@@ -4,11 +4,15 @@ use anyhow::{Context, Result};
 
 use crate::diagnostic::Location;
 
+mod cache;
+use cache::AnalysisCache;
+
 #[derive(Debug)]
 pub struct SourceFile {
     pub path: PathBuf,
     pub content: Vec<u8>,
     line_starts: Vec<usize>,
+    analysis: AnalysisCache,
 }
 
 impl SourceFile {
@@ -24,7 +28,16 @@ impl SourceFile {
             path: path.into(),
             line_starts: compute_line_starts(&content),
             content,
+            analysis: AnalysisCache::default(),
         }
+    }
+
+    pub(crate) fn cached<T: Send + Sync + 'static>(
+        &self,
+        key: usize,
+        initialize: impl FnOnce() -> T,
+    ) -> std::sync::Arc<T> {
+        self.analysis.get(key, initialize)
     }
 
     pub fn as_bytes(&self) -> &[u8] {

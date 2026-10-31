@@ -32,16 +32,14 @@ pub(super) fn plural(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn scope(n: Node<'_>) -> Option<Node<'_>> {
-    ancestors(n)
-        .into_iter()
-        .find(|p| matches!(p.kind(), "class" | "module" | "singleton_class"))
+    ancestors(n).find(|p| matches!(p.kind(), "class" | "module" | "singleton_class"))
 }
 fn matching_method<'n>(c: &Context<'_>, n: Node<'n>, attribute: Node<'_>) -> Option<Node<'n>> {
     if !c.symbol(attribute) {
         return None;
     }
     let owner = scope(n)?;
-    descendants(owner).into_iter().find(|m| {
+    descendants(owner).find(|m| {
         m.kind() == "method" && c.method(*m) == c.value(attribute) && scope(*m) == Some(owner)
     })
 }

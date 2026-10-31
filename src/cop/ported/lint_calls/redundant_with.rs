@@ -74,9 +74,9 @@ fn correct(
         } else {
             end
         };
-        finding.edit(selector.start_byte(), end, "each")
+        finding.edit_with(c, selector.start_byte(), end, || "each")
     } else {
-        finding.edit(operator_start(n, selector), end, "")
+        finding.edit_with(c, operator_start(n, selector), end, || "")
     }
 }
 fn operator_start(n: Node<'_>, selector: Node<'_>) -> usize {

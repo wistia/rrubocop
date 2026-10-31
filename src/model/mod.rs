@@ -11,6 +11,8 @@
 //! multiple-assignment target lists.
 
 mod builder;
+mod local_identifiers;
+pub(crate) use local_identifiers::LocalIdentifiers;
 mod patterns;
 mod reads;
 mod scopes;
@@ -242,5 +244,18 @@ mod tests {
             .expect("block scope");
         assert!(blk.entries.contains_key("y"));
         assert!(!fm.scopes[0].entries.contains_key("y"));
+    }
+    #[test]
+    fn nested_destructuring_binds_parameters_without_binding_default_reads() {
+        let model = build_from_str("def m((a, (b, *rest)), value = source); b = 1; puts rest; end");
+        let method = model
+            .scopes
+            .iter()
+            .find(|s| s.kind == ScopeKind::Method)
+            .unwrap();
+        for name in ["a", "b", "rest", "value"] {
+            assert_eq!(method.entries[name].intro_kind, IntroKind::Param, "{name}");
+        }
+        assert!(!method.entries.contains_key("source"));
     }
 }

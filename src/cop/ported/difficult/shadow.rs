@@ -25,27 +25,34 @@ impl Cop for ShadowedArgument {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
+        let index = std::sync::OnceLock::new();
         for (scope_index, scope) in model.scopes.iter().enumerate() {
             if !matches!(scope.kind, ScopeKind::Method | ScopeKind::Block) {
                 continue;
             }
             for (name, entry) in &scope.entries {
-                if let Some(n) = shadow(model, scope_index, name, entry, config) {
-                    let (line, col) = source.offset_to_line_col(n.start_byte());
-                    let mut d = self.diagnostic(
-                        source,
-                        line,
-                        col,
-                        format!(
-                            "Argument `{name}` was shadowed by a local variable before it was used."
-                        ),
-                    );
-                    d.highlight_length = n.end_byte() - n.start_byte();
-                    diagnostics.push(d);
+                if let Some(n) = shadow(model, scope_index, name, entry, config, &index) {
+                    diagnostics.push(shadow_diagnostic(self, source, n, name));
                 }
             }
         }
     }
+}
+fn shadow_diagnostic(
+    cop: &ShadowedArgument,
+    source: &SourceFile,
+    n: Node<'_>,
+    name: &str,
+) -> Diagnostic {
+    let (line, col) = source.offset_to_line_col(n.start_byte());
+    let mut diagnostic = cop.diagnostic(
+        source,
+        line,
+        col,
+        format!("Argument `{name}` was shadowed by a local variable before it was used."),
+    );
+    diagnostic.highlight_length = n.end_byte() - n.start_byte();
+    diagnostic
 }
 fn shadow<'n>(
     model: &'n FileModel<'_>,
@@ -53,16 +60,16 @@ fn shadow<'n>(
     name: &str,
     entry: &Entry,
     config: &CopConfig,
+    index: &std::sync::OnceLock<references::Index>,
 ) -> Option<Node<'n>> {
     let scope = &model.scopes[scope_index];
-    if !argument_entry(scope, entry) || entry.writes.is_empty() {
-        return None;
-    }
-    let declaration = parameter(model, entry.intro_byte)?;
-    let reads = argument_reads(model, scope_index, name, entry)?;
-    let (target, known, plain) = candidate(model, scope, name, entry)?;
+    let declaration = written_parameter(model, scope, entry)?;
+    let index = index.get_or_init(|| references::Index::new(model));
+    let reads = argument_reads(model, scope_index, name, entry, index)?;
+    let (target, known, plain) = candidate(model, scope, name, entry, index)?;
     if referenced_before(
         model,
+        index,
         entry,
         &reads,
         assignment(target).start_byte(),
@@ -78,6 +85,16 @@ fn shadow<'n>(
         target
     })
 }
+fn written_parameter<'n>(
+    model: &'n FileModel<'_>,
+    scope: &ScopeData,
+    entry: &Entry,
+) -> Option<Node<'n>> {
+    if !argument_entry(scope, entry) || entry.writes.is_empty() {
+        return None;
+    }
+    parameter(model, entry.intro_byte)
+}
 fn argument_entry(scope: &ScopeData, entry: &Entry) -> bool {
     entry.intro_kind == IntroKind::Param
         || scope.kind == ScopeKind::Block && entry.intro_kind == IntroKind::Binding
@@ -87,6 +104,7 @@ fn candidate<'n>(
     scope: &ScopeData,
     name: &str,
     entry: &Entry,
+    index: &references::Index,
 ) -> Option<(Node<'n>, bool, bool)> {
     let mut known = true;
     for write in &entry.writes {
@@ -95,8 +113,11 @@ fn candidate<'n>(
             continue;
         }
         let target = at(model.tree.root_node(), write.byte)?;
+        if pattern_binding(target) {
+            continue;
+        }
         let node = assignment(target);
-        if uses(model, name, node) {
+        if uses(index, name, node) {
             continue;
         }
         if conditional(node, scope.entered_at) {
@@ -108,11 +129,26 @@ fn candidate<'n>(
     None
 }
 
+fn pattern_binding(n: Node<'_>) -> bool {
+    ancestors(n)
+        .take_while(|p| {
+            !matches!(
+                p.kind(),
+                "assignment"
+                    | "operator_assignment"
+                    | "method"
+                    | "singleton_method"
+                    | "block"
+                    | "do_block"
+                    | "lambda"
+            )
+        })
+        .any(|p| matches!(p.kind(), "match_pattern" | "in_clause"))
+}
+
 fn parameter<'n>(model: &'n FileModel<'_>, byte: usize) -> Option<Node<'n>> {
     let n = at(model.tree.root_node(), byte)?;
-    let p = ancestors(n)
-        .into_iter()
-        .find(|p| p.kind().ends_with("parameters"))?;
+    let p = ancestors(n).find(|p| p.kind().ends_with("parameters"))?;
     if block_local(p, byte) {
         return None;
     }
@@ -120,7 +156,6 @@ fn parameter<'n>(model: &'n FileModel<'_>, byte: usize) -> Option<Node<'n>> {
 }
 fn declaration<'n>(n: Node<'n>, parameters: Node<'n>) -> Option<Node<'n>> {
     let wrappers = ancestors(n)
-        .into_iter()
         .take_while(|a| *a != parameters)
         .collect::<Vec<_>>();
     if wrappers.iter().any(|p| !parameter_wrapper(*p)) {
@@ -164,7 +199,6 @@ fn at(root: Node<'_>, byte: usize) -> Option<Node<'_>> {
 }
 fn assignment(n: Node<'_>) -> Node<'_> {
     ancestors(n)
-        .into_iter()
         .find_map(|parent| match parent.kind() {
             "assignment" | "operator_assignment" | "for" => Some(parent),
             "rescue" => Some(n),
@@ -175,7 +209,6 @@ fn assignment(n: Node<'_>) -> Node<'_> {
 
 fn conditional(n: Node<'_>, stop: usize) -> bool {
     ancestors(n)
-        .into_iter()
         .take_while(|p| p.start_byte() != stop)
         .any(|p| {
             matches!(
@@ -202,7 +235,8 @@ fn argument_reads(
     scope: usize,
     name: &str,
     entry: &Entry,
+    index: &references::Index,
 ) -> Option<Vec<crate::model::Read>> {
-    let reads = references::reads(model, scope, name, entry);
+    let reads = references::reads(model, scope, name, entry, index);
     (!reads.is_empty()).then_some(reads)
 }

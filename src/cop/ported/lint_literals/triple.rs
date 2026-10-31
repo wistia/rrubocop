@@ -10,7 +10,7 @@ pub(super) fn triple(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
             n,
             "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
         )
-        .replace(n, replacement(c, &kids(n))),
+        .replace_with(c, n, || replacement(c, &kids(n))),
     ]
 }
 fn replacement(c: &Context<'_>, strings: &[Node<'_>]) -> String {

@@ -33,7 +33,7 @@ fn correct(c: &Context<'_>, n: Node<'_>, count: BigInt, f: Finding) -> Finding {
         return remove_line(c, n, f);
     }
     if let Some(proc) = args(n).first().and_then(|a| kids(*a).first().copied()) {
-        return f.replace(n, c.value(proc));
+        return f.replace_with(c, n, || c.value(proc));
     }
     let Some((b, body)) = block_body(n) else {
         return f;
@@ -51,14 +51,15 @@ fn own_line(c: &Context<'_>, n: Node<'_>) -> bool {
 fn remove_line(c: &Context<'_>, n: Node<'_>, f: Finding) -> Finding {
     let bytes = c.source.as_bytes();
     let start = n.start_byte() - n.start_position().column;
-    f.edit(
+    f.edit_with(
+        c,
         start,
         bytes[n.end_byte()..]
             .iter()
             .position(|b| *b == b'\n')
             .map(|p| n.end_byte() + p + 1)
             .unwrap_or(bytes.len()),
-        "",
+        || "",
     )
 }
 

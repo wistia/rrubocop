@@ -31,20 +31,25 @@ fn check_method(c: &Context<'_>, calls: &[Node<'_>], method: &str) -> Vec<Findin
 }
 fn separated(c: &Context<'_>, n: Node<'_>, method: &str) -> Finding {
     let a = args(n);
-    let indent = " ".repeat(n.start_position().column);
-    let text = a
-        .iter()
-        .rev()
-        .map(|a| format!("{method} {}", c.text(*a)))
-        .collect::<Vec<_>>()
-        .join(&format!("\n{indent}"));
-    Finding::new(n, format!("Put `{method}` mixins in separate statements.")).replace(n, text)
+    let text = c.render_edit(|| {
+        let indent = " ".repeat(n.start_position().column);
+        a.iter()
+            .rev()
+            .map(|a| format!("{method} {}", c.text(*a)))
+            .collect::<Vec<_>>()
+            .join(&format!("\n{indent}"))
+    });
+    Finding::new(n, format!("Put `{method}` mixins in separate statements.")).replace_with(
+        c,
+        n,
+        || text,
+    )
 }
 fn grouped(c: &Context<'_>, mixins: &[Node<'_>], method: &str) -> Vec<Finding> {
     if mixins.len() < 2 {
         return vec![];
     }
-    let names = mixin_names(c, mixins);
+    let names = c.render_edit(|| mixin_names(c, mixins));
     mixins
         .iter()
         .enumerate()
@@ -62,9 +67,9 @@ fn grouped_finding(
 ) -> Finding {
     let f = Finding::new(n, format!("Put `{method}` mixins in a single statement."));
     if i == 0 {
-        return f.replace(n, format!("{method} {names}"));
+        return f.replace_with(c, n, || format!("{method} {names}"));
     }
-    f.edit(removal_start(c, mixins[i - 1], n), n.end_byte(), "")
+    f.edit_with(c, removal_start(c, mixins[i - 1], n), n.end_byte(), || "")
 }
 fn removal_start(c: &Context<'_>, previous: Node<'_>, n: Node<'_>) -> usize {
     let gap = &c.source.as_bytes()[previous.end_byte()..n.start_byte()];

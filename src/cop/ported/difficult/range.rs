@@ -23,18 +23,15 @@ impl Cop for OutOfRangeRegexpRef {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        if !source
-            .as_bytes()
-            .windows(2)
-            .any(|pair| pair[0] == b'$' && (b'1'..=b'9').contains(&pair[1]))
-        {
+        if !has_reference(source) {
             return;
         }
-        let c = Context { source, config };
+        let c = Context::new(source, config);
         let mut state = State {
             c: &c,
             valid: Some(0),
             findings: vec![],
+            heredocs: heredoc::Heredocs::new(&c, tree.root_node()),
         };
         state.walk(tree.root_node());
         for f in state.findings {
@@ -45,13 +42,15 @@ impl Cop for OutOfRangeRegexpRef {
         }
     }
 }
-struct State<'a, 's> {
+struct State<'a, 's, 'n> {
     c: &'a Context<'s>,
     valid: Option<usize>,
     findings: Vec<Finding>,
+    heredocs: heredoc::Heredocs<'n>,
 }
+mod heredoc;
 mod walk;
-impl State<'_, '_> {
+impl State<'_, '_, '_> {
     fn count(&self, n: Node<'_>) -> Option<usize> {
         if n.kind() != "regex" {
             return None;
@@ -59,7 +58,7 @@ impl State<'_, '_> {
         super::super::style_regexp::capture_counts(self.c, n)
             .map(|(named, numbered)| if named > 0 { named } else { numbered })
     }
-    fn maximum(&self, nodes: Vec<Node<'_>>) -> Option<usize> {
+    fn maximum<'n>(&self, nodes: impl IntoIterator<Item = Node<'n>>) -> Option<usize> {
         nodes.into_iter().filter_map(|n| self.count(n)).max()
     }
     fn reference(&mut self, n: Node<'_>) {
@@ -113,4 +112,11 @@ fn message(digits: &str, count: usize) -> String {
     };
     let group = if count == 1 { "group" } else { "groups" };
     format!("${digits} is out of range ({amount} regexp capture {group} detected).")
+}
+
+fn has_reference(source: &SourceFile) -> bool {
+    source
+        .as_bytes()
+        .windows(2)
+        .any(|pair| pair[0] == b'$' && (b'1'..=b'9').contains(&pair[1]))
 }

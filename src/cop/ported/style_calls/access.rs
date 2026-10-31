@@ -25,12 +25,10 @@ fn unpack_finding(c: &Context<'_>, n: Node<'_>, recv: Node<'_>) -> Finding {
             c.text(args(recv)[0])
         ),
     )
-    .edit(
-        start,
-        n.end_byte(),
+    .edit_with(c, start, n.end_byte(), || {
         String::from_utf8_lossy(&c.source.as_bytes()[start..recv.end_byte()])
-            .replacen("unpack", "unpack1", 1),
-    )
+            .replacen("unpack", "unpack1", 1)
+    })
 }
 pub(super) fn sort(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some((recv, max, access_start)) = access(c, n) else {
@@ -58,7 +56,7 @@ fn sort_suggestion(sorter: &str, max: bool) -> String {
 fn sort_finding(c: &Context<'_>, n: Node<'_>, recv: Node<'_>, max: bool, start: usize) -> Finding {
     let finding = sort_edit(c, n, recv, start, &sort_suggestion(c.method(recv), max));
     if let Some(op) = logical_operator(c, n) {
-        return finding.also_edit(op.start_byte(), op.end_byte(), "");
+        return finding.also_edit_with(c, op.start_byte(), op.end_byte(), || "");
     }
     finding
 }
@@ -77,15 +75,13 @@ fn sort_edit(
         n.end_byte(),
         sort_message(c, n, recv, start, suggestion),
     )
-    .edit(
-        selector.start_byte(),
-        n.end_byte(),
+    .edit_with(c, selector.start_byte(), n.end_byte(), || {
         format!(
             "{suggestion}{inside}{}{}",
             logical_suffix(c, n),
             String::from_utf8_lossy(&c.source.as_bytes()[recv.end_byte()..start])
-        ),
-    )
+        )
+    })
 }
 fn sort_message(
     c: &Context<'_>,

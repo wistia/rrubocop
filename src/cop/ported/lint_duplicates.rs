@@ -64,20 +64,57 @@ fn require(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     }
     let (start, end) = whole_lines(c, n);
-    vec![Finding::new(n, format!("Duplicate `{}` detected.", c.method(n))).edit(start, end, "")]
+    vec![
+        Finding::new(n, format!("Duplicate `{}` detected.", c.method(n))).edit_with(
+            c,
+            start,
+            end,
+            || "",
+        ),
+    ]
 }
 fn require_call(c: &Context<'_>, n: Node<'_>) -> bool {
     ["require", "require_relative"].contains(&c.method(n))
         && kernel_receiver(c, n)
         && args(n).len() == 1
 }
+struct RepeatedRequires(HashSet<usize>);
 fn repeated_require(c: &Context<'_>, n: Node<'_>) -> bool {
-    let parent = ruby_parent(n);
-    descendants(parent)
-        .into_iter()
-        .take_while(|p| *p != n)
-        .filter(|p| is_call(*p) && ruby_parent(*p) == parent)
-        .any(|p| same_requirement(c, p, n))
+    c.source
+        .cached(0, || index_requirements(c, n))
+        .0
+        .contains(&n.start_byte())
+}
+fn index_requirements(c: &Context<'_>, n: Node<'_>) -> RepeatedRequires {
+    let root = tree_root(n);
+    let mut seen = HashSet::new();
+    RepeatedRequires(
+        descendants(root)
+            .filter(|node| require_candidate(c, *node))
+            .filter(|node| !seen.insert(requirement_key(c, *node)))
+            .map(|node| node.start_byte())
+            .collect(),
+    )
+}
+
+fn tree_root(n: Node<'_>) -> Node<'_> {
+    ancestors(n).last().unwrap_or(n)
+}
+fn require_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
+    is_call(n) && require_call(c, n)
+}
+fn requirement_key<'a>(
+    c: &'a Context<'_>,
+    node: Node<'_>,
+) -> (usize, usize, &'static str, &'a str, String) {
+    let parent = ruby_parent(node);
+    (
+        parent.start_byte(),
+        parent.end_byte(),
+        parent.kind(),
+        c.method(node),
+        canonical(args(node)[0], c),
+    )
 }
 fn ruby_parent(n: Node<'_>) -> Node<'_> {
     let parent = n.parent().unwrap_or(n);
@@ -104,8 +141,25 @@ fn kernel_receiver(c: &Context<'_>, n: Node<'_>) -> bool {
             && c.text(r).rsplit("::").next() == Some("Kernel")
     })
 }
-fn same_requirement(c: &Context<'_>, a: Node<'_>, b: Node<'_>) -> bool {
-    require_call(c, a)
-        && c.method(a) == c.method(b)
-        && canonical(args(a)[0], c) == canonical(args(b)[0], c)
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn requirements_are_indexed_in_order_with_ruby_parent_boundaries() {
+        let source = crate::parse::source::SourceFile::from_bytes("sample.rb", b"require 'a'\n# comment\nrequire 'a'\nrequire_relative 'a'\nif condition\n require 'a'\n require 'a'\nend\nrequire 'b'\n".to_vec());
+        let tree = crate::parse::parse_ruby(&source).unwrap();
+        let config = crate::cop::CopConfig::default();
+        let c = Context::new(&source, &config);
+        let calls = descendants(tree.root_node())
+            .filter(|n| is_call(*n) && require_call(&c, *n))
+            .collect::<Vec<_>>();
+        assert_eq!(
+            calls
+                .iter()
+                .map(|n| repeated_require(&c, *n))
+                .collect::<Vec<_>>(),
+            [false, true, false, false, true, false]
+        );
+    }
 }

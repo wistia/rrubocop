@@ -154,10 +154,27 @@ pub(super) fn check(
         .map(|o| shared::node_line(source, o.node))
         .collect();
     let (mut scan_diags, mut scan_corr) = (Vec::new(), Vec::new());
-    scan(&mut scan_diags, &mut corrections.is_some().then_some(&mut scan_corr));
-    keep_unowned(source, &lines, (scan_diags, scan_corr), diagnostics, &mut corrections);
+    scan(
+        &mut scan_diags,
+        &mut corrections.is_some().then_some(&mut scan_corr),
+    );
+    keep_unowned(
+        source,
+        &lines,
+        (scan_diags, scan_corr),
+        diagnostics,
+        &mut corrections,
+    );
     for offense in &owned {
-        report(cop, source, code_map, width, offense, diagnostics, &mut corrections);
+        report(
+            cop,
+            source,
+            code_map,
+            width,
+            offense,
+            diagnostics,
+            &mut corrections,
+        );
     }
 }
 

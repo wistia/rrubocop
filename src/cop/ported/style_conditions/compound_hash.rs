@@ -20,8 +20,8 @@ fn combinator(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 fn outer_combinator(c: &Context<'_>, n: Node<'_>) -> bool {
     combinator(c, n)
-        && !ancestors(n).iter().any(|p| combinator(c, *p))
-        && ancestors(n).iter().any(|p| hash_definition(c, *p))
+        && !ancestors(n).any(|p| combinator(c, p))
+        && ancestors(n).any(|p| hash_definition(c, p))
 }
 fn hash_message(c: &Context<'_>, n: Node<'_>) -> Option<&'static str> {
     if field(n, "receiver").is_some_and(|r| r.kind() == "array" && kids(r).len() == 1) {

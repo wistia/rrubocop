@@ -8,7 +8,7 @@ pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     inspect(c, n, &arguments(n))
 }
 fn inspect(c: &Context<'_>, n: Node<'_>, arguments: &[Node<'_>]) -> Vec<Finding> {
-    let Some(code) = code_argument(arguments) else {
+    let Some(code) = code_argument(c, arguments) else {
         return vec![];
     };
     let base = if c.method(n) == "eval" { 2 } else { 1 };
@@ -19,8 +19,8 @@ fn inspect(c: &Context<'_>, n: Node<'_>, arguments: &[Node<'_>]) -> Vec<Finding>
     }
     out
 }
-fn code_argument<'n>(arguments: &[Node<'n>]) -> Option<Node<'n>> {
-    arguments.first().copied().filter(|n| literal_code(*n))
+fn code_argument<'n>(c: &Context<'_>, arguments: &[Node<'n>]) -> Option<Node<'n>> {
+    arguments.first().copied().filter(|n| literal_code(c, *n))
 }
 
 fn arguments(n: Node<'_>) -> Vec<Node<'_>> {
@@ -29,8 +29,17 @@ fn arguments(n: Node<'_>) -> Vec<Node<'_>> {
         .filter(|a| !matches!(a.kind(), "comment" | "heredoc_body" | "heredoc_end"))
         .collect()
 }
-fn literal_code(n: Node<'_>) -> bool {
-    matches!(n.kind(), "string" | "heredoc_beginning" | "chained_string")
+fn literal_code(c: &Context<'_>, n: Node<'_>) -> bool {
+    match n.kind() {
+        "string" | "chained_string" | "character" => true,
+        "heredoc_beginning" => !c
+            .text(n)
+            .trim_start_matches("<<")
+            .trim_start_matches(['-', '~'])
+            .starts_with('`'),
+        "identifier" => c.text(n) == "__FILE__",
+        _ => false,
+    }
 }
 fn file(c: &Context<'_>, n: Node<'_>, arguments: &[Node<'_>], base: usize) -> Option<Finding> {
     arguments
@@ -61,6 +70,7 @@ fn line_argument<'n>(c: &Context<'_>, arguments: &[Node<'n>]) -> Option<Node<'n>
 
 fn clear_edits(findings: &mut [Finding]) {
     for finding in findings {
+        finding.correctable = false;
         finding.edit = None;
         finding.additional.clear();
     }
@@ -96,7 +106,7 @@ fn file_finding(c: &Context<'_>, call: Node<'_>, file: Node<'_>) -> Finding {
         ),
     );
     if location::replaceable(c, file) {
-        f.replace(file, "__FILE__")
+        f.replace_with(c, file, || "__FILE__")
     } else {
         f
     }
@@ -112,7 +122,7 @@ fn line_finding(c: &Context<'_>, call: Node<'_>, line: Node<'_>, diff: isize) ->
         ),
     );
     if location::replaceable(c, line) {
-        f.replace(line, expected)
+        f.replace_with(c, line, || expected)
     } else {
         f
     }
@@ -129,11 +139,9 @@ fn missing(
         return f;
     }
     let last = *arguments.last().unwrap();
-    f.edit(
-        last.end_byte(),
-        last.end_byte(),
-        missing_text(c, code, last, arguments.len() <= base),
-    )
+    f.edit_with(c, last.end_byte(), last.end_byte(), || {
+        missing_text(c, code, last, arguments.len() <= base)
+    })
 }
 fn missing_message(c: &Context<'_>, n: Node<'_>) -> String {
     if c.method(n) == "eval" {

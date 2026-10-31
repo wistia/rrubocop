@@ -5,7 +5,7 @@ pub(super) fn spec_constants(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(message) = constant_message(n) else {
         return vec![];
     };
-    if ancestors(n).iter().any(|parent| spec_group(c, *parent)) {
+    if ancestors(n).any(|parent| spec_group(c, parent)) {
         return vec![];
     }
     vec![Finding::new(n, message)]

@@ -26,7 +26,7 @@ fn rescue_finding(
     invalid: &[Node<'_>],
 ) -> Finding {
     let names = sources(c, invalid);
-    Finding::range(n.start_byte(), ex.end_byte(), format!("Rescuing from `{names}` will raise a `TypeError` instead of catching the actual exception.")).edit(n.start_byte() + 6, ex.end_byte(), replacement(c, &valid_exceptions(exceptions,invalid)))
+    Finding::range(n.start_byte(), ex.end_byte(), format!("Rescuing from `{names}` will raise a `TypeError` instead of catching the actual exception.")).edit_with(c, n.start_byte() + 6, ex.end_byte(), || replacement(c, &valid_exceptions(exceptions,invalid)))
 }
 fn valid_exceptions<'a>(exceptions: &[Node<'a>], invalid: &[Node<'_>]) -> Vec<Node<'a>> {
     exceptions

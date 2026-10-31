@@ -38,7 +38,13 @@ pub(super) fn colon(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let mut cursor = n.walk();
     n.children(&mut cursor)
         .filter(|o| c.text(*o) == "::")
-        .map(|o| Finding::new(o, "Do not use `::` for defining class methods.").replace(o, "."))
+        .map(|o| {
+            Finding::new(o, "Do not use `::` for defining class methods.").replace_with(
+                c,
+                o,
+                || ".",
+            )
+        })
         .collect()
 }
 pub(super) fn empty_parameters(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -47,7 +53,12 @@ pub(super) fn empty_parameters(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     };
     let start = n.start_byte() + if n.kind() == "do_block" { 2 } else { 1 };
     vec![
-        Finding::new(p, "Omit pipes for the empty block parameters.").edit(start, p.end_byte(), ""),
+        Finding::new(p, "Omit pipes for the empty block parameters.").edit_with(
+            c,
+            start,
+            p.end_byte(),
+            || "",
+        ),
     ]
 }
 fn empty_pipes(c: &Context<'_>, n: Node<'_>, p: Node<'_>) -> bool {
@@ -66,10 +77,11 @@ pub(super) fn when_then(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     }
     vec![
-        Finding::new(keyword, "Do not use `then` for multiline `when` statement.").edit(
+        Finding::new(keyword, "Do not use `then` for multiline `when` statement.").edit_with(
+            c,
             before_spaces(c, keyword.start_byte()),
             keyword.end_byte(),
-            "",
+            || "",
         ),
     ]
 }

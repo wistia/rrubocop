@@ -53,9 +53,7 @@ pub(super) fn method_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 
 fn matching_method(c: &Context<'_>, n: Node<'_>, attribute: Node<'_>) -> bool {
     n.parent().is_some_and(|parent| {
-        descendants(parent)
-            .iter()
-            .any(|d| d.kind() == "method" && c.method(*d) == c.value(attribute))
+        descendants(parent).any(|d| d.kind() == "method" && c.method(d) == c.value(attribute))
     })
 }
 

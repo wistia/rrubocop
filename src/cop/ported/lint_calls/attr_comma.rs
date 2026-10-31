@@ -13,7 +13,7 @@ pub(super) fn attr_comma(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
             offset + 1,
             "Avoid leaving a trailing comma in attribute declarations.",
         )
-        .edit(offset, offset + 1, ""),
+        .edit_with(c, offset, offset + 1, || ""),
     ]
 }
 fn trailing_comma(c: &Context<'_>, a: &[Node<'_>]) -> Option<usize> {

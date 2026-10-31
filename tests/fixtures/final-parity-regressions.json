@@ -1,0 +1,540 @@
+[
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "class_eval <<`CODE`\nprintf 1\nCODE\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class_eval <<`CODE`\nprintf 1\nCODE\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "class_eval <<-`CODE`\nprintf 1\nCODE\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class_eval <<-`CODE`\nprintf 1\nCODE\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "class_eval <<~`CODE`\nprintf 1\nCODE\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class_eval <<~`CODE`\nprintf 1\nCODE\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "eval(?1, binding)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Pass a binding, `__FILE__`, and `__LINE__` to `eval`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "eval(?1, binding, __FILE__, __LINE__)\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "eval(__FILE__, binding)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Pass a binding, `__FILE__`, and `__LINE__` to `eval`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "eval(__FILE__, binding, __FILE__, __LINE__)\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "class_eval(\"1\", (__FILE__), __LINE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 16,
+        "message": "Incorrect file for `class_eval`; use `__FILE__` instead of `(__FILE__)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class_eval(\"1\", __FILE__, __LINE__)\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "class_eval(\"1\", __FILE__, (__LINE__))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 26,
+        "message": "Incorrect line number for `class_eval`; use `__LINE__` instead of `(__LINE__)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class_eval(\"1\", __FILE__, __LINE__)\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "class_eval(\"1\", ((__FILE__)), ((__LINE__)))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 16,
+        "message": "Incorrect file for `class_eval`; use `__FILE__` instead of `((__FILE__))`.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 30,
+        "message": "Incorrect line number for `class_eval`; use `__LINE__` instead of `((__LINE__))`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class_eval(\"1\", __FILE__, __LINE__)\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def m((a, (b, c)))\n b = 42\n puts b\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Argument `b` was shadowed by a local variable before it was used.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m((a, (b, c)))\n b = 42\n puts b\nend\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "items.each do |(a, (b,c))|\n b = 42\n puts b\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Argument `b` was shadowed by a local variable before it was used.",
+        "correctable": false
+      }
+    ],
+    "corrected": "items.each do |(a, (b,c))|\n b = 42\n puts b\nend\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def m((a, *rest))\n rest = []\n puts rest\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Argument `rest` was shadowed by a local variable before it was used.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m((a, *rest))\n rest = []\n puts rest\nend\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def m(foo)\n data => { foo: }\n puts foo\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def m(foo)\n data => { foo: }\n puts foo\nend\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def m(foo)\n data => { foo: }\n foo = 1\n puts foo\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Argument `foo` was shadowed by a local variable before it was used.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m(foo)\n data => { foo: }\n foo = 1\n puts foo\nend\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def m(foo)\n case data\n in { foo: }\n puts foo\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def m(foo)\n case data\n in { foo: }\n puts foo\n end\nend\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def m((a, (b, c)))\n puts b\n b = 42\n puts b\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def m((a, (b, c)))\n puts b\n b = 42\n puts b\nend\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def m(a = source)\n source = 1\n puts source\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def m(a = source)\n source = 1\n puts source\nend\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "\"x\".match(<<~TEXT)\n #{/(a)/ =~ \"a\"}\nTEXT\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "\"x\".match(<<~TEXT)\n #{/(a)/ =~ \"a\"}\nTEXT\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "\"x\".gsub(/(x)/, <<~TEXT)\n #{$1}\nTEXT\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 3,
+        "message": "$1 is out of range (no regexp capture groups detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "\"x\".gsub(/(x)/, <<~TEXT)\n #{$1}\nTEXT\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "/(a)/ =~ \"a\"\ns[/(a)(b)/] = $2\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 14,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 5,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "/(a)/ =~ \"a\"\ns[/(a)(b)/] = $2\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "/(a)/ =~ \"a\"\ns[/(a)(b)/] += $2\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "/(a)/ =~ \"a\"\ns[/(a)(b)/] += $2\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "/(a)/ =~ \"a\"\ns[/(a)(b)/]\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "/(a)/ =~ \"a\"\ns[/(a)(b)/]\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "\"x\".gsub(<<~TEXT, <<~TEXT)\n #{/(a)/ =~ \"a\"}\nTEXT\n #{$2}\nTEXT\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 3,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "\"x\".gsub(<<~TEXT, <<~TEXT)\n #{/(a)/ =~ \"a\"}\nTEXT\n #{$2}\nTEXT\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "\"x\".match(<<~OUTER)\n #{\"x\".gsub(/(a)/, <<~INNER)}\n  #{$2}\n INNER\nOUTER\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 4,
+        "message": "$2 is out of range (no regexp capture groups detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "\"x\".match(<<~OUTER)\n #{\"x\".gsub(/(a)/, <<~INNER)}\n  #{$2}\n INNER\nOUTER\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "\"x\".match(<<~TEXT)\n #{\"x\".gsub(/(a)/, <<~TEXT)}\n  #{$2}\n TEXT\nTEXT\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 4,
+        "message": "$2 is out of range (no regexp capture groups detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "\"x\".match(<<~TEXT)\n #{\"x\".gsub(/(a)/, <<~TEXT)}\n  #{$2}\n TEXT\nTEXT\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "\"x\".match(<<\"C\\ODE\")\n #{/(a)/ =~ \"a\"}\nC\\ODE\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "\"x\".match(<<\"C\\ODE\")\n #{/(a)/ =~ \"a\"}\nC\\ODE\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "\"x\".match(<<~TEXT)\n #{\"\nTEXT\n\"; /(a)/ =~ \"a\"}\n #{$2}\nTEXT\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 3,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "\"x\".match(<<~TEXT)\n #{\"\nTEXT\n\"; /(a)/ =~ \"a\"}\n #{$2}\nTEXT\nputs $2\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "class_eval <<'CO`DE'\n1\nCO`DE\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Pass `__FILE__` and `__LINE__` to `class_eval`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class_eval <<'CO`DE', __FILE__, __LINE__ + 1\n1\nCO`DE\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "/(a)/ =~ \"a\"\nx, s[/(a)(b)/] = 1, $2\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 20,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 5,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "/(a)/ =~ \"a\"\nx, s[/(a)(b)/] = 1, $2\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "/(a)/ =~ \"a\"\n(x, s[/(a)(b)/]) = 1, $2\nputs $2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 22,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 5,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "/(a)/ =~ \"a\"\n(x, s[/(a)(b)/]) = 1, $2\nputs $2\n"
+  },
+  {
+    "cop": "Lint/OutOfRangeRegexpRef",
+    "source": "/(a)/ =~ \"a\"\nfor s[/(a)(b)/] in xs\n puts $2\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 6,
+        "message": "$2 is out of range (1 regexp capture group detected).",
+        "correctable": false
+      }
+    ],
+    "corrected": "/(a)/ =~ \"a\"\nfor s[/(a)(b)/] in xs\n puts $2\nend\n"
+  }
+]

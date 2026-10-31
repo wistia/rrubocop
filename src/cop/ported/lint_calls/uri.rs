@@ -17,7 +17,7 @@ pub(super) fn uri_regexp(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
                 c.text(n)
             ),
         )
-        .replace(n, preferred),
+        .replace_with(c, n, || preferred),
     ]
 }
 pub(super) fn uri_escape(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {

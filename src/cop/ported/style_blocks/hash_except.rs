@@ -16,10 +16,11 @@ pub(super) fn hash_except(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let preferred = format!("except({})", key_content(c, except));
     let start = method_node(n).start_byte();
     vec![
-        Finding::range(start, n.end_byte(), format!("Use `{preferred}` instead.")).edit(
+        Finding::range(start, n.end_byte(), format!("Use `{preferred}` instead.")).edit_with(
+            c,
             start,
             n.end_byte(),
-            preferred,
+            || preferred,
         ),
     ]
 }

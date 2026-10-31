@@ -67,3 +67,5 @@ fn all_ported_cops_have_fixture_pairs() {
     fixtures::check_pairs(&cases());
 }
 mod pipeline;
+
+mod parity;

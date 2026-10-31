@@ -17,18 +17,24 @@ struct Scanner<'a> {
     extended: bool,
     tokens: Vec<Token>,
     captures: (usize, usize),
+    emit_tokens: bool,
 }
 pub(super) fn scan(text: &str, extended: bool, interpolations: &[(usize, usize)]) -> Vec<Token> {
-    run(text, extended, interpolations).tokens
+    run(text, extended, interpolations, true).tokens
 }
 pub(super) fn captures(
     text: &str,
     extended: bool,
     interpolations: &[(usize, usize)],
 ) -> (usize, usize) {
-    run(text, extended, interpolations).captures
+    run(text, extended, interpolations, false).captures
 }
-fn run<'a>(text: &'a str, extended: bool, interpolations: &'a [(usize, usize)]) -> Scanner<'a> {
+fn run<'a>(
+    text: &'a str,
+    extended: bool,
+    interpolations: &'a [(usize, usize)],
+    emit_tokens: bool,
+) -> Scanner<'a> {
     let mut scanner = Scanner {
         text,
         interpolations,
@@ -37,6 +43,7 @@ fn run<'a>(text: &'a str, extended: bool, interpolations: &'a [(usize, usize)]) 
         extended,
         tokens: vec![],
         captures: (0, 0),
+        emit_tokens,
     };
     scanner.run();
     scanner
@@ -78,6 +85,9 @@ impl Scanner<'_> {
         None
     }
     fn push(&mut self, start: usize, end: usize, inside: bool) {
+        if !self.emit_tokens {
+            return;
+        }
         self.tokens.push(Token {
             start,
             end,

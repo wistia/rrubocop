@@ -40,7 +40,7 @@ fn move_required(
     let mut f = insert_required(c, optional[0], required, f);
     if newline_needed(c, n, parameters) {
         let last = optional.last().unwrap();
-        f = f.also_edit(last.end_byte(), last.end_byte(), "\n");
+        f = f.also_edit_with(c, last.end_byte(), last.end_byte(), || "\n");
     }
     f
 }
@@ -77,14 +77,13 @@ fn insert_required(c: &Context<'_>, first: Node<'_>, required: &[Node<'_>], f: F
         .filter(|r| r.start_byte() > first.start_byte())
         .copied()
         .collect::<Vec<_>>();
-    let names = keyword_sources(c, &moved);
-    moved.into_iter().fold(
-        f.edit(first.start_byte(), first.start_byte(), format!("{names}, ")),
-        |f, r| {
-            let (start, end) = removal(c, r);
-            f.also_edit(start, end, "")
-        },
-    )
+    let first_edit = f.edit_with(c, first.start_byte(), first.start_byte(), || {
+        format!("{}, ", keyword_sources(c, &moved))
+    });
+    moved.into_iter().fold(first_edit, |f, r| {
+        let (start, end) = removal(c, r);
+        f.also_edit_with(c, start, end, || "")
+    })
 }
 fn keyword_sources(c: &Context<'_>, nodes: &[Node<'_>]) -> String {
     nodes

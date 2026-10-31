@@ -6,15 +6,13 @@ pub(super) fn is_policy(c: &Context<'_>, n: Node<'_>) -> bool {
             .is_some_and(|a| c.text(a).ends_with("Policy"))
 }
 pub(super) fn disables_scope(c: &Context<'_>, n: Node<'_>) -> bool {
-    descendants(n)
-        .iter()
-        .any(|d| is_call(*d) && c.method(*d) == "disable_scoping!")
+    descendants(n).any(|d| is_call(d) && c.method(d) == "disable_scoping!")
 }
 pub(super) fn no_show(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "show?" {
         return vec![];
     }
-    let Some(policy) = ancestors(n).into_iter().find(|p| is_policy(c, *p)) else {
+    let Some(policy) = ancestors(n).find(|p| is_policy(c, *p)) else {
         return vec![];
     };
     if disables_scope(c, policy) {
@@ -35,7 +33,7 @@ pub(super) fn policy_scope(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !is_policy(c, n) {
         return vec![];
     }
-    if descendants(n).into_iter().any(|d| {
+    if descendants(n).any(|d| {
         d.kind() == "class"
             && matches!(
                 superclass(c, d),

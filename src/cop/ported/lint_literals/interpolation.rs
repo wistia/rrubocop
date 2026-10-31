@@ -8,15 +8,17 @@ pub(super) fn interpolation(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(content) = quoted_content(text) else {
         return vec![];
     };
-    let replacement = if text.contains('"') {
-        format!("%{{{content}}}")
-    } else {
-        format!("\"{content}\"")
+    let replacement = || {
+        if text.contains('"') {
+            format!("%{{{content}}}")
+        } else {
+            format!("\"{content}\"")
+        }
     };
-    vec![Finding::new(n, "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.").replace(n, replacement)]
+    vec![Finding::new(n, "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.").replace_with(c, n, replacement)]
 }
 fn interpolated(n: Node<'_>) -> bool {
-    descendants(n).iter().any(|d| d.kind() == "interpolation")
+    descendants(n).any(|d| d.kind() == "interpolation")
 }
 fn quoted_content(text: &str) -> Option<&str> {
     if text.starts_with('\'') {

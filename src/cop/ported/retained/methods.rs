@@ -7,7 +7,7 @@ fn end_token(n: Node<'_>) -> Option<Node<'_>> {
 fn statements_body(n: Node<'_>) -> Vec<Node<'_>> {
     field(n, "body").map(statements).unwrap_or_default()
 }
-pub(super) fn end(_c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
+pub(super) fn end(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(e) = end_token(n) else {
         return vec![];
     };
@@ -23,11 +23,9 @@ pub(super) fn end(_c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
             e,
             "Place the end statement of a multi-line method on its own line.",
         )
-        .edit(
-            e.start_byte(),
-            e.start_byte(),
-            format!("\n{}", " ".repeat(n.start_position().column)),
-        ),
+        .edit_with(c, e.start_byte(), e.start_byte(), || {
+            format!("\n{}", " ".repeat(n.start_position().column))
+        }),
     ]
 }
 pub(super) fn body(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -39,12 +37,10 @@ pub(super) fn body(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         first,
         "Place the first line of a multi-line method definition's body on its own line.",
     )
-    .edit(
-        first.start_byte(),
-        first.start_byte(),
-        format!("\n{}", " ".repeat(indent)),
-    );
-    vec![move_comment(c, n, remove_semicolon(n, first, f))]
+    .edit_with(c, first.start_byte(), first.start_byte(), || {
+        format!("\n{}", " ".repeat(indent))
+    });
+    vec![move_comment(c, n, remove_semicolon(c, n, first, f))]
 }
 fn trailing_body(n: Node<'_>) -> Option<Node<'_>> {
     if end_token(n).is_none() || n.start_position().row == n.end_position().row {
@@ -55,13 +51,13 @@ fn trailing_body(n: Node<'_>) -> Option<Node<'_>> {
         .copied()
         .filter(|first| first.start_position().row == n.start_position().row)
 }
-fn remove_semicolon(n: Node<'_>, first: Node<'_>, f: Finding) -> Finding {
+fn remove_semicolon(c: &Context<'_>, n: Node<'_>, first: Node<'_>, f: Finding) -> Finding {
     let mut cursor = n.walk();
     if let Some(token) = n
         .children(&mut cursor)
         .find(|ch| ch.kind() == ";" && ch.start_byte() < first.start_byte())
     {
-        f.also_edit(token.start_byte(), token.end_byte(), "")
+        f.also_edit_with(c, token.start_byte(), token.end_byte(), || "")
     } else {
         f
     }
@@ -69,19 +65,16 @@ fn remove_semicolon(n: Node<'_>, first: Node<'_>, f: Finding) -> Finding {
 
 fn move_comment(c: &Context<'_>, n: Node<'_>, f: Finding) -> Finding {
     let Some(comment) = descendants(n)
-        .into_iter()
         .find(|ch| ch.kind() == "comment" && ch.start_position().row == n.start_position().row)
     else {
         return f;
     };
-    f.also_edit(
-        n.start_byte(),
-        n.start_byte(),
+    f.also_edit_with(c, n.start_byte(), n.start_byte(), || {
         format!(
             "{}\n{}",
             c.text(comment),
             " ".repeat(n.start_position().column)
-        ),
-    )
-    .also_edit(comment.start_byte(), comment.end_byte(), "")
+        )
+    })
+    .also_edit_with(c, comment.start_byte(), comment.end_byte(), || "")
 }

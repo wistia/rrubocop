@@ -21,10 +21,7 @@ fn percent_content(c: &Context<'_>, key: Node<'_>, symbol: bool) -> String {
         .join(", ")
 }
 fn percent_key(c: &Context<'_>, n: Node<'_>, symbol: bool) -> String {
-    match (
-        symbol,
-        descendants(n).iter().any(|d| d.kind() == "interpolation"),
-    ) {
+    match (symbol, descendants(n).any(|d| d.kind() == "interpolation")) {
         (true, true) => format!(":\"{}\"", c.text(n)),
         (true, false) => format!(":{}", c.text(n)),
         (false, true) => format!("\"{}\"", c.text(n)),

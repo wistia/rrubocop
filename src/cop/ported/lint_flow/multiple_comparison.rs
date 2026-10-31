@@ -8,8 +8,11 @@ pub(super) fn multiple_comparison(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> 
         return vec![];
     };
     vec![
-        Finding::new(n, "Use the `&&` operator to compare multiple values.")
-            .replace(center, format!("{} && {}", c.text(center), c.text(center))),
+        Finding::new(n, "Use the `&&` operator to compare multiple values.").replace_with(
+            c,
+            center,
+            || format!("{} && {}", c.text(center), c.text(center)),
+        ),
     ]
 }
 fn comparison(c: &Context<'_>, n: Node<'_>) -> bool {

@@ -1,12 +1,19 @@
 use super::super::context::*;
 use super::{options, scanner};
+use std::sync::{Arc, OnceLock};
 use tree_sitter::Node;
+#[derive(Default)]
+struct Analysis {
+    tokens: OnceLock<Vec<scanner::Token>>,
+    captures: OnceLock<(usize, usize)>,
+}
 pub(super) struct Pattern<'a> {
     pub text: &'a str,
     pub offset: usize,
     pub extended: bool,
     pub delimiters: [char; 2],
     interpolations: Vec<(usize, usize)>,
+    analysis: Arc<Analysis>,
 }
 impl<'a> Pattern<'a> {
     pub fn new(c: &Context<'a>, n: Node<'_>) -> Option<Self> {
@@ -15,9 +22,16 @@ impl<'a> Pattern<'a> {
         let delimiter = raw[open..].chars().next()?;
         let close = options::closing(delimiter);
         let end = raw.rfind(close)?;
-        Some(Self::build(raw, n, open, end, [delimiter, close]))
+        Some(Self::build(c, raw, n, open, end, [delimiter, close]))
     }
-    fn build(raw: &'a str, n: Node<'_>, open: usize, end: usize, delimiters: [char; 2]) -> Self {
+    fn build(
+        c: &Context<'a>,
+        raw: &'a str,
+        n: Node<'_>,
+        open: usize,
+        end: usize,
+        delimiters: [char; 2],
+    ) -> Self {
         let begin = open + delimiters[0].len_utf8();
         let offset = n.start_byte() + begin;
         Self {
@@ -26,19 +40,25 @@ impl<'a> Pattern<'a> {
             extended: raw[end + delimiters[1].len_utf8()..].contains('x'),
             delimiters,
             interpolations: interpolations(n, offset),
+            analysis: c.source.cached(n.start_byte(), Analysis::default),
         }
     }
     pub(super) fn captures(&self) -> Option<(usize, usize)> {
-        self.interpolations
-            .is_empty()
-            .then(|| scanner::captures(self.text, self.extended, &self.interpolations))
+        self.interpolations.is_empty().then(|| {
+            *self
+                .analysis
+                .captures
+                .get_or_init(|| scanner::captures(self.text, self.extended, &self.interpolations))
+        })
     }
-    fn tokens(&self) -> Vec<scanner::Token> {
-        scanner::scan(self.text, self.extended, &self.interpolations)
+    fn tokens(&self) -> &[scanner::Token] {
+        self.analysis
+            .tokens
+            .get_or_init(|| scanner::scan(self.text, self.extended, &self.interpolations))
     }
     pub fn escapes(&self) -> Vec<(usize, bool)> {
         self.tokens()
-            .into_iter()
+            .iter()
             .filter(|t| self.text.as_bytes()[t.start] == b'\\')
             .map(|t| (t.start, t.inside))
             .collect()

@@ -80,15 +80,22 @@ impl Builder<'_> {
         }
     }
 
-    /// Splat wrappers, forwarding args, shadow params etc.: bind any
-    /// identifier found inside.
+    /// Parameter wrappers recurse through bindings, never through default expressions.
     fn declare_wrapped_param(&mut self, child: Node, scope: ScopeId) {
+        if matches!(
+            child.kind(),
+            "identifier"
+                | "optional_parameter"
+                | "keyword_parameter"
+                | "block_parameter"
+                | "splat_parameter"
+        ) {
+            self.declare_named_param(child, scope);
+            return;
+        }
         let mut sub = child.walk();
-        for inner in child.children(&mut sub) {
-            if inner.kind() == "identifier" {
-                let name = self.text(inner).to_string();
-                self.bind_param(scope, name, inner.start_byte());
-            }
+        for inner in child.named_children(&mut sub) {
+            self.declare_wrapped_param(inner, scope);
         }
     }
 }

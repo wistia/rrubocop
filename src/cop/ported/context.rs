@@ -5,48 +5,29 @@ use tree_sitter::Node;
 pub(super) struct Context<'a> {
     pub source: &'a SourceFile,
     pub config: &'a CopConfig,
-}
-pub(super) struct Finding {
-    pub start: usize,
-    pub end: usize,
-    pub message: String,
-    pub edit: Option<(usize, usize, String)>,
-    pub additional: Vec<(usize, usize, String)>,
-}
-impl Finding {
-    pub fn new(node: Node<'_>, message: impl Into<String>) -> Self {
-        Self {
-            start: node.start_byte(),
-            end: node.end_byte(),
-            message: message.into(),
-            edit: None,
-            additional: vec![],
-        }
-    }
-    pub fn range(start: usize, end: usize, message: impl Into<String>) -> Self {
-        Self {
-            start,
-            end,
-            message: message.into(),
-            edit: None,
-            additional: vec![],
-        }
-    }
-    pub fn replace(mut self, node: Node<'_>, replacement: impl Into<String>) -> Self {
-        self.edit = Some((node.start_byte(), node.end_byte(), replacement.into()));
-        self
-    }
-    pub fn also_edit(mut self, start: usize, end: usize, replacement: impl Into<String>) -> Self {
-        self.additional.push((start, end, replacement.into()));
-        self
-    }
-
-    pub fn edit(mut self, start: usize, end: usize, replacement: impl Into<String>) -> Self {
-        self.edit = Some((start, end, replacement.into()));
-        self
-    }
+    render_edits: bool,
 }
 impl<'a> Context<'a> {
+    pub fn new(source: &'a SourceFile, config: &'a CopConfig) -> Self {
+        Self::with_edits(source, config, true)
+    }
+
+    pub fn with_edits(source: &'a SourceFile, config: &'a CopConfig, render_edits: bool) -> Self {
+        Self {
+            source,
+            config,
+            render_edits,
+        }
+    }
+
+    pub fn render_edit(&self, render: impl FnOnce() -> String) -> String {
+        if self.render_edits && !self.config.autocorrect_disabled() {
+            render()
+        } else {
+            String::new()
+        }
+    }
+
     pub fn text(&self, node: Node<'_>) -> &'a str {
         std::str::from_utf8(shared::node_bytes(self.source, node)).unwrap_or("")
     }
@@ -100,23 +81,6 @@ pub(super) fn kids(node: Node<'_>) -> Vec<Node<'_>> {
         .filter(|n| n.kind() != "comment")
         .collect()
 }
-pub(super) fn descendants(node: Node<'_>) -> Vec<Node<'_>> {
-    let mut out = vec![node];
-    let mut cursor = node.walk();
-    for child in node.named_children(&mut cursor) {
-        out.extend(descendants(child));
-    }
-    out
-}
-pub(super) fn ancestors(node: Node<'_>) -> Vec<Node<'_>> {
-    let mut out = Vec::new();
-    let mut parent = node.parent();
-    while let Some(n) = parent {
-        out.push(n);
-        parent = n.parent();
-    }
-    out
-}
 pub(super) fn is_call(node: Node<'_>) -> bool {
     matches!(node.kind(), "call" | "command" | "command_call")
 }
@@ -147,15 +111,30 @@ pub(super) fn statements(node: Node<'_>) -> Vec<Node<'_>> {
     }
 }
 pub(super) fn canonical(node: Node<'_>, c: &Context<'_>) -> String {
+    let mut result = String::new();
+    append_canonical(node, c, &mut result);
+    result
+}
+
+fn append_canonical(node: Node<'_>, c: &Context<'_>, result: &mut String) {
     if node.named_child_count() == 0 {
-        return format!("{}:{}", node.kind(), c.text(node));
+        result.push_str(node.kind());
+        result.push(':');
+        result.push_str(c.text(node));
+        return;
     }
-    let mut cur = node.walk();
-    node.children(&mut cur)
-        .filter(|n| n.kind() != "comment")
-        .map(|n| canonical(n, c))
-        .collect::<Vec<_>>()
-        .join("|")
+    let mut cursor = node.walk();
+    let mut first = true;
+    for child in node
+        .children(&mut cursor)
+        .filter(|child| child.kind() != "comment")
+    {
+        if !first {
+            result.push('|');
+        }
+        first = false;
+        append_canonical(child, c, result);
+    }
 }
 pub(super) fn operator<'a>(c: &'a Context<'_>, n: Node<'_>) -> &'a str {
     n.child_by_field_name("operator")
@@ -203,3 +182,11 @@ pub(super) fn option_pairs(node: Node<'_>) -> Vec<Node<'_>> {
 
 mod bindings;
 pub(super) use bindings::local_identifier;
+
+#[cfg(test)]
+mod tests;
+
+mod finding;
+pub(super) use finding::Finding;
+mod walk;
+pub(super) use walk::{ancestors, descendants};

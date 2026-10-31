@@ -28,7 +28,10 @@ pub fn shift_lines(
         };
         let indent = shared::line_indent(source, start);
         let new_indent = (indent as isize + delta).max(0) as usize;
-        let blank = matches!(source.as_bytes().get(start + indent), None | Some(b'\n' | b'\r'));
+        let blank = matches!(
+            source.as_bytes().get(start + indent),
+            None | Some(b'\n' | b'\r')
+        );
         if new_indent == indent || blank || skip(start) {
             continue;
         }

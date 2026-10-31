@@ -14,13 +14,11 @@ pub(in crate::cop::ported::retained) fn setex(c: &Context<'_>, n: Node<'_>) -> V
         return vec![f];
     };
     vec![
-        f.replace(method_node(n), "set")
-            .also_edit(expiry.start_byte(), expiry.end_byte(), c.text(value))
-            .also_edit(
-                value.start_byte(),
-                value.end_byte(),
-                format!("ex: {}", c.text(expiry)),
-            ),
+        f.replace_with(c, method_node(n), || "set")
+            .also_edit_with(c, expiry.start_byte(), expiry.end_byte(), || c.text(value))
+            .also_edit_with(c, value.start_byte(), value.end_byte(), || {
+                format!("ex: {}", c.text(expiry))
+            }),
     ]
 }
 
@@ -46,9 +44,7 @@ fn stable(c: &Context<'_>, n: Node<'_>) -> bool {
     match n.kind() {
         "integer" | "float" | "true" | "false" | "nil" | "simple_symbol" => true,
         "identifier" => local_identifier(c, n),
-        "string" | "delimited_symbol" => {
-            !descendants(n).iter().any(|n| n.kind() == "interpolation")
-        }
+        "string" | "delimited_symbol" => !descendants(n).any(|n| n.kind() == "interpolation"),
         "unary" => kids(n)
             .iter()
             .all(|n| matches!(n.kind(), "integer" | "float")),

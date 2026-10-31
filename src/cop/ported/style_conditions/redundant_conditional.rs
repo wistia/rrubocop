@@ -15,7 +15,7 @@ pub(super) fn redundant_conditional(c: &Context<'_>, n: Node<'_>) -> Vec<Finding
             n,
             format!("This conditional expression can just be replaced by `{msg}`."),
         )
-        .replace(n, replacement),
+        .replace_with(c, n, || replacement),
     ]
 }
 fn replacement(c: &Context<'_>, n: Node<'_>) -> Option<String> {

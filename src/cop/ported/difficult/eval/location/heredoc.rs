@@ -3,13 +3,12 @@ pub(super) fn first_line(c: &Context<'_>, code: Node<'_>) -> usize {
     if code.kind() != "heredoc_beginning" {
         return code.start_position().row + 1;
     }
-    let root = ancestors(code).last().copied().unwrap_or(code);
+    let root = ancestors(code).last().unwrap_or(code);
     unique_body(c, code, &nodes(root, "heredoc_body"))
         .map_or_else(|| lexical_line(c, code, root), |body| body_line(c, body))
 }
 fn nodes<'n>(root: Node<'n>, kind: &str) -> Vec<Node<'n>> {
     let mut nodes = descendants(root)
-        .into_iter()
         .filter(|n| n.kind() == kind)
         .collect::<Vec<_>>();
     nodes.sort_by_key(|n| n.start_byte());
@@ -95,10 +94,8 @@ mod tests {
     fn nested_pending_heredocs_use_their_own_body_line() {
         let source = SourceFile::from_bytes("probe.rb", b"outer(<<~FIRST, <<~SECOND)\n #{class_eval(<<~CODE)}\n  1\n CODE\nFIRST\n second\nSECOND\n".to_vec());
         let tree = crate::parse::parse_ruby(&source).unwrap();
-        let context = Context {
-            source: &source,
-            config: &CopConfig::default(),
-        };
+        let config = CopConfig::default();
+        let context = Context::new(&source, &config);
         let opener = nodes(tree.root_node(), "heredoc_beginning")
             .into_iter()
             .find(|n| context.text(*n) == "<<~CODE")

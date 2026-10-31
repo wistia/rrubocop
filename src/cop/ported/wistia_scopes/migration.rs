@@ -21,7 +21,6 @@ pub(super) fn migration(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 
 fn migration_methods<'a>(c: &Context<'a>, n: Node<'_>) -> Vec<&'a str> {
     descendants(n)
-        .into_iter()
         .filter(|d| empty_method(*d))
         .map(|d| c.method(d))
         .collect()

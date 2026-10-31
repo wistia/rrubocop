@@ -52,16 +52,18 @@ fn random_finding(
     rand: Node<'_>,
     (lo, hi): (BigInt, BigInt),
 ) -> Finding {
-    let prefix = if c.receiver(rand).is_empty() {
-        "rand".into()
-    } else {
-        format!("{}.rand", c.receiver(rand))
-    };
     Finding::new(
         n,
         "Prefer ranges when generating random numbers instead of integers with offsets.",
     )
-    .replace(n, format!("{prefix}({lo}..{hi})"))
+    .replace_with(c, n, || {
+        let prefix = if c.receiver(rand).is_empty() {
+            "rand".into()
+        } else {
+            format!("{}.rand", c.receiver(rand))
+        };
+        format!("{prefix}({lo}..{hi})")
+    })
 }
 fn random_parts<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, BigInt, bool)> {
     if n.kind() == "binary" && ["+", "-"].contains(&operator(c, n)) {

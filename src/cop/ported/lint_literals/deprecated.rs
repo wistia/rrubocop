@@ -42,9 +42,8 @@ fn finding(
         .unwrap_or_default();
     let raw = c.text(n);
     match entry.get("Alternative").and_then(|v| v.as_str()) {
-        Some(alt) => {
-            Finding::new(n, format!("Use `{alt}` instead of `{raw}`{suffix}.")).replace(n, alt)
-        }
+        Some(alt) => Finding::new(n, format!("Use `{alt}` instead of `{raw}`{suffix}."))
+            .replace_with(c, n, || alt),
         None => Finding::new(n, format!("Do not use `{raw}`{suffix}.")),
     }
 }

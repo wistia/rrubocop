@@ -14,8 +14,11 @@ pub(super) fn raise_exception(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         "StandardError"
     };
     vec![
-        Finding::new(exception, "Use `StandardError` over `Exception`.")
-            .replace(exception, replacement),
+        Finding::new(exception, "Use `StandardError` over `Exception`.").replace_with(
+            c,
+            exception,
+            || replacement,
+        ),
     ]
 }
 fn raised_exception<'a>(c: &Context<'_>, n: Node<'a>) -> Option<Node<'a>> {
@@ -34,7 +37,6 @@ fn implicit_namespace(c: &Context<'_>, n: Node<'_>, exception: Node<'_>) -> bool
         return false;
     }
     ancestors(n)
-        .into_iter()
         .filter(|p| p.kind() == "module")
         .filter_map(|p| field(p, "name"))
         .any(|name| allowed_namespace(c, c.text(name)))

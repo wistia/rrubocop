@@ -6,7 +6,7 @@ pub(super) fn slicing(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     };
     let selector = String::from_utf8_lossy(&c.source.as_bytes()[obj.end_byte()..n.end_byte()]);
     if range_zero(c, range) && range_tail(c, range) {
-        return vec![useless(n, obj, &selector)];
+        return vec![useless(c, n, obj, &selector)];
     }
     preferred(c, n, obj, range, &selector).into_iter().collect()
 }
@@ -25,13 +25,13 @@ fn range_tail(c: &Context<'_>, n: Node<'_>) -> bool {
     field(n, "end")
         .is_some_and(|e| e.kind() == "nil" || operator(c, n) == ".." && c.text(e) == "-1")
 }
-fn useless(n: Node<'_>, obj: Node<'_>, selector: &str) -> Finding {
+fn useless(c: &Context<'_>, n: Node<'_>, obj: Node<'_>, selector: &str) -> Finding {
     Finding::range(
         obj.end_byte(),
         n.end_byte(),
         format!("Remove the useless `{selector}`."),
     )
-    .edit(obj.end_byte(), n.end_byte(), "")
+    .edit_with(c, obj.end_byte(), n.end_byte(), || "")
 }
 fn preferred(
     c: &Context<'_>,
@@ -47,7 +47,7 @@ fn preferred(
             n.end_byte(),
             format!("Prefer `{replacement}` over `{selector}`."),
         )
-        .replace(edit, ""),
+        .replace_with(c, edit, || ""),
     )
 }
 fn preferred_edit<'n>(c: &Context<'_>, range: Node<'n>) -> Option<(String, Node<'n>)> {

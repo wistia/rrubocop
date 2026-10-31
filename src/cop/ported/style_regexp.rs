@@ -20,10 +20,16 @@ fn character_class(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     pattern
         .sets()
         .into_iter()
-        .filter_map(|(start, end, extended)| class_finding(&pattern, start, end, extended))
+        .filter_map(|(start, end, extended)| class_finding(c, &pattern, start, end, extended))
         .collect()
 }
-fn class_finding(p: &Pattern<'_>, start: usize, end: usize, extended: bool) -> Option<Finding> {
+fn class_finding(
+    c: &Context<'_>,
+    p: &Pattern<'_>,
+    start: usize,
+    end: usize,
+    extended: bool,
+) -> Option<Finding> {
     let inner = &p.text[start + 1..end - 1];
     if !redundant_class(p, inner) {
         return None;
@@ -46,7 +52,7 @@ fn class_finding(p: &Pattern<'_>, start: usize, end: usize, extended: bool) -> O
     Some(if unsafe_space(extended, inner) {
         finding
     } else {
-        finding.edit(start, end, replacement)
+        finding.edit_with(c, start, end, || replacement)
     })
 }
 fn redundant_class(p: &Pattern<'_>, inner: &str) -> bool {
@@ -66,10 +72,10 @@ fn escape(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     pattern
         .escapes()
         .into_iter()
-        .filter_map(|(index, inside)| escape_finding(&pattern, index, inside))
+        .filter_map(|(index, inside)| escape_finding(c, &pattern, index, inside))
         .collect()
 }
-fn escape_finding(p: &Pattern<'_>, index: usize, inside: bool) -> Option<Finding> {
+fn escape_finding(c: &Context<'_>, p: &Pattern<'_>, index: usize, inside: bool) -> Option<Finding> {
     let ch = p.text[index + 1..].chars().next()?;
     if allowed_escape(p, ch, index, inside) {
         return None;
@@ -81,7 +87,7 @@ fn escape_finding(p: &Pattern<'_>, index: usize, inside: bool) -> Option<Finding
             start + 1 + ch.len_utf8(),
             "Redundant escape inside regexp literal",
         )
-        .edit(start, start + 1, ""),
+        .edit_with(c, start, start + 1, || ""),
     )
 }
 fn allowed_escape(p: &Pattern<'_>, ch: char, index: usize, inside: bool) -> bool {

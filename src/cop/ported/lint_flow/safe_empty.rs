@@ -13,7 +13,7 @@ pub(super) fn safe_empty(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
             condition,
             "Avoid calling `empty?` with the safe navigation operator in conditionals.",
         )
-        .replace(condition, format!("{receiver} && {receiver}.empty?")),
+        .replace_with(c, condition, || format!("{receiver} && {receiver}.empty?")),
     ]
 }
 

@@ -2,7 +2,7 @@ use super::super::context::*;
 use tree_sitter::Node;
 
 pub(super) fn instance_vars(_c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    if ancestors(n).iter().any(|p| p.kind() == "class") {
+    if ancestors(n).any(|p| p.kind() == "class") {
         vec![Finding::new(
             n,
             "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",

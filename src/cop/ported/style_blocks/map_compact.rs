@@ -54,11 +54,9 @@ fn map_finding(
         n.end_byte(),
         format!("Replace `{current}` with `{method}`."),
     )
-    .edit(
-        start,
-        n.end_byte(),
-        format!("{method} {{ |{}| {} }}", c.text(param), c.text(condition)),
-    )
+    .edit_with(c, start, n.end_byte(), || {
+        format!("{method} {{ |{}| {} }}", c.text(param), c.text(condition))
+    })
 }
 mod condition;
 use condition::conditional_map;

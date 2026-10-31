@@ -48,9 +48,10 @@ pub(super) fn replaceable(c: &Context<'_>, n: Node<'_>) -> bool {
     match n.kind() {
         "integer" | "float" | "simple_symbol" | "nil" | "true" | "false" => true,
         "identifier" => matches!(c.text(n), "__FILE__" | "__LINE__") || local_identifier(c, n),
-        "string" => !descendants(n).iter().any(|n| n.kind() == "interpolation"),
+        "string" => !descendants(n).any(|n| n.kind() == "interpolation"),
         "binary" => line_offset(c, n).is_some(),
         "unary" => signed_number(c, n),
+        "parenthesized_statements" => single_expression(n).is_some_and(|n| replaceable(c, n)),
         _ => false,
     }
 }
@@ -59,4 +60,10 @@ fn signed_number(c: &Context<'_>, n: Node<'_>) -> bool {
         && kids(n)
             .iter()
             .all(|n| matches!(n.kind(), "integer" | "float"))
+}
+
+fn single_expression(n: Node<'_>) -> Option<Node<'_>> {
+    let mut nodes = kids(n).into_iter();
+    let first = nodes.next()?;
+    nodes.next().is_none().then_some(first)
 }

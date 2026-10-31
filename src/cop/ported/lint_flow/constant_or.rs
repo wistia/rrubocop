@@ -11,14 +11,12 @@ pub(super) fn constant_or(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if inside_method(n) {
         vec![finding]
     } else {
-        vec![finding.replace(op, "=")]
+        vec![finding.replace_with(c, op, || "=")]
     }
 }
 fn constant_target(n: Node<'_>) -> bool {
     field(n, "left").is_some_and(|l| matches!(l.kind(), "constant" | "scope_resolution"))
 }
 fn inside_method(n: Node<'_>) -> bool {
-    ancestors(n)
-        .iter()
-        .any(|p| matches!(p.kind(), "method" | "singleton_method"))
+    ancestors(n).any(|p| matches!(p.kind(), "method" | "singleton_method"))
 }

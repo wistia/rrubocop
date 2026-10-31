@@ -63,17 +63,20 @@ fn file_finding(
     content: Option<Node<'_>>,
     method: &str,
 ) -> Finding {
-    let extra = content
-        .map(|a| format!(", {}", c.text(a)))
-        .unwrap_or_default();
-    Finding::new(target, format!("Use `File.{method}`.")).edit(
+    Finding::new(target, format!("Use `File.{method}`.")).edit_with(
+        c,
         method_node(n).start_byte(),
         target.end_byte(),
-        format!(
-            "{method}({}{extra}){}",
-            c.text(args(n)[0]),
-            heredoc::suffix(c, n, target, content)
-        ),
+        || {
+            let extra = content
+                .map(|a| format!(", {}", c.text(a)))
+                .unwrap_or_default();
+            format!(
+                "{method}({}{extra}){}",
+                c.text(args(n)[0]),
+                heredoc::suffix(c, n, target, content)
+            )
+        },
     )
 }
 fn file_body<'a>(

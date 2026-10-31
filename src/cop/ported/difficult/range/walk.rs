@@ -1,21 +1,33 @@
 use super::*;
-impl State<'_, '_> {
-    pub(super) fn walk(&mut self, n: Node<'_>) {
+impl<'n> State<'_, '_, 'n> {
+    pub(super) fn walk(&mut self, n: Node<'n>) {
+        if n.kind() == "heredoc_body" {
+            return;
+        }
+        if n.kind() == "heredoc_beginning" {
+            for interpolation in self.heredocs.at(n) {
+                self.walk(interpolation);
+            }
+            return;
+        }
         self.before(n);
         if is_call(n) {
             self.call(n);
         } else {
-            for child in kids(n) {
-                self.walk(child);
-            }
-            if n.kind() == "binary" {
-                self.after_binary(n);
-            }
-            if n.kind() == "element_reference" {
-                self.after_index(n);
-            }
+            self.children(n);
         }
     }
+    fn children(&mut self, n: Node<'n>) {
+        for child in kids(n) {
+            self.walk(child);
+        }
+        match n.kind() {
+            "binary" => self.after_binary(n),
+            "element_reference" => self.after_index(n),
+            _ => {}
+        }
+    }
+
     fn before(&mut self, n: Node<'_>) {
         match n.kind() {
             "global_variable" => self.reference(n),
@@ -32,7 +44,7 @@ impl State<'_, '_> {
             _ => {}
         }
     }
-    fn call(&mut self, n: Node<'_>) {
+    fn call(&mut self, n: Node<'n>) {
         let b = block(n);
         for child in kids(n).into_iter().filter(|ch| Some(*ch) != b) {
             self.walk(child);
@@ -55,6 +67,9 @@ impl State<'_, '_> {
         }
     }
     fn after_index(&mut self, n: Node<'_>) {
+        if assigned_index(n) {
+            return;
+        }
         let receiver = field(n, "object");
         self.after(
             "[]",
@@ -95,4 +110,16 @@ fn identifier_slot(n: Node<'_>) -> bool {
     n.parent().is_some_and(|p| {
         field(p, "method") == Some(n) || field(p, "name") == Some(n) || field(p, "left") == Some(n)
     })
+}
+
+fn assigned_index(mut n: Node<'_>) -> bool {
+    while let Some(parent) = n.parent() {
+        match parent.kind() {
+            "left_assignment_list" | "destructured_left_assignment" => n = parent,
+            "assignment" => return field(parent, "left") == Some(n),
+            "for" => return field(parent, "pattern") == Some(n),
+            _ => return false,
+        }
+    }
+    false
 }

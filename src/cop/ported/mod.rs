@@ -1,4 +1,5 @@
 //! Additional pinned Ruby policies, including opt-in Wistia extension rules.
+mod call_names;
 mod context;
 mod difficult;
 mod lint_calls;
@@ -66,6 +67,9 @@ impl Cop for Rule {
             self.kinds
         }
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        call_names::for_rule(self.name)
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -74,7 +78,7 @@ impl Cop for Rule {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let context = Context { source, config };
+        let context = Context::with_edits(source, config, corrections.is_some());
         if node.kind() == "identifier"
             && bare_name(self.name).is_some()
             && !bare_call(self.name, &context, node)
@@ -86,6 +90,7 @@ impl Cop for Rule {
         }
         for mut finding in (self.check)(&context, node) {
             if config.autocorrect_disabled() {
+                finding.correctable = false;
                 finding.edit = None;
                 finding.additional.clear();
             }
@@ -118,7 +123,6 @@ fn identifier_slot(n: Node<'_>) -> bool {
 }
 fn in_parameters(n: Node<'_>) -> bool {
     context::ancestors(n)
-        .iter()
         .take_while(|p| !matches!(p.kind(), "method" | "block" | "do_block"))
         .any(|p| p.kind().contains("parameter"))
 }
@@ -164,7 +168,7 @@ fn finding_diagnostic(rule: &Rule, source: &SourceFile, finding: &Finding) -> Di
     let (line, col) = source.offset_to_line_col(finding.start);
     let mut diagnostic = rule.diagnostic(source, line, col, finding.message.clone());
     diagnostic.highlight_length = finding.end.saturating_sub(finding.start).max(1);
-    diagnostic.correctable = finding.edit.is_some();
+    diagnostic.correctable = finding.correctable;
     diagnostic
 }
 

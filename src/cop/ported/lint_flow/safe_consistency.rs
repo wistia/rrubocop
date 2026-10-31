@@ -93,7 +93,7 @@ fn with_safe_navigation(c: &Context<'_>, finding: Finding, n: Node<'_>) -> Findi
         .and_then(|call| field(call, "operator"))
         .filter(|dot| c.text(*dot) == ".");
     match dot {
-        Some(dot) => finding.edit(dot.start_byte(), dot.start_byte(), "&"),
+        Some(dot) => finding.edit_with(c, dot.start_byte(), dot.start_byte(), || "&"),
         None => finding,
     }
 }

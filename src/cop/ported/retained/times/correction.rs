@@ -10,14 +10,34 @@ pub(super) fn correct_body(
     if reassigns_parameter(c, body, parameter) || !substitution_safe(c, body, parameter) {
         return f;
     }
+    corrected_body(c, n, body, parameter, f)
+}
+
+fn corrected_body(
+    c: &Context<'_>,
+    n: Node<'_>,
+    body: Node<'_>,
+    parameter: &str,
+    f: Finding,
+) -> Finding {
+    if c.text(body).is_ascii() {
+        return f.replace_with(c, n, || {
+            deindent(
+                &replace_parameter(c, c.text(body), parameter),
+                n.start_position().column,
+                body.start_position().column,
+            )
+            .unwrap()
+        });
+    }
     let Some(text) = deindent(
-        &replace_parameter(c.text(body), parameter),
+        &replace_parameter(c, c.text(body), parameter),
         n.start_position().column,
         body.start_position().column,
     ) else {
         return f;
     };
-    f.replace(n, text)
+    f.replace_with(c, n, || text)
 }
 fn block_parameter<'a>(c: &Context<'a>, b: Node<'_>) -> &'a str {
     let ps = field(b, "parameters").map(kids).unwrap_or_default();
@@ -29,17 +49,17 @@ fn block_parameter<'a>(c: &Context<'a>, b: Node<'_>) -> &'a str {
 }
 fn reassigns_parameter(c: &Context<'_>, body: Node<'_>, parameter: &str) -> bool {
     !parameter.is_empty()
-        && descendants(body).iter().any(|n| {
+        && descendants(body).any(|n| {
             matches!(n.kind(), "assignment" | "operator_assignment")
-                && field(*n, "left").is_some_and(|l| assignment_contains(c, l, parameter))
+                && field(n, "left").is_some_and(|l| assignment_contains(c, l, parameter))
         })
 }
-fn replace_parameter(text: &str, parameter: &str) -> String {
+fn replace_parameter(c: &Context<'_>, text: &str, parameter: &str) -> String {
     if parameter.is_empty() {
         return text.into();
     }
-    regex::Regex::new(&format!(r"\b{}\b", regex::escape(parameter)))
-        .unwrap()
+    parameter_pattern(c, parameter)
+        .0
         .replace_all(text, "0")
         .into_owned()
 }
@@ -76,12 +96,11 @@ fn substitution_safe(c: &Context<'_>, body: Node<'_>, parameter: &str) -> bool {
     if parameter.is_empty() {
         return true;
     }
-    regex::Regex::new(&format!(r"\b{}\b", regex::escape(parameter)))
-        .unwrap()
+    parameter_pattern(c, parameter)
+        .0
         .find_iter(c.text(body))
         .count()
         == descendants(body)
-            .into_iter()
             .filter(|n| c.text(*n) == parameter && reference(*n))
             .count()
 }
@@ -97,4 +116,11 @@ fn reference(n: Node<'_>) -> bool {
         "method_parameters" | "block_parameters" | "lambda_parameters"
     ) && field(p, "method") != Some(n)
         && field(p, "name") != Some(n)
+}
+
+struct ParameterPattern(regex::Regex);
+fn parameter_pattern(c: &Context<'_>, parameter: &str) -> std::sync::Arc<ParameterPattern> {
+    c.source.cached(parameter.as_ptr() as usize, || {
+        ParameterPattern(regex::Regex::new(&format!(r"\b{}\b", regex::escape(parameter))).unwrap())
+    })
 }

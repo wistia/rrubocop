@@ -5,7 +5,11 @@ pub(super) fn erb(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     }
     let arguments = args(n);
-    erb_findings(c, &arguments, &good_arguments(c, n, &arguments))
+    erb_findings(
+        c,
+        &arguments,
+        &c.render_edit(|| good_arguments(c, n, &arguments)),
+    )
 }
 fn erb_findings(c: &Context<'_>, arguments: &[Node<'_>], good: &str) -> Vec<Finding> {
     arguments
@@ -24,10 +28,11 @@ fn erb_finding(
     index: usize,
     good: &str,
 ) -> Finding {
-    Finding::new(arg, message(index, c.text(arg))).edit(
+    Finding::new(arg, message(index, c.text(arg))).edit_with(
+        c,
         arguments[0].start_byte(),
         arguments.last().unwrap().end_byte(),
-        good,
+        || good,
     )
 }
 

@@ -9,30 +9,41 @@ pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !definition(n) {
         return vec![];
     }
-    let Some((root, relative)) = location::resolve(&c.source.path) else {
+    let info = c.source.cached(0, || AutoloadInfo::new(&c.source.path));
+    let Some((expected, acronyms)) = &info.0 else {
         return vec![];
     };
-    let acronyms = inflections::acronyms(&root);
-    let expected = expected_name(&relative, &acronyms);
-    let Some(actual) = names::defined(c, n, &acronyms) else {
+    let Some(actual) = names::defined(c, n, acronyms) else {
         return vec![];
     };
-    if compatible(
-        &expected,
-        actual.strip_prefix("Object::").unwrap_or(&actual),
-    ) {
+    if compatible(expected, actual.strip_prefix("Object::").unwrap_or(&actual)) {
         vec![]
     } else {
         vec![Finding::new(n, MESSAGE)]
     }
 }
+struct AutoloadInfo(Option<(String, std::sync::Arc<inflections::Acronyms>)>);
+impl AutoloadInfo {
+    fn new(path: &std::path::Path) -> Self {
+        Self(location::resolve(path).map(|(root, relative)| {
+            let acronyms = inflections::acronyms(&root);
+            (expected_name(&relative, &acronyms), acronyms)
+        }))
+    }
+}
 fn compatible(expected: &str, actual: &str) -> bool {
-    let expected = expected.split("::").collect::<Vec<_>>();
-    let actual = actual.split("::").collect::<Vec<_>>();
-    expected.starts_with(&actual) || actual.starts_with(&expected)
+    let mut expected = expected.split("::");
+    let mut actual = actual.split("::");
+    loop {
+        match (expected.next(), actual.next()) {
+            (Some(a), Some(b)) if a != b => return false,
+            (Some(_), Some(_)) => {}
+            _ => return true,
+        }
+    }
 }
 
-fn expected_name(relative: &str, acronyms: &[String]) -> String {
+fn expected_name(relative: &str, acronyms: &inflections::Acronyms) -> String {
     inflections::camelize(&relative.replace(".rb", ""), acronyms)
 }
 fn definition(n: Node<'_>) -> bool {

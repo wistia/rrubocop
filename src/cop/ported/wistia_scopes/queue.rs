@@ -21,18 +21,13 @@ fn class_calls(n: Node<'_>) -> Vec<Node<'_>> {
     let statements = body(n).map(statements).unwrap_or_default();
     let excluded = (statements.len() == 1).then(|| statements[0]);
     descendants(n)
-        .into_iter()
         .filter(|d| Some(*d) != excluded)
         .filter(|d| belongs_to_class(*d, n))
         .collect()
 }
 
 fn belongs_to_class(n: Node<'_>, class: Node<'_>) -> bool {
-    is_call(n)
-        && ancestors(n)
-            .into_iter()
-            .find(|p| matches!(p.kind(), "class" | "module"))
-            == Some(class)
+    is_call(n) && ancestors(n).find(|p| matches!(p.kind(), "class" | "module")) == Some(class)
 }
 
 fn worker(c: &Context<'_>, parent: &str, sends: &[Node<'_>]) -> bool {

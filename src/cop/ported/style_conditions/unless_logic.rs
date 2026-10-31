@@ -25,7 +25,6 @@ pub(super) fn unless_logic(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 
 fn logical_ops<'c>(c: &'c Context<'_>, cond: Node<'_>) -> std::collections::HashSet<&'c str> {
     descendants(cond)
-        .into_iter()
         .filter(|d| d.kind() == "binary")
         .map(|d| operator(c, d))
         .filter(|s| ["&&", "||", "and", "or"].contains(s))

@@ -9,15 +9,17 @@ pub(super) fn boolean_symbol(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         n,
         format!("Symbol with a boolean name - you probably meant to use `{value}`."),
     );
-    vec![correct_symbol(finding, n, value)]
+    vec![correct_symbol(c, finding, n, value)]
 }
 fn in_symbol_array(n: Node<'_>) -> bool {
-    ancestors(n).iter().any(|p| p.kind() == "symbol_array")
+    ancestors(n).any(|p| p.kind() == "symbol_array")
 }
-fn correct_symbol(finding: Finding, n: Node<'_>, value: &str) -> Finding {
+fn correct_symbol(c: &Context<'_>, finding: Finding, n: Node<'_>, value: &str) -> Finding {
     if n.kind() == "hash_key_symbol" {
-        finding.edit(n.start_byte(), n.end_byte() + 1, format!("{value} =>"))
+        finding.edit_with(c, n.start_byte(), n.end_byte() + 1, || {
+            format!("{value} =>")
+        })
     } else {
-        finding.replace(n, value)
+        finding.replace_with(c, n, || value)
     }
 }

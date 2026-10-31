@@ -48,22 +48,21 @@ fn last_assignment(c: &Context<'_>, s: &[Node<'_>]) -> Option<Finding> {
     if !same_return(c, assignment, returned) {
         return None;
     }
+    let right = field(assignment, "right")?;
     Some(
         Finding::new(
             assignment,
             "Redundant assignment before returning detected.",
         )
-        .edit(
-            assignment.start_byte(),
-            returned.end_byte(),
+        .edit_with(c, assignment.start_byte(), returned.end_byte(), || {
             format!(
                 "{}{}",
-                c.text(field(assignment, "right")?),
+                c.text(right),
                 String::from_utf8_lossy(
                     &c.source.as_bytes()[assignment.end_byte()..returned.start_byte()]
                 )
-            ),
-        ),
+            )
+        }),
     )
 }
 fn same_return(c: &Context<'_>, assignment: Node<'_>, returned: Node<'_>) -> bool {

@@ -19,13 +19,12 @@ pub(super) fn block_comma(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
             offset + 1,
             "Useless trailing comma present in block arguments.",
         )
-        .edit(offset, offset + 1, ""),
+        .edit_with(c, offset, offset + 1, || ""),
     ]
 }
 
 fn argument_count(n: Node<'_>) -> usize {
     descendants(n)
-        .iter()
         .filter(|p| {
             matches!(
                 p.kind(),

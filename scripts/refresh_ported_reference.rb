@@ -8,14 +8,19 @@ require 'rubocop'
 class PortedReference
   METADATA = %w[Description StyleGuide Reference Enabled VersionAdded VersionChanged Include Exclude].freeze
 
-  def initialize(config_path)
+  def initialize(config_path, fixture_file = nil)
     @config = RuboCop::ConfigLoader.configuration_from_file(config_path)
     @repository = Pathname.new(__dir__).parent
-    @fixture_file = @repository.join('tests/fixtures/ported-reference.json')
+    @fixture_file = if fixture_file
+      Pathname.new(fixture_file).expand_path
+    else
+      @repository.join('tests/fixtures/ported-reference.json')
+    end
+    @refresh_names = fixture_file.nil?
   end
 
   def refresh
-    refresh_names
+    refresh_names if @refresh_names
     configure_autoload_fixture
     results = JSON.parse(File.read(@fixture_file)).map.with_index do |test, index|
       refresh_case(test, index)
@@ -114,4 +119,4 @@ class PortedReference
   end
 end
 
-PortedReference.new(ARGV.fetch(0, '.rubocop.yml')).refresh if $PROGRAM_NAME == __FILE__
+PortedReference.new(ARGV.fetch(0, '.rubocop.yml'), ARGV[1]).refresh if $PROGRAM_NAME == __FILE__

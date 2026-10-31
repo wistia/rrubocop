@@ -5,10 +5,8 @@ use crate::parse::source::SourceFile;
 fn findings(code: &str, key: &str) -> Vec<Finding> {
     let source = SourceFile::from_bytes("db/migrate/probe.rb", code.as_bytes().to_vec());
     let tree = crate::parse::parse_ruby(&source).unwrap();
-    let c = Context {
-        source: &source,
-        config: &CopConfig::default(),
-    };
+    let config = CopConfig::default();
+    let c = Context::new(&source, &config);
     table_option(&c, candidate(&c, tree.root_node()), key, "test_value")
 }
 fn inspect(code: &str, key: &str) -> Finding {
@@ -17,7 +15,6 @@ fn inspect(code: &str, key: &str) -> Finding {
 
 fn candidate<'n>(c: &Context<'_>, n: Node<'n>) -> Node<'n> {
     descendants(n)
-        .into_iter()
         .find(|n| is_call(*n) && c.method(*n) == "create_table")
         .unwrap()
 }

@@ -30,7 +30,9 @@ fn correct_identity(
     right: Node<'_>,
 ) -> Finding {
     match field(left, "receiver").zip(field(right, "receiver")) {
-        Some((l, r)) => finding.replace(n, format!("{}.equal?({})", c.text(l), c.text(r))),
+        Some((l, r)) => {
+            finding.replace_with(c, n, || format!("{}.equal?({})", c.text(l), c.text(r)))
+        }
         None => finding,
     }
 }

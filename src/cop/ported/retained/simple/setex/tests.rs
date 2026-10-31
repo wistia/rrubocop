@@ -5,15 +5,12 @@ use crate::parse::source::SourceFile;
 fn inspect(code: &str) -> Finding {
     let source = SourceFile::from_bytes("probe.rb", code.as_bytes().to_vec());
     let tree = crate::parse::parse_ruby(&source).unwrap();
-    let c = Context {
-        source: &source,
-        config: &CopConfig::default(),
-    };
+    let config = CopConfig::default();
+    let c = Context::new(&source, &config);
     setex(&c, candidate(&c, tree.root_node())).remove(0)
 }
 fn candidate<'n>(c: &Context<'_>, n: Node<'n>) -> Node<'n> {
     descendants(n)
-        .into_iter()
         .find(|n| is_call(*n) && c.method(*n) == "setex")
         .unwrap()
 }

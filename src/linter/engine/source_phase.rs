@@ -61,6 +61,7 @@ fn run_file_model_cops(
         return;
     }
     let file_model = model::build(source.as_bytes(), tree.clone());
+    seed_local_identifiers(source, &file_model, active);
     for (cop, cfg, idx) in model_cops {
         one_file_model_cop(
             source,
@@ -154,4 +155,33 @@ fn one_plain_source_cop(
         idx,
         corrections,
     );
+}
+
+fn uses_local_identifiers(name: &str) -> bool {
+    matches!(
+        name,
+        "Cops/NoSleep"
+            | "Cops/NoForeignKeys"
+            | "AnyCable/PeriodicalTimers"
+            | "Style/TopLevelMethodDefinition"
+            | "Lint/SelfAssignment"
+            | "Lint/SafeNavigationWithEmpty"
+            | "Cops/RescueMustReportError"
+            | "Lint/OutOfRangeRegexpRef"
+            | "Style/EvalWithLocation"
+            | "Cops/NoSetex"
+    )
+}
+
+fn seed_local_identifiers(
+    source: &SourceFile,
+    file_model: &model::FileModel<'_>,
+    active: &[ActiveCop<'_>],
+) {
+    if active
+        .iter()
+        .any(|(cop, _, _)| uses_local_identifiers(cop.name()))
+    {
+        source.cached(0, || model::LocalIdentifiers::from_model(file_model));
+    }
 }

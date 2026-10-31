@@ -11,10 +11,9 @@ pub(super) fn empty_when(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn when_comments(n: Node<'_>) -> bool {
-    if descendants(n).iter().any(|d| d.kind() == "comment") {
+    if descendants(n).any(|d| d.kind() == "comment") {
         return true;
     }
-    descendants(ancestors(n).last().copied().unwrap_or(n))
-        .iter()
+    descendants(ancestors(n).last().unwrap_or(n))
         .any(|d| d.kind() == "comment" && d.start_position().row == n.end_position().row)
 }

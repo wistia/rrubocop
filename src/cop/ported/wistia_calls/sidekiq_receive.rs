@@ -24,7 +24,6 @@ fn async_symbol(c: &Context<'_>, n: Node<'_>) -> bool {
 
 fn safe_ancestor(c: &Context<'_>, n: Node<'_>) -> bool {
     ancestors(n)
-        .into_iter()
         .take_while(|parent| is_call(*parent) || parent.kind() == "argument_list")
         .any(|parent| {
             ["and_call_original", "and_wrap_original", "never", "not_to"]

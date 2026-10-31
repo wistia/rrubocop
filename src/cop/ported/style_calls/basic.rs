@@ -9,7 +9,7 @@ pub(super) fn dir(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
             n,
             "Use `__dir__` to get an absolute path to the current file's directory.",
         )
-        .replace(n, "__dir__"),
+        .replace_with(c, n, || "__dir__"),
     ]
 }
 fn file_receiver(c: &Context<'_>, n: Node<'_>) -> bool {
@@ -47,7 +47,7 @@ pub(super) fn string_chars(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
             n.end_byte(),
             format!("Use `chars` instead of `{current}`."),
         )
-        .edit(start, n.end_byte(), "chars"),
+        .edit_with(c, start, n.end_byte(), || "chars"),
     ]
 }
 pub(super) fn stderr(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -67,7 +67,7 @@ pub(super) fn stderr(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
                 c.receiver(n)
             ),
         )
-        .edit(n.start_byte(), end, "warn"),
+        .edit_with(c, n.start_byte(), end, || "warn"),
     ]
 }
 pub(super) fn require_extension(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -75,17 +75,18 @@ pub(super) fn require_extension(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     };
     if a.kind() != "string"
-        || descendants(a).iter().any(|d| d.kind() == "interpolation")
+        || descendants(a).any(|d| d.kind() == "interpolation")
         || !c.value(a).ends_with(".rb")
     {
         return vec![];
     }
     let start = a.end_byte() - 4;
     vec![
-        Finding::range(start, start + 3, "Redundant `.rb` file extension detected.").edit(
+        Finding::range(start, start + 3, "Redundant `.rb` file extension detected.").edit_with(
+            c,
             start,
             start + 3,
-            "",
+            || "",
         ),
     ]
 }

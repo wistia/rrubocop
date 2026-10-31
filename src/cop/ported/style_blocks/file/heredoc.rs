@@ -18,7 +18,7 @@ pub(super) fn suffix(
 }
 
 fn pairs(call: Node<'_>) -> Vec<(Node<'_>, Node<'_>)> {
-    let root = ancestors(call).last().copied().unwrap_or(call);
+    let root = ancestors(call).last().unwrap_or(call);
     let mut openers = nodes_of_kind(root, "heredoc_beginning");
     let mut bodies = nodes_of_kind(root, "heredoc_body");
     openers.sort_by_key(|node| node.start_byte());
@@ -38,7 +38,6 @@ fn references<'n>(call: Node<'n>, content: Option<Node<'n>>) -> Vec<Node<'n>> {
 
 fn nodes_of_kind<'n>(root: Node<'n>, kind: &str) -> Vec<Node<'n>> {
     descendants(root)
-        .into_iter()
         .filter(|node| node.kind() == kind)
         .collect()
 }

@@ -11,8 +11,11 @@ pub(super) fn or_assignment(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     };
     vec![
-        Finding::new(n, "Use the double pipe equals operator `||=` instead.")
-            .replace(n, format!("{} ||= {}", c.text(var), c.text(value))),
+        Finding::new(n, "Use the double pipe equals operator `||=` instead.").replace_with(
+            c,
+            n,
+            || format!("{} ||= {}", c.text(var), c.text(value)),
+        ),
     ]
 }
 fn ternary_parts<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, Node<'n>)> {

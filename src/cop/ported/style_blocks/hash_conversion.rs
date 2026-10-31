@@ -29,41 +29,41 @@ fn index_arguments<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Vec<Node<'n>>> {
     root_constant(c, obj, "Hash").then(|| kids(n).into_iter().filter(|a| *a != obj).collect())
 }
 fn literal_pairs(c: &Context<'_>, n: Node<'_>, a: &[Node<'_>]) -> Finding {
-    Finding::new(n, LITERAL_HASH).replace(
-        n,
+    Finding::new(n, LITERAL_HASH).replace_with(c, n, || {
         format!(
             "{{{}}}",
             a.iter().map(|a| c.text(*a)).collect::<Vec<_>>().join(", ")
-        ),
-    )
+        )
+    })
 }
 fn multi_argument(c: &Context<'_>, n: Node<'_>, a: &[Node<'_>]) -> Finding {
     let finding = Finding::new(n, LITERAL_PAIRS);
     if a.len() % 2 != 0 {
         return finding;
     }
-    finding.replace(
-        n,
+    finding.replace_with(c, n, || {
         format!(
             "{{{}}}",
             a.chunks(2)
                 .map(|p| format!("{} => {}", c.text(p[0]), c.text(p[1])))
                 .collect::<Vec<_>>()
                 .join(", ")
-        ),
-    )
+        )
+    })
 }
 fn hash_single(c: &Context<'_>, n: Node<'_>, a: Node<'_>) -> Vec<Finding> {
     if a.kind() == "splat_argument" {
         return splat(c, n);
     }
     if matches!(a.kind(), "hash" | "pair") {
-        return vec![Finding::new(n, LITERAL_HASH).replace(n, format!("{{{}}}", c.text(a)))];
+        return vec![
+            Finding::new(n, LITERAL_HASH).replace_with(c, n, || format!("{{{}}}", c.text(a))),
+        ];
     }
     if c.method(a) == "zip" && args(a).is_empty() {
         return vec![zip(c, n, a)];
     }
-    vec![Finding::new(n, TO_H).replace(n, format!("{}.to_h", to_h_receiver(c, a)))]
+    vec![Finding::new(n, TO_H).replace_with(c, n, || format!("{}.to_h", to_h_receiver(c, a)))]
 }
 fn splat(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.config.get_bool("AllowSplatArgument", true) {
@@ -76,13 +76,14 @@ fn splat(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     }
 }
 fn zip(c: &Context<'_>, n: Node<'_>, a: Node<'_>) -> Finding {
-    let text = c.text(a);
-    let replacement = if text.ends_with(')') {
-        format!("{}[])", &text[..text.len() - 1])
-    } else {
-        format!("{text}([])")
-    };
-    Finding::new(n, TO_H).replace(a, replacement)
+    Finding::new(n, TO_H).replace_with(c, a, || {
+        let text = c.text(a);
+        if text.ends_with(')') {
+            format!("{}[])", &text[..text.len() - 1])
+        } else {
+            format!("{text}([])")
+        }
+    })
 }
 fn to_h_receiver(c: &Context<'_>, a: Node<'_>) -> String {
     let text = c.text(a);
@@ -104,11 +105,16 @@ fn wrap_literal(c: &Context<'_>, finding: Finding, n: Node<'_>) -> Finding {
         return finding;
     };
     finding
-        .also_edit(method_node(parent).end_byte(), arguments.start_byte(), "(")
-        .also_edit(parent.end_byte(), parent.end_byte(), ")")
+        .also_edit_with(
+            c,
+            method_node(parent).end_byte(),
+            arguments.start_byte(),
+            || "(",
+        )
+        .also_edit_with(c, parent.end_byte(), parent.end_byte(), || ")")
 }
 fn literal_correction(finding: &Finding) -> bool {
-    matches!(finding.message.as_str(), LITERAL_HASH | LITERAL_PAIRS) && finding.edit.is_some()
+    matches!(finding.message.as_str(), LITERAL_HASH | LITERAL_PAIRS) && finding.correctable
 }
 fn bare_arguments<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
     n.parent()

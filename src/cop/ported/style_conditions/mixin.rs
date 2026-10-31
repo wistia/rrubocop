@@ -20,10 +20,7 @@ fn mixin_call(c: &Context<'_>, n: Node<'_>) -> bool {
     a.len() == 1 && matches!(a[0].kind(), "constant" | "scope_resolution")
 }
 fn top_scope(n: Node<'_>) -> bool {
-    if ancestors(n)
-        .iter()
-        .any(|p| matches!(p.kind(), "block" | "do_block" | "lambda"))
-    {
+    if ancestors(n).any(|p| matches!(p.kind(), "block" | "do_block" | "lambda")) {
         return false;
     }
     n.parent().is_none_or(|p| {
@@ -31,7 +28,5 @@ fn top_scope(n: Node<'_>) -> bool {
             p.kind(),
             "program" | "begin" | "body_statement" | "then" | "else" | "method"
         )
-    }) && !ancestors(n)
-        .iter()
-        .any(|p| matches!(p.kind(), "class" | "module" | "singleton_class"))
+    }) && !ancestors(n).any(|p| matches!(p.kind(), "class" | "module" | "singleton_class"))
 }

@@ -32,7 +32,7 @@ fn broad_rescue(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn reports_in(c: &Context<'_>, n: Node<'_>) -> bool {
-    descendants(n).iter().any(|d| reports(c, *d))
+    descendants(n).any(|d| reports(c, d))
 }
 
 fn reports(c: &Context<'_>, n: Node<'_>) -> bool {

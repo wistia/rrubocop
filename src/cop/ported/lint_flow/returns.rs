@@ -4,7 +4,7 @@ pub(super) fn void_return(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if kids(n).is_empty() {
         return vec![];
     }
-    let Some(scope) = ancestors(n).into_iter().find(|p| return_scope(*p)) else {
+    let Some(scope) = ancestors(n).find(|p| return_scope(*p)) else {
         return vec![];
     };
     let name = c.method(scope);
@@ -27,9 +27,11 @@ fn void_method(name: &str) -> bool {
     name == "initialize"
         || name.ends_with('=') && !matches!(name, "==" | "===" | "!=" | "<=" | ">=")
 }
-pub(super) fn top_return(_c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    if kids(n).is_empty() || ancestors(n).iter().any(|p| return_scope(*p)) {
+pub(super) fn top_return(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
+    if kids(n).is_empty() || ancestors(n).any(|p| return_scope(p)) {
         return vec![];
     }
-    vec![Finding::new(n, "Top level return with argument detected.").replace(n, "return")]
+    vec![
+        Finding::new(n, "Top level return with argument detected.").replace_with(c, n, || "return"),
+    ]
 }

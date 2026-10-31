@@ -16,7 +16,9 @@ fn table_option(c: &Context<'_>, n: Node<'_>, key: &str, value: &str) -> Vec<Fin
     }
     let f = Finding::new(n, format!("Missing {key} option"));
     vec![if let Some((position, comma)) = insertion::position(n) {
-        f.edit(position, position, format!("{comma}{key}: \"{value}\""))
+        f.edit_with(c, position, position, || {
+            format!("{comma}{key}: \"{value}\"")
+        })
     } else {
         f
     }]

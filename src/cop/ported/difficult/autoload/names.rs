@@ -2,7 +2,11 @@ use super::super::super::context::*;
 use super::inflections;
 use tree_sitter::Node;
 
-pub(super) fn defined(c: &Context<'_>, n: Node<'_>, acronyms: &[String]) -> Option<String> {
+pub(super) fn defined(
+    c: &Context<'_>,
+    n: Node<'_>,
+    acronyms: &inflections::Acronyms,
+) -> Option<String> {
     if matches!(n.kind(), "class" | "module") {
         Some(join(
             parent(c, n).as_deref(),
@@ -12,7 +16,7 @@ pub(super) fn defined(c: &Context<'_>, n: Node<'_>, acronyms: &[String]) -> Opti
         assigned(c, n, acronyms)
     }
 }
-fn assigned(c: &Context<'_>, n: Node<'_>, acronyms: &[String]) -> Option<String> {
+fn assigned(c: &Context<'_>, n: Node<'_>, acronyms: &inflections::Acronyms) -> Option<String> {
     let left = field(n, "left").unwrap_or(n);
     Some(join(
         assignment_namespace(c, n, left).as_deref(),
@@ -31,7 +35,7 @@ fn join(namespace: Option<&str>, name: &str) -> String {
 }
 fn parent(c: &Context<'_>, n: Node<'_>) -> Option<String> {
     let mut parts = vec![];
-    for ancestor in ancestors(n).into_iter().rev() {
+    for ancestor in ancestors(n).collect::<Vec<_>>().into_iter().rev() {
         add_namespace(c, ancestor, &mut parts)?;
     }
     Some(scope_name(&parts))

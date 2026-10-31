@@ -23,7 +23,7 @@ pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let rest = captures.get(2).unwrap();
     let mut out = vec![];
     for token in TOKENS.find_iter(rest.as_str()) {
-        if let Some(finding) = check_token(n, rest.start(), &token) {
+        if let Some(finding) = check_token(c, n, rest.start(), &token) {
             out.push(finding);
         }
         if unexpected(token.as_str()) {
@@ -46,7 +46,12 @@ fn qualify(name: &str) -> Option<String> {
         })
 }
 
-fn check_token(n: Node<'_>, offset: usize, token: &regex::Match<'_>) -> Option<Finding> {
+fn check_token(
+    c: &Context<'_>,
+    n: Node<'_>,
+    offset: usize,
+    token: &regex::Match<'_>,
+) -> Option<Finding> {
     let name = token.as_str().trim();
     if valid(name) {
         return None;
@@ -54,7 +59,7 @@ fn check_token(n: Node<'_>, offset: usize, token: &regex::Match<'_>) -> Option<F
     let start = n.start_byte() + offset + token.start();
     let f = Finding::range(start, start + name.len(), "Department name is missing.");
     Some(if let Some(qualified) = qualify(name) {
-        f.edit(start, start + name.len(), qualified)
+        f.edit_with(c, start, start + name.len(), || qualified)
     } else {
         f
     })
