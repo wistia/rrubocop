@@ -1,5 +1,6 @@
 //! Additional pinned Ruby policies, including opt-in Wistia extension rules.
 mod context;
+mod difficult;
 mod lint_calls;
 mod lint_duplicates;
 mod lint_flow;
@@ -176,6 +177,7 @@ fn own_edits(corrections: &mut Option<&mut Vec<Correction>>, before: usize, owne
 }
 
 pub fn register_all(registry: &mut CopRegistry) {
+    difficult::register(registry);
     retained::register(registry);
     lint_calls::register(registry);
     lint_duplicates::register(registry);

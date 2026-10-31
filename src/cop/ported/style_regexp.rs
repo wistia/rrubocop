@@ -103,3 +103,10 @@ fn opening_bracket(p: &Pattern<'_>, index: usize) -> bool {
 fn unsafe_space(extended: bool, inner: &str) -> bool {
     extended && inner.chars().count() == 1 && inner.chars().any(char::is_whitespace)
 }
+
+pub(super) fn capture_counts(c: &Context<'_>, n: Node<'_>) -> Option<(usize, usize)> {
+    if n.kind() != "regex" {
+        return None;
+    }
+    Pattern::new(c, n)?.captures()
+}

@@ -1,8 +1,9 @@
 # Wistia cop support
 
-This branch implements the original 79 support candidates plus all 14 retained
-review candidates from the October 2026 Wistia unsupported-cop audit. The registry
-contains 667 cops. The 27 Wistia, serializer, Custom, and AnyCable rules are opt-in;
+This branch implements all 98 retained support candidates from the October 2026
+Wistia unsupported-cop audit: the original 79, the 14 retained review candidates,
+and the final five larger checks. The registry contains 672 cops. The 28 Wistia,
+serializer, Custom, and AnyCable rules are opt-in;
 they are not generic Ruby defaults.
 
 The acceptance baseline is Wistia's Ruby 3.4.9 bundle: RuboCop 1.65.1,
@@ -10,7 +11,7 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 652 Rust tests, including 1,649 pinned Ruby reference examples across 93 added cops.
+- 657 Rust tests, including 2,024 pinned Ruby reference examples across 98 added cops.
 - Paired positive/negative Ruby fixtures for every new cop.
 - Comparisons check offense locations, messages, correctability, and actual
   correction output. Configuration probes cover options, disabled corrections,
@@ -39,11 +40,10 @@ That run takes 257.88 seconds and exactly matches all 27 Rust diagnostics,
 including locations and messages. All 24 app-specific rules also pass positive
 activation probes using the real Wistia configuration.
 
-No application files are rewritten by this change. The 14 retained review
-candidates below now have native implementations. Five difficult retained checks
-still require Ruby: `Cops/NoUndiscoverableAutoLoadedConstants`,
-`Lint/MixedRegexpCaptureTypes`, `Lint/OutOfRangeRegexpRef`,
-`Lint/ShadowedArgument`, and `Style/EvalWithLocation`.
+No application files are rewritten by this change. All five formerly deferred
+checks now have native implementations, leaving no active retained gaps in the
+audited set. This coverage claim is scoped to that audit and Ruby 3.4, not every
+RuboCop cop or Ruby configuration.
 `Lint/NonDeterministicRequireOrder` and `Security/YAMLLoad` are inactive on Ruby 3.4.
 
 ## Retained review candidates now supported
@@ -89,6 +89,51 @@ the same 27 pre-existing regexp diagnostics, with unchanged locations and messag
 The uncached Ruby comparison of these 14 configured rules takes 248.95 seconds.
 These runs have different rule scopes; the Ruby timing is not a full-suite timing.
 
+## Final five retained checks
+
+- `Cops/NoUndiscoverableAutoLoadedConstants` checks classes, modules, and constant
+  assignments against autoload roots and namespace prefixes. It handles concerns,
+  STI roots, project acronyms such as HMS/LLM, qualified definitions, and sibling
+  constants. Literal acronym declarations are parsed from the inflection file;
+  no Rails boot or arbitrary Ruby execution is required.
+- `Lint/MixedRegexpCaptureTypes` counts named and numbered groups while respecting
+  escaped delimiters, character classes, inline comments, and extended modes.
+- `Lint/OutOfRangeRegexpRef` tracks capture availability through the pinned Ruby
+  callback order, matching operations, blocks, case clauses, and pattern clauses.
+  Dynamic interpolation leaves counts unknown. The inherited `Safe: false`
+  setting is retained: Ruby's source-order analysis can flag conditional matches
+  conservatively. This rule never rewrites code.
+- `Lint/ShadowedArgument` uses the shared scope model, including original argument
+  references, conditional/block assignments, destructuring, and implicit
+  `binding`/`super` reads under both `IgnoreImplicitReferences` settings. It never
+  rewrites code.
+- `Style/EvalWithLocation` checks literal code passed to eval-family methods and
+  supplies accurate filename/line information where correction is safe. It handles
+  string and heredoc line offsets, including nested pending heredocs. It does not
+  invent an eval binding. Effectful filename/line expressions and uncertain
+  argument shapes keep diagnostics without unsafe corrections.
+
+The 375 additional examples include 41 eval cases reviewed for correction safety.
+They run both directly and through the real syntax/scope/configuration pipeline.
+All five checks activate under the real Wistia config without forcing `--only`.
+Four are diagnostic-only under both correction modes, even with correction
+explicitly enabled. Four runtime backtrace probes verify the eval filename and
+line after correction; two additional probes preserve missing-binding/effectful
+argument cases. All 585 changed reference outputs compile under Ruby 3.4.9.
+
+Ruby's shorthand regexp interpolation helper misses `#$value` as dynamic input;
+Rust explicitly treats its capture count as unknown, like `#{$value}`, to avoid
+false claims. These two intentional diagnostic differences are documented in the
+reference snapshot. Ordinary pinned Ruby locations/messages/correctability and
+safe correction output match the expanded fixture set.
+
+The final full uncached Rust scan inspects 14,762 files in 50.04 seconds
+(180,884 KiB peak RSS). It reports the same 27 pre-existing regexp findings with
+unchanged locations and messages, and zero findings from the new five checks.
+An uncached Ruby comparison selecting these five configured cops inspects the same
+files and reports zero findings in 273.75 seconds (161,692 KiB peak RSS). The two
+timings have different rule scopes; the Ruby figure is not a full-suite timing.
+
 ## Follow-up policy review
 
 Wistia retired `Lint/DuplicateRegexpCharacterClassElement`,
@@ -109,8 +154,9 @@ The autoload overlap review also retains
 `Cops/NoUndiscoverableAutoLoadedConstants`. Zeitwerk eager loading verifies each
 file's expected constant, but an unrelated sibling defined in the same file can
 still lack its own autoload entry. An isolated loader probe passes eager loading
-for that file while the custom cop correctly flags the sibling. The Wistia policy
-branch adds a regression for this case; ordinary nested constants remain allowed.
+for that file while the custom cop correctly flags the sibling. Both the Wistia
+policy branch and the native port have regressions for this case; ordinary nested
+constants remain allowed.
 
 ## Deliberate correction safeguards
 

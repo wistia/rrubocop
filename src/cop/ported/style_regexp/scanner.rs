@@ -16,8 +16,19 @@ struct Scanner<'a> {
     groups: Vec<bool>,
     extended: bool,
     tokens: Vec<Token>,
+    captures: (usize, usize),
 }
 pub(super) fn scan(text: &str, extended: bool, interpolations: &[(usize, usize)]) -> Vec<Token> {
+    run(text, extended, interpolations).tokens
+}
+pub(super) fn captures(
+    text: &str,
+    extended: bool,
+    interpolations: &[(usize, usize)],
+) -> (usize, usize) {
+    run(text, extended, interpolations).captures
+}
+fn run<'a>(text: &'a str, extended: bool, interpolations: &'a [(usize, usize)]) -> Scanner<'a> {
     let mut scanner = Scanner {
         text,
         interpolations,
@@ -25,10 +36,12 @@ pub(super) fn scan(text: &str, extended: bool, interpolations: &[(usize, usize)]
         groups: vec![],
         extended,
         tokens: vec![],
+        captures: (0, 0),
     };
     scanner.run();
-    scanner.tokens
+    scanner
 }
+
 impl Scanner<'_> {
     fn run(&mut self) {
         let mut i = 0;
@@ -102,8 +115,24 @@ impl Scanner<'_> {
             self.extended = extended;
             return end;
         }
+        self.count_group(i);
         self.groups.push(self.extended);
+        if self.text[i..].starts_with("(?(") {
+            return self.text[i + 3..]
+                .find(')')
+                .map_or(self.text.len(), |end| i + 4 + end);
+        }
         i + 1
+    }
+    fn count_group(&mut self, i: usize) {
+        let text = &self.text[i..];
+        if text.starts_with("(?'")
+            || text.starts_with("(?<") && !text.starts_with("(?<=") && !text.starts_with("(?<!")
+        {
+            self.captures.0 += 1;
+        } else if !text.starts_with("(?") {
+            self.captures.1 += 1;
+        }
     }
     fn close_group(&mut self, i: usize) -> usize {
         if let Some(mode) = self.groups.pop() {
@@ -112,3 +141,6 @@ impl Scanner<'_> {
         i + 1
     }
 }
+
+#[cfg(test)]
+mod tests;

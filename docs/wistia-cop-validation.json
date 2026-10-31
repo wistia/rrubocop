@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "date": "2026-10-31",
-  "requested_cops": 93,
-  "registered_cops_total": 667,
-  "reference_examples": 1649,
-  "rust_tests": 652,
-  "app_specific_activation_probes": 27,
-  "intentional_correction_safeguards": 72,
+  "requested_cops": 98,
+  "registered_cops_total": 672,
+  "reference_examples": 2024,
+  "rust_tests": 657,
+  "app_specific_activation_probes": 28,
+  "intentional_correction_safeguards": 89,
   "whole_codebase": {
     "files": 14762,
     "rust_seconds": 32.6,
@@ -24,9 +24,9 @@
   "notes": [
     "Rust scan runs all enabled registered cops; Ruby comparison selects the original79 plus mandatory syntax while respecting local disables.",
     "Before retiring the duplicate-regexp cop, normal pinned Ruby full scans hid these27 findings because it and MixedCaseRange mutated the shared regexp tree; MixedCaseRange still causes suppression after that retirement.",
-    "All14 retained review candidates now have Rust support. Five difficult retained checks still require Ruby enforcement."
+    "The finalfive retained checks are now implemented natively. The audited retained set has no active gaps on Ruby3.4; NonDeterministicRequireOrder and YAMLLoad remain inactive on that target."
   ],
-  "ruby_compiler_checked_rewrites": 460,
+  "ruby_compiler_checked_rewrites": 585,
   "followup_policy": {
     "retired": [
       "Lint/DuplicateRegexpCharacterClassElement",
@@ -60,13 +60,7 @@
       "previous_regexp_location_message_parity": true,
       "rust_full_configured_scan_seconds": 35.09
     },
-    "remaining_active_retained_gaps": [
-      "Lint/MixedRegexpCaptureTypes",
-      "Lint/OutOfRangeRegexpRef",
-      "Lint/ShadowedArgument",
-      "Style/EvalWithLocation",
-      "Cops/NoUndiscoverableAutoLoadedConstants"
-    ]
+    "remaining_active_retained_gaps": []
   },
   "custom_cop_review_fixes": {
     "reviewed_rules": 27,
@@ -89,5 +83,43 @@
     "serializer_rules_diagnostic_only": true,
     "cache_revision": 24,
     "ruby_originals_modified": false
+  },
+  "final_five": {
+    "cops": [
+      "Lint/MixedRegexpCaptureTypes",
+      "Lint/OutOfRangeRegexpRef",
+      "Lint/ShadowedArgument",
+      "Style/EvalWithLocation",
+      "Cops/NoUndiscoverableAutoLoadedConstants"
+    ],
+    "additional_reference_cases": 375,
+    "real_pipeline_reference_cases": 375,
+    "activation_probes": 5,
+    "diagnostic_only_correction_probes": 8,
+    "runtime_eval_backtrace_probes": 4,
+    "unsafe_eval_refusal_probes": 2,
+    "all_changed_outputs_compile": true,
+    "remaining_active_retained_gaps": [],
+    "unsupported_target_inactive_names": [
+      "Lint/NonDeterministicRequireOrder",
+      "Security/YAMLLoad"
+    ],
+    "ruby_five_cop_corpus": {
+      "files": 14762,
+      "offenses": 0,
+      "seconds": 273.75,
+      "rss_kib": 161692
+    },
+    "cache_revision": 25,
+    "rust_tests": 657,
+    "whole_codebase": {
+      "files": 14762,
+      "rust_full_configured_scan_seconds": 50.04,
+      "rust_peak_rss_kib": 180884,
+      "new_five_offenses_rust": 0,
+      "new_five_offenses_ruby": 0,
+      "unchanged_regexp_offenses": 27,
+      "locations_messages_exactly_match_previous_scan": true
+    }
   }
 }

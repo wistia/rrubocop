@@ -28,6 +28,11 @@ impl<'a> Pattern<'a> {
             interpolations: interpolations(n, offset),
         }
     }
+    pub(super) fn captures(&self) -> Option<(usize, usize)> {
+        self.interpolations
+            .is_empty()
+            .then(|| scanner::captures(self.text, self.extended, &self.interpolations))
+    }
     fn tokens(&self) -> Vec<scanner::Token> {
         scanner::scan(self.text, self.extended, &self.interpolations)
     }

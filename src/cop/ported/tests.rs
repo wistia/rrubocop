@@ -66,3 +66,4 @@ fn case_difference(registry: &CopRegistry, index: usize, case: &Case) -> Option<
 fn all_ported_cops_have_fixture_pairs() {
     fixtures::check_pairs(&cases());
 }
+mod pipeline;

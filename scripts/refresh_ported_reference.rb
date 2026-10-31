@@ -40,10 +40,23 @@ class PortedReference
   end
 
   def configure_autoload_fixture
+    configure_constant_fixture
     return unless defined?(Cops::NoRequireOnAutoLoadedPaths)
 
     Cops::NoRequireOnAutoLoadedPaths.send(:remove_const, :PATHS)
     Cops::NoRequireOnAutoLoadedPaths.const_set(:PATHS, [project.join('app/models').to_s])
+  end
+
+  def configure_constant_fixture
+    return unless defined?(Cops::NoUndiscoverableAutoLoadedConstants)
+
+    Cops::NoUndiscoverableAutoLoadedConstants.instance_variable_set(:@paths, fixture_autoload_paths)
+  end
+
+  def fixture_autoload_paths
+    Dir[project.join('app/*/concerns'), project.join('app/models/sti_models'),
+        project.join('app/*'), project.join('not_production/*'),
+        project.join('not_production/*/concerns')]
   end
 
   def refresh_case(test, index)
@@ -62,7 +75,8 @@ class PortedReference
   end
 
   def investigate(test, index, options)
-    report = RuboCop::Cop::Commissioner.new([configured_cop(test.fetch('cop'), options)], [],
+    cop = configured_cop(test.fetch('cop'), options)
+    report = RuboCop::Cop::Commissioner.new([cop], RuboCop::Cop::Team.forces_for([cop]),
                                             raise_error: true).investigate(source(test, index))
     raise report.errors.inspect unless report.errors.empty?
 

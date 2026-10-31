@@ -7,7 +7,7 @@ pub(super) fn check_pairs(cases: &[Case]) {
         .iter()
         .map(|case| case.cop.as_str())
         .collect::<BTreeSet<_>>();
-    assert_eq!(names.len(), 93);
+    assert_eq!(names.len(), 98);
     for name in names {
         check_pair(cases, name);
     }

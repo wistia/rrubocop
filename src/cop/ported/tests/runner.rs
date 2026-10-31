@@ -29,12 +29,33 @@ fn inspect(
     };
     let mut diagnostics = vec![];
     let mut corrections = vec![];
-    BatchedWalker::new(vec![registry.get(&case.cop).unwrap()], vec![&config]).walk(
-        source,
-        tree.root_node(),
-        &mut diagnostics,
-        Some(&mut corrections),
-    );
+    let cop = registry.get(&case.cop).unwrap();
+    if cop.needs_file_model() {
+        let model = crate::model::build(source.as_bytes(), tree);
+        cop.check_file_model(
+            source,
+            &model,
+            &config,
+            &mut diagnostics,
+            Some(&mut corrections),
+        );
+    } else if cop.uses_source_phase() {
+        cop.check_source(
+            source,
+            &tree,
+            &crate::parse::codemap::CodeMap::default(),
+            &config,
+            &mut diagnostics,
+            Some(&mut corrections),
+        );
+    } else {
+        BatchedWalker::new(vec![cop], vec![&config]).walk(
+            source,
+            tree.root_node(),
+            &mut diagnostics,
+            Some(&mut corrections),
+        );
+    }
     (diagnostics, corrections)
 }
 fn actual(diagnostics: Vec<Diagnostic>) -> Vec<String> {
