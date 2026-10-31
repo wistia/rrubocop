@@ -1,6 +1,10 @@
 //! `# rubocop:disable` / `enable` directive parsing.
 
+use regex::Regex;
 use std::collections::{HashMap, HashSet};
+use std::sync::LazyLock;
+
+static MARKER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)# *rubocop *: *").unwrap());
 
 #[derive(Default)]
 pub struct Directives {
@@ -78,7 +82,7 @@ fn apply_line(d: &mut Directives, line: &str, line_no: usize) {
     let Some(comment) = extract_rubocop_comment(line) else {
         return;
     };
-    for directive in comment.split("# rubocop:") {
+    for directive in MARKER.split(comment) {
         apply_directive(d, directive.trim(), line, line_no);
     }
 }
@@ -117,11 +121,8 @@ fn extract_rubocop_comment(line: &str) -> Option<&str> {
     let comment = line[idx..].trim_start();
     // RuboCop matches `# rubocop:` anywhere in the trailing comment (e.g.
     // `# note # rubocop:disable Cop`), not only at the first `#`.
-    let lower = comment.to_ascii_lowercase();
-    let marker = "# rubocop:";
-    let pos = lower.find(marker)?;
-    // Map ASCII lower find back to original (ASCII-only marker).
-    Some(comment[pos + marker.len()..].trim_start())
+    let found = MARKER.find(comment)?;
+    Some(comment[found.end()..].trim_start())
 }
 
 fn cop_names(after: &str) -> Vec<String> {
@@ -129,6 +130,7 @@ fn cop_names(after: &str) -> Vec<String> {
     after
         .split(',')
         .map(|s| s.trim().trim_start_matches(':').replace("::", "/"))
+        .map(qualify)
         .filter(|s| !s.is_empty())
         .collect()
 }
@@ -136,6 +138,17 @@ fn cop_names(after: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn short_names_disable_the_qualified_cop() {
+        let d =
+            parse("# rubocop : disable LineLength\nwork\n# rubocop : enable LineLength\nmore\n");
+        assert!(d.suppresses("Layout/LineLength", 2));
+        assert!(!d.suppresses("Layout/LineLength", 4));
+        let d = parse("work # rubocop:todo NoSetex, Lint\n");
+        assert!(d.suppresses("Cops/NoSetex", 1));
+        assert!(d.suppresses("Lint/UselessTimes", 1));
+    }
 
     #[test]
     fn legacy_department_separator() {
@@ -184,4 +197,10 @@ mod tests {
         let d = parse("it 'doesn\\'t twice' do # rubocop:disable RSpec/MultipleExpectations\n");
         assert!(d.suppresses("RSpec/MultipleExpectations", 1));
     }
+}
+
+fn qualify(name: String) -> String {
+    crate::config::cop_names::qualified(&name)
+        .map(|n| n.into_owned())
+        .unwrap_or(name)
 }

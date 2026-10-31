@@ -1,15 +1,16 @@
 # Wistia cop support
 
-This branch implements the 79 cops marked **support** by the October 2026 Wistia
-unsupported-cop audit. The registry contains 653 cops. The 24 Wistia, serializer,
-Custom, and AnyCable rules are opt-in; they are not generic Ruby defaults.
+This branch implements the original 79 support candidates plus all 14 retained
+review candidates from the October 2026 Wistia unsupported-cop audit. The registry
+contains 667 cops. The 27 Wistia, serializer, Custom, and AnyCable rules are opt-in;
+they are not generic Ruby defaults.
 
 The acceptance baseline is Wistia's Ruby 3.4.9 bundle: RuboCop 1.65.1,
 Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 615 Rust tests, including 1,278 pinned Ruby reference examples.
+- 616 Rust tests, including 1,538 pinned Ruby reference examples across 93 added cops.
 - Paired positive/negative Ruby fixtures for every new cop.
 - Comparisons check offense locations, messages, correctability, and actual
   correction output. Configuration probes cover options, disabled corrections,
@@ -38,9 +39,54 @@ That run takes 257.88 seconds and exactly matches all 27 Rust diagnostics,
 including locations and messages. All 24 app-specific rules also pass positive
 activation probes using the real Wistia configuration.
 
-No application files are rewritten by this change. Following the policy review,
-five of the original eight difficult audit items still need Ruby coverage, along
-with the retained review candidates.
+No application files are rewritten by this change. The 14 retained review
+candidates below now have native implementations. Five difficult retained checks
+still require Ruby: `Cops/NoUndiscoverableAutoLoadedConstants`,
+`Lint/MixedRegexpCaptureTypes`, `Lint/OutOfRangeRegexpRef`,
+`Lint/ShadowedArgument`, and `Style/EvalWithLocation`.
+`Lint/NonDeterministicRequireOrder` and `Security/YAMLLoad` are inactive on Ruby 3.4.
+
+## Retained review candidates now supported
+
+- `Cops/NoSetex`
+- `Lint/RefinementImportMethods`
+- `Lint/UselessTimes`
+- `Lint/NumberedParameterAssignment`
+- `Migration/DepartmentName`
+- `Serializers/PreferAttributeBlockOverAttributeAndMethod`
+- `Serializers/PreferAttributeBlockOverAttributesAndMethods`
+- `Style/ColonMethodDefinition`
+- `Style/EmptyBlockParameter`
+- `Style/KeywordParametersOrder`
+- `Style/MixinGrouping`
+- `Style/MultilineWhenThen`
+- `Style/TrailingBodyOnMethodDefinition`
+- `Style/TrailingMethodEndStatement`
+
+The additional reference cases cover both mixin styles, serializer scope isolation,
+commented arguments, keyword defaults and disabled corrections, endless and
+singleton methods, short directive names, and actual corrections. Reserved
+numbered bindings (`_1` through `_9`) are rejected by the syntax gate on Ruby 3;
+the lint rule also diagnoses valid but confusing names such as `_0` and `_10`.
+The syntax gate covers assignments, loops, rescue bindings, patterns, explicit
+parameters, and reserved method names. Short disable/enable/todo names resolve to
+the same qualified policy used by config loading. Known reference names are
+resolved even when their actual check is not yet ported; name resolution is not
+an implementation claim. The reference refresh script also regenerates this
+name inventory and the pinned legacy-name inventory.
+
+Both serializer rules and keyword-order enforcement honor Wistia's
+`AutoCorrect: disabled` setting. The suite also checks their correction behavior
+when explicitly enabled. All 14 positive activation probes pass using the real
+Wistia config without forcing enablement via `--only`. The 93 changed Ruby outputs
+from this batch compile under Ruby 3.4.9. Eight engine probes also verify disabled
+corrections in both modes, non-default indentation width, and the setex rewrite.
+
+Both implementations inspect the same 14,762 application files and find zero
+offenses from the new 14 rules. The full Rust scan takes 35.09 seconds and retains
+the same 27 pre-existing regexp diagnostics, with unchanged locations and messages.
+The uncached Ruby comparison of these 14 configured rules takes 248.95 seconds.
+These runs have different rule scopes; the Ruby timing is not a full-suite timing.
 
 ## Follow-up policy review
 
@@ -67,13 +113,17 @@ branch adds a regression for this case; ordinary nested constants remain allowed
 
 ## Deliberate correction safeguards
 
-Three reference examples record an explicit Rust difference and its reason:
+Seven reference examples record an explicit Rust difference and its reason:
 
 - Inline free-spacing regexp whitespace classes retain their diagnostic but are
   not autocorrected when removing the brackets changes the match.
 - FileWrite preserves an external heredoc once, where pinned Ruby duplicates it.
 - FileRead preserves a heredoc filename body and terminator, where pinned Ruby
   drops them and produces invalid Ruby.
+- `Lint/UselessTimes` refuses four pinned Ruby text substitutions that overwrite
+  a reassigned block parameter, change string contents, rewrite a method name
+  into an integer, or overwrite a shadowing block parameter. The findings remain
+  visible; the incorrect rewrites are not advertised as correctable.
 
 `Style/RandomWithOffset` uses arbitrary precision integers to preserve Ruby's
 integer arithmetic, including hex/binary literals and values beyond `i64`.

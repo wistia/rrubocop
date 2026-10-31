@@ -9,7 +9,7 @@ mod gem_path_local;
 mod gem_path_version;
 mod gem_path_version_override;
 
-mod cop_names;
+pub(crate) mod cop_names;
 mod discover;
 mod filter;
 mod filter_match;

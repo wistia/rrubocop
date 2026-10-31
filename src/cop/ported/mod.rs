@@ -4,6 +4,7 @@ mod lint_calls;
 mod lint_duplicates;
 mod lint_flow;
 mod lint_literals;
+mod retained;
 mod style_blocks;
 mod style_calls;
 mod style_conditions;
@@ -73,7 +74,10 @@ impl Cop for Rule {
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
         let context = Context { source, config };
-        if node.kind() == "identifier" && !bare_call(self.name, &context, node) {
+        if node.kind() == "identifier"
+            && bare_name(self.name).is_some()
+            && !bare_call(self.name, &context, node)
+        {
             return;
         }
         if context::safe(&context, node) && !accepts_safe(self.name) {
@@ -156,6 +160,7 @@ fn emit(
 }
 
 pub fn register_all(registry: &mut CopRegistry) {
+    retained::register(registry);
     lint_calls::register(registry);
     lint_duplicates::register(registry);
     lint_literals::register(registry);
@@ -170,7 +175,7 @@ pub fn register_all(registry: &mut CopRegistry) {
 }
 
 macro_rules! rules {
-    ($registry:expr; $(($name:literal, $kinds:expr, $check:ident, $correctable:expr, $safe:expr, $extension:expr)),+ $(,)?) => {
+    ($registry:expr; $(($name:literal, $kinds:expr, $check:path, $correctable:expr, $safe:expr, $extension:expr)),+ $(,)?) => {
         $( $registry.register(Box::new(super::Rule { name: $name, kinds: $kinds, check: $check, correctable: $correctable, safe: $safe, extension: $extension })); )+
     };
 }

@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "date": "2026-10-31",
-  "requested_cops": 79,
-  "registered_cops_total": 653,
-  "reference_examples": 1278,
-  "rust_tests": 615,
-  "app_specific_activation_probes": 24,
-  "intentional_correction_safeguards": 3,
+  "requested_cops": 93,
+  "registered_cops_total": 667,
+  "reference_examples": 1538,
+  "rust_tests": 616,
+  "app_specific_activation_probes": 27,
+  "intentional_correction_safeguards": 7,
   "whole_codebase": {
     "files": 14762,
     "rust_seconds": 32.6,
@@ -18,12 +18,13 @@
       "Style/RedundantRegexpCharacterClass": 8,
       "Style/RedundantRegexpEscape": 19
     },
-    "exact_location_message_parity": true
+    "exact_location_message_parity": true,
+    "scope": "Historical validation of the original79 additions; see retained_followup for the14 additional rules."
   },
   "notes": [
-    "Rust scan runs all enabled registered cops; Ruby comparison selects the requested79 plus mandatory syntax while respecting local disables.",
+    "Rust scan runs all enabled registered cops; Ruby comparison selects the original79 plus mandatory syntax while respecting local disables.",
     "Before retiring the duplicate-regexp cop, normal pinned Ruby full scans hid these27 findings because it and MixedCaseRange mutated the shared regexp tree; MixedCaseRange still causes suppression after that retirement.",
-    "Five of the original difficult audit checks and retained review candidates still need Ruby enforcement."
+    "All14 retained review candidates now have Rust support. Five difficult retained checks still require Ruby enforcement."
   ],
   "ruby_compiler_checked_rewrites": 460,
   "followup_policy": {
@@ -41,5 +42,30 @@
     ],
     "autoload_overlap_review": "Retain: eager loading passes files whose expected constant is defined alongside an independently undiscoverable sibling.",
     "remaining_regexp_interaction": "Retained Lint/MixedCaseRange also consumes the shared regexp tree through RegexpRanges#populate. Full Ruby runs still hide the27 findings after retiring the duplicate cop; temporarily excluding MixedCaseRange restores exact Rust locations."
+  },
+  "retained_followup": {
+    "additional_cops": 14,
+    "additional_reference_examples": 260,
+    "configured_activation_probes": 14,
+    "engine_config_correction_probes": 8,
+    "ruby_compiler_checked_rewrites": 93,
+    "whole_codebase": {
+      "files": 14762,
+      "rust_peak_rss_kib": 172656,
+      "ruby_configured_14_seconds": 248.95,
+      "ruby_peak_rss_kib": 156756,
+      "new_14_offenses_ruby": 0,
+      "new_14_offenses_rust": 0,
+      "unchanged_preexisting_regexp_findings": 27,
+      "previous_regexp_location_message_parity": true,
+      "rust_full_configured_scan_seconds": 35.09
+    },
+    "remaining_active_retained_gaps": [
+      "Lint/MixedRegexpCaptureTypes",
+      "Lint/OutOfRangeRegexpRef",
+      "Lint/ShadowedArgument",
+      "Style/EvalWithLocation",
+      "Cops/NoUndiscoverableAutoLoadedConstants"
+    ]
   }
 }

@@ -191,7 +191,7 @@ fn walk(
         diagnostics,
     );
     check_bare_not(source, node, cop, ruby_ver, diagnostics);
-    if ruby_ver >= 2.7 && numbered_assignment::reserved_assignment(source, node) {
+    if ruby_ver >= 3.0 && numbered_assignment::reserved_assignment(source, node) {
         let (line, col) = source.offset_to_line_col(node.start_byte());
         diagnostics.push(syntax_diag(
             cop,

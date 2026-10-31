@@ -24,6 +24,7 @@ impl ResolvedConfig {
 
     fn inject_cop_options(&self, name: &str, config: &mut CopConfig) {
         inject_globals(self, config);
+        self.inject_method_body_width(name, config);
         inject_rack_version(self, name, config);
         inject_line_length(self, name, config);
         inject_redundant_line_break(self, name, config);
@@ -38,6 +39,21 @@ impl ResolvedConfig {
         inject_missing_else(self, name, config);
         inject_quoted_symbols(self, name, config);
         inject_config_disabled_cops(self, name, config);
+    }
+
+    fn inject_method_body_width(&self, name: &str, config: &mut CopConfig) {
+        if name != "Style/TrailingBodyOnMethodDefinition" {
+            return;
+        }
+        if let Some(width) = self
+            .cop_configs
+            .get("Layout/IndentationWidth")
+            .and_then(|c| c.options.get("Width"))
+        {
+            config
+                .options
+                .insert("IndentationWidth".into(), width.clone());
+        }
     }
 
     /// Get the resolved config for a cop, applying directory-specific overrides

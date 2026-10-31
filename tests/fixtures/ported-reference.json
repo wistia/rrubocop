@@ -24093,5 +24093,5153 @@
       }
     ],
     "corrected": "attribute :longName, \"key\" => :long_name\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n  include Bar\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/refinement_import_methods_spec.rb:6",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `import_methods` instead of `include` because it is deprecated in Ruby 3.1.",
+        "correctable": false
+      }
+    ],
+    "corrected": "refine Foo do\n  include Bar\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n  prepend Bar\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/refinement_import_methods_spec.rb:15",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `import_methods` instead of `prepend` because it is deprecated in Ruby 3.1.",
+        "correctable": false
+      }
+    ],
+    "corrected": "refine Foo do\n  prepend Bar\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n  import_methods Bar\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/refinement_import_methods_spec.rb:24",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n  import_methods Bar\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n  Bar.include Baz\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/refinement_import_methods_spec.rb:32",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n  Bar.include Baz\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "include Foo\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/refinement_import_methods_spec.rb:40",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "include Foo\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { something }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:5",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { |i| something(i) }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:14",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "-1.times { something }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:23",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `-1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "-1.times { |i| something(i) }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:32",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `-1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { something }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:41",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "something\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |i| something(i) }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:52",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "something(0)\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times.reverse_each do\n  foo\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:63",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.times.reverse_each do\n  foo\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def foo\n  1.times do\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:74",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def foo\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def foo\n  1.times do\n    bar\n\n    baz\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:89",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def foo\n  bar\n\n  baz\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "2.times { |i| puts i }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:110",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "2.times { |i| puts i }\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times(&:something)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:117",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "-1.times(&:something)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:126",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `-1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times(&:something)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:135",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "something\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "2.times(&:something)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:146",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "2.times(&:something)\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "precondition\n0.times(&:something)\npostcondition\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:152",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "precondition\npostcondition\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n  do_something(i)\n  do_something_else(i)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:168",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "do_something(0)\ndo_something_else(0)\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n  do_something(i)\n  i += 1\n  do_something_else(i)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:183",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.times do |i|\n  do_something(i)\n  i += 1\n  do_something_else(i)\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n  do_something(i)\n  i, j = i * 2, i * 3\n  do_something_else(i)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:196",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.times do |i|\n  do_something(i)\n  i, j = i * 2, i * 3\n  do_something_else(i)\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n  do_something(i)\n  j = 1\n  do_something_else(j)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:209",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "do_something(0)\nj = 1\ndo_something_else(j)\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def my_method\n  0.times { do_something }\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:228",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def my_method\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def my_method\n  0.times do\n    do_something\n    do_something_else\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:242",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def my_method\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def my_method\n  1.times do\n    do_something\n    do_something_else\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:259",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def my_method\n  do_something\n  do_something_else\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "foo(0.times { do_something })\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:279",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "foo(0.times { do_something })\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "foo(1.times { do_something })\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:288",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "foo(1.times { do_something })\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/useless_times_spec.rb:297",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.times\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_0 = :value\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/numbered_parameter_assignment_spec.rb:17",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "_0 = :value\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_10 = :value\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/numbered_parameter_assignment_spec.rb:24",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_10` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "_10 = :value\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "non_numbered_parameter_name = :value\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/numbered_parameter_assignment_spec.rb:31",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "non_numbered_parameter_name = :value\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "Hash.new { _1[_2] = :value }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/lint/numbered_parameter_assignment_spec.rb:37",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Hash.new { _1[_2] = :value }\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:todo Alias, LineLength\nalias :ala :bala\n# rubocop:enable Alias, LineLength\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/migration/department_name_spec.rb:17",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 17,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 24,
+        "message": "Department name is missing.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# rubocop:todo Style/Alias, Layout/LineLength\nalias :ala :bala\n# rubocop:enable Style/Alias, Layout/LineLength\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop : todo Alias, LineLength\nalias :ala :bala\n# rubocop : enable Alias, LineLength\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/migration/department_name_spec.rb:37",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 17,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 24,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 19,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 26,
+        "message": "Department name is missing.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# rubocop : todo Style/Alias, Layout/LineLength\nalias :ala :bala\n# rubocop : enable Style/Alias, Layout/LineLength\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable SingleSpaceBeforeFirstArg, Layout/LineLength\nname             \"apache_kafka\"\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/migration/department_name_spec.rb:56",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Department name is missing.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# rubocop:disable Style/SingleSpaceBeforeFirstArg, Layout/LineLength\nname             \"apache_kafka\"\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "alias :ala :bala # rubocop:disable all\n# rubocop:disable Style/Alias\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/migration/department_name_spec.rb:75",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "alias :ala :bala # rubocop:disable all\n# rubocop:disable Style/Alias\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable Style/Alias # Plain code comment\nalias :ala :bala\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/migration/department_name_spec.rb:84",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "# rubocop:disable Style/Alias # Plain code comment\nalias :ala :bala\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable Style/Alias -- because something, something, and something\nalias :ala :bala\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/migration/department_name_spec.rb:93",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "# rubocop:disable Style/Alias -- because something, something, and something\nalias :ala :bala\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable Style:Alias\nalias :ala :bala\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/migration/department_name_spec.rb:105",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "# rubocop:disable Style:Alias\nalias :ala :bala\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable Style\nalias :ala :bala\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/migration/department_name_spec.rb:114",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "# rubocop:disable Style\nalias :ala :bala\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two\n  attribute :three\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attribute_and_method_spec.rb:11",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two\n  attribute :three\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two\n  attribute :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attribute_and_method_spec.rb:23",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two\n  attribute :three\n\n  def two\n    \"two\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attribute :attribute_with_block do\n    \"block value\"\n  end\n\n  def attribute_with_block\n    \"value\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attribute_and_method_spec.rb:50",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :attribute_with_block do\n    \"block value\"\n  end\n\n  def attribute_with_block\n    \"value\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class OuterSerializer\n  attribute :two\n\n  class InnerSerializer\n    def two\n      \"nested\"\n    end\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attribute_and_method_spec.rb:65",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class OuterSerializer\n  attribute :two\n\n  class InnerSerializer\n    def two\n      \"nested\"\n    end\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class FirstSerializer\n  attribute :two\nend\n\nclass SecondSerializer\n  def two\n    \"sibling\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attribute_and_method_spec.rb:79",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class FirstSerializer\n  attribute :two\nend\n\nclass SecondSerializer\n  def two\n    \"sibling\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:11",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:23",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def two\n    \"two\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:51",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def three\n    \"three\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:79",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def three\n    \"three\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one\n\n  def one\n    \"one\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:107",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one\n\n  def one\n    \"one\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:130",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def two\n    \"two\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:159",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three,\n    :four\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  def four\n    \"four\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:270",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      },
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      },
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three,\n    :four\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  def four\n    \"four\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:302",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      },
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:332",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class OuterSerializer\n  attributes :two\n\n  class InnerSerializer\n    def two\n      \"nested\"\n    end\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:364",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class OuterSerializer\n  attributes :two\n\n  class InnerSerializer\n    def two\n      \"nested\"\n    end\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class FirstSerializer\n  attributes :two\nend\n\nclass SecondSerializer\n  def two\n    \"sibling\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "spec/cops/serializers/prefer_attribute_block_over_attributes_and_methods_spec.rb:378",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class FirstSerializer\n  attributes :two\nend\n\nclass SecondSerializer\n  def two\n    \"sibling\"\n  end\nend\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class Foo\n  def self.bar\n    something\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/colon_method_definition_spec.rb:5",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  def self.bar\n    something\n  end\nend\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class Foo\n  def self::bar\n    something\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/colon_method_definition_spec.rb:16",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  def self.bar\n    something\n  end\nend\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class Foo\n  def Foo::bar\n    something\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/colon_method_definition_spec.rb:37",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  def Foo.bar\n    something\n  end\nend\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "a do ||\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:5",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a do\nend\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "a { || do_something }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:18",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a { do_something }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "def foo\n  super { || do_something }\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:29",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def foo\n  super { do_something }\nend\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "lambda { || do_something }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:44",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "lambda { do_something }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "a do\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:55",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a do\nend\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "a { }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:62",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a { }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "a do |x|\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:68",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a do |x|\nend\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "a { |x| }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:75",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a { |x| }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "-> () { do_something }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/empty_block_parameter_spec.rb:81",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "-> () { do_something }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(arg, optional: 1, required:)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:5",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m(arg, optional: 1, required:)\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m arg, optional: 1, required:\n  do_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:18",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m arg, optional: 1, required:\n  do_something\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m arg, optional1: 1, optional2: 2, required:\n  do_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:33",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 25,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m arg, optional1: 1, optional2: 2, required:\n  do_something\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(arg, optional1: 1, required1:, optional2: 2, required2:, **rest, &block)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:49",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 37,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m(arg, optional1: 1, required1:, optional2: 2, required2:, **rest, &block)\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m arg, optional1: 1, required1:, optional2: 2, required2:, **rest\n  do_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:64",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 37,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m arg, optional1: 1, required1:, optional2: 2, required2:, **rest\n  do_something\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m arg, optional1: 1, required1:, optional2: 2, required2:, **rest, &block\n  do_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:81",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 37,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m arg, optional1: 1, required1:, optional2: 2, required2:, **rest, &block\n  do_something\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(arg, required:, optional: 1)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:97",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def m(arg, required:, optional: 1)\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "m(arg) do |block_arg, optional: 1, required:|\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:105",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "m(arg) do |block_arg, optional: 1, required:|\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "m(arg) do |block_arg, required:, optional: 1|\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/keyword_parameters_order_spec.rb:118",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "m(arg) do |block_arg, required:, optional: 1|\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar, Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:9",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  include Qux\n  include Bar\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar, Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:9",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  include Bar, Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "expect(foo).to include { { bar: baz } }",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:25",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "expect(foo).to include { { bar: baz } }"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "expect(foo).to include { { bar: baz } }",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:25",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "expect(foo).to include { { bar: baz } }"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar, Baz\n  include Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:29",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  include Baz\n  include Bar\n  include Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar, Baz\n  include Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:29",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  include Qux, Bar, Baz\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:47",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  include\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:47",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  include\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  extend Bar, Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:57",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `extend` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  extend Qux\n  extend Bar\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  extend Bar, Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:57",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  extend Bar, Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  extend\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:73",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  extend\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  extend\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:73",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  extend\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend Bar, Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:83",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `prepend` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  prepend Qux\n  prepend Bar\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend Bar, Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:83",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  prepend Bar, Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:99",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  prepend\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:99",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  prepend\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar, Baz\n  extend Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:109",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  include Baz\n  include Bar\n  extend Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar, Baz\n  extend Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:109",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  include Bar, Baz\n  extend Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar\n  include Baz\n  include Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:133",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  include Bar\n  include Baz\n  include Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar\n  include Baz\n  include Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:133",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  include Qux, Baz, Bar\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "config.include Foo\nconfig.include Bar\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:152",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "config.include Foo\nconfig.include Bar\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "config.include Foo\nconfig.include Bar\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:152",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "config.include Foo\nconfig.include Bar\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar, Baz\n  include FooBar, FooBaz\n  include Qux, FooBarBaz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:159",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  include Baz\n  include Bar\n  include FooBaz\n  include FooBar\n  include FooBarBaz\n  include Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar, Baz\n  include FooBar, FooBaz\n  include Qux, FooBarBaz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:159",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  include Qux, FooBarBaz, FooBar, FooBaz, Bar, Baz\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  extend Bar\n  extend Baz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:180",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  extend Bar\n  extend Baz\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  extend Bar\n  extend Baz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:180",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `extend` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Put `extend` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  extend Baz, Bar\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend Bar\n  prepend Baz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:199",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  prepend Bar\n  prepend Baz\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend Bar\n  prepend Baz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:199",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  prepend Baz, Bar\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend Bar\n  prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:216",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  prepend Bar\n  prepend Baz\n  do_something_else\n  prepend Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend Bar\n  prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:216",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 2,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  prepend Qux, Baz, Bar\n  do_something_else\n  \nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend Bar\n  Other.prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:239",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  prepend Bar\n  Other.prepend Baz\n  do_something_else\n  prepend Qux\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  prepend Bar\n  Other.prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:239",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 2,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  prepend Qux, Bar\n  Other.prepend Baz\n  do_something_else\n  \nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar\n  include Baz\n  extend Baz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:264",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  include Bar\n  include Baz\n  extend Baz\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar\n  include Baz\n  extend Baz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:264",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  include Baz, Bar\n  extend Baz\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:283",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/mixin_grouping_spec.rb:283",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar then\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:5",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case foo\nwhen bar\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar then\ndo_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:20",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case foo\nwhen bar\ndo_something\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar then\ndo_something1\ndo_something2\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:37",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case foo\nwhen bar\ndo_something1\ndo_something2\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar then do_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:56",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case foo\nwhen bar then do_something\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case cond\nwhen foo then do_something(arg1,\n                           arg2)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:64",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case cond\nwhen foo then do_something(arg1,\n                           arg2)\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar then do_something\n              do_another_thing\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:74",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case foo\nwhen bar then do_something\n              do_another_thing\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:83",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case foo\nwhen bar\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar\ndo_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:91",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case foo\nwhen bar\ndo_something\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case condition\nwhen foo then {\n    key: 'value'\n  }\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:100",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case condition\nwhen foo then {\n    key: 'value'\n  }\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case condition\nwhen foo then [\n    'element'\n  ]\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:110",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case condition\nwhen foo then [\n    'element'\n  ]\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar\n  then do_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:120",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case foo\nwhen bar\n do_something\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar, baz then\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:137",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 14,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case foo\nwhen bar, baz\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case foo\nwhen bar,\n     baz then do_something\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/multiline_when_then_spec.rb:152",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case foo\nwhen bar,\n     baz then do_something\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def some_method; body\nend\ndef extra_large; { size: 15 };\nend\ndef seven_times(stuff) 7.times { do_this(stuff) }\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_body_on_method_definition_spec.rb:7",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 17,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 17,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 23,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def some_method \n  body\nend\ndef extra_large \n  { size: 15 };\nend\ndef seven_times(stuff) \n  7.times { do_this(stuff) }\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def some_method; foo = {}\n  more_body(foo)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_body_on_method_definition_spec.rb:33",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 17,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def some_method \n  foo = {}\n  more_body(foo)\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def do_stuff(thing) process(thing)\n  8.times { thing + 9 }\n  even_more(thing)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_body_on_method_definition_spec.rb:49",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def do_stuff(thing) \n  process(thing)\n  8.times { thing + 9 }\n  even_more(thing)\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def some_method\n  body\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_body_on_method_definition_spec.rb:67",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def some_method\n  body\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def stuff_method\n  stuff\n  9.times { process(stuff) }\n  more_stuff\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_body_on_method_definition_spec.rb:75",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def stuff_method\n  stuff\n  9.times { process(stuff) }\n  more_stuff\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def some_method\n  body\nfoo; end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_body_on_method_definition_spec.rb:85",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def some_method\n  body\nfoo; end\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def some_method = (\n  body\n)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_body_on_method_definition_spec.rb:94",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def some_method = (\n  body\n)\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def some_method\nfoo; end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:7",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 5,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def some_method\nfoo; \nend\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def a\n  b\n{ foo: bar }; end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:21",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 14,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def a\n  b\n{ foo: bar }; \nend\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def c\n  b = calculation\n  [b] end # because b\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:37",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 6,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def c\n  b = calculation\n  [b] \nend # because b\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def d\n  block do\n    foo\n  end end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:53",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 6,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def d\n  block do\n    foo\n  end \nend\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "class Foo\n  def some_method\n  foo; end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:71",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 7,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  def some_method\n  foo; \n  end\nend\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def no_op; end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:89",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def no_op; end\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def something; do_stuff; end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:95",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def something; do_stuff; end\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "class Foo\n  def some_method\n    [] end\n  def another_method\n    {} end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:101",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 7,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 7,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Foo\n  def some_method\n    [] \n  end\n  def another_method\n    {} \n  end\nend\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def foo = bar\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:126",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def foo = bar\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def foo =\n          bar\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "/tmp/rr-ports-rubocop-reference/spec/rubocop/cop/style/trailing_method_end_statement_spec.rb:133",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def foo =\n          bar\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, ttl, value)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, value, ex: ttl)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "setex(\"key\", 60, \"value\")\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "set(\"key\", \"value\", ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.set(key, value, ex: ttl)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "redis.set(key, value, ex: ttl)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis&.setex(key, ttl, value)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "redis&.setex(key, ttl, value)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, expires_at - now, payload.to_json)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, payload.to_json, ex: expires_at - now)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, ttl, value) { callback }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, value, ex: ttl) { callback }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(arg, optional: 1, required:)\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(arg, required:, optional: 1)\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m arg, optional: 1, required:\n  do_something\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m arg, required:, optional: 1\n  do_something\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m arg, optional1: 1, optional2: 2, required:\n  do_something\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 25,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m arg, required:, optional1: 1, optional2: 2\n  do_something\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(arg, optional1: 1, required1:, optional2: 2, required2:, **rest, &block)\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 37,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m(arg, required1:, required2:, optional1: 1, optional2: 2, **rest, &block)\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m arg, optional1: 1, required1:, optional2: 2, required2:, **rest\n  do_something\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 37,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m arg, required1:, required2:, optional1: 1, optional2: 2, **rest\n  do_something\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m arg, optional1: 1, required1:, optional2: 2, required2:, **rest, &block\n  do_something\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 37,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def m arg, required1:, required2:, optional1: 1, optional2: 2, **rest, &block\n  do_something\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(arg, required:, optional: 1)\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def m(arg, required:, optional: 1)\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "m(arg) do |block_arg, optional: 1, required:|\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "m(arg) do |block_arg, required:, optional: 1|\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "m(arg) do |block_arg, required:, optional: 1|\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "m(arg) do |block_arg, required:, optional: 1|\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two\n  attribute :three\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two\n  attribute :three\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two\n  attribute :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two do\n    \"two\"\n  end\n  attribute :three\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attribute :attribute_with_block do\n    \"block value\"\n  end\n\n  def attribute_with_block\n    \"value\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :attribute_with_block do\n    \"block value\"\n  end\n\n  def attribute_with_block\n    \"value\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class OuterSerializer\n  attribute :two\n\n  class InnerSerializer\n    def two\n      \"nested\"\n    end\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class OuterSerializer\n  attribute :two\n\n  class InnerSerializer\n    def two\n      \"nested\"\n    end\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class FirstSerializer\n  attribute :two\nend\n\nclass SecondSerializer\n  def two\n    \"sibling\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class FirstSerializer\n  attribute :two\nend\n\nclass SecondSerializer\n  def two\n    \"sibling\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  attribute :two do\n    \"two\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :two,\n    :three\n\n  attribute :one do\n    \"one\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def three\n    \"three\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two\n\n  attribute :three do\n    \"three\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one\n\n  def one\n    \"one\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one do\n    \"one\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  attribute :two do\n    \"two\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :two,\n    :three\n\n  attribute :one do\n    \"one\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three,\n    :four\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  def four\n    \"four\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      },
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      },
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :three\n\n  attribute :one do\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class OuterSerializer\n  attributes :two\n\n  class InnerSerializer\n    def two\n      \"nested\"\n    end\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class OuterSerializer\n  attributes :two\n\n  class InnerSerializer\n    def two\n      \"nested\"\n    end\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class FirstSerializer\n  attributes :two\nend\n\nclass SecondSerializer\n  def two\n    \"sibling\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class FirstSerializer\n  attributes :two\nend\n\nclass SecondSerializer\n  def two\n    \"sibling\"\n  end\nend\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_0 += 1\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "_0 += 1\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_10 ||= foo\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_10` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "_10 ||= foo\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_01 = foo\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_1` is reserved for numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "_01 = foo\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_000 = foo\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "_000 = foo\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_0, _10 = xs\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 4,
+        "message": "`_10` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "_0, _10 = xs\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "(_10, *_0), a = xs\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "`_10` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 7,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(_10, *_0), a = xs\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "for _10 in xs\n work\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "`_10` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "for _10 in xs\n work\nend\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "begin\n work\nrescue => _0\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 10,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue => _0\nend\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "xs.each { _10 = foo }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "`_10` is similar to numbered parameter; consider another name.",
+        "correctable": false
+      }
+    ],
+    "corrected": "xs.each { _10 = foo }\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "xs.each { |x| puts x }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "xs.each { |x| puts x }\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "foo => [_0]\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo => [_0]\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "case foo\nin [_10]\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case foo\nin [_10]\nend\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable Alias, LineLength\nalias foo bar\n# rubocop:enable Alias, LineLength\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 25,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 17,
+        "message": "Department name is missing.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 24,
+        "message": "Department name is missing.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# rubocop:disable Style/Alias, Layout/LineLength\nalias foo bar\n# rubocop:enable Style/Alias, Layout/LineLength\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable Lint, Style\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "# rubocop:disable Lint, Style\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable SingleSpaceBeforeFirstArg\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Department name is missing.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# rubocop:disable Style/SingleSpaceBeforeFirstArg\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable Style/Alias -- reason, more\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "# rubocop:disable Style/Alias -- reason, more\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable Alias -- reason\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "# rubocop:disable Alias -- reason\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable all\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "# rubocop:disable all\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "puts \"# rubocop:disable Alias\"\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "puts \"# rubocop:disable Alias\"\n"
+  },
+  {
+    "cop": "Migration/DepartmentName",
+    "source": "# rubocop:disable NoSetex\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Department name is missing.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# rubocop:disable Cops/NoSetex\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n include M\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Use `import_methods` instead of `include` because it is deprecated in Ruby 3.1.",
+        "correctable": false
+      }
+    ],
+    "corrected": "refine Foo do\n include M\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n include M\n include N\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n include M\n include N\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n if foo\n include M\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n if foo\n include M\n end\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n self.include M\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n self.include M\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n class Nested\n include M\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n class Nested\n include M\n end\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n prepend M\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Use `import_methods` instead of `prepend` because it is deprecated in Ruby 3.1.",
+        "correctable": false
+      }
+    ],
+    "corrected": "refine Foo do\n prepend M\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n prepend M\n prepend N\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n prepend M\n prepend N\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n if foo\n prepend M\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n if foo\n prepend M\n end\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n self.prepend M\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n self.prepend M\nend\n"
+  },
+  {
+    "cop": "Lint/RefinementImportMethods",
+    "source": "refine Foo do\n class Nested\n prepend M\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "refine Foo do\n class Nested\n prepend M\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class Serializer\n attribute :name\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class Serializer\n attribute :name\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class Serializer\n attribute :name\n class Nested\n def name\n object.name\n end\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Serializer\n attribute :name\n class Nested\n def name\n object.name\n end\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class Serializer\n attribute :name\n def self.name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Serializer\n attribute :name\n def self.name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class Serializer\n attribute :name\n private\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class Serializer\n attribute :name\n private\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class Serializer\n attribute :name\n def name\n object.name\n end\n class Nested\n def name\n object.other\n end\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class Serializer\n attribute :name\n def name\n object.name\n end\n class Nested\n def name\n object.other\n end\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "attribute :name\ndef name\n object.name\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :name\ndef name\n object.name\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class Serializer\n attribute :name do\n object.name\n end\n def name\n object.other\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Serializer\n attribute :name do\n object.name\n end\n def name\n object.other\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "module Serializer\n attribute :name\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false
+      }
+    ],
+    "corrected": "module Serializer\n attribute :name\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class Serializer\n attributes :name\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class Serializer\n attributes :name\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class Serializer\n attributes :name\n class Nested\n def name\n object.name\n end\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Serializer\n attributes :name\n class Nested\n def name\n object.name\n end\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class Serializer\n attributes :name\n def self.name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Serializer\n attributes :name\n def self.name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class Serializer\n attributes :name\n private\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class Serializer\n attributes :name\n private\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class Serializer\n attributes :name\n def name\n object.name\n end\n class Nested\n def name\n object.other\n end\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class Serializer\n attributes :name\n def name\n object.name\n end\n class Nested\n def name\n object.other\n end\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "attributes :name\ndef name\n object.name\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attributes :name\ndef name\n object.name\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class Serializer\n attributes :name do\n object.name\n end\n def name\n object.other\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Serializer\n attributes :name do\n object.name\n end\n def name\n object.other\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "module Serializer\n attributes :name\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "module Serializer\n attributes :name\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { || work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { work }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "->() { work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "->() { work }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "lambda { || work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "lambda { work }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |;local| work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |;local| work }\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |i| i = 2; puts i }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "0 = 2; puts 0\n",
+    "rust_corrected": "1.times { |i| i = 2; puts i }\n",
+    "rust_correctable": false,
+    "reason": "Pinned Ruby misses a leading block argument reassignment and rewrites it to invalid Ruby (0 = 2); retain the finding without autocorrection."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "x = 1.times { work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "x = 1.times { work }\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { work }.foo\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.times { work }.foo\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "(-1).times { work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "(-1).times { work }\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0x1.times { work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |i| puts \"i\" }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "puts \"0\"\n",
+    "rust_corrected": "1.times { |i| puts \"i\" }\n",
+    "rust_correctable": false,
+    "reason": "Pinned Ruby text substitution changes non-variable occurrences of the block parameter (method names, strings, or shadowing parameters); refuse the unsafe correction."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |i| object.i }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "object.0\n",
+    "rust_corrected": "1.times { |i| object.i }\n",
+    "rust_correctable": false,
+    "reason": "Pinned Ruby text substitution changes non-variable occurrences of the block parameter (method names, strings, or shadowing parameters); refuse the unsafe correction."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |i| proc { |i| i } }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "proc { |0| 0 }\n",
+    "rust_corrected": "1.times { |i| proc { |i| i } }\n",
+    "rust_correctable": false,
+    "reason": "Pinned Ruby text substitution changes non-variable occurrences of the block parameter (method names, strings, or shadowing parameters); refuse the unsafe correction."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; work # comment\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# comment\ndef f \n  work \nend\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def f; work # comment\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f; work # comment\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def self.f; work\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.f \n  work\nend\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def self.f; work\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def self.f; work\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f = work(\n foo\n)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f = work(\n foo\n)\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def f = work(\n foo\n)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f = work(\n foo\n)\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; first; second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f \n  first; second\nend\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def f; first; second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f; first; second\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f\n work; end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f\n work; end\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def f\n work; end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n work; \nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f\n begin\n work\n rescue\n other\n end end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f\n begin\n work\n rescue\n other\n end end\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def f\n begin\n work\n rescue\n other\n end end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 5,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n begin\n work\n rescue\n other\n end \nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f\n work\nrescue\n other end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f\n work\nrescue\n other end\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def f\n work\nrescue\n other end\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 7,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n work\nrescue\n other \nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n obj&.attribute :name\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy argument and receiver regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n obj&.attribute :name\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n attribute(\n # argument comment\n :name)\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy argument and receiver regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class S\n attribute(\n # argument comment\n :name)\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class S\n obj&.attributes :name\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy argument and receiver regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n obj&.attributes :name\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class S\n attributes(\n # argument comment\n :name)\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy argument and receiver regression",
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class S\n attributes(\n # argument comment\n :name)\n def name\n object.name\n end\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class S\n include A,\n # argument comment\n B\n include C\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "origin": "retained policy argument and receiver regression",
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n include C, A, B\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class S\n include A,\n # argument comment\n B\n include C\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "origin": "retained policy argument and receiver regression",
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n include B\n include A\n include C\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(\n # key comment\n key,\n # ttl comment\n ttl,\n # value comment\n value)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy argument and receiver regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(\n # key comment\n key,\n # ttl comment\n value,\n # value comment\n ex: ttl)\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times(\n # block arg comment\n &:work)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy argument and receiver regression",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f(x = ';'); work\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "retained policy separator token regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 16,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(x = ';') \n  work\nend\n"
   }
 ]

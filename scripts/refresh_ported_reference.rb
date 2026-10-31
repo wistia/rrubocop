@@ -15,6 +15,7 @@ class PortedReference
   end
 
   def refresh
+    refresh_names
     configure_autoload_fixture
     results = JSON.parse(File.read(@fixture_file)).map.with_index do |test, index|
       refresh_case(test, index)
@@ -24,6 +25,15 @@ class PortedReference
   end
 
   private
+
+  def refresh_names
+    write_names('cop_department_names.txt', RuboCop::Cop::Registry.global.map(&:cop_name).sort)
+    write_names('legacy_cop_names.txt', RuboCop::ConfigObsoletion.legacy_cop_names)
+  end
+
+  def write_names(filename, names)
+    @repository.join('src/resources', filename).write("#{names.join("\n")}\n")
+  end
 
   def project
     @repository.join('tests/fixtures/ported_project')
@@ -45,8 +55,10 @@ class PortedReference
   end
 
   def snapshot_options(options)
-    options.reject { |key, _| METADATA.include?(key) }.merge('TargetRubyVersion' => 3.4,
-                                                             'ActiveSupportExtensionsEnabled' => @config.active_support_extensions_enabled?)
+    options.reject { |key, _| METADATA.include?(key) }.merge(
+      'TargetRubyVersion' => 3.4,
+      'ActiveSupportExtensionsEnabled' => @config.active_support_extensions_enabled?
+    )
   end
 
   def investigate(test, index, options)
@@ -70,6 +82,8 @@ class PortedReference
                                           test.fetch('path').sub('$PROJECT', project.to_s))
     raise "Invalid Ruby syntax in case #{index}" unless source.valid_syntax?
 
+    source.registry = RuboCop::Cop::Registry.global
+    source.config = @config
     source
   end
 
