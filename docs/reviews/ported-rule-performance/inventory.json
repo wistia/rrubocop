@@ -1,0 +1,1860 @@
+{
+  "head": "832a13f9a10842551c09eef37fe3dc513b81fbd5",
+  "scope": "All 98 retained added cops; static analysis, no timings inferred",
+  "rules": [
+    {
+      "cop": "AnyCable/InstanceVars",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "instance_vars",
+      "node_kinds": [
+        "instance_variable"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 3,
+      "opportunities": [],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "AnyCable/PeriodicalTimers",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "timers",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 6,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P2_binding_model_reparse"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": false
+    },
+    {
+      "cop": "AnyCable/StreamFrom",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "stream",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 16,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "charset",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 20,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "collation",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 20,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "group": "wistia_scopes",
+      "registry_source": "src/cop/ported/wistia_scopes.rs",
+      "checker": "no_show",
+      "node_kinds": [
+        "method"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 3,
+      "opportunities": [
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Cops/EnforceScopeInPolicies",
+      "group": "wistia_scopes",
+      "registry_source": "src/cop/ported/wistia_scopes.rs",
+      "checker": "policy_scope",
+      "node_kinds": [
+        "class"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 6,
+      "opportunities": [
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "group": "wistia_scopes",
+      "registry_source": "src/cop/ported/wistia_scopes.rs",
+      "checker": "queue",
+      "node_kinds": [
+        "class"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 25,
+      "opportunities": [
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Cops/NoCSVGenerate",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "csv",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 3,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoCallbackSkippingProtectedWrites",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "protected_writes",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 17,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoConstantDefinitionsInSpecs",
+      "group": "wistia_scopes",
+      "registry_source": "src/cop/ported/wistia_scopes.rs",
+      "checker": "spec_constants",
+      "node_kinds": [
+        "class",
+        "module",
+        "assignment"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 9,
+      "opportunities": [],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Cops/NoContentIndexCallsInBackfills",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "content_index",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 5,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoDirectLanternConfigBuilderMutators",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "lantern",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 12,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoForeignKeys",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "foreign_keys",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 5,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P2_binding_model_reparse"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoRequireOnAutoLoadedPaths",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "require_autoload",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 3,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P3_filesystem_and_file_context"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoSetWithoutExpiration",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "redis_expiry",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 32,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoSetex",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "simple::setex",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 18,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P2_binding_model_reparse",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoSidekiqReceive",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "sidekiq_receive",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 5,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoSleep",
+      "group": "wistia_calls",
+      "registry_source": "src/cop/ported/wistia_calls.rs",
+      "checker": "sleep",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 8,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P2_binding_model_reparse"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+      "group": "wistia_scopes",
+      "registry_source": "src/cop/ported/wistia_scopes.rs",
+      "checker": "top_level",
+      "node_kinds": [
+        "program"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 9,
+      "opportunities": [],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "group": "difficult",
+      "registry_source": "src/cop/ported/difficult.rs",
+      "checker": "autoload::check",
+      "node_kinds": [
+        "class",
+        "module",
+        "assignment",
+        "operator_assignment",
+        "constant",
+        "scope_resolution"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 44,
+      "opportunities": [
+        "P3_filesystem_and_file_context"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Cops/RescueMustReportError",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "report_error",
+      "node_kinds": [
+        "rescue",
+        "rescue_modifier"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 53,
+      "opportunities": [
+        "P2_binding_model_reparse",
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Custom/RequireRespondToAny",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "respond_to",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 2,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/AmbiguousAssignment",
+      "group": "lint_literals",
+      "registry_source": "src/cop/ported/lint_literals.rs",
+      "checker": "ambiguous",
+      "node_kinds": [
+        "assignment"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 7,
+      "opportunities": [],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/BooleanSymbol",
+      "group": "lint_literals",
+      "registry_source": "src/cop/ported/lint_literals.rs",
+      "checker": "boolean_symbol",
+      "node_kinds": [
+        "simple_symbol",
+        "delimited_symbol",
+        "hash_key_symbol"
+      ],
+      "correctable": true,
+      "safe_autocorrect": false,
+      "app_specific": false,
+      "reference_cases": 13,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/DeprecatedConstants",
+      "group": "lint_literals",
+      "registry_source": "src/cop/ported/lint_literals.rs",
+      "checker": "deprecated",
+      "node_kinds": [
+        "constant",
+        "scope_resolution"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 19,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/DuplicateCaseCondition",
+      "group": "lint_duplicates",
+      "registry_source": "src/cop/ported/lint_duplicates.rs",
+      "checker": "case_conditions",
+      "node_kinds": [
+        "case"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 12,
+      "opportunities": [
+        "P4_canonical_string_allocation"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/DuplicateElsifCondition",
+      "group": "lint_duplicates",
+      "registry_source": "src/cop/ported/lint_duplicates.rs",
+      "checker": "elsif_conditions",
+      "node_kinds": [
+        "if"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 7,
+      "opportunities": [
+        "P4_canonical_string_allocation"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/DuplicateRequire",
+      "group": "lint_duplicates",
+      "registry_source": "src/cop/ported/lint_duplicates.rs",
+      "checker": "require",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": false,
+      "app_specific": false,
+      "reference_cases": 14,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk",
+        "P4_canonical_string_allocation",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/DuplicateRescueException",
+      "group": "lint_duplicates",
+      "registry_source": "src/cop/ported/lint_duplicates.rs",
+      "checker": "rescue_exceptions",
+      "node_kinds": [
+        "body_statement",
+        "begin"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 9,
+      "opportunities": [
+        "P4_canonical_string_allocation"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/EmptyExpression",
+      "group": "lint_literals",
+      "registry_source": "src/cop/ported/lint_literals.rs",
+      "checker": "empty",
+      "node_kinds": [
+        "parenthesized_statements"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 16,
+      "opportunities": [],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/EmptyWhen",
+      "group": "lint_duplicates",
+      "registry_source": "src/cop/ported/lint_duplicates.rs",
+      "checker": "empty_when",
+      "node_kinds": [
+        "when"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 19,
+      "opportunities": [
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/ErbNewArguments",
+      "group": "lint_calls",
+      "registry_source": "src/cop/ported/lint_calls.rs",
+      "checker": "erb",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 11,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/FloatComparison",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "float_comparison",
+      "node_kinds": [
+        "binary",
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 15,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/IdentityComparison",
+      "group": "lint_calls",
+      "registry_source": "src/cop/ported/lint_calls.rs",
+      "checker": "identity",
+      "node_kinds": [
+        "binary",
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 9,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/InterpolationCheck",
+      "group": "lint_literals",
+      "registry_source": "src/cop/ported/lint_literals.rs",
+      "checker": "interpolation",
+      "node_kinds": [
+        "string"
+      ],
+      "correctable": true,
+      "safe_autocorrect": false,
+      "app_specific": false,
+      "reference_cases": 14,
+      "opportunities": [
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/MixedRegexpCaptureTypes",
+      "group": "difficult",
+      "registry_source": "src/cop/ported/difficult.rs",
+      "checker": "mixed",
+      "node_kinds": [
+        "regex"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 30,
+      "opportunities": [
+        "P5_repeated_regexp_scan"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/MultipleComparison",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "multiple_comparison",
+      "node_kinds": [
+        "binary"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 7,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/NestedPercentLiteral",
+      "group": "lint_literals",
+      "registry_source": "src/cop/ported/lint_literals.rs",
+      "checker": "nested_percent",
+      "node_kinds": [
+        "string_array",
+        "symbol_array"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 14,
+      "opportunities": [],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/NumberedParameterAssignment",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "numbered::check",
+      "node_kinds": [
+        "identifier"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 16,
+      "opportunities": [],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/OrAssignmentToConstant",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "constant_or",
+      "node_kinds": [
+        "operator_assignment"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 8,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/OutOfRangeRegexpRef",
+      "group": "difficult",
+      "registry_source": "src/cop/ported/difficult.rs",
+      "checker": "range::OutOfRangeRegexpRef",
+      "node_kinds": [
+        "custom_file_model_or_tree_pass"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 91,
+      "opportunities": [
+        "P2_binding_model_reparse",
+        "P5_repeated_regexp_scan"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/RaiseException",
+      "group": "lint_calls",
+      "registry_source": "src/cop/ported/lint_calls.rs",
+      "checker": "raise_exception",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 20,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/RedundantWithIndex",
+      "group": "lint_calls",
+      "registry_source": "src/cop/ported/lint_calls.rs",
+      "checker": "with_index",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 16,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/RedundantWithObject",
+      "group": "lint_calls",
+      "registry_source": "src/cop/ported/lint_calls.rs",
+      "checker": "with_object",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 14,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/RefinementImportMethods",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "simple::refinement",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 15,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/RegexpAsCondition",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "regexp_condition",
+      "node_kinds": [
+        "regex"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 8,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/RescueType",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "rescue_type",
+      "node_kinds": [
+        "rescue"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 7,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/ReturnInVoidContext",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "void_return",
+      "node_kinds": [
+        "return"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 11,
+      "opportunities": [],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/SafeNavigationConsistency",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "safe_consistency",
+      "node_kinds": [
+        "binary"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 21,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/SafeNavigationWithEmpty",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "safe_empty",
+      "node_kinds": [
+        "if",
+        "unless",
+        "if_modifier",
+        "unless_modifier",
+        "conditional"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 8,
+      "opportunities": [
+        "P2_binding_model_reparse",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/SelfAssignment",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "self_assignment",
+      "node_kinds": [
+        "assignment",
+        "operator_assignment",
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 52,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P2_binding_model_reparse",
+        "P4_canonical_string_allocation"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/ShadowedArgument",
+      "group": "difficult",
+      "registry_source": "src/cop/ported/difficult.rs",
+      "checker": "shadow::ShadowedArgument",
+      "node_kinds": [
+        "custom_file_model_or_tree_pass"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 142,
+      "opportunities": [
+        "P4_materialized_descendant_walk",
+        "P6_scope_lookup_and_provenance"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/TopLevelReturnWithArgument",
+      "group": "lint_flow",
+      "registry_source": "src/cop/ported/lint_flow.rs",
+      "checker": "top_return",
+      "node_kinds": [
+        "return"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 12,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/TrailingCommaInAttributeDeclaration",
+      "group": "lint_calls",
+      "registry_source": "src/cop/ported/lint_calls.rs",
+      "checker": "attr_comma",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 4,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/TripleQuotes",
+      "group": "lint_literals",
+      "registry_source": "src/cop/ported/lint_literals.rs",
+      "checker": "triple",
+      "node_kinds": [
+        "chained_string"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 13,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Lint/UriEscapeUnescape",
+      "group": "lint_calls",
+      "registry_source": "src/cop/ported/lint_calls.rs",
+      "checker": "uri_escape",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 13,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/UriRegexp",
+      "group": "lint_calls",
+      "registry_source": "src/cop/ported/lint_calls.rs",
+      "checker": "uri_regexp",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 12,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "times::check",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": false,
+      "app_specific": false,
+      "reference_cases": 35,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Migration/DepartmentName",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "departments::check",
+      "node_kinds": [
+        "comment"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 16,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Rails/ReversibleMigrationMethodDefinition",
+      "group": "wistia_scopes",
+      "registry_source": "src/cop/ported/wistia_scopes.rs",
+      "checker": "migration",
+      "node_kinds": [
+        "class"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 3,
+      "opportunities": [
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Security/CompoundHash",
+      "group": "style_conditions",
+      "registry_source": "src/cop/ported/style_conditions.rs",
+      "checker": "compound_hash",
+      "node_kinds": [
+        "binary",
+        "operator_assignment",
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 25,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Serializers/AvoidCapitalizedKeys",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "capitalized",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 14,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Serializers/AvoidKeyAndBlock",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "key_block",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 8,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "group": "wistia_runtime",
+      "registry_source": "src/cop/ported/wistia_runtime.rs",
+      "checker": "method_block",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 6,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "serializers::single",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 26,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "serializers::plural",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": true,
+      "reference_cases": 39,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/ClassEqualityComparison",
+      "group": "style_conditions",
+      "registry_source": "src/cop/ported/style_conditions.rs",
+      "checker": "class_equality",
+      "node_kinds": [
+        "call",
+        "binary"
+      ],
+      "correctable": true,
+      "safe_autocorrect": false,
+      "app_specific": false,
+      "reference_cases": 26,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction",
+        "P8_config_regex_compilation"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/ColonMethodDefinition",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "simple::colon",
+      "node_kinds": [
+        "singleton_method"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 3,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/Dir",
+      "group": "style_calls",
+      "registry_source": "src/cop/ported/style_calls.rs",
+      "checker": "dir",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 6,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/EmptyBlockParameter",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "simple::empty_parameters",
+      "node_kinds": [
+        "block",
+        "do_block"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 13,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/EvalWithLocation",
+      "group": "difficult",
+      "registry_source": "src/cop/ported/difficult.rs",
+      "checker": "eval::check",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 68,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P2_binding_model_reparse",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/FileRead",
+      "group": "style_blocks",
+      "registry_source": "src/cop/ported/style_blocks.rs",
+      "checker": "file_read",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 14,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/FileWrite",
+      "group": "style_blocks",
+      "registry_source": "src/cop/ported/style_blocks.rs",
+      "checker": "file_write",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 9,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/HashConversion",
+      "group": "style_blocks",
+      "registry_source": "src/cop/ported/style_blocks.rs",
+      "checker": "hash_conversion",
+      "node_kinds": [
+        "element_reference",
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": false,
+      "app_specific": false,
+      "reference_cases": 23,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/HashExcept",
+      "group": "style_blocks",
+      "registry_source": "src/cop/ported/style_blocks.rs",
+      "checker": "hash_except",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 53,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/KeywordParametersOrder",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "keywords::check",
+      "node_kinds": [
+        "method_parameters",
+        "block_parameters",
+        "lambda_parameters"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 18,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/MapCompactWithConditionalBlock",
+      "group": "style_blocks",
+      "registry_source": "src/cop/ported/style_blocks.rs",
+      "checker": "map_compact",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 40,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "mixins::check",
+      "node_kinds": [
+        "class",
+        "module"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 38,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/MixinUsage",
+      "group": "style_conditions",
+      "registry_source": "src/cop/ported/style_conditions.rs",
+      "checker": "mixin",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 22,
+      "opportunities": [
+        "P1_call_dispatch"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/MultilineWhenThen",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "simple::when_then",
+      "node_kinds": [
+        "when"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 13,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/OrAssignment",
+      "group": "style_conditions",
+      "registry_source": "src/cop/ported/style_conditions.rs",
+      "checker": "or_assignment",
+      "node_kinds": [
+        "assignment",
+        "if",
+        "unless",
+        "if_modifier",
+        "unless_modifier",
+        "conditional"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 31,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/RandomWithOffset",
+      "group": "style_calls",
+      "registry_source": "src/cop/ported/style_calls.rs",
+      "checker": "random",
+      "node_kinds": [
+        "binary",
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 37,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/RedundantAssignment",
+      "group": "style_conditions",
+      "registry_source": "src/cop/ported/style_conditions.rs",
+      "checker": "redundant_assignment",
+      "node_kinds": [
+        "method",
+        "singleton_method"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 13,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "group": "style_conditions",
+      "registry_source": "src/cop/ported/style_conditions.rs",
+      "checker": "redundant_conditional",
+      "node_kinds": [
+        "if",
+        "unless",
+        "conditional",
+        "elsif"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 15,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/RedundantFileExtensionInRequire",
+      "group": "style_calls",
+      "registry_source": "src/cop/ported/style_calls.rs",
+      "checker": "require_extension",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 9,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/RedundantRegexpCharacterClass",
+      "group": "style_regexp",
+      "registry_source": "src/cop/ported/style_regexp.rs",
+      "checker": "character_class",
+      "node_kinds": [
+        "regex"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 82,
+      "opportunities": [
+        "P5_repeated_regexp_scan",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/RedundantRegexpEscape",
+      "group": "style_regexp",
+      "registry_source": "src/cop/ported/style_regexp.rs",
+      "checker": "escape",
+      "node_kinds": [
+        "regex"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 79,
+      "opportunities": [
+        "P5_repeated_regexp_scan",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/RedundantSort",
+      "group": "style_calls",
+      "registry_source": "src/cop/ported/style_calls.rs",
+      "checker": "sort",
+      "node_kinds": [
+        "call",
+        "element_reference"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 55,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "group": "style_calls",
+      "registry_source": "src/cop/ported/style_calls.rs",
+      "checker": "slicing",
+      "node_kinds": [
+        "element_reference"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 20,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/StderrPuts",
+      "group": "style_calls",
+      "registry_source": "src/cop/ported/style_calls.rs",
+      "checker": "stderr",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 9,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/StringChars",
+      "group": "style_calls",
+      "registry_source": "src/cop/ported/style_calls.rs",
+      "checker": "string_chars",
+      "node_kinds": [
+        "call"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 12,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/TopLevelMethodDefinition",
+      "group": "style_conditions",
+      "registry_source": "src/cop/ported/style_conditions.rs",
+      "checker": "top_method",
+      "node_kinds": [
+        "method",
+        "singleton_method",
+        "call"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 20,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P2_binding_model_reparse"
+      ],
+      "classification": "candidate_hotspot",
+      "call_gate_present": false
+    },
+    {
+      "cop": "Style/TrailingBodyOnMethodDefinition",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "methods::body",
+      "node_kinds": [
+        "method",
+        "singleton_method"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 15,
+      "opportunities": [
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/TrailingCommaInBlockArgs",
+      "group": "style_blocks",
+      "registry_source": "src/cop/ported/style_blocks.rs",
+      "checker": "block_comma",
+      "node_kinds": [
+        "block",
+        "do_block"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 23,
+      "opportunities": [
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/TrailingMethodEndStatement",
+      "group": "retained",
+      "registry_source": "src/cop/ported/retained.rs",
+      "checker": "methods::end",
+      "node_kinds": [
+        "method"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 17,
+      "opportunities": [
+        "P4_materialized_descendant_walk",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/UnlessLogicalOperators",
+      "group": "style_conditions",
+      "registry_source": "src/cop/ported/style_conditions.rs",
+      "checker": "unless_logic",
+      "node_kinds": [
+        "unless",
+        "unless_modifier"
+      ],
+      "correctable": false,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 31,
+      "opportunities": [
+        "P4_materialized_descendant_walk"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": null
+    },
+    {
+      "cop": "Style/UnpackFirst",
+      "group": "style_calls",
+      "registry_source": "src/cop/ported/style_calls.rs",
+      "checker": "unpack",
+      "node_kinds": [
+        "call",
+        "element_reference"
+      ],
+      "correctable": true,
+      "safe_autocorrect": true,
+      "app_specific": false,
+      "reference_cases": 15,
+      "opportunities": [
+        "P1_call_dispatch",
+        "P7_eager_correction_construction"
+      ],
+      "classification": "bounded_local_or_subtree_work",
+      "call_gate_present": false
+    }
+  ]
+}
