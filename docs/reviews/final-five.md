@@ -1,5 +1,7 @@
 # Final five ports: independent review
 
+**Follow-up:** All findings below are addressed in the [parity fixes and optimization record](port-fixes-and-optimizations.md). The remainder preserves the original review evidence.
+
 Reviewed implementation commit `832a13f9a10842551c09eef37fe3dc513b81fbd5`. This is a review record; the findings below remain unfixed. New targeted comparisons supplement the previously passing 375 final-five reference cases and CLI correction checks.
 
 | Priority | Cop | Confirmed discrepancy |

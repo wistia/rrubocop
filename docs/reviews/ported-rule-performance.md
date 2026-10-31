@@ -1,5 +1,7 @@
 # Performance review of all 98 added ports
 
+**Follow-up:** The concrete optimization categories are implemented in the [parity fixes and optimization record](port-fixes-and-optimizations.md), including controlled before/after results. The remainder preserves the original audit.
+
 Read-only audit of `832a13f9a10842551c09eef37fe3dc513b81fbd5` in `the rrubocop checkout`. No source edits or builds. The working tree remained clean. Coverage: **98 ports = 28 app-specific + 70 generic**, 2,024 pinned reference cases; 672 registered cops overall.
 
 ## Findings

@@ -11,16 +11,18 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 657 Rust tests, including 2,024 pinned Ruby reference examples across 98 added cops.
+- 672 Rust tests, including 2,054 pinned Ruby reference examples across 98 added cops.
+  The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
+  the 30 newly added regressions, correction-mode coverage and current measurements.
 - Paired positive/negative Ruby fixtures for every new cop.
 - Comparisons check offense locations, messages, correctability, and actual
   correction output. Configuration probes cover options, disabled corrections,
   safe corrections, binding scope, and AnyCable inclusion/exclusion. Unique short
   keys and explicitly required extension classes activate the intended policies.
-- All 460 changed fixture outputs whose originals compile also compile with
+- All 591 changed fixture outputs also compile with
   Ruby 3.4.9. Regexp and heredoc regressions include explicit semantic safeguards.
 - `abcop --full` passes without threshold changes or suppressions.
-- Full uncached Rust scan: 14,762 application files, 32.60 seconds, 179,224 KiB
+- Earlier pre-optimization uncached Rust scan: 14,762 application files, 32.60 seconds, 179,224 KiB
   peak RSS. It reports 27 existing regexp offenses (19 redundant escapes and
   8 single-element character classes).
 
