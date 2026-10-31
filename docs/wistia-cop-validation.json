@@ -22,8 +22,24 @@
   },
   "notes": [
     "Rust scan runs all enabled registered cops; Ruby comparison selects the requested79 plus mandatory syntax while respecting local disables.",
-    "Normal pinned Ruby full scans hide these27 regexp findings because another cop mutates the shared regexp tree.",
-    "Eight difficult audit gaps and retained review candidates still need Ruby enforcement."
+    "Before retiring the duplicate-regexp cop, normal pinned Ruby full scans hid these27 findings because it and MixedCaseRange mutated the shared regexp tree; MixedCaseRange still causes suppression after that retirement.",
+    "Five of the original difficult audit checks and retained review candidates still need Ruby enforcement."
   ],
-  "ruby_compiler_checked_rewrites": 460
+  "ruby_compiler_checked_rewrites": 460,
+  "followup_policy": {
+    "retired": [
+      "Lint/DuplicateRegexpCharacterClassElement",
+      "Style/RedundantCondition",
+      "Style/SuperArguments"
+    ],
+    "retained": [
+      "Lint/MixedRegexpCaptureTypes",
+      "Lint/OutOfRangeRegexpRef",
+      "Lint/ShadowedArgument",
+      "Style/EvalWithLocation",
+      "Cops/NoUndiscoverableAutoLoadedConstants"
+    ],
+    "autoload_overlap_review": "Retain: eager loading passes files whose expected constant is defined alongside an independently undiscoverable sibling.",
+    "remaining_regexp_interaction": "Retained Lint/MixedCaseRange also consumes the shared regexp tree through RegexpRanges#populate. Full Ruby runs still hide the27 findings after retiring the duplicate cop; temporarily excluding MixedCaseRange restores exact Rust locations."
+  }
 }

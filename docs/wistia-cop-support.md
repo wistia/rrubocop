@@ -38,8 +38,32 @@ That run takes 257.88 seconds and exactly matches all 27 Rust diagnostics,
 including locations and messages. All 24 app-specific rules also pass positive
 activation probes using the real Wistia configuration.
 
-No application files are rewritten by this change. The eight difficult audit
-items and retained review candidates still require their Ruby coverage.
+No application files are rewritten by this change. Following the policy review,
+five of the original eight difficult audit items still need Ruby coverage, along
+with the retained review candidates.
+
+## Follow-up policy review
+
+Wistia retired `Lint/DuplicateRegexpCharacterClassElement`,
+`Style/RedundantCondition`, and `Style/SuperArguments`. The first provides modest
+syntax cleanup and has the shared-tree mutation bug described above; the other
+two mainly prefer shorter code or implicit argument forwarding. A follow-up
+probe confirmed that retained `Lint/MixedCaseRange` also consumes the shared
+regexp tree through `RegexpRanges#populate`, so full Ruby runs continue hiding
+the 27 findings. Temporarily excluding that second cop for diagnosis restores
+all 27 Rust-reported locations; retiring the duplicate cop alone does not repair
+the shared-parser problem.
+
+Keep `Lint/MixedRegexpCaptureTypes`, `Lint/OutOfRangeRegexpRef`,
+`Lint/ShadowedArgument`, and `Style/EvalWithLocation` for their correctness and
+debugging value. Retain the existing `Safe: false` setting on out-of-range refs.
+
+The autoload overlap review also retains
+`Cops/NoUndiscoverableAutoLoadedConstants`. Zeitwerk eager loading verifies each
+file's expected constant, but an unrelated sibling defined in the same file can
+still lack its own autoload entry. An isolated loader probe passes eager loading
+for that file while the custom cop correctly flags the sibling. The Wistia policy
+branch adds a regression for this case; ordinary nested constants remain allowed.
 
 ## Deliberate correction safeguards
 
