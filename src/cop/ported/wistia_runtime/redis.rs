@@ -18,23 +18,25 @@ pub(super) fn redis_expiry(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn expiration(c: &Context<'_>, n: Node<'_>) -> bool {
-    ["ex", "exat", "px", "pxat"]
-        .iter()
-        .any(|key| c.symbol_pair_value(n, key).is_some())
+    option_pairs(n).into_iter().any(|pair| {
+        field(pair, "key").is_some_and(|key| {
+            c.symbol(key) && ["ex", "exat", "px", "pxat"].contains(&c.value(key))
+        })
+    })
 }
 
 fn redis_block(c: &Context<'_>, n: Node<'_>) -> bool {
-    if n.parent()
-        .is_none_or(|p| p.kind() != "block_body" || kids(p).len() < 2)
-    {
+    let Some(body) = n.parent().filter(|p| transaction_body(*p)) else {
         return false;
-    }
-    ancestors(n)
-        .into_iter()
-        .filter(|parent| transaction(c, *parent))
-        .any(|parent| {
-            first_parameter(parent).is_some_and(|parameter| c.text(parameter) == c.receiver(n))
-        })
+    };
+    let Some(call) = body
+        .parent()
+        .and_then(|b| b.parent())
+        .filter(|p| transaction(c, *p))
+    else {
+        return false;
+    };
+    first_parameter(call).is_some_and(|parameter| c.text(parameter) == c.receiver(n))
 }
 
 fn transaction(c: &Context<'_>, n: Node<'_>) -> bool {
@@ -51,7 +53,16 @@ fn first_parameter(n: Node<'_>) -> Option<Node<'_>> {
 
 fn has_expiration(c: &Context<'_>, n: Node<'_>) -> bool {
     args(n)
-        .get(2)
-        .is_some_and(|argument| expiration(c, *argument))
-        || expiration(c, n)
+        .into_iter()
+        .filter(|a| a.kind() != "comment")
+        .skip(2)
+        .any(|option| expiration(c, option))
 }
+
+fn transaction_body(n: Node<'_>) -> bool {
+    matches!(n.kind(), "block_body" | "body_statement") && kids(n).len() >= 2
+}
+
+#[cfg(test)]
+#[path = "guardrail_tests.rs"]
+mod tests;

@@ -14,21 +14,34 @@ pub(super) fn check_pairs(cases: &[Case]) {
 }
 fn check_pair(cases: &[Case], name: &str) {
     for (positive, filename) in [(true, "offense.rb"), (false, "no_offense.rb")] {
-        let original = cases
-            .iter()
-            .find(|c| c.cop == name && !c.expected.is_empty() == positive)
-            .unwrap();
         let parsed = parsed_fixture(name, filename);
+        let original = matching_case(cases, name, positive, &parsed);
         let case = fixture_case(original, &parsed);
         assert_eq!(case.source, original.source, "{name} {filename}");
         assert_eq!(
             parsed.expected.len(),
-            original.expected.len(),
+            runner::expected(original).len(),
             "{name} {filename}"
         );
         runner::assert_case(&CopRegistry::default_registry(), &case);
     }
 }
+fn matching_case<'a>(
+    cases: &'a [Case],
+    name: &str,
+    positive: bool,
+    parsed: &crate::testutil::ParsedFixture,
+) -> &'a Case {
+    cases
+        .iter()
+        .find(|case| {
+            case.cop == name
+                && case.source.as_bytes() == parsed.source
+                && !runner::expected(case).is_empty() == positive
+        })
+        .unwrap_or_else(|| panic!("No reference case for {name}, positive={positive}"))
+}
+
 fn fixture_case(original: &Case, parsed: &crate::testutil::ParsedFixture) -> Case {
     let mut case = original.clone();
     case.source = String::from_utf8(parsed.source.clone()).unwrap();

@@ -170,6 +170,7 @@ fn report_missing_blank(
                 replacement: "\n".into(),
                 cop_name: cop.name(),
                 cop_index: 0,
+                owner: None,
             });
             diag.corrected = true;
         }

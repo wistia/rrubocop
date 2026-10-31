@@ -36,13 +36,41 @@ fn reports_in(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn reports(c: &Context<'_>, n: Node<'_>) -> bool {
-    (is_call(n) || n.kind() == "identifier")
-        && (c.method(n) == "raise"
-            || sentry_report(c, n)
-            || c.receiver(n).trim_start_matches("::") == "Rails.error" && c.method(n) == "report")
+    if is_call(n) && !safe(c, n) {
+        c.method(n) == "raise" || sentry_report(c, n) || rails_report(c, n)
+    } else {
+        bare_raise(c, n)
+    }
+}
+
+fn bare_raise(c: &Context<'_>, n: Node<'_>) -> bool {
+    n.kind() == "identifier"
+        && c.text(n) == "raise"
+        && !n
+            .parent()
+            .is_some_and(|p| field(p, "method") == Some(n) || field(p, "name") == Some(n))
+        && !local_identifier(c, n)
 }
 
 fn sentry_report(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.receiver(n).trim_start_matches("::") == "Sentry"
+    field(n, "receiver").is_some_and(|r| constant(c, r, "Sentry"))
         && ["capture_exception", "capture_message"].contains(&c.method(n))
+}
+
+fn rails_report(c: &Context<'_>, n: Node<'_>) -> bool {
+    c.method(n) == "report" && field(n, "receiver").is_some_and(|receiver| rails_error(c, receiver))
+}
+
+fn rails_error(c: &Context<'_>, n: Node<'_>) -> bool {
+    is_call(n)
+        && !safe(c, n)
+        && c.method(n) == "error"
+        && field(n, "receiver").is_some_and(|receiver| constant(c, receiver, "Rails"))
+}
+
+fn constant(c: &Context<'_>, n: Node<'_>, name: &str) -> bool {
+    n.kind() == "constant" && c.text(n) == name
+        || n.kind() == "scope_resolution"
+            && field(n, "scope").is_none()
+            && field(n, "name").is_some_and(|constant| c.text(constant) == name)
 }

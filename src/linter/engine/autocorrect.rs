@@ -95,7 +95,10 @@ pub(crate) fn lint_bytes_autocorrect(
     if mode == AutocorrectMode::Off {
         return Ok(ctx.lint_bytes(bytes)?.diagnostics);
     }
-    run_autocorrect_loop(&ctx, bytes)
+    let mut candidate = bytes.clone();
+    let diagnostics = run_autocorrect_loop(&ctx, &mut candidate)?;
+    *bytes = candidate;
+    Ok(diagnostics)
 }
 
 fn run_autocorrect_loop(ctx: &LintCtx<'_>, bytes: &mut Vec<u8>) -> Result<Vec<Diagnostic>> {
@@ -121,11 +124,17 @@ fn collect_corrected_passes(
             PassOutcome::Finished => return Ok(corrected),
             PassOutcome::Applied { mut diags, set } => {
                 corrected.extend(diags.drain(..).filter(|d| d.corrected));
-                *bytes = set.apply(bytes);
+                *bytes = validated_edits(ctx, bytes, &set)?;
             }
         }
     }
     Ok(corrected)
+}
+
+fn validated_edits(ctx: &LintCtx<'_>, bytes: &[u8], set: &CorrectionSet) -> Result<Vec<u8>> {
+    let candidate = set.apply(bytes);
+    syntax::validate(ctx, &candidate)?;
+    Ok(candidate)
 }
 
 enum PassOutcome {
@@ -176,7 +185,7 @@ mod tests {
     use crate::config::ResolvedConfig;
     use crate::cop::registry::CopRegistry;
 
-    fn lint_only(path: &str, bytes: &mut Vec<u8>, only: &str) -> Vec<Diagnostic> {
+    pub(super) fn lint_only(path: &str, bytes: &mut Vec<u8>, only: &str) -> Vec<Diagnostic> {
         let config = ResolvedConfig::empty();
         let registry = CopRegistry::default_registry();
         let filters = CopFilterSet::build(&config, &registry);
@@ -267,6 +276,7 @@ mod tests {
                 replacement: String::new(),
                 cop_name: "Layout/Other",
                 cop_index: 0,
+                owner: None,
             }]),
         );
         assert!(!diags[0].corrected);
@@ -275,3 +285,11 @@ mod tests {
 
 #[cfg(test)]
 mod config_tests;
+
+#[cfg(test)]
+mod ownership_tests;
+
+mod syntax;
+
+#[cfg(test)]
+mod syntax_tests;

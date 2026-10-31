@@ -136,8 +136,11 @@ fn expand_cop_list(list: &[String], registry: &CopRegistry) -> Vec<String> {
 }
 
 pub fn should_fail(diagnostics: &[Diagnostic], fail_level: &str) -> bool {
-    let Some(min) = Severity::from_str(fail_level) else {
-        return !diagnostics.is_empty();
-    };
-    diagnostics.iter().any(|d| d.severity >= min)
+    let min = Severity::from_str(fail_level).unwrap_or(Severity::Convention);
+    diagnostics
+        .iter()
+        .any(|d| !d.corrected && d.severity >= min)
 }
+
+#[cfg(test)]
+mod failure_tests;

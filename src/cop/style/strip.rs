@@ -78,6 +78,7 @@ fn report(
             replacement: format!("{root_src}.strip"),
             cop_name: cop.name(),
             cop_index: 0,
+            owner: None,
         });
         diag.corrected = true;
     }

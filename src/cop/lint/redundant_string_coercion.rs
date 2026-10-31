@@ -37,6 +37,7 @@ fn strip_to_s(source: &SourceFile, call: Node<'_>, recv: Node<'_>) -> Correction
         replacement: String::new(),
         cop_name: "Lint/RedundantStringCoercion",
         cop_index: 0,
+        owner: None,
     }
 }
 
@@ -47,6 +48,7 @@ fn self_corr(call: Node<'_>) -> Correction {
         replacement: "self".to_string(),
         cop_name: "Lint/RedundantStringCoercion",
         cop_index: 0,
+        owner: None,
     }
 }
 

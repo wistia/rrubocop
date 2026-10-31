@@ -40,6 +40,7 @@ fn fix_gap(
         replacement: "\n".repeat(number),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     true
 }

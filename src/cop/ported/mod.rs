@@ -125,7 +125,8 @@ fn in_parameters(n: Node<'_>) -> bool {
 fn accepts_safe(name: &str) -> bool {
     matches!(
         name,
-        "Lint/SelfAssignment"
+        "Cops/NoCallbackSkippingProtectedWrites"
+            | "Lint/SelfAssignment"
             | "Lint/SafeNavigationConsistency"
             | "Lint/RedundantWithIndex"
             | "Lint/RedundantWithObject"
@@ -144,10 +145,8 @@ fn emit(
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<&mut Vec<Correction>>,
 ) {
-    let (line, col) = source.offset_to_line_col(finding.start);
-    let mut diagnostic = rule.diagnostic(source, line, col, finding.message);
-    diagnostic.highlight_length = finding.end.saturating_sub(finding.start).max(1);
-    diagnostic.correctable = finding.edit.is_some();
+    let mut diagnostic = finding_diagnostic(rule, source, &finding);
+    let before = corrections.as_ref().map_or(0, |edits| edits.len());
     if let Some((start, end, replacement)) = finding.edit {
         diagnostic.corrected =
             crate::cop::shared::push_replace(corrections, start, end, replacement, rule.name);
@@ -156,7 +155,24 @@ fn emit(
         diagnostic.corrected |=
             crate::cop::shared::push_replace(corrections, start, end, replacement, rule.name);
     }
+    own_edits(corrections, before, finding.start);
     diagnostics.push(diagnostic);
+}
+
+fn finding_diagnostic(rule: &Rule, source: &SourceFile, finding: &Finding) -> Diagnostic {
+    let (line, col) = source.offset_to_line_col(finding.start);
+    let mut diagnostic = rule.diagnostic(source, line, col, finding.message.clone());
+    diagnostic.highlight_length = finding.end.saturating_sub(finding.start).max(1);
+    diagnostic.correctable = finding.edit.is_some();
+    diagnostic
+}
+
+fn own_edits(corrections: &mut Option<&mut Vec<Correction>>, before: usize, owner: usize) {
+    if let Some(edits) = corrections.as_deref_mut() {
+        for edit in &mut edits[before..] {
+            edit.owner = Some(owner);
+        }
+    }
 }
 
 pub fn register_all(registry: &mut CopRegistry) {

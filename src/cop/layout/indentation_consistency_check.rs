@@ -30,6 +30,7 @@ fn fix_indent(
         replacement: " ".repeat(base),
         cop_name,
         cop_index: 0,
+        owner: None,
     });
     true
 }

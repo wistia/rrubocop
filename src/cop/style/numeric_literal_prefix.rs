@@ -49,6 +49,7 @@ impl Cop for NumericLiteralPrefix {
                 replacement: "o".into(),
                 cop_name: self.name(),
                 cop_index: 0,
+                owner: None,
             });
             diag.corrected = true;
         }

@@ -20,13 +20,15 @@ pub(super) fn protected_writes(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn protected_column(c: &Context<'_>, n: Node<'_>) -> bool {
-    let arguments = args(n);
+    let arguments = args(n)
+        .into_iter()
+        .filter(|a| a.kind() != "comment")
+        .collect::<Vec<_>>();
     arguments.len() == 2 && c.symbol(arguments[0]) && c.value(arguments[0]) == "protected"
 }
 
 fn protected_hash(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.pair_value(n, "protected").is_some()
-        && option_pairs(n).iter().any(|pair| protected_pair(c, *pair))
+    option_pairs(n).iter().any(|pair| protected_pair(c, *pair))
 }
 
 fn protected_pair(c: &Context<'_>, n: Node<'_>) -> bool {

@@ -110,6 +110,7 @@ fn push_sorted_correction(group: &[DepEntry], corr: &mut Vec<Correction>, bytes:
             .collect(),
         cop_name: "Gemspec/OrderedDependencies",
         cop_index: 0,
+        owner: None,
     });
 }
 

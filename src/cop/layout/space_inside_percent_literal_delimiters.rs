@@ -71,6 +71,7 @@ fn strip_sides(
             replacement: String::new(),
             cop_name,
             cop_index: 0,
+            owner: None,
         });
     }
     if sp_b {
@@ -84,6 +85,7 @@ fn strip_sides(
             replacement: String::new(),
             cop_name,
             cop_index: 0,
+            owner: None,
         });
     }
 }

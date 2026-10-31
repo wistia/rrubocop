@@ -167,6 +167,7 @@ fn push_replace(
         replacement: replacement.to_string(),
         cop_name,
         cop_index: 0,
+        owner: None,
     });
     true
 }

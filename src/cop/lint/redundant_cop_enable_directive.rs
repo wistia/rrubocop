@@ -116,6 +116,7 @@ fn push_enable_fix(
         replacement: String::new(),
         cop_name: "Lint/RedundantCopEnableDirective",
         cop_index: 0,
+        owner: None,
     });
     true
 }

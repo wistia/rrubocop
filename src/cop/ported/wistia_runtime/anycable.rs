@@ -25,7 +25,7 @@ pub(super) fn stream(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !valid_stream_arguments(c, n) {
         return vec![];
     }
-    descendants(n)
+    option_pairs(n)
         .into_iter()
         .filter(|p| custom_coder(c, *p))
         .map(|p| Finding::new(p, "Custom coders are not supported in AnyCable"))
@@ -43,14 +43,25 @@ fn custom_coder(c: &Context<'_>, n: Node<'_>) -> bool {
     n.kind() == "pair"
         && coder_key(c, n)
         && n.child_by_field_name("value")
-            .is_none_or(|v| c.text(v) != "ActiveSupport::JSON")
+            .is_none_or(|v| !active_support_json(c, v))
 }
 
 fn coder_key(c: &Context<'_>, n: Node<'_>) -> bool {
     n.child_by_field_name("key")
-        .is_some_and(|k| c.value(k) == "coder")
+        .is_some_and(|k| c.symbol(k) && c.value(k) == "coder")
 }
 
 fn valid_stream_arguments(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.method(n) != "stream_from" || args(n).first().is_some_and(|a| a.kind() == "string")
+    c.method(n) != "stream_from"
+        || args(n)
+            .into_iter()
+            .find(|a| a.kind() != "comment")
+            .is_some_and(|a| a.kind() == "string")
+}
+
+fn active_support_json(c: &Context<'_>, n: Node<'_>) -> bool {
+    n.kind() == "scope_resolution"
+        && field(n, "scope")
+            .is_some_and(|scope| scope.kind() == "constant" && c.text(scope) == "ActiveSupport")
+        && field(n, "name").is_some_and(|name| c.text(name) == "JSON")
 }

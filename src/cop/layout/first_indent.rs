@@ -63,6 +63,7 @@ fn report_indent(
                 replacement: " ".repeat(expected),
                 cop_name: cop.name(),
                 cop_index: 0,
+                owner: None,
             });
             diag.corrected = true;
         }

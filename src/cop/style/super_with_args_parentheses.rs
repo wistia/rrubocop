@@ -88,6 +88,7 @@ fn push_parens(
         replacement: "(".into(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     corr.push(Correction {
         start: last_arg.end_byte(),
@@ -95,6 +96,7 @@ fn push_parens(
         replacement: ")".into(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     diag.corrected = true;
 }

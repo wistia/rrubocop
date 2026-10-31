@@ -82,6 +82,7 @@ fn insert_nl_before_close(cop: &dyn Cop, close_off: usize, corr: &mut Vec<Correc
         replacement: "\n".into(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
 }
 
@@ -111,6 +112,7 @@ fn move_close_inline(
         replacement: close_ch.to_string(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     corr.push(Correction {
         start: remove_start,
@@ -118,6 +120,7 @@ fn move_close_inline(
         replacement: String::new(),
         cop_name: cop.name(),
         cop_index: 1,
+        owner: None,
     });
     true
 }

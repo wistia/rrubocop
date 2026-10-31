@@ -10,7 +10,7 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 616 Rust tests, including 1,538 pinned Ruby reference examples across 93 added cops.
+- 652 Rust tests, including 1,649 pinned Ruby reference examples across 93 added cops.
 - Paired positive/negative Ruby fixtures for every new cop.
 - Comparisons check offense locations, messages, correctability, and actual
   correction output. Configuration probes cover options, disabled corrections,
@@ -75,9 +75,10 @@ resolved even when their actual check is not yet ported; name resolution is not
 an implementation claim. The reference refresh script also regenerates this
 name inventory and the pinned legacy-name inventory.
 
-Both serializer rules and keyword-order enforcement honor Wistia's
-`AutoCorrect: disabled` setting. The suite also checks their correction behavior
-when explicitly enabled. All 14 positive activation probes pass using the real
+The serializer method-to-block rules are now diagnostic-only even under explicit
+correction enablement, because moving public methods cannot generally preserve
+callers, parameters, and control flow. Keyword-order enforcement continues to honor
+Wistia's `AutoCorrect: disabled` setting. All 14 positive activation probes pass using the real
 Wistia config without forcing enablement via `--only`. The 93 changed Ruby outputs
 from this batch compile under Ruby 3.4.9. Eight engine probes also verify disabled
 corrections in both modes, non-default indentation width, and the setex rewrite.
@@ -113,7 +114,7 @@ branch adds a regression for this case; ordinary nested constants remain allowed
 
 ## Deliberate correction safeguards
 
-Seven reference examples record an explicit Rust difference and its reason:
+Reference cases record explicit Rust safeguards and their reasons:
 
 - Inline free-spacing regexp whitespace classes retain their diagnostic but are
   not autocorrected when removing the brackets changes the match.
@@ -129,6 +130,28 @@ Seven reference examples record an explicit Rust difference and its reason:
 integer arithmetic, including hex/binary literals and values beyond `i64`.
 `AutoCorrect: disabled` blocks both correction modes; `Safe` and
 `SafeAutoCorrect` are respected by safe correction mode.
+
+## Custom cop review fixes
+
+The [custom cop review](reviews/custom-cops.md) records the complete findings and
+resolution. Multi-edit corrections now have stable ownership, respect disable
+comments, apply atomically, and receive accurate correction credit. Invalid native
+syntax in any candidate batch aborts without writing the original file. Independent
+same-position insertions are serialized across correction passes.
+
+Migration correctors insert into the argument list, preserve supplied shorthand
+options, and decline unknown option bundles. NoSetex only reorders stable literals
+or proven lexical locals; uncertain/effectful arguments remain manual findings.
+The serializer transformation code was removed while retaining both checks.
+The diagnostic guardrail fixes cover Redis transactions, protected-write arguments,
+AnyCable option boundaries, and AST-based rescue reporting. Existing Ruby matcher
+holes and unsafe rewrites are documented as intentional reference differences.
+
+The post-fix full scan inspects 14,762 files in 39.93 seconds and reports the same
+27 regexp findings with unchanged locations and messages. All 554 changed reference
+outputs compile on Ruby 3.4.9. Runtime probes preserve five serializer field results
+and three Redis/table argument results. These checks supplement the clean current
+corpus with adverse correction inputs that it does not contain.
 
 ## Reproducing the reference fixtures
 

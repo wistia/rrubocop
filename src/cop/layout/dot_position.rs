@@ -43,6 +43,7 @@ fn fix_leading(cop: &dyn Cop, dot: usize, method: Node<'_>, corr: &mut Vec<Corre
         replacement: String::new(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     corr.push(Correction {
         start: method.start_byte(),
@@ -50,6 +51,7 @@ fn fix_leading(cop: &dyn Cop, dot: usize, method: Node<'_>, corr: &mut Vec<Corre
         replacement: ".".into(),
         cop_name: cop.name(),
         cop_index: 1,
+        owner: None,
     });
 }
 

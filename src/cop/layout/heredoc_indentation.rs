@@ -106,6 +106,7 @@ fn fix_to_squiggly(
         replacement: format!("<<~{}", String::from_utf8_lossy(rest)),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
 }
 
@@ -136,6 +137,7 @@ fn fix_body_indents(
                 replacement: " ".repeat(target),
                 cop_name: cop.name(),
                 cop_index: ci,
+                owner: None,
             });
         }
         off += line_bytes.len() + 1;

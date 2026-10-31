@@ -11,6 +11,7 @@ struct Case {
     path: String,
     config: HashMap<String, serde_yml::Value>,
     expected: Vec<Expected>,
+    rust_expected: Option<Vec<Expected>>,
     corrected: String,
     rust_corrected: Option<String>,
     rust_correctable: Option<bool>,
@@ -49,7 +50,7 @@ fn pinned_ruby_diagnostics_and_corrections() {
 fn case_difference(registry: &CopRegistry, index: usize, case: &Case) -> Option<String> {
     let (actual, corrected) = runner::run(registry, case);
     let expected = runner::expected(case);
-    if case.rust_corrected.is_some() {
+    if case.rust_corrected.is_some() || case.rust_expected.is_some() {
         assert!(case.reason.is_some());
     }
     if actual == expected && corrected == *runner::expected_correction(case) {

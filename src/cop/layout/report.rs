@@ -38,6 +38,7 @@ pub fn shift_lines(
             replacement: " ".repeat(new_indent),
             cop_name: cop.name(),
             cop_index: 0,
+            owner: None,
         });
         applied = true;
     }
@@ -64,6 +65,7 @@ pub fn report_fix(
             replacement,
             cop_name: cop.name(),
             cop_index: 0,
+            owner: None,
         });
         diag.corrected = true;
     }
@@ -109,6 +111,7 @@ pub fn insert_newline(
                 replacement: "\n".into(),
                 cop_name: cop.name(),
                 cop_index: 0,
+                owner: None,
             });
             diag.corrected = true;
         }
@@ -136,6 +139,7 @@ pub fn fix_indent(
                 replacement: " ".repeat(expected),
                 cop_name: cop.name(),
                 cop_index: 0,
+                owner: None,
             });
             diag.corrected = true;
         }

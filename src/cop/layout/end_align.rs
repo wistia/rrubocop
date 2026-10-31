@@ -25,6 +25,7 @@ fn apply_fix(
         replacement: " ".repeat(base_col),
         cop_name,
         cop_index: 0,
+        owner: None,
     });
     true
 }

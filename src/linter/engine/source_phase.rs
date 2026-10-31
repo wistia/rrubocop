@@ -21,7 +21,15 @@ pub(super) fn run_line_phase(
         let mut corr_buf = allow_corr(mode, *cop, cfg).then(Vec::new);
         let before = diagnostics.len();
         cop.check_lines(source, cfg, diagnostics, corr_buf.as_mut());
-        finish_cop_pass(diagnostics, before, cfg, &mut corr_buf, *idx, corrections);
+        finish_cop_pass(
+            source,
+            diagnostics,
+            before,
+            cfg,
+            &mut corr_buf,
+            *idx,
+            corrections,
+        );
     }
 }
 
@@ -80,7 +88,15 @@ fn one_file_model_cop(
     let mut corr_buf = allow_corr(mode, cop, cfg).then(Vec::new);
     let before = diagnostics.len();
     cop.check_file_model(source, file_model, cfg, diagnostics, corr_buf.as_mut());
-    finish_cop_pass(diagnostics, before, cfg, &mut corr_buf, idx, corrections);
+    finish_cop_pass(
+        source,
+        diagnostics,
+        before,
+        cfg,
+        &mut corr_buf,
+        idx,
+        corrections,
+    );
 }
 
 fn run_plain_source_cops(
@@ -129,5 +145,13 @@ fn one_plain_source_cop(
     let mut corr_buf = allow_corr(mode, cop, cfg).then(Vec::new);
     let before = diagnostics.len();
     cop.check_source(source, tree, code_map, cfg, diagnostics, corr_buf.as_mut());
-    finish_cop_pass(diagnostics, before, cfg, &mut corr_buf, idx, corrections);
+    finish_cop_pass(
+        source,
+        diagnostics,
+        before,
+        cfg,
+        &mut corr_buf,
+        idx,
+        corrections,
+    );
 }

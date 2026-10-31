@@ -99,6 +99,7 @@ fn push_unless(
         replacement: "unless".to_string(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     let inner_src = String::from_utf8_lossy(node_bytes(source, inner)).into_owned();
     let replacement = if cond.start_byte() == if_kw.end_byte() {
@@ -112,6 +113,7 @@ fn push_unless(
         replacement,
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     diag.corrected = true;
 }

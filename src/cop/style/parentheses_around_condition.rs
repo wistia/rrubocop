@@ -142,6 +142,7 @@ fn strip_open(
         replacement: String::new(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
 }
 
@@ -163,6 +164,7 @@ fn strip_close(
         replacement: String::new(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
 }
 

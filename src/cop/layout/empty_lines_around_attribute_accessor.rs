@@ -112,6 +112,7 @@ impl Cop for EmptyLinesAroundAttributeAccessor {
                     replacement: "\n".into(),
                     cop_name: self.name(),
                     cop_index: 0,
+                    owner: None,
                 });
                 diag.corrected = true;
             }

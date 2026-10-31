@@ -131,6 +131,7 @@ fn push_newline_at(
         replacement: "\n".into(),
         cop_name,
         cop_index: 0,
+        owner: None,
     });
     true
 }

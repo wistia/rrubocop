@@ -130,12 +130,21 @@ impl<'a> BatchedWalker<'a> {
         diagnostics: &mut Vec<Diagnostic>,
         corrections: &mut Option<&mut Vec<Correction>>,
     ) {
+        let diag_before = diagnostics.len();
+        let edit_before = corrections.as_ref().map_or(0, |edits| edits.len());
         let corr = if self.corr_ok[i] {
             corrections.as_deref_mut()
         } else {
             None
         };
         self.cops[i].check_node(source, node, self.configs[i], diagnostics, corr);
+        if let Some(edits) = corrections.as_deref_mut() {
+            crate::correction::assign_owners(
+                source,
+                &diagnostics[diag_before..],
+                &mut edits[edit_before..],
+            );
+        }
     }
 }
 
@@ -247,6 +256,7 @@ mod tests {
                     replacement: String::new(),
                     cop_name: self.name(),
                     cop_index: 0,
+                    owner: None,
                 });
             }
         }

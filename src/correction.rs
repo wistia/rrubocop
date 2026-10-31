@@ -1,6 +1,9 @@
 //! Source-level autocorrect edits (adapted from nitrocop).
 
 use crate::diagnostic::Diagnostic;
+mod ownership;
+mod selection;
+pub(crate) use ownership::{assign_owners, filter_disabled};
 
 #[derive(Debug, Clone)]
 pub struct Correction {
@@ -9,32 +12,22 @@ pub struct Correction {
     pub replacement: String,
     pub cop_name: &'static str,
     pub cop_index: usize,
+    /// Owning offense start byte, independent of the edited ranges.
+    pub owner: Option<usize>,
 }
 
 pub struct CorrectionSet {
     corrections: Vec<Correction>,
-    /// Other cops that emitted the same edit and were dropped as duplicates.
-    aliases: Vec<Vec<&'static str>>,
+    /// Other offense owners whose identical edits were deduplicated.
+    aliases: Vec<Vec<Correction>>,
 }
 
 impl CorrectionSet {
-    pub fn from_vec(mut raw: Vec<Correction>) -> Self {
-        raw.sort_by(|a, b| a.start.cmp(&b.start).then(a.cop_index.cmp(&b.cop_index)));
-        let mut accepted: Vec<Correction> = Vec::with_capacity(raw.len());
-        let mut aliases = Vec::with_capacity(raw.len());
-        for c in raw {
-            if note_same(&accepted, &mut aliases, &c) {
-                continue;
-            }
-            if accepted.last().is_some_and(|last| c.start < last.end) {
-                continue;
-            }
-            accepted.push(c);
-            aliases.push(Vec::new());
-        }
+    pub fn from_vec(raw: Vec<Correction>) -> Self {
+        let accepted = selection::select(raw);
         Self {
-            corrections: accepted,
-            aliases,
+            corrections: accepted.iter().map(|a| a.edit.clone()).collect(),
+            aliases: accepted.into_iter().map(|a| a.aliases).collect(),
         }
     }
 
@@ -70,9 +63,8 @@ impl CorrectionSet {
         self.corrections
             .iter()
             .zip(&self.aliases)
-            .any(|(edit, names)| {
-                correction_covers(edit, off)
-                    && (edit.cop_name == cop || names.iter().any(|n| *n == cop))
+            .any(|(edit, aliases)| {
+                credits(edit, cop, off) || aliases.iter().any(|alias| credits(alias, cop, off))
             })
     }
 }
@@ -100,22 +92,10 @@ pub fn reconcile_corrected(
     }
 }
 
-fn note_same(accepted: &[Correction], aliases: &mut [Vec<&'static str>], c: &Correction) -> bool {
-    let Some(i) = accepted
-        .iter()
-        .position(|a| a.start == c.start && a.end == c.end && a.replacement == c.replacement)
-    else {
-        return false;
-    };
-    let name = c.cop_name;
-    if name != accepted[i].cop_name && !aliases[i].contains(&name) {
-        aliases[i].push(name);
-    }
-    true
-}
-
-fn correction_covers(c: &Correction, off: usize) -> bool {
-    off >= c.start && off <= c.end.max(c.start)
+fn credits(c: &Correction, cop: &str, off: usize) -> bool {
+    c.cop_name == cop
+        && c.owner
+            .map_or_else(|| off >= c.start && off <= c.end, |owner| owner == off)
 }
 
 #[cfg(test)]
@@ -126,17 +106,23 @@ mod tests {
     use crate::diagnostic::{Diagnostic, Location, Severity};
     use crate::parse::source::SourceFile;
 
-    fn edit(start: usize, end: usize, replacement: &str, cop: &'static str) -> Correction {
+    pub(super) fn edit(
+        start: usize,
+        end: usize,
+        replacement: &str,
+        cop: &'static str,
+    ) -> Correction {
         Correction {
             start,
             end,
             replacement: replacement.into(),
             cop_name: cop,
             cop_index: 0,
+            owner: None,
         }
     }
 
-    fn diag(cop: &str, column: usize) -> Diagnostic {
+    pub(super) fn diag(cop: &str, column: usize) -> Diagnostic {
         Diagnostic {
             path: "a.rb".into(),
             cop_name: cop.into(),
@@ -179,3 +165,6 @@ mod tests {
         assert!(!diags[0].corrected);
     }
 }
+
+#[cfg(test)]
+mod ownership_tests;

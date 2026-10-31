@@ -135,6 +135,7 @@ pub(super) fn push_removal(
         replacement: String::new(),
         cop_name: "Lint/RedundantCopDisableDirective",
         cop_index: 0,
+        owner: None,
     });
     diag.corrected = true;
 }

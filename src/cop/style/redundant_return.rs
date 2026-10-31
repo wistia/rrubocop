@@ -100,6 +100,7 @@ fn push_remove_return(cop: &RedundantReturn, node: Node<'_>, corr: &mut Vec<Corr
         replacement: String::new(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
 }
 
@@ -117,6 +118,7 @@ fn wrap_multi_return_as_array(cop: &RedundantReturn, node: Node<'_>, corr: &mut 
         replacement: "[".into(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     corr.push(Correction {
         start: last.end_byte(),
@@ -124,6 +126,7 @@ fn wrap_multi_return_as_array(cop: &RedundantReturn, node: Node<'_>, corr: &mut 
         replacement: "]".into(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
 }
 

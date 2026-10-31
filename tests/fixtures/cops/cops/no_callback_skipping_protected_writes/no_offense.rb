@@ -1,1 +1,1 @@
-media&.update_all(protected: false)
+media.update(protected: true)

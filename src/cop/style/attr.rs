@@ -148,6 +148,7 @@ fn apply_corr(
         replacement: replacement.to_string(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     if has_boolean_last {
         corr.push(Correction {
@@ -156,6 +157,7 @@ fn apply_corr(
             replacement: String::new(),
             cop_name: cop.name(),
             cop_index: 0,
+            owner: None,
         });
     }
     diag.corrected = true;

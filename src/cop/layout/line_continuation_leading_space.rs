@@ -137,6 +137,7 @@ fn push_space_move(
         replacement: String::new(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     corr.push(Correction {
         start: insert_at,
@@ -144,6 +145,7 @@ fn push_space_move(
         replacement: spaces,
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     true
 }

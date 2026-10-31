@@ -70,6 +70,7 @@ fn report(
             replacement: format!("{left_src}.join({sep})"),
             cop_name: cop.name(),
             cop_index: 0,
+            owner: None,
         });
         diag.corrected = true;
     }

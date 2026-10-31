@@ -33,6 +33,7 @@ fn push_indent_fix(
         replacement: " ".repeat(expected),
         cop_name,
         cop_index: 0,
+        owner: None,
     });
 }
 

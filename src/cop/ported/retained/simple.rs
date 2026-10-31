@@ -1,33 +1,8 @@
 use super::super::context::*;
-use super::arguments as args;
 use tree_sitter::Node;
 
-pub(super) fn setex(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    if c.method(n) != "setex" {
-        return vec![];
-    }
-    let a = args(n)
-        .into_iter()
-        .filter(|a| a.kind() != "comment")
-        .collect::<Vec<_>>();
-    let f = Finding::range(
-        n.start_byte(),
-        send_end(n),
-        "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
-    );
-    let Some((expiry, value)) = a.get(1).zip(a.get(2)) else {
-        return vec![f];
-    };
-    vec![
-        f.replace(method_node(n), "set")
-            .also_edit(expiry.start_byte(), expiry.end_byte(), c.text(*value))
-            .also_edit(
-                value.start_byte(),
-                value.end_byte(),
-                format!("ex: {}", c.text(*expiry)),
-            ),
-    ]
-}
+mod setex;
+pub(super) use setex::setex;
 pub(super) fn refinement(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.config.get_f64("TargetRubyVersion", 3.4) < 3.1
         || !matches!(c.method(n), "include" | "prepend")

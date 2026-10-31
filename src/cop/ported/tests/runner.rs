@@ -52,7 +52,9 @@ fn actual(diagnostics: Vec<Diagnostic>) -> Vec<String> {
 }
 pub(super) fn expected(case: &Case) -> Vec<String> {
     let mut values = case
-        .expected
+        .rust_expected
+        .as_ref()
+        .unwrap_or(&case.expected)
         .iter()
         .map(|e| {
             format!(

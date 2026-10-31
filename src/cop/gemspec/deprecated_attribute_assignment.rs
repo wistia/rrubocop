@@ -74,6 +74,7 @@ fn offense(
             replacement: String::new(),
             cop_name: cop.name(),
             cop_index: 0,
+            owner: None,
         });
         diag.corrected = true;
     }

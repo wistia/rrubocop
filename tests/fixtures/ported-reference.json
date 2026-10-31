@@ -630,7 +630,16 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "media&.update_all(protected: false)\n"
+    "corrected": "media&.update_all(protected: false)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "reason": "The Ruby callback aliases on_csend but its send-only NodePattern misses safe-navigation protected writes; Rust deliberately guards the same unsafe writes under both call operators."
   },
   {
     "cop": "Cops/NoCallbackSkippingProtectedWrites",
@@ -24006,7 +24015,10 @@
         "correctable": true
       }
     ],
-    "corrected": "create_table :widgets, \"charset\" => \"utf8mb4\", charset: \"utf8mb4\"\n"
+    "corrected": "create_table :widgets, \"charset\" => \"utf8mb4\", charset: \"utf8mb4\"\n",
+    "rust_corrected": "create_table :widgets, \"charset\" => \"utf8mb4\"\n",
+    "rust_correctable": false,
+    "reason": "Non-symbol/dynamic option keys can already provide settings; refuse schema-default insertion rather than overwrite uncertain options."
   },
   {
     "cop": "Cops/CreateTableMustIncludeCollation",
@@ -24026,7 +24038,10 @@
         "correctable": true
       }
     ],
-    "corrected": "create_table :widgets, \"collation\" => \"utf8mb4_unicode_ci\", collation: \"utf8mb4_unicode_ci\"\n"
+    "corrected": "create_table :widgets, \"collation\" => \"utf8mb4_unicode_ci\", collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_corrected": "create_table :widgets, \"collation\" => \"utf8mb4_unicode_ci\"\n",
+    "rust_correctable": false,
+    "reason": "Non-symbol/dynamic option keys can already provide settings; refuse schema-default insertion rather than overwrite uncertain options."
   },
   {
     "cop": "Cops/NoSetWithoutExpiration",
@@ -27084,7 +27099,10 @@
         "correctable": true
       }
     ],
-    "corrected": "redis.set(key, value, ex: ttl)\n"
+    "corrected": "redis.set(key, value, ex: ttl)\n",
+    "rust_corrected": "redis.setex(key, ttl, value)\n",
+    "rust_correctable": false,
+    "reason": "The apparent ttl/value names are unbound Ruby method calls, or expressions can have side effects; swapping their evaluation is not proved safe. Retain the diagnostic without autocorrection."
   },
   {
     "cop": "Cops/NoSetex",
@@ -27150,7 +27168,10 @@
         "correctable": true
       }
     ],
-    "corrected": "redis.set(key, payload.to_json, ex: expires_at - now)\n"
+    "corrected": "redis.set(key, payload.to_json, ex: expires_at - now)\n",
+    "rust_corrected": "redis.setex(key, expires_at - now, payload.to_json)\n",
+    "rust_correctable": false,
+    "reason": "The apparent ttl/value names are unbound Ruby method calls, or expressions can have side effects; swapping their evaluation is not proved safe. Retain the diagnostic without autocorrection."
   },
   {
     "cop": "Cops/NoSetex",
@@ -27170,7 +27191,10 @@
         "correctable": true
       }
     ],
-    "corrected": "redis.set(key, value, ex: ttl) { callback }\n"
+    "corrected": "redis.set(key, value, ex: ttl) { callback }\n",
+    "rust_corrected": "redis.setex(key, ttl, value) { callback }\n",
+    "rust_correctable": false,
+    "reason": "The apparent ttl/value names are unbound Ruby method calls, or expressions can have side effects; swapping their evaluation is not proved safe. Retain the diagnostic without autocorrection."
   },
   {
     "cop": "Style/KeywordParametersOrder",
@@ -27426,7 +27450,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two do\n    \"two\"\n  end\n  attribute :three\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two do\n    \"two\"\n  end\n  attribute :three\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one\n  attribute :two\n  attribute :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
@@ -27513,7 +27540,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  attribute :two do\n    \"two\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  attribute :two do\n    \"two\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -27536,7 +27566,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :two,\n    :three\n\n  attribute :one do\n    \"one\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :two,\n    :three\n\n  attribute :one do\n    \"one\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -27559,7 +27592,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two\n\n  attribute :three do\n    \"three\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two\n\n  attribute :three do\n    \"three\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :two,\n    :three\n\n  def three\n    \"three\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -27582,7 +27618,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one do\n    \"one\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attribute :one do\n    \"one\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one\n\n  def one\n    \"one\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -27605,7 +27644,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  attribute :two do\n    \"two\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  attribute :two do\n    \"two\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def two\n    \"two\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -27628,7 +27670,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :two,\n    :three\n\n  attribute :one do\n    \"one\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :two,\n    :three\n\n  attribute :one do\n    \"one\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -27663,7 +27708,10 @@
         "correctable": false
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three,\n    :four\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  def four\n    \"four\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -27692,7 +27740,10 @@
         "correctable": false
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    # There are many comments, but this one is mine\n    :two,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  def two\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -27715,7 +27766,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :three\n\n  attribute :one do\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n"
+    "corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :three\n\n  attribute :one do\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "rust_corrected": "class MaSerializer < ActiveModelSerializers\n  attributes :one,\n    :three\n\n  def one\n    \"one\"\n  end\n\n  attribute :two do\n    \"two\"\n  end\n\n  attribute :four do\n    \"four\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block rewrites are intentionally unsupported: deleting public methods or changing parameter/control-flow context cannot be generally safe, even with AutoCorrect explicitly enabled. Diagnostics remain available."
   },
   {
     "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
@@ -29198,7 +29252,10 @@
         "correctable": true
       }
     ],
-    "corrected": "redis.set(\n # key comment\n key,\n # ttl comment\n value,\n # value comment\n ex: ttl)\n"
+    "corrected": "redis.set(\n # key comment\n key,\n # ttl comment\n value,\n # value comment\n ex: ttl)\n",
+    "rust_corrected": "redis.setex(\n # key comment\n key,\n # ttl comment\n ttl,\n # value comment\n value)\n",
+    "rust_correctable": false,
+    "reason": "The apparent ttl/value names are unbound Ruby method calls, or expressions can have side effects; swapping their evaluation is not proved safe. Retain the diagnostic without autocorrection."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -29241,5 +29298,2151 @@
       }
     ],
     "corrected": "def f(x = ';') \n  work\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n  attribute :name\n  def name(prefix)\n    prefix + object.name\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attribute :name\n  def name(prefix)\n    prefix + object.name\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  attribute :name do\n    prefix + object.name\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n  attribute :name\n  def name(prefix = \"prefix\")\n    prefix + object.name\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attribute :name\n  def name(prefix = \"prefix\")\n    prefix + object.name\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  attribute :name do\n    prefix + object.name\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class S\n  attributes :name\n  def name(prefix = \"prefix\")\n    prefix + object.name\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attributes :name\n  def name(prefix = \"prefix\")\n    prefix + object.name\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  attribute :name do(prefix = \"prefix\")\n    prefix + object.name\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class S\n  attributes :name\n  def  name\n    object.name\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attributes :name\n  def  name\n    object.name\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  def  name\n    object.name\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n  attribute :name\n  def name\n    <<~TEXT\n      content\n    TEXT\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attribute :name\n  def name\n    <<~TEXT\n      content\n    TEXT\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  attribute :name do\n    <<~TEXT\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n  attribute :name\n  # important method comment\n  def name\n    object.name\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attribute :name\n  # important method comment\n  def name\n    object.name\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  attribute :name do\n    object.name\n  end\n  # important method comment\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n  attribute :name\n  def name\n    return \"name\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attribute :name\n  def name\n    return \"name\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  attribute :name do\n    return \"name\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class S\n  attributes :name\n  def name\n    return \"name\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attributes :name\n  def name\n    return \"name\"\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  attribute :name do\n    return \"name\"\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n  attribute :name\n  attribute :name, key: :other_name\n  def name\n    object.name\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attribute :name\n  attribute :name, key: :other_name\n  def name\n    object.name\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Prefer block attribute over method call.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  attribute :name do\n    object.name\n  end\n  attribute :name, key: :other_name do\n    object.name\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class S\n  attributes :name if enabled?\n  def name\n    object.name\n  end\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attributes :name if enabled?\n  def name\n    object.name\n  end\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class S\n  if enabled?\n  attribute :name do\n    object.name\n  end\nend\n"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class S\n  attributes :\"first-name\"\n  define_method(:\"first-name\") { object.name }\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "rust_corrected": "class S\n  attributes :\"first-name\"\n  define_method(:\"first-name\") { object.name }\nend\n",
+    "rust_correctable": false,
+    "reason": "Serializer method-to-block correction remains diagnostic-only, preserving method API, lexical bindings, control flow and conditional declarations.",
+    "origin": "custom cop review adversarial serializer correction",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n  attributes :\"first-name\"\n  define_method(:\"first-name\") { object.name }\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined do |pipe|\n pipe.set(\"key0\", \"value\")\n pipe.set(\"key1\", \"value\")\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.pipelined do |pipe|\n pipe.set(\"key0\", \"value\")\n pipe.set(\"key1\", \"value\")\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined do |pipe|\n pipe.set(\"key0\", \"value\", ex: 60)\n pipe.set(\"key1\", \"value\", pxat: deadline)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.pipelined do |pipe|\n pipe.set(\"key0\", \"value\", ex: 60)\n pipe.set(\"key1\", \"value\", pxat: deadline)\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined do |pipe|\n other.set(\"key0\", \"value\")\n other.set(\"key1\", \"value\")\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.pipelined do |pipe|\n other.set(\"key0\", \"value\")\n other.set(\"key1\", \"value\")\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined do |pipe|\n pipe.set(\n  # key comment\n  \"key\", \"value\", ex: 60)\n work\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.pipelined do |pipe|\n pipe.set(\n  # key comment\n  \"key\", \"value\", ex: 60)\n work\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined do |pipe|\n objects.each do |pipe|\n  pipe.set(\"key0\", \"value\")\n  pipe.set(\"key1\", \"value\")\n end\n work\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.pipelined do |pipe|\n objects.each do |pipe|\n  pipe.set(\"key0\", \"value\")\n  pipe.set(\"key1\", \"value\")\n end\n work\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi do |pipe|\n pipe.set(\"key0\", \"value\")\n pipe.set(\"key1\", \"value\")\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.multi do |pipe|\n pipe.set(\"key0\", \"value\")\n pipe.set(\"key1\", \"value\")\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi do |pipe|\n pipe.set(\"key0\", \"value\", ex: 60)\n pipe.set(\"key1\", \"value\", pxat: deadline)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.multi do |pipe|\n pipe.set(\"key0\", \"value\", ex: 60)\n pipe.set(\"key1\", \"value\", pxat: deadline)\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi do |pipe|\n other.set(\"key0\", \"value\")\n other.set(\"key1\", \"value\")\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.multi do |pipe|\n other.set(\"key0\", \"value\")\n other.set(\"key1\", \"value\")\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi do |pipe|\n pipe.set(\n  # key comment\n  \"key\", \"value\", ex: 60)\n work\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.multi do |pipe|\n pipe.set(\n  # key comment\n  \"key\", \"value\", ex: 60)\n work\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi do |pipe|\n objects.each do |pipe|\n  pipe.set(\"key0\", \"value\")\n  pipe.set(\"key1\", \"value\")\n end\n work\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.multi do |pipe|\n objects.each do |pipe|\n  pipe.set(\"key0\", \"value\")\n  pipe.set(\"key1\", \"value\")\n end\n work\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined { |pipe|\n pipe.set(\"key0\", \"value\")\n pipe.set(\"key1\", \"value\")\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.pipelined { |pipe|\n pipe.set(\"key0\", \"value\")\n pipe.set(\"key1\", \"value\")\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined { |pipe|\n pipe.set(\"key0\", \"value\", ex: 60)\n pipe.set(\"key1\", \"value\", pxat: deadline)\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.pipelined { |pipe|\n pipe.set(\"key0\", \"value\", ex: 60)\n pipe.set(\"key1\", \"value\", pxat: deadline)\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined { |pipe|\n other.set(\"key0\", \"value\")\n other.set(\"key1\", \"value\")\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.pipelined { |pipe|\n other.set(\"key0\", \"value\")\n other.set(\"key1\", \"value\")\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined { |pipe|\n pipe.set(\n  # key comment\n  \"key\", \"value\", ex: 60)\n work\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.pipelined { |pipe|\n pipe.set(\n  # key comment\n  \"key\", \"value\", ex: 60)\n work\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.pipelined { |pipe|\n objects.each do |pipe|\n  pipe.set(\"key0\", \"value\")\n  pipe.set(\"key1\", \"value\")\n end\n work\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.pipelined { |pipe|\n objects.each do |pipe|\n  pipe.set(\"key0\", \"value\")\n  pipe.set(\"key1\", \"value\")\n end\n work\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi { |pipe|\n pipe.set(\"key0\", \"value\")\n pipe.set(\"key1\", \"value\")\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.multi { |pipe|\n pipe.set(\"key0\", \"value\")\n pipe.set(\"key1\", \"value\")\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi { |pipe|\n pipe.set(\"key0\", \"value\", ex: 60)\n pipe.set(\"key1\", \"value\", pxat: deadline)\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.multi { |pipe|\n pipe.set(\"key0\", \"value\", ex: 60)\n pipe.set(\"key1\", \"value\", pxat: deadline)\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi { |pipe|\n other.set(\"key0\", \"value\")\n other.set(\"key1\", \"value\")\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.multi { |pipe|\n other.set(\"key0\", \"value\")\n other.set(\"key1\", \"value\")\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi { |pipe|\n pipe.set(\n  # key comment\n  \"key\", \"value\", ex: 60)\n work\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.multi { |pipe|\n pipe.set(\n  # key comment\n  \"key\", \"value\", ex: 60)\n work\n}\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.multi { |pipe|\n objects.each do |pipe|\n  pipe.set(\"key0\", \"value\")\n  pipe.set(\"key1\", \"value\")\n end\n work\n}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.multi { |pipe|\n objects.each do |pipe|\n  pipe.set(\"key0\", \"value\")\n  pipe.set(\"key1\", \"value\")\n end\n work\n}\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "record.update_column(\n # argument comment\n :protected, true)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "record.update_column(\n # argument comment\n :protected, true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "record.update_column(\n # argument comment\n :name, \"name\")\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "record.update_column(\n # argument comment\n :name, \"name\")\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "record&.update_column(\n # argument comment\n :protected, true)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "record&.update_column(\n # argument comment\n :protected, true)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "reason": "The Ruby callback aliases on_csend but its send-only NodePattern misses safe-navigation protected writes; Rust deliberately guards the same unsafe writes under both call operators."
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "record&.update_columns(protected: true)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "record&.update_columns(protected: true)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_columns`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "reason": "The Ruby callback aliases on_csend but its send-only NodePattern misses safe-navigation protected writes; Rust deliberately guards the same unsafe writes under both call operators."
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "record.update_columns(\n # argument comment\n protected: true)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_columns`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "record.update_columns(\n # argument comment\n protected: true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "record&.update_all(\n # argument comment\n protected: true)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "record&.update_all(\n # argument comment\n protected: true)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "reason": "The Ruby callback aliases on_csend but its send-only NodePattern misses safe-navigation protected writes; Rust deliberately guards the same unsafe writes under both call operators."
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\n # channel name\n \"abc\", coder: JSON)\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 8,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(\n # channel name\n \"abc\", coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\n # channel name\n \"abc\", coder: ActiveSupport::JSON)\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(\n # channel name\n \"abc\", coder: ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record.with_options(coder: JSON))\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_for(record.with_options(coder: JSON))\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record.with_options(coder: JSON), coder: JSON)\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 45,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record.with_options(coder: JSON), coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record.with_options(coder: JSON), coder: ActiveSupport::JSON)\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_for(record.with_options(coder: JSON), coder: ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, {\"coder\" => JSON})\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_for(record, {\"coder\" => JSON})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, {coder: JSON})\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, {coder: JSON})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, coder: ::ActiveSupport::JSON)\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, coder: ::ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, coder: Other::ActiveSupport::JSON)\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, coder: Other::ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n raise\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue\n raise\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n raise = false\n  puts raise\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue\n raise = false\n  puts raise\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n raised = true\n  raise\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue\n raised = true\n  raise\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n raise = false\n  Kernel.raise(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue\n raise = false\n  Kernel.raise(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n items.each { |raise| puts raise }\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue\n items.each { |raise| puts raise }\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Rails.error().report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue\n Rails.error().report(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n ::Rails.error().report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue\n ::Rails.error().report(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Rails.error.report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue\n Rails.error.report(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Other::Rails.error().report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue\n Other::Rails.error().report(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Rails&.error.report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue\n Rails&.error.report(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Sentry.capture_exception(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue\n Sentry.capture_exception(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n ::Sentry.capture_exception(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue\n ::Sentry.capture_exception(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Sentry&.capture_exception(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue\n Sentry&.capture_exception(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Other::Sentry.capture_exception(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue\n Other::Sentry.capture_exception(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n error.report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue\n error.report(error)\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "raise = false\nbegin\n work\nrescue\n puts raise\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "raise = false\nbegin\n work\nrescue\n puts raise\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue => raise\n puts raise\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom cop safety review regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue => raise\n puts raise\nend\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, charset: \"utf8mb4\")\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets), charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets,)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, charset: \"utf8mb4\",)\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets,), charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets) do |t|\n t.string :name\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, charset: \"utf8mb4\") do |t|\n t.string :name\nend\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets), charset: \"utf8mb4\" do |t|\n t.string :name\nend\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "result = create_table(:widgets).tap { work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "result = create_table(:widgets, charset: \"utf8mb4\").tap { work }\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "result = create_table(:widgets), charset: \"utf8mb4\".tap { work }\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, {id: false})\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, {id: false, charset: \"utf8mb4\"})\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, {id: false}), charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, {})\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, {charset: \"utf8mb4\"})\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, {}), charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, # widget comment\n)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, charset: \"utf8mb4\", # widget comment\n)\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, # widget comment\n), charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "options = {charset: \"ascii\", collation: \"ascii_bin\"}\ncreate_table :widgets, **options\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "options = {charset: \"ascii\", collation: \"ascii_bin\"}\ncreate_table :widgets, **options\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "options = {charset: \"ascii\", collation: \"ascii_bin\"}\ncreate_table :widgets, **options, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, {**options}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table :widgets, {**options}\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, {**options}, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, options\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table :widgets, options\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, options, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(*args)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(*args)\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(*args), charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table <<~TABLE\n widgets\nTABLE\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table <<~TABLE\n widgets\nTABLE\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table <<~TABLE, charset: \"utf8mb4\"\n widgets\nTABLE\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, collation: \"utf8mb4_unicode_ci\")\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets), collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets,)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, collation: \"utf8mb4_unicode_ci\",)\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets,), collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets) do |t|\n t.string :name\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, collation: \"utf8mb4_unicode_ci\") do |t|\n t.string :name\nend\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets), collation: \"utf8mb4_unicode_ci\" do |t|\n t.string :name\nend\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "result = create_table(:widgets).tap { work }\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "result = create_table(:widgets, collation: \"utf8mb4_unicode_ci\").tap { work }\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "result = create_table(:widgets), collation: \"utf8mb4_unicode_ci\".tap { work }\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, {id: false})\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, {id: false, collation: \"utf8mb4_unicode_ci\"})\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, {id: false}), collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, {})\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, {collation: \"utf8mb4_unicode_ci\"})\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, {}), collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, # widget comment\n)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(:widgets, collation: \"utf8mb4_unicode_ci\", # widget comment\n)\n",
+    "reason": "Use a structurally valid argument-list insertion instead of the pinned Ruby append-after-call rewrite.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, # widget comment\n), collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "options = {charset: \"ascii\", collation: \"ascii_bin\"}\ncreate_table :widgets, **options\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "options = {charset: \"ascii\", collation: \"ascii_bin\"}\ncreate_table :widgets, **options\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "options = {charset: \"ascii\", collation: \"ascii_bin\"}\ncreate_table :widgets, **options, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, {**options}\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table :widgets, {**options}\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, {**options}, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, options\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table :widgets, options\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, options, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(*args)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table(*args)\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(*args), collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table <<~TABLE\n widgets\nTABLE\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "create_table <<~TABLE\n widgets\nTABLE\n",
+    "reason": "Unknown option bundles, splats, and external heredocs cannot be safely defaulted or structurally rewritten; retain the diagnostic without correction.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table <<~TABLE, collation: \"utf8mb4_unicode_ci\"\n widgets\nTABLE\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "events = [60, 1234]\nredis.setex(key, events.shift, events.shift)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "events = [60, 1234]\nredis.setex(key, events.shift, events.shift)\n",
+    "reason": "Swapping TTL/value is only safe for stable literals or proven lexical locals. Refuse side effects, unbound method-like identifiers, unknown argument grouping/arity, and external heredocs.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "events = [60, 1234]\nredis.set(key, events.shift, ex: events.shift)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, *ttl_and_value, 1234)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "redis.setex(key, *ttl_and_value, 1234)\n",
+    "reason": "Swapping TTL/value is only safe for stable literals or proven lexical locals. Refuse side effects, unbound method-like identifiers, unknown argument grouping/arity, and external heredocs.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, 1234, ex: *ttl_and_value)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, 60, a: 1, b: 2)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "redis.setex(key, 60, a: 1, b: 2)\n",
+    "reason": "Swapping TTL/value is only safe for stable literals or proven lexical locals. Refuse side effects, unbound method-like identifiers, unknown argument grouping/arity, and external heredocs.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, a: 1, b: 2, ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, 60, {a: 1})\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "redis.setex(key, 60, {a: 1})\n",
+    "reason": "Swapping TTL/value is only safe for stable literals or proven lexical locals. Refuse side effects, unbound method-like identifiers, unknown argument grouping/arity, and external heredocs.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, {a: 1}, ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, 60, \"#{payload}\")\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "redis.setex(key, 60, \"#{payload}\")\n",
+    "reason": "Swapping TTL/value is only safe for stable literals or proven lexical locals. Refuse side effects, unbound method-like identifiers, unknown argument grouping/arity, and external heredocs.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, \"#{payload}\", ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, TTL, VALUE)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "redis.setex(key, TTL, VALUE)\n",
+    "reason": "Swapping TTL/value is only safe for stable literals or proven lexical locals. Refuse side effects, unbound method-like identifiers, unknown argument grouping/arity, and external heredocs.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, VALUE, ex: TTL)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, ttl, value)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "redis.setex(key, ttl, value)\n",
+    "reason": "The apparent ttl/value names are unbound Ruby method calls, or expressions can have side effects; swapping their evaluation is not proved safe. Retain the diagnostic without autocorrection.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, value, ex: ttl)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, <<~TTL, <<~VALUE)\n 60\nTTL\n payload\nVALUE\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "rust_corrected": "redis.setex(key, <<~TTL, <<~VALUE)\n 60\nTTL\n payload\nVALUE\n",
+    "reason": "Swapping TTL/value is only safe for stable literals or proven lexical locals. Refuse side effects, unbound method-like identifiers, unknown argument grouping/arity, and external heredocs.",
+    "rust_correctable": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, <<~VALUE, ex: <<~TTL)\n 60\nTTL\n payload\nVALUE\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, 60, \"payload\")\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(key, \"payload\", ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "def f(key, ttl, value)\n redis.setex(key, ttl, value)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(key, ttl, value)\n redis.set(key, value, ex: ttl)\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "ttl = 60; value = :value\nredis.setex(key, ttl, value, &callback)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction safety review",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "ttl = 60; value = :value\nredis.set(key, value, ex: ttl, &callback)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from \"topic\", coder: ActiveSupport:: JSON\n",
+    "path": "app/channels/probe.rb",
+    "options": {},
+    "origin": "custom cop review valid constant spacing",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from \"topic\", coder: ActiveSupport:: JSON\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set('key', {ex: 60})\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "guardrail review option scope regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.set('key', {ex: 60})\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set('key', {ex: 60}, ex: 60)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "guardrail review option scope regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.set('key', {ex: 60}, ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\n # key\n 'key', {px: 60}, nx: true)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "guardrail review option scope regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.set(\n # key\n 'key', {px: 60}, nx: true)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\n # key\n 'key', {px: 60}, nx: true, ex: 60)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "guardrail review option scope regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$redis.set(\n # key\n 'key', {px: 60}, nx: true, ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "ex = 60; $redis.set('key', 'value', ex:)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "guardrail review shorthand option regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ex = 60; $redis.set('key', 'value', ex:)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "protected = true; record.update_columns(protected:)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "guardrail review shorthand option regression",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Don't write `protected` with `update_columns`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "protected = true; record.update_columns(protected:)\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "charset = \"ascii\"; collation = \"ascii_bin\"\ncreate_table(:widgets, charset:, collation:)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction review shorthand keyword guard",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "charset = \"ascii\"; collation = \"ascii_bin\"\ncreate_table(:widgets, charset:, collation:)\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, charset: nil, collation: nil)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction review shorthand keyword guard",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "create_table(:widgets, charset: nil, collation: nil)\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "charset = \"ascii\"; collation = \"ascii_bin\"\ncreate_table(:widgets, charset:, collation:)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction review shorthand keyword guard",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "charset = \"ascii\"; collation = \"ascii_bin\"\ncreate_table(:widgets, charset:, collation:)\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, charset: nil, collation: nil)\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction review shorthand keyword guard",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "create_table(:widgets, charset: nil, collation: nil)\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\"\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction review escaped-symbol safety guard",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "create_table :widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\"\n",
+    "rust_correctable": false,
+    "reason": "Escaped symbol keys are not decoded canonically; retain a manual diagnostic rather than override a possibly existing schema option. The Ruby baseline recognizes the decoded symbol and reports no offense.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "create_table :widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\"\n",
+    "path": "test.rb",
+    "options": {},
+    "origin": "custom correction review escaped-symbol safety guard",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "create_table :widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\"\n",
+    "rust_correctable": false,
+    "reason": "Escaped symbol keys are not decoded canonically; retain a manual diagnostic rather than override a possibly existing schema option. The Ruby baseline recognizes the decoded symbol and reports no offense.",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "create_table :widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\"\n"
   }
 ]

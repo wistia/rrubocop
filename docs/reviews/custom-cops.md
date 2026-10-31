@@ -3,8 +3,8 @@
 Reviewed implementation commit `586bb4c` on October 31, 2026. Three independent
 agents reviewed all 27 app-specific ports against Wistia's pinned Ruby cops and
 ran adversarial probes through actual CLI correction paths. The parent agent
-reviewed the shared correction engine. This commit records findings only; no
-implementation or configuration changes were made.
+reviewed the shared correction engine. The original review commit recorded findings only. The following resolution
+records the subsequent implementation fixes; Wistia configuration is unchanged.
 
 | Review group | Rules | Correction exposure | Detailed report |
 | --- | ---: | --- | --- |
@@ -16,6 +16,53 @@ The clean application corpus and previous passing parity fixtures did not exerci
 these adverse correction shapes. Matching an unsafe Ruby rewrite is not evidence
 that the correction is safe. Findings below distinguish inherited behavior from
 Rust-only defects and current exposure from disabled paths.
+
+## Resolution on this branch
+
+The fixes below supersede the original review recommendations and observations.
+The original findings remain as a record of the adversarial inputs.
+
+- Edits now carry an owning offense byte offset. Suppressing an offense suppresses
+  all of its edits, and corrected-result accounting uses ownership rather than
+  overlap with the diagnostic highlight. Corrected-only runs exit successfully;
+remaining offenses still respect the configured severity threshold. Legacy corrections receive ownership at
+  their callback boundary; edits with uncertain ownership are conservatively skipped.
+- Conflicting offense groups are accepted or rejected atomically. Independent
+  insertions at the same point run in separate passes, preserving valid output
+  when both migration cops add options to an empty hash. Identical edits retain
+  attribution for both diagnostics.
+- Each candidate correction batch passes the native syntax gate before acceptance.
+  A failure aborts without changing the original buffer or file. No Ruby runtime
+  is needed for this defense; it uses the existing native parser allowances.
+- Table options are inserted into the actual argument list or explicit hash.
+  Existing shorthand and nil-valued keys are respected. Splats, unknown positional
+  options, external heredoc arguments, and uncertain quoted/escaped option keys
+  are left for manual review instead of overwriting settings.
+- NoSetex correction requires exactly three arguments (plus an optional block
+  pass), with stable literal or proven lexical-local TTL/value expressions.
+  Effectful calls, bare method names, interpolated values, heredocs, splats, and
+  uncertain hash arguments keep their diagnostic without a rewrite.
+- Both serializer method-to-block rules are now strictly diagnostic-only. The
+  unsafe correction implementations were removed, so even `AutoCorrect: true`
+  cannot delete methods, lose bindings, change return/super behavior, or damage
+  conditional declarations. This strengthens the existing disabled Wistia policy.
+- All six diagnostic regressions were repaired. Nearby fixes also prevent payload
+  hashes from masquerading as TTL options and preserve shorthand option checks.
+  Protected writes through safe navigation are guarded even though the Ruby
+  handler's send-only matcher misses them; this difference is explicit in fixtures.
+
+The pinned reference snapshot retains Ruby's original results alongside explicit,
+reasoned Rust safeguards. This preserves provenance without requiring Rust to copy
+unsafe Ruby behavior. The Ruby originals themselves are unchanged. Their migration and NoSetex
+autocorrectors retain the reviewed hazards; these fixes apply to the Rust fork.
+The original Ruby serializer transformations remain disabled by Wistia policy.
+
+Validation includes the full Rust suite, pinned Ruby reference cases, syntax
+compilation of every changed reference output, real CLI suppression/count checks,
+combined-cop corrections, and before/after runtime checks for Redis/table arguments
+and ActiveModelSerializers field values. See
+[validation metadata](../wistia-cop-validation.json) for final counts. The full
+14,762-file corpus still reports exactly the same 27 known regexp findings.
 
 ## Shared-engine defects
 

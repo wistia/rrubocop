@@ -84,6 +84,7 @@ impl Cop for FrozenStringLiteralComment {
                 replacement: "# frozen_string_literal: true\n".into(),
                 cop_name: self.name(),
                 cop_index: 0,
+                owner: None,
             });
             diag.corrected = true;
         }

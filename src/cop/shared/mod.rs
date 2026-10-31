@@ -40,6 +40,7 @@ pub fn push_replace(
         replacement: replacement.into(),
         cop_name,
         cop_index: 0,
+        owner: None,
     });
     true
 }

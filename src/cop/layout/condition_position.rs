@@ -89,6 +89,7 @@ fn apply_move(
         replacement: format!(" {cond_src}"),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     if rm_start < kw_end {
         return false;
@@ -99,6 +100,7 @@ fn apply_move(
         replacement: String::new(),
         cop_name: cop.name(),
         cop_index: 1,
+        owner: None,
     });
     true
 }

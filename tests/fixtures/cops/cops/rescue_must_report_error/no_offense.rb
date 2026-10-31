@@ -1,1 +1,5 @@
-begin; work; rescue; Sentry.capture_exception(e); end
+begin
+ work
+rescue
+ Rails.error().report(error)
+end

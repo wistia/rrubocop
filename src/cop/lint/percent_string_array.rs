@@ -47,6 +47,7 @@ fn apply_fixes(
                 replacement: cleaned,
                 cop_name,
                 cop_index: 0,
+                owner: None,
             });
         }
     }

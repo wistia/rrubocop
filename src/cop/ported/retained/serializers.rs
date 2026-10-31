@@ -1,7 +1,6 @@
 use super::super::context::*;
 use super::arguments as args;
 use tree_sitter::Node;
-mod correction;
 
 pub(super) fn single(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "attribute" || block(n).is_some() {
@@ -10,48 +9,26 @@ pub(super) fn single(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(attribute) = args(n).first().copied() else {
         return vec![];
     };
-    let Some(method) = matching_method(c, n, attribute) else {
+    if matching_method(c, n, attribute).is_none() {
         return vec![];
-    };
-    vec![correction::single(
-        c,
-        n,
-        method,
-        Finding::new(n, "Prefer block attribute over method call."),
-    )]
+    }
+    vec![Finding::new(n, "Prefer block attribute over method call.")]
 }
 pub(super) fn plural(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "attributes" || block(n).is_some() {
         return vec![];
     }
-    let a = attribute_arguments(n);
-    let mut corrected = false;
-    a.iter()
-        .enumerate()
+    args(n)
+        .into_iter()
         .rev()
-        .filter_map(|(i, attribute)| {
-            let method = matching_method(c, n, *attribute)?;
-            Some(plural_finding(c, n, method, &a, i, &mut corrected))
+        .filter_map(|attribute| {
+            matching_method(c, n, attribute)?;
+            Some(Finding::new(
+                attribute,
+                "Prefer block attribute over method call from attributes.",
+            ))
         })
         .collect()
-}
-fn plural_finding(
-    c: &Context<'_>,
-    n: Node<'_>,
-    method: Node<'_>,
-    a: &[Node<'_>],
-    i: usize,
-    corrected: &mut bool,
-) -> Finding {
-    let f = Finding::new(
-        a[i],
-        "Prefer block attribute over method call from attributes.",
-    );
-    if *corrected {
-        return f;
-    }
-    *corrected = true;
-    correction::plural(c, n, method, a, i, f)
 }
 
 fn scope(n: Node<'_>) -> Option<Node<'_>> {
@@ -69,9 +46,5 @@ fn matching_method<'n>(c: &Context<'_>, n: Node<'n>, attribute: Node<'_>) -> Opt
     })
 }
 
-fn attribute_arguments(n: Node<'_>) -> Vec<Node<'_>> {
-    args(n)
-        .into_iter()
-        .filter(|n| n.kind() != "comment")
-        .collect()
-}
+#[cfg(test)]
+mod tests;

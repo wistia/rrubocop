@@ -39,6 +39,7 @@ fn strip_spaces(
             replacement: String::new(),
             cop_name,
             cop_index: 0,
+            owner: None,
         });
     }
     if after {
@@ -48,6 +49,7 @@ fn strip_spaces(
             replacement: String::new(),
             cop_name,
             cop_index: 0,
+            owner: None,
         });
     }
 }

@@ -94,6 +94,7 @@ fn push_edit(
         replacement,
         cop_name: COP,
         cop_index: 0,
+        owner: None,
     });
     true
 }

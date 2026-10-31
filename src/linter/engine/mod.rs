@@ -137,6 +137,7 @@ fn run_redundant_disable_audit(
             corr_buf.as_mut(),
         );
         finish_cop_pass(
+            source,
             diagnostics,
             before,
             &config.cop_config(cop.name()),
@@ -170,6 +171,10 @@ fn apply_directives(
             diagnostics,
             corrections,
         );
+    }
+    filter_directives(source, ignore_disable, diagnostics);
+    if let Some(edits) = corrections.as_mut() {
+        crate::correction::filter_disabled(source, edits, ignore_disable);
     }
     offense::finalize_offenses(source, config, registry, diagnostics);
 }
@@ -300,6 +305,7 @@ pub(super) fn merge_corrections(into: &mut Option<Vec<Correction>>, from: Option
 }
 
 pub(super) fn finish_cop_pass(
+    source: &SourceFile,
     diagnostics: &mut [Diagnostic],
     before: usize,
     cfg: &CopConfig,
@@ -308,6 +314,7 @@ pub(super) fn finish_cop_pass(
     corrections: &mut Option<Vec<Correction>>,
 ) {
     if let Some(buf) = corr_buf.as_mut() {
+        crate::correction::assign_owners(source, &diagnostics[before..], buf);
         for c in buf {
             c.cop_index = idx;
         }

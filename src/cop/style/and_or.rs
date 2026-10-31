@@ -125,6 +125,7 @@ fn push_correction(
         replacement: repl.to_string(),
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
     true
 }

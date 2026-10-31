@@ -47,6 +47,7 @@ fn move_required(
 fn newline_needed(c: &Context<'_>, n: Node<'_>, parameters: &[Node<'_>]) -> bool {
     !c.text(n).starts_with(['(', '|'])
         && n.kind() == "method_parameters"
+        && !line_break_after(c, n)
         && parameters
             .last()
             .is_some_and(|p| p.kind() == "keyword_parameter")
@@ -91,4 +92,11 @@ fn keyword_sources(c: &Context<'_>, nodes: &[Node<'_>]) -> String {
         .map(|n| c.text(*n))
         .collect::<Vec<_>>()
         .join(", ")
+}
+
+fn line_break_after(c: &Context<'_>, n: Node<'_>) -> bool {
+    c.source.as_bytes()[n.end_byte()..]
+        .iter()
+        .find(|b| !matches!(b, b' ' | b'\t'))
+        .is_some_and(|b| matches!(b, b'\n' | b'\r'))
 }

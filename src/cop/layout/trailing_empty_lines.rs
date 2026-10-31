@@ -87,6 +87,7 @@ fn apply_fix(cop: &dyn Cop, style: &str, begin_pos: usize, end: usize, corr: &mu
         replacement,
         cop_name: cop.name(),
         cop_index: 0,
+        owner: None,
     });
 }
 

@@ -26,6 +26,7 @@ fn remove_ensure(cop_name: &'static str, kw: Node<'_>) -> Correction {
         replacement: String::new(),
         cop_name,
         cop_index: 0,
+        owner: None,
     }
 }
 

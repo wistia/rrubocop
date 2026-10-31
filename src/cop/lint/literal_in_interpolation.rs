@@ -84,6 +84,7 @@ impl Cop for LiteralInInterpolation {
                 replacement: repl,
                 cop_name: self.name(),
                 cop_index: 0,
+                owner: None,
             });
             diag.corrected = true;
         }

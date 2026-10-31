@@ -28,6 +28,7 @@ fn replace_method(
             replacement: replacement.to_string(),
             cop_name: cop.name(),
             cop_index: 0,
+            owner: None,
         });
         diag.corrected = true;
     }
@@ -79,6 +80,7 @@ fn drop_bool_arg(node: Node<'_>, args: &[Node<'_>], cop_name: &'static str) -> C
         replacement: String::new(),
         cop_name,
         cop_index: 0,
+        owner: None,
     }
 }
 
