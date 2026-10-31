@@ -49,7 +49,7 @@ fn registered(
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<Vec<Correction>>,
 ) -> bool {
-    let mut corr_buf = allow_corr(mode, cop).then(Vec::new);
+    let mut corr_buf = super::allow_corr(mode, cop, cfg).then(Vec::new);
     let before = diagnostics.len();
     cop.check_source(source, tree, code_map, cfg, diagnostics, corr_buf.as_mut());
     stamp_and_merge(diagnostics, before, cfg, &mut corr_buf, idx, corrections);
@@ -72,14 +72,6 @@ fn probe(
         None,
     );
     !out.is_empty()
-}
-
-fn allow_corr(mode: AutocorrectMode, cop: &dyn Cop) -> bool {
-    match mode {
-        AutocorrectMode::Off => false,
-        AutocorrectMode::Safe => cop.supports_autocorrect() && cop.safe_autocorrect(),
-        AutocorrectMode::All => cop.supports_autocorrect(),
-    }
 }
 
 fn stamp_and_merge(

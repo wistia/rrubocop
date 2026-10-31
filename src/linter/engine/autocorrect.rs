@@ -272,3 +272,6 @@ mod tests {
         assert!(!diags[0].corrected);
     }
 }
+
+#[cfg(test)]
+mod config_tests;

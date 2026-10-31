@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-31",
+  "requested_cops": 79,
+  "registered_cops_total": 653,
+  "reference_examples": 1278,
+  "rust_tests": 615,
+  "app_specific_activation_probes": 24,
+  "intentional_correction_safeguards": 3,
+  "whole_codebase": {
+    "files": 14762,
+    "rust_seconds": 32.6,
+    "rust_peak_rss_kib": 179224,
+    "ruby_configured_79_seconds": 257.88,
+    "ruby_peak_rss_kib": 164484,
+    "offenses": 27,
+    "offenses_by_cop": {
+      "Style/RedundantRegexpCharacterClass": 8,
+      "Style/RedundantRegexpEscape": 19
+    },
+    "exact_location_message_parity": true
+  },
+  "notes": [
+    "Rust scan runs all enabled registered cops; Ruby comparison selects the requested79 plus mandatory syntax while respecting local disables.",
+    "Normal pinned Ruby full scans hide these27 regexp findings because another cop mutates the shared regexp tree.",
+    "Eight difficult audit gaps and retained review candidates still need Ruby enforcement."
+  ],
+  "ruby_compiler_checked_rewrites": 460
+}

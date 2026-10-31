@@ -39,7 +39,7 @@ impl CopRegistry {
         super::rspec::register_all(&mut registry);
         super::rspec_rails::register_all(&mut registry);
         super::security::register_all(&mut registry);
-        super::style::register_all(&mut registry);
+        register_style_and_extensions(&mut registry);
         registry
     }
 
@@ -73,4 +73,9 @@ impl CopRegistry {
     pub fn index_of(&self, name: &str) -> Option<usize> {
         self.index.get(name).copied()
     }
+}
+
+fn register_style_and_extensions(registry: &mut CopRegistry) {
+    super::style::register_all(registry);
+    super::ported::register_all(registry);
 }

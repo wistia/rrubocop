@@ -71,7 +71,9 @@ fn inject_standard_wrappers(gems: &mut Vec<String>) {
 }
 
 fn gem_config_rel_path(gem_name: &str, ruby_version: Option<f64>) -> Option<String> {
-    if gem_name.starts_with("rubocop-") {
+    if gem_name == "anycable-rails-core" {
+        Some("lib/anycable/rails/rubocop/config/default.yml".into())
+    } else if gem_name.starts_with("rubocop-") {
         Some("config/default.yml".into())
     } else {
         standard_gem_config_path(gem_name, ruby_version).map(|path| path.into())
@@ -136,6 +138,11 @@ fn load_one_require_gem(
     gem_cache: Option<&HashMap<String, PathBuf>>,
     base_layer: &mut ConfigLayer,
 ) {
+    let gem_name = if gem_name == "anycable/rails/compatibility/rubocop" {
+        "anycable-rails-core"
+    } else {
+        gem_name
+    };
     let Some(config_rel_path) = gem_config_rel_path(gem_name, ruby_version) else {
         return;
     };
@@ -191,6 +198,7 @@ pub(crate) fn process_require_plugins(
     inject_standard_wrappers(&mut gems);
     let visited_before = visited.clone();
     for gem_name in &gems {
+        super::load_extension::load_required(gem_name, working_dir, base_layer);
         load_one_require_gem(
             gem_name,
             ruby_version,

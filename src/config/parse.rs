@@ -27,16 +27,7 @@ fn apply_layer_entry(layer: &mut ConfigLayer, key_str: &str, value: &Value) {
         "AllCops" => {
             apply_allcops_fields(layer, value);
         }
-        key if key.contains('/') => {
-            layer
-                .cop_configs
-                .insert(key_str.to_string(), parse_cop_config(value));
-        }
-        _ => {
-            layer
-                .department_configs
-                .insert(key_str.to_string(), parse_department_config(value));
-        }
+        _ => apply_policy_entry(layer, key_str, value),
     }
 }
 
@@ -131,4 +122,16 @@ pub(crate) fn value_to_string_list(value: &Value) -> Option<Vec<String>> {
             .filter_map(|v| v.as_str().map(String::from))
             .collect()
     })
+}
+
+fn apply_policy_entry(layer: &mut ConfigLayer, name: &str, value: &Value) {
+    if let Some(qualified) = super::cop_names::qualified(name) {
+        layer
+            .cop_configs
+            .insert(qualified.into_owned(), parse_cop_config(value));
+    } else {
+        layer
+            .department_configs
+            .insert(name.into(), parse_department_config(value));
+    }
 }

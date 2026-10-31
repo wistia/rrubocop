@@ -7,6 +7,7 @@ pub mod lint;
 pub mod metrics;
 pub mod naming;
 pub mod performance;
+mod ported;
 pub mod rails;
 pub mod rake;
 pub mod registry;
@@ -58,6 +59,12 @@ impl Default for CopConfig {
 }
 
 impl CopConfig {
+    pub fn autocorrect_disabled(&self) -> bool {
+        self.options
+            .get("AutoCorrect")
+            .is_some_and(|v| v.as_bool() == Some(false) || v.as_str() == Some("disabled"))
+    }
+
     pub fn get_str<'a>(&'a self, key: &str, default: &'a str) -> &'a str {
         self.options
             .get(key)

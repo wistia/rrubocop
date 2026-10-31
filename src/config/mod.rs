@@ -9,6 +9,7 @@ mod gem_path_local;
 mod gem_path_version;
 mod gem_path_version_override;
 
+mod cop_names;
 mod discover;
 mod filter;
 mod filter_match;
@@ -16,6 +17,7 @@ mod filter_path;
 mod globutil;
 mod load;
 mod load_defaults;
+mod load_extension;
 mod load_gems;
 mod load_lockfile;
 mod load_recursive;
@@ -708,3 +710,6 @@ mod tests {
         assert!(config.is_cop_enabled("Layout/LineLength", Path::new("x.rb"), &[], &[]));
     }
 }
+
+#[cfg(test)]
+mod anycable_tests;

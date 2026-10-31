@@ -18,7 +18,7 @@ pub(super) fn run_line_phase(
     corrections: &mut Option<Vec<Correction>>,
 ) {
     for (cop, cfg, idx) in active.iter().filter(|(c, _, _)| c.uses_line_phase()) {
-        let mut corr_buf = allow_corr(mode, *cop).then(Vec::new);
+        let mut corr_buf = allow_corr(mode, *cop, cfg).then(Vec::new);
         let before = diagnostics.len();
         cop.check_lines(source, cfg, diagnostics, corr_buf.as_mut());
         finish_cop_pass(diagnostics, before, cfg, &mut corr_buf, *idx, corrections);
@@ -77,7 +77,7 @@ fn one_file_model_cop(
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<Vec<Correction>>,
 ) {
-    let mut corr_buf = allow_corr(mode, cop).then(Vec::new);
+    let mut corr_buf = allow_corr(mode, cop, cfg).then(Vec::new);
     let before = diagnostics.len();
     cop.check_file_model(source, file_model, cfg, diagnostics, corr_buf.as_mut());
     finish_cop_pass(diagnostics, before, cfg, &mut corr_buf, idx, corrections);
@@ -126,7 +126,7 @@ fn one_plain_source_cop(
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<Vec<Correction>>,
 ) {
-    let mut corr_buf = allow_corr(mode, cop).then(Vec::new);
+    let mut corr_buf = allow_corr(mode, cop, cfg).then(Vec::new);
     let before = diagnostics.len();
     cop.check_source(source, tree, code_map, cfg, diagnostics, corr_buf.as_mut());
     finish_cop_pass(diagnostics, before, cfg, &mut corr_buf, idx, corrections);

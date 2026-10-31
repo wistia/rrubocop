@@ -126,6 +126,7 @@ const AS_EXTENSION_COPS: &[&str] = &[
     "Lint/DuplicateMethods",
     "Lint/UselessAccessModifier",
     "Style/ArrayIntersect",
+    "Style/HashExcept",
     "Style/CollectionQuerying",
     "Style/RedundantFilterChain",
 ];

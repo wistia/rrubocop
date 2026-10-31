@@ -123,11 +123,11 @@ fn run_redundant_disable_audit(
 ) {
     let active_refs: Vec<(&dyn Cop, &CopConfig)> =
         active.iter().map(|(c, cfg, _)| (*c, cfg)).collect();
-    for (cop, _, idx) in active {
+    for (cop, cfg, idx) in active {
         if cop.name() != "Lint/RedundantCopDisableDirective" {
             continue;
         }
-        let mut corr_buf = allow_corr(mode, *cop).then(Vec::new);
+        let mut corr_buf = allow_corr(mode, *cop, cfg).then(Vec::new);
         let before = diagnostics.len();
         cop.audit_after_cops(
             source,
@@ -278,10 +278,17 @@ pub(super) fn corr_bucket(mode: AutocorrectMode) -> Option<Vec<Correction>> {
     (mode != AutocorrectMode::Off).then(Vec::new)
 }
 
-pub(super) fn allow_corr(mode: AutocorrectMode, cop: &dyn Cop) -> bool {
+pub(super) fn allow_corr(mode: AutocorrectMode, cop: &dyn Cop, cfg: &CopConfig) -> bool {
+    if cfg.autocorrect_disabled() {
+        return false;
+    }
     match mode {
         AutocorrectMode::Off => false,
-        AutocorrectMode::Safe => cop.supports_autocorrect() && cop.safe_autocorrect(),
+        AutocorrectMode::Safe => {
+            cop.supports_autocorrect()
+                && cfg.get_bool("Safe", true)
+                && cfg.get_bool("SafeAutoCorrect", cop.safe_autocorrect())
+        }
         AutocorrectMode::All => cop.supports_autocorrect(),
     }
 }

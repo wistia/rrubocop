@@ -1,0 +1,31 @@
+use super::super::context::*;
+use tree_sitter::Node;
+pub(super) fn attr_comma(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
+    if !["attr", "attr_reader", "attr_writer", "attr_accessor"].contains(&c.method(n)) {
+        return vec![];
+    }
+    let Some(offset) = trailing_comma(c, &args(n)) else {
+        return vec![];
+    };
+    vec![
+        Finding::range(
+            offset,
+            offset + 1,
+            "Avoid leaving a trailing comma in attribute declarations.",
+        )
+        .edit(offset, offset + 1, ""),
+    ]
+}
+fn trailing_comma(c: &Context<'_>, a: &[Node<'_>]) -> Option<usize> {
+    if a.len() < 2 || a.last().is_none_or(|a| a.kind() != "method") {
+        return None;
+    }
+    comma_between(c, a[a.len() - 2].end_byte(), a.last()?.start_byte())
+}
+
+fn comma_between(c: &Context<'_>, start: usize, end: usize) -> Option<usize> {
+    c.source.as_bytes()[start..end]
+        .iter()
+        .position(|b| *b == b',')
+        .map(|i| start + i)
+}
