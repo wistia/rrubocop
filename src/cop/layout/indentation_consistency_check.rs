@@ -55,6 +55,14 @@ fn report(
     diagnostics.push(diag);
 }
 
+fn continues_range(source: &SourceFile, kids: &[Node<'_>], index: usize) -> bool {
+    index > 0
+        && kids[index].kind() == "parenthesized_statements"
+        && shared::node_text(source, kids[index - 1])
+            .trim_end()
+            .ends_with("..")
+}
+
 fn check_flat(
     cop: &dyn Cop,
     source: &SourceFile,
@@ -67,11 +75,11 @@ fn check_flat(
     for (i, &k) in kids.iter().enumerate() {
         let line = shared::node_line(source, k);
         let col = util::display_col(source, k.start_byte());
-        if i > 0 && line == prev_end {
-            prev_end = util::end_line(source, k);
+        let same_expression = (i > 0 && line == prev_end) || continues_range(source, kids, i);
+        prev_end = util::end_line(source, k);
+        if same_expression {
             continue;
         }
-        prev_end = util::end_line(source, k);
         if !util::begins_its_line(source, k.start_byte()) {
             continue;
         }

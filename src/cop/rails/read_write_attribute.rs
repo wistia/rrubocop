@@ -11,6 +11,12 @@ use crate::parse::source::SourceFile;
 pub struct ReadWriteAttribute;
 
 fn attribute_rewrite<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<(String, &'a str)> {
+    if node
+        .child_by_field_name("receiver")
+        .is_some_and(|n| n.kind() != "self")
+    {
+        return None;
+    }
     let method = call_method_name(source, node)?;
     let args = argument_nodes(node);
     let repl = match method {

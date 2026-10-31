@@ -33,6 +33,8 @@ pub struct ResolvedConfig {
     /// Target Ruby version from AllCops.TargetRubyVersion (e.g. 3.1, 3.2).
     /// None means not specified (cops should default to 2.7 per RuboCop convention).
     pub target_ruby_version: Option<f64>,
+    pub(crate) rubocop_version: Option<String>,
+    pub(crate) rubocop_rails_version: Option<String>,
     /// Target Rails version from AllCops.TargetRailsVersion (e.g. 7.1, 8.0).
     /// None means not specified (cops should default to 5.0 per RuboCop convention).
     pub(crate) target_rails_version: Option<f64>,
@@ -106,6 +108,8 @@ impl ResolvedConfig {
             require_known_cops: HashSet::new(),
             require_departments: HashSet::new(),
             target_ruby_version: None,
+            rubocop_version: None,
+            rubocop_rails_version: None,
             target_rails_version: None,
             active_support_extensions_enabled: false,
             rubocop_known_cops: HashSet::new(),

@@ -27,11 +27,34 @@ fn combined_quant(a: u8, b: u8) -> char {
     }
 }
 
+fn redundant_pair(a: u8, b: u8) -> bool {
+    is_quant(a) && is_quant(b) && !skip_valid_pair(a, b)
+}
+
 fn find_redundant(pattern: &str) -> Option<(char, char, char)> {
     let bytes = pattern.as_bytes();
+    let mut in_class = false;
+    let mut escaped = false;
     for i in 0..bytes.len().saturating_sub(1) {
+        if escaped {
+            escaped = false;
+            continue;
+        }
+        if bytes[i] == b'\\' {
+            escaped = true;
+            continue;
+        }
+        if bytes[i] == b'[' {
+            in_class = true;
+        }
+        if bytes[i] == b']' {
+            in_class = false;
+        }
+        if in_class {
+            continue;
+        }
         let (a, b) = (bytes[i], bytes[i + 1]);
-        if !is_quant(a) || !is_quant(b) || skip_valid_pair(a, b) {
+        if !redundant_pair(a, b) {
             continue;
         }
         return Some((a as char, b as char, combined_quant(a, b)));

@@ -44,28 +44,7 @@ pub(crate) fn sibling_enabled(configs: &HashMap<String, CopConfig>, sibling: &st
         .unwrap_or(true)
 }
 
-pub(crate) fn inject_globals(cfg: &ResolvedConfig, config: &mut CopConfig) {
-    inject_f64(
-        &mut config.options,
-        "TargetRubyVersion",
-        cfg.target_ruby_version,
-    );
-    inject_f64(
-        &mut config.options,
-        "TargetRailsVersion",
-        cfg.target_rails_version,
-    );
-    inject_bool(
-        &mut config.options,
-        "__RailtiesInLockfile",
-        cfg.railties_in_lockfile,
-    );
-    inject_f64(
-        &mut config.options,
-        "__RailtiesVersion",
-        cfg.railties_version,
-    );
-}
+pub(crate) use super::resolved_versions::inject_globals;
 
 pub(crate) fn inject_rack_version(cfg: &ResolvedConfig, name: &str, config: &mut CopConfig) {
     if !matches!(
@@ -166,6 +145,11 @@ pub(crate) fn inject_hash_alignment(cfg: &ResolvedConfig, name: &str, config: &m
     if name != "Layout/HashAlignment" {
         return;
     }
+    inject_bool(
+        &mut config.options,
+        "ArgumentAlignmentEnabled",
+        sibling_enabled(&cfg.cop_configs, "Layout/ArgumentAlignment"),
+    );
     inject_sibling_str(
         &mut config.options,
         &cfg.cop_configs,

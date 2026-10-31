@@ -1,0 +1,2 @@
+values = [first,
+  second].freeze

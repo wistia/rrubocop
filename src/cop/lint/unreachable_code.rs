@@ -12,6 +12,9 @@ fn is_terminator(source: &crate::parse::source::SourceFile, node: Node<'_>) -> b
     match node.kind() {
         "return" | "next" | "break" | "retry" | "redo" => true,
         "call" => {
+            if node.child_by_field_name("receiver").is_some() {
+                return false;
+            }
             let meth = call_method_name(source, node).unwrap_or(b"");
             matches!(meth, b"raise" | b"fail" | b"throw" | b"exit" | b"abort")
         }

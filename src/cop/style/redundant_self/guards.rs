@@ -4,6 +4,9 @@ use tree_sitter::Node;
 
 pub(super) fn call_is_assign_lhs(node: Node<'_>) -> bool {
     node.parent().is_some_and(|p| {
+        if p.kind() == "left_assignment_list" {
+            return true;
+        }
         matches!(p.kind(), "assignment" | "operator_assignment")
             && p.child_by_field_name("left")
                 .is_some_and(|l| l.id() == node.id())

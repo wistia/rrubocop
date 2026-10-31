@@ -1,5 +1,6 @@
 //! Ruby / gem version resolution from gemspec and lockfiles.
 
+use super::types::ConfigLayer;
 use std::path::Path;
 
 const KNOWN_RUBIES: &[f64] = &[
@@ -77,4 +78,56 @@ pub(crate) fn parse_gem_version_from_lockfile(content: &str, gem_name: &str) -> 
     content
         .lines()
         .find_map(|line| parse_lock_version_line(line.trim(), gem_name))
+}
+
+fn parse_ruby_version_file(content: &str) -> Option<f64> {
+    let parts: Vec<&str> = content
+        .trim()
+        .trim_start_matches("ruby-")
+        .split('.')
+        .collect();
+    if parts.len() < 2 {
+        return None;
+    }
+    let major: u64 = parts[0].parse().ok()?;
+    let minor: u64 = parts[1].parse().ok()?;
+    Some(major as f64 + minor as f64 / 10.0)
+}
+
+fn tool_versions_ruby(config_dir: &Path) -> Option<f64> {
+    config_dir.ancestors().find_map(|dir| {
+        std::fs::read_to_string(dir.join(".tool-versions"))
+            .ok()?
+            .lines()
+            .find_map(|line| line.strip_prefix("ruby ").and_then(parse_ruby_version_file))
+    })
+}
+
+pub(crate) fn resolve_target_ruby_version(base: &ConfigLayer, config_dir: &Path) -> Option<f64> {
+    base.target_ruby_version
+        .or_else(|| resolve_ruby_version_from_gemspec(config_dir))
+        .or_else(|| {
+            std::fs::read_to_string(config_dir.join(".ruby-version"))
+                .ok()
+                .and_then(|c| parse_ruby_version_file(&c))
+        })
+        .or_else(|| tool_versions_ruby(config_dir))
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn tool_versions_sets_target_ruby() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(
+            dir.path().join(".tool-versions"),
+            "nodejs 24.0.0\nruby 3.4.9\n",
+        )
+        .unwrap();
+        let config = super::super::types::ConfigLayer::empty();
+        assert_eq!(
+            super::super::load_resolve::resolve_target_ruby_version(&config, dir.path()),
+            Some(3.4)
+        );
+    }
 }

@@ -23,6 +23,10 @@ fn setter_call<'a>(node: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
     (recv.kind() == "identifier").then_some((left, recv))
 }
 
+fn new_call(source: &SourceFile, node: Node<'_>) -> bool {
+    node.kind() == "call" && crate::cop::shared::call_method_name(source, node) == Some(b"new")
+}
+
 fn created_from_call(source: &SourceFile, body: Node<'_>, var: &[u8], skip: usize) -> bool {
     let mut found = false;
     for_each_descendant(body, |n| {
@@ -36,7 +40,7 @@ fn created_from_call(source: &SourceFile, body: Node<'_>, var: &[u8], skip: usiz
             return;
         }
         if n.child_by_field_name("right")
-            .is_some_and(|r| r.kind() == "call")
+            .is_some_and(|r| new_call(source, r))
         {
             found = true;
         }

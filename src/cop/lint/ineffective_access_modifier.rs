@@ -42,6 +42,22 @@ fn report_singleton(
     ));
 }
 
+fn explicitly_private(source: &SourceFile, body: Node<'_>, child: Node<'_>) -> bool {
+    let Some(name) = child.child_by_field_name("name") else {
+        return false;
+    };
+    let name = node_bytes(source, name);
+    let mut private_cursor = body.walk();
+    body.named_children(&mut private_cursor).any(|n| {
+        if crate::cop::shared::call_method_name(source, n) != Some(b"private_class_method") {
+            return false;
+        }
+        crate::cop::shared::argument_nodes(n)
+            .iter()
+            .any(|arg| node_bytes(source, *arg).strip_prefix(b":") == Some(name))
+    })
+}
+
 fn scan_body(
     cop: &IneffectiveAccessModifier,
     source: &SourceFile,
@@ -57,6 +73,9 @@ fn scan_body(
             continue;
         }
         if child.kind() != "singleton_method" {
+            continue;
+        }
+        if explicitly_private(source, body, child) {
             continue;
         }
         if let Some((line, modifier)) = current_mod {

@@ -1,7 +1,7 @@
 //! Naming / order helpers for GraphQL Ruby DSL cops.
 
 pub fn is_snake_case(name: &str) -> bool {
-    let bytes = name.as_bytes();
+    let bytes = name.trim_start_matches('_').as_bytes();
     !bytes.is_empty()
         && bytes[0].is_ascii_lowercase()
         && bytes

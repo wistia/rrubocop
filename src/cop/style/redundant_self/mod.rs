@@ -39,6 +39,12 @@ impl Cop for RedundantSelf {
         let Some(recv) = call_receiver(node) else {
             return;
         };
+        if node
+            .child_by_field_name("operator")
+            .is_some_and(|n| crate::cop::shared::node_bytes(source, n) == b"&.")
+        {
+            return;
+        }
         if recv.kind() != "self" {
             return;
         }

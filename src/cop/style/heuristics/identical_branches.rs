@@ -8,6 +8,9 @@ use crate::parse::source::SourceFile;
 
 /// Branches that share identical source text (for reporting).
 pub fn identical_branch_nodes<'a>(source: &SourceFile, node: Node<'a>) -> Option<Vec<Node<'a>>> {
+    if incomplete_conditional(node) {
+        return None;
+    }
     let branches = match node.kind() {
         "if" | "unless" | "conditional" => if_branches(node),
         "case" => case_branches(node),
@@ -31,6 +34,22 @@ pub fn matches_identical_conditional_branches(
     _config: &CopConfig,
 ) -> bool {
     identical_branch_nodes(source, node).is_some()
+}
+
+fn incomplete_conditional(node: Node<'_>) -> bool {
+    if node.kind() == "case" {
+        let mut cursor = node.walk();
+        return !node.named_children(&mut cursor).any(|n| n.kind() == "else");
+    }
+    matches!(node.kind(), "if" | "unless") && !is_ternary(node) && !terminal_else(node)
+}
+
+fn terminal_else(node: Node<'_>) -> bool {
+    match node.child_by_field_name("alternative") {
+        Some(n) if n.kind() == "else" => true,
+        Some(n) if matches!(n.kind(), "if" | "elsif") => terminal_else(n),
+        _ => false,
+    }
 }
 
 fn if_branches<'a>(node: Node<'a>) -> Vec<Option<Node<'a>>> {

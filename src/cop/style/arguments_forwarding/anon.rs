@@ -38,10 +38,14 @@ pub(super) fn report(
             scope_stops: METHOD_STOPS,
             include_lambda: true,
             any_inside_block: false,
-            guard_inside_block: ruby < 3.4,
+            guard_inside_block: ruby < 3.4 || super::legacy_block_forwarding(config),
         },
     );
     if found.name_used || found.blocked || found.nodes.is_empty() {
+        return;
+    }
+    if super::legacy_block_forwarding(config) && found.nodes.iter().any(|n| super::within_block(*n))
+    {
         return;
     }
     for pass in found.nodes {

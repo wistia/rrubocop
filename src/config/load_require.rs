@@ -99,12 +99,16 @@ fn load_gem_yaml_layer(
     }
 }
 
-fn merge_require_layer(base_layer: &mut ConfigLayer, layer: ConfigLayer) {
-    // Keep AllCops.Exclude from rubocop-* gems (e.g. rubocop-rails `db/*schema.rb`).
-    // Patterns stay project-relative — do not rewrite them against a gem path.
-    // Also record them so a later project Exclude replace cannot drop them
-    // (RuboCop injects plugin Exclude into default_configuration).
-    base_layer.extend_plugin_excludes(&layer.global_excludes);
+fn merge_require_layer(base_layer: &mut ConfigLayer, mut layer: ConfigLayer, working_dir: &Path) {
+    // Legacy require layers do not carry their merge policy into the project.
+    // New plugin defaults retain injected excludes after project replacement.
+    if !super::gem_path_version::select_version("rubocop", working_dir)
+        .is_ok_and(|v| v.starts_with("1.65."))
+    {
+        base_layer.extend_plugin_excludes(&layer.global_excludes);
+    } else {
+        layer.inherit_mode = Default::default();
+    }
     merge_layer_into(base_layer, &layer, None);
 }
 
@@ -136,7 +140,7 @@ fn load_one_require_gem(
         return;
     };
     match load_gem_yaml_layer(gem_name, &config_rel_path, working_dir, visited, gem_cache) {
-        Ok(layer) => merge_require_layer(base_layer, layer),
+        Ok(layer) => merge_require_layer(base_layer, layer, working_dir),
         Err(e) => {
             if gem_name.starts_with("rubocop-") {
                 eprintln!("warning: require '{gem_name}': {e:#}");

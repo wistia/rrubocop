@@ -75,7 +75,7 @@ fn pair_gap(pair: Node<'_>) -> Option<(usize, usize)> {
 
 fn collect_hash_gaps(node: Node<'_>, out: &mut Vec<(usize, usize)>) {
     // RuboCop ignores key/value gaps in multiline hashes (Layout/HashAlignment).
-    if matches!(node.kind(), "hash" | "bare_hash")
+    if matches!(node.kind(), "hash" | "bare_hash" | "argument_list")
         && node.start_position().row != node.end_position().row
     {
         let mut cur = node.walk();

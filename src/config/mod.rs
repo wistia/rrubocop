@@ -35,6 +35,7 @@ mod resolved_filters;
 mod resolved_fingerprint;
 mod resolved_inject;
 mod resolved_state;
+mod resolved_versions;
 mod ruby_ver;
 mod standard;
 mod standard_convert;
@@ -70,6 +71,24 @@ mod tests {
 
     fn fixtures_dir() -> PathBuf {
         PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/config")
+    }
+
+    #[test]
+    fn legacy_project_exclude_replaces_required_plugin_excludes() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(
+            dir.path().join("Gemfile.lock"),
+            "GEM\n  specs:\n    rubocop (1.65.1)\n    rubocop-rails (2.26.0)\n",
+        )
+        .unwrap();
+        std::fs::write(
+            dir.path().join(".rubocop.yml"),
+            "require: rubocop-rails\nAllCops:\n  Exclude: [ignored/**/*]\n",
+        )
+        .unwrap();
+        let config = super::load_config(None, Some(dir.path()), None).unwrap();
+        assert!(!config.global_excludes.iter().any(|p| p == "bin/*"));
+        assert!(config.global_excludes.iter().any(|p| p.contains("ignored")));
     }
 
     #[test]

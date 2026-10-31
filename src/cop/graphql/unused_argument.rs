@@ -12,6 +12,14 @@ use crate::parse::source::SourceFile;
 
 pub struct UnusedArgument;
 
+fn first_resolution_method(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    class_body_stmts(node).into_iter().find_map(|n| {
+        let name = n.child_by_field_name("name")?;
+        let text = node_text(source, name);
+        matches!(text.as_str(), "resolve" | "authorized?").then_some(text)
+    })
+}
+
 impl Cop for UnusedArgument {
     fn name(&self) -> &'static str {
         "GraphQL/UnusedArgument"
@@ -40,7 +48,8 @@ impl Cop for UnusedArgument {
         if declared.is_empty() {
             return;
         }
-        for method_name in ["resolve", "authorized?"] {
+        let first = first_resolution_method(source, node);
+        for method_name in first.as_deref().into_iter() {
             let Some((method, msg)) = missing_for(source, node, method_name, &declared) else {
                 continue;
             };

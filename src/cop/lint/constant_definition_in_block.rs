@@ -32,6 +32,9 @@ fn offense_in_block(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> 
             }
             return true;
         }
+        if !matches!(cur.kind(), "body_statement" | "block_body") {
+            return false;
+        }
         p = cur.parent();
     }
     false
@@ -58,7 +61,12 @@ impl Cop for ConstantDefinitionInBlock {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        if node.kind() == "assignment" && !is_const_assign(node) {
+        if node.kind() == "assignment"
+            && (!is_const_assign(node)
+                || node
+                    .child_by_field_name("left")
+                    .is_some_and(|n| n.kind() == "scope_resolution"))
+        {
             return;
         }
         if !offense_in_block(source, node, config) {

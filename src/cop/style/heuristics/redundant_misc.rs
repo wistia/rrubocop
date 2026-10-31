@@ -42,7 +42,13 @@ pub fn matches_redundant_heredoc_delimiter_quotes(
         return false;
     }
     let b = &source.as_bytes()[node.start_byte()..node.end_byte()];
-    b.contains(&b'\'') || b.contains(&b'"')
+    if !b.contains(&b'\'') && !b.contains(&b'"') {
+        return false;
+    }
+    if !b.contains(&b'\'') {
+        return true;
+    }
+    heredoc_quotes_needed(source, node)
 }
 
 pub fn matches_redundant_interpolation(
@@ -162,4 +168,16 @@ fn acceptable_capital_q(node: Node<'_>, src: &[u8]) -> bool {
         .named_children(&mut cur)
         .any(|ch| ch.kind() == "interpolation")
         && double_quotes_required(src)
+}
+
+fn heredoc_quotes_needed(source: &SourceFile, node: Node<'_>) -> bool {
+    let mut sibling = node.next_named_sibling();
+    while let Some(n) = sibling {
+        if n.kind() == "heredoc_body" {
+            let text = &source.as_bytes()[n.start_byte()..n.end_byte()];
+            return !text.contains(&b'\\') && !text.windows(2).any(|w| w == b"#{");
+        }
+        sibling = n.next_named_sibling();
+    }
+    false
 }

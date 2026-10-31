@@ -7,6 +7,20 @@ use crate::parse::source::SourceFile;
 
 pub struct UselessAssignment;
 
+fn written_in_block(root: tree_sitter::Node<'_>, offset: usize) -> bool {
+    let mut node = root.descendant_for_byte_range(offset, offset);
+    while let Some(n) = node {
+        if matches!(n.kind(), "block" | "do_block") {
+            return true;
+        }
+        if matches!(n.kind(), "method" | "singleton_method") {
+            return false;
+        }
+        node = n.parent();
+    }
+    false
+}
+
 impl Cop for UselessAssignment {
     fn name(&self) -> &'static str {
         "Lint/UselessAssignment"
@@ -38,6 +52,14 @@ impl Cop for UselessAssignment {
                     continue;
                 }
                 if entry.intro_kind != IntroKind::Assign {
+                    continue;
+                }
+                if entry.writes.len() > 1
+                    && entry
+                        .writes
+                        .iter()
+                        .any(|w| written_in_block(file_model.tree.root_node(), w.byte))
+                {
                     continue;
                 }
                 if !entry.reads.is_empty() {

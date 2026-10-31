@@ -2,6 +2,8 @@
 
 mod items;
 
+pub(super) use items::hash_alignment_items as hash_pairs_for_alignment;
+
 use tree_sitter::Node;
 
 use crate::cop::Cop;
@@ -102,7 +104,11 @@ fn align_cols(
     let first_line = shared::node_line(source, items[0]);
     let base_col = shared::node_col(source, items[0]);
     let fixed_col = if style == "with_fixed_indentation" {
-        selector_line_indent(source, node) + width
+        if node.kind() == "array" {
+            shared::line_indent(source, node.start_byte()) + width
+        } else {
+            selector_line_indent(source, node) + width
+        }
     } else {
         shared::line_indent(
             source,

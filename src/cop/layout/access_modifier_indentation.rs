@@ -30,6 +30,9 @@ fn enclosing_type(node: Node<'_>) -> Option<Node<'_>> {
     let mut p = node.parent();
     while let Some(n) = p {
         // `class_methods do` / similar — RuboCop treats the block as the module-like scope.
+        if matches!(n.kind(), "method" | "singleton_method") {
+            return None;
+        }
         if matches!(n.kind(), "do_block" | "block") {
             return Some(n);
         }
@@ -119,7 +122,13 @@ fn skip_modifier(node: Node<'_>, name: &[u8]) -> bool {
 /// not kwargs (`private: false`) or ordinary identifiers.
 fn is_access_modifier_form(node: Node<'_>) -> bool {
     match node.kind() {
-        "call" | "command" | "command_call" => true,
+        "call" | "command" | "command_call" => {
+            node.child_by_field_name("arguments").is_none_or(|args| {
+                let mut cursor = args.walk();
+                args.named_children(&mut cursor)
+                    .all(|n| matches!(n.kind(), "method" | "singleton_method" | "comment"))
+            })
+        }
         "identifier" => node.parent().is_some_and(|p| {
             matches!(
                 p.kind(),

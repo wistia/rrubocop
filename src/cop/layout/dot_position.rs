@@ -90,6 +90,29 @@ fn report_trailing(
     ));
 }
 
+fn dot_location<'a>(source: &SourceFile, node: Node<'a>) -> Option<(Node<'a>, usize, bool)> {
+    let Some(recv) = node.child_by_field_name("receiver") else {
+        return None;
+    };
+    let Some(method) = node.child_by_field_name("method") else {
+        return None;
+    };
+    if shared::node_line(source, recv) == shared::node_line(source, method) {
+        return None;
+    }
+    let Some(dot) = find_dot(source.as_bytes(), node, recv, method) else {
+        return None;
+    };
+    if source.as_bytes()[dot..method.start_byte()]
+        .split(|&b| b == b'\n')
+        .any(is_comment_line)
+    {
+        return None;
+    }
+    let leading = source.offset_to_line_col(dot).0 == shared::node_line(source, method);
+    Some((method, dot, leading))
+}
+
 impl Cop for DotPosition {
     fn name(&self) -> &'static str {
         "Layout/DotPosition"
@@ -110,19 +133,9 @@ impl Cop for DotPosition {
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
         let want_leading = config.get_str("EnforcedStyle", "leading") != "trailing";
-        let Some(recv) = node.child_by_field_name("receiver") else {
+        let Some((method, dot, leading)) = dot_location(source, node) else {
             return;
         };
-        let Some(method) = node.child_by_field_name("method") else {
-            return;
-        };
-        if shared::node_line(source, recv) == shared::node_line(source, method) {
-            return;
-        }
-        let Some(dot) = find_dot(source.as_bytes(), node, recv, method) else {
-            return;
-        };
-        let leading = source.offset_to_line_col(dot).0 == shared::node_line(source, method);
         if want_leading && !leading {
             report_leading(self, source, dot, method, diagnostics, &mut corrections);
         } else if !want_leading && leading {

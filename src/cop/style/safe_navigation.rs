@@ -1,5 +1,8 @@
 //! Style/SafeNavigation — prefer &. over explicit nil checks (breadth).
 
+mod context;
+use context::unsafe_enclosing_use;
+
 use tree_sitter::Node;
 
 use crate::cop::shared::{call_method_name, call_receiver, node_bytes, node_text};
@@ -39,6 +42,7 @@ impl Cop for SafeNavigation {
             || !is_and_safe_nav(source, node)
             || lhs_reassigned_in_method(source, node)
             || inside_block(node)
+            || unsafe_enclosing_use(source, node)
         {
             return;
         }

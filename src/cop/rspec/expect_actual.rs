@@ -32,6 +32,12 @@ fn complex_literal(node: Node<'_>) -> bool {
 }
 
 fn is_literal(node: Node<'_>) -> bool {
+    if node.kind() == "string" {
+        let mut cursor = node.walk();
+        return !node
+            .named_children(&mut cursor)
+            .any(|n| n.kind() == "interpolation");
+    }
     SIMPLE.contains(&node.kind()) || complex_literal(node)
 }
 
@@ -45,6 +51,9 @@ fn matcher_name<'a>(source: &'a SourceFile, runner: Node<'_>) -> Option<&'a [u8]
 }
 
 fn expect_actual_arg<'a>(source: &SourceFile, runner: Node<'a>) -> Option<Node<'a>> {
+    if argument_nodes(runner).len() != 1 {
+        return None;
+    }
     let recv = call_receiver(runner)?;
     if call_method_name(source, recv) != Some(b"expect") {
         return None;

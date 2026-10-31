@@ -38,6 +38,23 @@ impl Cop for MethodCallWithoutArgsParentheses {
     }
 }
 
+fn assignment_shadows(source: &SourceFile, node: Node<'_>, meth: &[u8]) -> bool {
+    let mut parent = node.parent();
+    while let Some(n) = parent {
+        if n.kind() == "assignment"
+            && n.child_by_field_name("left")
+                .is_some_and(|l| crate::cop::shared::node_bytes(source, l) == meth)
+        {
+            return true;
+        }
+        if matches!(n.kind(), "method" | "singleton_method" | "class" | "module") {
+            break;
+        }
+        parent = n.parent();
+    }
+    false
+}
+
 fn empty_args<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
     // RuboCop uses `on_send` only — `super()` / `yield()` are separate node types.
     if matches!(call_method_name(source, node), Some(b"super" | b"yield")) {
@@ -48,6 +65,9 @@ fn empty_args<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
     };
     // RuboCop `camel_case_method?` — `Success()`, `Failure()`, etc.
     if meth.first().is_some_and(|b| b.is_ascii_uppercase()) {
+        return None;
+    }
+    if assignment_shadows(source, node, meth) {
         return None;
     }
     let args = node.child_by_field_name("arguments")?;

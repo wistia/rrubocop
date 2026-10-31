@@ -46,6 +46,13 @@ pub fn first_sym_arg(source: &SourceFile, node: Node<'_>) -> Option<String> {
         .find(|n| n.kind() != "comment")?;
     sym_text(source, first).or_else(|| {
         if matches!(first.kind(), "string" | "string_content") {
+            let mut cursor = first.walk();
+            if first
+                .named_children(&mut cursor)
+                .any(|n| n.kind() == "interpolation")
+            {
+                return None;
+            }
             Some(strip_quotes(&node_text(source, first)))
         } else {
             None

@@ -38,9 +38,9 @@ fn arg_nodes(args: Node<'_>) -> Vec<Node<'_>> {
 
 /// RuboCop treats keyword args in parens as one argument; tree-sitter lists each pair separately.
 fn top_level_args(args: Node<'_>) -> Vec<Node<'_>> {
-    let nodes = arg_nodes(args);
-    if !nodes.is_empty() && nodes.iter().all(|n| n.kind() == "pair") {
-        return vec![nodes[0]];
+    let mut nodes = arg_nodes(args);
+    if let Some(first_pair) = nodes.iter().position(|n| n.kind() == "pair") {
+        nodes.truncate(first_pair + 1);
     }
     nodes
 }

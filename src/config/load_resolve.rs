@@ -12,7 +12,7 @@ use super::load_defaults::try_load_rubocop_defaults;
 use super::load_lockfile::LockfileMeta;
 use super::load_recursive::{load_config_recursive_inner, load_project_config_recursive};
 use super::resolved::ResolvedConfig;
-use super::ruby_ver::resolve_ruby_version_from_gemspec;
+pub(crate) use super::ruby_ver::resolve_target_ruby_version;
 use super::standard::convert_standard_yml;
 use super::types::{ConfigLayer, NewCopsPolicy};
 
@@ -153,26 +153,6 @@ pub(crate) fn apply_disabled_by_default(
     }
 }
 
-fn parse_ruby_version_file(content: &str) -> Option<f64> {
-    let parts: Vec<&str> = content.trim().split('.').collect();
-    if parts.len() < 2 {
-        return None;
-    }
-    let major: u64 = parts[0].parse().ok()?;
-    let minor: u64 = parts[1].parse().ok()?;
-    Some(major as f64 + minor as f64 / 10.0)
-}
-
-pub(crate) fn resolve_target_ruby_version(base: &ConfigLayer, config_dir: &Path) -> Option<f64> {
-    base.target_ruby_version
-        .or_else(|| resolve_ruby_version_from_gemspec(config_dir))
-        .or_else(|| {
-            std::fs::read_to_string(config_dir.join(".ruby-version"))
-                .ok()
-                .and_then(|c| parse_ruby_version_file(&c))
-        })
-}
-
 pub(crate) struct ResolvedParts {
     pub base: ConfigLayer,
     pub config_dir: PathBuf,
@@ -197,6 +177,12 @@ pub(crate) fn build_resolved(parts: ResolvedParts) -> ResolvedConfig {
         cop_configs: parts.base.cop_configs,
         department_configs: parts.base.department_configs,
         global_excludes: parts.base.global_excludes,
+        rubocop_version: super::gem_path_version::select_version("rubocop", &parts.config_dir).ok(),
+        rubocop_rails_version: super::gem_path_version::select_version(
+            "rubocop-rails",
+            &parts.config_dir,
+        )
+        .ok(),
         config_dir: Some(parts.config_dir),
         scan_root: parts.scan_root,
         new_cops,

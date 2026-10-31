@@ -10,6 +10,29 @@ use crate::parse::source::SourceFile;
 
 pub struct ArgumentsForwarding;
 
+fn within_block(mut node: Node<'_>) -> bool {
+    loop {
+        if matches!(node.kind(), "block" | "do_block")
+            || node.child_by_field_name("block").is_some()
+        {
+            return true;
+        }
+        let Some(parent) = node.parent() else {
+            return false;
+        };
+        node = parent;
+    }
+}
+
+fn legacy_block_forwarding(config: &CopConfig) -> bool {
+    let mut parts = config.get_str("__RubocopVersion", "1.91.0").split('.');
+    parts.next() == Some("1")
+        && parts
+            .next()
+            .and_then(|s| s.parse::<u64>().ok())
+            .is_some_and(|minor| minor <= 65)
+}
+
 pub(super) const COP: &str = "Style/ArgumentsForwarding";
 
 mod anon;
@@ -170,6 +193,9 @@ impl Cop for ArgumentsForwarding {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if legacy_block_forwarding(config) && within_block(node) {
+            return;
+        }
         let ruby = config.get_f64("TargetRubyVersion", 2.7);
         if ruby < 2.7 {
             return;

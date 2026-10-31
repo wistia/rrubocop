@@ -29,7 +29,15 @@ pub(super) fn report(
         return;
     };
     // Before Ruby 3.4, anonymous forwarding inside a block is left unchanged.
-    if !at_least(ruby, 3.4) && forwards.iter().any(|node| in_block(*node)) {
+    if (!at_least(ruby, 3.4) || super::legacy_block_forwarding(config))
+        && forwards.iter().any(|node| {
+            if super::legacy_block_forwarding(config) {
+                super::within_block(*node)
+            } else {
+                in_block(*node)
+            }
+        })
+    {
         return;
     }
     for node in &forwards {

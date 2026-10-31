@@ -173,6 +173,23 @@ fn process_line(
     true
 }
 
+fn heredoc_ranges(tree: &tree_sitter::Tree) -> Vec<(usize, usize)> {
+    let mut heredocs = Vec::new();
+    crate::cop::shared::for_each_descendant(tree.root_node(), |n| {
+        if n.kind() == "heredoc_body" {
+            heredocs.push((n.start_byte(), n.end_byte()));
+        }
+    });
+    heredocs
+}
+
+fn allowed_heredoc_line(allow: bool, ranges: &[(usize, usize)], offset: usize) -> bool {
+    allow
+        && ranges
+            .iter()
+            .any(|&(start, end)| offset >= start && offset < end)
+}
+
 impl Cop for TrailingWhitespace {
     fn name(&self) -> &'static str {
         "Layout/TrailingWhitespace"
@@ -181,22 +198,29 @@ impl Cop for TrailingWhitespace {
         true
     }
 
-    fn uses_line_phase(&self) -> bool {
+    fn uses_source_phase(&self) -> bool {
         true
     }
 
-    fn check_lines(
+    fn check_source(
         &self,
         source: &SourceFile,
+        tree: &tree_sitter::Tree,
+        _code_map: &crate::parse::codemap::CodeMap,
         config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
         let allow = config.get_bool("AllowInHeredoc", false);
+        let heredocs = heredoc_ranges(tree);
         let mut terms = Vec::new();
         let mut saw_nonblank = false;
         let mut byte_offset = 0usize;
         for (i, line) in source.lines().enumerate() {
+            if allowed_heredoc_line(allow, &heredocs, byte_offset) {
+                byte_offset += line.len() + 1;
+                continue;
+            }
             if !process_line(
                 self,
                 source,

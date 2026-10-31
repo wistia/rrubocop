@@ -23,6 +23,16 @@ fn unfocus_repl(method: &[u8]) -> Option<&'static str> {
     }
 }
 
+fn focus_target<'a>(source: &SourceFile, node: Node<'a>) -> Option<(Node<'a>, &'static str)> {
+    if node.child_by_field_name("receiver").is_some() {
+        return None;
+    }
+    let Some(repl) = call_method_name(source, node).and_then(unfocus_repl) else {
+        return None;
+    };
+    Some((method_node(node).unwrap_or(node), repl))
+}
+
 impl Cop for Focus {
     fn name(&self) -> &'static str {
         "RSpec/Focus"
@@ -48,13 +58,9 @@ impl Cop for Focus {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some(method) = call_method_name(source, node) else {
+        let Some((meth, repl)) = focus_target(source, node) else {
             return;
         };
-        let Some(repl) = unfocus_repl(method) else {
-            return;
-        };
-        let meth = method_node(node).unwrap_or(node);
         let (line, col) = source.offset_to_line_col(meth.start_byte());
         let mut diag = self.diagnostic(source, line, col, "Focused spec found.".into());
         if !repl.is_empty()
@@ -70,4 +76,10 @@ impl Cop for Focus {
         }
         diagnostics.push(diag);
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    crate::cop_fixture_tests!(Focus, "cops/rspec/focus");
 }

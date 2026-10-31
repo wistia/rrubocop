@@ -25,11 +25,31 @@ fn expected_col(
 ) -> usize {
     match style {
         "indented_relative_to_receiver" => shared::line_indent(source, recv.start_byte()) + width,
-        "indented" => {
-            shared::line_indent(source, chain::chain_root(source, node).start_byte()) + width
-        }
+        "indented" => indented_chain_col(source, node, width),
         "aligned" | _ => aligned_expected(source, node, width),
     }
+}
+
+fn indented_chain_col(source: &SourceFile, node: Node<'_>, width: usize) -> usize {
+    let root = chain::chain_root(source, node);
+    shared::line_indent(source, root.start_byte())
+        + width
+        + if prefix_keyword(
+            source
+                .line_text(shared::node_line(source, root))
+                .unwrap_or("")
+                .trim_start(),
+        ) {
+            width
+        } else {
+            0
+        }
+}
+
+fn prefix_keyword(line: &str) -> bool {
+    (line.starts_with("return ") && !line.contains(" if ") && !line.contains(" unless "))
+        || line.starts_with("if ")
+        || line.starts_with("unless ")
 }
 
 fn aligned_expected(source: &SourceFile, node: Node<'_>, width: usize) -> usize {
@@ -113,6 +133,9 @@ fn leading_dot_parts<'a>(source: &SourceFile, n: Node<'a>) -> Option<(Node<'a>, 
     }
     let recv = n.child_by_field_name("receiver")?;
     let method = n.child_by_field_name("method")?;
+    if shared::node_bytes(source, method) == b"[]" {
+        return None;
+    }
     let (recv_end_line, _) = source.offset_to_line_col(recv.end_byte().saturating_sub(1));
     if recv_end_line == shared::node_line(source, method) {
         return None;

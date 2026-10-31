@@ -97,6 +97,17 @@ fn check_percent(
     let Some((expected, named)) = scan::field_count(&fmt) else {
         return;
     };
+    if matches!(
+        right.kind(),
+        "identifier"
+            | "call"
+            | "element_reference"
+            | "instance_variable"
+            | "constant"
+            | "scope_resolution"
+    ) {
+        return;
+    }
     let actual = if right.kind() == "array" {
         array_len(right)
     } else {

@@ -1,0 +1,1 @@
+Namespace = module_parent

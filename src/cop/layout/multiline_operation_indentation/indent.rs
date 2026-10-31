@@ -23,7 +23,7 @@ fn node_end_line(source: &SourceFile, node: Node<'_>) -> usize {
 pub(super) fn not_for_this_cop(node: Node<'_>) -> bool {
     let mut p = node.parent();
     while let Some(n) = p {
-        if n.kind() == "parenthesized_statements" {
+        if matches!(n.kind(), "parenthesized_statements" | "interpolation") {
             return true;
         }
         if n.kind() == "argument_list" && arg_list_has_paren(n) {

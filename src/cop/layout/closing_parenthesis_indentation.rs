@@ -53,6 +53,13 @@ fn element_start_cols(source: &SourceFile, elements: &[Node<'_>]) -> Vec<usize> 
 
 /// RuboCop `expected_column` for a hanging `)`.
 fn expected_close_col(source: &SourceFile, node: Node<'_>, indent_width: usize) -> usize {
+    if node.parent().is_some_and(|n| n.kind() == "return") {
+        return shared::line_indent(source, node.start_byte());
+    }
+    expected_argument_close_col(source, node, indent_width)
+}
+
+fn expected_argument_close_col(source: &SourceFile, node: Node<'_>, indent_width: usize) -> usize {
     let open_line = shared::node_line(source, node);
     let open_col = shared::node_col(source, node);
     let elements = named_elements(node);

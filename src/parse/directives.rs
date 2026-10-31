@@ -78,6 +78,12 @@ fn apply_line(d: &mut Directives, line: &str, line_no: usize) {
     let Some(comment) = extract_rubocop_comment(line) else {
         return;
     };
+    for directive in comment.split("# rubocop:") {
+        apply_directive(d, directive.trim(), line, line_no);
+    }
+}
+
+fn apply_directive(d: &mut Directives, comment: &str, line: &str, line_no: usize) {
     if let Some(rest) = comment.strip_prefix("enable") {
         apply_enable(d, rest, line_no);
         return;
@@ -122,7 +128,7 @@ fn cop_names(after: &str) -> Vec<String> {
     let after = after.split("--").next().unwrap_or(after);
     after
         .split(',')
-        .map(|s| s.trim().trim_start_matches(':').to_string())
+        .map(|s| s.trim().trim_start_matches(':').replace("::", "/"))
         .filter(|s| !s.is_empty())
         .collect()
 }
@@ -130,6 +136,24 @@ fn cop_names(after: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn legacy_department_separator() {
+        let d = parse(
+            "# rubocop:disable Rails::SkipsModelValidations\nRecord.update_all(active: true)\n# rubocop:enable Rails::SkipsModelValidations\nRecord.update_all(active: false)\n",
+        );
+        assert!(d.suppresses("Rails/SkipsModelValidations", 2));
+        assert!(!d.suppresses("Rails/SkipsModelValidations", 4));
+    }
+
+    #[test]
+    fn chained_todo_comments() {
+        let d = parse(
+            "rescue Exception # rubocop:todo Lint/RescueException # rubocop:todo Cops/RescueMustReportError\n",
+        );
+        assert!(d.suppresses("Lint/RescueException", 1));
+        assert!(d.suppresses("Cops/RescueMustReportError", 1));
+    }
 
     #[test]
     fn disable_after_interpolation_hash() {

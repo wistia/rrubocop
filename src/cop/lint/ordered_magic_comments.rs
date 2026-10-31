@@ -7,8 +7,18 @@ use crate::parse::source::SourceFile;
 pub struct OrderedMagicComments;
 
 fn is_encoding(line: &str) -> bool {
-    let lower = line.to_ascii_lowercase();
-    lower.contains("encoding:") || lower.contains("coding:") || lower.contains("encoding =")
+    encoding_magic(&line.to_ascii_lowercase())
+}
+
+fn encoding_magic(line: &str) -> bool {
+    let content = line
+        .trim_start_matches('#')
+        .trim()
+        .trim_start_matches("-*-")
+        .trim();
+    content.starts_with("encoding:")
+        || content.starts_with("coding:")
+        || content.starts_with("encoding =")
 }
 
 fn is_other_magic(line: &str) -> bool {

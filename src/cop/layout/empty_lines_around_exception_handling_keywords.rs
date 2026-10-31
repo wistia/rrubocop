@@ -82,6 +82,25 @@ fn check_after(
     );
 }
 
+fn exception_else(n: Node<'_>) -> bool {
+    if n.kind() == "else" {
+        let Some(parent) = n.parent() else {
+            return false;
+        };
+        if !matches!(parent.kind(), "begin" | "body_statement") {
+            return false;
+        }
+        let mut cur = parent.walk();
+        if !parent
+            .named_children(&mut cur)
+            .any(|c| c.kind() == "rescue")
+        {
+            return false;
+        }
+    }
+    true
+}
+
 fn check_kw(
     cop: &dyn Cop,
     source: &SourceFile,
@@ -93,20 +112,11 @@ fn check_kw(
         return;
     }
     // RuboCop only flags `else` inside begin/rescue — not if/case else.
-    if n.kind() == "else" {
-        let Some(parent) = n.parent() else {
-            return;
-        };
-        if !matches!(parent.kind(), "begin" | "body_statement") {
-            return;
-        }
-        let mut cur = parent.walk();
-        if !parent
-            .named_children(&mut cur)
-            .any(|c| c.kind() == "rescue")
-        {
-            return;
-        }
+    if !exception_else(n) {
+        return;
+    }
+    if shared::node_col(source, n) != shared::line_indent(source, n.start_byte()) {
+        return;
     }
     let line = shared::node_line(source, n);
     let kw = n.kind();
@@ -139,5 +149,19 @@ impl Cop for EmptyLinesAroundExceptionHandlingKeywords {
         shared::for_each_descendant(tree.root_node(), |n| {
             check_kw(self, source, n, diagnostics, &mut corrections);
         });
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn inline_rescue_has_no_blank_line_offense() {
+        crate::testutil::assert_cop_no_offenses_full(
+            &super::EmptyLinesAroundExceptionHandlingKeywords,
+            include_bytes!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/layout/empty_lines_around_exception_handling_keywords/no_offense.rb"
+            )),
+        );
     }
 }

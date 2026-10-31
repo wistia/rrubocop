@@ -43,3 +43,6 @@ macro_rules! cop_fixture_tests {
         }
     };
 }
+
+#[cfg(test)]
+mod project_parity;

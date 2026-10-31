@@ -53,7 +53,7 @@ fn is_errors(source: &SourceFile, node: Node<'_>) -> bool {
 fn scope_name<'a>(source: &'a SourceFile, recv: Node<'_>) -> Option<&'a [u8]> {
     let name = if is_call(recv) {
         call_method_name(source, recv)?
-    } else if recv.kind() == "identifier" {
+    } else if recv.kind() == "identifier" && node_bytes(source, recv) == b"all" {
         node_bytes(source, recv)
     } else {
         return None;

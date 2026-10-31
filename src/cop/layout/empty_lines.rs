@@ -71,6 +71,11 @@ fn on_nonblank(
     );
 }
 
+fn reset_blank_run(count: &mut usize, start: &mut Option<(usize, usize)>) {
+    *count = 0;
+    *start = None;
+}
+
 impl Cop for EmptyLines {
     fn name(&self) -> &'static str {
         "Layout/EmptyLines"
@@ -79,13 +84,15 @@ impl Cop for EmptyLines {
         true
     }
 
-    fn uses_line_phase(&self) -> bool {
+    fn uses_source_phase(&self) -> bool {
         true
     }
 
-    fn check_lines(
+    fn check_source(
         &self,
         source: &SourceFile,
+        _tree: &tree_sitter::Tree,
+        code_map: &crate::parse::codemap::CodeMap,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
@@ -95,7 +102,9 @@ impl Cop for EmptyLines {
         let mut blank_run_start: Option<(usize, usize)> = None;
         let mut blank_count = 0usize;
         for (i, line) in lines.iter().enumerate() {
-            if is_blank(line) {
+            if code_map.covers(byte_offset) {
+                reset_blank_run(&mut blank_count, &mut blank_run_start);
+            } else if is_blank(line) {
                 if blank_count == 0 {
                     blank_run_start = Some((i, byte_offset));
                 }
@@ -111,8 +120,7 @@ impl Cop for EmptyLines {
                     diagnostics,
                     &mut corrections,
                 );
-                blank_count = 0;
-                blank_run_start = None;
+                reset_blank_run(&mut blank_count, &mut blank_run_start);
             }
             byte_offset += line.len() + 1;
         }

@@ -41,7 +41,10 @@ fn stripped(line: &[u8]) -> &[u8] {
 
 fn less_indented(line: &[u8]) -> bool {
     let rest = stripped(line);
-    rest.starts_with(b"end")
+    (rest.starts_with(b"end")
+        && rest
+            .get(3)
+            .is_none_or(|b| !b.is_ascii_alphanumeric() && *b != b'_'))
         || rest
             .first()
             .is_some_and(|b| matches!(b, b'}' | b')' | b']'))

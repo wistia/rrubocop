@@ -120,6 +120,9 @@ fn accept_punct(next: u8) -> bool {
 }
 
 fn accept_kw_delim(k: &str, next: u8) -> bool {
+    if k == "end" && next == b'[' {
+        return true;
+    }
     (next == b'[' && ACCEPT_LEFT_BRACKET.contains(&k))
         || (next == b'(' && ACCEPT_LEFT_PAREN.contains(&k))
 }

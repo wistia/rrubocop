@@ -18,8 +18,33 @@ pub(super) fn self_is_redundant(source: &SourceFile, node: Node<'_>) -> bool {
 }
 
 fn excluded_method(method: &[u8]) -> bool {
-    method == b"class"
-        || method.starts_with(b"[")
+    matches!(
+        method,
+        b"class"
+            | b"select"
+            | b"for"
+            | b"in"
+            | b"if"
+            | b"unless"
+            | b"while"
+            | b"until"
+            | b"case"
+            | b"when"
+            | b"then"
+            | b"else"
+            | b"elsif"
+            | b"begin"
+            | b"end"
+            | b"rescue"
+            | b"ensure"
+            | b"return"
+            | b"yield"
+            | b"super"
+            | b"defined?"
+            | b"not"
+            | b"and"
+            | b"or"
+    ) || method.starts_with(b"[")
         || method.first().is_some_and(|b| b.is_ascii_uppercase())
         || is_setter_name(method)
         || !is_simple_method_name(method)

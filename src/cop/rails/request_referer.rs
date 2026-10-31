@@ -10,6 +10,20 @@ use crate::parse::source::SourceFile;
 
 pub struct RequestReferer;
 
+fn replacement<'a>(source: &SourceFile, node: Node<'_>, config: &'a CopConfig) -> Option<&'a str> {
+    let receiver = node.child_by_field_name("receiver")?;
+    if crate::cop::shared::node_bytes(source, receiver) != b"request" {
+        return None;
+    }
+    let prefer = config.get_str("EnforcedStyle", "referer");
+    let wrong = if prefer == "referer" {
+        b"referrer".as_slice()
+    } else {
+        b"referer".as_slice()
+    };
+    (call_method_name(source, node) == Some(wrong)).then_some(prefer)
+}
+
 impl Cop for RequestReferer {
     fn name(&self) -> &'static str {
         "Rails/RequestReferer"
@@ -31,18 +45,14 @@ impl Cop for RequestReferer {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some(method) = call_method_name(source, node) else {
+        let Some(prefer) = replacement(source, node, config) else {
             return;
         };
-        let prefer = config.get_str("EnforcedStyle", "referer");
         let wrong = if prefer == "referer" {
             "referrer"
         } else {
             "referer"
         };
-        if method != wrong.as_bytes() {
-            return;
-        }
         let meth = method_node(node).unwrap_or(node);
         let (line, col) = source.offset_to_line_col(node.start_byte());
         let mut diag = self.diagnostic(

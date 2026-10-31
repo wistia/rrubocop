@@ -22,7 +22,7 @@ impl Cop for OrderedFields {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["class", "module"]
+        &["class"]
     }
 
     fn check_node(

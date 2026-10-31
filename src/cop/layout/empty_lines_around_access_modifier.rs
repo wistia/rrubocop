@@ -218,6 +218,9 @@ fn check_modifier(
         return;
     };
     let line = shared::node_line(source, n);
+    if n.next_named_sibling().is_none() {
+        return;
+    }
     let before_ok = previous_line_ok(source, line, n);
     let (need_before, need_after) =
         blank_needs(style, before_ok, shared::line_blank(source, line + 1));

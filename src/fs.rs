@@ -129,6 +129,17 @@ fn maybe_emit(
     emit(path);
 }
 
+fn discoverable_entry(entry: &ignore::DirEntry) -> bool {
+    if entry.depth() == 0 || !entry.file_name().to_string_lossy().starts_with('.') {
+        return true;
+    }
+    entry.file_type().is_some_and(|t| t.is_file())
+        && entry
+            .file_name()
+            .to_str()
+            .is_some_and(|n| RUBY_FILENAMES.contains(&n))
+}
+
 fn walk_directory_emitting(
     dir: &Path,
     filters: &CopFilterSet,
@@ -140,10 +151,11 @@ fn walk_directory_emitting(
 ) -> Result<()> {
     let mut builder = WalkBuilder::new(dir);
     builder
-        .hidden(true)
+        .hidden(false)
         .git_ignore(true)
         .git_global(true)
-        .follow_links(false);
+        .follow_links(true)
+        .filter_entry(discoverable_entry);
 
     for entry in builder.build() {
         if stop.load(Ordering::Relaxed) {
@@ -259,4 +271,48 @@ fn has_ruby_shebang(path: &Path) -> bool {
         return false;
     };
     text.starts_with("#!") && (text.contains("ruby") || text.contains("jruby"))
+}
+
+#[cfg(test)]
+mod tests {
+    #[cfg(unix)]
+    fn write_fixture(root: &std::path::Path, relative: &str) {
+        let path = root.join(relative);
+        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+        std::fs::write(path, "value = 1\n").unwrap();
+    }
+
+    #[cfg(unix)]
+    fn symlink_fixture(root: &std::path::Path) {
+        write_fixture(root, "source/example.rb");
+        write_fixture(root, ".cache/ignored.rb");
+        std::os::unix::fs::symlink("source", root.join("alias")).unwrap();
+    }
+
+    #[test]
+    #[cfg(unix)]
+    fn follows_directory_symlinks_without_entering_hidden_directories() {
+        let dir = tempfile::tempdir().unwrap();
+        symlink_fixture(dir.path());
+        let found = super::discover_files(
+            &[dir.path().to_path_buf()],
+            &crate::config::ResolvedConfig::empty(),
+        )
+        .unwrap();
+        assert_eq!(found.files.len(), 2);
+        assert!(found.files.contains(&dir.path().join("alias/example.rb")));
+    }
+
+    #[test]
+    fn discovers_hidden_ruby_dotfiles() {
+        let dir = tempfile::tempdir().unwrap();
+        let dotfile = dir.path().join(".pryrc");
+        std::fs::write(&dotfile, "require 'pry'\n").unwrap();
+        let found = super::discover_files(
+            &[dir.path().to_path_buf()],
+            &crate::config::ResolvedConfig::empty(),
+        )
+        .unwrap();
+        assert!(found.files.contains(&dotfile));
+    }
 }

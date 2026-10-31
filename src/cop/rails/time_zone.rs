@@ -58,6 +58,29 @@ fn check_time_call(
     );
 }
 
+fn legacy_timezone_literal(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {
+    if config
+        .get_str("__RubocopRailsVersion", "2.37.0")
+        .starts_with("2.26.")
+    {
+        if crate::cop::shared::argument_nodes(node)
+            .first()
+            .is_some_and(|n| {
+                n.kind() == "string"
+                    && crate::cop::shared::node_bytes(source, *n)
+                        .iter()
+                        .rev()
+                        .skip(1)
+                        .next()
+                        .is_some_and(|b| b.is_ascii_alphabetic())
+            })
+        {
+            return true;
+        }
+    }
+    false
+}
+
 impl Cop for TimeZone {
     fn name(&self) -> &'static str {
         "Rails/TimeZone"
@@ -87,6 +110,9 @@ impl Cop for TimeZone {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
+        if legacy_timezone_literal(source, node, config) {
+            return;
+        }
         let flexible = config.get_str("EnforcedStyle", "flexible") != "strict";
         if string_to_time_needs_zone(source, node) {
             report_time_zone(

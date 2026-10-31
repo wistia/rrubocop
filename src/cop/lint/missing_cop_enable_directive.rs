@@ -85,6 +85,9 @@ impl Cop for MissingCopEnableDirective {
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
         let maximum = config.get_usize("MaximumRangeSize", usize::MAX);
+        if maximum == usize::MAX {
+            return;
+        }
         let mut open: HashMap<String, usize> = HashMap::new();
         let mut last_line = 0usize;
         for (i, line) in source.lines().enumerate() {

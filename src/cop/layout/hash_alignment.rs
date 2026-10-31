@@ -67,6 +67,36 @@ fn hash_align_style(config: &CopConfig) -> &str {
     }
 }
 
+fn conflicts_with_argument_alignment(node: Node<'_>, config: &CopConfig) -> bool {
+    if !config.get_bool("ArgumentAlignmentEnabled", true)
+        || config.get_str("ArgumentAlignmentStyle", "with_first_argument")
+            != "with_fixed_indentation"
+    {
+        return false;
+    }
+    alignment_selector(node).is_some_and(|(selector, first)| {
+        selector.start_position().row == first.start_position().row
+    })
+}
+
+fn alignment_selector(node: Node<'_>) -> Option<(Node<'_>, Node<'_>)> {
+    let first = *super::align_items::hash_pairs_for_alignment(node).first()?;
+    let (args, previous) = if node.kind() == "hash" {
+        (node.parent(), node.prev_named_sibling())
+    } else {
+        (Some(node), first.prev_named_sibling())
+    };
+    let Some(args) = args.filter(|n| matches!(n.kind(), "argument_list" | "command_argument_list"))
+    else {
+        return None;
+    };
+    Some((argument_selector(args, previous)?, first))
+}
+
+fn argument_selector<'a>(args: Node<'a>, previous: Option<Node<'a>>) -> Option<Node<'a>> {
+    previous.or_else(|| args.parent()?.child_by_field_name("method"))
+}
+
 impl Cop for HashAlignment {
     fn name(&self) -> &'static str {
         "Layout/HashAlignment"
@@ -86,6 +116,9 @@ impl Cop for HashAlignment {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if conflicts_with_argument_alignment(node, config) {
+            return;
+        }
         let last_arg = last_arg_style(config);
         match node.kind() {
             "argument_list" | "command_argument_list" if skip_kwargs(last_arg) => return,
@@ -114,6 +147,23 @@ mod tests {
     };
 
     crate::cop_fixture_tests!(HashAlignment, "cops/layout/hash_alignment");
+
+    #[test]
+    fn respects_fixed_argument_indentation() {
+        let mut config = CopConfig::default();
+        config.options.insert(
+            "ArgumentAlignmentStyle".into(),
+            "with_fixed_indentation".into(),
+        );
+        assert_cop_no_offenses_full_with_config(
+            &HashAlignment,
+            include_bytes!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/layout/hash_alignment/fixed_argument_indent/no_offense.rb"
+            )),
+            config,
+        );
+    }
 
     fn style_config(style: &str) -> CopConfig {
         let mut config = CopConfig::default();

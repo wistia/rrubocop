@@ -70,6 +70,48 @@ fn check_close(
     }
 }
 
+fn hash_inner(source: &SourceFile, node: Node<'_>) -> Option<space_delim::DelimSpace> {
+    let bytes = source.as_bytes();
+    if bytes.get(node.start_byte()) != Some(&b'{') {
+        return None;
+    }
+    let start = node.start_byte() + 1;
+    let end = node.end_byte().checked_sub(1)?;
+    if end <= start {
+        return None;
+    }
+    space_delim::scan_inner(bytes, start, end)
+}
+
+fn opening_comment(source: &SourceFile, offset: usize) -> bool {
+    source.as_bytes()[offset..]
+        .iter()
+        .copied()
+        .skip_while(|b| matches!(b, b' ' | b'\t'))
+        .next()
+        == Some(b'#')
+}
+
+fn spacing_context(
+    source: &SourceFile,
+    node: Node<'_>,
+    config: &CopConfig,
+) -> Option<(space_delim::DelimSpace, bool)> {
+    if node.kind() == "hash_pattern"
+        && config
+            .get_str("__RubocopVersion", "1.91.0")
+            .starts_with("1.65.")
+    {
+        return None;
+    }
+    let inner = hash_inner(source, node)?;
+    let want = config.get_str("EnforcedStyle", "space") != "no_space";
+    if !want && opening_comment(source, inner.inner_s) {
+        return None;
+    }
+    Some((inner, want))
+}
+
 impl Cop for SpaceInsideHashLiteralBraces {
     fn name(&self) -> &'static str {
         "Layout/SpaceInsideHashLiteralBraces"
@@ -78,7 +120,6 @@ impl Cop for SpaceInsideHashLiteralBraces {
         true
     }
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        // RuboCop aliases `on_hash_pattern` → `on_hash`.
         &["hash", "hash_pattern"]
     }
 
@@ -90,20 +131,10 @@ impl Cop for SpaceInsideHashLiteralBraces {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let style = config.get_str("EnforcedStyle", "space");
-        let bytes = source.as_bytes();
-        if bytes.get(node.start_byte()) != Some(&b'{') {
-            return;
-        }
-        let inner_s = node.start_byte() + 1;
-        let inner_e = node.end_byte() - 1;
-        if inner_e <= inner_s {
-            return;
-        }
-        let Some(d) = space_delim::scan_inner(bytes, inner_s, inner_e) else {
+        let Some((d, want)) = spacing_context(source, node, config) else {
             return;
         };
-        let want = style != "no_space";
+        let bytes = source.as_bytes();
         let mut correctable = true;
         check_open(
             self,

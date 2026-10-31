@@ -81,7 +81,8 @@ fn contains_delims(text: &[u8], open: u8, close: u8) -> bool {
 }
 
 fn percent_inner(text: &[u8]) -> Option<&[u8]> {
-    let oi = open_delim(text)? as usize;
+    let delim = open_delim(text)?;
+    let oi = text.iter().position(|&b| b == delim)?;
     if oi >= text.len() {
         return None;
     }

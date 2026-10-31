@@ -10,7 +10,7 @@ pub struct FrozenStringLiteralComment;
 fn is_frozen_magic(line: &str) -> bool {
     let t = line.trim();
     t.starts_with('#')
-        && t.contains("frozen_string_literal:")
+        && (t.contains("frozen_string_literal:") || t.contains("frozen-string-literal:"))
         && (t.contains("true") || t.contains("false"))
 }
 

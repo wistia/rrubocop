@@ -67,7 +67,7 @@ fn allowed_assignment(source: &SourceFile, value: Option<Node<'_>>) -> bool {
         return true;
     };
     match value.kind() {
-        "constant" | "scope_resolution" | "block" | "do_block" => true,
+        "constant" | "scope_resolution" | "block" | "do_block" | "identifier" => true,
         "call" | "command" => {
             class_or_struct_new(source, value) || allowed_method_call_on_rhs(value)
         }

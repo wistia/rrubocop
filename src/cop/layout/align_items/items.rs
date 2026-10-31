@@ -97,7 +97,7 @@ fn trailing_keyword_pairs<'a>(node: Node<'a>) -> Vec<Node<'a>> {
 }
 
 /// Items to align for `Layout/HashAlignment` (`hash` or kwargs in `argument_list`).
-pub(super) fn hash_alignment_items<'a>(node: Node<'a>) -> Vec<Node<'a>> {
+pub(crate) fn hash_alignment_items<'a>(node: Node<'a>) -> Vec<Node<'a>> {
     match node.kind() {
         "argument_list" | "command_argument_list" => trailing_keyword_pairs(node),
         "hash" => hash_pairs(node),

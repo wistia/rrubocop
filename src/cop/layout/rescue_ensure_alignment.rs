@@ -128,6 +128,10 @@ fn block_send_node(block: Node<'_>) -> Option<Node<'_>> {
     None
 }
 
+fn starts_line(source: &SourceFile, node: Node<'_>) -> bool {
+    shared::node_col(source, node) == shared::line_indent(source, node.start_byte())
+}
+
 impl Cop for RescueEnsureAlignment {
     fn name(&self) -> &'static str {
         "Layout/RescueEnsureAlignment"
@@ -148,6 +152,9 @@ impl Cop for RescueEnsureAlignment {
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
         if node.parent().is_some_and(|p| p.kind() == node.kind()) {
+            return;
+        }
+        if !starts_line(source, node) {
             return;
         }
         let Some(base_col) = alignment_col(source, node, config) else {

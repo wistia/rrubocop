@@ -8,6 +8,16 @@ use crate::parse::source::SourceFile;
 
 pub struct Eval;
 
+fn kernel_eval(source: &SourceFile, node: Node<'_>) -> bool {
+    crate::cop::shared::call_method_name(source, node) == Some(b"eval")
+        && node.child_by_field_name("receiver").is_none_or(|n| {
+            matches!(
+                crate::cop::shared::node_bytes(source, n),
+                b"Kernel" | b"::Kernel"
+            )
+        })
+}
+
 impl Cop for Eval {
     fn name(&self) -> &'static str {
         "Security/Eval"
@@ -29,15 +39,7 @@ impl Cop for Eval {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        let method = node.child_by_field_name("method").or_else(|| {
-            let mut c = node.walk();
-            node.children(&mut c).find(|n| n.kind() == "identifier")
-        });
-        let Some(method) = method else {
-            return;
-        };
-        let name = &source.as_bytes()[method.start_byte()..method.end_byte()];
-        if name != b"eval" {
+        if !kernel_eval(source, node) {
             return;
         }
         let (line, col) = source.offset_to_line_col(node.start_byte());
@@ -48,4 +50,10 @@ impl Cop for Eval {
             "The use of `eval` is a serious security risk.".to_string(),
         ));
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    crate::cop_fixture_tests!(Eval, "cops/security/eval");
 }

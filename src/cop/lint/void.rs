@@ -192,7 +192,12 @@ impl Cop for Void {
         let mut cur = node.walk();
         let stmts: Vec<_> = node
             .named_children(&mut cur)
-            .filter(|n| !matches!(n.kind(), "rescue" | "else" | "ensure" | "comment"))
+            .filter(|n| {
+                !matches!(
+                    n.kind(),
+                    "rescue" | "else" | "ensure" | "comment" | "heredoc_body"
+                )
+            })
             .collect();
         check_void_stmts(source, &stmts, self, diagnostics);
         if config.get_bool("CheckForMethodsWithNoSideEffects", false) {

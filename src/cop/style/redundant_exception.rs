@@ -44,7 +44,7 @@ fn detect<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
         return None;
     }
     let args = argument_nodes(node);
-    if args.len() < 2 {
+    if args.len() != 2 {
         return None;
     }
     if !is_const_named(source, args[0], b"RuntimeError") {
