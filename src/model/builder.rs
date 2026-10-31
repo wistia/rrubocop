@@ -46,9 +46,6 @@ impl<'m> Builder<'m> {
         w: Write,
         intro_kind: super::IntroKind,
     ) {
-        if name.starts_with('_') {
-            return;
-        }
         let pos = w.byte;
         match self.lookup(scope, pos, name) {
             Some(s) => {

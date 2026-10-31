@@ -14,7 +14,7 @@ use crate::diagnostic::Diagnostic;
 
 /// Bump whenever cops or stored diagnostic shape change so stale entries
 /// are never served.
-pub(crate) const RULES_REV: u32 = 20;
+pub(crate) const RULES_REV: u32 = 21;
 
 pub(crate) const MAX_ENTRIES: usize = 20_000;
 const ENTRIES: TableDefinition<&str, &[u8]> = TableDefinition::new("entries");

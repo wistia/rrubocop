@@ -1,6 +1,7 @@
 //! Lint/Syntax — tree-sitter ERROR/missing plus TargetRubyVersion-gated / MRI-invalid forms.
 
 mod false_errors;
+mod numbered_assignment;
 
 use tree_sitter::Node;
 
@@ -190,6 +191,17 @@ fn walk(
         diagnostics,
     );
     check_bare_not(source, node, cop, ruby_ver, diagnostics);
+    if ruby_ver >= 2.7 && numbered_assignment::reserved_assignment(source, node) {
+        let (line, col) = source.offset_to_line_col(node.start_byte());
+        diagnostics.push(syntax_diag(
+            cop,
+            source,
+            line,
+            col,
+            "reserved numbered parameter cannot be assigned",
+            ruby_ver,
+        ));
+    }
     let mut cur = node.walk();
     for child in node.children(&mut cur) {
         walk(
@@ -272,6 +284,29 @@ mod tests {
     use super::*;
     use crate::testutil::{assert_cop_no_offenses_full, run_cop_full, run_cop_full_with_config};
     use std::collections::HashMap;
+
+    #[test]
+    fn reserved_numbered_assignments_are_syntax_errors() {
+        for code in
+            include_str!("../../../tests/fixtures/cops/lint/syntax/offense_numbered_assignments.rb")
+                .lines()
+        {
+            let diags = run_cop_full_with_config(&Syntax, code.as_bytes(), ruby34());
+            assert!(has_syntax_fatals(&diags), "{code}: {diags:?}");
+        }
+    }
+
+    #[test]
+    fn numbered_reads_and_nonreserved_assignments_are_valid() {
+        for code in include_str!(
+            "../../../tests/fixtures/cops/lint/syntax/no_offense_numbered_assignments.rb"
+        )
+        .lines()
+        {
+            let diags = run_cop_full_with_config(&Syntax, code.as_bytes(), ruby34());
+            assert!(diags.is_empty(), "{code}: {diags:?}");
+        }
+    }
 
     fn ruby34() -> CopConfig {
         CopConfig {

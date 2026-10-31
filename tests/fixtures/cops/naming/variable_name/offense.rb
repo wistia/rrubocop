@@ -12,3 +12,10 @@ def pattern_reads(withdrawal)
       ^^^^^^^^^ Naming/VariableName: Use snake_case for variable names.
   _ = fail_reason
 end
+
+items.each { |_Foo| _Foo }
+              ^^^^ Naming/VariableName: Use snake_case for variable names.
+                    ^^^^ Naming/VariableName: Use snake_case for variable names.
+
+_badName = 1
+^^^^^^^^ Naming/VariableName: Use snake_case for variable names.

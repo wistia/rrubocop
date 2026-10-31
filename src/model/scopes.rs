@@ -75,9 +75,7 @@ impl Builder<'_> {
         if let Some(v) = child.child_by_field_name("value") {
             self.walk(v, scope, false);
         }
-        if let Some(name) = super::builder::declared_name(child, self.src)
-            && !name.starts_with('_')
-        {
+        if let Some(name) = super::builder::declared_name(child, self.src) {
             self.bind_param(scope, name, child.start_byte());
         }
     }
@@ -89,9 +87,7 @@ impl Builder<'_> {
         for inner in child.children(&mut sub) {
             if inner.kind() == "identifier" {
                 let name = self.text(inner).to_string();
-                if !name.starts_with('_') {
-                    self.bind_param(scope, name, inner.start_byte());
-                }
+                self.bind_param(scope, name, inner.start_byte());
             }
         }
     }

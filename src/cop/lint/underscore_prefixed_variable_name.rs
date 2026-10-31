@@ -49,3 +49,12 @@ impl Cop for UnderscorePrefixedVariableName {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    crate::cop_fixture_tests!(
+        UnderscorePrefixedVariableName,
+        "cops/lint/underscore_prefixed_variable_name"
+    );
+}

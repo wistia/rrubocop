@@ -136,7 +136,7 @@ impl Builder<'_> {
             under_defined,
         };
         if self.lookup(scope, r.byte, &name).is_some() {
-            record_named_read(self, scope, &name, r);
+            self.record_read(scope, &name, r);
         } else {
             record_unresolved_vcall(self, scope, &name, n.start_byte(), under_defined);
         }
@@ -145,12 +145,6 @@ impl Builder<'_> {
 
 fn is_magic_file_ident(name: &str) -> bool {
     matches!(name, "__FILE__" | "__LINE__" | "__ENCODING__")
-}
-
-fn record_named_read(b: &mut Builder<'_>, scope: ScopeId, name: &str, r: Read) {
-    if !name.starts_with('_') {
-        b.record_read(scope, name, r);
-    }
 }
 
 fn record_unresolved_vcall(
