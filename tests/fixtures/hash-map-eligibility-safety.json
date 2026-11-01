@@ -1,0 +1,287 @@
+[
+  {
+    "cop": "Style/HashExcept",
+    "source": "$events = []\ndef keys; $events << :keys; [:a]; end\nh = {a: 1, b: 2}\np h.reject { |k, v| keys.include?(k) }\np $events\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Use `except(*keys)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$events = []\ndef keys; $events << :keys; [:a]; end\nh = {a: 1, b: 2}\np h.except(*keys)\np $events\n",
+    "rust_corrected": "$events = []\ndef keys; $events << :keys; [:a]; end\nh = {a: 1, b: 2}\np h.reject { |k, v| keys.include?(k) }\np $events\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments.",
+    "runtime_stdout": "{b: 2}\n[:keys, :keys]\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "keys = [:a]\np({a: 1, b: 2}.reject { |k, v| keys.include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 15,
+        "message": "Use `except(*keys)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "keys = [:a]\np({a: 1, b: 2}.except(*keys))\n",
+    "rust_corrected": "keys = [:a]\np({a: 1, b: 2}.reject { |k, v| keys.include?(k) })\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments.",
+    "runtime_stdout": "{b: 2}\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({'a b' => 1, 'z' => 2}.reject { |k, v| %w[a\\ b].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 25,
+        "message": "Use `except('a\\ b')` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({'a b' => 1, 'z' => 2}.except('a\\ b'))\n",
+    "rust_corrected": "p({'a b' => 1, 'z' => 2}.reject { |k, v| %w[a\\ b].include?(k) })\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments.",
+    "runtime_stdout": "{\"z\" => 2}\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({:'a-b' => 1, z: 2}.reject { |k, v| %i[a-b].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Use `except(:a-b)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({:'a-b' => 1, z: 2}.except(:a-b))\n",
+    "rust_corrected": "p({:'a-b' => 1, z: 2}.reject { |k, v| %i[a-b].include?(k) })\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments.",
+    "runtime_stdout": "{z: 2}\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({a: 1, b: 2}.reject { |k, v| [:a].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({a: 1, b: 2}.except(:a))\n",
+    "runtime_stdout": "{b: 2}\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({a: 1, b: 2}.reject { |k, v| %i[a].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({a: 1, b: 2}.except(:a))\n",
+    "runtime_stdout": "{b: 2}\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({'a' => 1, 'b' => 2}.reject { |k, v| %w[a].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Use `except('a')` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({'a' => 1, 'b' => 2}.except('a'))\n",
+    "runtime_stdout": "{\"b\" => 2}\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({a: 1, b: 2}.reject { |k, v| k == :a })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({a: 1, b: 2}.except(:a))\n",
+    "runtime_stdout": "{b: 2}\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "p [nil, 1].map { |x| x if true }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [nil, 1].select { |x| true }\n",
+    "rust_corrected": "p [nil, 1].map { |x| x if true }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics.",
+    "runtime_stdout": "[1]\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "p [false, nil, 1].filter_map { |x| x if true }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Replace `filter_map { ... }` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [false, nil, 1].select { |x| true }\n",
+    "rust_corrected": "p [false, nil, 1].filter_map { |x| x if true }\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics.",
+    "runtime_stdout": "[1]\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "p [1, 2].map { |x| x if x > 1 }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [1, 2].select { |x| x > 1 }\n",
+    "rust_corrected": "p [1, 2].map { |x| x if x > 1 }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics.",
+    "runtime_stdout": "[2]\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h = {[:a, :b] => 1, :a => 2}\np h.reject { |k, v| k.eql?([:a, :b]) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 4,
+        "message": "Use `except(:a, :b)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h = {[:a, :b] => 1, :a => 2}\np h.except(:a, :b)\n",
+    "rust_corrected": "h = {[:a, :b] => 1, :a => 2}\np h.reject { |k, v| k.eql?([:a, :b]) }\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: eql? compares an array as a scalar key; rendering its elements as separate except arguments changes the key removed.",
+    "runtime_stdout": "{a: 2}\n"
+  }
+]

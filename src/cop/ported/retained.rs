@@ -11,7 +11,7 @@ pub(super) fn register(r: &mut CopRegistry) {
     super::rules!(r;
         ("Cops/NoSetex", &["call"], simple::setex, true, true, true),
         ("Lint/RefinementImportMethods", &["call"], simple::refinement, false, true, false),
-        ("Lint/UselessTimes", &["call"], times::check, true, false, false),
+        ("Lint/UselessTimes", &["call"], times::check, false, false, false),
         ("Lint/NumberedParameterAssignment", &["identifier"], numbered::check, false, true, false),
         ("Migration/DepartmentName", &["comment"], departments::check, true, true, false),
         ("Serializers/PreferAttributeBlockOverAttributeAndMethod", &["call"], serializers::single, false, true, true),

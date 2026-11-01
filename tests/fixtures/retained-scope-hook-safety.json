@@ -21,7 +21,7 @@
     "corrected": "def i; 42; end\ndef inner\n 0\nend\nputs inner\n",
     "rust_correctable": false,
     "rust_corrected": "def i; 42; end\n1.times do |i|\n def inner\n  i\n end\nend\nputs inner\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -45,7 +45,7 @@
     "corrected": "def i; 42; end\nclass C\n def self.result; 0; end\nend\n",
     "rust_correctable": false,
     "rust_corrected": "def i; 42; end\n1.times do |i|\n class C\n  def self.result; i; end\n end\nend\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -69,7 +69,7 @@
     "corrected": "case [42]\nin [0]\n puts 0\nend\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do |i|\n case [42]\n in [i]\n  puts i\n end\nend\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -93,7 +93,7 @@
     "corrected": "[42] => [0]\nputs 0\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do |i|\n [42] => [i]\n puts i\nend\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -117,7 +117,7 @@
     "corrected": "case {a: 42}\nin {a: 0}\n puts 0\nend\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do |i|\n case {a: 42}\n in {a: i}\n  puts i\n end\nend\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -141,7 +141,7 @@
     "corrected": "def i; 42; end\nmodule Inner\n def self.result; 0; end\nend\nputs Inner.result\n",
     "rust_correctable": false,
     "rust_corrected": "def i; 42; end\n1.times do |i|\n module Inner\n  def self.result; i; end\n end\nend\nputs Inner.result\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -165,7 +165,7 @@
     "corrected": "def i; 42; end\nclass << self\n def result; 0; end\nend\nputs result\n",
     "rust_correctable": false,
     "rust_corrected": "def i; 42; end\n1.times do |i|\n class << self\n  def result; i; end\n end\nend\nputs result\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -186,7 +186,10 @@
         "correctable": true
       }
     ],
-    "corrected": "callback = -> { 0 }\nputs callback.call\n"
+    "corrected": "callback = -> { 0 }\nputs callback.call\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n callback = -> { i }\n puts callback.call\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -207,7 +210,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def unrelated; 42; end\nputs 0\n"
+    "corrected": "def unrelated; 42; end\nputs 0\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n def unrelated; 42; end\n puts i\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Style/MixinGrouping",

@@ -4419,7 +4419,11 @@
         "correctable": true
       }
     ],
-    "corrected": "items.select { |x| allowed?(x) }\n"
+    "corrected": "items.select { |x| allowed?(x) }\n",
+    "rust_corrected": "items.map { |x| x if allowed?(x) }.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -4439,7 +4443,11 @@
         "correctable": true
       }
     ],
-    "corrected": "items.reject { |x| blocked?(x) }\n"
+    "corrected": "items.reject { |x| blocked?(x) }\n",
+    "rust_corrected": "items.filter_map { |x| x unless blocked?(x) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -4452,7 +4460,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "items.map { |x| x.name if allowed?(x) }.compact\n"
+    "corrected": "items.map { |x| x.name if allowed?(x) }.compact\n",
+    "rust_corrected": "items.map { |x| x.name if allowed?(x) }.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -4465,7 +4477,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "items.filter_map { |x| other(x) }\n"
+    "corrected": "items.filter_map { |x| other(x) }\n",
+    "rust_corrected": "items.filter_map { |x| other(x) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MixinUsage",
@@ -7237,7 +7253,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(*array)\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(*array)\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.include?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -7631,7 +7651,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "foo.map { |item| item if item.bar }\n"
+    "corrected": "foo.map { |item| item if item.bar }\n",
+    "rust_corrected": "foo.map { |item| item if item.bar }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MixinUsage",
@@ -16349,7 +16373,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(:\"#{foo}\", :bar)\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(:\"#{foo}\", :bar)\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| %I[#{foo} bar].include?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16371,7 +16399,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(\"#{foo}\", 'bar')\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(\"#{foo}\", 'bar')\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| %W[#{foo} bar].include?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16393,7 +16425,11 @@
         "correctable": true
       }
     ],
-    "corrected": "array = [:foo, :bar]\n{foo: 1, bar: 2, baz: 3}.except(*array)\n"
+    "corrected": "array = [:foo, :bar]\n{foo: 1, bar: 2, baz: 3}.except(*array)\n",
+    "rust_corrected": "array = [:foo, :bar]\n{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.include?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16459,7 +16495,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(:\"#{foo}\", :bar)\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(:\"#{foo}\", :bar)\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(%I[#{foo} bar]) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16481,7 +16521,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(\"#{foo}\", 'bar')\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(\"#{foo}\", 'bar')\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(%W[#{foo} bar]) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16503,7 +16547,11 @@
         "correctable": true
       }
     ],
-    "corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.except(*array)\n"
+    "corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.except(*array)\n",
+    "rust_corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(array) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16525,7 +16573,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(*array)\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(*array)\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| k.in?(array) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16547,7 +16599,11 @@
         "correctable": true
       }
     ],
-    "corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.except(*array)\n"
+    "corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.except(*array)\n",
+    "rust_corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.include?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16635,7 +16691,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(:\"#{foo}\", :bar)\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(:\"#{foo}\", :bar)\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| !%I[#{foo} bar].exclude?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16657,7 +16717,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(\"#{foo}\", 'bar')\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(\"#{foo}\", 'bar')\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| !%W[#{foo} bar].exclude?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16679,7 +16743,11 @@
         "correctable": true
       }
     ],
-    "corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.except(*array)\n"
+    "corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.except(*array)\n",
+    "rust_corrected": "array = %i[foo bar]\n{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.exclude?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/HashExcept",
@@ -16701,7 +16769,11 @@
         "correctable": true
       }
     ],
-    "corrected": "{foo: 1, bar: 2, baz: 3}.except(*array)\n"
+    "corrected": "{foo: 1, bar: 2, baz: 3}.except(*array)\n",
+    "rust_corrected": "{foo: 1, bar: 2, baz: 3}.reject { |k, v| !array.exclude?(k) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16722,7 +16794,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16743,7 +16819,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.filter_map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16764,7 +16844,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.filter_map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16785,7 +16869,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo&.select { |item| item.bar? }\n"
+    "corrected": "foo&.select { |item| item.bar? }\n",
+    "rust_corrected": "foo&.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend&.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16806,7 +16894,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? &&\n    bar.baz }\n"
+    "corrected": "foo.select { |item| item.bar? &&\n    bar.baz }\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar? &&\n    bar.baz\n    item\n  else\n    next\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16827,7 +16919,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    next item\n  else\n    nil\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16848,7 +16944,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    next\n  else\n    item\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16869,7 +16969,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    nil\n  else\n    next item\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16890,7 +16994,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  item.bar? ? item : next\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16911,7 +17019,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  item.bar? ? next : item\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16932,7 +17044,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  item if item.bar?\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16953,7 +17069,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  item unless item.bar?\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16974,7 +17094,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  next if item.bar?\n\n  item\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -16995,7 +17119,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  next unless item.bar?\n\n  item\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17016,7 +17144,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  next item if item.bar?\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17037,7 +17169,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  next item unless item.bar?\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17058,7 +17194,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  next item if item.bar?\n\n  nil\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17079,7 +17219,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  next item unless item.bar?\n\n  nil\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17103,7 +17247,8 @@
     "corrected": "foo.select { |item| item.bar? }\n",
     "rust_correctable": false,
     "rust_corrected": "foo.map do |item|\n  next nil if item.bar?\n\n  item\nend.compact\n",
-    "reason": "Argumented next followed by the mapped parameter can return nil or another value; converting to select/reject changes the result. Preserve as manual despite unsafe upstream correction."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics.",
+    "manual": true
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17127,7 +17272,8 @@
     "corrected": "foo.reject { |item| item.bar? }\n",
     "rust_correctable": false,
     "rust_corrected": "foo.map do |item|\n  next nil unless item.bar?\n\n  item\nend.compact\n",
-    "reason": "Argumented next followed by the mapped parameter can return nil or another value; converting to select/reject changes the result. Preserve as manual despite unsafe upstream correction."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics.",
+    "manual": true
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17148,7 +17294,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    item\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17169,7 +17319,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map do |item|\n  unless item.bar?\n    item\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17183,7 +17337,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend\n"
+    "corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17197,7 +17355,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.do_something\n"
+    "corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.do_something\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.do_something\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17211,7 +17373,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.compact(arg)\n"
+    "corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.compact(arg)\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.compact(arg)\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17225,7 +17391,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "foo.map do |item|\n  if item.bar?\n    1\n  else\n    2\n  end\nend.compact\n"
+    "corrected": "foo.map do |item|\n  if item.bar?\n    1\n  else\n    2\n  end\nend.compact\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    1\n  else\n    2\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17239,7 +17409,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "foo.map do |item|\n  if item.bar?\n    item\n  elsif\n    baz\n  else\n    next\n  end\nend.compact\n"
+    "corrected": "foo.map do |item|\n  if item.bar?\n    item\n  elsif\n    baz\n  else\n    next\n  end\nend.compact\n",
+    "rust_corrected": "foo.map do |item|\n  if item.bar?\n    item\n  elsif\n    baz\n  else\n    next\n  end\nend.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17253,7 +17427,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "next unless item.bar?\nnext unless item.baz?\n\nitem\n"
+    "corrected": "next unless item.bar?\nnext unless item.baz?\n\nitem\n",
+    "rust_corrected": "next unless item.bar?\nnext unless item.baz?\n\nitem\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17274,7 +17452,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map { |item| item.bar? ? item : next }.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17295,7 +17477,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map { |item| item.bar? ? next : item }.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17316,7 +17502,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_corrected": "foo.map { |item| item if item.bar? }.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17337,7 +17527,11 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_corrected": "foo.map { |item| item unless item.bar? }.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MixinUsage",
@@ -23082,7 +23276,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "items.filter_map { |item| item if allowed?(item); transform(item) }\n"
+    "corrected": "items.filter_map { |item| item if allowed?(item); transform(item) }\n",
+    "rust_corrected": "items.filter_map { |item| item if allowed?(item); transform(item) }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -23095,7 +23293,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "items.filter_map { |item| item ? item : nil }\n"
+    "corrected": "items.filter_map { |item| item ? item : nil }\n",
+    "rust_corrected": "items.filter_map { |item| item ? item : nil }\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -23108,7 +23310,11 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "items.map { |item| next item unless allowed?(item); transform(item) }.compact\n"
+    "corrected": "items.map { |item| next item unless allowed?(item); transform(item) }.compact\n",
+    "rust_corrected": "items.map { |item| next item unless allowed?(item); transform(item) }.compact\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/UnlessLogicalOperators",
@@ -24232,7 +24438,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { something }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24254,7 +24463,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { |i| something(i) }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24276,7 +24488,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "-1.times { something }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24298,7 +24513,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "-1.times { |i| something(i) }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24320,7 +24538,10 @@
         "correctable": true
       }
     ],
-    "corrected": "something\n"
+    "corrected": "something\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { something }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24342,7 +24563,10 @@
         "correctable": true
       }
     ],
-    "corrected": "something(0)\n"
+    "corrected": "something(0)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { |i| something(i) }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24364,7 +24588,10 @@
         "correctable": false
       }
     ],
-    "corrected": "1.times.reverse_each do\n  foo\nend\n"
+    "corrected": "1.times.reverse_each do\n  foo\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times.reverse_each do\n  foo\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24386,7 +24613,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def foo\nend\n"
+    "corrected": "def foo\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def foo\n  1.times do\n  end\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24408,7 +24638,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def foo\n  bar\n\n  baz\nend\n"
+    "corrected": "def foo\n  bar\n\n  baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def foo\n  1.times do\n    bar\n\n    baz\n  end\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24423,7 +24656,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "2.times { |i| puts i }\n"
+    "corrected": "2.times { |i| puts i }\n",
+    "rust_correctable": false,
+    "rust_corrected": "2.times { |i| puts i }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24448,7 +24684,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times(&:something)\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24473,7 +24709,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "-1.times(&:something)\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24498,7 +24734,7 @@
     "corrected": "something\n",
     "rust_correctable": false,
     "rust_corrected": "1.times(&:something)\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24513,7 +24749,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "2.times(&:something)\n"
+    "corrected": "2.times(&:something)\n",
+    "rust_correctable": false,
+    "rust_corrected": "2.times(&:something)\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24538,7 +24777,7 @@
     "corrected": "precondition\npostcondition\n",
     "rust_correctable": false,
     "rust_corrected": "precondition\n0.times(&:something)\npostcondition\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24560,7 +24799,10 @@
         "correctable": true
       }
     ],
-    "corrected": "do_something(0)\ndo_something_else(0)\n"
+    "corrected": "do_something(0)\ndo_something_else(0)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n  do_something(i)\n  do_something_else(i)\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24582,7 +24824,10 @@
         "correctable": false
       }
     ],
-    "corrected": "1.times do |i|\n  do_something(i)\n  i += 1\n  do_something_else(i)\nend\n"
+    "corrected": "1.times do |i|\n  do_something(i)\n  i += 1\n  do_something_else(i)\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n  do_something(i)\n  i += 1\n  do_something_else(i)\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24604,7 +24849,10 @@
         "correctable": false
       }
     ],
-    "corrected": "1.times do |i|\n  do_something(i)\n  i, j = i * 2, i * 3\n  do_something_else(i)\nend\n"
+    "corrected": "1.times do |i|\n  do_something(i)\n  i, j = i * 2, i * 3\n  do_something_else(i)\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n  do_something(i)\n  i, j = i * 2, i * 3\n  do_something_else(i)\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24626,7 +24874,10 @@
         "correctable": true
       }
     ],
-    "corrected": "do_something(0)\nj = 1\ndo_something_else(j)\n"
+    "corrected": "do_something(0)\nj = 1\ndo_something_else(j)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n  do_something(i)\n  j = 1\n  do_something_else(j)\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24648,7 +24899,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def my_method\nend\n"
+    "corrected": "def my_method\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def my_method\n  0.times { do_something }\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24670,7 +24924,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def my_method\nend\n"
+    "corrected": "def my_method\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def my_method\n  0.times do\n    do_something\n    do_something_else\n  end\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24692,7 +24949,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def my_method\n  do_something\n  do_something_else\nend\n"
+    "corrected": "def my_method\n  do_something\n  do_something_else\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def my_method\n  1.times do\n    do_something\n    do_something_else\n  end\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24714,7 +24974,10 @@
         "correctable": false
       }
     ],
-    "corrected": "foo(0.times { do_something })\n"
+    "corrected": "foo(0.times { do_something })\n",
+    "rust_correctable": false,
+    "rust_corrected": "foo(0.times { do_something })\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24736,7 +24999,10 @@
         "correctable": false
       }
     ],
-    "corrected": "foo(1.times { do_something })\n"
+    "corrected": "foo(1.times { do_something })\n",
+    "rust_correctable": false,
+    "rust_corrected": "foo(1.times { do_something })\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24758,7 +25024,10 @@
         "correctable": false
       }
     ],
-    "corrected": "1.times\n"
+    "corrected": "1.times\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/NumberedParameterAssignment",
@@ -28836,7 +29105,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -28861,7 +29133,7 @@
     "corrected": "0 = 2; puts 0\n",
     "rust_corrected": "1.times { |i| i = 2; puts i }\n",
     "rust_correctable": false,
-    "reason": "Pinned Ruby misses a leading block argument reassignment and rewrites it to invalid Ruby (0 = 2); retain the finding without autocorrection."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -28883,7 +29155,10 @@
         "correctable": false
       }
     ],
-    "corrected": "x = 1.times { work }\n"
+    "corrected": "x = 1.times { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "x = 1.times { work }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -28905,7 +29180,10 @@
         "correctable": false
       }
     ],
-    "corrected": "1.times { work }.foo\n"
+    "corrected": "1.times { work }.foo\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { work }.foo\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -28920,7 +29198,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "(-1).times { work }\n"
+    "corrected": "(-1).times { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "(-1).times { work }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -28942,7 +29223,10 @@
         "correctable": true
       }
     ],
-    "corrected": "work\n"
+    "corrected": "work\n",
+    "rust_correctable": false,
+    "rust_corrected": "0x1.times { work }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -28967,7 +29251,7 @@
     "corrected": "puts \"0\"\n",
     "rust_corrected": "1.times { |i| puts \"i\" }\n",
     "rust_correctable": false,
-    "reason": "Pinned Ruby text substitution changes non-variable occurrences of the block parameter (method names, strings, or shadowing parameters); refuse the unsafe correction."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -28992,7 +29276,7 @@
     "corrected": "object.0\n",
     "rust_corrected": "1.times { |i| object.i }\n",
     "rust_correctable": false,
-    "reason": "Pinned Ruby text substitution changes non-variable occurrences of the block parameter (method names, strings, or shadowing parameters); refuse the unsafe correction."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -29017,7 +29301,7 @@
     "corrected": "proc { |0| 0 }\n",
     "rust_corrected": "1.times { |i| proc { |i| i } }\n",
     "rust_correctable": false,
-    "reason": "Pinned Ruby text substitution changes non-variable occurrences of the block parameter (method names, strings, or shadowing parameters); refuse the unsafe correction."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Style/TrailingBodyOnMethodDefinition",
@@ -29428,7 +29712,7 @@
     "corrected": "work\n",
     "rust_correctable": false,
     "rust_corrected": "1.times(\n # block arg comment\n &:work)\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Style/TrailingBodyOnMethodDefinition",
@@ -39129,7 +39413,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times { work }; keep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39153,7 +39437,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times; keep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39177,7 +39461,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "1.times {}; keep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39201,7 +39485,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times do\n work\nend; keep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39225,7 +39509,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times { work } # keep comment\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39249,7 +39533,7 @@
     "corrected": "value = \"one\nwo\"\nputs(value)\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39273,7 +39557,7 @@
     "corrected": "work\nescue Error\nother\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do\n work\nrescue Error\n other\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39297,7 +39581,7 @@
     "corrected": "work\nnsure\nother\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do\n work\nensure\n other\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39321,7 +39605,7 @@
     "corrected": "break 123\nkeep_me\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { break 123 }\nkeep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39345,7 +39629,7 @@
     "corrected": "next 123\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { next 123 }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39369,7 +39653,7 @@
     "corrected": "redo\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { redo }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39393,7 +39677,7 @@
     "corrected": "while condition\n break\n keep_me\nend\n",
     "rust_correctable": false,
     "rust_corrected": "while condition\n 1.times { break }\n keep_me\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39417,7 +39701,7 @@
     "corrected": "consume(first, second)\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { |first, second| consume(first, second) }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39441,7 +39725,7 @@
     "corrected": "consume(first, second)\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { |(first, second)| consume(first, second) }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39465,7 +39749,7 @@
     "corrected": "consume(index)\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { |index; local| consume(index) }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39489,7 +39773,7 @@
     "corrected": "1.times { puts _1 }\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { puts _1 }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39513,7 +39797,7 @@
     "corrected": "puts it\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { puts it }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39537,7 +39821,7 @@
     "corrected": "zero?\n",
     "rust_correctable": false,
     "rust_corrected": "1.times(&:zero?)\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39561,7 +39845,7 @@
     "corrected": "zero?\n",
     "rust_correctable": false,
     "rust_corrected": "1.times(&%s(zero?))\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39585,7 +39869,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times(&:work)\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39599,7 +39883,10 @@
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "0.times(&:\"#{callback_name}\")\n"
+    "corrected": "0.times(&:\"#{callback_name}\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "0.times(&:\"#{callback_name}\")\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39623,7 +39910,7 @@
     "corrected": "  value\nTEXT\n",
     "rust_correctable": false,
     "rust_corrected": "0.times { puts <<~TEXT }\n  value\nTEXT\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39647,7 +39934,7 @@
     "corrected": "work\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { # keep comment\n work\n}\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39671,7 +39958,7 @@
     "corrected": "work # keep comment\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { work } # keep comment\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39695,7 +39982,7 @@
     "corrected": "items.each do\n consume(\"one\nwo\")\nend\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do\n items.each do\n  consume(\"one\ntwo\")\n end\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39716,7 +40003,10 @@
         "correctable": true
       }
     ],
-    "corrected": "items.each { break }\n"
+    "corrected": "items.each { break }\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { items.each { break } }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39737,7 +40027,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def f\n return 7\nend\n"
+    "corrected": "def f\n return 7\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 1.times { return 7 }\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39758,7 +40051,10 @@
         "correctable": true
       }
     ],
-    "corrected": "while condition; break; end\n"
+    "corrected": "while condition; break; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { while condition; break; end }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39779,7 +40075,10 @@
         "correctable": true
       }
     ],
-    "corrected": "work; keep_me\n"
+    "corrected": "work; keep_me\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { work }; keep_me\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -39800,7 +40099,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { work };\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -41597,7 +41899,7 @@
     "corrected": "values = [\n]\n",
     "rust_correctable": false,
     "rust_corrected": "values = [\n  0.times {}\n]\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41621,7 +41923,7 @@
     "corrected": "values = [\n  7\n]\n",
     "rust_correctable": false,
     "rust_corrected": "values = [\n  1.times { 7 }\n]\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41645,7 +41947,7 @@
     "corrected": "values = {a: \n}\n",
     "rust_correctable": false,
     "rust_corrected": "values = {a: \n  0.times { work }\n}\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41669,7 +41971,7 @@
     "corrected": "value =\n",
     "rust_correctable": false,
     "rust_corrected": "value =\n  0.times {}\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41693,7 +41995,7 @@
     "corrected": "consume(\n  0.times { work }\n)\n",
     "rust_correctable": false,
     "rust_corrected": "consume(\n  0.times { work }\n)\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41717,7 +42019,7 @@
     "corrected": "if\n work\nend\n",
     "rust_correctable": false,
     "rust_corrected": "if\n  0.times {}\n work\nend\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41741,7 +42043,7 @@
     "corrected": "value = begin\nend\n",
     "rust_correctable": false,
     "rust_corrected": "value = begin\n 0.times {}\nend\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41765,7 +42067,7 @@
     "corrected": "value = if condition\nend\n",
     "rust_correctable": false,
     "rust_corrected": "value = if condition\n 0.times {}\nend\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41789,7 +42091,7 @@
     "corrected": "(\n).inspect\n",
     "rust_correctable": false,
     "rust_corrected": "(\n 0.times {}\n).inspect\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41813,7 +42115,7 @@
     "corrected": "def i; 42; end\ndef inner\n 0\nend\nputs inner\n",
     "rust_correctable": false,
     "rust_corrected": "def i; 42; end\n1.times do |i|\n def inner\n  i\n end\nend\nputs inner\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41837,7 +42139,7 @@
     "corrected": "def i; 42; end\nclass C\n def self.result; 0; end\nend\n",
     "rust_correctable": false,
     "rust_corrected": "def i; 42; end\n1.times do |i|\n class C\n  def self.result; i; end\n end\nend\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41861,7 +42163,7 @@
     "corrected": "case [42]\nin [0]\n puts 0\nend\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do |i|\n case [42]\n in [i]\n  puts i\n end\nend\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41885,7 +42187,7 @@
     "corrected": "[42] => [0]\nputs 0\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do |i|\n [42] => [i]\n puts i\nend\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41909,7 +42211,7 @@
     "corrected": "case {a: 42}\nin {a: 0}\n puts 0\nend\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do |i|\n case {a: 42}\n in {a: i}\n  puts i\n end\nend\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41933,7 +42235,7 @@
     "corrected": "def i; 42; end\nmodule Inner\n def self.result; 0; end\nend\nputs Inner.result\n",
     "rust_correctable": false,
     "rust_corrected": "def i; 42; end\n1.times do |i|\n module Inner\n  def self.result; i; end\n end\nend\nputs Inner.result\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41957,7 +42259,7 @@
     "corrected": "def i; 42; end\nclass << self\n def result; 0; end\nend\nputs result\n",
     "rust_correctable": false,
     "rust_corrected": "def i; 42; end\n1.times do |i|\n class << self\n  def result; i; end\n end\nend\nputs result\n",
-    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41978,7 +42280,10 @@
         "correctable": true
       }
     ],
-    "corrected": "callback = -> { 0 }\nputs callback.call\n"
+    "corrected": "callback = -> { 0 }\nputs callback.call\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n callback = -> { i }\n puts callback.call\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -41999,7 +42304,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def unrelated; 42; end\nputs 0\n"
+    "corrected": "def unrelated; 42; end\nputs 0\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n def unrelated; 42; end\n puts i\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -43441,85 +43749,103 @@
     "source": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n"
+    "corrected": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n"
+    "corrected": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n"
+    "corrected": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| if test(x); next_item(x); end; x }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); next_item(x); end; x }.compact\n"
+    "corrected": "items.map { |x| if test(x); next_item(x); end; x }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); next_item(x); end; x }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.filter_map { |x| x if test(x); log(x) }\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.filter_map { |x| x if test(x); log(x) }\n"
+    "corrected": "items.filter_map { |x| x if test(x); log(x) }\n",
+    "rust_corrected": "items.filter_map { |x| x if test(x); log(x) }\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n"
+    "corrected": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| next x if test(x); nil }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
@@ -43532,14 +43858,17 @@
         "correctable": true
       }
     ],
-    "corrected": "items.select { |x| test(x) }\n"
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_corrected": "items.map { |x| next x if test(x); nil }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| next unless test(x); x }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
@@ -43552,14 +43881,17 @@
         "correctable": true
       }
     ],
-    "corrected": "items.select { |x| test(x) }\n"
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_corrected": "items.map { |x| next unless test(x); x }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| x if test(x) }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
@@ -43572,14 +43904,17 @@
         "correctable": true
       }
     ],
-    "corrected": "items.select { |x| test(x) }\n"
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_corrected": "items.map { |x| x if test(x) }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.filter_map { |x| x unless test(x) }\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
@@ -43592,7 +43927,10 @@
         "correctable": true
       }
     ],
-    "corrected": "items.reject { |x| test(x) }\n"
+    "corrected": "items.reject { |x| test(x) }\n",
+    "rust_corrected": "items.filter_map { |x| x unless test(x) }\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -43615,7 +43953,7 @@
     "corrected": "items.select { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map { |x| next nil if test(x); x }.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -43638,7 +43976,7 @@
     "corrected": "items.reject { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map { |x| next nil unless test(x); x }.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -43661,7 +43999,7 @@
     "corrected": "items.select { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map { |x| next x if test(x); x }.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -43684,7 +44022,7 @@
     "corrected": "items.select { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map { |x| next other(x) if test(x); x }.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -43707,7 +44045,7 @@
     "corrected": "items.select { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map do |x|\n # keep this\n x if test(x)\nend.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/OrAssignment",
@@ -43781,5 +44119,667 @@
       }
     ],
     "corrected": "@x ||= 1\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "$events = []\ndef keys; $events << :keys; [:a]; end\nh = {a: 1, b: 2}\np h.reject { |k, v| keys.include?(k) }\np $events\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Use `except(*keys)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$events = []\ndef keys; $events << :keys; [:a]; end\nh = {a: 1, b: 2}\np h.except(*keys)\np $events\n",
+    "rust_corrected": "$events = []\ndef keys; $events << :keys; [:a]; end\nh = {a: 1, b: 2}\np h.reject { |k, v| keys.include?(k) }\np $events\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "keys = [:a]\np({a: 1, b: 2}.reject { |k, v| keys.include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 15,
+        "message": "Use `except(*keys)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "keys = [:a]\np({a: 1, b: 2}.except(*keys))\n",
+    "rust_corrected": "keys = [:a]\np({a: 1, b: 2}.reject { |k, v| keys.include?(k) })\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({'a b' => 1, 'z' => 2}.reject { |k, v| %w[a\\ b].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 25,
+        "message": "Use `except('a\\ b')` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({'a b' => 1, 'z' => 2}.except('a\\ b'))\n",
+    "rust_corrected": "p({'a b' => 1, 'z' => 2}.reject { |k, v| %w[a\\ b].include?(k) })\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({:'a-b' => 1, z: 2}.reject { |k, v| %i[a-b].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Use `except(:a-b)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({:'a-b' => 1, z: 2}.except(:a-b))\n",
+    "rust_corrected": "p({:'a-b' => 1, z: 2}.reject { |k, v| %i[a-b].include?(k) })\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: dynamic key evaluation can change its frequency or value; complex percent words cannot be safely rendered as except arguments."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({a: 1, b: 2}.reject { |k, v| [:a].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({a: 1, b: 2}.except(:a))\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({a: 1, b: 2}.reject { |k, v| %i[a].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({a: 1, b: 2}.except(:a))\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({'a' => 1, 'b' => 2}.reject { |k, v| %w[a].include?(k) })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Use `except('a')` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({'a' => 1, 'b' => 2}.except('a'))\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "p({a: 1, b: 2}.reject { |k, v| k == :a })\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({a: 1, b: 2}.except(:a))\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "p [nil, 1].map { |x| x if true }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [nil, 1].select { |x| true }\n",
+    "rust_corrected": "p [nil, 1].map { |x| x if true }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "p [false, nil, 1].filter_map { |x| x if true }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Replace `filter_map { ... }` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [false, nil, 1].select { |x| true }\n",
+    "rust_corrected": "p [false, nil, 1].filter_map { |x| x if true }\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "p [1, 2].map { |x| x if x > 1 }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [1, 2].select { |x| x > 1 }\n",
+    "rust_corrected": "p [1, 2].map { |x| x if x > 1 }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 1.times { :value }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n :value\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 1.times { :value }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 0.times { :value }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 0.times { :value }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n -1.times { :value }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `-1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n -1.times { :value }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "values = [1].map do\n 1.times { :value }\nend\np values\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [1].map do\n :value\nend\np values\n",
+    "rust_correctable": false,
+    "rust_corrected": "values = [1].map do\n 1.times { :value }\nend\np values\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "f = -> do\n 1.times { :value }\nend\np f.call\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "f = -> do\n :value\nend\np f.call\n",
+    "rust_correctable": false,
+    "rust_corrected": "f = -> do\n 1.times { :value }\nend\np f.call\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f(flag)\n if flag\n  1.times { :yes }\n else\n  0.times { :no }\n end\nend\np [f(true), f(false)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(flag)\n if flag\n  :yes\n else\n end\nend\np [f(true), f(false)]\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(flag)\n if flag\n  1.times { :yes }\n else\n  0.times { :no }\n end\nend\np [f(true), f(false)]\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n begin\n  1.times { :value }\n ensure\n  :ignored\n end\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n begin\n  :value\n ensure\n  :ignored\n end\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n begin\n  1.times { :value }\n ensure\n  :ignored\n end\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "value = class TimesValueExample\n 1.times { :value }\nend\np value\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = class TimesValueExample\n :value\nend\np value\n",
+    "rust_correctable": false,
+    "rust_corrected": "value = class TimesValueExample\n 1.times { :value }\nend\np value\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n created = 42\nend\np defined?(created)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "created = 42\np defined?(created)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n created = 42\nend\np defined?(created)\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { :ignored }\np :kept\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ":ignored\np :kept\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { :ignored }\np :kept\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 1.times { :ignored }\n :kept\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n :ignored\n :kept\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 1.times { :ignored }\n :kept\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n value = 2\n 1.times { value = 42 }\n value\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n value = 2\n value = 42\n value\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n value = 2\n 1.times { value = 42 }\n value\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { :ignored }\np :kept\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p :kept\n",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { :ignored }\np :kept\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 2.times { :value }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "def f\n 2.times { :value }\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 2.times { :value }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "p [1.times { :value }, 0.times { :value }]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "p [1.times { :value }, 0.times { :value }]\n",
+    "rust_correctable": false,
+    "rust_corrected": "p [1.times { :value }, 0.times { :value }]\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 1.times { return 7 }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n return 7\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 1.times { return 7 }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h = {[:a, :b] => 1, :a => 2}\np h.reject { |k, v| k.eql?([:a, :b]) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 4,
+        "message": "Use `except(:a, :b)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h = {[:a, :b] => 1, :a => 2}\np h.except(:a, :b)\n",
+    "rust_corrected": "h = {[:a, :b] => 1, :a => 2}\np h.reject { |k, v| k.eql?([:a, :b]) }\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: eql? compares an array as a scalar key; rendering its elements as separate except arguments changes the key removed."
   }
 ]

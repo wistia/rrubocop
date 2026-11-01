@@ -21,7 +21,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times { work }; keep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -45,7 +45,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times; keep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -69,7 +69,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "1.times {}; keep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -93,7 +93,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times do\n work\nend; keep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -117,7 +117,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times { work } # keep comment\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -141,7 +141,7 @@
     "corrected": "value = \"one\nwo\"\nputs(value)\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -165,7 +165,7 @@
     "corrected": "work\nescue Error\nother\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do\n work\nrescue Error\n other\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -189,7 +189,7 @@
     "corrected": "work\nnsure\nother\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do\n work\nensure\n other\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -213,7 +213,7 @@
     "corrected": "break 123\nkeep_me\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { break 123 }\nkeep_me\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -237,7 +237,7 @@
     "corrected": "next 123\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { next 123 }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -261,7 +261,7 @@
     "corrected": "redo\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { redo }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -285,7 +285,7 @@
     "corrected": "while condition\n break\n keep_me\nend\n",
     "rust_correctable": false,
     "rust_corrected": "while condition\n 1.times { break }\n keep_me\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -309,7 +309,7 @@
     "corrected": "consume(first, second)\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { |first, second| consume(first, second) }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -333,7 +333,7 @@
     "corrected": "consume(first, second)\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { |(first, second)| consume(first, second) }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -357,7 +357,7 @@
     "corrected": "consume(index)\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { |index; local| consume(index) }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -381,7 +381,7 @@
     "corrected": "1.times { puts _1 }\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { puts _1 }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -405,7 +405,7 @@
     "corrected": "puts it\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { puts it }\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -429,7 +429,7 @@
     "corrected": "zero?\n",
     "rust_correctable": false,
     "rust_corrected": "1.times(&:zero?)\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -453,7 +453,7 @@
     "corrected": "zero?\n",
     "rust_correctable": false,
     "rust_corrected": "1.times(&%s(zero?))\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -477,7 +477,7 @@
     "corrected": "",
     "rust_correctable": false,
     "rust_corrected": "0.times(&:work)\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -491,7 +491,10 @@
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "0.times(&:\"#{callback_name}\")\n"
+    "corrected": "0.times(&:\"#{callback_name}\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "0.times(&:\"#{callback_name}\")\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -515,7 +518,7 @@
     "corrected": "  value\nTEXT\n",
     "rust_correctable": false,
     "rust_corrected": "0.times { puts <<~TEXT }\n  value\nTEXT\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -539,7 +542,7 @@
     "corrected": "work\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { # keep comment\n work\n}\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -563,7 +566,7 @@
     "corrected": "work # keep comment\n",
     "rust_correctable": false,
     "rust_corrected": "1.times { work } # keep comment\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -587,7 +590,7 @@
     "corrected": "items.each do\n consume(\"one\nwo\")\nend\n",
     "rust_correctable": false,
     "rust_corrected": "1.times do\n items.each do\n  consume(\"one\ntwo\")\n end\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -608,7 +611,10 @@
         "correctable": true
       }
     ],
-    "corrected": "items.each { break }\n"
+    "corrected": "items.each { break }\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { items.each { break } }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -629,7 +635,10 @@
         "correctable": true
       }
     ],
-    "corrected": "def f\n return 7\nend\n"
+    "corrected": "def f\n return 7\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 1.times { return 7 }\nend\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -650,7 +659,10 @@
         "correctable": true
       }
     ],
-    "corrected": "while condition; break; end\n"
+    "corrected": "while condition; break; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { while condition; break; end }\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -671,7 +683,10 @@
         "correctable": true
       }
     ],
-    "corrected": "work; keep_me\n"
+    "corrected": "work; keep_me\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { work }; keep_me\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -692,7 +707,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { work };\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -1147,7 +1165,7 @@
     "corrected": "values = [\n]\n",
     "rust_correctable": false,
     "rust_corrected": "values = [\n  0.times {}\n]\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -1171,7 +1189,7 @@
     "corrected": "values = [\n  7\n]\n",
     "rust_correctable": false,
     "rust_corrected": "values = [\n  1.times { 7 }\n]\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -1195,7 +1213,7 @@
     "corrected": "values = {a: \n}\n",
     "rust_correctable": false,
     "rust_corrected": "values = {a: \n  0.times { work }\n}\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -1219,7 +1237,7 @@
     "corrected": "value =\n",
     "rust_correctable": false,
     "rust_corrected": "value =\n  0.times {}\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -1243,7 +1261,7 @@
     "corrected": "consume(\n  0.times { work }\n)\n",
     "rust_correctable": false,
     "rust_corrected": "consume(\n  0.times { work }\n)\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -1267,7 +1285,7 @@
     "corrected": "if\n work\nend\n",
     "rust_correctable": false,
     "rust_corrected": "if\n  0.times {}\n work\nend\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -1291,7 +1309,7 @@
     "corrected": "value = begin\nend\n",
     "rust_correctable": false,
     "rust_corrected": "value = begin\n 0.times {}\nend\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -1315,7 +1333,7 @@
     "corrected": "value = if condition\nend\n",
     "rust_correctable": false,
     "rust_corrected": "value = if condition\n 0.times {}\nend\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -1339,6 +1357,6 @@
     "corrected": "(\n).inspect\n",
     "rust_correctable": false,
     "rust_corrected": "(\n 0.times {}\n).inspect\n",
-    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
   }
 ]

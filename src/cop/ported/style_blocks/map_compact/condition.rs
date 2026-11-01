@@ -126,4 +126,3 @@ fn next_value(c: &Context<'_>, node: Node<'_>, arg: &str) -> bool {
 
 mod guard;
 use guard::trailing_guard;
-pub(super) use guard::uncertain_guard;

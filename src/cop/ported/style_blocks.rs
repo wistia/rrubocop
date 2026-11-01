@@ -5,7 +5,7 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Style/FileWrite", &["call"], file_write, true, true, false),
         ("Style/HashConversion", &["element_reference","call"], hash_conversion, true, false, false),
         ("Style/HashExcept", &["call"], hash_except, true, true, false),
-        ("Style/MapCompactWithConditionalBlock", &["call"], map_compact, true, true, false),
+        ("Style/MapCompactWithConditionalBlock", &["call"], map_compact, false, true, false),
         ("Style/TrailingCommaInBlockArgs", &["block","do_block"], block_comma, true, true, false)
     );
 }
@@ -24,3 +24,6 @@ use map_compact::map_compact;
 
 mod block_comma;
 use block_comma::block_comma;
+
+#[cfg(test)]
+mod eligibility_tests;

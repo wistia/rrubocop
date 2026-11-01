@@ -527,85 +527,103 @@
     "source": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n"
+    "corrected": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n"
+    "corrected": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n"
+    "corrected": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| if test(x); next_item(x); end; x }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); next_item(x); end; x }.compact\n"
+    "corrected": "items.map { |x| if test(x); next_item(x); end; x }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); next_item(x); end; x }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.filter_map { |x| x if test(x); log(x) }\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.filter_map { |x| x if test(x); log(x) }\n"
+    "corrected": "items.filter_map { |x| x if test(x); log(x) }\n",
+    "rust_corrected": "items.filter_map { |x| x if test(x); log(x) }\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n"
+    "corrected": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n",
+    "rust_corrected": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| next x if test(x); nil }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
@@ -618,14 +636,17 @@
         "correctable": true
       }
     ],
-    "corrected": "items.select { |x| test(x) }\n"
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_corrected": "items.map { |x| next x if test(x); nil }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| next unless test(x); x }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
@@ -638,14 +659,17 @@
         "correctable": true
       }
     ],
-    "corrected": "items.select { |x| test(x) }\n"
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_corrected": "items.map { |x| next unless test(x); x }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.map { |x| x if test(x) }.compact\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
@@ -658,14 +682,17 @@
         "correctable": true
       }
     ],
-    "corrected": "items.select { |x| test(x) }\n"
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_corrected": "items.map { |x| x if test(x) }.compact\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
     "source": "items.filter_map { |x| x unless test(x) }\n",
     "path": "probe.rb",
     "options": {},
-    "manual": false,
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": false
@@ -678,7 +705,10 @@
         "correctable": true
       }
     ],
-    "corrected": "items.reject { |x| test(x) }\n"
+    "corrected": "items.reject { |x| test(x) }\n",
+    "rust_corrected": "items.filter_map { |x| x unless test(x) }\n",
+    "rust_correctable": false,
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -701,7 +731,7 @@
     "corrected": "items.select { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map { |x| next nil if test(x); x }.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -724,7 +754,7 @@
     "corrected": "items.reject { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map { |x| next nil unless test(x); x }.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -747,7 +777,7 @@
     "corrected": "items.select { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map { |x| next x if test(x); x }.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -770,7 +800,7 @@
     "corrected": "items.select { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map { |x| next other(x) if test(x); x }.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -793,7 +823,7 @@
     "corrected": "items.select { |x| test(x) }\n",
     "rust_correctable": false,
     "rust_corrected": "items.map do |x|\n # keep this\n x if test(x)\nend.compact\n",
-    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+    "reason": "Manual rewrite: unknown elements may be nil or false, and select/reject do not preserve map.compact/filter_map semantics."
   },
   {
     "cop": "Style/OrAssignment",

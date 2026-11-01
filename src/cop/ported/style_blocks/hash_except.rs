@@ -19,7 +19,7 @@ fn hash_finding(c: &Context<'_>, n: Node<'_>, except: Node<'_>) -> Finding {
     let preferred = format!("except({})", key_content(c, except));
     let start = method_node(n).start_byte();
     let finding = Finding::range(start, n.end_byte(), format!("Use `{preferred}` instead."));
-    if descendants(n).any(|node| node.kind() == "comment") {
+    if !safety::static_key(c, except) || descendants(n).any(|node| node.kind() == "comment") {
         finding
     } else {
         finding.edit_with(c, start, n.end_byte(), || preferred)
@@ -70,3 +70,5 @@ mod content;
 mod matcher;
 use content::key_content;
 use matcher::except_key;
+
+mod safety;

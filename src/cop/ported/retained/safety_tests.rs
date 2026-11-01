@@ -121,27 +121,29 @@ fn group_comments_and_disabled_members_cannot_leave_duplicate_inclusions() {
 }
 
 #[test]
-fn ordinary_times_rewrites_keep_nested_control_targets_and_return_scope() {
-    for (source, expected) in [
-        (
-            "1.times { items.each { break } }\n",
-            "items.each { break }\n",
-        ),
-        (
-            "def f\n 1.times { return 7 }\nend\n",
-            "def f\n return 7\nend\n",
-        ),
-        ("1.times { work }; keep_me\n", "work; keep_me\n"),
+fn ordinary_times_calls_remain_manual_even_when_the_result_appears_unused() {
+    for source in [
+        "1.times { items.each { break } }\n",
+        "def f\n 1.times { return 7 }\nend\n",
+        "1.times { work }; keep_me\n",
     ] {
-        assert_eq!(
-            correct(source, &["Lint/UselessTimes"], AutocorrectMode::All, false).0,
-            expected
-        );
-        assert_eq!(
-            correct(source, &["Lint/UselessTimes"], AutocorrectMode::Safe, false).0,
-            source
-        );
+        for mode in [
+            AutocorrectMode::Off,
+            AutocorrectMode::Safe,
+            AutocorrectMode::All,
+        ] {
+            let (after, diagnostics) = correct(source, &["Lint/UselessTimes"], mode, false);
+            assert_eq!(after, source);
+            assert_eq!(diagnostics.len(), 1);
+            assert!(diagnostics.iter().all(|d| !d.correctable && !d.corrected));
+        }
     }
+    assert!(
+        !CopRegistry::default_registry()
+            .get("Lint/UselessTimes")
+            .unwrap()
+            .supports_autocorrect()
+    );
 }
 
 #[test]
@@ -182,6 +184,18 @@ fn parameter_substitution_respects_nested_scopes_and_pattern_bindings() {
         .iter()
         .filter(|case| case["rust_correctable"] == false)
     {
+        assert_manual(case);
+    }
+}
+
+#[test]
+fn times_return_values_and_lexical_frames_remain_manual() {
+    let cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/tests/fixtures/times-value-safety.json"
+    )))
+    .unwrap();
+    for case in cases.as_array().unwrap() {
         assert_manual(case);
     }
 }

@@ -1,0 +1,391 @@
+[
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 1.times { :value }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n :value\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 1.times { :value }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 0.times { :value }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 0.times { :value }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n -1.times { :value }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `-1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n -1.times { :value }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "values = [1].map do\n 1.times { :value }\nend\np values\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [1].map do\n :value\nend\np values\n",
+    "rust_correctable": false,
+    "rust_corrected": "values = [1].map do\n 1.times { :value }\nend\np values\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "f = -> do\n 1.times { :value }\nend\np f.call\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "f = -> do\n :value\nend\np f.call\n",
+    "rust_correctable": false,
+    "rust_corrected": "f = -> do\n 1.times { :value }\nend\np f.call\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f(flag)\n if flag\n  1.times { :yes }\n else\n  0.times { :no }\n end\nend\np [f(true), f(false)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(flag)\n if flag\n  :yes\n else\n end\nend\np [f(true), f(false)]\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(flag)\n if flag\n  1.times { :yes }\n else\n  0.times { :no }\n end\nend\np [f(true), f(false)]\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n begin\n  1.times { :value }\n ensure\n  :ignored\n end\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n begin\n  :value\n ensure\n  :ignored\n end\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n begin\n  1.times { :value }\n ensure\n  :ignored\n end\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "value = class TimesValueExample\n 1.times { :value }\nend\np value\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = class TimesValueExample\n :value\nend\np value\n",
+    "rust_correctable": false,
+    "rust_corrected": "value = class TimesValueExample\n 1.times { :value }\nend\np value\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n created = 42\nend\np defined?(created)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "created = 42\np defined?(created)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n created = 42\nend\np defined?(created)\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { :ignored }\np :kept\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ":ignored\np :kept\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { :ignored }\np :kept\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 1.times { :ignored }\n :kept\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n :ignored\n :kept\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 1.times { :ignored }\n :kept\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n value = 2\n 1.times { value = 42 }\n value\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n value = 2\n value = 42\n value\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n value = 2\n 1.times { value = 42 }\n value\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { :ignored }\np :kept\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p :kept\n",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { :ignored }\np :kept\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 2.times { :value }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "def f\n 2.times { :value }\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 2.times { :value }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "p [1.times { :value }, 0.times { :value }]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "p [1.times { :value }, 0.times { :value }]\n",
+    "rust_correctable": false,
+    "rust_corrected": "p [1.times { :value }, 0.times { :value }]\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 1.times { return 7 }\nend\np f\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n return 7\nend\np f\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f\n 1.times { return 7 }\nend\np f\n",
+    "reason": "UselessTimes is diagnostic-only: removing even a literal-count loop can change its observable receiver return value, lexical bindings, and block frame; preserve source in every correction mode."
+  }
+]
