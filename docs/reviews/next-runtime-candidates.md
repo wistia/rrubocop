@@ -66,3 +66,7 @@ Syntax-only directive controls take **0.929s normally / 0.920s ignoring disable 
 - [102 valid timing records, provenance and rejected controls](next-runtime-candidates/measurements.json)
 
 Nine generated Ruby source variants compile with Ruby 3.4.9 without execution. All proposed speedups remain unimplemented. Configuration controls that accidentally loaded a nested file as the root were excluded; failed Gemfile-lock lookup experiments are not timings. No application files were modified.
+
+## Implementation follow-up
+
+All four candidates are implemented and validated. See [configuration, CodeMap, and custom dispatch results](config-codemap-custom-optimizations.md) for parity checks and isolated-cache measurements.
