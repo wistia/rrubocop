@@ -11,11 +11,12 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 693 Rust tests, including 2,054 pinned Ruby reference examples across 98 added cops.
+- 702 Rust tests, including 2,054 pinned Ruby reference examples across 98 added cops.
   The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
   the 30 newly added regressions and correction-mode coverage. The
   [latest custom-rule fixes](reviews/custom-rule-optimization-fixes.md) record
-  traversal/index/cache improvements and current timing and memory measurements.
+  traversal/index/cache improvements. The [autoload and lazy-index follow-up](reviews/autoload-lazy-index-optimization.md)
+  records the latest targeted timing and memory results, including the full-codebase trade-off.
 - Paired positive/negative Ruby fixtures for every new cop.
 - Comparisons check offense locations, messages, correctability, and actual
   correction output. Configuration probes cover options, disabled corrections,

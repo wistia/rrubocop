@@ -2,6 +2,10 @@
 
 Implementation `91ccb7c` addresses every optimization category in the [28-rule follow-up audit](custom-rule-performance-next.md), based on `3e0c2c1`. This includes the confirmed traversal regression and the conditional/lower-priority opportunities, with the existing rule semantics retained.
 
+## Further specialization
+
+[Implementation 6cdec63](autoload-lazy-index-optimization.md) further bounds autoload names and splits indexes into demand-driven components. It improves targeted sparse/deep cases, with a small measured full-codebase runtime/memory trade-off; the results below remain the historical 91ccb7c comparison.
+
 ## Changes
 
 | Area | Implementation |
