@@ -57,3 +57,7 @@ The useful gains are targeted: sparse queue **~21%**, policy **~13%**, serialize
 Namespace and sparse policy/queue/serializer peaks decrease roughly **32–37%**. Sparse-rescue and full-codebase peaks are slightly higher; full medians increase about **4.7%** in this comparison. Peak RSS includes the process, parser, configuration and result-cache writes, rather than isolated index heap usage. No general memory reduction is claimed for the whole application.
 
 [All 46 timing/memory runs, source/binary provenance and 63 differential cases](autoload-lazy-index-measurements.json) are committed with this report. Different stress inputs are not a per-rule ranking of the production codebase.
+
+## Subsequent measurement controls
+
+The [next-candidate audit](next-runtime-candidates.md) repeats comparisons with isolated result-cache directories. It finds near-tied sample results and a smaller +0.46% old/new full-run difference in one pair. This does not prove the prior +1.2% was caused by cache pressure or disappeared; it limits causal attribution from these small comparisons. Prepared configuration reuse is now the strongest measured next candidate.

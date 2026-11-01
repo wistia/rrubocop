@@ -1,0 +1,2113 @@
+{
+  "audited_commit": "3982e390d1c6c918a51522b009c9fe78f2ba0f39",
+  "audited_implementation": "6cdec63d0b325aa6659b128ef301c2255d62924b",
+  "previous_commit": "32099f2c658db4bd15b2d7681235f4dc0bdfb351",
+  "corpus_commit": "404394655f71e35560f1c24bf773af3de098c534",
+  "binary_hashes": {
+    "current": "736bf2a2d8565ff27dfb7b097ca517b3da7bcae034d4f18495ade4973941b0c3",
+    "previous": "1d8fa159cb35f9876e6c28c4207812fe26f1858eba12daea557fdbea1b93e5a9"
+  },
+  "sample_files": 632,
+  "sample_manifest_sha256": "7fbf72ab7810acac93f547d0224fac276b66a2853dfc35874bca5b005c0324f1",
+  "method": "Sequential release runs; no builds or other heavy scans. Isolated valid cache directories per binary/group; --cache false disables reads but writes remain. Cache-unavailable experiments point RRUBOCOP_CACHE_DIR at explicitlycreated temporary regular file (Cache::open returnsNone); not a CLI disabling feature. Sharedcache usesexistingdefaultdir. Filesystem warm. Medians below are smallrepeat directional evidence, not confidence intervals.",
+  "syntax_validation": {
+    "ruby": "3.4.9",
+    "generated_variants": 9,
+    "executed": false
+  },
+  "diagnostic_checks": {
+    "sample_ablation_scopes": "zero offenses in all sample rows",
+    "actual_dev_spec_control": "same17files, identical complete zero-offense arrays asserted; actual activation not instrumented",
+    "directive_control": "same632files, identical complete zero-offense arrays asserted",
+    "full_scopes": "all report27offenses; only counts retained for fresh isolated runs, not fresh full-array equality proof"
+  },
+  "rejected_controls": [
+    {
+      "scope_prefix": "config:",
+      "rows": 24,
+      "reason": "Single-file nested path caused child config to load as top-level, so no directory-override path; excluded from conclusions. Corrected config-fixed uses first rootfile plus second root/nested samebytes file."
+    },
+    {
+      "scope_prefix": "actual-dev-spec:",
+      "recorded_rows": 0,
+      "reason": "Naive dev/spec-only and last-position-root-sentinel attempted controls fail inheritedstandard gem resolution (no Gemfile.lock at childconfigdir). Retried with project-root Gemfile FIRST plus16specs. No application directory changes/workarounds."
+    }
+  ],
+  "summary": [
+    {
+      "binary": "current",
+      "scope": "actual-dev-spec-fixed:explicit-root-excepts",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.9893842260353267,
+      "user": 1.021689000000002,
+      "system": 0.23199100000000006,
+      "max_rss_kib": 54608,
+      "metadata": {
+        "files_inspected": 17,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "actual-dev-spec-fixed:normal",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 4.079973367974162,
+      "user": 25.368216000000004,
+      "system": 0.337344,
+      "max_rss_kib": 72972,
+      "metadata": {
+        "files_inspected": 17,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:1000:cop",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.021864905487746,
+      "user": 0.014825499999986391,
+      "system": 0.007732999999999879,
+      "max_rss_kib": 14224.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:1000:syntax",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.020328353624790907,
+      "user": 0.014171000000004597,
+      "system": 0.007216000000000111,
+      "max_rss_kib": 13656.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:4000:cop",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.04940375150181353,
+      "user": 0.039893000000006396,
+      "system": 0.010535500000000031,
+      "max_rss_kib": 17308.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:4000:syntax",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.036638180492445827,
+      "user": 0.027492499999993925,
+      "system": 0.010128499999999985,
+      "max_rss_kib": 17306.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:8000:cop",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.10881430958397686,
+      "user": 0.09596499999999253,
+      "system": 0.013551999999999897,
+      "max_rss_kib": 22044.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:8000:syntax",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.05775512778200209,
+      "user": 0.04588650000000882,
+      "system": 0.012926500000000063,
+      "max_rss_kib": 21716.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:100:nestedpair",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.20727819902822375,
+      "user": 0.20078599999999996,
+      "system": 0.009033,
+      "max_rss_kib": 20524,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:100:rootpair",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.03591093514114618,
+      "user": 0.030272999999999994,
+      "system": 0.008085999999999996,
+      "max_rss_kib": 17776,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:1:nestedpair",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.03825458791106939,
+      "user": 0.032600000000000004,
+      "system": 0.007146,
+      "max_rss_kib": 19608,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:1:rootpair",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.03491960093379021,
+      "user": 0.029146999999999992,
+      "system": 0.006791999999999999,
+      "max_rss_kib": 16984,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:300:nestedpair",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.5695241331122816,
+      "user": 0.562329,
+      "system": 0.014064999999999994,
+      "max_rss_kib": 22204,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 2,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:300:rootpair",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.03856912814080715,
+      "user": 0.03543699999999994,
+      "system": 0.007228000000000012,
+      "max_rss_kib": 19580,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 2,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:1000:cop",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.031059355940669775,
+      "user": 0.02310099999999693,
+      "system": 0.00899900000000009,
+      "max_rss_kib": 15412.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:1000:syntax",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.025924289133399725,
+      "user": 0.019156500000008236,
+      "system": 0.007372999999999963,
+      "max_rss_kib": 15252.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:2000:cop",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.04831240605562925,
+      "user": 0.03948400000001584,
+      "system": 0.009883500000000045,
+      "max_rss_kib": 17372.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:2000:syntax",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.036457323702052236,
+      "user": 0.02663799999999128,
+      "system": 0.010867499999999919,
+      "max_rss_kib": 17334.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:500:cop",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.023448043037205935,
+      "user": 0.017787999999995918,
+      "system": 0.006789999999999963,
+      "max_rss_kib": 14226.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:500:syntax",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.020627729361876845,
+      "user": 0.015519999999995093,
+      "system": 0.006194499999999992,
+      "max_rss_kib": 14106.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "directive-control:ignore",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.9196276599541306,
+      "user": 1.299114000000003,
+      "system": 0.20443599999999984,
+      "max_rss_kib": 39984,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "directive-control:normal",
+      "cache": "unavailable",
+      "repeats": 3,
+      "wall": 0.9292890620417893,
+      "user": 1.3204250000000002,
+      "system": 0.20265500000000003,
+      "max_rss_kib": 42160,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "full-all",
+      "cache": "isolated",
+      "repeats": 1,
+      "wall": 28.74550731992349,
+      "user": 218.52582,
+      "system": 1.1111120000000003,
+      "max_rss_kib": 139040,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "full-cache-unavailable",
+      "cache": "unavailable",
+      "repeats": 1,
+      "wall": 28.431591047905385,
+      "user": 216.344872,
+      "system": 1.0015719999999995,
+      "max_rss_kib": 141004,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "full-no-custom",
+      "cache": "isolated",
+      "repeats": 1,
+      "wall": 28.465237907133996,
+      "user": 216.65486599999997,
+      "system": 1.0190959999999993,
+      "max_rss_kib": 136544,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:10000:cop",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.22009350964799523,
+      "user": 0.18943799999999555,
+      "system": 0.031764000000000125,
+      "max_rss_kib": 44976.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:10000:syntax",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.18404390569776297,
+      "user": 0.1574745000000064,
+      "system": 0.027682499999999943,
+      "max_rss_kib": 44826.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:1000:cop",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.035595686407759786,
+      "user": 0.029609500000006506,
+      "system": 0.0070389999999999064,
+      "max_rss_kib": 16218.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:1000:syntax",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 0.03104643104597926,
+      "user": 0.02562149999999974,
+      "system": 0.00652050000000004,
+      "max_rss_kib": 16250.0,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-all",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.4804027820937335,
+      "user": 9.706109,
+      "system": 0.25874099999999967,
+      "max_rss_kib": 89248,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "isolated",
+      "repeats": 2,
+      "wall": 2.4868190193083137,
+      "user": 9.733149999999995,
+      "system": 0.2655675000000004,
+      "max_rss_kib": 89158.0,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "shared",
+      "repeats": 2,
+      "wall": 2.527282590046525,
+      "user": 9.757765500000005,
+      "system": 0.2787040000000003,
+      "max_rss_kib": 99722.0,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "unavailable",
+      "repeats": 2,
+      "wall": 2.4555138628929853,
+      "user": 9.649687999999998,
+      "system": 0.2813644999999996,
+      "max_rss_kib": 88462.0,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-autoload",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.479317896068096,
+      "user": 9.701806000000005,
+      "system": 0.2846970000000004,
+      "max_rss_kib": 89388,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-custom",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.4465256296098232,
+      "user": 9.568171000000003,
+      "system": 0.26927,
+      "max_rss_kib": 85628,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-lazy-indexes",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.4833092051558197,
+      "user": 9.711750999999992,
+      "system": 0.289215,
+      "max_rss_kib": 88116,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-rescue",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.4747800389304757,
+      "user": 9.703729999999993,
+      "system": 0.2816449999999997,
+      "max_rss_kib": 88744,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "full-all",
+      "cache": "isolated",
+      "repeats": 1,
+      "wall": 28.613084208685905,
+      "user": 217.352344,
+      "system": 1.072878,
+      "max_rss_kib": 133232,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-all",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.4779368438757956,
+      "user": 9.690536,
+      "system": 0.30146600000000046,
+      "max_rss_kib": 88808,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-autoload",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.4816193799488246,
+      "user": 9.692026000000027,
+      "system": 0.2715309999999995,
+      "max_rss_kib": 89048,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-custom",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.453025466762483,
+      "user": 9.548155000000008,
+      "system": 0.2554809999999996,
+      "max_rss_kib": 86328,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-lazy-indexes",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.4734426140785217,
+      "user": 9.695349000000007,
+      "system": 0.26861599999999974,
+      "max_rss_kib": 88680,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-rescue",
+      "cache": "isolated",
+      "repeats": 3,
+      "wall": 2.4964165831916034,
+      "user": 9.761601999999996,
+      "system": 0.26517500000000016,
+      "max_rss_kib": 88424,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    }
+  ],
+  "raw_valid_runs": [
+    {
+      "binary": "previous",
+      "scope": "sample-all",
+      "cache": "isolated",
+      "wall": 2.4623871156945825,
+      "user": 9.690536,
+      "system": 0.303174,
+      "max_rss_kib": 89568,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-all",
+      "cache": "isolated",
+      "wall": 2.4804027820937335,
+      "user": 9.706109,
+      "system": 0.27042900000000003,
+      "max_rss_kib": 89248,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-custom",
+      "cache": "isolated",
+      "wall": 2.4721369021572173,
+      "user": 9.627821,
+      "system": 0.24917699999999998,
+      "max_rss_kib": 86200,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-custom",
+      "cache": "isolated",
+      "wall": 2.428861859254539,
+      "user": 9.568171000000003,
+      "system": 0.26927,
+      "max_rss_kib": 85568,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-autoload",
+      "cache": "isolated",
+      "wall": 2.4593928530812263,
+      "user": 9.670947999999996,
+      "system": 0.27815199999999995,
+      "max_rss_kib": 89048,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-autoload",
+      "cache": "isolated",
+      "wall": 2.5032130228355527,
+      "user": 9.797440000000002,
+      "system": 0.290891,
+      "max_rss_kib": 89388,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-rescue",
+      "cache": "isolated",
+      "wall": 2.4964165831916034,
+      "user": 9.738320000000002,
+      "system": 0.28978100000000007,
+      "max_rss_kib": 88424,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-rescue",
+      "cache": "isolated",
+      "wall": 2.4747800389304757,
+      "user": 9.703729999999993,
+      "system": 0.2778320000000001,
+      "max_rss_kib": 88744,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-lazy-indexes",
+      "cache": "isolated",
+      "wall": 2.5033864052966237,
+      "user": 9.707740999999999,
+      "system": 0.28035999999999994,
+      "max_rss_kib": 88560,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-lazy-indexes",
+      "cache": "isolated",
+      "wall": 2.483814302831888,
+      "user": 9.735178000000005,
+      "system": 0.28055299999999983,
+      "max_rss_kib": 88116,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-lazy-indexes",
+      "cache": "isolated",
+      "wall": 2.4582001171074808,
+      "user": 9.652574999999999,
+      "system": 0.289215,
+      "max_rss_kib": 88560,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-lazy-indexes",
+      "cache": "isolated",
+      "wall": 2.4484080099500716,
+      "user": 9.695349000000007,
+      "system": 0.25755000000000017,
+      "max_rss_kib": 88924,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-rescue",
+      "cache": "isolated",
+      "wall": 2.459544325247407,
+      "user": 9.67571799999999,
+      "system": 0.2816449999999997,
+      "max_rss_kib": 90284,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-rescue",
+      "cache": "isolated",
+      "wall": 2.501319473143667,
+      "user": 9.761601999999996,
+      "system": 0.26517500000000016,
+      "max_rss_kib": 88644,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-autoload",
+      "cache": "isolated",
+      "wall": 2.479317896068096,
+      "user": 9.701806000000005,
+      "system": 0.2846970000000004,
+      "max_rss_kib": 88680,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-autoload",
+      "cache": "isolated",
+      "wall": 2.4816193799488246,
+      "user": 9.699484000000012,
+      "system": 0.2715309999999995,
+      "max_rss_kib": 88940,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-custom",
+      "cache": "isolated",
+      "wall": 2.4465256296098232,
+      "user": 9.564196999999979,
+      "system": 0.28112700000000057,
+      "max_rss_kib": 85628,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-custom",
+      "cache": "isolated",
+      "wall": 2.428708193823695,
+      "user": 9.546404000000024,
+      "system": 0.2554809999999996,
+      "max_rss_kib": 86648,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-all",
+      "cache": "isolated",
+      "wall": 2.487508454825729,
+      "user": 9.714523999999983,
+      "system": 0.25874099999999967,
+      "max_rss_kib": 88684,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-all",
+      "cache": "isolated",
+      "wall": 2.4804720473475754,
+      "user": 9.660022999999995,
+      "system": 0.30146600000000046,
+      "max_rss_kib": 88472,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-all",
+      "cache": "isolated",
+      "wall": 2.4779368438757956,
+      "user": 9.690748000000013,
+      "system": 0.2539530000000001,
+      "max_rss_kib": 88808,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-all",
+      "cache": "isolated",
+      "wall": 2.473677861969918,
+      "user": 9.702113999999995,
+      "system": 0.2500309999999999,
+      "max_rss_kib": 89768,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-custom",
+      "cache": "isolated",
+      "wall": 2.453025466762483,
+      "user": 9.548155000000008,
+      "system": 0.29534099999999963,
+      "max_rss_kib": 86328,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-custom",
+      "cache": "isolated",
+      "wall": 2.4537529260851443,
+      "user": 9.609111999999982,
+      "system": 0.2588170000000005,
+      "max_rss_kib": 86332,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-autoload",
+      "cache": "isolated",
+      "wall": 2.48640959803015,
+      "user": 9.692026000000027,
+      "system": 0.25041399999999925,
+      "max_rss_kib": 89380,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-autoload",
+      "cache": "isolated",
+      "wall": 2.4473748868331313,
+      "user": 9.629857999999984,
+      "system": 0.2834260000000004,
+      "max_rss_kib": 90284,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-rescue",
+      "cache": "isolated",
+      "wall": 2.4957195832394063,
+      "user": 9.775221999999985,
+      "system": 0.2573780000000001,
+      "max_rss_kib": 88104,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-rescue",
+      "cache": "isolated",
+      "wall": 2.488268453627825,
+      "user": 9.735111000000018,
+      "system": 0.31214299999999984,
+      "max_rss_kib": 88040,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "sample-no-lazy-indexes",
+      "cache": "isolated",
+      "wall": 2.4734426140785217,
+      "user": 9.676840000000027,
+      "system": 0.26861599999999974,
+      "max_rss_kib": 88680,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-no-lazy-indexes",
+      "cache": "isolated",
+      "wall": 2.4833092051558197,
+      "user": 9.711750999999992,
+      "system": 0.2928280000000001,
+      "max_rss_kib": 87976,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "isolated",
+      "wall": 2.5101854926906526,
+      "user": 9.775232999999957,
+      "system": 0.26060900000000053,
+      "max_rss_kib": 89376,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "unavailable",
+      "wall": 2.459009261801839,
+      "user": 9.655251000000021,
+      "system": 0.27481199999999895,
+      "max_rss_kib": 88748,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "shared",
+      "wall": 2.527202528901398,
+      "user": 9.742493000000024,
+      "system": 0.26735100000000145,
+      "max_rss_kib": 99500,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "shared",
+      "wall": 2.527362651191652,
+      "user": 9.773037999999985,
+      "system": 0.2900569999999991,
+      "max_rss_kib": 99944,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "unavailable",
+      "wall": 2.452018463984132,
+      "user": 9.644124999999974,
+      "system": 0.2879170000000002,
+      "max_rss_kib": 88176,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "sample-cache-control",
+      "cache": "isolated",
+      "wall": 2.463452545925975,
+      "user": 9.691067000000032,
+      "system": 0.27052600000000027,
+      "max_rss_kib": 88940,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "full-all",
+      "cache": "isolated",
+      "wall": 28.74550731992349,
+      "user": 218.52582,
+      "system": 1.1111120000000003,
+      "max_rss_kib": 139040,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "full-no-custom",
+      "cache": "isolated",
+      "wall": 28.465237907133996,
+      "user": 216.65486599999997,
+      "system": 1.0190959999999993,
+      "max_rss_kib": 136544,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "full-cache-unavailable",
+      "cache": "unavailable",
+      "wall": 28.431591047905385,
+      "user": 216.344872,
+      "system": 1.0015719999999995,
+      "max_rss_kib": 141004,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "previous",
+      "scope": "full-all",
+      "cache": "isolated",
+      "wall": 28.613084208685905,
+      "user": 217.352344,
+      "system": 1.072878,
+      "max_rss_kib": 133232,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:1000:cop",
+      "cache": "unavailable",
+      "wall": 0.03629784798249602,
+      "user": 0.03130600000000072,
+      "system": 0.006113000000000035,
+      "max_rss_kib": 16408,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:1000:syntax",
+      "cache": "unavailable",
+      "wall": 0.03114845883101225,
+      "user": 0.026214000000010174,
+      "system": 0.006056000000000061,
+      "max_rss_kib": 16280,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:1000:syntax",
+      "cache": "unavailable",
+      "wall": 0.030944403260946274,
+      "user": 0.02502899999998931,
+      "system": 0.006985000000000019,
+      "max_rss_kib": 16220,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:1000:cop",
+      "cache": "unavailable",
+      "wall": 0.03489352483302355,
+      "user": 0.02791300000001229,
+      "system": 0.007964999999999778,
+      "max_rss_kib": 16028,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:10000:cop",
+      "cache": "unavailable",
+      "wall": 0.21886258898302913,
+      "user": 0.18569199999998887,
+      "system": 0.034355000000000135,
+      "max_rss_kib": 45000,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:10000:syntax",
+      "cache": "unavailable",
+      "wall": 0.18353732815012336,
+      "user": 0.15355400000001396,
+      "system": 0.031101000000000045,
+      "max_rss_kib": 44828,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:10000:syntax",
+      "cache": "unavailable",
+      "wall": 0.18455048324540257,
+      "user": 0.16139499999999884,
+      "system": 0.02426399999999984,
+      "max_rss_kib": 44824,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "redis-first:10000:cop",
+      "cache": "unavailable",
+      "wall": 0.22132443031296134,
+      "user": 0.19318400000000224,
+      "system": 0.029173000000000116,
+      "max_rss_kib": 44952,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:500:cop",
+      "cache": "unavailable",
+      "wall": 0.02359047206118703,
+      "user": 0.017426000000000386,
+      "system": 0.00722899999999993,
+      "max_rss_kib": 14104,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:500:syntax",
+      "cache": "unavailable",
+      "wall": 0.020709735807031393,
+      "user": 0.015871000000004187,
+      "system": 0.00599100000000008,
+      "max_rss_kib": 14236,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:500:syntax",
+      "cache": "unavailable",
+      "wall": 0.020545722916722298,
+      "user": 0.015168999999986,
+      "system": 0.006397999999999904,
+      "max_rss_kib": 13976,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:500:cop",
+      "cache": "unavailable",
+      "wall": 0.02330561401322484,
+      "user": 0.01814999999999145,
+      "system": 0.0063509999999999955,
+      "max_rss_kib": 14348,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:1000:cop",
+      "cache": "unavailable",
+      "wall": 0.031002901028841734,
+      "user": 0.022321000000005142,
+      "system": 0.009697000000000067,
+      "max_rss_kib": 15444,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:1000:syntax",
+      "cache": "unavailable",
+      "wall": 0.026274210307747126,
+      "user": 0.01561399999999935,
+      "system": 0.010804000000000036,
+      "max_rss_kib": 15256,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:1000:syntax",
+      "cache": "unavailable",
+      "wall": 0.025574367959052324,
+      "user": 0.022699000000017122,
+      "system": 0.00394199999999989,
+      "max_rss_kib": 15248,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:1000:cop",
+      "cache": "unavailable",
+      "wall": 0.031115810852497816,
+      "user": 0.023880999999988717,
+      "system": 0.008301000000000114,
+      "max_rss_kib": 15380,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:2000:cop",
+      "cache": "unavailable",
+      "wall": 0.048277647234499454,
+      "user": 0.0357140000000129,
+      "system": 0.013589999999999991,
+      "max_rss_kib": 17308,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:2000:syntax",
+      "cache": "unavailable",
+      "wall": 0.03568320022895932,
+      "user": 0.02584299999998052,
+      "system": 0.010891999999999902,
+      "max_rss_kib": 17300,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:2000:syntax",
+      "cache": "unavailable",
+      "wall": 0.03723144717514515,
+      "user": 0.02743300000000204,
+      "system": 0.010842999999999936,
+      "max_rss_kib": 17368,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "constant-refs:2000:cop",
+      "cache": "unavailable",
+      "wall": 0.04834716487675905,
+      "user": 0.04325400000001878,
+      "system": 0.006177000000000099,
+      "max_rss_kib": 17436,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:1000:cop",
+      "cache": "unavailable",
+      "wall": 0.021602317690849304,
+      "user": 0.01405499999998483,
+      "system": 0.008602999999999916,
+      "max_rss_kib": 14216,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:1000:syntax",
+      "cache": "unavailable",
+      "wall": 0.020310313906520605,
+      "user": 0.013029000000017277,
+      "system": 0.00835000000000008,
+      "max_rss_kib": 13656,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:1000:syntax",
+      "cache": "unavailable",
+      "wall": 0.02034639334306121,
+      "user": 0.015312999999991916,
+      "system": 0.006082000000000143,
+      "max_rss_kib": 13656,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:1000:cop",
+      "cache": "unavailable",
+      "wall": 0.022127493284642696,
+      "user": 0.015595999999987953,
+      "system": 0.0068629999999998414,
+      "max_rss_kib": 14232,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:4000:cop",
+      "cache": "unavailable",
+      "wall": 0.04934170702472329,
+      "user": 0.04043300000000727,
+      "system": 0.00991300000000006,
+      "max_rss_kib": 17052,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:4000:syntax",
+      "cache": "unavailable",
+      "wall": 0.03644358413293958,
+      "user": 0.029065000000002783,
+      "system": 0.008292999999999884,
+      "max_rss_kib": 17432,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:4000:syntax",
+      "cache": "unavailable",
+      "wall": 0.036832776851952076,
+      "user": 0.025919999999985066,
+      "system": 0.011964000000000086,
+      "max_rss_kib": 17180,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:4000:cop",
+      "cache": "unavailable",
+      "wall": 0.04946579597890377,
+      "user": 0.03935300000000552,
+      "system": 0.011158000000000001,
+      "max_rss_kib": 17564,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:8000:cop",
+      "cache": "unavailable",
+      "wall": 0.1076130191795528,
+      "user": 0.09568699999999808,
+      "system": 0.012229999999999963,
+      "max_rss_kib": 22044,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:8000:syntax",
+      "cache": "unavailable",
+      "wall": 0.058057821821421385,
+      "user": 0.04347100000001092,
+      "system": 0.015560999999999936,
+      "max_rss_kib": 21912,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:8000:syntax",
+      "cache": "unavailable",
+      "wall": 0.0574524337425828,
+      "user": 0.04830200000000673,
+      "system": 0.01029200000000019,
+      "max_rss_kib": 21520,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "codemap:8000:cop",
+      "cache": "unavailable",
+      "wall": 0.11001559998840094,
+      "user": 0.09624299999998698,
+      "system": 0.014873999999999832,
+      "max_rss_kib": 22044,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:1:rootpair",
+      "cache": "unavailable",
+      "wall": 0.03460743697360158,
+      "user": 0.029110999999999998,
+      "system": 0.006791999999999999,
+      "max_rss_kib": 16984,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:1:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.039096759632229805,
+      "user": 0.03440499999999999,
+      "system": 0.005214,
+      "max_rss_kib": 19608,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:1:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.03825458791106939,
+      "user": 0.032600000000000004,
+      "system": 0.007146,
+      "max_rss_kib": 19548,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:1:rootpair",
+      "cache": "unavailable",
+      "wall": 0.03491960093379021,
+      "user": 0.029146999999999992,
+      "system": 0.007075000000000001,
+      "max_rss_kib": 17052,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:1:rootpair",
+      "cache": "unavailable",
+      "wall": 0.03509270027279854,
+      "user": 0.030475000000000002,
+      "system": 0.005901,
+      "max_rss_kib": 16680,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:1:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.03813977260142565,
+      "user": 0.028953000000000007,
+      "system": 0.010596000000000001,
+      "max_rss_kib": 19736,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:100:rootpair",
+      "cache": "unavailable",
+      "wall": 0.035990672186017036,
+      "user": 0.030272999999999994,
+      "system": 0.008085999999999996,
+      "max_rss_kib": 18204,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:100:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.20727819902822375,
+      "user": 0.20078599999999996,
+      "system": 0.009033,
+      "max_rss_kib": 20780,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:100:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.2069720891304314,
+      "user": 0.19939300000000004,
+      "system": 0.010017000000000005,
+      "max_rss_kib": 20524,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:100:rootpair",
+      "cache": "unavailable",
+      "wall": 0.03586927009746432,
+      "user": 0.03040100000000001,
+      "system": 0.007738999999999996,
+      "max_rss_kib": 17776,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:100:rootpair",
+      "cache": "unavailable",
+      "wall": 0.03591093514114618,
+      "user": 0.02928199999999992,
+      "system": 0.009079000000000004,
+      "max_rss_kib": 17508,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:100:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.2081184620037675,
+      "user": 0.20364500000000008,
+      "system": 0.007140999999999995,
+      "max_rss_kib": 20076,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:300:rootpair",
+      "cache": "unavailable",
+      "wall": 0.0379232419654727,
+      "user": 0.03543699999999994,
+      "system": 0.006883,
+      "max_rss_kib": 19756,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 2,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:300:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.5695241331122816,
+      "user": 0.562329,
+      "system": 0.011069999999999997,
+      "max_rss_kib": 21620,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 2,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:300:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.5762318861670792,
+      "user": 0.5667180000000003,
+      "system": 0.014064999999999994,
+      "max_rss_kib": 22204,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 2,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:300:rootpair",
+      "cache": "unavailable",
+      "wall": 0.03861187817528844,
+      "user": 0.03591199999999972,
+      "system": 0.007228000000000012,
+      "max_rss_kib": 19312,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 2,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:300:rootpair",
+      "cache": "unavailable",
+      "wall": 0.03856912814080715,
+      "user": 0.03291399999999989,
+      "system": 0.010222999999999982,
+      "max_rss_kib": 19580,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 2,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "config-fixed:300:nestedpair",
+      "cache": "unavailable",
+      "wall": 0.5694491136819124,
+      "user": 0.5567040000000003,
+      "system": 0.015091000000000021,
+      "max_rss_kib": 22208,
+      "metadata": {
+        "files_inspected": 2,
+        "offense_count": 2,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "actual-dev-spec-fixed:normal",
+      "cache": "unavailable",
+      "wall": 4.090941799804568,
+      "user": 25.45252,
+      "system": 0.337344,
+      "max_rss_kib": 72972,
+      "metadata": {
+        "files_inspected": 17,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "actual-dev-spec-fixed:explicit-root-excepts",
+      "cache": "unavailable",
+      "wall": 0.9893842260353267,
+      "user": 1.0107040000000005,
+      "system": 0.24315199999999998,
+      "max_rss_kib": 54344,
+      "metadata": {
+        "files_inspected": 17,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "actual-dev-spec-fixed:explicit-root-excepts",
+      "cache": "unavailable",
+      "wall": 0.9919080729596317,
+      "user": 1.021689000000002,
+      "system": 0.223885,
+      "max_rss_kib": 54676,
+      "metadata": {
+        "files_inspected": 17,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "actual-dev-spec-fixed:normal",
+      "cache": "unavailable",
+      "wall": 3.9750799341127276,
+      "user": 24.883262,
+      "system": 0.3293410000000001,
+      "max_rss_kib": 73216,
+      "metadata": {
+        "files_inspected": 17,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "actual-dev-spec-fixed:normal",
+      "cache": "unavailable",
+      "wall": 4.079973367974162,
+      "user": 25.368216000000004,
+      "system": 0.3404639999999999,
+      "max_rss_kib": 72780,
+      "metadata": {
+        "files_inspected": 17,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "actual-dev-spec-fixed:explicit-root-excepts",
+      "cache": "unavailable",
+      "wall": 0.9867934277281165,
+      "user": 1.0257939999999905,
+      "system": 0.23199100000000006,
+      "max_rss_kib": 54608,
+      "metadata": {
+        "files_inspected": 17,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "directive-control:normal",
+      "cache": "unavailable",
+      "wall": 0.9292890620417893,
+      "user": 1.3114780000000081,
+      "system": 0.20750500000000005,
+      "max_rss_kib": 41900,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "directive-control:ignore",
+      "cache": "unavailable",
+      "wall": 0.9160522259771824,
+      "user": 1.299114000000003,
+      "system": 0.19347199999999987,
+      "max_rss_kib": 39984,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "directive-control:normal",
+      "cache": "unavailable",
+      "wall": 0.9393982440233231,
+      "user": 1.3243989999999997,
+      "system": 0.20265500000000003,
+      "max_rss_kib": 42160,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "directive-control:ignore",
+      "cache": "unavailable",
+      "wall": 0.9196276599541306,
+      "user": 1.2844939999999951,
+      "system": 0.21280400000000022,
+      "max_rss_kib": 42420,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "directive-control:normal",
+      "cache": "unavailable",
+      "wall": 0.926407712046057,
+      "user": 1.3204250000000002,
+      "system": 0.20098199999999977,
+      "max_rss_kib": 42460,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "current",
+      "scope": "directive-control:ignore",
+      "cache": "unavailable",
+      "wall": 0.9357428117655218,
+      "user": 1.3038549999999987,
+      "system": 0.20443599999999984,
+      "max_rss_kib": 39976,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    }
+  ]
+}
