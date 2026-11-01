@@ -1,20 +1,20 @@
 //! Lint/Syntax first-pass gate (RuboCop: parser failures → Syntax only).
 
 use crate::cli::AutocorrectMode;
-use crate::config::ResolvedConfig;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
+use crate::linter::prepared::PreparedLint;
 use crate::parse::codemap::CodeMap;
 use crate::parse::source::SourceFile;
 
-pub(crate) type ActiveCop<'a> = (&'a dyn Cop, CopConfig, usize);
+pub(crate) type ActiveCop<'a> = (&'a dyn Cop, &'a CopConfig, usize);
 
 /// Returns true when syntax fatals should skip other cops.
 pub(crate) fn run(
     source: &SourceFile,
     tree: &tree_sitter::Tree,
-    config: &ResolvedConfig,
+    context: &PreparedLint<'_>,
     active: &[ActiveCop<'_>],
     mode: AutocorrectMode,
     diagnostics: &mut Vec<Diagnostic>,
@@ -34,7 +34,7 @@ pub(crate) fn run(
             diagnostics,
             corrections,
         ),
-        None => probe(source, tree, &code_map, config),
+        None => probe(source, tree, &code_map, context),
     }
 }
 
@@ -60,17 +60,10 @@ fn probe(
     source: &SourceFile,
     tree: &tree_sitter::Tree,
     code_map: &CodeMap,
-    config: &ResolvedConfig,
+    context: &PreparedLint<'_>,
 ) -> bool {
     let mut out = Vec::new();
-    crate::cop::lint::Syntax.check_source(
-        source,
-        tree,
-        code_map,
-        &config.cop_config("Lint/Syntax"),
-        &mut out,
-        None,
-    );
+    crate::cop::lint::Syntax.check_source(source, tree, code_map, context.syntax(), &mut out, None);
     !out.is_empty()
 }
 

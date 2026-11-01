@@ -11,14 +11,15 @@ use rayon::prelude::*;
 
 use crate::cache::{Cache, CacheSettings};
 use crate::cli::AutocorrectMode;
-use crate::config::{CopFilterSet, ResolvedConfig};
+use crate::config::ResolvedConfig;
 use crate::cop::registry::CopRegistry;
 use crate::diagnostic::Diagnostic;
 use crate::fs::discover_emitting;
 use crate::parse::source::SourceFile;
 
 use super::RunPrep;
-use super::engine::lint_source;
+use super::engine::lint_source_prepared;
+use super::prepared::PreparedLint;
 
 pub(super) struct LintBatch {
     pub diagnostics: Vec<Diagnostic>,
@@ -238,19 +239,7 @@ fn lint_path_job(
         return Ok(());
     }
     let source = SourceFile::from_path(path)?.with_operation(prep.operation.clone());
-    let mut diags = lint_file(
-        &source,
-        config,
-        registry,
-        &prep.filters,
-        prep.only.as_deref(),
-        &prep.except,
-        prep.mode,
-        prep.ignore_disable,
-        prep.cache.as_ref(),
-        prep.cache_read,
-        settings,
-    )?;
+    let mut diags = lint_file(&source, config, registry, prep, settings)?;
     bump_fail_fast(
         prep,
         counted_offenses(&diags, prep.fail_fast_uncorrected_only),
@@ -265,44 +254,40 @@ fn lint_file(
     source: &SourceFile,
     config: &ResolvedConfig,
     registry: &CopRegistry,
-    filters: &CopFilterSet,
-    only: Option<&[String]>,
-    except: &[String],
-    mode: AutocorrectMode,
-    ignore_disable: bool,
-    cache: Option<&Cache>,
-    cache_read: bool,
+    prep: &RunPrep,
     settings: CacheSettings<'_>,
 ) -> Result<Vec<Diagnostic>> {
     let path = &source.path;
-    if let Some(hit) = cache_get(cache, cache_read, path, source, settings) {
+    if let Some(hit) = cache_get(prep.cache.as_ref(), prep.cache_read, path, source, settings) {
         return Ok(hit);
     }
-    let diags = if mode == AutocorrectMode::Off {
-        lint_source(
+    let context = PreparedLint {
+        config,
+        registry,
+        filters: &prep.filters,
+        configs: &prep.prepared,
+    };
+    let diags = if prep.mode == AutocorrectMode::Off {
+        lint_source_prepared(
             source,
-            config,
-            registry,
-            filters,
-            only,
-            except,
-            mode,
-            ignore_disable,
+            &context,
+            prep.only.as_deref(),
+            &prep.except,
+            prep.mode,
+            prep.ignore_disable,
         )?
         .diagnostics
     } else {
         super::engine::lint_file_autocorrect(
             source,
-            config,
-            registry,
-            filters,
-            only,
-            except,
-            mode,
-            ignore_disable,
+            &context,
+            prep.only.as_deref(),
+            &prep.except,
+            prep.mode,
+            prep.ignore_disable,
         )?
     };
-    cache_put(cache, path, source, settings, &diags);
+    cache_put(prep.cache.as_ref(), path, source, settings, &diags);
     Ok(diags)
 }
 

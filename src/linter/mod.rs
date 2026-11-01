@@ -2,6 +2,7 @@
 
 mod engine;
 mod parallel;
+mod prepared;
 
 use std::path::PathBuf;
 
@@ -26,6 +27,7 @@ pub struct LintResult {
 
 pub(crate) struct RunPrep {
     pub(crate) filters: CopFilterSet,
+    pub(crate) prepared: prepared::PreparedConfigs,
     pub(crate) operation: std::sync::Arc<crate::parse::source::LintOperation>,
     pub(crate) only: Option<Vec<String>>,
     pub(crate) except: Vec<String>,
@@ -88,6 +90,7 @@ fn prepare_run(args: &Args, config: &ResolvedConfig, registry: &CopRegistry) -> 
     let mode = args.autocorrect_mode();
     RunPrep {
         operation: std::sync::Arc::default(),
+        prepared: prepared::PreparedConfigs::new(config, registry),
         cache: open_result_cache(mode),
         cache_read: args.cache_read_enabled(),
         config_fp: config.cache_fingerprint(),

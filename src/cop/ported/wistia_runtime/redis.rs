@@ -23,6 +23,13 @@ fn expiration(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn redis_block(c: &Context<'_>, n: Node<'_>) -> bool {
+    if !c
+        .source
+        .cached(0, || transactions::Marker::new(c.source))
+        .present()
+    {
+        return false;
+    }
     c.source
         .cached(0, || transactions::Transactions::new(c, n))
         .contains(n)

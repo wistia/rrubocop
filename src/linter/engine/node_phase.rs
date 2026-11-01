@@ -32,7 +32,7 @@ pub(super) fn run_node_phase(
 fn ast_walker<'a>(ast: &[&'a ActiveCop<'a>], mode: AutocorrectMode) -> BatchedWalker<'a> {
     BatchedWalker::with_corr_ok(
         ast.iter().map(|(c, _, _)| *c).collect(),
-        ast.iter().map(|(_, c, _)| c).collect(),
+        ast.iter().map(|(_, c, _)| *c).collect(),
         ast.iter()
             .map(|(c, cfg, _)| allow_corr(mode, *c, cfg))
             .collect(),

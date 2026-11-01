@@ -18,6 +18,8 @@ use crate::parse;
 use crate::parse::directives;
 use crate::parse::source::SourceFile;
 
+use super::prepared::{PreparedConfigs, PreparedLint};
+
 type ActiveCop<'a> = syntax_gate::ActiveCop<'a>;
 
 pub struct LintOutput {
@@ -37,7 +39,26 @@ pub fn lint_source(
     mode: AutocorrectMode,
     ignore_disable: bool,
 ) -> Result<LintOutput> {
-    let active = select_active(source, config, registry, filters, only, except);
+    let configs = PreparedConfigs::new(config, registry);
+    let context = PreparedLint {
+        config,
+        registry,
+        filters,
+        configs: &configs,
+    };
+    lint_source_prepared(source, &context, only, except, mode, ignore_disable)
+}
+
+pub(super) fn lint_source_prepared(
+    source: &SourceFile,
+    context: &PreparedLint<'_>,
+    only: Option<&[String]>,
+    except: &[String],
+    mode: AutocorrectMode,
+    ignore_disable: bool,
+) -> Result<LintOutput> {
+    let registry = context.registry;
+    let active = select_active(source, *context, only, except);
     if active.is_empty() {
         return Ok(LintOutput {
             diagnostics: Vec::new(),
@@ -50,7 +71,7 @@ pub fn lint_source(
     run_file_cops(
         source,
         &tree,
-        config,
+        context,
         registry,
         &active,
         mode,
@@ -59,7 +80,7 @@ pub fn lint_source(
     )?;
     apply_directives(
         source,
-        config,
+        context,
         registry,
         &active,
         mode,
@@ -90,14 +111,22 @@ fn finalize_corrections(
 fn run_file_cops(
     source: &SourceFile,
     tree: &tree_sitter::Tree,
-    config: &ResolvedConfig,
+    context: &PreparedLint<'_>,
     registry: &CopRegistry,
     active: &[ActiveCop<'_>],
     mode: AutocorrectMode,
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<Vec<Correction>>,
 ) -> Result<()> {
-    if syntax_gate::run(source, tree, config, active, mode, diagnostics, corrections) {
+    if syntax_gate::run(
+        source,
+        tree,
+        context,
+        active,
+        mode,
+        diagnostics,
+        corrections,
+    ) {
         return Ok(());
     }
     run_non_syntax(
@@ -114,15 +143,14 @@ fn run_file_cops(
 
 fn run_redundant_disable_audit(
     source: &SourceFile,
-    config: &ResolvedConfig,
+    context: &PreparedLint<'_>,
     pre_filter: &[Diagnostic],
     active: &[ActiveCop<'_>],
     mode: AutocorrectMode,
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<Vec<Correction>>,
 ) {
-    let active_refs: Vec<(&dyn Cop, &CopConfig)> =
-        active.iter().map(|(c, cfg, _)| (*c, cfg)).collect();
+    let active_refs = audit_configs(active);
     for (cop, cfg, idx) in active {
         if cop.name() != "Lint/RedundantCopDisableDirective" {
             continue;
@@ -140,7 +168,7 @@ fn run_redundant_disable_audit(
             source,
             diagnostics,
             before,
-            &config.cop_config(cop.name()),
+            context.root_config(*idx),
             &mut corr_buf,
             *idx,
             corrections,
@@ -149,9 +177,16 @@ fn run_redundant_disable_audit(
     }
 }
 
+fn audit_configs<'a>(active: &[ActiveCop<'a>]) -> Vec<(&'a dyn Cop, &'a CopConfig)> {
+    active
+        .iter()
+        .map(|(cop, config, _)| (*cop, *config))
+        .collect()
+}
+
 fn apply_directives(
     source: &SourceFile,
-    config: &ResolvedConfig,
+    context: &PreparedLint<'_>,
     registry: &CopRegistry,
     active: &[ActiveCop<'_>],
     mode: AutocorrectMode,
@@ -164,7 +199,7 @@ fn apply_directives(
     if !ignore_disable {
         run_redundant_disable_audit(
             source,
-            config,
+            context,
             &pre_filter,
             active,
             mode,
@@ -176,7 +211,7 @@ fn apply_directives(
     if let Some(edits) = corrections.as_mut() {
         crate::correction::filter_disabled(source, edits, ignore_disable);
     }
-    offense::finalize_offenses(source, config, registry, diagnostics);
+    offense::finalize_offenses(source, context.config, registry, diagnostics);
 }
 
 fn run_non_syntax(
@@ -194,7 +229,7 @@ fn run_non_syntax(
         &active
             .iter()
             .filter(|(c, _, _)| c.name() != "Lint/Syntax")
-            .map(|(c, cfg, idx)| (*c, cfg.clone(), *idx))
+            .map(|(c, cfg, idx)| (*c, *cfg, *idx))
             .collect::<Vec<_>>(),
         registry,
         mode,
@@ -234,33 +269,23 @@ fn filter_directives(source: &SourceFile, ignore_disable: bool, diagnostics: &mu
 }
 
 fn select_active<'a>(
-    source: &SourceFile,
-    config: &ResolvedConfig,
-    registry: &'a CopRegistry,
-    filters: &CopFilterSet,
+    source: &'a SourceFile,
+    context: PreparedLint<'a>,
     only: Option<&[String]>,
     except: &[String],
 ) -> Vec<ActiveCop<'a>> {
     let path = source.path.as_path();
-    registry
+    let configs = context.for_file(path);
+    context
+        .registry
         .cops()
         .iter()
         .enumerate()
-        .filter(|(_, cop)| {
-            cop_wanted(cop.name(), path, filters, only, except)
-                && !config.disabled_by_dir_override(cop.name(), path)
+        .filter(|(index, cop)| {
+            cop_wanted(cop.name(), path, context.filters, only, except) && !configs.disabled(*index)
         })
-        .map(|(idx, cop)| active_cop_entry(cop.as_ref(), config, path, idx))
+        .map(|(index, cop)| (cop.as_ref(), configs.get(index), index))
         .collect()
-}
-
-fn active_cop_entry<'a>(
-    cop: &'a dyn Cop,
-    config: &ResolvedConfig,
-    path: &std::path::Path,
-    idx: usize,
-) -> ActiveCop<'a> {
-    (cop, config.cop_config_for_file(cop.name(), path), idx)
 }
 
 fn cop_wanted(

@@ -71,12 +71,17 @@ fn invalid_candidate_never_replaces_the_original_file() {
     let config = ResolvedConfig::empty();
     let registry = registry();
     let filters = CopFilterSet::build(&config, &registry);
+    let configs = PreparedConfigs::new(&config, &registry);
+    let prepared = PreparedLint {
+        config: &config,
+        registry: &registry,
+        filters: &filters,
+        configs: &configs,
+    };
     assert!(
         lint_file_autocorrect(
             &SourceFile::from_path(&file).unwrap(),
-            &config,
-            &registry,
-            &filters,
+            &prepared,
             None,
             &[],
             AutocorrectMode::Safe,

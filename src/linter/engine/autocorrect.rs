@@ -13,15 +13,14 @@ use crate::correction::CorrectionSet;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 
-use super::{LintOutput, lint_source};
+use super::{LintOutput, lint_source_prepared};
+use crate::linter::prepared::{PreparedConfigs, PreparedLint};
 
 pub(crate) const MAX_ITERATIONS: usize = 200;
 
 struct LintCtx<'a> {
     path: &'a Path,
-    config: &'a ResolvedConfig,
-    registry: &'a CopRegistry,
-    filters: &'a CopFilterSet,
+    prepared: PreparedLint<'a>,
     only: Option<&'a [String]>,
     except: &'a [String],
     mode: AutocorrectMode,
@@ -31,12 +30,10 @@ struct LintCtx<'a> {
 
 impl<'a> LintCtx<'a> {
     fn lint_bytes(&self, bytes: &[u8]) -> Result<LintOutput> {
-        lint_source(
+        lint_source_prepared(
             &SourceFile::from_bytes(self.path, bytes.to_vec())
                 .with_operation(self.operation.clone()),
-            self.config,
-            self.registry,
-            self.filters,
+            &self.prepared,
             self.only,
             self.except,
             self.mode,
@@ -47,9 +44,7 @@ impl<'a> LintCtx<'a> {
 
 pub(crate) fn lint_file_autocorrect(
     source: &SourceFile,
-    config: &ResolvedConfig,
-    registry: &CopRegistry,
-    filters: &CopFilterSet,
+    prepared: &PreparedLint<'_>,
     only: Option<&[String]>,
     except: &[String],
     mode: AutocorrectMode,
@@ -58,9 +53,7 @@ pub(crate) fn lint_file_autocorrect(
     let mut bytes = std::fs::read(&source.path)?;
     let ctx = LintCtx {
         path: &source.path,
-        config,
-        registry,
-        filters,
+        prepared: *prepared,
         only,
         except,
         mode,
@@ -86,11 +79,15 @@ pub(crate) fn lint_bytes_autocorrect(
     ignore_disable: bool,
 ) -> Result<Vec<Diagnostic>> {
     let operation = std::sync::Arc::default();
+    let configs = PreparedConfigs::new(config, registry);
     let ctx = LintCtx {
         path,
-        config,
-        registry,
-        filters,
+        prepared: PreparedLint {
+            config,
+            registry,
+            filters,
+            configs: &configs,
+        },
         only,
         except,
         mode,

@@ -11,7 +11,7 @@ pub(super) fn validate(ctx: &LintCtx<'_>, bytes: &[u8]) -> Result<()> {
         &source,
         &tree,
         &CodeMap::default(),
-        &ctx.config.cop_config("Lint/Syntax"),
+        ctx.prepared.syntax(),
         &mut diagnostics,
         None,
     );

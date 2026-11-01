@@ -3,6 +3,8 @@
 use std::collections::HashMap;
 
 use tree_sitter::Node;
+mod parents;
+use parents::Parents;
 
 use crate::cop::shared::call_method_name;
 use crate::cop::{Cop, CopConfig};
@@ -26,6 +28,7 @@ pub struct BatchedWalker<'a> {
     /// Call-like cops gated by method name.
     call_by_name: HashMap<&'static [u8], Vec<usize>>,
     identifier_by_name: HashMap<&'static [u8], Vec<usize>>,
+    parents: Parents,
 }
 
 impl<'a> BatchedWalker<'a> {
@@ -45,6 +48,7 @@ impl<'a> BatchedWalker<'a> {
         let mut call_all = Vec::new();
         let mut call_by_name: HashMap<&'static [u8], Vec<usize>> = HashMap::new();
         let mut identifier_by_name = HashMap::new();
+        let mut parents = Parents::default();
         for (i, cop) in cops.iter().enumerate() {
             register_cop(
                 i,
@@ -53,9 +57,11 @@ impl<'a> BatchedWalker<'a> {
                 &mut call_all,
                 &mut call_by_name,
                 &mut identifier_by_name,
+                &mut parents,
             );
         }
         merge_identifier_cops(&kinds, &mut identifier_by_name);
+        parents.merge(&kinds);
         Self {
             cops,
             configs,
@@ -64,6 +70,7 @@ impl<'a> BatchedWalker<'a> {
             call_all,
             call_by_name,
             identifier_by_name,
+            parents,
         }
     }
 
@@ -74,24 +81,31 @@ impl<'a> BatchedWalker<'a> {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        self.visit(source, root, diagnostics, &mut corrections);
+        self.visit(
+            source,
+            root,
+            root.parent().map(|n| n.kind()),
+            diagnostics,
+            &mut corrections,
+        );
     }
 
     fn visit(
         &self,
         source: &SourceFile,
         node: Node<'_>,
+        parent: Option<&str>,
         diagnostics: &mut Vec<Diagnostic>,
         corrections: &mut Option<&mut Vec<Correction>>,
     ) {
         // Dispatch only on named nodes. Anonymous keyword/punct tokens share kinds
         // like `rescue`/`ensure`/`else` with real clauses and would false-positive.
         if node.is_named() {
-            self.dispatch(source, node, diagnostics, corrections);
+            self.dispatch(source, node, parent, diagnostics, corrections);
         }
         let mut cursor = node.walk();
         for child in node.children(&mut cursor) {
-            self.visit(source, child, diagnostics, corrections);
+            self.visit(source, child, Some(node.kind()), diagnostics, corrections);
         }
     }
 
@@ -99,6 +113,7 @@ impl<'a> BatchedWalker<'a> {
         &self,
         source: &SourceFile,
         node: Node<'_>,
+        parent: Option<&str>,
         diagnostics: &mut Vec<Diagnostic>,
         corrections: &mut Option<&mut Vec<Correction>>,
     ) {
@@ -107,21 +122,28 @@ impl<'a> BatchedWalker<'a> {
             self.dispatch_call(source, node, diagnostics, corrections);
             return;
         }
-        if let Some(idxs) = self.node_cops(source, node) {
+        if let Some(idxs) = self.node_cops(source, node, parent) {
             for &i in idxs {
                 self.run_cop(i, source, node, diagnostics, corrections);
             }
         }
     }
 
-    fn node_cops(&self, source: &SourceFile, node: Node<'_>) -> Option<&Vec<usize>> {
+    fn node_cops(
+        &self,
+        source: &SourceFile,
+        node: Node<'_>,
+        parent: Option<&str>,
+    ) -> Option<&Vec<usize>> {
         if node.kind() == "identifier" {
             let name = &source.as_bytes()[node.byte_range()];
             if let Some(indices) = self.identifier_by_name.get(name) {
                 return Some(indices);
             }
         }
-        self.kinds.get(node.kind())
+        self.parents
+            .get(node.kind(), parent)
+            .or_else(|| self.kinds.get(node.kind()))
     }
 
     fn dispatch_call(
@@ -176,6 +198,7 @@ fn register_cop(
     call_all: &mut Vec<usize>,
     call_by_name: &mut HashMap<&'static [u8], Vec<usize>>,
     identifier_by_name: &mut HashMap<&'static [u8], Vec<usize>>,
+    parents: &mut Parents,
 ) {
     // Empty interested_node_kinds => not an AST cop (skipped).
     let mut saw_call = false;
@@ -193,9 +216,22 @@ fn register_cop(
                     call_by_name.entry(n).or_default().push(i);
                 }
             }
-        } else if !register_identifier(i, cop, k, identifier_by_name) {
-            kinds.entry(k).or_default().push(i);
+        } else {
+            register_node(i, cop, k, kinds, identifier_by_name, parents);
         }
+    }
+}
+
+fn register_node(
+    i: usize,
+    cop: &dyn Cop,
+    kind: &'static str,
+    kinds: &mut HashMap<&'static str, Vec<usize>>,
+    identifiers: &mut HashMap<&'static [u8], Vec<usize>>,
+    parents: &mut Parents,
+) {
+    if !register_identifier(i, cop, kind, identifiers) && !parents.register(i, cop, kind) {
+        kinds.entry(kind).or_default().push(i);
     }
 }
 

@@ -2,6 +2,20 @@ use super::*;
 use std::collections::{HashMap, HashSet};
 
 type Key = (usize, usize, &'static str);
+pub(super) struct Marker(bool);
+impl Marker {
+    pub(super) fn new(source: &crate::parse::source::SourceFile) -> Self {
+        let bytes = source.as_bytes();
+        Self(
+            [b"multi".as_slice(), b"pipelined".as_slice()]
+                .iter()
+                .any(|marker| bytes.windows(marker.len()).any(|part| part == *marker)),
+        )
+    }
+    pub(super) fn present(&self) -> bool {
+        self.0
+    }
+}
 pub(super) struct Transactions(HashSet<Key>);
 impl Transactions {
     pub(super) fn new(c: &Context<'_>, n: Node<'_>) -> Self {
@@ -55,3 +69,6 @@ impl<'n> Builder<'_, '_> {
         }
     }
 }
+
+#[cfg(test)]
+mod tests;

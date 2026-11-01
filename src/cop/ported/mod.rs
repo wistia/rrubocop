@@ -80,6 +80,15 @@ impl Cop for Rule {
             _ => &[],
         }
     }
+    fn interested_parent_node_kinds(&self, kind: &str) -> &'static [&'static str] {
+        if self.name == "Cops/NoUndiscoverableAutoLoadedConstants"
+            && matches!(kind, "constant" | "scope_resolution")
+        {
+            &["left_assignment_list", "destructured_left_assignment"]
+        } else {
+            &[]
+        }
+    }
     fn check_node(
         &self,
         source: &SourceFile,

@@ -214,6 +214,12 @@ pub trait Cop: Send + Sync {
         &[]
     }
 
+    /// Immediate parent kinds that gate ordinary node dispatch.
+    /// Call and identifier kinds use their separate name gates.
+    fn interested_parent_node_kinds(&self, _kind: &str) -> &'static [&'static str] {
+        &[]
+    }
+
     #[allow(unused_variables)]
     fn check_node(
         &self,

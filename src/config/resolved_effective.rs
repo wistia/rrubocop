@@ -13,20 +13,20 @@ use super::types::{ConfigLayer, NewCopsPolicy};
 impl ResolvedConfig {
     /// True when a nested `.rubocop.yml` disables this cop for `file_path`.
     pub fn disabled_by_dir_override(&self, name: &str, file_path: &Path) -> bool {
-        let Some(layer) = self.find_dir_layer_for_file(file_path) else {
-            return false;
-        };
-        if layer
+        self.dir_layer_index_for_file(file_path)
+            .is_some_and(|index| self.dir_override_disables(index, name))
+    }
+
+    pub(crate) fn dir_override_disables(&self, index: usize, name: &str) -> bool {
+        let layer = &self.dir_overrides[index].1;
+        layer
             .cop_configs
             .get(name)
             .is_some_and(|c| c.enabled == EnabledState::False)
-        {
-            return true;
-        }
-        layer
-            .department_configs
-            .get(name.split('/').next().unwrap_or(""))
-            .is_some_and(|c| c.enabled == EnabledState::False)
+            || layer
+                .department_configs
+                .get(name.split('/').next().unwrap_or(""))
+                .is_some_and(|c| c.enabled == EnabledState::False)
     }
 
     /// Build the effective config for a file under a nested `.rubocop.yml`.
@@ -43,22 +43,27 @@ impl ResolvedConfig {
 
     /// Find the nearest directory-specific config layer, if any.
     fn find_dir_layer_for_file(&self, file_path: &Path) -> Option<&ConfigLayer> {
+        self.dir_layer_index_for_file(file_path)
+            .map(|index| &self.dir_overrides[index].1)
+    }
+
+    pub(crate) fn dir_layer_index_for_file(&self, file_path: &Path) -> Option<usize> {
         if self.dir_overrides.is_empty() {
             return None;
         }
-        for (dir, layer) in &self.dir_overrides {
+        for (index, (dir, _)) in self.dir_overrides.iter().enumerate() {
             if path_under_dir(file_path, dir) {
-                return Some(layer);
+                return Some(index);
             }
         }
         self.find_dir_layer_relativized(file_path)
     }
 
-    fn find_dir_layer_relativized(&self, file_path: &Path) -> Option<&ConfigLayer> {
-        if let Some(layer) =
+    fn find_dir_layer_relativized(&self, file_path: &Path) -> Option<usize> {
+        if let Some(index) =
             self.find_dir_layer_relativized_under(file_path, self.scan_root.as_deref())
         {
-            return Some(layer);
+            return Some(index);
         }
         if self.scan_root.as_deref() == self.config_dir.as_deref() {
             return None;
@@ -70,13 +75,13 @@ impl ResolvedConfig {
         &self,
         file_path: &Path,
         base: Option<&Path>,
-    ) -> Option<&ConfigLayer> {
+    ) -> Option<usize> {
         let base = base?;
         let rel_path = file_path.strip_prefix(base).unwrap_or(file_path);
-        for (dir, layer) in &self.dir_overrides {
+        for (index, (dir, _)) in self.dir_overrides.iter().enumerate() {
             let rel_dir = dir.strip_prefix(base).unwrap_or(dir.as_path());
             if rel_path.starts_with(rel_dir) || path_under_dir(rel_path, rel_dir) {
-                return Some(layer);
+                return Some(index);
             }
         }
         None
