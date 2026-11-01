@@ -61,8 +61,12 @@ pub struct Diagnostic {
     #[serde(default)]
     pub correctable: bool,
     /// Source line text for clang-style output (no trailing newline).
-    #[serde(default, skip_serializing_if = "String::is_empty")]
-    pub source_line: String,
+    #[serde(
+        default,
+        with = "source_line",
+        skip_serializing_if = "source_line::is_empty"
+    )]
+    pub source_line: std::sync::Arc<str>,
     /// Highlight width in display columns (default 1 → single `^`).
     #[serde(default = "default_highlight_len")]
     pub highlight_length: usize,
@@ -232,7 +236,7 @@ mod tests {
                 .into(),
             corrected: false,
             correctable: false,
-            source_line: String::new(),
+            source_line: Default::default(),
             highlight_length: 1,
         };
         let s = d.to_string();
@@ -281,3 +285,5 @@ mod tests {
         assert_eq!(without, "msg");
     }
 }
+
+mod source_line;

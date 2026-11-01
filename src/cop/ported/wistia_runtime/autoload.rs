@@ -11,8 +11,11 @@ pub(super) fn require_autoload(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(argument) = require_argument(n) else {
         return vec![];
     };
+    let Some(required) = c.static_string(argument) else {
+        return vec![];
+    };
     let paths = c.source.cached(0, || project_paths(c.source));
-    if paths.contains(c.value(argument)) {
+    if paths.contains(&required) {
         vec![Finding::new(
             n,
             "Calling `require` on an autoloaded path breaks autoloading",

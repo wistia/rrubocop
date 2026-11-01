@@ -24,15 +24,30 @@ fn protected_column(c: &Context<'_>, n: Node<'_>) -> bool {
         .into_iter()
         .filter(|a| a.kind() != "comment")
         .collect::<Vec<_>>();
-    arguments.len() == 2 && c.static_symbol(arguments[0]).as_deref() == Some("protected")
+    arguments.first().is_some_and(|argument| {
+        c.static_symbol(*argument).as_deref() == Some("protected")
+            && (arguments.len() == 2 || implicit_hash(&arguments[1..]))
+    })
 }
 
 fn protected_hash(c: &Context<'_>, n: Node<'_>) -> bool {
-    option_pairs(n).any(|pair| protected_pair(c, pair))
+    let arguments: Vec<_> = args(n)
+        .into_iter()
+        .filter(|argument| argument.kind() != "comment")
+        .collect();
+    (implicit_hash(&arguments) || arguments.len() == 1 && arguments[0].kind() == "hash")
+        && option_pairs(n).any(|pair| protected_pair(c, pair))
 }
 
 fn protected_pair(c: &Context<'_>, n: Node<'_>) -> bool {
     n.kind() == "pair"
         && n.child_by_field_name("key")
             .is_some_and(|key| c.static_symbol(key).as_deref() == Some("protected"))
+}
+
+fn implicit_hash(arguments: &[Node<'_>]) -> bool {
+    !arguments.is_empty()
+        && arguments
+            .iter()
+            .all(|argument| matches!(argument.kind(), "pair" | "hash_splat_argument"))
 }

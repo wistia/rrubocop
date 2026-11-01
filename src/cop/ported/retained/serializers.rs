@@ -32,9 +32,9 @@ pub(super) fn plural(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn matching_method(c: &Context<'_>, n: Node<'_>, attribute: Node<'_>) -> Option<()> {
-    (c.symbol(attribute)
-        && super::super::custom_index::index(c, n).method(c, n, c.value(attribute), true))
-    .then_some(())
+    c.static_symbol(attribute)
+        .filter(|name| super::super::custom_index::index(c, n).method(c, n, name, true))
+        .map(|_| ())
 }
 
 #[cfg(test)]

@@ -11,10 +11,11 @@ use redb::ReadableTableMetadata;
 use redb::{Database, Durability, ReadableDatabase, ReadableTable, TableDefinition};
 
 use crate::diagnostic::Diagnostic;
+mod codec;
 
 /// Bump whenever cops or stored diagnostic shape change so stale entries
 /// are never served.
-pub(crate) const RULES_REV: u32 = 31;
+pub(crate) const RULES_REV: u32 = 32;
 
 pub(crate) const MAX_ENTRIES: usize = 20_000;
 const ENTRIES: TableDefinition<&str, &[u8]> = TableDefinition::new("entries");
@@ -32,16 +33,11 @@ impl EntryStore {
         let rtx = self.db.begin_read().ok()?;
         let table = rtx.open_table(ENTRIES).ok()?;
         let value = table.get(key).ok()??;
-        let f: CachedFile = serde_json::from_slice(value.value()).ok()?;
-        Some(f.diagnostics)
+        codec::decode(value.value())
     }
 
     pub(crate) fn store(&self, key: &str, diagnostics: &[Diagnostic]) {
-        let payload = CachedFileRef {
-            ts: now_ms(),
-            diagnostics,
-        };
-        let Ok(bytes) = serde_json::to_vec(&payload) else {
+        let Ok(bytes) = codec::encode(now_ms(), diagnostics) else {
             return;
         };
         let Some(tx) = self.write_tx() else {
@@ -149,25 +145,10 @@ impl EntryStore {
     }
 }
 
-#[derive(serde::Deserialize)]
-struct CachedFile {
-    #[allow(dead_code)]
-    ts: u64,
-    diagnostics: Vec<Diagnostic>,
-}
-
-#[derive(serde::Serialize)]
-struct CachedFileRef<'a> {
-    ts: u64,
-    diagnostics: &'a [Diagnostic],
-}
-
 pub type CachedDiags = Vec<Diagnostic>;
 
 fn parse_age(key: &str, payload: &[u8]) -> Option<(u64, String)> {
-    serde_json::from_slice::<CachedFile>(payload)
-        .ok()
-        .map(|f| (f.ts, key.to_string()))
+    codec::timestamp(payload).map(|ts| (ts, key.to_string()))
 }
 
 fn now_ms() -> u64 {

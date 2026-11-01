@@ -6,7 +6,7 @@ pub(super) fn capitalized(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     }
     let Some(value) = c
-        .symbol_pair_value(n, "key")
+        .static_symbol_pair_value(n, "key")
         .or_else(|| args(n).first().copied())
     else {
         return vec![];
@@ -21,18 +21,23 @@ pub(super) fn capitalized(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn capitalized_literal(c: &Context<'_>, n: Node<'_>) -> bool {
-    (c.symbol(n) || n.kind() == "string") && {
-        let value = c.value(n);
+    if n.kind() == "chained_string" {
+        return false;
+    }
+    c.static_value(n).is_some_and(|value| {
         if value.is_ascii() {
             value.bytes().any(|b| b.is_ascii_uppercase())
         } else {
             value.to_lowercase() != value
         }
-    }
+    })
 }
 
 pub(super) fn key_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    if c.method(n) == "attribute" && block(n).is_some() && c.symbol_pair_value(n, "key").is_some() {
+    if c.method(n) == "attribute"
+        && block(n).is_some()
+        && c.static_symbol_pair_value(n, "key").is_some()
+    {
         vec![Finding::new(
             n,
             "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
@@ -59,7 +64,8 @@ pub(super) fn method_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn matching_method(c: &Context<'_>, n: Node<'_>, attribute: Node<'_>) -> bool {
-    super::super::custom_index::index(c, n).method(c, n, c.value(attribute), false)
+    c.static_symbol(attribute)
+        .is_some_and(|name| super::super::custom_index::index(c, n).method(c, n, &name, false))
 }
 
 fn attribute_block(c: &Context<'_>, n: Node<'_>) -> bool {

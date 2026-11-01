@@ -23,6 +23,14 @@ pub(super) fn superclass<'a>(c: &'a Context<'_>, n: Node<'_>) -> &'a str {
         .map(|s| c.text(s).trim_start_matches("::"))
         .unwrap_or("")
 }
+pub(super) fn constant_superclass<'a>(
+    c: &Context<'a>,
+    n: Node<'_>,
+) -> Option<std::borrow::Cow<'a, str>> {
+    n.child_by_field_name("superclass")
+        .and_then(|s| s.named_child(0))
+        .and_then(|s| c.constant_name(s))
+}
 pub(super) fn policy_scope(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !is_policy(c, n) {
         return vec![];

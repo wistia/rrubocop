@@ -58,10 +58,28 @@ impl<'a> Context<'a> {
     pub fn static_symbol(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
         symbols::value(self, node)
     }
-    pub fn symbol_pair_value<'n>(&self, node: Node<'n>, key: &str) -> Option<Node<'n>> {
+    pub fn constant_name(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
+        constants::name(self, node)
+    }
+    pub fn static_string(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
+        symbols::string(self, node)
+    }
+    pub fn static_value(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
+        self.static_symbol(node)
+            .or_else(|| self.static_string(node))
+    }
+    pub fn static_pair_value<'n>(&self, node: Node<'n>, key: &str) -> Option<Node<'n>> {
         option_pairs(node).find_map(|pair| {
             let name = field(pair, "key")?;
-            (self.symbol(name) && self.value(name) == key)
+            (self.static_value(name).as_deref() == Some(key))
+                .then(|| field(pair, "value"))
+                .flatten()
+        })
+    }
+    pub fn static_symbol_pair_value<'n>(&self, node: Node<'n>, key: &str) -> Option<Node<'n>> {
+        option_pairs(node).find_map(|pair| {
+            let name = field(pair, "key")?;
+            (self.static_symbol(name).as_deref() == Some(key))
                 .then(|| field(pair, "value"))
                 .flatten()
         })
@@ -182,3 +200,8 @@ mod walk;
 pub(super) use walk::{ancestors, descendants};
 
 mod symbols;
+
+mod constants;
+
+#[cfg(test)]
+mod literal_tests;

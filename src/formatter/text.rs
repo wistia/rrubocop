@@ -144,7 +144,7 @@ mod tests {
             message: "msg".into(),
             corrected,
             correctable,
-            source_line: String::new(),
+            source_line: Default::default(),
             highlight_length: 1,
         }
     }

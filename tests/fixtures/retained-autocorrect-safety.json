@@ -1,0 +1,1335 @@
+[
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { work }; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { work }; keep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times; keep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times {}; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "1.times {}; keep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times do\n work\nend; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times do\n work\nend; keep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { work } # keep comment\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { work } # keep comment\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = \"one\nwo\"\nputs(value)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n work\nrescue Error\n other\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work\nescue Error\nother\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n work\nrescue Error\n other\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n work\nensure\n other\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work\nnsure\nother\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n work\nensure\n other\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { break 123 }\nkeep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "break 123\nkeep_me\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { break 123 }\nkeep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { next 123 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "next 123\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { next 123 }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { redo }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "redo\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { redo }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "while condition\n 1.times { break }\n keep_me\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "while condition\n break\n keep_me\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "while condition\n 1.times { break }\n keep_me\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |first, second| consume(first, second) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume(first, second)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { |first, second| consume(first, second) }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |(first, second)| consume(first, second) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume(first, second)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { |(first, second)| consume(first, second) }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |index; local| consume(index) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume(index)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { |index; local| consume(index) }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { puts _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.times { puts _1 }\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { puts _1 }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { puts it }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "puts it\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { puts it }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times(&:zero?)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "zero?\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times(&:zero?)\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times(&%s(zero?))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "zero?\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times(&%s(zero?))\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times(&:work)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times(&:work)\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times(&:\"#{callback_name}\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "0.times(&:\"#{callback_name}\")\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { puts <<~TEXT }\n  value\nTEXT\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "  value\nTEXT\n",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { puts <<~TEXT }\n  value\nTEXT\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { # keep comment\n work\n}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { # keep comment\n work\n}\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { work } # keep comment\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work # keep comment\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { work } # keep comment\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n items.each do\n  consume(\"one\ntwo\")\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each do\n consume(\"one\nwo\")\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n items.each do\n  consume(\"one\ntwo\")\n end\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { items.each { break } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { break }\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 1.times { return 7 }\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n return 7\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { while condition; break; end }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "while condition; break; end\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { work }; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work; keep_me\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { work };\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include first_module(), second_module()\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include second_module()\n include first_module()\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include first_module(), second_module()\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include A,\n # keep argument comment\n B\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include B\n include A\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include A,\n # keep argument comment\n B\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n side_effect\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n side_effect\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n side_effect\n include Second\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n $events << ancestors.include?(Second)\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n $events << ancestors.include?(Second)\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n $events << ancestors.include?(Second)\n include Second\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n # keep group comment\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n # keep group comment\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n # keep group comment\n include Second\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n include Second # keep suffix comment\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First # keep suffix comment\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n include Second # keep suffix comment\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n extend Other\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n extend Other\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n extend Other\n include Second\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include()\n include A\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include()\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include()\n include A\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include first_module()\n include second_module()\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include second_module(), first_module()\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include first_module()\n include second_module()\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include ::First, Namespace::Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Namespace::Second\n include ::First\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include ::First\n include Namespace::Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Namespace::Second, ::First\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X; include First; include Second; end\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 24,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X; include Second, First; ; end\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "values = [\n  0.times {}\n]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [\n]\n",
+    "rust_correctable": false,
+    "rust_corrected": "values = [\n  0.times {}\n]\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "values = [\n  1.times { 7 }\n]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [\n  7\n]\n",
+    "rust_correctable": false,
+    "rust_corrected": "values = [\n  1.times { 7 }\n]\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "values = {a: \n  0.times { work }\n}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = {a: \n}\n",
+    "rust_correctable": false,
+    "rust_corrected": "values = {a: \n  0.times { work }\n}\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "value =\n  0.times {}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value =\n",
+    "rust_correctable": false,
+    "rust_corrected": "value =\n  0.times {}\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "consume(\n  0.times { work }\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "consume(\n  0.times { work }\n)\n",
+    "rust_correctable": false,
+    "rust_corrected": "consume(\n  0.times { work }\n)\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "if\n  0.times {}\n work\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "if\n work\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "if\n  0.times {}\n work\nend\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "value = begin\n 0.times {}\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = begin\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "value = begin\n 0.times {}\nend\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "value = if condition\n 0.times {}\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = if condition\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "value = if condition\n 0.times {}\nend\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "(\n 0.times {}\n).inspect\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(\n).inspect\n",
+    "rust_correctable": false,
+    "rust_corrected": "(\n 0.times {}\n).inspect\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  }
+]

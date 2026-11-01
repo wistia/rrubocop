@@ -60,3 +60,28 @@ pub(crate) fn offenses_json(diags: &[Diagnostic]) -> String {
     serde_json::to_string(&diags.iter().map(to_lsp_offense).collect::<Vec<_>>())
         .unwrap_or_else(|_| "[]".into())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn shared_source_lines_keep_diagnostic_serde_and_lsp_contracts() {
+        let diagnostic = Diagnostic {
+            path: "a.rb".into(),
+            location: crate::diagnostic::Location { line: 1, column: 1 },
+            severity: Severity::Warning,
+            cop_name: "Test/Cop".into(),
+            message: "message".into(),
+            corrected: false,
+            correctable: true,
+            source_line: "original source".into(),
+            highlight_length: 2,
+        };
+        let restored: Diagnostic =
+            serde_json::from_value(serde_json::to_value(&diagnostic).unwrap()).unwrap();
+        assert_eq!(to_lsp_offense(&diagnostic), to_lsp_offense(&restored));
+        let value = to_lsp_offense(&restored);
+        assert_eq!(value["range"]["end"]["character"], 3);
+        assert!(value.get("source_line").is_none());
+    }
+}

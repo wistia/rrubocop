@@ -18,7 +18,7 @@ fn sample_diag() -> crate::diagnostic::Diagnostic {
         message: "Trailing whitespace detected.".into(),
         corrected: false,
         correctable: true,
-        source_line: String::new(),
+        source_line: Default::default(),
         highlight_length: 1,
     }
 }
@@ -111,5 +111,40 @@ fn file_key_separates_adjacent_variable_fields() {
         cache.file_key(path, body, a),
         cache.file_key(path, body, b),
         "length-prefix must disambiguate only/except split"
+    );
+}
+
+#[test]
+fn warm_cache_keeps_original_shared_excerpts_without_repeated_line_payloads() {
+    let cache = Cache::open_at(&temp_cache_dir("shared-lines")).unwrap();
+    let mut first = sample_diag();
+    first.source_line = "é original".into();
+    let diagnostics = vec![first; 4];
+    let settings = CacheSettings {
+        only: "",
+        except: "",
+        ignore_disable: false,
+        force_default_config: false,
+        rubocop_version: "",
+        config_fingerprint: &[],
+    };
+    let original = cache.file_key(Path::new("a.rb"), b"original", settings);
+    let changed = cache.file_key(Path::new("a.rb"), b"changed", settings);
+    cache.store(&original, &diagnostics);
+    assert_warmed(&cache.get(&original).unwrap(), &diagnostics);
+    assert!(cache.get(&changed).is_none());
+}
+
+fn assert_warmed(
+    warmed: &[crate::diagnostic::Diagnostic],
+    diagnostics: &[crate::diagnostic::Diagnostic],
+) {
+    assert!(std::sync::Arc::ptr_eq(
+        &warmed[0].source_line,
+        &warmed[3].source_line
+    ));
+    assert_eq!(
+        serde_json::to_value(warmed).unwrap(),
+        serde_json::to_value(diagnostics).unwrap()
     );
 }

@@ -25,8 +25,8 @@ fn broad_rescue(c: &Context<'_>, n: Node<'_>) -> bool {
     n.child_by_field_name("exceptions")
         .is_none_or(|exceptions| {
             kids(exceptions).iter().any(|exception| {
-                ["StandardError", "Exception"]
-                    .contains(&c.text(*exception).trim_start_matches("::"))
+                c.constant_name(*exception)
+                    .is_some_and(|name| ["StandardError", "Exception"].contains(&name.as_ref()))
             })
         })
 }

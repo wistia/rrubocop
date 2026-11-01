@@ -1,1 +1,3 @@
-attribute :long_name
+class A
+ attribute %Q(lowercase)
+end

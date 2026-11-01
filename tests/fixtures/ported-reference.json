@@ -24426,7 +24426,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times(&:something)\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24448,7 +24451,10 @@
         "correctable": true
       }
     ],
-    "corrected": ""
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "-1.times(&:something)\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24470,7 +24476,10 @@
         "correctable": true
       }
     ],
-    "corrected": "something\n"
+    "corrected": "something\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times(&:something)\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -24507,7 +24516,10 @@
         "correctable": true
       }
     ],
-    "corrected": "precondition\npostcondition\n"
+    "corrected": "precondition\npostcondition\n",
+    "rust_correctable": false,
+    "rust_corrected": "precondition\n0.times(&:something)\npostcondition\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Lint/UselessTimes",
@@ -26427,7 +26439,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  prepend Qux, Baz, Bar\n  do_something_else\n  \nend\n"
+    "corrected": "class Foo\n  prepend Qux, Baz, Bar\n  do_something_else\n  \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend Bar\n  prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26480,7 +26495,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  prepend Qux, Bar\n  Other.prepend Baz\n  do_something_else\n  \nend\n"
+    "corrected": "class Foo\n  prepend Qux, Bar\n  Other.prepend Baz\n  do_something_else\n  \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend Bar\n  Other.prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -29205,7 +29223,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class S\n include C, A, B\nend\n"
+    "corrected": "class S\n include C, A, B\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class S\n include A,\n # argument comment\n B\n include C\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -29232,7 +29253,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class S\n include B\n include A\n include C\nend\n"
+    "corrected": "class S\n include B\n include A\n include C\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class S\n include A,\n # argument comment\n B\n include C\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Cops/NoSetex",
@@ -29277,7 +29301,10 @@
         "correctable": true
       }
     ],
-    "corrected": "work\n"
+    "corrected": "work\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times(\n # block arg comment\n &:work)\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
   },
   {
     "cop": "Style/TrailingBodyOnMethodDefinition",
@@ -38955,5 +38982,2680 @@
       }
     ],
     "corrected": "$redis.set(\"k\", \"v\", \"ex\" => 60)\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { work }; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { work }; keep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times; keep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times {}; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "1.times {}; keep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times do\n work\nend; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times do\n work\nend; keep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { work } # keep comment\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { work } # keep comment\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = \"one\nwo\"\nputs(value)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n work\nrescue Error\n other\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work\nescue Error\nother\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n work\nrescue Error\n other\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n work\nensure\n other\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work\nnsure\nother\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n work\nensure\n other\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { break 123 }\nkeep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "break 123\nkeep_me\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { break 123 }\nkeep_me\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { next 123 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "next 123\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { next 123 }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { redo }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "redo\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { redo }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "while condition\n 1.times { break }\n keep_me\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "while condition\n break\n keep_me\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "while condition\n 1.times { break }\n keep_me\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |first, second| consume(first, second) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume(first, second)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { |first, second| consume(first, second) }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |(first, second)| consume(first, second) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume(first, second)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { |(first, second)| consume(first, second) }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { |index; local| consume(index) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume(index)\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { |index; local| consume(index) }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { puts _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.times { puts _1 }\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { puts _1 }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { puts it }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "puts it\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { puts it }\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times(&:zero?)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "zero?\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times(&:zero?)\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times(&%s(zero?))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "zero?\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times(&%s(zero?))\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times(&:work)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "",
+    "rust_correctable": false,
+    "rust_corrected": "0.times(&:work)\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times(&:\"#{callback_name}\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "0.times(&:\"#{callback_name}\")\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { puts <<~TEXT }\n  value\nTEXT\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "  value\nTEXT\n",
+    "rust_correctable": false,
+    "rust_corrected": "0.times { puts <<~TEXT }\n  value\nTEXT\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { # keep comment\n work\n}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { # keep comment\n work\n}\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { work } # keep comment\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work # keep comment\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times { work } # keep comment\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n items.each do\n  consume(\"one\ntwo\")\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each do\n consume(\"one\nwo\")\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do\n items.each do\n  consume(\"one\ntwo\")\n end\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { items.each { break } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { break }\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def f\n 1.times { return 7 }\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f\n return 7\nend\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { while condition; break; end }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "while condition; break; end\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { work }; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "work; keep_me\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times { work };\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": ""
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include first_module(), second_module()\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include second_module()\n include first_module()\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include first_module(), second_module()\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include A,\n # keep argument comment\n B\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include B\n include A\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include A,\n # keep argument comment\n B\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n side_effect\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n side_effect\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n side_effect\n include Second\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n $events << ancestors.include?(Second)\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n $events << ancestors.include?(Second)\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n $events << ancestors.include?(Second)\n include Second\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n # keep group comment\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n # keep group comment\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n # keep group comment\n include Second\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n include Second # keep suffix comment\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First # keep suffix comment\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n include Second # keep suffix comment\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include First\n extend Other\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Second, First\n extend Other\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include First\n extend Other\n include Second\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include()\n include A\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include()\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include()\n include A\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include first_module()\n include second_module()\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include second_module(), first_module()\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include first_module()\n include second_module()\nend\n",
+    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include ::First, Namespace::Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Namespace::Second\n include ::First\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include ::First\n include Namespace::Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n include Namespace::Second, ::First\nend\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X; include First; include Second; end\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 24,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X; include Second, First; ; end\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options :queue => :default\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options :queue => :default\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options :\"qu\\x65ue\" => :default\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options :\"qu\\x65ue\" => :default\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options \"qu\\x65ue\" => :default\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options \"qu\\x65ue\" => :default\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options :\"queue\" => :default\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options :\"queue\" => :default\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options \"queue\" => :default\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options \"queue\" => :default\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A < BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < ::BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A < ::BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A < A::BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::\n BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A < A::\n BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < NsqWorker::Worker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < NsqWorker::Worker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < NsqWorker::\n Worker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < NsqWorker::\n Worker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::Nsq::BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < A::Nsq::BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::Nsq::\n BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < A::Nsq::\n BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :A\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 11,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute :A\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :\"\\x41\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 11,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute :\"\\x41\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute \"\\x41\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 11,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute \"\\x41\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :\"\\x6A\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :\"\\x6A\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute \"\\x6A\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute \"\\x6A\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :\"#{value}\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :\"#{value}\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :\"\\u0041\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 11,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute :\"\\u0041\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class A\n attribute :name do\n 1\n end\n def name;2;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute :name do\n 1\n end\n def name;2;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class A\n attribute :\"na\\x6de\" do\n 1\n end\n def name;2;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute :\"na\\x6de\" do\n 1\n end\n def name;2;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class A\n attribute :\"#{value}\" do\n 1\n end\n def name;2;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :\"#{value}\" do\n 1\n end\n def name;2;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/EnforceScopeInPolicies",
+    "source": "class APolicy\n class Scope < ApplicationPolicy::Scope\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class APolicy\n class Scope < ApplicationPolicy::Scope\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/EnforceScopeInPolicies",
+    "source": "class APolicy\n class Scope < ::ApplicationPolicy::Scope\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class APolicy\n class Scope < ::ApplicationPolicy::Scope\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/EnforceScopeInPolicies",
+    "source": "class APolicy\n class Scope < ApplicationPolicy::\n Scope\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class APolicy\n class Scope < ApplicationPolicy::\n Scope\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/EnforceScopeInPolicies",
+    "source": "class APolicy\n class Scope < JwtPolicy::\n Scope\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class APolicy\n class Scope < JwtPolicy::\n Scope\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::\n BaseWorker\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A < A::\n BaseWorker\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < ::\n BaseWorker\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A < ::\n BaseWorker\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue ::\n StandardError\n recover\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "begin\n work\nrescue ::\n StandardError\n recover\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :Camel, :\"k\\x65y\" => :lowercase\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :Camel, :\"k\\x65y\" => :lowercase\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_columns(other, protected: true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_columns(other, protected: true)\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require \"known\"\n",
+    "path": "$PROJECT/test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Calling `require` on an autoloaded path breaks autoloading",
+        "correctable": false
+      }
+    ],
+    "corrected": "require \"known\"\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require \"k\\x6eown\"\n",
+    "path": "$PROJECT/test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Calling `require` on an autoloaded path breaks autoloading",
+        "correctable": false
+      }
+    ],
+    "corrected": "require \"k\\x6eown\"\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require %q(known)\n",
+    "path": "$PROJECT/test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Calling `require` on an autoloaded path breaks autoloading",
+        "correctable": false
+      }
+    ],
+    "corrected": "require %q(known)\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute %Q(lowercase)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute %Q(lowercase)\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute \"#{SOME}\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute \"#{SOME}\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :\"#{SOME}\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :\"#{SOME}\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "describe A do\n it \"works\" do\n expect(Worker).to receive(:\"perform_\\x61sync\")\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 19,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe A do\n it \"works\" do\n expect(Worker).to receive(:\"perform_\\x61sync\")\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options :\"q\\165eue\" => :default\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options :\"q\\165eue\" => :default\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options :\"\\u0071ueue\" => :default\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options :\"\\u0071ueue\" => :default\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options %q(queue) => :default\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options %q(queue) => :default\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options %Q(queue) => :default\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options %Q(queue) => :default\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options \"qu\" \"eue\" => :default\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options \"qu\" \"eue\" => :default\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n sidekiq_options \"qu\\x65ue\": :default\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A < BaseWorker\n sidekiq_options \"qu\\x65ue\": :default\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :\"\\cM\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :\"\\cM\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute \"\\cMFOO\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 11,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute \"\\cMFOO\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute %q(\\x41)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute %q(\\x41)\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute %q(\\x6A)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 11,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute %q(\\x6A)\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute %Q(\\u{41})\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 11,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute %Q(\\u{41})\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :'#{SOME}'\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 11,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute :'#{SOME}'\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute \"\\q\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute \"\\q\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute \"\\C-M\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute \"\\C-M\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :Camel, :key => :lowercase\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :Camel, :key => :lowercase\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :Camel, \"k\\x65y\": :lowercase\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :Camel, \"k\\x65y\": :lowercase\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::\n # type\n BaseWorker\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A < A::\n # type\n BaseWorker\n def perform;work;end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/EnforceScopeInPolicies",
+    "source": "class APolicy\n disable_scoping!\n class Scope < ApplicationPolicy::\n Scope\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Policies must define a scope that inherits from `ApplicationPolicy::Scope` (or `JwtPolicy::Scope`)\nOR explicitly disable scoping with `disable_scoping!`\n",
+        "correctable": false
+      }
+    ],
+    "corrected": "class APolicy\n disable_scoping!\n class Scope < ApplicationPolicy::\n Scope\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue ::\n StandardError\n Sentry.capture_exception($!)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue ::\n StandardError\n Sentry.capture_exception($!)\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue Foo::\n StandardError\n recover\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "begin\n work\nrescue Foo::\n StandardError\n recover\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_columns(protected: true, name: \"x\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_columns`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_columns(protected: true, name: \"x\")\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:protected, first: true, second: false)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_column(:protected, first: true, second: false)\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_columns(**options, protected: true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_columns`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_columns(**options, protected: true)\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_columns({protected: true}, other)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_columns({protected: true}, other)\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_columns(protected: true, **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_columns`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_columns(protected: true, **options)\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require %Q(known)\n",
+    "path": "$PROJECT/test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Calling `require` on an autoloaded path breaks autoloading",
+        "correctable": false
+      }
+    ],
+    "corrected": "require %Q(known)\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require \"kn\" \"own\"\n",
+    "path": "$PROJECT/test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "require \"kn\" \"own\"\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require 'k\\x6eown'\n",
+    "path": "$PROJECT/test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "require 'k\\x6eown'\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require \"#{unknown}\"\n",
+    "path": "$PROJECT/test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "require \"#{unknown}\"\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require \"other\"\n",
+    "path": "$PROJECT/test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "require \"other\"\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "describe A do\n it \"works\" do\n expect(Worker).to receive(%s(perform_async))\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 19,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe A do\n it \"works\" do\n expect(Worker).to receive(%s(perform_async))\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "describe A do\n it \"works\" do\n expect(Worker).to receive(:\"perform_\\x69n\")\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 19,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe A do\n it \"works\" do\n expect(Worker).to receive(:\"perform_\\x69n\")\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "describe A do\n it \"works\" do\n expect(Worker).to receive(\"perform_async\")\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "describe A do\n it \"works\" do\n expect(Worker).to receive(\"perform_async\")\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "describe A do\n it \"works\" do\n expect(Worker).to receive(:perform_soon)\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "describe A do\n it \"works\" do\n expect(Worker).to receive(:perform_soon)\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class A\n attribute :\"na\\x6de\"\n def name; 2; end\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": "disabled"
+    },
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute :\"na\\x6de\"\n def name; 2; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class A\n attribute %s(name)\n def name; 2; end\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": "disabled"
+    },
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute %s(name)\n def name; 2; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class A\n attribute :\"#{OTHER}\"\n def name; 2; end\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": "disabled"
+    },
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :\"#{OTHER}\"\n def name; 2; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class A\n attributes :\"na\\x6de\"\n def name; 2; end\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": "disabled"
+    },
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attributes :\"na\\x6de\"\n def name; 2; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class A\n attributes %s(name)\n def name; 2; end\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": "disabled"
+    },
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Prefer block attribute over method call from attributes.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attributes %s(name)\n def name; 2; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+    "source": "class A\n attributes :\"#{OTHER}\"\n def name; 2; end\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": "disabled"
+    },
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attributes :\"#{OTHER}\"\n def name; 2; end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "class A\n attribute :name, :\"k\\x65y\" => :other do\n 1\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n attribute :name, :\"k\\x65y\" => :other do\n 1\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "class A\n attribute :name do\n 1\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :name do\n 1\n end\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute \"NA\" \"ME\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute \"NA\" \"ME\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "class A\n attribute :UP, key: \"low\" \"er\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n attribute :UP, key: \"low\" \"er\"\nend\n",
+    "origin": "diagnostic-literal-constant-parity-review"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "values = [\n  0.times {}\n]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [\n]\n",
+    "rust_correctable": false,
+    "rust_corrected": "values = [\n  0.times {}\n]\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "values = [\n  1.times { 7 }\n]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [\n  7\n]\n",
+    "rust_correctable": false,
+    "rust_corrected": "values = [\n  1.times { 7 }\n]\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "values = {a: \n  0.times { work }\n}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = {a: \n}\n",
+    "rust_correctable": false,
+    "rust_corrected": "values = {a: \n  0.times { work }\n}\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "value =\n  0.times {}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value =\n",
+    "rust_correctable": false,
+    "rust_corrected": "value =\n  0.times {}\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "consume(\n  0.times { work }\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "consume(\n  0.times { work }\n)\n",
+    "rust_correctable": false,
+    "rust_corrected": "consume(\n  0.times { work }\n)\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "if\n  0.times {}\n work\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "if\n work\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "if\n  0.times {}\n work\nend\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "value = begin\n 0.times {}\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = begin\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "value = begin\n 0.times {}\nend\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "value = if condition\n 0.times {}\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = if condition\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "value = if condition\n 0.times {}\nend\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "(\n 0.times {}\n).inspect\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(\n).inspect\n",
+    "rust_correctable": false,
+    "rust_corrected": "(\n 0.times {}\n).inspect\n",
+    "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
   }
 ]

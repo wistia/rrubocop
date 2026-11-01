@@ -67,14 +67,13 @@ fn own_summary(c: &Context<'_>, n: Node<'_>) -> Summary {
 fn scope_class(c: &Context<'_>, n: Node<'_>) -> bool {
     n.kind() == "class"
         && matches!(
-            superclass(c, n),
-            "ApplicationPolicy::Scope" | "JwtPolicy::Scope"
+            superclass(c, n).as_deref(),
+            Some("ApplicationPolicy::Scope" | "JwtPolicy::Scope")
         )
 }
 
-fn superclass<'a>(c: &'a Context<'_>, n: Node<'_>) -> &'a str {
+fn superclass<'a>(c: &Context<'a>, n: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
     field(n, "superclass")
         .and_then(|s| s.named_child(0))
-        .map(|s| c.text(s).trim_start_matches("::"))
-        .unwrap_or("")
+        .and_then(|s| c.constant_name(s))
 }

@@ -272,7 +272,7 @@ mod tests {
             severity: Severity::Convention,
             corrected: true,
             correctable: true,
-            source_line: String::new(),
+            source_line: Default::default(),
             highlight_length: 1,
         }];
         reconcile_corrected(

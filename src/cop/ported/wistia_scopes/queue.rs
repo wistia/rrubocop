@@ -1,9 +1,10 @@
 use super::super::context::*;
-use super::policies::superclass;
+use super::policies::constant_superclass;
 use tree_sitter::Node;
 
 pub(super) fn queue(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    let parent = superclass(c, n);
+    let name = constant_superclass(c, n);
+    let parent = name.as_deref().unwrap_or("");
     if parent.contains("Nsq::BaseWorker") || parent == "NsqWorker::Worker" {
         return vec![];
     }
@@ -34,6 +35,7 @@ fn direct_queue(c: &Context<'_>, n: Node<'_>) -> bool {
         && statements.into_iter().any(|n| {
             is_call(n)
                 && (c.method(n) == "use_default_queue!"
-                    || c.method(n) == "sidekiq_options" && c.pair_value(n, "queue").is_some())
+                    || c.method(n) == "sidekiq_options"
+                        && c.static_pair_value(n, "queue").is_some())
         })
 }

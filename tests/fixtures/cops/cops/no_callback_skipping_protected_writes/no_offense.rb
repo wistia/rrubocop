@@ -1,1 +1,1 @@
-media.update_all("protected" => true)
+media.update_columns(other, protected: true)

@@ -19,7 +19,8 @@ fn receives_async(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn async_symbol(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.symbol(n) && ["perform_async", "perform_in", "perform_at"].contains(&c.value(n))
+    c.static_symbol(n)
+        .is_some_and(|name| ["perform_async", "perform_in", "perform_at"].contains(&name.as_ref()))
 }
 
 fn safe_ancestor(c: &Context<'_>, n: Node<'_>) -> bool {

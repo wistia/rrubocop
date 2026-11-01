@@ -43,9 +43,10 @@ fn enrich_offense(
 
 fn fill_source_highlight(source: &SourceFile, d: &mut Diagnostic) {
     if d.source_line.is_empty() {
-        if let Some(line) = source.line_text(d.location.line) {
-            d.source_line = line.to_string();
-        }
+        let line = source.cached(d.location.line, || {
+            SharedLine(source.line_text(d.location.line).unwrap_or("").into())
+        });
+        d.source_line = line.0.clone();
     }
     if d.highlight_length == 0 {
         d.highlight_length = 1;
@@ -93,3 +94,8 @@ fn join_url(base: &str, path: &str) -> String {
         path.trim_start_matches('/')
     )
 }
+
+struct SharedLine(std::sync::Arc<str>);
+
+#[cfg(test)]
+mod tests;

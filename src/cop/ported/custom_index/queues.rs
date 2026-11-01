@@ -52,7 +52,7 @@ fn update(c: &Context<'_>, n: Node<'_>, queue: &mut Queue) {
     match c.method(n) {
         "include" => queue.worker |= args(n).iter().any(|a| worker_constant(c, *a)),
         "use_default_queue!" => queue.declared = true,
-        "sidekiq_options" => queue.declared |= c.pair_value(n, "queue").is_some(),
+        "sidekiq_options" => queue.declared |= c.static_pair_value(n, "queue").is_some(),
         _ => {}
     }
 }

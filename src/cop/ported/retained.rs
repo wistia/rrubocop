@@ -32,3 +32,6 @@ fn arguments(n: tree_sitter::Node<'_>) -> Vec<tree_sitter::Node<'_>> {
         .filter(|a| a.kind() != "comment")
         .collect()
 }
+
+#[cfg(test)]
+mod safety_tests;

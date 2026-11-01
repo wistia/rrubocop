@@ -121,7 +121,7 @@ mod tests {
             message: String::new(),
             corrected: false,
             correctable: false,
-            source_line: String::new(),
+            source_line: Default::default(),
             highlight_length: 1,
         }
     }

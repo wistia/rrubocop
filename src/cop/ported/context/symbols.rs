@@ -15,8 +15,26 @@ fn symbol_label(c: &Context<'_>, n: Node<'_>) -> bool {
         && n.parent()
             .is_some_and(|p| p.kind() == "pair" && field(p, "key") == Some(n))
 }
+pub(super) fn string<'a>(c: &Context<'a>, n: Node<'_>) -> Option<Cow<'a, str>> {
+    match n.kind() {
+        "string" if !symbol_label(c, n) => delimited(c, n),
+        "chained_string" => chained(c, n),
+        _ => None,
+    }
+}
+fn chained<'a>(c: &Context<'a>, n: Node<'_>) -> Option<Cow<'a, str>> {
+    let mut cursor = n.walk();
+    let mut result = String::new();
+    for child in n
+        .named_children(&mut cursor)
+        .filter(|child| child.kind() != "comment")
+    {
+        result.push_str(string(c, child)?.as_ref());
+    }
+    Some(Cow::Owned(result))
+}
 fn delimited<'a>(c: &Context<'a>, n: Node<'_>) -> Option<Cow<'a, str>> {
-    if descendants(n).any(|n| n.kind() == "interpolation") {
+    if c.text(n).contains('#') && descendants(n).any(|n| n.kind() == "interpolation") {
         return None;
     }
     let (inner, double, delimiter) = contents(c.text(n))?;
@@ -27,10 +45,17 @@ fn delimited<'a>(c: &Context<'a>, n: Node<'_>) -> Option<Cow<'a, str>> {
 }
 fn contents(text: &str) -> Option<(&str, bool, u8)> {
     let text = text.strip_prefix(':').unwrap_or(text);
-    let offset = if text.starts_with("%s") { 2 } else { 0 };
+    let (offset, double) = match text.as_bytes() {
+        [b'%', b's' | b'q', ..] => (2, false),
+        [b'%', b'Q', ..] => (2, true),
+        [b'%', ..] => (1, true),
+        [b'"', ..] => (0, true),
+        [b'\'', ..] => (0, false),
+        _ => return None,
+    };
     let delimiter = *text.as_bytes().get(offset)?;
     let inner = text.get(offset + 1..text.len().checked_sub(1)?)?;
-    Some((inner, offset == 0 && delimiter == b'"', delimiter))
+    Some((inner, double, delimiter))
 }
 fn decode(inner: &str, double: bool, delimiter: u8) -> Option<String> {
     let mut bytes = inner.bytes().peekable();
@@ -77,5 +102,10 @@ mod tests {
     fn double_quoted_space_escape_differs_from_single_quoted() {
         assert_eq!(decode(r"\s", true, b'"').as_deref(), Some(" "));
         assert_eq!(decode(r"\s", false, b'\'').as_deref(), Some(r"\s"));
+    }
+    #[test]
+    fn nested_control_escapes_do_not_recurse() {
+        let text = format!("{}A", r"\C-".repeat(10_000));
+        assert_eq!(decode(&text, true, b'"').as_deref(), Some("\x01"));
     }
 }

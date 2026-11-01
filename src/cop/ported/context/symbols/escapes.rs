@@ -8,7 +8,7 @@ pub(super) fn append(
         b'0'..=b'7' => result.push(octal(byte, bytes)),
         b'u' => unicode(bytes, result)?,
         b'\n' | b'\r' => newline(byte, bytes, result),
-        b'c' | b'C' | b'M' => return None,
+        b'c' | b'C' | b'M' => control::append(byte, bytes, result)?,
         _ => result.push(simple(byte)),
     }
     Some(())
@@ -88,3 +88,5 @@ fn newline(byte: u8, bytes: &mut std::iter::Peekable<std::str::Bytes<'_>>, resul
         }
     }
 }
+
+mod control;

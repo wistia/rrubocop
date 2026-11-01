@@ -1,4 +1,8 @@
 use super::*;
+mod indent;
+mod pattern;
+use indent::deindent;
+use pattern::parameter_pattern;
 pub(super) fn correct_body(
     c: &Context<'_>,
     n: Node<'_>,
@@ -7,7 +11,10 @@ pub(super) fn correct_body(
     f: Finding,
 ) -> Finding {
     let parameter = block_parameter(c, b);
-    if reassigns_parameter(c, body, parameter) || !substitution_safe(c, body, parameter) {
+    if !safety::extraction(b, body, c)
+        || reassigns_parameter(c, body, parameter)
+        || !substitution_safe(c, body, parameter)
+    {
         return f;
     }
     corrected_body(c, n, body, parameter, f)
@@ -20,24 +27,13 @@ fn corrected_body(
     parameter: &str,
     f: Finding,
 ) -> Finding {
-    if c.text(body).is_ascii() {
-        return f.replace_with(c, n, || {
-            deindent(
-                &replace_parameter(c, c.text(body), parameter),
-                n.start_position().column,
-                body.start_position().column,
-            )
-            .unwrap()
-        });
-    }
-    let Some(text) = deindent(
-        &replace_parameter(c, c.text(body), parameter),
-        n.start_position().column,
-        body.start_position().column,
-    ) else {
-        return f;
-    };
-    f.replace_with(c, n, || text)
+    f.replace_with(c, n, || {
+        deindent(
+            &replace_parameter(c, c.text(body), parameter),
+            n.start_position().column,
+            body.start_position().column,
+        )
+    })
 }
 fn block_parameter<'a>(c: &Context<'a>, b: Node<'_>) -> &'a str {
     let ps = field(b, "parameters").map(kids).unwrap_or_default();
@@ -62,22 +58,6 @@ fn replace_parameter(c: &Context<'_>, text: &str, parameter: &str) -> String {
         .0
         .replace_all(text, "0")
         .into_owned()
-}
-fn deindent(text: &str, start: usize, end: usize) -> Option<String> {
-    text.split('\n')
-        .enumerate()
-        .map(|(i, line)| {
-            if i == 0 || line.is_empty() || end <= start || start > line.len() {
-                return Some(line.to_owned());
-            }
-            Some(format!(
-                "{}{}",
-                line.get(..start)?,
-                line.get(end.min(line.len())..)?
-            ))
-        })
-        .collect::<Option<Vec<_>>>()
-        .map(|lines| lines.join("\n"))
 }
 
 fn assignment_contains(c: &Context<'_>, n: Node<'_>, parameter: &str) -> bool {
@@ -116,11 +96,4 @@ fn reference(n: Node<'_>) -> bool {
         "method_parameters" | "block_parameters" | "lambda_parameters"
     ) && field(p, "method") != Some(n)
         && field(p, "name") != Some(n)
-}
-
-struct ParameterPattern(regex::Regex);
-fn parameter_pattern(c: &Context<'_>, parameter: &str) -> std::sync::Arc<ParameterPattern> {
-    c.source.cached(parameter.as_ptr() as usize, || {
-        ParameterPattern(regex::Regex::new(&format!(r"\b{}\b", regex::escape(parameter))).unwrap())
-    })
 }

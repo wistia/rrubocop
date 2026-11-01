@@ -4,12 +4,13 @@ use num_bigint::BigInt;
 use tree_sitter::Node;
 mod correction;
 mod integer;
+mod safety;
 pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(count) = times_count(c, n) else {
         return vec![];
     };
     let f = Finding::new(n, format!("Useless call to `{count}.times` detected."));
-    if !own_line(c, n) || n.parent().is_some_and(is_call) {
+    if !own_line(c, n) || !safety::statement(n) || !safety::call(c, n) {
         return vec![f];
     }
     vec![correct(c, n, count, f)]
@@ -25,15 +26,22 @@ fn valid_arguments(c: &Context<'_>, n: Node<'_>) -> bool {
     let a = args(n);
     a.len() <= 1
         && a.first().is_none_or(|a| {
-            a.kind() == "block_argument" && kids(*a).first().is_some_and(|s| c.symbol(*s))
+            a.kind() == "block_argument"
+                && kids(*a)
+                    .first()
+                    .is_some_and(|s| c.static_symbol(*s).is_some())
         })
 }
 fn correct(c: &Context<'_>, n: Node<'_>, count: BigInt, f: Finding) -> Finding {
-    if never_process(count, n) {
-        return remove_line(c, n, f);
+    if !args(n).is_empty() {
+        return f;
     }
-    if let Some(proc) = args(n).first().and_then(|a| kids(*a).first().copied()) {
-        return f.replace_with(c, n, || c.value(proc));
+    if never_process(count, n) {
+        return if safety::removal(c, n) {
+            remove_line(c, n, f)
+        } else {
+            f
+        };
     }
     let Some((b, body)) = block_body(n) else {
         return f;
@@ -41,10 +49,8 @@ fn correct(c: &Context<'_>, n: Node<'_>, count: BigInt, f: Finding) -> Finding {
     correction::correct_body(c, n, b, body, f)
 }
 fn own_line(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.source.as_bytes()[..n.start_byte()]
-        .rsplit(|b| *b == b'\n')
-        .next()
-        .unwrap_or_default()
+    let start = n.start_byte() - n.start_position().column;
+    c.source.as_bytes()[start..n.start_byte()]
         .iter()
         .all(u8::is_ascii_whitespace)
 }

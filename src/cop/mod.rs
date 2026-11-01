@@ -133,7 +133,7 @@ pub trait Cop: Send + Sync {
             message,
             corrected: false,
             correctable: self.supports_autocorrect(),
-            source_line: String::new(),
+            source_line: Default::default(),
             highlight_length: 1,
         }
     }
