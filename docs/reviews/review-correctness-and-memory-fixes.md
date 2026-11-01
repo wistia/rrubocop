@@ -55,3 +55,5 @@ The percent scopes contain non-interpolating `%w` words, selecting SpaceAfterCom
 Separately, three alternating standalone runs use the actual selector/coordinate source snapshots. The 32 disjoint 1 MiB replacement probe drops median RSS from 100,136 to 34,596 KiB. The mostly ASCII coordinate probe drops from 10,980 to 3,616 KiB; the Unicode-heavy probe remains 7,908 KiB in both. These isolate the relevant structures and do not represent whole-engine or application memory use. Extra moves in CorrectionSet/finalization and the two small negative guards have no isolated timing attribution.
 
 [Raw timings, source/binary hashes, standalone memory measurements, comparison records, and runners](review-correctness-and-memory-measurements.json).
+
+A [subsequent custom-rule audit and fixes](remaining-custom-safety-efficiency.md) cover remaining literal/constant matching, inherited unsafe retained rewrites, and diagnostic/cache line duplication.

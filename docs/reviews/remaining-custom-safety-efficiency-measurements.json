@@ -1,0 +1,3779 @@
+{
+  "baseline_commit": "89b63121a3b3b4ddd24fb5354958ca1847d9c2f9",
+  "implementation_commit": "cb936d2ea6760016186649678ebdcf8308761957",
+  "corpus_commit": "404394655f71e35560f1c24bf773af3de098c534",
+  "binary_sha256": {
+    "before": "b4d6b4863f3fac398b9f8357c72a42d80848c8edab4746d934dc1499ddacf7b1",
+    "after": "32153cd78b41b594b15af96b1041811b421439da9e56acda2e4f3bba35ec323b"
+  },
+  "sample_manifest_sha256": "7fbf72ab7810acac93f547d0224fac276b66a2853dfc35874bca5b005c0324f1",
+  "benchmark_runner": "import json,subprocess,os,time,resource,statistics\nfrom pathlib import Path\nroot=Path('/home/ubuntu/code/rrubocop-wistia-parity');project=Path('/tmp/rr-remaining-benchmark-project');project.mkdir(exist_ok=True);(project/'Gemfile').write_text('');(project/'.rubocop.yml').write_text('AllCops:\\n  NewCops: enable\\n  TargetRubyVersion: 3.4\\nAnyCable/InstanceVars:\\n  Enabled: true\\n  Include: [\"**/*\"]\\n')\npath=project/'probe.rb';bins={'before':'/tmp/rrubocop-before-remaining-89b6312','after':str(root/'target/release/rrubocop')};cache=Path('/tmp/rr-remaining-benchmark-cache');cache.mkdir(exist_ok=True);(cache/'unavailable').write_text('benchmark-only unavailable backend');rows=[];outputs={}\ndef run(binary,scope,args,cwd=project,source=None,cache_scope=None,read=False):\n if source is not None:path.write_text(source)\n cachepath=cache/binary/(cache_scope or scope) if cache_scope or scope in ['sample','full'] else cache/'unavailable';env={**os.environ,'RRUBOCOP_CACHE_DIR':str(cachepath)};rss=Path('/tmp/rr-remaining-rss.txt');u=resource.getrusage(resource.RUSAGE_CHILDREN);start=time.perf_counter()\n p=subprocess.run(['/usr/bin/time','-q','-f','%M','-o',str(rss),bins[binary],'--cache',str(read).lower(),'--format','json']+args,cwd=cwd,env=env,capture_output=True,text=True,timeout=120);e=resource.getrusage(resource.RUSAGE_CHILDREN)\n if p.returncode not in (0,1):raise RuntimeError((scope,p.stderr))\n data=json.loads(p.stdout);assert not any(o['cop_name']=='Lint/Syntax' for o in data['offenses']),(scope,data)\n rows.append({'binary':binary,'scope':scope,'wall':time.perf_counter()-start,'user':e.ru_utime-u.ru_utime,'system':e.ru_stime-u.ru_stime,'max_rss_kib':int(rss.read_text().strip()),'metadata':data['metadata'],'cache_bytes':sum(p.stat().st_size for p in cachepath.rglob('*') if p.is_file()) if cachepath.is_dir() else None});outputs.setdefault(scope,{})[binary]=data['offenses'];Path('/tmp/rr-remaining-timings.json').write_text(json.dumps(rows,indent=2));Path('/tmp/rr-remaining-'+binary+'-'+scope+'.json').write_text(json.dumps(data,indent=2));print(rows[-1],flush=True)\ndef repeated(scope,source,cop):\n for repeat in range(3):\n  for b in (['before','after'] if repeat%2==0 else ['after','before']):run(b,scope,['--only',cop,str(path)],source=source)\nfor n in [2000,4000]:repeated('times-line-'+str(n),'1.times { use(0) };'*n+'\\n','Lint/UselessTimes')\nrepeated('times-multiline-4000','1.times { use(0) }\\n'*4000,'Lint/UselessTimes')\nrepeated('times-parameters-2000','1.times do |i|\\n use(i)\\nend\\n'*2000,'Lint/UselessTimes')\nfor n in [2,600]:repeated('ancestors-nested-'+str(n),'module A\\n'+''.join('def m'+str(i)+'\\n@x\\n' for i in range(n))+'end\\n'*(n+1),'AnyCable/InstanceVars')\nrepeated('ancestors-flat-8000','module A\\ndef m\\n'+'@x\\n'*8000+'end\\nend\\n','AnyCable/InstanceVars')\nsource='1.times { use(0) };'*1000+'\\n'\nfor repeat in range(3):\n for b in (['before','after'] if repeat%2==0 else ['after','before']):\n  run(b,'cache-cold-1000',['--only','Lint/UselessTimes',str(path)],source=source,cache_scope='cache-1000',read=False)\n  run(b,'cache-warm-1000',['--only','Lint/UselessTimes',str(path)],source=source,cache_scope='cache-1000',read=True)\ncorpus=Path('/home/ubuntu/code/wistia-rrubocop-benchmark');inputs=json.load(open('/tmp/rr-performance-inputs.json'))\nfor repeat in range(3):\n for b in (['before','after'] if repeat%2==0 else ['after','before']):run(b,'sample',inputs['sample'],corpus)\nfor repeat in range(2):\n for b in (['before','after'] if repeat==0 else ['after','before']):run(b,'full',[],corpus)\ncomparisons={scope:{'identical_cli_offenses':v['before']==v['after']} for scope,v in outputs.items()};Path('/tmp/rr-remaining-benchmark-comparisons.json').write_text(json.dumps(comparisons,indent=2))\nfor scope in outputs:print(scope,{b:statistics.median(r['wall'] for r in rows if r['scope']==scope and r['binary']==b) for b in bins},comparisons[scope],flush=True)\n",
+  "summaries": {
+    "times-line-2000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.1321431752294302,
+        "user": 0.08193299999999998,
+        "system": 0.05252200000000001,
+        "max_rss_kib": 93812,
+        "cache_bytes": null
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.06494498485699296,
+        "user": 0.05134399999999999,
+        "system": 0.012195000000000011,
+        "max_rss_kib": 19944,
+        "cache_bytes": null
+      }
+    },
+    "times-line-4000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.3740477040410042,
+        "user": 0.20355399999999996,
+        "system": 0.17287399999999997,
+        "max_rss_kib": 323580,
+        "cache_bytes": null
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.11346299573779106,
+        "user": 0.09075100000000003,
+        "system": 0.018934000000000006,
+        "max_rss_kib": 27112,
+        "cache_bytes": null
+      }
+    },
+    "times-multiline-4000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.11845682421699166,
+        "user": 0.09648000000000012,
+        "system": 0.017461999999999978,
+        "max_rss_kib": 27064,
+        "cache_bytes": null
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.13931407500058413,
+        "user": 0.11448899999999984,
+        "system": 0.02082700000000004,
+        "max_rss_kib": 28316,
+        "cache_bytes": null
+      }
+    },
+    "times-parameters-2000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.1457996191456914,
+        "user": 0.12058199999999997,
+        "system": 0.023977000000000026,
+        "max_rss_kib": 39484,
+        "cache_bytes": null
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.09539192588999867,
+        "user": 0.0796140000000003,
+        "system": 0.01383599999999996,
+        "max_rss_kib": 22316,
+        "cache_bytes": null
+      }
+    },
+    "ancestors-nested-2": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.014158436097204685,
+        "user": 0.008470000000000422,
+        "system": 0.006675999999999904,
+        "max_rss_kib": 12852,
+        "cache_bytes": null
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.014408094342797995,
+        "user": 0.009536999999999907,
+        "system": 0.005618000000000123,
+        "max_rss_kib": 13036,
+        "cache_bytes": null
+      }
+    },
+    "ancestors-nested-600": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.1828441610559821,
+        "user": 0.17548900000000023,
+        "system": 0.007980000000000098,
+        "max_rss_kib": 15536,
+        "cache_bytes": null
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.025269790086895227,
+        "user": 0.018866999999999745,
+        "system": 0.007360999999999951,
+        "max_rss_kib": 15784,
+        "cache_bytes": null
+      }
+    },
+    "ancestors-flat-8000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.06336086709052324,
+        "user": 0.05358200000000002,
+        "system": 0.01117900000000005,
+        "max_rss_kib": 21432,
+        "cache_bytes": null
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.05895508220419288,
+        "user": 0.04860499999999979,
+        "system": 0.011190999999999951,
+        "max_rss_kib": 23004,
+        "cache_bytes": null
+      }
+    },
+    "cache-cold-1000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.14555107988417149,
+        "user": 0.05503999999999998,
+        "system": 0.07087699999999986,
+        "max_rss_kib": 119740,
+        "cache_bytes": 100667392
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.047285810112953186,
+        "user": 0.030834999999999724,
+        "system": 0.011251999999999818,
+        "max_rss_kib": 17636,
+        "cache_bytes": 2101248
+      }
+    },
+    "cache-warm-1000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.06862252904102206,
+        "user": 0.025114999999999554,
+        "system": 0.03978999999999999,
+        "max_rss_kib": 65860,
+        "cache_bytes": 67112960
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.021324260160326958,
+        "user": 0.012514000000000358,
+        "system": 0.0067750000000001975,
+        "max_rss_kib": 13160,
+        "cache_bytes": 2101248
+      }
+    },
+    "sample": {
+      "before": {
+        "repeats": 3,
+        "wall": 1.7372513520531356,
+        "user": 6.755667000000001,
+        "system": 0.2501009999999999,
+        "max_rss_kib": 75084,
+        "cache_bytes": 716800
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 1.7251207791268826,
+        "user": 6.760057999999999,
+        "system": 0.24030799999999997,
+        "max_rss_kib": 75444,
+        "cache_bytes": 1056768
+      }
+    },
+    "full": {
+      "before": {
+        "repeats": 2,
+        "wall": 19.7863987183664,
+        "user": 148.65416000000002,
+        "system": 0.9454375000000002,
+        "max_rss_kib": 139046.0,
+        "cache_bytes": 5820416.0
+      },
+      "after": {
+        "repeats": 2,
+        "wall": 19.89861568226479,
+        "user": 149.5188395,
+        "system": 0.920382,
+        "max_rss_kib": 137802.0,
+        "cache_bytes": 4939776.0
+      }
+    }
+  },
+  "timings": [
+    {
+      "binary": "before",
+      "scope": "times-line-2000",
+      "wall": 0.1321431752294302,
+      "user": 0.073201,
+      "system": 0.05669,
+      "max_rss_kib": 93800,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-line-2000",
+      "wall": 0.06449249666184187,
+      "user": 0.05134399999999999,
+      "system": 0.011297999999999996,
+      "max_rss_kib": 19932,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-line-2000",
+      "wall": 0.06795046478509903,
+      "user": 0.049886000000000014,
+      "system": 0.016374,
+      "max_rss_kib": 20008,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-line-2000",
+      "wall": 0.13624147372320294,
+      "user": 0.08193299999999998,
+      "system": 0.05252200000000001,
+      "max_rss_kib": 93812,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-line-2000",
+      "wall": 0.13130728900432587,
+      "user": 0.08196399999999998,
+      "system": 0.04779099999999997,
+      "max_rss_kib": 93816,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-line-2000",
+      "wall": 0.06494498485699296,
+      "user": 0.05134500000000003,
+      "system": 0.012195000000000011,
+      "max_rss_kib": 19944,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-line-4000",
+      "wall": 0.38568430580198765,
+      "user": 0.20355399999999996,
+      "system": 0.176749,
+      "max_rss_kib": 323576,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-line-4000",
+      "wall": 0.1144932908937335,
+      "user": 0.09075100000000003,
+      "system": 0.018934000000000006,
+      "max_rss_kib": 27112,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-line-4000",
+      "wall": 0.11346299573779106,
+      "user": 0.09255099999999994,
+      "system": 0.016374999999999973,
+      "max_rss_kib": 27116,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-line-4000",
+      "wall": 0.3740477040410042,
+      "user": 0.19690600000000003,
+      "system": 0.17287399999999997,
+      "max_rss_kib": 323704,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-line-4000",
+      "wall": 0.3718903213739395,
+      "user": 0.20572400000000013,
+      "system": 0.16195700000000002,
+      "max_rss_kib": 323580,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-line-4000",
+      "wall": 0.11289383936673403,
+      "user": 0.08888999999999991,
+      "system": 0.019969000000000015,
+      "max_rss_kib": 27048,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-multiline-4000",
+      "wall": 0.11782126314938068,
+      "user": 0.09648000000000012,
+      "system": 0.017278000000000016,
+      "max_rss_kib": 27132,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-multiline-4000",
+      "wall": 0.13980852905660868,
+      "user": 0.11448899999999984,
+      "system": 0.02082700000000004,
+      "max_rss_kib": 28268,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-multiline-4000",
+      "wall": 0.13864944176748395,
+      "user": 0.11225400000000008,
+      "system": 0.021890999999999994,
+      "max_rss_kib": 28392,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-multiline-4000",
+      "wall": 0.11871198425069451,
+      "user": 0.09252899999999986,
+      "system": 0.022033999999999998,
+      "max_rss_kib": 27064,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-multiline-4000",
+      "wall": 0.11845682421699166,
+      "user": 0.09703000000000017,
+      "system": 0.017461999999999978,
+      "max_rss_kib": 27064,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-multiline-4000",
+      "wall": 0.13931407500058413,
+      "user": 0.1152629999999999,
+      "system": 0.019959999999999978,
+      "max_rss_kib": 28316,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 4000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-parameters-2000",
+      "wall": 0.14640284003689885,
+      "user": 0.12058199999999997,
+      "system": 0.023977000000000026,
+      "max_rss_kib": 39484,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-parameters-2000",
+      "wall": 0.09499753406271338,
+      "user": 0.0796140000000003,
+      "system": 0.01383599999999996,
+      "max_rss_kib": 22312,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-parameters-2000",
+      "wall": 0.09896422969177365,
+      "user": 0.0884159999999996,
+      "system": 0.008859000000000061,
+      "max_rss_kib": 22316,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-parameters-2000",
+      "wall": 0.1457996191456914,
+      "user": 0.11705999999999994,
+      "system": 0.02707599999999999,
+      "max_rss_kib": 39464,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "times-parameters-2000",
+      "wall": 0.1447969484142959,
+      "user": 0.12314500000000006,
+      "system": 0.02006999999999992,
+      "max_rss_kib": 39484,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "times-parameters-2000",
+      "wall": 0.09539192588999867,
+      "user": 0.07777499999999993,
+      "system": 0.01620900000000003,
+      "max_rss_kib": 22376,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 2000,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-nested-2",
+      "wall": 0.014209527056664228,
+      "user": 0.008071000000000161,
+      "system": 0.0072470000000000034,
+      "max_rss_kib": 12852,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-nested-2",
+      "wall": 0.014408094342797995,
+      "user": 0.009949999999999903,
+      "system": 0.005479000000000012,
+      "max_rss_kib": 13036,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-nested-2",
+      "wall": 0.014062278904020786,
+      "user": 0.009536999999999907,
+      "system": 0.005618000000000123,
+      "max_rss_kib": 13036,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-nested-2",
+      "wall": 0.013950313907116652,
+      "user": 0.008470000000000422,
+      "system": 0.006675999999999904,
+      "max_rss_kib": 12852,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-nested-2",
+      "wall": 0.014158436097204685,
+      "user": 0.012089000000000016,
+      "system": 0.003041999999999989,
+      "max_rss_kib": 12852,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-nested-2",
+      "wall": 0.015269930940121412,
+      "user": 0.005271999999999721,
+      "system": 0.010737999999999914,
+      "max_rss_kib": 13032,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-nested-600",
+      "wall": 0.18337319884449244,
+      "user": 0.17548900000000023,
+      "system": 0.00894600000000012,
+      "max_rss_kib": 15544,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-nested-600",
+      "wall": 0.02555657923221588,
+      "user": 0.017822999999999922,
+      "system": 0.008896000000000015,
+      "max_rss_kib": 15656,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-nested-600",
+      "wall": 0.025174589827656746,
+      "user": 0.018866999999999745,
+      "system": 0.007360999999999951,
+      "max_rss_kib": 15784,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-nested-600",
+      "wall": 0.1828441610559821,
+      "user": 0.1790560000000001,
+      "system": 0.004974999999999952,
+      "max_rss_kib": 15532,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-nested-600",
+      "wall": 0.18159025395289063,
+      "user": 0.17464400000000024,
+      "system": 0.007980000000000098,
+      "max_rss_kib": 15536,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-nested-600",
+      "wall": 0.025269790086895227,
+      "user": 0.02047700000000008,
+      "system": 0.005884999999999918,
+      "max_rss_kib": 15852,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-flat-8000",
+      "wall": 0.06336086709052324,
+      "user": 0.05418599999999962,
+      "system": 0.01017800000000002,
+      "max_rss_kib": 21424,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-flat-8000",
+      "wall": 0.05895508220419288,
+      "user": 0.04973300000000025,
+      "system": 0.010348000000000024,
+      "max_rss_kib": 23004,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-flat-8000",
+      "wall": 0.05899430997669697,
+      "user": 0.047555000000000014,
+      "system": 0.012426999999999966,
+      "max_rss_kib": 23064,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-flat-8000",
+      "wall": 0.0636887177824974,
+      "user": 0.05358200000000002,
+      "system": 0.01117900000000005,
+      "max_rss_kib": 21432,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "ancestors-flat-8000",
+      "wall": 0.06332362070679665,
+      "user": 0.04946099999999998,
+      "system": 0.014906000000000086,
+      "max_rss_kib": 21432,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "after",
+      "scope": "ancestors-flat-8000",
+      "wall": 0.05864779697731137,
+      "user": 0.04860499999999979,
+      "system": 0.011190999999999951,
+      "max_rss_kib": 22888,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": null
+    },
+    {
+      "binary": "before",
+      "scope": "cache-cold-1000",
+      "wall": 0.1346166990697384,
+      "user": 0.04676100000000005,
+      "system": 0.055898,
+      "max_rss_kib": 87100,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 67112960
+    },
+    {
+      "binary": "before",
+      "scope": "cache-warm-1000",
+      "wall": 0.06876719417050481,
+      "user": 0.02588299999999988,
+      "system": 0.03978999999999999,
+      "max_rss_kib": 65860,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 67112960
+    },
+    {
+      "binary": "after",
+      "scope": "cache-cold-1000",
+      "wall": 0.047285810112953186,
+      "user": 0.02908500000000025,
+      "system": 0.011627999999999972,
+      "max_rss_kib": 17000,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 1056768
+    },
+    {
+      "binary": "after",
+      "scope": "cache-warm-1000",
+      "wall": 0.022593172267079353,
+      "user": 0.01021800000000006,
+      "system": 0.009254000000000095,
+      "max_rss_kib": 13160,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 1056768
+    },
+    {
+      "binary": "after",
+      "scope": "cache-cold-1000",
+      "wall": 0.047681673895567656,
+      "user": 0.030834999999999724,
+      "system": 0.011251999999999818,
+      "max_rss_kib": 17636,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 2101248
+    },
+    {
+      "binary": "after",
+      "scope": "cache-warm-1000",
+      "wall": 0.021324260160326958,
+      "user": 0.012514000000000358,
+      "system": 0.0067750000000001975,
+      "max_rss_kib": 13160,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 2101248
+    },
+    {
+      "binary": "before",
+      "scope": "cache-cold-1000",
+      "wall": 0.1588514861650765,
+      "user": 0.05503999999999998,
+      "system": 0.08057499999999984,
+      "max_rss_kib": 119740,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 100667392
+    },
+    {
+      "binary": "before",
+      "scope": "cache-warm-1000",
+      "wall": 0.0658512101508677,
+      "user": 0.025114999999999554,
+      "system": 0.038715000000000055,
+      "max_rss_kib": 64648,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 100667392
+    },
+    {
+      "binary": "before",
+      "scope": "cache-cold-1000",
+      "wall": 0.14555107988417149,
+      "user": 0.0567230000000003,
+      "system": 0.07087699999999986,
+      "max_rss_kib": 123964,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 100667392
+    },
+    {
+      "binary": "before",
+      "scope": "cache-warm-1000",
+      "wall": 0.06862252904102206,
+      "user": 0.024564999999999948,
+      "system": 0.04090700000000025,
+      "max_rss_kib": 68284,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 67112960
+    },
+    {
+      "binary": "after",
+      "scope": "cache-cold-1000",
+      "wall": 0.04727047495543957,
+      "user": 0.034025000000000194,
+      "system": 0.007007999999999903,
+      "max_rss_kib": 17764,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 2625536
+    },
+    {
+      "binary": "after",
+      "scope": "cache-warm-1000",
+      "wall": 0.021295825019478798,
+      "user": 0.013099999999999667,
+      "system": 0.005980999999999792,
+      "max_rss_kib": 13160,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1000,
+        "corrected_count": 0
+      },
+      "cache_bytes": 2625536
+    },
+    {
+      "binary": "before",
+      "scope": "sample",
+      "wall": 1.7372513520531356,
+      "user": 6.755667000000001,
+      "system": 0.2219580000000001,
+      "max_rss_kib": 75336,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": 1056768
+    },
+    {
+      "binary": "after",
+      "scope": "sample",
+      "wall": 1.7259153281338513,
+      "user": 6.760057999999999,
+      "system": 0.24030799999999997,
+      "max_rss_kib": 75444,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": 1056768
+    },
+    {
+      "binary": "after",
+      "scope": "sample",
+      "wall": 1.7189931101165712,
+      "user": 6.7555499999999995,
+      "system": 0.2565979999999999,
+      "max_rss_kib": 76024,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": 1056768
+    },
+    {
+      "binary": "before",
+      "scope": "sample",
+      "wall": 1.7267927639186382,
+      "user": 6.707758000000002,
+      "system": 0.26599600000000034,
+      "max_rss_kib": 74504,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": 380928
+    },
+    {
+      "binary": "before",
+      "scope": "sample",
+      "wall": 1.7420900678262115,
+      "user": 6.779437999999995,
+      "system": 0.2501009999999999,
+      "max_rss_kib": 75084,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": 716800
+    },
+    {
+      "binary": "after",
+      "scope": "sample",
+      "wall": 1.7251207791268826,
+      "user": 6.813995000000006,
+      "system": 0.23951499999999992,
+      "max_rss_kib": 75132,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      },
+      "cache_bytes": 638976
+    },
+    {
+      "binary": "before",
+      "scope": "full",
+      "wall": 19.8324809637852,
+      "user": 148.710326,
+      "system": 0.9585759999999999,
+      "max_rss_kib": 135480,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      },
+      "cache_bytes": 4206592
+    },
+    {
+      "binary": "after",
+      "scope": "full",
+      "wall": 19.884256588760763,
+      "user": 149.304131,
+      "system": 0.9316200000000006,
+      "max_rss_kib": 136916,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      },
+      "cache_bytes": 2494464
+    },
+    {
+      "binary": "after",
+      "scope": "full",
+      "wall": 19.912974775768816,
+      "user": 149.73354799999998,
+      "system": 0.9091439999999995,
+      "max_rss_kib": 138688,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      },
+      "cache_bytes": 7385088
+    },
+    {
+      "binary": "before",
+      "scope": "full",
+      "wall": 19.740316472947598,
+      "user": 148.59799400000003,
+      "system": 0.9322990000000004,
+      "max_rss_kib": 142612,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      },
+      "cache_bytes": 7434240
+    }
+  ],
+  "benchmark_comparisons": {
+    "times-line-2000": {
+      "identical_cli_offenses": true
+    },
+    "times-line-4000": {
+      "identical_cli_offenses": true
+    },
+    "times-multiline-4000": {
+      "identical_cli_offenses": true
+    },
+    "times-parameters-2000": {
+      "identical_cli_offenses": true
+    },
+    "ancestors-nested-2": {
+      "identical_cli_offenses": true
+    },
+    "ancestors-nested-600": {
+      "identical_cli_offenses": true
+    },
+    "ancestors-flat-8000": {
+      "identical_cli_offenses": true
+    },
+    "cache-cold-1000": {
+      "identical_cli_offenses": true
+    },
+    "cache-warm-1000": {
+      "identical_cli_offenses": true
+    },
+    "sample": {
+      "identical_cli_offenses": true
+    },
+    "full": {
+      "identical_cli_offenses": true
+    }
+  },
+  "offense_sha256": {
+    "times-line-2000": {
+      "before": "46d4868ad7b656d13253d15ecf9aeb927f1675a52adbb7b316369ba42ef018e8",
+      "after": "46d4868ad7b656d13253d15ecf9aeb927f1675a52adbb7b316369ba42ef018e8"
+    },
+    "times-line-4000": {
+      "before": "3be4698259906f2e1f8fd1e027e9284994b49d61bf6fa8a37a4709ca5a65ba3e",
+      "after": "3be4698259906f2e1f8fd1e027e9284994b49d61bf6fa8a37a4709ca5a65ba3e"
+    },
+    "times-multiline-4000": {
+      "before": "a9d7e35ad91330d443b5fff495e83687cc17167ba75c0968fbac239a14887250",
+      "after": "a9d7e35ad91330d443b5fff495e83687cc17167ba75c0968fbac239a14887250"
+    },
+    "times-parameters-2000": {
+      "before": "7d6340c41b01b6977783a2f465d09ba4bac51575bc3c2f08914ec8cb4aabf354",
+      "after": "7d6340c41b01b6977783a2f465d09ba4bac51575bc3c2f08914ec8cb4aabf354"
+    },
+    "ancestors-nested-2": {
+      "before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "ancestors-nested-600": {
+      "before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "ancestors-flat-8000": {
+      "before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "cache-cold-1000": {
+      "before": "fcbd1356bc093ae1df78e939dc7b641d2d31d537cea80f494611435e7bb72bf0",
+      "after": "fcbd1356bc093ae1df78e939dc7b641d2d31d537cea80f494611435e7bb72bf0"
+    },
+    "cache-warm-1000": {
+      "before": "fcbd1356bc093ae1df78e939dc7b641d2d31d537cea80f494611435e7bb72bf0",
+      "after": "fcbd1356bc093ae1df78e939dc7b641d2d31d537cea80f494611435e7bb72bf0"
+    },
+    "sample": {
+      "before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "full": {
+      "before": "cfa96263352ba0864eeddac275d5760bdafcdb8421df31a5c6229601201a608d",
+      "after": "cfa96263352ba0864eeddac275d5760bdafcdb8421df31a5c6229601201a608d"
+    }
+  },
+  "release_cli_safety": [
+    {
+      "case": 0,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 0,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 0,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 1,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 1,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 1,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 2,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 2,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 2,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 3,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 3,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 3,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 4,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 4,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 4,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 5,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 5,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 5,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 6,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 6,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 6,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 7,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 7,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 7,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 8,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 8,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 8,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 9,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 9,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 9,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 10,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 10,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 10,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 11,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 11,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 11,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 12,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 12,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 12,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 13,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 13,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 13,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 14,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 14,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 14,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 15,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 15,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 15,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 16,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 16,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 16,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 17,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 17,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 17,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 18,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 18,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 18,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 19,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 19,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 19,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 20,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 0,
+      "corrected": 0
+    },
+    {
+      "case": 20,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 0,
+      "corrected": 0
+    },
+    {
+      "case": 20,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 0,
+      "corrected": 0
+    },
+    {
+      "case": 21,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 21,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 21,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 22,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 22,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 22,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 23,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 23,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 23,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 24,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 24,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 24,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 25,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 25,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 25,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 1
+    },
+    {
+      "case": 26,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 26,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 26,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 1
+    },
+    {
+      "case": 27,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 27,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 27,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 1
+    },
+    {
+      "case": 28,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 28,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 28,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 1
+    },
+    {
+      "case": 29,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 29,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 29,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 1
+    },
+    {
+      "case": 30,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 30,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 30,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 31,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 31,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 31,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 32,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 32,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 32,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 33,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 33,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 33,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 34,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 34,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 34,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 35,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 35,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 35,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 36,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 36,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 36,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 37,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 37,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 37,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 38,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 38,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 38,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 39,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 39,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 39,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 40,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 40,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 1
+    },
+    {
+      "case": 40,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 1
+    },
+    {
+      "case": 41,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 41,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 2
+    },
+    {
+      "case": 41,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 2
+    },
+    {
+      "case": 42,
+      "cop": "Style/MixinGrouping",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 0
+    },
+    {
+      "case": 42,
+      "cop": "Style/MixinGrouping",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 2
+    },
+    {
+      "case": 42,
+      "cop": "Style/MixinGrouping",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 2,
+      "corrected": 2
+    },
+    {
+      "case": 43,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 43,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 43,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 44,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 44,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 44,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 45,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 45,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 45,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 46,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 46,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 46,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 47,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 47,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 47,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 48,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 48,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 48,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 49,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 49,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 49,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 50,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 50,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 50,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 51,
+      "cop": "Lint/UselessTimes",
+      "mode": "off",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 51,
+      "cop": "Lint/UselessTimes",
+      "mode": "-a",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    },
+    {
+      "case": 51,
+      "cop": "Lint/UselessTimes",
+      "mode": "-A",
+      "matches_expected_bytes": true,
+      "offenses": 1,
+      "corrected": 0
+    }
+  ],
+  "safety_runtime": {
+    "method": "Expected output bytes checked by Rust engine safety suite in Off/Safe/All; these exact fixture bytes execute under Ruby3.4.9 using stub methods/modules.",
+    "cases": [
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "0.times { work }; keep_me\n",
+        "manual": true,
+        "before": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "0.times; keep_me\n",
+        "manual": true,
+        "before": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "1.times {}; keep_me\n",
+        "manual": true,
+        "before": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "0.times do\n work\nend; keep_me\n",
+        "manual": true,
+        "before": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
+        "manual": true,
+        "before": {
+          "events": [],
+          "stdout": "one\ntwo\n",
+          "error": null
+        },
+        "after": {
+          "events": [],
+          "stdout": "one\ntwo\n",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "1.times do\n work\nrescue Error\n other\nend\n",
+        "manual": true,
+        "before": {
+          "events": [
+            "work",
+            "rescued"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            "work",
+            "rescued"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "1.times { break 123 }\nkeep_me\n",
+        "manual": true,
+        "before": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "while condition\n 1.times { break }\n keep_me\nend\n",
+        "manual": true,
+        "before": {
+          "events": [],
+          "stdout": "",
+          "error": "NameError"
+        },
+        "after": {
+          "events": [],
+          "stdout": "",
+          "error": "NameError"
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "1.times { |first, second| consume(first, second) }\n",
+        "manual": true,
+        "before": {
+          "events": [
+            [
+              0,
+              null
+            ]
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            [
+              0,
+              null
+            ]
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "1.times(&:zero?)\n",
+        "manual": true,
+        "before": {
+          "events": [],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Lint/UselessTimes",
+        "source": "1.times { work }; keep_me\n",
+        "manual": false,
+        "before": {
+          "events": [
+            "work",
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            "work",
+            "keep"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Style/MixinGrouping",
+        "source": "class X\n include first_module(), second_module()\nend\n",
+        "manual": true,
+        "before": {
+          "events": [
+            "first",
+            "second"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            "first",
+            "second"
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      },
+      {
+        "cop": "Style/MixinGrouping",
+        "source": "class X\n include First\n $events << ancestors.include?(Second)\n include Second\nend\n",
+        "manual": true,
+        "before": {
+          "events": [
+            false
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "after": {
+          "events": [
+            false
+          ],
+          "stdout": "",
+          "error": null
+        },
+        "equivalent": true
+      }
+    ]
+  },
+  "value_runtime": {
+    "method": "Rust safety suite asserts these exact sources unchanged in all modes; execute preserved reference bytes in Ruby3.4.9.",
+    "cases": [
+      {
+        "source": "values = [\n  0.times {}\n]\n",
+        "before": [
+          0
+        ],
+        "after": [
+          0
+        ],
+        "equivalent": true
+      },
+      {
+        "source": "values = [\n  1.times { 7 }\n]\n",
+        "before": [
+          1
+        ],
+        "after": [
+          1
+        ],
+        "equivalent": true
+      },
+      {
+        "source": "values = {a: \n  0.times { work }\n}\n",
+        "before": {
+          "a": 0
+        },
+        "after": {
+          "a": 0
+        },
+        "equivalent": true
+      },
+      {
+        "source": "value =\n  0.times {}\n",
+        "before": 0,
+        "after": 0,
+        "equivalent": true
+      },
+      {
+        "source": "consume(\n  0.times { work }\n)\n",
+        "before": 0,
+        "after": 0,
+        "equivalent": true
+      },
+      {
+        "source": "value = begin\n 0.times {}\nend\n",
+        "before": 0,
+        "after": 0,
+        "equivalent": true
+      },
+      {
+        "source": "(\n 0.times {}\n).inspect\n",
+        "before": "0",
+        "after": "0",
+        "equivalent": true
+      }
+    ]
+  },
+  "safety_rubyvm_validity": [
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "0.times { work }; keep_me\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "0.times; keep_me\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times {}; keep_me\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "0.times do\n work\nend; keep_me\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "0.times { work } # keep comment\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times do\n work\nrescue Error\n other\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times do\n work\nensure\n other\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { break 123 }\nkeep_me\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { next 123 }\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { redo }\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "while condition\n 1.times { break }\n keep_me\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { |first, second| consume(first, second) }\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { |(first, second)| consume(first, second) }\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { |index; local| consume(index) }\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { puts _1 }\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { puts it }\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times(&:zero?)\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times(&%s(zero?))\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "0.times(&:work)\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "0.times(&:\"#{callback_name}\")\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "0.times { puts <<~TEXT }\n  value\nTEXT\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { # keep comment\n work\n}\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { work } # keep comment\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times do\n items.each do\n  consume(\"one\ntwo\")\n end\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { items.each { break } }\n",
+      "expected_output_valid": true,
+      "manual": false
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "def f\n 1.times { return 7 }\nend\n",
+      "expected_output_valid": true,
+      "manual": false
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { while condition; break; end }\n",
+      "expected_output_valid": true,
+      "manual": false
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "1.times { work }; keep_me\n",
+      "expected_output_valid": true,
+      "manual": false
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "0.times { work };\n",
+      "expected_output_valid": true,
+      "manual": false
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include first_module(), second_module()\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include A,\n # keep argument comment\n B\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include First\n side_effect\n include Second\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include First\n $events << ancestors.include?(Second)\n include Second\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include First\n # keep group comment\n include Second\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include First\n include Second # keep suffix comment\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include First\n extend Other\n include Second\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include()\n include A\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include first_module()\n include second_module()\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include ::First, Namespace::Second\nend\n",
+      "expected_output_valid": true,
+      "manual": false
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X\n include ::First\n include Namespace::Second\nend\n",
+      "expected_output_valid": true,
+      "manual": false
+    },
+    {
+      "cop": "Style/MixinGrouping",
+      "source": "class X; include First; include Second; end\n",
+      "expected_output_valid": true,
+      "manual": false
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "values = [\n  0.times {}\n]\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "values = [\n  1.times { 7 }\n]\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "values = {a: \n  0.times { work }\n}\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "value =\n  0.times {}\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "consume(\n  0.times { work }\n)\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "if\n  0.times {}\n work\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "value = begin\n 0.times {}\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "value = if condition\n 0.times {}\nend\n",
+      "expected_output_valid": true,
+      "manual": true
+    },
+    {
+      "cop": "Lint/UselessTimes",
+      "source": "(\n 0.times {}\n).inspect\n",
+      "expected_output_valid": true,
+      "manual": true
+    }
+  ],
+  "inspection_comparisons": [
+    {
+      "case": 0,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; attribute :x; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 1,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; attribute :x;end;class A;def x;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 2,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; def outer; attribute :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 3,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; class << self; attribute :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 4,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; attribute(:x) {nil}; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 5,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "module A; attribute :x,:y;def x;end;def self.y;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 6,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; attributes :x; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 7,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; attributes :x;end;class A;def x;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 8,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; def outer; attributes :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 9,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; class << self; attributes :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 10,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; attributes(:x) {nil}; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 11,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "module A; attributes :x,:y;def x;end;def self.y;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 12,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; attribute :x; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 13,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; attribute :x;end;class A;def x;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 14,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; def outer; attribute :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 15,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; class << self; attribute :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 16,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; attribute(:x) {nil}; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 17,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "module A; attribute :x,:y;def x;end;def self.y;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 18,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A;include Sidekiq::Worker;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 19,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A\ninclude Sidekiq::Worker\n# comment\nend\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 20,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A < BaseWorker;def m;sidekiq_options queue: :x;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 21,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A < BaseWorker;module B;sidekiq_options queue: :x;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 22,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A < BaseWorker;include Sidekiq::Worker;class B;use_default_queue!;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 23,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A;class B < BaseWorker;use_default_queue!;end;work;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 24,
+      "cop": "Cops/RescueMustReportError",
+      "source": "begin;work;rescue;-> {Sentry.capture_exception($!)};end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 25,
+      "cop": "Cops/RescueMustReportError",
+      "source": "begin;work;rescue;raise=1;raise;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 26,
+      "cop": "Cops/RescueMustReportError",
+      "source": "begin;work;rescue;def m;Rails.error.report($!);end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 27,
+      "cop": "Cops/RescueMustReportError",
+      "source": "begin;work;rescue;Sentry&.capture_exception($!);end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 28,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "redis.multi do |t|;t.set(\"a\",\"v\");end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 29,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "redis.multi do |t|\nt.set(\"a\",\"v\")\n# comment\nend\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 30,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "redis.multi do |t|;t.set(\"a\",\"v\");t.set(\"b\",\"v\",ex:60);end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 31,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "redis.multi do |t|;items.each { |t| t.set(\"a\",\"v\") };noop;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 32,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "other.multi do |t|;t.set(\"a\",\"v\");marker=\"redis\";end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 33,
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "source": "class FooPolicy;class Other;def show?;true;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 34,
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "source": "class FooPolicy;class Other;disable_scoping!;def show?;true;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 35,
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "source": "class FooPolicy;class Other;class Scope < ApplicationPolicy::Scope;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 36,
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "source": "class FooPolicy;class OtherPolicy;disable_scoping!;def show?;true;end;end;def show?;true;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 37,
+      "cop": "Cops/EnforceScopeInPolicies",
+      "source": "class FooPolicy;class Other;def show?;true;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 38,
+      "cop": "Cops/EnforceScopeInPolicies",
+      "source": "class FooPolicy;class Other;disable_scoping!;def show?;true;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 39,
+      "cop": "Cops/EnforceScopeInPolicies",
+      "source": "class FooPolicy;class Other;class Scope < ApplicationPolicy::Scope;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 40,
+      "cop": "Cops/EnforceScopeInPolicies",
+      "source": "class FooPolicy;class OtherPolicy;disable_scoping!;def show?;true;end;end;def show?;true;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 41,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;class B;end;class C;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 42,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "A=Class.new do;B=1;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 43,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "A.class_eval do;B=1;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 44,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;class << self;B=1;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 45,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "items.each do;class A;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 46,
+      "cop": "AnyCable/InstanceVars",
+      "source": "module A;@x=1;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 47,
+      "cop": "AnyCable/InstanceVars",
+      "source": "class A;module B;@x=1;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 48,
+      "cop": "Cops/NoSleep",
+      "source": "sleep\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 49,
+      "cop": "Cops/NoSleep",
+      "source": "sleep=1;sleep\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 50,
+      "cop": "Cops/NoSleep",
+      "source": "def m(sleep);sleep;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 51,
+      "cop": "Cops/NoForeignKeys",
+      "source": "add_foreign_key\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 52,
+      "cop": "Cops/NoForeignKeys",
+      "source": "add_foreign_key=1;add_foreign_key\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 53,
+      "cop": "Cops/NoForeignKeys",
+      "source": "def m(add_foreign_key);add_foreign_key;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 54,
+      "cop": "AnyCable/PeriodicalTimers",
+      "source": "periodically\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 55,
+      "cop": "AnyCable/PeriodicalTimers",
+      "source": "periodically=1;periodically\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 56,
+      "cop": "AnyCable/PeriodicalTimers",
+      "source": "def m(periodically);periodically;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 57,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A\ud801\udc00;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 58,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A\ud801\udc00::B;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 59,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "module Object;class A;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 60,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class Object::A;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 61,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class ABCDEFGHIJKLMNOPQRSTUVWXYZ;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 62,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "module A;class << self;class << self;B=1;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 63,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;(B,(C,D),E)=nil;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 64,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;B::C,D=nil;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 65,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;(*B,C)=[];end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 66,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;for B,C in [];end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    }
+  ],
+  "correction_comparisons": [
+    {
+      "case": "codemap-0",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-0",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-0",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-1",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-1",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-1",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-2",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-2",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-2",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-3",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-3",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-3",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-4",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-4",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-4",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-5",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-5",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-5",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "nested-options",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "nested-options",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "nested-options",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    }
+  ],
+  "clippy_comparison": {
+    "baseline": 224,
+    "current": 223,
+    "new": [],
+    "removed": [
+      [
+        "src/linter/engine/offense.rs",
+        "clippy::collapsible_if",
+        "this `if` statement can be collapsed",
+        1
+      ]
+    ]
+  },
+  "validation": {
+    "all_target_tests": 782,
+    "ported_reference_cases": 2205,
+    "earlier_final_parity_cases": 30,
+    "new_diagnostic_reference_cases": 83,
+    "new_retained_safety_cases": 52,
+    "abc_function_offenses": 0,
+    "abc_module_offenses": 0,
+    "abc_used_once": 92,
+    "abc_never_used": 0
+  },
+  "fixture_sha256": {
+    "tests/fixtures/ported-reference.json": "f08a750952850217b02c62f8e12f2af61b68dc1716c1cf11edd05c572887b922",
+    "tests/fixtures/retained-autocorrect-safety.json": "9afea2c5ed47975efc40389f3299b8c0a8d760abb3437372cc0073220cdebc67"
+  }
+}
