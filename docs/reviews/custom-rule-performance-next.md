@@ -1,6 +1,6 @@
 # Further performance audit of the 28 custom checks
 
-Read-only audit of `5b95a2e` (optimized implementation `3f5fca0`), following the [previous optimization work](port-fixes-and-optimizations.md). No implementation changes are included. **Findings below remain unfixed.** Two static reviewers covered all 28 app-specific rules; one profiler measured the existing release binary, matched corpus controls and candidate-heavy inputs. Already-fixed NoSetex reparsing and eager edit rendering are not being proposed again.
+Read-only audit of `5b95a2e` (optimized implementation `3f5fca0`), following the [previous optimization work](port-fixes-and-optimizations.md). The audit itself made no implementation changes. **The findings are now addressed in [implementation 91ccb7c and its measured follow-up](custom-rule-optimization-fixes.md).** Two static reviewers covered all 28 app-specific rules; one profiler measured the existing release binary, matched corpus controls and candidate-heavy inputs. Already-fixed NoSetex reparsing and eager edit rendering are not being proposed again.
 
 ## Priority 1: repair the shared streaming traversal regression
 

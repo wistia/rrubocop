@@ -4,7 +4,7 @@ Follow-up to the [independent parity review](final-five.md) and [98-rule perform
 
 ## Subsequent audit
 
-The [further custom-check audit](custom-rule-performance-next.md) identifies a performance regression in the streaming descendant walker on nested/wide stress inputs, confirmed against the preserved pre-change binary. It recommends TreeCursor traversal before further per-rule indexing. This remains unfixed in the audited implementation; the passing parity tests and full-codebase measurements below remain historical validation evidence.
+The [further custom-check audit](custom-rule-performance-next.md) identifies a performance regression in the streaming descendant walker on nested/wide stress inputs, confirmed against the preserved pre-change binary. It recommends TreeCursor traversal before further per-rule indexing. That regression is fixed in [implementation 91ccb7c and its measured follow-up](custom-rule-optimization-fixes.md); the passing parity tests and full-codebase measurements below remain historical validation evidence.
 
 ## Parity fixes
 
