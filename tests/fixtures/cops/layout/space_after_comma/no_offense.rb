@@ -9,3 +9,7 @@ puts '#{foo(1,2)}'
 puts <<'LITERAL'
 #{foo(1,2)}
 LITERAL
+value = %s,foo,
+value = %i,a b,
+value = %x,echo,
+value = %w,a b,

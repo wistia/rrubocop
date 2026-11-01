@@ -25,15 +25,22 @@ pub struct CorrectionSet {
 
 impl CorrectionSet {
     pub fn from_vec(raw: Vec<Correction>) -> Self {
-        let accepted = selection::select(raw);
+        let (corrections, aliases) = selection::select(raw)
+            .into_iter()
+            .map(|accepted| (accepted.edit, accepted.aliases))
+            .unzip();
         Self {
-            corrections: accepted.iter().map(|a| a.edit.clone()).collect(),
-            aliases: accepted.into_iter().map(|a| a.aliases).collect(),
+            corrections,
+            aliases,
         }
     }
 
     pub fn accepted(&self) -> &[Correction] {
         &self.corrections
+    }
+
+    pub fn into_accepted(self) -> Vec<Correction> {
+        self.corrections
     }
 
     pub fn apply(&self, source: &[u8]) -> Vec<u8> {

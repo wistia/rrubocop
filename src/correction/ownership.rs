@@ -10,6 +10,9 @@ pub(crate) fn assign_owners(
     diagnostics: &[Diagnostic],
     edits: &mut [Correction],
 ) {
+    if edits.iter().all(|edit| edit.owner.is_some()) {
+        return;
+    }
     let mut candidates = diagnostic_candidates(source, diagnostics);
     let mut by_cop: HashMap<&str, Vec<usize>> = HashMap::new();
     for (index, edit) in edits

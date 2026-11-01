@@ -2,13 +2,27 @@ use super::*;
 
 fn old_select(raw: Vec<Correction>) -> Vec<Accepted> {
     let mut accepted: Vec<Accepted> = Vec::new();
-    for group in groups(raw) {
+    for group in old_groups(raw) {
         if old_compatible(&group, &accepted) {
             old_accept(group, &mut accepted);
         }
     }
     accepted.sort_by_key(|a| order(&a.edit));
     accepted
+}
+
+fn old_groups(mut raw: Vec<Correction>) -> Vec<Vec<Correction>> {
+    raw.sort_by_key(order);
+    let mut indices = HashMap::new();
+    let mut groups: Vec<Vec<Correction>> = Vec::new();
+    for edit in raw {
+        let index = group_index(&edit, &mut indices, groups.len());
+        if index == groups.len() {
+            groups.push(Vec::new());
+        }
+        groups[index].push(edit);
+    }
+    groups
 }
 
 fn old_compatible(group: &[Correction], accepted: &[Accepted]) -> bool {

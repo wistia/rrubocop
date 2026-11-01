@@ -52,6 +52,9 @@ fn collect_ranges(node: Node<'_>, src: &[u8], out: &mut Vec<(usize, usize)>) {
             | "heredoc_end"
             | "regex"
             | "character"
+            | "delimited_symbol"
+            | "symbol_array"
+            | "subshell"
             | "simple_symbol"
             | "hash_key_symbol"
             | "%w"
@@ -67,7 +70,9 @@ fn collect_ranges(node: Node<'_>, src: &[u8], out: &mut Vec<(usize, usize)>) {
         || kind.contains("heredoc")
     {
         let mut start = node.start_byte();
-        collect_interpolations(node, src, out, &mut start);
+        if permits_interpolation(node, src) {
+            collect_interpolations(node, src, out, &mut start);
+        }
         out.push((start, node.end_byte()));
         return;
     }
@@ -76,6 +81,19 @@ fn collect_ranges(node: Node<'_>, src: &[u8], out: &mut Vec<(usize, usize)>) {
     for child in node.children(&mut cursor) {
         collect_ranges(child, src, out);
     }
+}
+
+fn permits_interpolation(node: Node<'_>, src: &[u8]) -> bool {
+    if !matches!(
+        node.kind(),
+        "string" | "delimited_symbol" | "string_array" | "symbol_array"
+    ) {
+        return true;
+    }
+    let bytes = &src[node.byte_range()];
+    !(bytes.starts_with(b"'")
+        || bytes.starts_with(b":'")
+        || matches!(bytes.get(..2), Some(b"%w" | b"%i" | b"%q" | b"%s")))
 }
 
 fn collect_interpolations(

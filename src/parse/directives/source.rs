@@ -34,7 +34,6 @@ fn from_tree(source: &SourceFile, tree: &tree_sitter::Tree) -> Directives {
     for comment in comments {
         apply_comment(&mut directives, source, comment);
     }
-    close_open(&mut directives, source);
     directives
 }
 
@@ -49,7 +48,7 @@ fn apply_comment(directives: &mut Directives, source: &SourceFile, comment: tree
     let (line_no, _) = source.offset_to_line_col(comment.start_byte());
     directives.comment_lines.push(line_no);
     directives.comment_starts.push(comment.start_byte());
-    let line = if trailing(source, comment.start_byte(), line_no) {
+    let line = if marker.start() > 0 || trailing(source, comment.start_byte(), line_no) {
         "code #"
     } else {
         "#"
@@ -68,17 +67,6 @@ fn trailing(source: &SourceFile, offset: usize, line: usize) -> bool {
     source.as_bytes()[start..offset]
         .iter()
         .any(|byte| !byte.is_ascii_whitespace())
-}
-
-fn close_open(directives: &mut Directives, source: &SourceFile) {
-    let last_line = source.line_count() - usize::from(source.as_bytes().last() == Some(&b'\n'));
-    for (name, start) in directives.open_blocks.drain() {
-        directives
-            .range_disables
-            .entry(name)
-            .or_default()
-            .push((start, last_line.max(1)));
-    }
 }
 
 fn collect_comments<'tree>(

@@ -10,6 +10,8 @@ use super::redundant_cop_disable_directive::nth_cop_token;
 
 /// Lint/RedundantCopEnableDirective — enable without matching disable.
 pub struct RedundantCopEnableDirective;
+mod state;
+use state::Disabled;
 
 fn directive_names(rest: &str) -> Vec<String> {
     let names: Vec<String> = rest
@@ -81,12 +83,14 @@ fn partial_enable_cop_range(
 fn entire_enable_line_range(
     source: &SourceFile,
     line_no: usize,
-    line: &str,
+    _line: &str,
 ) -> Option<(usize, usize)> {
     let start = source.line_start(line_no)?;
     Some((
         start,
-        start + line.len() + usize::from(start + line.len() < source.as_bytes().len()),
+        source
+            .line_start(line_no + 1)
+            .unwrap_or(source.as_bytes().len()),
     ))
 }
 
@@ -122,10 +126,10 @@ fn push_enable_fix(
     true
 }
 
-fn collect_orphaned<'a>(disabled: &mut HashSet<String>, names: &'a [String]) -> Vec<&'a str> {
+fn collect_orphaned<'a>(disabled: &mut Disabled, names: &'a [String]) -> Vec<&'a str> {
     let mut out = Vec::new();
     for name in names {
-        if disabled.remove(name) || disabled.contains("all") {
+        if disabled.enable(name) {
             continue;
         }
         out.push(name.as_str());
@@ -144,12 +148,16 @@ fn report_orphaned_enable(
     corrections: &mut Option<&mut Vec<Correction>>,
     diagnostics: &mut Vec<Diagnostic>,
 ) {
+    let (start, end) = nth_cop_token(line, name, 1).unwrap_or((0, name.len()));
+    let column = crate::parse::source::byte_index_to_column(line, start);
+    let display = if name == "all" { "all cops" } else { name };
     let mut diag = cop.diagnostic(
         source,
         line_no,
-        0,
-        format!("Unnecessary enabling of {name}."),
+        column,
+        format!("Unnecessary enabling of {display}."),
     );
+    diag.highlight_length = end - start;
     if let Some(corr) = corrections.as_deref_mut()
         && push_enable_fix(source, line_no, line, name, remove_entire, entire_fix, corr)
     {
@@ -161,7 +169,7 @@ fn report_orphaned_enable(
 fn check_enable(
     cop: &RedundantCopEnableDirective,
     source: &SourceFile,
-    disabled: &mut HashSet<String>,
+    disabled: &mut Disabled,
     line: &str,
     line_no: usize,
     diagnostics: &mut Vec<Diagnostic>,
@@ -222,17 +230,13 @@ impl Cop for RedundantCopEnableDirective {
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
         // RuboCop seeds disable counts with cops disabled in config.
-        let mut disabled = config_disabled(config);
+        let mut disabled = Disabled::new(config_disabled(config));
         let directives = crate::parse::directives::for_source(source, tree);
         for &line_no in directives.comment_lines() {
             let Some(s) = directives.comment_line(source, line_no) else {
                 continue;
             };
-            if let Some(rest) = s.split("# rubocop:disable").nth(1) {
-                for name in directive_names(rest) {
-                    disabled.insert(name);
-                }
-            }
+            disabled.disable_comment(&s);
             check_enable(
                 self,
                 source,

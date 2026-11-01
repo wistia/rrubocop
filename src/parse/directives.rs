@@ -1,18 +1,17 @@
 //! `# rubocop:disable` / `enable` directive parsing.
 
 use regex::Regex;
-use std::collections::{HashMap, HashSet};
-use std::sync::LazyLock;
+use std::collections::HashMap;
+use std::sync::{Arc, LazyLock, Mutex};
 
 static MARKER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)# *rubocop *: *").unwrap());
 
+type CachedRanges = Mutex<HashMap<String, Arc<Vec<(usize, usize)>>>>;
+
 #[derive(Default)]
 pub struct Directives {
-    /// Cop name (or department or "all") → disabled line numbers (trailing).
-    line_disables: HashMap<String, HashSet<usize>>,
-    /// Cop name → inclusive ranges disabled by block directives.
-    range_disables: HashMap<String, Vec<(usize, usize)>>,
-    open_blocks: HashMap<String, usize>,
+    switches: Vec<Switch>,
+    ranges: CachedRanges,
     comment_lines: Vec<usize>,
     comment_starts: Vec<usize>,
 }
@@ -34,31 +33,24 @@ impl Directives {
     }
 
     pub fn suppresses(&self, cop_name: &str, line: usize) -> bool {
-        if self.line_disabled("all", line) || self.range_disabled("all", line) {
-            return true;
-        }
-        if self.line_disabled(cop_name, line) || self.range_disabled(cop_name, line) {
-            return true;
-        }
-        if let Some((dept, _)) = cop_name.split_once('/') {
-            self.line_disabled(dept, line) || self.range_disabled(dept, line)
-        } else {
-            false
-        }
+        !self.switches.is_empty()
+            && self
+                .cop_ranges(cop_name)
+                .iter()
+                .any(|&(start, end)| start <= line && line <= end)
     }
 
-    fn line_disabled(&self, name: &str, line: usize) -> bool {
-        self.line_disables
-            .iter()
-            .any(|(k, s)| k.eq_ignore_ascii_case(name) && s.contains(&line))
-    }
-
-    fn range_disabled(&self, name: &str, line: usize) -> bool {
-        self.range_disables.iter().any(|(k, ranges)| {
-            k.eq_ignore_ascii_case(name) && ranges.iter().any(|&(a, b)| a <= line && line <= b)
-        })
+    pub(crate) fn disabled_by(&self, cop_name: &str, line: usize, directive_line: usize) -> bool {
+        !self.switches.is_empty()
+            && self
+                .cop_ranges(cop_name)
+                .iter()
+                .any(|&(start, end)| start == directive_line && start <= line && line <= end)
     }
 }
+
+mod state;
+use state::Switch;
 
 fn mask_prefix(text: &str, prefix: usize) -> std::borrow::Cow<'_, str> {
     if text.as_bytes()[..prefix]
@@ -76,51 +68,28 @@ fn mask_prefix(text: &str, prefix: usize) -> std::borrow::Cow<'_, str> {
     std::borrow::Cow::Owned(String::from_utf8(masked).unwrap())
 }
 
-fn apply_enable(d: &mut Directives, rest: &str, line_no: usize) {
+fn apply_switch(d: &mut Directives, rest: &str, line: &str, line_no: usize, disabled: bool) {
+    let single_line = !line.trim_start().starts_with('#');
     for name in cop_names(rest.trim_start_matches([' ', ':'])) {
-        let Some(key) = d
-            .open_blocks
-            .keys()
-            .find(|k| k.eq_ignore_ascii_case(&name))
-            .cloned()
-        else {
-            continue;
-        };
-        if let Some(start) = d.open_blocks.remove(&key) {
-            d.range_disables
-                .entry(key)
-                .or_default()
-                .push((start, line_no));
-        }
-    }
-}
-
-fn apply_disable(d: &mut Directives, rest: &str, line: &str, line_no: usize) {
-    let names = cop_names(rest.trim_start_matches([' ', ':']));
-    // Bare `# rubocop:disable` is malformed (Lint/CopDirectiveSyntax), not "all".
-    if names.is_empty() {
-        return;
-    }
-    let trailing = !line.trim_start().starts_with('#');
-    for name in names {
-        if trailing {
-            d.line_disables.entry(name).or_default().insert(line_no);
-        } else {
-            d.open_blocks.entry(name).or_insert(line_no);
-        }
+        d.switches.push(Switch {
+            name,
+            line: line_no,
+            disabled,
+            single_line,
+        });
     }
 }
 
 fn apply_directive(d: &mut Directives, comment: &str, line: &str, line_no: usize) {
     if let Some(rest) = comment.strip_prefix("enable") {
-        apply_enable(d, rest, line_no);
+        apply_switch(d, rest, line, line_no, false);
         return;
     }
     if let Some(rest) = comment
         .strip_prefix("disable")
         .or_else(|| comment.strip_prefix("todo"))
     {
-        apply_disable(d, rest, line, line_no);
+        apply_switch(d, rest, line, line_no, true);
     }
 }
 

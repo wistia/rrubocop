@@ -11,11 +11,9 @@ pub(super) fn value<'a>(c: &Context<'a>, n: Node<'_>) -> Option<Cow<'a, str>> {
     }
 }
 fn symbol_label(c: &Context<'_>, n: Node<'_>) -> bool {
-    n.parent().is_some_and(|p| {
-        p.kind() == "pair"
-            && field(p, "key") == Some(n)
-            && c.source.as_bytes().get(n.end_byte()) == Some(&b':')
-    })
+    c.source.as_bytes().get(n.end_byte()) == Some(&b':')
+        && n.parent()
+            .is_some_and(|p| p.kind() == "pair" && field(p, "key") == Some(n))
 }
 fn delimited<'a>(c: &Context<'a>, n: Node<'_>) -> Option<Cow<'a, str>> {
     if descendants(n).any(|n| n.kind() == "interpolation") {

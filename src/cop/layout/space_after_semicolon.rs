@@ -70,3 +70,9 @@ impl Cop for SpaceAfterSemicolon {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    crate::cop_fixture_tests!(SpaceAfterSemicolon, "cops/layout/space_after_semicolon");
+}

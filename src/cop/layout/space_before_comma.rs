@@ -82,3 +82,9 @@ impl Cop for SpaceBeforeComma {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    crate::cop_fixture_tests!(SpaceBeforeComma, "cops/layout/space_before_comma");
+}

@@ -3,17 +3,17 @@ use std::collections::BTreeMap;
 use std::ops::Bound::Excluded;
 
 #[derive(Default)]
-pub(super) struct ConflictIndex {
-    ranges: BTreeMap<usize, Correction>,
-    insertions: BTreeMap<usize, Insertions>,
+pub(super) struct ConflictIndex<'a> {
+    ranges: BTreeMap<usize, &'a Correction>,
+    insertions: BTreeMap<usize, Insertions<'a>>,
 }
 
-struct Insertions {
-    first: Correction,
+struct Insertions<'a> {
+    first: &'a Correction,
     multiple: bool,
 }
 
-impl ConflictIndex {
+impl<'a> ConflictIndex<'a> {
     pub(super) fn conflicts(&self, edit: &Correction) -> bool {
         if self
             .ranges
@@ -44,28 +44,26 @@ impl ConflictIndex {
                 .is_some()
     }
 
-    pub(super) fn insert(&mut self, edit: &Correction) {
+    pub(super) fn insert(&mut self, edit: &'a Correction) {
         if edit.start == edit.end {
             self.insertions
                 .entry(edit.start)
-                .and_modify(|others| others.multiple |= !identical(&others.first, edit))
+                .and_modify(|others| others.multiple |= !identical(others.first, edit))
                 .or_insert_with(|| Insertions {
-                    first: edit.clone(),
+                    first: edit,
                     multiple: false,
                 });
         } else {
-            self.ranges
-                .entry(edit.start)
-                .or_insert_with(|| edit.clone());
+            self.ranges.entry(edit.start).or_insert(edit);
         }
     }
 }
 
-impl Insertions {
+impl Insertions<'_> {
     fn conflicts(&self, edit: &Correction) -> bool {
-        if same_owner(&self.first, edit) {
+        if same_owner(self.first, edit) {
             return false;
         }
-        self.multiple || !identical(&self.first, edit)
+        self.multiple || !identical(self.first, edit)
     }
 }

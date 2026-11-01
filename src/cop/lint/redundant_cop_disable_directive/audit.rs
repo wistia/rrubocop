@@ -24,10 +24,18 @@ fn offense_in_range(offense: &Diagnostic, range: (usize, usize)) -> bool {
     offense.location.line >= range.0 && offense.location.line <= range.1
 }
 
-fn directive_needed(cop: &str, range: (usize, usize), offenses: &[Diagnostic]) -> bool {
-    offenses
-        .iter()
-        .any(|o| cop_matches_disabled(&o.cop_name, cop) && offense_in_range(o, range))
+fn directive_needed(
+    source: &SourceFile,
+    cop: &str,
+    dir: &DisableDirective,
+    offenses: &[Diagnostic],
+) -> bool {
+    let directives = crate::parse::directives::cached(source);
+    offenses.iter().any(|o| {
+        cop_matches_disabled(&o.cop_name, cop)
+            && offense_in_range(o, dir.range)
+            && directives.disabled_by(&o.cop_name, o.location.line, dir.line)
+    })
 }
 
 fn active_for_redundant_audit(c: &dyn Cop) -> bool {
@@ -59,12 +67,15 @@ fn cop_auditable(name: &str, active: &[(&dyn Cop, &CopConfig)]) -> bool {
 }
 
 fn cop_is_redundant(
+    source: &SourceFile,
     name: &str,
     dir: &DisableDirective,
     offenses: &[Diagnostic],
     active: &[(&dyn Cop, &CopConfig)],
 ) -> bool {
-    cop_auditable(name, active) && !directive_needed(name, dir.range, offenses)
+    cop_auditable(name, active)
+        && (already_disabled(source, name, dir.line)
+            || !directive_needed(source, name, dir, offenses))
 }
 
 fn redundant_offense(
@@ -75,12 +86,7 @@ fn redundant_offense(
     name: &str,
 ) -> Diagnostic {
     let (col, length) = offense_span(line, dir, name);
-    let mut diag = cop.diagnostic(
-        source,
-        dir.line,
-        col,
-        format!("Unnecessary disabling of `{name}`."),
-    );
+    let mut diag = cop.diagnostic(source, dir.line, col, redundant_message(name));
     diag.highlight_length = length;
     diag
 }
@@ -103,7 +109,7 @@ fn all_block_disable_cops_redundant(
 ) -> bool {
     block_disable_cops(source, dir.line).is_some_and(|cops| {
         cops.iter()
-            .all(|name| cop_is_redundant(name, dir, offenses, active))
+            .all(|name| cop_is_redundant(source, name, dir, offenses, active))
     })
 }
 
@@ -173,7 +179,7 @@ fn report_directive_redundancies(
     let redundant: Vec<&String> = dir
         .cops
         .iter()
-        .filter(|name| cop_is_redundant(name, dir, offenses, active))
+        .filter(|name| cop_is_redundant(source, name, dir, offenses, active))
         .collect();
     if redundant.is_empty() {
         return;
@@ -222,4 +228,18 @@ pub fn audit_redundant_disables(
             corrections.as_deref_mut(),
         );
     }
+}
+
+fn redundant_message(name: &str) -> String {
+    if name.eq_ignore_ascii_case("all") {
+        return "Unnecessary disabling of all cops.".into();
+    }
+    if !name.contains('/') {
+        return format!("Unnecessary disabling of `{name}` department.");
+    }
+    format!("Unnecessary disabling of `{name}`.")
+}
+
+fn already_disabled(source: &SourceFile, name: &str, line: usize) -> bool {
+    name.contains('/') && crate::parse::directives::cached(source).restarts_block(name, line)
 }

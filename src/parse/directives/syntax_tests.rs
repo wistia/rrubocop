@@ -56,3 +56,32 @@ fn directives_reuse_the_existing_tree_and_typed_source_cache() {
     let corrected = SourceFile::from_bytes("a.rb", b"x = 1\n".to_vec());
     assert!(!cached(&corrected).suppresses("Layout/TrailingWhitespace", 2));
 }
+
+#[test]
+fn selectors_share_the_same_per_cop_ranges() {
+    for (disable, enable) in [
+        ("Layout/SpaceAfterComma", "all"),
+        ("Layout/SpaceAfterComma", "Layout"),
+        ("all", "Layout/SpaceAfterComma"),
+        ("Layout", "Layout/SpaceAfterComma"),
+    ] {
+        let directives = parse(&format!(
+            "# rubocop:disable {disable}\nfoo(1,2)\n# rubocop:enable {enable}\nfoo(3,4)\n"
+        ));
+        assert!(directives.suppresses("Layout/SpaceAfterComma", 2));
+        assert!(directives.suppresses("Layout/SpaceAfterComma", 3));
+        assert!(!directives.suppresses("Layout/SpaceAfterComma", 4));
+        assert!(!directives.disabled_by("Layout/SpaceAfterComma", 4, 1));
+    }
+}
+#[test]
+fn trailing_enables_do_not_change_block_state_and_trailing_disables_do_not_close_it() {
+    let directives = parse(
+        "# rubocop:disable Layout\nfoo(1,2) # rubocop:enable Layout\nfoo(3,4) # rubocop:disable Layout/SpaceAfterComma\nfoo(5,6)\n# rubocop:enable all\nfoo(7,8)\n",
+    );
+    assert!(directives.disabled_by("Layout/SpaceAfterComma", 2, 1));
+    assert!(directives.disabled_by("Layout/SpaceAfterComma", 3, 1));
+    assert!(directives.disabled_by("Layout/SpaceAfterComma", 3, 3));
+    assert!(directives.suppresses("Layout/SpaceAfterComma", 4));
+    assert!(!directives.suppresses("Layout/SpaceAfterComma", 6));
+}

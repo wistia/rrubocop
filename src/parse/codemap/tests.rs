@@ -113,3 +113,39 @@ fn assert_literal_coverage(text: &str, map: &CodeMap) {
         }
     }
 }
+
+#[test]
+fn literal_containers_cover_their_punctuation_delimiters() {
+    for text in [
+        "%s;foo;", "%s,foo ,", "%i,a b,", "%x,echo,", "%w,a b,", ":'a,b'",
+    ] {
+        let source = SourceFile::from_bytes("t.rb", text.as_bytes().to_vec());
+        let tree = parse_ruby(&source).unwrap();
+        assert!(!tree.root_node().has_error(), "{text}");
+        let map = CodeMap::from_tree(tree.root_node(), source.as_bytes());
+        assert!((0..text.len()).all(|offset| map.covers(offset)), "{text}");
+    }
+}
+#[test]
+fn noninterpolating_literal_prefixes_prune_only_actual_literal_containers() {
+    for (text, permitted) in [
+        ("%w(a b)", false),
+        ("%i(a b)", false),
+        ("%q(a)", false),
+        ("%s(a)", false),
+        ("'a'", false),
+        ("%W(a)", true),
+        ("%I(a)", true),
+        ("%Q(a)", true),
+        ("%x(a)", true),
+    ] {
+        let source = SourceFile::from_bytes("t.rb", text.as_bytes().to_vec());
+        let tree = parse_ruby(&source).unwrap();
+        let node = tree.root_node().named_child(0).unwrap();
+        assert_eq!(
+            permits_interpolation(node, source.as_bytes()),
+            permitted,
+            "{text}"
+        );
+    }
+}

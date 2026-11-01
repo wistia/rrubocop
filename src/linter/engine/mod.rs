@@ -108,7 +108,7 @@ fn finalize_corrections(
     };
     let set = CorrectionSet::from_vec(std::mem::take(corrs));
     crate::correction::reconcile_corrected(diagnostics, source, &set);
-    *corrs = set.accepted().to_vec();
+    *corrs = set.into_accepted();
 }
 
 fn run_file_cops(

@@ -83,15 +83,7 @@ fn record_disable(
     }
     if line.trim_start().starts_with('#') {
         for name in cops {
-            open.insert(
-                name.clone(),
-                DisableDirective {
-                    line: line_no,
-                    column: col,
-                    cops: vec![name],
-                    range: (line_no, line_no),
-                },
-            );
+            record_block(open, out, line_no, col, name);
         }
     } else {
         out.push(DisableDirective {
@@ -170,18 +162,8 @@ pub(super) fn cop_token_column(line: &str, cop: &str, occurrence: usize) -> usiz
         .unwrap_or(0)
 }
 
-pub(super) fn offense_span(line: &str, dir: &DisableDirective, name: &str) -> (usize, usize) {
-    if dir.cops.len() == 1
-        && let Some((_, end)) = nth_cop_token(line, name, 1)
-    {
-        return (
-            dir.column,
-            byte_index_to_column(line, end).saturating_sub(dir.column),
-        );
-    }
-    let column = redundant_col(line, name, dir.column);
-    (column, cop_highlight(line, column, name))
-}
+mod span;
+pub(super) use span::offense_span;
 
 pub(super) fn redundant_col(line: &str, name: &str, fallback: usize) -> usize {
     nth_cop_token(line, name, 1)
@@ -202,3 +184,6 @@ pub(super) fn cop_highlight(line: &str, col: usize, cop: &str) -> usize {
         .map(|_| cop.len())
         .unwrap_or(1)
 }
+
+mod blocks;
+use blocks::record_block;

@@ -8,28 +8,53 @@ pub(super) struct Accepted {
     pub aliases: Vec<Correction>,
 }
 
-pub(super) fn select(raw: Vec<Correction>) -> Vec<Accepted> {
-    let mut accepted = Vec::new();
-    let mut conflicts = ConflictIndex::default();
-    let mut duplicates = HashMap::new();
-    for group in groups(raw) {
-        if compatible(&group, &conflicts) {
-            accept(group, &mut accepted, &mut conflicts, &mut duplicates);
-        }
-    }
+struct Selected {
+    edit: usize,
+    aliases: Vec<usize>,
+}
+
+pub(super) fn select(mut raw: Vec<Correction>) -> Vec<Accepted> {
+    raw.sort_by_key(order);
+    let selected = select_indices(&raw);
+    materialize(raw, selected)
+}
+
+fn materialize(raw: Vec<Correction>, selected: Vec<Selected>) -> Vec<Accepted> {
+    let mut edits: Vec<_> = raw.into_iter().map(Some).collect();
+    let mut accepted: Vec<_> = selected
+        .into_iter()
+        .map(|selected| Accepted {
+            edit: edits[selected.edit].take().unwrap(),
+            aliases: selected
+                .aliases
+                .into_iter()
+                .map(|index| edits[index].take().unwrap())
+                .collect(),
+        })
+        .collect();
     accepted.sort_by_key(|a| order(&a.edit));
     accepted
 }
-fn groups(mut raw: Vec<Correction>) -> Vec<Vec<Correction>> {
-    raw.sort_by_key(order);
+fn select_indices(raw: &[Correction]) -> Vec<Selected> {
+    let mut selected = Vec::new();
+    let mut conflicts = ConflictIndex::default();
+    let mut duplicates = HashMap::new();
+    for group in groups(raw) {
+        if compatible(&group, raw, &conflicts) {
+            accept(group, raw, &mut selected, &mut conflicts, &mut duplicates);
+        }
+    }
+    selected
+}
+fn groups(raw: &[Correction]) -> Vec<Vec<usize>> {
     let mut indices = HashMap::new();
-    let mut groups: Vec<Vec<Correction>> = Vec::new();
-    for edit in raw {
-        let index = group_index(&edit, &mut indices, groups.len());
-        if index == groups.len() {
+    let mut groups: Vec<Vec<usize>> = Vec::new();
+    for (index, edit) in raw.iter().enumerate() {
+        let group = group_index(edit, &mut indices, groups.len());
+        if group == groups.len() {
             groups.push(Vec::new());
         }
-        groups[index].push(edit);
+        groups[group].push(index);
     }
     groups
 }
@@ -42,9 +67,10 @@ fn group_index(
         *indices.entry((edit.cop_name, owner)).or_insert(next)
     })
 }
-fn compatible(group: &[Correction], accepted: &ConflictIndex) -> bool {
+fn compatible<'a>(group: &[usize], raw: &'a [Correction], accepted: &ConflictIndex<'a>) -> bool {
     let mut within_group = ConflictIndex::default();
-    for edit in group {
+    for &index in group {
+        let edit = &raw[index];
         if accepted.conflicts(edit) || within_group.conflicts(edit) {
             return false;
         }
@@ -52,21 +78,23 @@ fn compatible(group: &[Correction], accepted: &ConflictIndex) -> bool {
     }
     true
 }
-fn accept(
-    group: Vec<Correction>,
-    accepted: &mut Vec<Accepted>,
-    conflicts: &mut ConflictIndex,
-    duplicates: &mut HashMap<(usize, usize, String), usize>,
+fn accept<'a>(
+    group: Vec<usize>,
+    raw: &'a [Correction],
+    selected: &mut Vec<Selected>,
+    conflicts: &mut ConflictIndex<'a>,
+    duplicates: &mut HashMap<(usize, usize, &'a str), usize>,
 ) {
-    for edit in group {
-        let key = (edit.start, edit.end, edit.replacement.clone());
-        if let Some(&index) = duplicates.get(&key) {
-            accepted[index].aliases.push(edit);
+    for index in group {
+        let edit = &raw[index];
+        let key = (edit.start, edit.end, edit.replacement.as_str());
+        if let Some(&accepted) = duplicates.get(&key) {
+            selected[accepted].aliases.push(index);
         } else {
-            duplicates.insert(key, accepted.len());
-            conflicts.insert(&edit);
-            accepted.push(Accepted {
-                edit,
+            duplicates.insert(key, selected.len());
+            conflicts.insert(edit);
+            selected.push(Selected {
+                edit: index,
                 aliases: Vec::new(),
             });
         }

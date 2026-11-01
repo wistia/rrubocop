@@ -304,3 +304,6 @@ mod syntax_tests;
 
 #[cfg(test)]
 mod directive_tests;
+
+#[cfg(test)]
+mod review_tests;
