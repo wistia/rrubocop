@@ -31,17 +31,10 @@ pub(super) fn plural(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         .collect()
 }
 
-fn scope(n: Node<'_>) -> Option<Node<'_>> {
-    ancestors(n).find(|p| matches!(p.kind(), "class" | "module" | "singleton_class"))
-}
-fn matching_method<'n>(c: &Context<'_>, n: Node<'n>, attribute: Node<'_>) -> Option<Node<'n>> {
-    if !c.symbol(attribute) {
-        return None;
-    }
-    let owner = scope(n)?;
-    descendants(owner).find(|m| {
-        m.kind() == "method" && c.method(*m) == c.value(attribute) && scope(*m) == Some(owner)
-    })
+fn matching_method(c: &Context<'_>, n: Node<'_>, attribute: Node<'_>) -> Option<()> {
+    (c.symbol(attribute)
+        && super::super::custom_index::index(c, n).method(n, c.value(attribute), true))
+    .then_some(())
 }
 
 #[cfg(test)]

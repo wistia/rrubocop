@@ -73,7 +73,7 @@ fn invalid_candidate_never_replaces_the_original_file() {
     let filters = CopFilterSet::build(&config, &registry);
     assert!(
         lint_file_autocorrect(
-            &file,
+            &SourceFile::from_path(&file).unwrap(),
             &config,
             &registry,
             &filters,

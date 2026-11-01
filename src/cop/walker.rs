@@ -25,6 +25,7 @@ pub struct BatchedWalker<'a> {
     call_all: Vec<usize>,
     /// Call-like cops gated by method name.
     call_by_name: HashMap<&'static [u8], Vec<usize>>,
+    identifier_by_name: HashMap<&'static [u8], Vec<usize>>,
 }
 
 impl<'a> BatchedWalker<'a> {
@@ -43,9 +44,18 @@ impl<'a> BatchedWalker<'a> {
         let mut kinds: HashMap<&'static str, Vec<usize>> = HashMap::new();
         let mut call_all = Vec::new();
         let mut call_by_name: HashMap<&'static [u8], Vec<usize>> = HashMap::new();
+        let mut identifier_by_name = HashMap::new();
         for (i, cop) in cops.iter().enumerate() {
-            register_cop(i, *cop, &mut kinds, &mut call_all, &mut call_by_name);
+            register_cop(
+                i,
+                *cop,
+                &mut kinds,
+                &mut call_all,
+                &mut call_by_name,
+                &mut identifier_by_name,
+            );
         }
+        merge_identifier_cops(&kinds, &mut identifier_by_name);
         Self {
             cops,
             configs,
@@ -53,6 +63,7 @@ impl<'a> BatchedWalker<'a> {
             kinds,
             call_all,
             call_by_name,
+            identifier_by_name,
         }
     }
 
@@ -96,11 +107,21 @@ impl<'a> BatchedWalker<'a> {
             self.dispatch_call(source, node, diagnostics, corrections);
             return;
         }
-        if let Some(idxs) = self.kinds.get(kind) {
+        if let Some(idxs) = self.node_cops(source, node) {
             for &i in idxs {
                 self.run_cop(i, source, node, diagnostics, corrections);
             }
         }
+    }
+
+    fn node_cops(&self, source: &SourceFile, node: Node<'_>) -> Option<&Vec<usize>> {
+        if node.kind() == "identifier" {
+            let name = &source.as_bytes()[node.byte_range()];
+            if let Some(indices) = self.identifier_by_name.get(name) {
+                return Some(indices);
+            }
+        }
+        self.kinds.get(node.kind())
     }
 
     fn dispatch_call(
@@ -154,6 +175,7 @@ fn register_cop(
     kinds: &mut HashMap<&'static str, Vec<usize>>,
     call_all: &mut Vec<usize>,
     call_by_name: &mut HashMap<&'static [u8], Vec<usize>>,
+    identifier_by_name: &mut HashMap<&'static [u8], Vec<usize>>,
 ) {
     // Empty interested_node_kinds => not an AST cop (skipped).
     let mut saw_call = false;
@@ -171,8 +193,36 @@ fn register_cop(
                     call_by_name.entry(n).or_default().push(i);
                 }
             }
-        } else {
+        } else if !register_identifier(i, cop, k, identifier_by_name) {
             kinds.entry(k).or_default().push(i);
+        }
+    }
+}
+
+fn register_identifier(
+    i: usize,
+    cop: &dyn Cop,
+    kind: &str,
+    by_name: &mut HashMap<&'static [u8], Vec<usize>>,
+) -> bool {
+    let names = cop.interested_identifier_names();
+    if kind != "identifier" || names.is_empty() {
+        return false;
+    }
+    for name in names {
+        by_name.entry(name).or_default().push(i);
+    }
+    true
+}
+
+fn merge_identifier_cops(
+    kinds: &HashMap<&'static str, Vec<usize>>,
+    by_name: &mut HashMap<&'static [u8], Vec<usize>>,
+) {
+    if let Some(ungated) = kinds.get("identifier") {
+        for indices in by_name.values_mut() {
+            indices.extend(ungated);
+            indices.sort_unstable();
         }
     }
 }
@@ -294,3 +344,6 @@ mod tests {
         assert!(!corr.is_empty());
     }
 }
+
+#[cfg(test)]
+mod identifier_tests;

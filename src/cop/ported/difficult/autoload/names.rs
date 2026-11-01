@@ -1,6 +1,8 @@
 use super::super::super::context::*;
 use super::inflections;
 use tree_sitter::Node;
+mod prefixes;
+use prefixes::parent;
 
 pub(super) fn defined(
     c: &Context<'_>,
@@ -32,13 +34,6 @@ fn join(namespace: Option<&str>, name: &str) -> String {
     namespace
         .filter(|s| !s.is_empty())
         .map_or_else(|| name.to_owned(), |p| format!("{p}::{name}"))
-}
-fn parent(c: &Context<'_>, n: Node<'_>) -> Option<String> {
-    let mut parts = vec![];
-    for ancestor in ancestors(n).collect::<Vec<_>>().into_iter().rev() {
-        add_namespace(c, ancestor, &mut parts)?;
-    }
-    Some(scope_name(&parts))
 }
 fn scope_name(parts: &[String]) -> String {
     if parts.is_empty() {

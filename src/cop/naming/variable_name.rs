@@ -209,7 +209,7 @@ impl Cop for VariableName {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        for scope in &file_model.scopes {
+        for scope in file_model.scopes.iter() {
             for (name, entry) in &scope.entries {
                 check_entry(self, source, file_model, name, entry, config, diagnostics);
             }

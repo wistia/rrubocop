@@ -2,13 +2,10 @@ use super::super::context::*;
 use tree_sitter::Node;
 
 pub(super) fn redis_expiry(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    if c.method(n) != "set" {
+    if c.method(n) != "set" || has_expiration(c, n) {
         return vec![];
     }
     if !c.receiver(n).to_lowercase().contains("redis") && !redis_block(c, n) {
-        return vec![];
-    }
-    if has_expiration(c, n) {
         return vec![];
     }
     vec![Finding::new(
@@ -18,7 +15,7 @@ pub(super) fn redis_expiry(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn expiration(c: &Context<'_>, n: Node<'_>) -> bool {
-    option_pairs(n).into_iter().any(|pair| {
+    option_pairs(n).any(|pair| {
         field(pair, "key").is_some_and(|key| {
             c.symbol(key) && ["ex", "exat", "px", "pxat"].contains(&c.value(key))
         })
@@ -26,17 +23,9 @@ fn expiration(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn redis_block(c: &Context<'_>, n: Node<'_>) -> bool {
-    let Some(body) = n.parent().filter(|p| transaction_body(*p)) else {
-        return false;
-    };
-    let Some(call) = body
-        .parent()
-        .and_then(|b| b.parent())
-        .filter(|p| transaction(c, *p))
-    else {
-        return false;
-    };
-    first_parameter(call).is_some_and(|parameter| c.text(parameter) == c.receiver(n))
+    c.source
+        .cached(0, || transactions::Transactions::new(c, n))
+        .contains(n)
 }
 
 fn transaction(c: &Context<'_>, n: Node<'_>) -> bool {
@@ -60,9 +49,18 @@ fn has_expiration(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn transaction_body(n: Node<'_>) -> bool {
-    matches!(n.kind(), "block_body" | "body_statement") && kids(n).len() >= 2
+    matches!(n.kind(), "block_body" | "body_statement") && {
+        let mut cursor = n.walk();
+        n.named_children(&mut cursor)
+            .filter(|n| n.kind() != "comment")
+            .take(2)
+            .count()
+            == 2
+    }
 }
 
 #[cfg(test)]
 #[path = "guardrail_tests.rs"]
 mod tests;
+
+mod transactions;

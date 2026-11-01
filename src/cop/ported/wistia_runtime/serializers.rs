@@ -21,7 +21,14 @@ pub(super) fn capitalized(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn capitalized_literal(c: &Context<'_>, n: Node<'_>) -> bool {
-    (c.symbol(n) || n.kind() == "string") && c.value(n).to_lowercase() != c.value(n)
+    (c.symbol(n) || n.kind() == "string") && {
+        let value = c.value(n);
+        if value.is_ascii() {
+            value.bytes().any(|b| b.is_ascii_uppercase())
+        } else {
+            value.to_lowercase() != value
+        }
+    }
 }
 
 pub(super) fn key_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -52,9 +59,7 @@ pub(super) fn method_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn matching_method(c: &Context<'_>, n: Node<'_>, attribute: Node<'_>) -> bool {
-    n.parent().is_some_and(|parent| {
-        descendants(parent).any(|d| d.kind() == "method" && c.method(d) == c.value(attribute))
-    })
+    super::super::custom_index::index(c, n).method(n, c.value(attribute), false)
 }
 
 fn attribute_block(c: &Context<'_>, n: Node<'_>) -> bool {

@@ -5,7 +5,10 @@ use anyhow::{Context, Result};
 use crate::diagnostic::Location;
 
 mod cache;
+mod operation;
 use cache::AnalysisCache;
+pub(crate) use operation::LintOperation;
+use std::sync::{Arc, OnceLock};
 
 #[derive(Debug)]
 pub struct SourceFile {
@@ -13,6 +16,7 @@ pub struct SourceFile {
     pub content: Vec<u8>,
     line_starts: Vec<usize>,
     analysis: AnalysisCache,
+    operation: OnceLock<Arc<LintOperation>>,
 }
 
 impl SourceFile {
@@ -29,6 +33,7 @@ impl SourceFile {
             line_starts: compute_line_starts(&content),
             content,
             analysis: AnalysisCache::default(),
+            operation: OnceLock::new(),
         }
     }
 
@@ -38,6 +43,22 @@ impl SourceFile {
         initialize: impl FnOnce() -> T,
     ) -> std::sync::Arc<T> {
         self.analysis.get(key, initialize)
+    }
+
+    pub(crate) fn with_operation(mut self, operation: Arc<LintOperation>) -> Self {
+        if self
+            .operation
+            .get()
+            .is_some_and(|previous| !Arc::ptr_eq(previous, &operation))
+        {
+            self.analysis = AnalysisCache::default();
+        }
+        self.operation = OnceLock::from(operation);
+        self
+    }
+
+    pub(crate) fn operation(&self) -> &Arc<LintOperation> {
+        self.operation.get_or_init(Arc::default)
     }
 
     pub fn as_bytes(&self) -> &[u8] {

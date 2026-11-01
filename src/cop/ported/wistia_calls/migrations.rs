@@ -26,7 +26,6 @@ fn table_option(c: &Context<'_>, n: Node<'_>, key: &str, value: &str) -> Vec<Fin
 
 fn has_option(c: &Context<'_>, n: Node<'_>, name: &str) -> bool {
     option_pairs(n)
-        .into_iter()
         .filter_map(|pair| field(pair, "key"))
         .any(|key| c.symbol(key) && c.value(key) == name)
 }

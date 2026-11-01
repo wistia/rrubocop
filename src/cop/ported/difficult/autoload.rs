@@ -9,7 +9,7 @@ pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !definition(n) {
         return vec![];
     }
-    let info = c.source.cached(0, || AutoloadInfo::new(&c.source.path));
+    let info = c.source.cached(0, || AutoloadInfo::new(c.source));
     let Some((expected, acronyms)) = &info.0 else {
         return vec![];
     };
@@ -24,9 +24,9 @@ pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 struct AutoloadInfo(Option<(String, std::sync::Arc<inflections::Acronyms>)>);
 impl AutoloadInfo {
-    fn new(path: &std::path::Path) -> Self {
-        Self(location::resolve(path).map(|(root, relative)| {
-            let acronyms = inflections::acronyms(&root);
+    fn new(source: &crate::parse::source::SourceFile) -> Self {
+        Self(location::resolve(source).map(|(root, relative)| {
+            let acronyms = inflections::acronyms(source, &root);
             (expected_name(&relative, &acronyms), acronyms)
         }))
     }

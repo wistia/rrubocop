@@ -7,8 +7,7 @@ pub(super) fn queue(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if parent.contains("Nsq::BaseWorker") || parent == "NsqWorker::Worker" {
         return vec![];
     }
-    let sends = class_calls(n);
-    if !worker(c, parent, &sends) || sends.iter().any(|call| queue_declaration(c, *call)) {
+    if complete(c, n, parent) {
         return vec![];
     }
     vec![Finding::new(
@@ -17,33 +16,20 @@ pub(super) fn queue(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     )]
 }
 
-fn class_calls(n: Node<'_>) -> Vec<Node<'_>> {
+fn complete(c: &Context<'_>, n: Node<'_>, parent: &str) -> bool {
+    let known = parent == "BaseWorker" || parent.ends_with("::BaseWorker");
+    if known && direct_queue(c, n) {
+        return true;
+    }
+    let (included, declared) = super::super::custom_index::index(c, n).worker_queue(n);
+    !(known || included) || declared
+}
+fn direct_queue(c: &Context<'_>, n: Node<'_>) -> bool {
     let statements = body(n).map(statements).unwrap_or_default();
-    let excluded = (statements.len() == 1).then(|| statements[0]);
-    descendants(n)
-        .filter(|d| Some(*d) != excluded)
-        .filter(|d| belongs_to_class(*d, n))
-        .collect()
-}
-
-fn belongs_to_class(n: Node<'_>, class: Node<'_>) -> bool {
-    is_call(n) && ancestors(n).find(|p| matches!(p.kind(), "class" | "module")) == Some(class)
-}
-
-fn worker(c: &Context<'_>, parent: &str, sends: &[Node<'_>]) -> bool {
-    parent == "BaseWorker"
-        || parent.ends_with("::BaseWorker")
-        || sends.iter().any(|call| includes_worker(c, *call))
-}
-
-fn includes_worker(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.method(n) == "include"
-        && args(n)
-            .iter()
-            .any(|argument| c.text(*argument) == "Sidekiq::Worker")
-}
-
-fn queue_declaration(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.method(n) == "use_default_queue!"
-        || c.method(n) == "sidekiq_options" && c.pair_value(n, "queue").is_some()
+    statements.len() > 1
+        && statements.into_iter().any(|n| {
+            is_call(n)
+                && (c.method(n) == "use_default_queue!"
+                    || c.method(n) == "sidekiq_options" && c.pair_value(n, "queue").is_some())
+        })
 }

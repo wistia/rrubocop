@@ -66,7 +66,7 @@ impl Cop for UnusedBlockArgument {
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
         let ignore_empty = config.get_bool("IgnoreEmptyBlocks", true);
-        for scope in &file_model.scopes {
+        for scope in file_model.scopes.iter() {
             if scope.kind != ScopeKind::Block {
                 continue;
             }

@@ -12,7 +12,7 @@
 
 mod builder;
 mod local_identifiers;
-pub(crate) use local_identifiers::LocalIdentifiers;
+pub(crate) use local_identifiers::{LocalIdentifierScopes, LocalIdentifiers};
 mod patterns;
 mod reads;
 mod scopes;
@@ -92,7 +92,7 @@ pub struct ScopeData {
 pub struct FileModel<'s> {
     pub src: &'s [u8],
     pub tree: Tree,
-    pub scopes: Vec<ScopeData>,
+    pub scopes: std::sync::Arc<Vec<ScopeData>>,
     /// safe-navigation sites whose receiver resolved to a local var:
     /// `(receiver start byte, receiver name, owning scope)`
     pub csend_sites: Vec<(usize, Box<str>, ScopeId)>,
@@ -173,7 +173,7 @@ pub fn build<'s>(src: &'s [u8], tree: Tree) -> FileModel<'s> {
     FileModel {
         src,
         tree,
-        scopes,
+        scopes: std::sync::Arc::new(scopes),
         csend_sites,
         vcall_sites,
     }

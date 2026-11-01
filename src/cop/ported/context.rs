@@ -56,7 +56,7 @@ impl<'a> Context<'a> {
         )
     }
     pub fn symbol_pair_value<'n>(&self, node: Node<'n>, key: &str) -> Option<Node<'n>> {
-        option_pairs(node).into_iter().find_map(|pair| {
+        option_pairs(node).find_map(|pair| {
             let name = field(pair, "key")?;
             (self.symbol(name) && self.value(name) == key)
                 .then(|| field(pair, "value"))
@@ -64,7 +64,7 @@ impl<'a> Context<'a> {
         })
     }
     pub fn pair_value<'n>(&self, node: Node<'n>, key: &str) -> Option<Node<'n>> {
-        option_pairs(node).into_iter().find_map(|p| {
+        option_pairs(node).find_map(|p| {
             let k = p.child_by_field_name("key")?;
             (self.value(k) == key)
                 .then(|| p.child_by_field_name("value"))
@@ -164,21 +164,8 @@ pub(super) fn literal(n: Node<'_>) -> bool {
     )
 }
 
-pub(super) fn option_pairs(node: Node<'_>) -> Vec<Node<'_>> {
-    match node.kind() {
-        "pair" => vec![node],
-        "hash" => kids(node)
-            .into_iter()
-            .filter(|p| p.kind() == "pair")
-            .collect(),
-        "call" => args(node)
-            .into_iter()
-            .filter(|p| matches!(p.kind(), "hash" | "pair"))
-            .flat_map(option_pairs)
-            .collect(),
-        _ => vec![],
-    }
-}
+mod options;
+pub(super) use options::option_pairs;
 
 mod bindings;
 pub(super) use bindings::local_identifier;

@@ -125,3 +125,24 @@ fn shorthand_keywords_preserve_key_based_policies() {
         1
     );
 }
+
+#[test]
+fn transaction_comments_do_not_turn_one_statement_into_two() {
+    let source = "redis.multi do |t|\n # comment\n t.set('a', 'v')\nend\n";
+    assert_eq!(count("Cops/NoSetWithoutExpiration", source), 0);
+    let repeated = source.replace(" t.set('a', 'v')", " t.set('a', 'v')\n t.set('b', 'v')");
+    assert_eq!(count("Cops/NoSetWithoutExpiration", &repeated), 2);
+}
+#[test]
+fn nested_reporters_keep_existing_descendant_semantics() {
+    let source =
+        "begin; work; rescue; begin; work; rescue; Sentry.capture_exception(error); end; end";
+    assert_eq!(count("Cops/RescueMustReportError", source), 0);
+    assert_eq!(
+        count(
+            "Cops/RescueMustReportError",
+            &source.replace("Sentry.capture_exception(error)", "work")
+        ),
+        2
+    );
+}

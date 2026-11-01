@@ -237,8 +237,9 @@ fn lint_path_job(
     if stop.load(Ordering::Relaxed) {
         return Ok(());
     }
+    let source = SourceFile::from_path(path)?.with_operation(prep.operation.clone());
     let mut diags = lint_file(
-        path,
+        &source,
         config,
         registry,
         &prep.filters,
@@ -261,7 +262,7 @@ fn lint_path_job(
 }
 
 fn lint_file(
-    path: &Path,
+    source: &SourceFile,
     config: &ResolvedConfig,
     registry: &CopRegistry,
     filters: &CopFilterSet,
@@ -273,13 +274,13 @@ fn lint_file(
     cache_read: bool,
     settings: CacheSettings<'_>,
 ) -> Result<Vec<Diagnostic>> {
-    let source = SourceFile::from_path(path)?;
-    if let Some(hit) = cache_get(cache, cache_read, path, &source, settings) {
+    let path = &source.path;
+    if let Some(hit) = cache_get(cache, cache_read, path, source, settings) {
         return Ok(hit);
     }
     let diags = if mode == AutocorrectMode::Off {
         lint_source(
-            &source,
+            source,
             config,
             registry,
             filters,
@@ -291,7 +292,7 @@ fn lint_file(
         .diagnostics
     } else {
         super::engine::lint_file_autocorrect(
-            path,
+            source,
             config,
             registry,
             filters,
@@ -301,7 +302,7 @@ fn lint_file(
             ignore_disable,
         )?
     };
-    cache_put(cache, path, &source, settings, &diags);
+    cache_put(cache, path, source, settings, &diags);
     Ok(diags)
 }
 

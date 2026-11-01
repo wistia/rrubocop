@@ -209,6 +209,11 @@ pub trait Cop: Send + Sync {
         &[]
     }
 
+    /// Names that gate identifier dispatch; empty means every identifier.
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        &[]
+    }
+
     #[allow(unused_variables)]
     fn check_node(
         &self,

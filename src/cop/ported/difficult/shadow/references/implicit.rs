@@ -60,7 +60,7 @@ fn implicit_read(model: &FileModel<'_>, byte: usize, vcalls: &HashSet<usize>) ->
 }
 fn explicit_reads(model: &FileModel<'_>, implicit: &HashSet<usize>) -> HashMap<String, Vec<usize>> {
     let mut explicit = HashMap::<String, Vec<usize>>::new();
-    for scope in &model.scopes {
+    for scope in model.scopes.iter() {
         for (name, entry) in &scope.entries {
             explicit.entry(name.to_string()).or_default().extend(
                 entry

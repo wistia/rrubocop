@@ -1,6 +1,7 @@
 //! Additional pinned Ruby policies, including opt-in Wistia extension rules.
 mod call_names;
 mod context;
+mod custom_index;
 mod difficult;
 mod lint_calls;
 mod lint_duplicates;
@@ -69,6 +70,15 @@ impl Cop for Rule {
     }
     fn interested_call_names(&self) -> &'static [&'static [u8]] {
         call_names::for_rule(self.name)
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        match self.name {
+            "Cops/NoSleep" => &[b"sleep"],
+            "Cops/NoForeignKeys" => &[b"add_foreign_key"],
+            "AnyCable/PeriodicalTimers" => &[b"periodically"],
+            "Style/TopLevelMethodDefinition" => &[b"define_method"],
+            _ => &[],
+        }
     }
     fn check_node(
         &self,

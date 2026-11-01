@@ -1,33 +1,49 @@
-use tree_sitter::Node;
+use tree_sitter::{Node, TreeCursor};
 
 pub(in crate::cop::ported) fn descendants(node: Node<'_>) -> Descendants<'_> {
     Descendants {
-        root: node,
-        next: Some(node),
+        cursor: node.walk(),
+        done: false,
+        first: true,
     }
 }
 
 pub(in crate::cop::ported) struct Descendants<'a> {
-    root: Node<'a>,
-    next: Option<Node<'a>>,
+    cursor: TreeCursor<'a>,
+    done: bool,
+    first: bool,
+}
+
+impl Descendants<'_> {
+    fn advance(&mut self) {
+        if self.cursor.goto_first_child() {
+            return;
+        }
+        loop {
+            if self.cursor.goto_next_sibling() {
+                return;
+            }
+            if !self.cursor.goto_parent() {
+                self.done = true;
+                return;
+            }
+        }
+    }
 }
 
 impl<'a> Iterator for Descendants<'a> {
     type Item = Node<'a>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let node = self.next?;
-        self.next = node.named_child(0).or_else(|| {
-            let mut current = node;
-            while current != self.root {
-                if let Some(sibling) = current.next_named_sibling() {
-                    return Some(sibling);
-                }
-                current = current.parent()?;
+        while !self.done {
+            let first = std::mem::replace(&mut self.first, false);
+            let node = self.cursor.node();
+            self.advance();
+            if first || node.is_named() {
+                return Some(node);
             }
-            None
-        });
-        Some(node)
+        }
+        None
     }
 }
 

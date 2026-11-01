@@ -182,6 +182,8 @@ fn seed_local_identifiers(
         .iter()
         .any(|(cop, _, _)| uses_local_identifiers(cop.name()))
     {
-        source.cached(0, || model::LocalIdentifiers::from_model(file_model));
+        source.cached(0, || {
+            model::LocalIdentifierScopes::new(file_model.scopes.clone())
+        });
     }
 }

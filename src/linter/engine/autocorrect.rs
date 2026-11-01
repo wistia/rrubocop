@@ -26,12 +26,14 @@ struct LintCtx<'a> {
     except: &'a [String],
     mode: AutocorrectMode,
     ignore_disable: bool,
+    operation: &'a std::sync::Arc<crate::parse::source::LintOperation>,
 }
 
 impl<'a> LintCtx<'a> {
     fn lint_bytes(&self, bytes: &[u8]) -> Result<LintOutput> {
         lint_source(
-            &SourceFile::from_bytes(self.path, bytes.to_vec()),
+            &SourceFile::from_bytes(self.path, bytes.to_vec())
+                .with_operation(self.operation.clone()),
             self.config,
             self.registry,
             self.filters,
@@ -44,7 +46,7 @@ impl<'a> LintCtx<'a> {
 }
 
 pub(crate) fn lint_file_autocorrect(
-    path: &Path,
+    source: &SourceFile,
     config: &ResolvedConfig,
     registry: &CopRegistry,
     filters: &CopFilterSet,
@@ -53,10 +55,9 @@ pub(crate) fn lint_file_autocorrect(
     mode: AutocorrectMode,
     ignore_disable: bool,
 ) -> Result<Vec<Diagnostic>> {
-    let mut bytes = std::fs::read(path)?;
-    let diags = lint_bytes_autocorrect(
-        path,
-        &mut bytes,
+    let mut bytes = std::fs::read(&source.path)?;
+    let ctx = LintCtx {
+        path: &source.path,
         config,
         registry,
         filters,
@@ -64,9 +65,11 @@ pub(crate) fn lint_file_autocorrect(
         except,
         mode,
         ignore_disable,
-    )?;
+        operation: source.operation(),
+    };
+    let diags = ctx.run(&mut bytes)?;
     if mode != AutocorrectMode::Off {
-        std::fs::write(path, &bytes)?;
+        std::fs::write(&source.path, &bytes)?;
     }
     Ok(diags)
 }
@@ -82,6 +85,7 @@ pub(crate) fn lint_bytes_autocorrect(
     mode: AutocorrectMode,
     ignore_disable: bool,
 ) -> Result<Vec<Diagnostic>> {
+    let operation = std::sync::Arc::default();
     let ctx = LintCtx {
         path,
         config,
@@ -91,14 +95,21 @@ pub(crate) fn lint_bytes_autocorrect(
         except,
         mode,
         ignore_disable,
+        operation: &operation,
     };
-    if mode == AutocorrectMode::Off {
-        return Ok(ctx.lint_bytes(bytes)?.diagnostics);
+    ctx.run(bytes)
+}
+
+impl LintCtx<'_> {
+    fn run(&self, bytes: &mut Vec<u8>) -> Result<Vec<Diagnostic>> {
+        if self.mode == AutocorrectMode::Off {
+            return Ok(self.lint_bytes(bytes)?.diagnostics);
+        }
+        let mut candidate = bytes.clone();
+        let diagnostics = run_autocorrect_loop(self, &mut candidate)?;
+        *bytes = candidate;
+        Ok(diagnostics)
     }
-    let mut candidate = bytes.clone();
-    let diagnostics = run_autocorrect_loop(&ctx, &mut candidate)?;
-    *bytes = candidate;
-    Ok(diagnostics)
 }
 
 fn run_autocorrect_loop(ctx: &LintCtx<'_>, bytes: &mut Vec<u8>) -> Result<Vec<Diagnostic>> {

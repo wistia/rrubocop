@@ -28,7 +28,7 @@ fn protected_column(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn protected_hash(c: &Context<'_>, n: Node<'_>) -> bool {
-    option_pairs(n).iter().any(|pair| protected_pair(c, *pair))
+    option_pairs(n).any(|pair| protected_pair(c, pair))
 }
 
 fn protected_pair(c: &Context<'_>, n: Node<'_>) -> bool {

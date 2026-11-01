@@ -78,7 +78,7 @@ fn assert_membership(source: &SourceFile, config: &CopConfig) {
     let c = Context::new(source, config);
     let tree = crate::parse::parse_ruby(source).unwrap();
     let model = crate::model::build(source.as_bytes(), tree.clone());
-    let expected = crate::model::LocalIdentifiers::from_model(&model);
+    let expected = crate::model::LocalIdentifiers::from_scopes(&model.scopes);
     for n in descendants(tree.root_node()).filter(|n| n.kind() == "identifier") {
         assert_eq!(
             local_identifier(&c, n),
@@ -115,4 +115,38 @@ fn streaming_walk_has_the_same_preorder_and_named_node_boundaries() {
             expected
         );
     }
+}
+
+#[test]
+fn seeded_scope_storage_is_shared_and_identifier_index_stays_lazy() {
+    let (source, config) = fixture("def m(arg); arg; end");
+    let scopes = seed_scopes(&source);
+    assert!(!scopes.released());
+    let calls = AtomicUsize::new(0);
+    source.cached(0, || {
+        calls.fetch_add(1, Ordering::SeqCst);
+        scopes.index()
+    });
+    assert_eq!(calls.load(Ordering::SeqCst), 1);
+    assert!(scopes.released());
+    assert_membership(&source, &config);
+}
+
+#[test]
+fn streaming_walk_keeps_an_unnamed_root_without_leaving_its_subtree() {
+    let (source, _) = fixture("a + b");
+    let tree = crate::parse::parse_ruby(&source).unwrap();
+    let binary = tree.root_node().named_child(0).unwrap();
+    let operator = binary.child_by_field_name("operator").unwrap();
+    assert!(!operator.is_named());
+    assert_eq!(descendants(operator).collect::<Vec<_>>(), [operator]);
+}
+
+fn seed_scopes(source: &SourceFile) -> std::sync::Arc<crate::model::LocalIdentifierScopes> {
+    let model = crate::model::build(source.as_bytes(), crate::parse::parse_ruby(source).unwrap());
+    let scopes = source.cached(0, || {
+        crate::model::LocalIdentifierScopes::new(model.scopes.clone())
+    });
+    assert!(scopes.shares(&model.scopes));
+    scopes
 }

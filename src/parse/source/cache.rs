@@ -3,15 +3,20 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex, OnceLock};
 
 type Slot<T> = OnceLock<Arc<T>>;
-type Values = HashMap<(TypeId, usize), Arc<dyn Any + Send + Sync>>;
+type Values<K> = HashMap<(TypeId, K), Arc<dyn Any + Send + Sync>>;
 
-#[derive(Default)]
-pub(super) struct AnalysisCache(Mutex<Values>);
+pub(super) struct AnalysisCache<K = usize>(Mutex<Values<K>>);
 
-impl AnalysisCache {
+impl<K> Default for AnalysisCache<K> {
+    fn default() -> Self {
+        Self(Mutex::new(HashMap::new()))
+    }
+}
+
+impl<K: std::hash::Hash + Eq> AnalysisCache<K> {
     pub(super) fn get<T: Send + Sync + 'static>(
         &self,
-        key: usize,
+        key: K,
         initialize: impl FnOnce() -> T,
     ) -> Arc<T> {
         let slot = {
@@ -27,7 +32,7 @@ impl AnalysisCache {
     }
 }
 
-impl std::fmt::Debug for AnalysisCache {
+impl<K> std::fmt::Debug for AnalysisCache<K> {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         formatter
             .debug_struct("AnalysisCache")

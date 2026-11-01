@@ -5,17 +5,11 @@ pub(super) fn is_policy(c: &Context<'_>, n: Node<'_>) -> bool {
         && n.child_by_field_name("name")
             .is_some_and(|a| c.text(a).ends_with("Policy"))
 }
-pub(super) fn disables_scope(c: &Context<'_>, n: Node<'_>) -> bool {
-    descendants(n).any(|d| is_call(d) && c.method(d) == "disable_scoping!")
-}
 pub(super) fn no_show(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "show?" {
         return vec![];
     }
-    let Some(policy) = ancestors(n).find(|p| is_policy(c, *p)) else {
-        return vec![];
-    };
-    if disables_scope(c, policy) {
+    if super::super::custom_index::index(c, n).parent_policy_disabled(n) != Some(false) {
         return vec![];
     }
     vec![Finding::new(
@@ -33,14 +27,8 @@ pub(super) fn policy_scope(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !is_policy(c, n) {
         return vec![];
     }
-    if descendants(n).any(|d| {
-        d.kind() == "class"
-            && matches!(
-                superclass(c, d),
-                "ApplicationPolicy::Scope" | "JwtPolicy::Scope"
-            )
-    }) != disables_scope(c, n)
-    {
+    let index = super::super::custom_index::index(c, n);
+    if index.policy_scope(n) != index.policy_disabled(n) {
         return vec![];
     }
     vec![Finding::new(

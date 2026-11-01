@@ -1,25 +1,17 @@
 use super::super::super::context::*;
 use crate::parse::source::SourceFile;
 use regex::Regex;
-use std::collections::HashMap;
-use std::path::{Path, PathBuf};
-use std::sync::{Arc, LazyLock, Mutex, OnceLock};
+use std::path::Path;
+use std::sync::{Arc, LazyLock};
 static ACRONYM_BOUNDARY: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"([A-Z]+)([A-Z][a-z])").unwrap());
 static WORD_BOUNDARY: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"([a-z\d])([A-Z])").unwrap());
 
 pub(super) type Acronyms = Vec<(String, String)>;
-type CachedAcronyms = (Vec<u8>, Arc<Acronyms>);
-pub(super) fn acronyms(root: &Path) -> Arc<Acronyms> {
-    static CACHE: OnceLock<Mutex<HashMap<PathBuf, CachedAcronyms>>> = OnceLock::new();
-    let content = initializer_content(root);
-    let mut cache = CACHE.get_or_init(Default::default).lock().unwrap();
-    if let Some((_, acronyms)) = cache.get(root).filter(|(previous, _)| *previous == content) {
-        return acronyms.clone();
-    }
-    let acronyms = Arc::new(load(root, content.clone()));
-    cache.insert(root.to_owned(), (content, acronyms.clone()));
-    acronyms
+pub(super) fn acronyms(source: &SourceFile, root: &Path) -> Arc<Acronyms> {
+    source
+        .operation()
+        .cached(root, || load(root, initializer_content(root)))
 }
 fn initializer_content(root: &Path) -> Vec<u8> {
     std::fs::read(root.join("config/initializers/inflections.rb")).unwrap_or_default()
@@ -90,27 +82,49 @@ fn underscore(name: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    fn fresh_acronyms(root: &Path) -> Arc<Acronyms> {
+        acronyms(&SourceFile::from_bytes("example.rb", vec![]), root)
+    }
     #[test]
     fn inflections_refresh_when_initializer_changes() {
         let project = tempfile::tempdir().unwrap();
         let directory = project.path().join("config/initializers");
         std::fs::create_dir_all(&directory).unwrap();
         let path = directory.join("inflections.rb");
-        assert!(acronyms(project.path()).is_empty());
+        assert!(fresh_acronyms(project.path()).is_empty());
         std::fs::write(&path, "inflect.acronym 'API'").unwrap();
         assert_eq!(
-            camelize("api_client", &acronyms(project.path())),
+            camelize("api_client", &fresh_acronyms(project.path())),
             "APIClient"
         );
         std::fs::write(&path, "inflect.acronym 'OAuth'").unwrap();
         assert_eq!(
-            camelize("oauth_client", &acronyms(project.path())),
+            camelize("oauth_client", &fresh_acronyms(project.path())),
             "OAuthClient"
         );
         assert_eq!(
-            camelize("api_client", &acronyms(project.path())),
+            camelize("api_client", &fresh_acronyms(project.path())),
             "ApiClient"
         );
+    }
+    #[test]
+    fn operation_inflections_are_shared_and_refresh_after_same_size_edits() {
+        let (project, path) = project_with_acronym();
+        let operation = Arc::default();
+        let first =
+            SourceFile::from_bytes("first.rb", vec![]).with_operation(Arc::clone(&operation));
+        let second = SourceFile::from_bytes("second.rb", vec![]).with_operation(operation);
+        let original = acronyms(&first, project.path());
+        std::fs::write(&path, "inflect.acronym 'URL'").unwrap();
+        assert!(Arc::ptr_eq(&original, &acronyms(&second, project.path())));
+        assert_eq!(camelize("url", &fresh_acronyms(project.path())), "URL");
+    }
+    fn project_with_acronym() -> (tempfile::TempDir, std::path::PathBuf) {
+        let project = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(project.path().join("config/initializers")).unwrap();
+        let path = project.path().join("config/initializers/inflections.rb");
+        std::fs::write(&path, "inflect.acronym 'API'").unwrap();
+        (project, path)
     }
     #[test]
     fn deleted_inflections_are_not_cached() {
@@ -119,8 +133,8 @@ mod tests {
         std::fs::create_dir_all(&directory).unwrap();
         let path = directory.join("inflections.rb");
         std::fs::write(&path, "inflect.acronym 'API'").unwrap();
-        assert!(!acronyms(project.path()).is_empty());
+        assert!(!fresh_acronyms(project.path()).is_empty());
         std::fs::remove_file(path).unwrap();
-        assert!(acronyms(project.path()).is_empty());
+        assert!(fresh_acronyms(project.path()).is_empty());
     }
 }

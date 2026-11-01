@@ -167,7 +167,7 @@ impl Cop for UnusedMethodArgument {
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
         let allow_kw = config.get_bool("AllowUnusedKeywordArguments", false);
-        for scope in &file_model.scopes {
+        for scope in file_model.scopes.iter() {
             if scope.kind != ScopeKind::Method
                 || skip_method(source, file_model, scope.entered_at, config)
             {

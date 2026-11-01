@@ -1,8 +1,8 @@
 use super::super::context::*;
 use tree_sitter::Node;
 
-pub(super) fn instance_vars(_c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    if ancestors(n).any(|p| p.kind() == "class") {
+pub(super) fn instance_vars(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
+    if super::super::custom_index::in_class(c, n) {
         vec![Finding::new(
             n,
             "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
@@ -16,25 +16,31 @@ pub(super) fn stream(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !matches!(c.method(n), "stream_from" | "stream_for") {
         return vec![];
     }
-    if callback(c, n) {
+    let values = args(n);
+    if callback(c, n, &values) {
         return vec![Finding::new(
             n,
             "Custom stream callbacks are not supported in AnyCable",
         )];
     }
-    if !valid_stream_arguments(c, n) {
+    if !valid_stream_arguments(c, n, &values) {
         return vec![];
     }
-    option_pairs(n)
+    coder_findings(c, values)
+}
+fn coder_findings(c: &Context<'_>, values: Vec<Node<'_>>) -> Vec<Finding> {
+    values
         .into_iter()
+        .filter(|n| matches!(n.kind(), "pair" | "hash"))
+        .flat_map(option_pairs)
         .filter(|p| custom_coder(c, *p))
         .map(|p| Finding::new(p, "Custom coders are not supported in AnyCable"))
         .collect()
 }
 
-fn callback(c: &Context<'_>, n: Node<'_>) -> bool {
+fn callback(c: &Context<'_>, n: Node<'_>, values: &[Node<'_>]) -> bool {
     block(n).is_some()
-        || args(n).iter().any(|v| {
+        || values.iter().any(|v| {
             v.kind() == "lambda" || is_call(*v) && c.method(*v) == "lambda" && block(*v).is_some()
         })
 }
@@ -51,10 +57,10 @@ fn coder_key(c: &Context<'_>, n: Node<'_>) -> bool {
         .is_some_and(|k| c.symbol(k) && c.value(k) == "coder")
 }
 
-fn valid_stream_arguments(c: &Context<'_>, n: Node<'_>) -> bool {
+fn valid_stream_arguments(c: &Context<'_>, n: Node<'_>, values: &[Node<'_>]) -> bool {
     c.method(n) != "stream_from"
-        || args(n)
-            .into_iter()
+        || values
+            .iter()
             .find(|a| a.kind() != "comment")
             .is_some_and(|a| a.kind() == "string")
 }

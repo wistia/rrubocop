@@ -26,6 +26,7 @@ pub struct LintResult {
 
 pub(crate) struct RunPrep {
     pub(crate) filters: CopFilterSet,
+    pub(crate) operation: std::sync::Arc<crate::parse::source::LintOperation>,
     pub(crate) only: Option<Vec<String>>,
     pub(crate) except: Vec<String>,
     pub(crate) mode: AutocorrectMode,
@@ -86,6 +87,7 @@ fn prepare_run(args: &Args, config: &ResolvedConfig, registry: &CopRegistry) -> 
     let except = expand_cop_list(&args.except, registry);
     let mode = args.autocorrect_mode();
     RunPrep {
+        operation: std::sync::Arc::default(),
         cache: open_result_cache(mode),
         cache_read: args.cache_read_enabled(),
         config_fp: config.cache_fingerprint(),

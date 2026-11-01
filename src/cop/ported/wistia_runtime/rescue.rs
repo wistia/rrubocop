@@ -32,7 +32,8 @@ fn broad_rescue(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn reports_in(c: &Context<'_>, n: Node<'_>) -> bool {
-    descendants(n).any(|d| reports(c, d))
+    let summary = c.source.cached(0, || summary::Reporters::new(c, n));
+    summary.contains(c, n)
 }
 
 fn reports(c: &Context<'_>, n: Node<'_>) -> bool {
@@ -74,3 +75,5 @@ fn constant(c: &Context<'_>, n: Node<'_>, name: &str) -> bool {
             && field(n, "scope").is_none()
             && field(n, "name").is_some_and(|constant| c.text(constant) == name)
 }
+
+mod summary;

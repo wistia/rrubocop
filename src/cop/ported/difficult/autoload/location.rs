@@ -1,8 +1,9 @@
+use crate::parse::source::SourceFile;
 use std::path::{Component, Path, PathBuf};
 
-pub(super) fn resolve(path: &Path) -> Option<(PathBuf, String)> {
-    let path = absolute(path)?;
-    let project = project_root(&path)?;
+pub(super) fn resolve(source: &SourceFile) -> Option<(PathBuf, String)> {
+    let path = absolute(&source.path)?;
+    let project = project_root(source, &path)?;
     let relative = path.strip_prefix(&project).ok()?;
     let parts = relative.components().collect::<Vec<_>>();
     supported(&parts).then(|| (project, relative_name(&parts)))
@@ -29,17 +30,13 @@ fn absolute(path: &Path) -> Option<PathBuf> {
         Some(std::env::current_dir().ok()?.join(path))
     }
 }
-fn project_root(path: &Path) -> Option<PathBuf> {
-    known_project(path).or_else(|| synthetic_project(path))
-}
-fn known_project(path: &Path) -> Option<PathBuf> {
-    project_with(path, "Gemfile").or_else(|| project_with(path, ".rubocop.yml"))
-}
-fn project_with(path: &Path, marker: &str) -> Option<PathBuf> {
-    path.ancestors()
-        .skip(1)
-        .find(|p| p.join(marker).is_file())
-        .map(Path::to_owned)
+fn project_root(source: &SourceFile, path: &Path) -> Option<PathBuf> {
+    let directory = path.parent()?;
+    source
+        .operation()
+        .ancestor(directory, "Gemfile", true)
+        .or_else(|| source.operation().ancestor(directory, ".rubocop.yml", true))
+        .or_else(|| synthetic_project(path))
 }
 fn synthetic_project(path: &Path) -> Option<PathBuf> {
     let parts = path.components().collect::<Vec<_>>();
@@ -67,7 +64,7 @@ mod tests {
         std::fs::write(project.path().join("Gemfile"), "").unwrap();
         std::fs::write(nested.join(".rubocop.yml"), "").unwrap();
         assert_eq!(
-            resolve(&nested.join("widget.rb")),
+            resolve(&SourceFile::from_bytes(nested.join("widget.rb"), vec![])),
             Some((project.path().to_owned(), "nested/widget.rb".into()))
         );
     }
