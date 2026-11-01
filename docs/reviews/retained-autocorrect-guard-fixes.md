@@ -1,5 +1,7 @@
 # Retained autocorrection guard fixes
 
+The later [return-value and key-eligibility safeguards](unsafe-value-eligibility.md) supersede the Times and MapCompact correction policies described here.
+
 Review baseline: `789661a38997290c938c4920e06a92585888ed63`. Implementation: `342454a354dc4fb981d8745c9b8ca014f5cb4cc2`.
 
 ## Resulting behavior

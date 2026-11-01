@@ -1,5 +1,7 @@
 # Remaining custom-rule safety and efficiency fixes
 
+The later [return-value and key-eligibility safeguards](unsafe-value-eligibility.md) supersede the Times and MapCompact correction policies described here.
+
 Follow-up to the review of `89b63121a3b3b4ddd24fb5354958ca1847d9c2f9`.
 
 ## Correction safety

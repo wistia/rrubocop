@@ -11,7 +11,7 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 786 Rust tests, including 2,334 pinned Ruby reference examples across 98 added cops,
+- 788 Rust tests, including 2,362 pinned Ruby reference examples across 98 added cops,
   plus 11 interpolation reference cases.
   The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
   the 30 newly added regressions and correction-mode coverage. The
@@ -173,10 +173,10 @@ Reference cases record explicit Rust safeguards and their reasons:
 - FileWrite preserves an external heredoc once, where pinned Ruby duplicates it.
 - FileRead preserves a heredoc filename body and terminator, where pinned Ruby
   drops them and produces invalid Ruby.
-- `Lint/UselessTimes` refuses four pinned Ruby text substitutions that overwrite
-  a reassigned block parameter, change string contents, rewrite a method name
-  into an integer, or overwrite a shadowing block parameter. The findings remain
-  visible; the incorrect rewrites are not advertised as correctable.
+- `Lint/UselessTimes` and `Style/MapCompactWithConditionalBlock` are report-only
+  in both correction modes, preserving return values, bindings, and collection
+  semantics. `Style/HashExcept` leaves dynamic key expressions and complex
+  literal collections manual; supported static literals retain unsafe corrections.
 
 `Style/RandomWithOffset` uses arbitrary precision integers to preserve Ruby's
 integer arithmetic, including hex/binary literals and values beyond `i64`.
@@ -345,3 +345,5 @@ The [review correctness and memory follow-up](reviews/review-correctness-and-mem
 The [remaining custom-rule safety and efficiency fixes](reviews/remaining-custom-safety-efficiency.md) add decoded literal/constant parity, conservative retained-cop rewrites, shared source excerpts and compact cache storage, with runtime checks and measured tradeoffs.
 
 The [retained autocorrection guard fixes](reviews/retained-autocorrect-guard-fixes.md) cover ten rules, make MixinGrouping report-only, and add 100 targeted cases with release/runtime verification.
+
+The [return-value and key-eligibility safeguards](reviews/unsafe-value-eligibility.md) disable Times and MapCompact corrections and constrain HashExcept key rewrites.
