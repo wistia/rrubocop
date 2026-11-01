@@ -50,3 +50,5 @@ The actual nested-config scope is the same 16 dev/spec files plus a root Gemfile
 Complete offense arrays match for every paired benchmark scope. Small synthetic timings include process startup and should be treated as directional. These are local Rust before/after measurements, not a forecast of CI wall time.
 
 Raw timing rows, CPU/RSS medians, binary hashes, and parity comparisons: [measurement evidence](config-codemap-custom-measurements.json).
+
+A subsequent [correctness and correction-indexing pass](correctness-and-correction-indexes.md) fixes interpolation, directives, Unicode ownership, and custom-rule edge cases, with separate measurements.

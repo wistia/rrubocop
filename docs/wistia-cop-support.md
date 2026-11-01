@@ -11,7 +11,8 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 721 Rust tests, including 2,054 pinned Ruby reference examples across 98 added cops.
+- 748 Rust tests, including 2,100 pinned Ruby reference examples across 98 added cops,
+  plus 11 interpolation reference cases.
   The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
   the 30 newly added regressions and correction-mode coverage. The
   [latest custom-rule fixes](reviews/custom-rule-optimization-fixes.md) record
@@ -336,3 +337,5 @@ abcop --full
 - `Style/UnpackFirst`
 
 The [configuration, CodeMap, and custom dispatch follow-up](reviews/config-codemap-custom-optimizations.md) records the latest four optimizations and full-corpus measurements.
+
+The [correctness and correction-indexing follow-up](reviews/correctness-and-correction-indexes.md) records Unicode, directive, interpolation, and custom-rule fixes, correction scaling measurements, and the conservative block-comment reference exception.
