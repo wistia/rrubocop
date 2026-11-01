@@ -2,6 +2,10 @@
 
 Follow-up to the [independent parity review](final-five.md) and [98-rule performance audit](ported-rule-performance.md), based on implementation `832a13f` and review record `d8470e3`. Fixes and optimizations are implemented in `3f5fca0`.
 
+## Subsequent audit
+
+The [further custom-check audit](custom-rule-performance-next.md) identifies a performance regression in the streaming descendant walker on nested/wide stress inputs, confirmed against the preserved pre-change binary. It recommends TreeCursor traversal before further per-rule indexing. This remains unfixed in the audited implementation; the passing parity tests and full-codebase measurements below remain historical validation evidence.
+
 ## Parity fixes
 
 All six confirmed discrepancy groups are fixed. Eval excludes command heredocs, recognizes character and magic filename literals, and safely normalizes pure single-expression parenthesized location arguments. Quoted string heredoc delimiters containing backticks remain eligible. Unknown/effectful location expressions retain their conservative refusals.
