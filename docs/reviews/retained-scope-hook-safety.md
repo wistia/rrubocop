@@ -1,0 +1,11 @@
+# Retained scope and hook correction safety
+
+Two inherited UselessTimes parameter-substitution hazards remained after the previous guards. Bare identifiers inside nested methods/classes can be calls to unrelated methods, and pattern captures can rebind the parameter. Textual substitution changed `i` into `0` in both contexts, producing wrong method results or constant patterns that raise NoMatchingPatternError. The fork now leaves parameter-bearing nested lexical scopes and pattern contexts manual while retaining normal captured block/lambda references. Plain Times corrections remain unsafe-only and retain the previously documented return-value/scope limitations.
+
+MixinGrouping is now diagnostic-only in both styles, including with `-A`. Static-looking constant arguments are insufficient proof: an inclusion hook can define a constant used by the next include. Grouping resolves that constant before the hook runs and can raise NameError; separating arguments can resolve a hook-replaced constant instead of the original one. Extension/prepend hooks present the same general ordering problem. The ordinary constant-lookup assumption from the previous report is superseded by this policy.
+
+The old MixinGrouping rendering and correction-safety machinery is removed. Diagnostics, locations, messages, and configuration styles remain, but the cop reports no autocorrection capability or per-offense correctability.
+
+Thirteen new examples are replayed through bundled Ruby RuboCop 1.65.1. Explicit reference exceptions preserve source and mark unsafe cases uncorrectable; two positive Times controls still rewrite nested capturing lambdas or unrelated method definitions. Both original Times faults and both mixin hook faults reproduce upstream. The recorded old rewrite changes runtime output from 42 to 0, turns a successful pattern match into NoMatchingPatternError, raises NameError for a hook-defined constant, and changes old/new inclusion-hook events.
+
+Evidence is pinned in `tests/fixtures/retained-scope-hook-safety.json`, the central port reference corpus, all-mode engine checks, and annotated Times fixtures. Existing MixinGrouping references are consistently updated to the diagnostic-only policy. No source is evaluated during linting.

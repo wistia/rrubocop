@@ -11,7 +11,7 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 782 Rust tests, including 2,235 pinned Ruby reference examples across 98 added cops,
+- 786 Rust tests, including 2,334 pinned Ruby reference examples across 98 added cops,
   plus 11 interpolation reference cases.
   The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
   the 30 newly added regressions and correction-mode coverage. The
@@ -64,7 +64,7 @@ RuboCop cop or Ruby configuration.
 - `Style/ColonMethodDefinition`
 - `Style/EmptyBlockParameter`
 - `Style/KeywordParametersOrder`
-- `Style/MixinGrouping`
+- `Style/MixinGrouping` — diagnostic-only in both styles, including `-A`.
 - `Style/MultilineWhenThen`
 - `Style/TrailingBodyOnMethodDefinition`
 - `Style/TrailingMethodEndStatement`
@@ -343,3 +343,5 @@ The [correctness and correction-indexing follow-up](reviews/correctness-and-corr
 The [review correctness and memory follow-up](reviews/review-correctness-and-memory-fixes.md) fixes literal-delimiter and directive regressions and records lower allocation overhead, 90 Ruby reference runs, and targeted memory measurements.
 
 The [remaining custom-rule safety and efficiency fixes](reviews/remaining-custom-safety-efficiency.md) add decoded literal/constant parity, conservative retained-cop rewrites, shared source excerpts and compact cache storage, with runtime checks and measured tradeoffs.
+
+The [retained autocorrection guard fixes](reviews/retained-autocorrect-guard-fixes.md) cover ten rules, make MixinGrouping report-only, and add 100 targeted cases with release/runtime verification.

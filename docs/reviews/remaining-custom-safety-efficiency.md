@@ -70,3 +70,5 @@ Tradeoffs are visible: the 4,000-line offense-heavy probe rises from 0.119s to 0
 All paired benchmark CLI offense arrays match. Full scans inspect 14,762 files and retain 27 findings: 19.786s before versus 19.899s after. CPU changes are similarly small; there is no demonstrated clean-corpus speedup. JSON output does not expose the correctable flag; deliberate safety changes to eligibility are covered by the strict reference tests, not inferred from JSON equality.
 
 [Raw timings, allocated cache sizes, binary/fixture hashes, runtime observations, CLI checks, and runner](remaining-custom-safety-efficiency-measurements.json).
+
+A [subsequent safety review](retained-autocorrect-guard-fixes.md) supersedes the constant-only MixinGrouping correction policy: the rule is now diagnostic-only, and further retained-rule guards cover scope, patterns, branches, and observable effects.
