@@ -1,1 +1,1 @@
-hash.reject { |k, v| v == :a }
+h.reject { |k,v| k == :a; log; false }

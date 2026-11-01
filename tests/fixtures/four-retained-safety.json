@@ -1,0 +1,809 @@
+[
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def b; :method; end\ndef m(a: b, b:)\n a\nend\np m(b: :arg)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def b; :method; end\ndef m(b:, a: b)\n a\nend\np m(b: :arg)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def b; :method; end\ndef m(a: b, b:)\n a\nend\np m(b: :arg)\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def b; :method; end\nf = ->(a: b, b:) { a }\np f.call(b: :arg)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def b; :method; end\nf = ->(b:, a: b) { a }\np f.call(b: :arg)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def b; :method; end\nf = ->(a: b, b:) { a }\np f.call(b: :arg)\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: eval(\"b\"), b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: eval(\"b\"))\n a\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m(a: eval(\"b\"), b:)\n a\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: -> { b }, b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: -> { b })\n a\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m(a: -> { b }, b:)\n a\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: \"#{b}\", b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: \"#{b}\")\n a\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m(a: \"#{b}\", b:)\n a\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: 1, # keep default\n b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: 1, # keep default)\n a\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m(a: 1, # keep default\n b:)\n a\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: 1, b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: 1)\n a\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "f = ->(a: \"value\", b:) { a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "f = ->(b:, a: \"value\") { a }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: :symbol, b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: :symbol)\n a\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def foo; \"x\" # frozen_string_literal: true\nend\np foo.frozen?\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# frozen_string_literal: true\ndef foo \n  \"x\" \nend\np foo.frozen?\n",
+    "rust_correctable": false,
+    "rust_corrected": "def foo; \"x\" # frozen_string_literal: true\nend\np foo.frozen?\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; \"é\" # coding: us-ascii\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# coding: us-ascii\ndef f \n  \"é\" \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f; \"é\" # coding: us-ascii\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; work # ordinary comment\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# ordinary comment\ndef f \n  work \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f; work # ordinary comment\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def self.f; \"x\" # frozen_string_literal: true\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# frozen_string_literal: true\ndef self.f \n  \"x\" \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def self.f; \"x\" # frozen_string_literal: true\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; work\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f \n  work\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def self.f; \"x\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.f \n  \"x\"\nend\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |file| file.write(file.path) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, file.path)\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |file| file.write(file.path) }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |file| file.write(file) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, file)\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |file| file.write(file) }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |file| file.write(\"#{file.path}\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, \"#{file.path}\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |file| file.write(\"#{file.path}\") }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |file| file.write(File.read(path)) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, File.read(path))\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |file| file.write(File.read(path)) }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\").write(data())\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, data())\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\").write(data())\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\").write(data)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, data)\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\").write(data)\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\", &callback).write(\"data\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "File.open(path, \"w\", &callback).write(\"data\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\", &callback).write(\"data\")\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\", \"extra\").write(\"data\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "File.open(path, \"w\", \"extra\").write(\"data\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\", \"extra\").write(\"data\")\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |f| f.write(\"data\") # keep comment\n}\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, \"data\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |f| f.write(\"data\") # keep comment\n}\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w') do |f|\n f.write(<<~TEXT)\n content\nTEXT\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write('x', <<~TEXT)\n content\nTEXT\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open('x', 'w') do |f|\n f.write(<<~TEXT)\n content\nTEXT\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w') { |file| file.write('data') }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write('x', 'data')\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "data = \"value\"\nFile.open(path, \"wb\") { |file| file.write(data) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use `File.binwrite`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "data = \"value\"\nFile.binwrite(path, data)\n",
+    "rust_correctable": false,
+    "rust_corrected": "data = \"value\"\nFile.open(path, \"wb\") { |file| file.write(data) }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w').write('data')\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write('x', 'data')\n"
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = nil\n $reader = -> { value }\n value = 1\n value\nend\np m\np $reader.call\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n value = nil\n $reader = -> { value }\n 1\n \nend\np m\np $reader.call\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n value = nil\n $reader = -> { value }\n value = 1\n value\nend\np m\np $reader.call\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = nil\n reader = -> { value }\n [reader].each { |r| $reader = r }\n value = 1\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n value = nil\n reader = -> { value }\n [reader].each { |r| $reader = r }\n 1\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n value = nil\n reader = -> { value }\n [reader].each { |r| $reader = r }\n value = 1\n value\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n $saved = binding\n value = 1\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n $saved = binding\n 1\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n $saved = binding\n value = 1\n value\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n observer = eval(\"binding\")\n value = 1\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n observer = eval(\"binding\")\n 1\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n observer = eval(\"binding\")\n value = 1\n value\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = nil\n $reader = proc { value }\n if ready\n  value = 1\n  value\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 2,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n value = nil\n $reader = proc { value }\n if ready\n  1\n  \n end\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n value = nil\n $reader = proc { value }\n if ready\n  value = 1\n  value\n end\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = 1\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n 1\n \nend\n"
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = compute\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n compute\n \nend\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "data = \"value\"\nFile.open(\"x\", \"wb\") { |file| file.write(data) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use `File.binwrite`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "data = \"value\"\nFile.binwrite(\"x\", data)\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "pth = \"/tmp/rr-file-write-coercion\"\nFile.write(pth, \"original\")\ndata = \"old\"\npath = Object.new\npath.define_singleton_method(:to_path) { data = \"changed\"; pth }\nFile.open(path, \"w\") { |file| file.write(data) }\np File.read(pth)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "pth = \"/tmp/rr-file-write-coercion\"\nFile.write(pth, \"original\")\ndata = \"old\"\npath = Object.new\npath.define_singleton_method(:to_path) { data = \"changed\"; pth }\nFile.write(path, data)\np File.read(pth)\n",
+    "rust_correctable": false,
+    "rust_corrected": "pth = \"/tmp/rr-file-write-coercion\"\nFile.write(pth, \"original\")\ndata = \"old\"\npath = Object.new\npath.define_singleton_method(:to_path) { data = \"changed\"; pth }\nFile.open(path, \"w\") { |file| file.write(data) }\np File.read(pth)\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  }
+]

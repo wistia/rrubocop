@@ -1,7 +1,12 @@
 use super::super::context::*;
 use tree_sitter::Node;
 pub(super) fn redundant_assignment(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    body(n).map(|b| redundant_branch(c, b)).unwrap_or_default()
+    let findings = body(n).map(|b| redundant_branch(c, b)).unwrap_or_default();
+    if !findings.is_empty() && observers(c, n) {
+        findings.into_iter().map(manual).collect()
+    } else {
+        findings
+    }
 }
 fn redundant_branch(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if matches!(n.kind(), "rescue" | "in_clause" | "when") {
@@ -93,4 +98,18 @@ fn condition_branches(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         .filter(|k| Some(*k) != field(n, "condition"))
         .flat_map(|k| redundant_branch(c, k))
         .collect()
+}
+
+fn observers(c: &Context<'_>, n: Node<'_>) -> bool {
+    descendants(n).any(|node| {
+        matches!(node.kind(), "block" | "do_block" | "lambda")
+            || (is_call(node) || node.kind() == "identifier")
+                && matches!(c.method(node), "binding" | "eval" | "caller_binding")
+    })
+}
+fn manual(mut finding: Finding) -> Finding {
+    finding.correctable = false;
+    finding.edit = None;
+    finding.additional.clear();
+    finding
 }

@@ -13,7 +13,7 @@ pub(super) fn conditional_map<'n>(
     ) {
         return None;
     }
-    let (yes, no) = map_branches(cond);
+    let (yes, no) = map_branches(cond)?;
     let positive = if s.len() == 1 {
         branch_result(c, yes, no, arg)
     } else {
@@ -21,15 +21,27 @@ pub(super) fn conditional_map<'n>(
     }?;
     Some((field(cond, "condition")?, positive))
 }
-fn map_branches(n: Node<'_>) -> (Option<Node<'_>>, Option<Node<'_>>) {
-    let yes = field(n, "consequence").or_else(|| field(n, "body"));
-    let no = field(n, "alternative");
-    if n.kind().starts_with("unless") {
+fn map_branches(n: Node<'_>) -> Option<(Option<Node<'_>>, Option<Node<'_>>)> {
+    let yes = single_branch(field(n, "consequence").or_else(|| field(n, "body")))?;
+    let no = single_branch(field(n, "alternative"))?;
+    Some(if n.kind().starts_with("unless") {
         (no, yes)
     } else {
         (yes, no)
+    })
+}
+fn single_branch(branch: Option<Node<'_>>) -> Option<Option<Node<'_>>> {
+    let Some(branch) = branch else {
+        return Some(None);
+    };
+    let nodes = statements(branch);
+    match nodes.as_slice() {
+        [] => Some(None),
+        [node] => Some(Some(*node)),
+        _ => None,
     }
 }
+
 fn branch_result(
     c: &Context<'_>,
     yes: Option<Node<'_>>,
@@ -54,10 +66,7 @@ fn returns_arg(c: &Context<'_>, branch: Option<Node<'_>>, arg: &str) -> bool {
             let s = statements(b);
             (s.len() == 1).then(|| s[0])
         })
-        .is_some_and(|v| {
-            c.text(v) == arg
-                || v.kind() == "next" && kids(v).first().is_some_and(|a| c.text(*a) == arg)
-        })
+        .is_some_and(|v| c.text(v) == arg || next_value(c, v, arg))
 }
 fn empty_branch(c: &Context<'_>, branch: Option<Node<'_>>) -> bool {
     branch.is_none_or(|b| {
@@ -78,7 +87,7 @@ fn guard_result(
     if s.len() != 2 || c.text(s[1]) != arg {
         return None;
     }
-    trailing_guard(c, yes, no)
+    trailing_guard(yes, no)
 }
 fn nil_guard(
     c: &Context<'_>,
@@ -90,20 +99,11 @@ fn nil_guard(
     if s.len() != 2 || c.text(s[1]) != "nil" {
         return None;
     }
-    if next_arg(c, yes, arg) {
+    if no.is_none() && next_arg(c, yes, arg) {
         return Some(true);
     }
-    if next_arg(c, no, arg) {
+    if yes.is_none() && next_arg(c, no, arg) {
         return Some(false);
-    }
-    None
-}
-fn trailing_guard(c: &Context<'_>, yes: Option<Node<'_>>, no: Option<Node<'_>>) -> Option<bool> {
-    if yes.is_some_and(|v| c.text(v).starts_with("next")) {
-        return Some(c.text(yes.unwrap()) != "next");
-    }
-    if no.is_some_and(|v| c.text(v).starts_with("next")) {
-        return Some(c.text(no.unwrap()) == "next");
     }
     None
 }
@@ -111,10 +111,19 @@ fn trailing_guard(c: &Context<'_>, yes: Option<Node<'_>>, no: Option<Node<'_>>) 
 fn next_arg(c: &Context<'_>, branch: Option<Node<'_>>, arg: &str) -> bool {
     branch
         .and_then(|b| statements(b).first().copied())
-        .is_some_and(|v| v.kind() == "next" && kids(v).first().is_some_and(|a| c.text(*a) == arg))
+        .is_some_and(|v| next_value(c, v, arg))
 }
 fn nil_branch(c: &Context<'_>, branch: Option<Node<'_>>) -> bool {
     branch
         .and_then(|b| statements(b).first().copied())
         .is_some_and(|v| c.text(v) == "nil")
 }
+
+fn next_value(c: &Context<'_>, node: Node<'_>, arg: &str) -> bool {
+    let args = kids(node);
+    node.kind() == "next" && args.len() == 1 && c.text(args[0]) == arg
+}
+
+mod guard;
+use guard::trailing_guard;
+pub(super) use guard::uncertain_guard;

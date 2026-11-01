@@ -19,7 +19,7 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Style/ColonMethodDefinition", &["singleton_method"], simple::colon, true, true, false),
         ("Style/EmptyBlockParameter", &["block","do_block"], simple::empty_parameters, true, true, false),
         ("Style/KeywordParametersOrder", &["method_parameters","block_parameters","lambda_parameters"], keywords::check, true, true, false),
-        ("Style/MixinGrouping", &["class","module"], mixins::check, true, true, false),
+        ("Style/MixinGrouping", &["class","module"], mixins::check, false, true, false),
         ("Style/MultilineWhenThen", &["when"], simple::when_then, true, true, false),
         ("Style/TrailingBodyOnMethodDefinition", &["method","singleton_method"], methods::body, true, true, false),
         ("Style/TrailingMethodEndStatement", &["method"], methods::end, true, true, false)

@@ -32,15 +32,18 @@ pub(super) fn body(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(first) = trailing_body(n) else {
         return vec![];
     };
-    let indent = n.start_position().column + c.config.get_usize("IndentationWidth", 2);
     let f = Finding::new(
         first,
         "Place the first line of a multi-line method definition's body on its own line.",
-    )
-    .edit_with(c, first.start_byte(), first.start_byte(), || {
+    );
+    if first_line_comment(n) {
+        return vec![f];
+    }
+    let indent = n.start_position().column + c.config.get_usize("IndentationWidth", 2);
+    let f = f.edit_with(c, first.start_byte(), first.start_byte(), || {
         format!("\n{}", " ".repeat(indent))
     });
-    vec![move_comment(c, n, remove_semicolon(c, n, first, f))]
+    vec![remove_semicolon(c, n, first, f)]
 }
 fn trailing_body(n: Node<'_>) -> Option<Node<'_>> {
     if end_token(n).is_none() || n.start_position().row == n.end_position().row {
@@ -63,18 +66,7 @@ fn remove_semicolon(c: &Context<'_>, n: Node<'_>, first: Node<'_>, f: Finding) -
     }
 }
 
-fn move_comment(c: &Context<'_>, n: Node<'_>, f: Finding) -> Finding {
-    let Some(comment) = descendants(n)
-        .find(|ch| ch.kind() == "comment" && ch.start_position().row == n.start_position().row)
-    else {
-        return f;
-    };
-    f.also_edit_with(c, n.start_byte(), n.start_byte(), || {
-        format!(
-            "{}\n{}",
-            c.text(comment),
-            " ".repeat(n.start_position().column)
-        )
-    })
-    .also_edit_with(c, comment.start_byte(), comment.end_byte(), || "")
+fn first_line_comment(n: Node<'_>) -> bool {
+    descendants(n)
+        .any(|node| node.kind() == "comment" && node.start_position().row == n.start_position().row)
 }

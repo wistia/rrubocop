@@ -1,0 +1,871 @@
+[
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if flag == other; true; log; else; false; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if flag == other; true; log; else; false; end\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if flag == other; true; else; false; log; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if flag == other; true; else; false; log; end\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "unless flag == other; false; log; else; true; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless flag == other; false; log; else; true; end\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(if 2 <=> 1; true; else; false; end)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "p(if 2 <=> 1; true; else; false; end)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(if \"x\" =~ /x/; true; else; false; end)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "p(if \"x\" =~ /x/; true; else; false; end)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(if \"x\" !~ /y/; true; else; false; end)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "p(if \"x\" !~ /y/; true; else; false; end)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if prior; work; elsif flag == other; true; log; else; false; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if prior; work; elsif flag == other; true; log; else; false; end\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(1 == 1 ? true : false)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "This conditional expression can just be replaced by `1 == 1`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p(1 == 1)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(1 != 2 ? false : true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "This conditional expression can just be replaced by `!(1 != 2)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p(!(1 != 2))\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if 1 == 1\n # keep this\n true\nelse\n false\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `1 == 1`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "1 == 1\n",
+    "rust_correctable": false,
+    "rust_corrected": "if 1 == 1\n # keep this\n true\nelse\n false\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if 1 == 1 # rubocop:disable Layout/LineLength\n true\nelse\n false\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `1 == 1`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "1 == 1\n",
+    "rust_correctable": false,
+    "rust_corrected": "if 1 == 1 # rubocop:disable Layout/LineLength\n true\nelse\n false\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = if x; x; log; else; fallback; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "x = if x; x; log; else; fallback; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = if x; x; else; fallback; log; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= fallback; log\n",
+    "rust_expected": [],
+    "rust_corrected": "x = if x; x; else; fallback; log; end\n",
+    "reason": "Upstream extracts a multi-statement fallback incorrectly, moving or dropping its effects and changing the assigned result. Only singleton branches are supported."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = unless x; fallback; log; else; x; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= x\n",
+    "rust_expected": [],
+    "rust_corrected": "x = unless x; fallback; log; else; x; end\n",
+    "reason": "Upstream extracts a multi-statement fallback incorrectly, moving or dropping its effects and changing the assigned result. Only singleton branches are supported."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = x ? x : fallback\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= fallback\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = fallback unless x\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= fallback\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless x\n x = fallback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless x\n x = fallback\nend\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless x; x = fallback; else; log; log_again; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless x; x = fallback; else; log; log_again; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "if x; log; log_again; else; x = fallback; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if x; log; log_again; else; x = fallback; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless x; x = fallback; else; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless x; x = fallback; else; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "if x; else; x = fallback; log; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if x; else; x = fallback; log; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = if x\n x\nelse\n # keep fallback explanation\n fallback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= fallback\n",
+    "rust_correctable": false,
+    "rust_corrected": "x = if x\n x\nelse\n # keep fallback explanation\n fallback\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless x # rubocop:disable Layout/LineLength\n x = fallback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless x # rubocop:disable Layout/LineLength\n x = fallback\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "unless x # rubocop:disable Layout/LineLength\n x = fallback\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |k,v| k == :a; log; false }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "h.reject { |k,v| k == :a; log; false }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |k,v| k == :a; log }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "h.reject { |k,v| k == :a; log }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.select { |k,v| k != :a; log; true }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "h.select { |k,v| k != :a; log; true }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject do |k,v|\n k == :a\nensure\n log\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "h.reject do |k,v|\n k == :a\nensure\n log\nend\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |k,v| k == :a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.select { |k,v| k != :a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |k,v| [:a,:b].include?(k) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a, :b)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a, :b)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject do |k,v|\n # keep this\n k == :a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n",
+    "rust_correctable": false,
+    "rust_corrected": "h.reject do |k,v|\n # keep this\n k == :a\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); next_item(x); end; x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); next_item(x); end; x }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.filter_map { |x| x if test(x); log(x) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.filter_map { |x| x if test(x); log(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next x if test(x); nil }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next unless test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| x if test(x) }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.filter_map { |x| x unless test(x) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `filter_map { ... }` with `reject`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.reject { |x| test(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next nil if test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |x| next nil if test(x); x }.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next nil unless test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.reject { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |x| next nil unless test(x); x }.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next x if test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |x| next x if test(x); x }.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next other(x) if test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |x| next other(x) if test(x); x }.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map do |x|\n # keep this\n x if test(x)\nend.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map do |x|\n # keep this\n x if test(x)\nend.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "def x; puts :read; true; end\nunless x\n x = 1\nend\np x\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "manual": false,
+    "expected": [],
+    "corrected": "def x; puts :read; true; end\nunless x\n x = 1\nend\np x\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = nil\nunless x\n x = 1\nend\np x\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "manual": false,
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x = nil\nx ||= 1\np x\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "def m(x)\n unless x\n  x = 1\n end\n x\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "manual": false,
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(x)\n x ||= 1\n x\nend\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless @x\n @x = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "manual": false,
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "@x ||= 1\n"
+  }
+]

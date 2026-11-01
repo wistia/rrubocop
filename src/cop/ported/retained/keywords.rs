@@ -37,6 +37,9 @@ fn move_required(
     optional: &[Node<'_>],
     f: Finding,
 ) -> Finding {
+    if !safe_defaults(c, optional) || descendants(n).any(|node| node.kind() == "comment") {
+        return f;
+    }
     let mut f = insert_required(c, optional[0], required, f);
     if newline_needed(c, n, parameters) {
         let last = optional.last().unwrap();
@@ -99,3 +102,23 @@ fn line_break_after(c: &Context<'_>, n: Node<'_>) -> bool {
         .find(|b| !matches!(b, b' ' | b'\t'))
         .is_some_and(|b| matches!(b, b'\n' | b'\r'))
 }
+
+fn safe_defaults(c: &Context<'_>, optional: &[Node<'_>]) -> bool {
+    optional
+        .iter()
+        .all(|parameter| field(*parameter, "value").is_some_and(|value| literal_default(c, value)))
+}
+fn literal_default(c: &Context<'_>, value: Node<'_>) -> bool {
+    match value.kind() {
+        "integer" | "float" | "true" | "false" | "nil" => true,
+        "simple_symbol" | "delimited_symbol" => c.static_symbol(value).is_some(),
+        "string" => c.static_string(value).is_some(),
+        "unary" => kids(value)
+            .iter()
+            .all(|child| matches!(child.kind(), "integer" | "float")),
+        _ => false,
+    }
+}
+
+#[cfg(test)]
+mod safety_tests;

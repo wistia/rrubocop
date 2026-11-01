@@ -4151,12 +4151,12 @@
   {
     "cop": "Style/FileWrite",
     "source": "File.open(path, \"w\").write(data)\n",
-    "path": "test.rb",
-    "positive": true,
+    "path": "probe.rb",
     "options": {},
+    "manual": true,
     "config": {
       "TargetRubyVersion": 3.4,
-      "ActiveSupportExtensionsEnabled": true
+      "ActiveSupportExtensionsEnabled": false
     },
     "expected": [
       {
@@ -4166,7 +4166,10 @@
         "correctable": true
       }
     ],
-    "corrected": "File.write(path, data)\n"
+    "corrected": "File.write(path, data)\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\").write(data)\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
   },
   {
     "cop": "Style/FileWrite",
@@ -4186,7 +4189,10 @@
         "correctable": true
       }
     ],
-    "corrected": "File.binwrite(path, data)\n"
+    "corrected": "File.binwrite(path, data)\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"wb\") { |f| f.write(data) }\n",
+    "reason": "Decline a safe correction that can change keyword binding, hoist a comment, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
   },
   {
     "cop": "Style/FileWrite",
@@ -17094,7 +17100,10 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.select { |item| item.bar? }\n"
+    "corrected": "foo.select { |item| item.bar? }\n",
+    "rust_correctable": false,
+    "rust_corrected": "foo.map do |item|\n  next nil if item.bar?\n\n  item\nend.compact\n",
+    "reason": "Argumented next followed by the mapped parameter can return nil or another value; converting to select/reject changes the result. Preserve as manual despite unsafe upstream correction."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -17115,7 +17124,10 @@
         "correctable": true
       }
     ],
-    "corrected": "foo.reject { |item| item.bar? }\n"
+    "corrected": "foo.reject { |item| item.bar? }\n",
+    "rust_correctable": false,
+    "rust_corrected": "foo.map do |item|\n  next nil unless item.bar?\n\n  item\nend.compact\n",
+    "reason": "Argumented next followed by the mapped parameter can return nil or another value; converting to select/reject changes the result. Preserve as manual despite unsafe upstream correction."
   },
   {
     "cop": "Style/MapCompactWithConditionalBlock",
@@ -20010,7 +20022,7 @@
   },
   {
     "cop": "Style/RedundantRegexpEscape",
-    "source": "x = s[/[一二三四\\.]+/]\np x\n",
+    "source": "x = s[/[\u4e00\u4e8c\u4e09\u56db\\.]+/]\np x\n",
     "path": "test.rb",
     "positive": true,
     "options": {},
@@ -20027,11 +20039,11 @@
         "correctable": true
       }
     ],
-    "corrected": "x = s[/[一二三四.]+/]\np x\n"
+    "corrected": "x = s[/[\u4e00\u4e8c\u4e09\u56db.]+/]\np x\n"
   },
   {
     "cop": "Style/RedundantRegexpEscape",
-    "source": "r = /[\\§]/\n",
+    "source": "r = /[\\\u00a7]/\n",
     "path": "test.rb",
     "positive": true,
     "options": {},
@@ -20048,7 +20060,7 @@
         "correctable": true
       }
     ],
-    "corrected": "r = /[§]/\n"
+    "corrected": "r = /[\u00a7]/\n"
   },
   {
     "cop": "Style/RedundantSort",
@@ -23641,7 +23653,10 @@
         "correctable": true
       }
     ],
-    "corrected": "File.write('x', <<~TEXT)\n    content\n  TEXT\n"
+    "corrected": "File.write('x', <<~TEXT)\n    content\n  TEXT\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open('x', 'w') do |f|\n  f.write(<<~TEXT)\n    content\n  TEXT\nend\n",
+    "reason": "Decline a safe correction that can change keyword binding, hoist a comment, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
   },
   {
     "cop": "Style/FileWrite",
@@ -23649,8 +23664,8 @@
     "path": "test.rb",
     "positive": true,
     "options": {},
-    "rust_corrected": "File.binwrite('x', <<'TEXT')\n  binary content\nTEXT\n",
-    "reason": "Pinned FileWrite duplicates an external heredoc body when replacing a brace block; Rust retains the original body once.",
+    "rust_corrected": "File.open('x', 'wb') { |f| f.write(<<'TEXT') }\n  binary content\nTEXT\n",
+    "reason": "Decline a safe correction that can change keyword binding, hoist a comment, evaluate write content before open/truncation, or remove an assignment observable through a captured binding.",
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": true
@@ -23663,7 +23678,8 @@
         "correctable": true
       }
     ],
-    "corrected": "File.binwrite('x', <<'TEXT')\n  binary content\nTEXT\n  binary content\nTEXT\n"
+    "corrected": "File.binwrite('x', <<'TEXT')\n  binary content\nTEXT\n  binary content\nTEXT\n",
+    "rust_correctable": false
   },
   {
     "cop": "Style/FileRead",
@@ -23725,7 +23741,10 @@
         "correctable": true
       }
     ],
-    "corrected": "File.write('x', <<-TEXT)\n  keep this indentation\n  TEXT\n"
+    "corrected": "File.write('x', <<-TEXT)\n  keep this indentation\n  TEXT\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open('x', 'w') do |f|\n  f.write(<<-TEXT)\n  keep this indentation\n  TEXT\nend\n",
+    "reason": "Decline a safe correction that can change keyword binding, hoist a comment, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
   },
   {
     "cop": "Style/RandomWithOffset",
@@ -25716,7 +25735,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  include Qux\n  include Bar\nend\n"
+    "corrected": "class Foo\n  include Qux\n  include Bar\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar, Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25736,7 +25758,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  include Bar, Qux\nend\n"
+    "corrected": "class Foo\n  include Bar, Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar, Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25756,7 +25781,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "expect(foo).to include { { bar: baz } }"
+    "corrected": "expect(foo).to include { { bar: baz } }",
+    "rust_correctable": false,
+    "rust_corrected": "expect(foo).to include { { bar: baz } }",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25776,7 +25804,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "expect(foo).to include { { bar: baz } }"
+    "corrected": "expect(foo).to include { { bar: baz } }",
+    "rust_correctable": false,
+    "rust_corrected": "expect(foo).to include { { bar: baz } }",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25803,7 +25834,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  include Baz\n  include Bar\n  include Qux\nend\n"
+    "corrected": "class Foo\n  include Baz\n  include Bar\n  include Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar, Baz\n  include Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25836,7 +25870,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  include Qux, Bar, Baz\nend\n"
+    "corrected": "class Foo\n  include Qux, Bar, Baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar, Baz\n  include Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25856,7 +25893,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  include\nend\n"
+    "corrected": "class Foo\n  include\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25876,7 +25916,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  include\nend\n"
+    "corrected": "class Foo\n  include\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25903,7 +25946,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  extend Qux\n  extend Bar\nend\n"
+    "corrected": "class Foo\n  extend Qux\n  extend Bar\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  extend Bar, Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25923,7 +25969,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  extend Bar, Qux\nend\n"
+    "corrected": "class Foo\n  extend Bar, Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  extend Bar, Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25943,7 +25992,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  extend\nend\n"
+    "corrected": "class Foo\n  extend\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  extend\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25963,7 +26015,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  extend\nend\n"
+    "corrected": "class Foo\n  extend\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  extend\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -25990,7 +26045,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  prepend Qux\n  prepend Bar\nend\n"
+    "corrected": "class Foo\n  prepend Qux\n  prepend Bar\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend Bar, Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26010,7 +26068,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  prepend Bar, Qux\nend\n"
+    "corrected": "class Foo\n  prepend Bar, Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend Bar, Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26030,7 +26091,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  prepend\nend\n"
+    "corrected": "class Foo\n  prepend\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26050,7 +26114,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  prepend\nend\n"
+    "corrected": "class Foo\n  prepend\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26077,7 +26144,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  include Baz\n  include Bar\n  extend Qux\nend\n"
+    "corrected": "class Foo\n  include Baz\n  include Bar\n  extend Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar, Baz\n  extend Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26097,7 +26167,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  include Bar, Baz\n  extend Qux\nend\n"
+    "corrected": "class Foo\n  include Bar, Baz\n  extend Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar, Baz\n  extend Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26117,7 +26190,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  include Bar\n  include Baz\n  include Qux\nend\n"
+    "corrected": "class Foo\n  include Bar\n  include Baz\n  include Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar\n  include Baz\n  include Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26156,7 +26232,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  include Qux, Baz, Bar\nend\n"
+    "corrected": "class Foo\n  include Qux, Baz, Bar\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar\n  include Baz\n  include Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26176,7 +26255,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "config.include Foo\nconfig.include Bar\n"
+    "corrected": "config.include Foo\nconfig.include Bar\n",
+    "rust_correctable": false,
+    "rust_corrected": "config.include Foo\nconfig.include Bar\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26196,7 +26278,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "config.include Foo\nconfig.include Bar\n"
+    "corrected": "config.include Foo\nconfig.include Bar\n",
+    "rust_correctable": false,
+    "rust_corrected": "config.include Foo\nconfig.include Bar\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26235,7 +26320,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  include Baz\n  include Bar\n  include FooBaz\n  include FooBar\n  include FooBarBaz\n  include Qux\nend\n"
+    "corrected": "class Foo\n  include Baz\n  include Bar\n  include FooBaz\n  include FooBar\n  include FooBarBaz\n  include Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar, Baz\n  include FooBar, FooBaz\n  include Qux, FooBarBaz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26274,7 +26362,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  include Qux, FooBarBaz, FooBar, FooBaz, Bar, Baz\nend\n"
+    "corrected": "class Foo\n  include Qux, FooBarBaz, FooBar, FooBaz, Bar, Baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar, Baz\n  include FooBar, FooBaz\n  include Qux, FooBarBaz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26294,7 +26385,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  extend Bar\n  extend Baz\nend\n"
+    "corrected": "class Foo\n  extend Bar\n  extend Baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  extend Bar\n  extend Baz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26327,7 +26421,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  extend Baz, Bar\nend\n"
+    "corrected": "class Foo\n  extend Baz, Bar\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  extend Bar\n  extend Baz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26347,7 +26444,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  prepend Bar\n  prepend Baz\nend\n"
+    "corrected": "class Foo\n  prepend Bar\n  prepend Baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend Bar\n  prepend Baz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26380,7 +26480,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  prepend Baz, Bar\nend\n"
+    "corrected": "class Foo\n  prepend Baz, Bar\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend Bar\n  prepend Baz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26400,7 +26503,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  prepend Bar\n  prepend Baz\n  do_something_else\n  prepend Qux\nend\n"
+    "corrected": "class Foo\n  prepend Bar\n  prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend Bar\n  prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26442,7 +26548,7 @@
     "corrected": "class Foo\n  prepend Qux, Baz, Bar\n  do_something_else\n  \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class Foo\n  prepend Bar\n  prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26462,7 +26568,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  prepend Bar\n  Other.prepend Baz\n  do_something_else\n  prepend Qux\nend\n"
+    "corrected": "class Foo\n  prepend Bar\n  Other.prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  prepend Bar\n  Other.prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26498,7 +26607,7 @@
     "corrected": "class Foo\n  prepend Qux, Bar\n  Other.prepend Baz\n  do_something_else\n  \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class Foo\n  prepend Bar\n  Other.prepend Baz\n  do_something_else\n  prepend Qux\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26518,7 +26627,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  include Bar\n  include Baz\n  extend Baz\nend\n"
+    "corrected": "class Foo\n  include Bar\n  include Baz\n  extend Baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar\n  include Baz\n  extend Baz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26551,7 +26663,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class Foo\n  include Baz, Bar\n  extend Baz\nend\n"
+    "corrected": "class Foo\n  include Baz, Bar\n  extend Baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar\n  include Baz\n  extend Baz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26571,7 +26686,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n"
+    "corrected": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -26591,7 +26709,10 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "expected": [],
-    "corrected": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n"
+    "corrected": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class Foo\n  include Bar\n  prepend Baz\n  extend Baz\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MultilineWhenThen",
@@ -28916,7 +29037,10 @@
         "correctable": true
       }
     ],
-    "corrected": "# comment\ndef f \n  work \nend\n"
+    "corrected": "# comment\ndef f \n  work \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f; work # comment\nend\n",
+    "reason": "Decline a safe correction that can change keyword binding, hoist a comment, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
   },
   {
     "cop": "Style/TrailingMethodEndStatement",
@@ -29226,7 +29350,7 @@
     "corrected": "class S\n include C, A, B\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class S\n include A,\n # argument comment\n B\n include C\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -29256,7 +29380,7 @@
     "corrected": "class S\n include B\n include A\n include C\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class S\n include A,\n # argument comment\n B\n include C\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Cops/NoSetex",
@@ -38930,7 +39054,7 @@
   },
   {
     "cop": "Cops/NoCallbackSkippingProtectedWrites",
-    "source": "media.update_all(\"протектед\": true)\n",
+    "source": "media.update_all(\"\u043f\u0440\u043e\u0442\u0435\u043a\u0442\u0435\u0434\": true)\n",
     "path": "probe.rb",
     "options": {},
     "config": {
@@ -38938,7 +39062,7 @@
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "media.update_all(\"протектед\": true)\n"
+    "corrected": "media.update_all(\"\u043f\u0440\u043e\u0442\u0435\u043a\u0442\u0435\u0434\": true)\n"
   },
   {
     "cop": "Cops/NoCallbackSkippingProtectedWrites",
@@ -39705,7 +39829,7 @@
     "corrected": "class X\n include second_module()\n include first_module()\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include first_module(), second_module()\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -39734,7 +39858,7 @@
     "corrected": "class X\n include B\n include A\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include A,\n # keep argument comment\n B\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -39769,7 +39893,7 @@
     "corrected": "class X\n include Second, First\n side_effect\n \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n side_effect\n include Second\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -39804,7 +39928,7 @@
     "corrected": "class X\n include Second, First\n $events << ancestors.include?(Second)\n \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n $events << ancestors.include?(Second)\n include Second\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -39839,7 +39963,7 @@
     "corrected": "class X\n include Second, First\n # keep group comment\n \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n # keep group comment\n include Second\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -39874,7 +39998,7 @@
     "corrected": "class X\n include Second, First # keep suffix comment\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n include Second # keep suffix comment\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -39909,7 +40033,7 @@
     "corrected": "class X\n include Second, First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -39944,7 +40068,7 @@
     "corrected": "class X\n include Second, First\n extend Other\n \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n extend Other\n include Second\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -39973,7 +40097,7 @@
     "corrected": "class X\n include()\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include()\n include A\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -40008,7 +40132,7 @@
     "corrected": "class X\n include second_module(), first_module()\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include first_module()\n include second_module()\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -40034,7 +40158,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class X\n include Namespace::Second\n include ::First\nend\n"
+    "corrected": "class X\n include Namespace::Second\n include ::First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include ::First, Namespace::Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -40066,7 +40193,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class X\n include Namespace::Second, ::First\nend\n"
+    "corrected": "class X\n include Namespace::Second, ::First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include ::First\n include Namespace::Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -40098,7 +40228,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class X; include Second, First; ; end\n"
+    "corrected": "class X; include Second, First; ; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X; include First; include Second; end\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Cops/ExplicitSidekiqQueue",
@@ -41657,5 +41790,1996 @@
     "rust_correctable": false,
     "rust_corrected": "(\n 0.times {}\n).inspect\n",
     "reason": "Keep value-context Times expressions manual: removing or replacing them can delete stored array/hash values or assignment/condition/argument expressions."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n def inner\n  i\n end\nend\nputs inner\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def i; 42; end\ndef inner\n 0\nend\nputs inner\n",
+    "rust_correctable": false,
+    "rust_corrected": "def i; 42; end\n1.times do |i|\n def inner\n  i\n end\nend\nputs inner\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n class C\n  def self.result; i; end\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def i; 42; end\nclass C\n def self.result; 0; end\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def i; 42; end\n1.times do |i|\n class C\n  def self.result; i; end\n end\nend\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n case [42]\n in [i]\n  puts i\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case [42]\nin [0]\n puts 0\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n case [42]\n in [i]\n  puts i\n end\nend\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n [42] => [i]\n puts i\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "[42] => [0]\nputs 0\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n [42] => [i]\n puts i\nend\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n case {a: 42}\n in {a: i}\n  puts i\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case {a: 42}\nin {a: 0}\n puts 0\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n case {a: 42}\n in {a: i}\n  puts i\n end\nend\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n module Inner\n  def self.result; i; end\n end\nend\nputs Inner.result\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def i; 42; end\nmodule Inner\n def self.result; 0; end\nend\nputs Inner.result\n",
+    "rust_correctable": false,
+    "rust_corrected": "def i; 42; end\n1.times do |i|\n module Inner\n  def self.result; i; end\n end\nend\nputs Inner.result\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n class << self\n  def result; i; end\n end\nend\nputs result\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def i; 42; end\nclass << self\n def result; 0; end\nend\nputs result\n",
+    "rust_correctable": false,
+    "rust_corrected": "def i; 42; end\n1.times do |i|\n class << self\n  def result; i; end\n end\nend\nputs result\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n callback = -> { i }\n puts callback.call\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "callback = -> { 0 }\nputs callback.call\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n def unrelated; 42; end\n puts i\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def unrelated; 42; end\nputs 0\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "module First\n def self.included(base)\n  base.const_set(:Second, Module.new)\n end\nend\nclass C\n include First\n include Second\nend\nputs C.ancestors.length\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 8,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module First\n def self.included(base)\n  base.const_set(:Second, Module.new)\n end\nend\nclass C\n include Second, First\nend\nputs C.ancestors.length\n",
+    "rust_correctable": false,
+    "rust_corrected": "module First\n def self.included(base)\n  base.const_set(:Second, Module.new)\n end\nend\nclass C\n include First\n include Second\nend\nputs C.ancestors.length\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "module First\n def self.included(base); puts \"old\";end\nend\nmodule Second\n def self.included(base)\n  base.const_set(:First, Module.new do\n   def self.included(base); puts \"new\";end\n  end)\n end\nend\nclass C\n include First, Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 12,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module First\n def self.included(base); puts \"old\";end\nend\nmodule Second\n def self.included(base)\n  base.const_set(:First, Module.new do\n   def self.included(base); puts \"new\";end\n  end)\n end\nend\nclass C\n include Second\n include First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "module First\n def self.included(base); puts \"old\";end\nend\nmodule Second\n def self.included(base)\n  base.const_set(:First, Module.new do\n   def self.included(base); puts \"new\";end\n  end)\n end\nend\nclass C\n include First, Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class C\n include First, Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class C\n include Second\n include First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class C\n include First, Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class C\n include First\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class C\n include Second, First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class C\n include First\n include Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def b; :method; end\ndef m(a: b, b:)\n a\nend\np m(b: :arg)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def b; :method; end\ndef m(b:, a: b)\n a\nend\np m(b: :arg)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def b; :method; end\ndef m(a: b, b:)\n a\nend\np m(b: :arg)\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def b; :method; end\nf = ->(a: b, b:) { a }\np f.call(b: :arg)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def b; :method; end\nf = ->(b:, a: b) { a }\np f.call(b: :arg)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def b; :method; end\nf = ->(a: b, b:) { a }\np f.call(b: :arg)\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: eval(\"b\"), b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: eval(\"b\"))\n a\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m(a: eval(\"b\"), b:)\n a\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: -> { b }, b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: -> { b })\n a\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m(a: -> { b }, b:)\n a\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: \"#{b}\", b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: \"#{b}\")\n a\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m(a: \"#{b}\", b:)\n a\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: 1, # keep default\n b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: 1, # keep default)\n a\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m(a: 1, # keep default\n b:)\n a\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: 1, b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: 1)\n a\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "f = ->(a: \"value\", b:) { a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "f = ->(b:, a: \"value\") { a }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def m(a: :symbol, b:)\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(b:, a: :symbol)\n a\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def foo; \"x\" # frozen_string_literal: true\nend\np foo.frozen?\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# frozen_string_literal: true\ndef foo \n  \"x\" \nend\np foo.frozen?\n",
+    "rust_correctable": false,
+    "rust_corrected": "def foo; \"x\" # frozen_string_literal: true\nend\np foo.frozen?\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; \"\u00e9\" # coding: us-ascii\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# coding: us-ascii\ndef f \n  \"\u00e9\" \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f; \"\u00e9\" # coding: us-ascii\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; work # ordinary comment\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# ordinary comment\ndef f \n  work \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f; work # ordinary comment\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def self.f; \"x\" # frozen_string_literal: true\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# frozen_string_literal: true\ndef self.f \n  \"x\" \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def self.f; \"x\" # frozen_string_literal: true\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; work\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f \n  work\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def self.f; \"x\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.f \n  \"x\"\nend\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |file| file.write(file.path) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, file.path)\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |file| file.write(file.path) }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |file| file.write(file) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, file)\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |file| file.write(file) }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |file| file.write(\"#{file.path}\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, \"#{file.path}\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |file| file.write(\"#{file.path}\") }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |file| file.write(File.read(path)) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, File.read(path))\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |file| file.write(File.read(path)) }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\").write(data())\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, data())\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\").write(data())\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\", &callback).write(\"data\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "File.open(path, \"w\", &callback).write(\"data\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\", &callback).write(\"data\")\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\", \"extra\").write(\"data\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "File.open(path, \"w\", \"extra\").write(\"data\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\", \"extra\").write(\"data\")\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |f| f.write(\"data\") # keep comment\n}\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write(path, \"data\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open(path, \"w\") { |f| f.write(\"data\") # keep comment\n}\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w') do |f|\n f.write(<<~TEXT)\n content\nTEXT\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write('x', <<~TEXT)\n content\nTEXT\n",
+    "rust_correctable": false,
+    "rust_corrected": "File.open('x', 'w') do |f|\n f.write(<<~TEXT)\n content\nTEXT\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w') { |file| file.write('data') }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write('x', 'data')\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "data = \"value\"\nFile.open(path, \"wb\") { |file| file.write(data) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use `File.binwrite`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "data = \"value\"\nFile.binwrite(path, data)\n",
+    "rust_correctable": false,
+    "rust_corrected": "data = \"value\"\nFile.open(path, \"wb\") { |file| file.write(data) }\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w').write('data')\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.write('x', 'data')\n"
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = nil\n $reader = -> { value }\n value = 1\n value\nend\np m\np $reader.call\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n value = nil\n $reader = -> { value }\n 1\n \nend\np m\np $reader.call\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n value = nil\n $reader = -> { value }\n value = 1\n value\nend\np m\np $reader.call\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = nil\n reader = -> { value }\n [reader].each { |r| $reader = r }\n value = 1\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n value = nil\n reader = -> { value }\n [reader].each { |r| $reader = r }\n 1\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n value = nil\n reader = -> { value }\n [reader].each { |r| $reader = r }\n value = 1\n value\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n $saved = binding\n value = 1\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n $saved = binding\n 1\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n $saved = binding\n value = 1\n value\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n observer = eval(\"binding\")\n value = 1\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n observer = eval(\"binding\")\n 1\n \nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n observer = eval(\"binding\")\n value = 1\n value\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = nil\n $reader = proc { value }\n if ready\n  value = 1\n  value\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 2,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n value = nil\n $reader = proc { value }\n if ready\n  1\n  \n end\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def m\n value = nil\n $reader = proc { value }\n if ready\n  value = 1\n  value\n end\nend\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = 1\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n 1\n \nend\n"
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def m\n value = compute\n value\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Redundant assignment before returning detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m\n compute\n \nend\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "data = \"value\"\nFile.open(\"x\", \"wb\") { |file| file.write(data) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use `File.binwrite`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "data = \"value\"\nFile.binwrite(\"x\", data)\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "pth = \"/tmp/rr-file-write-coercion\"\nFile.write(pth, \"original\")\ndata = \"old\"\npath = Object.new\npath.define_singleton_method(:to_path) { data = \"changed\"; pth }\nFile.open(path, \"w\") { |file| file.write(data) }\np File.read(pth)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "pth = \"/tmp/rr-file-write-coercion\"\nFile.write(pth, \"original\")\ndata = \"old\"\npath = Object.new\npath.define_singleton_method(:to_path) { data = \"changed\"; pth }\nFile.write(path, data)\np File.read(pth)\n",
+    "rust_correctable": false,
+    "rust_corrected": "pth = \"/tmp/rr-file-write-coercion\"\nFile.write(pth, \"original\")\ndata = \"old\"\npath = Object.new\npath.define_singleton_method(:to_path) { data = \"changed\"; pth }\nFile.open(path, \"w\") { |file| file.write(data) }\np File.read(pth)\n",
+    "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if flag == other; true; log; else; false; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if flag == other; true; log; else; false; end\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if flag == other; true; else; false; log; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if flag == other; true; else; false; log; end\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "unless flag == other; false; log; else; true; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless flag == other; false; log; else; true; end\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(if 2 <=> 1; true; else; false; end)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "p(if 2 <=> 1; true; else; false; end)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(if \"x\" =~ /x/; true; else; false; end)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "p(if \"x\" =~ /x/; true; else; false; end)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(if \"x\" !~ /y/; true; else; false; end)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "p(if \"x\" !~ /y/; true; else; false; end)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if prior; work; elsif flag == other; true; log; else; false; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if prior; work; elsif flag == other; true; log; else; false; end\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(1 == 1 ? true : false)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "This conditional expression can just be replaced by `1 == 1`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p(1 == 1)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(1 != 2 ? false : true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "This conditional expression can just be replaced by `!(1 != 2)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p(!(1 != 2))\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if 1 == 1\n # keep this\n true\nelse\n false\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `1 == 1`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "1 == 1\n",
+    "rust_correctable": false,
+    "rust_corrected": "if 1 == 1\n # keep this\n true\nelse\n false\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if 1 == 1 # rubocop:disable Layout/LineLength\n true\nelse\n false\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `1 == 1`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "1 == 1\n",
+    "rust_correctable": false,
+    "rust_corrected": "if 1 == 1 # rubocop:disable Layout/LineLength\n true\nelse\n false\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = if x; x; log; else; fallback; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "x = if x; x; log; else; fallback; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = if x; x; else; fallback; log; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= fallback; log\n",
+    "rust_expected": [],
+    "rust_corrected": "x = if x; x; else; fallback; log; end\n",
+    "reason": "Upstream extracts a multi-statement fallback incorrectly, moving or dropping its effects and changing the assigned result. Only singleton branches are supported."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = unless x; fallback; log; else; x; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= x\n",
+    "rust_expected": [],
+    "rust_corrected": "x = unless x; fallback; log; else; x; end\n",
+    "reason": "Upstream extracts a multi-statement fallback incorrectly, moving or dropping its effects and changing the assigned result. Only singleton branches are supported."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = x ? x : fallback\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= fallback\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = fallback unless x\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= fallback\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless x\n x = fallback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless x\n x = fallback\nend\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless x; x = fallback; else; log; log_again; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless x; x = fallback; else; log; log_again; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "if x; log; log_again; else; x = fallback; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if x; log; log_again; else; x = fallback; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless x; x = fallback; else; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless x; x = fallback; else; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "if x; else; x = fallback; log; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "if x; else; x = fallback; log; end\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = if x\n x\nelse\n # keep fallback explanation\n fallback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x ||= fallback\n",
+    "rust_correctable": false,
+    "rust_corrected": "x = if x\n x\nelse\n # keep fallback explanation\n fallback\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless x # rubocop:disable Layout/LineLength\n x = fallback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "unless x # rubocop:disable Layout/LineLength\n x = fallback\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "unless x # rubocop:disable Layout/LineLength\n x = fallback\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |k,v| k == :a; log; false }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "h.reject { |k,v| k == :a; log; false }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |k,v| k == :a; log }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "h.reject { |k,v| k == :a; log }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.select { |k,v| k != :a; log; true }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "h.select { |k,v| k != :a; log; true }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject do |k,v|\n k == :a\nensure\n log\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "h.reject do |k,v|\n k == :a\nensure\n log\nend\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |k,v| k == :a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.select { |k,v| k != :a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |k,v| [:a,:b].include?(k) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a, :b)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a, :b)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject do |k,v|\n # keep this\n k == :a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n",
+    "rust_correctable": false,
+    "rust_corrected": "h.reject do |k,v|\n # keep this\n k == :a\nend\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); next x; else; nil; log(x); end }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); next x; else; log(x); end; nil }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); log(x); else; next x; end; nil }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); next_item(x); end; x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); next_item(x); end; x }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.filter_map { |x| x if test(x); log(x) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.filter_map { |x| x if test(x); log(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "items.map { |x| if test(x); x; log(x); else; next; end }.compact\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next x if test(x); nil }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next unless test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| x if test(x) }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.filter_map { |x| x unless test(x) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": false,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `filter_map { ... }` with `reject`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.reject { |x| test(x) }\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next nil if test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |x| next nil if test(x); x }.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next nil unless test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.reject { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |x| next nil unless test(x); x }.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next x if test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |x| next x if test(x); x }.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |x| next other(x) if test(x); x }.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |x| next other(x) if test(x); x }.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map do |x|\n # keep this\n x if test(x)\nend.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "manual": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |x| test(x) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map do |x|\n # keep this\n x if test(x)\nend.compact\n",
+    "reason": "Preserve comments/directives and guarded-next values rather than reproduce unsafe upstream removal or selection."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "def x; puts :read; true; end\nunless x\n x = 1\nend\np x\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "manual": false,
+    "expected": [],
+    "corrected": "def x; puts :read; true; end\nunless x\n x = 1\nend\np x\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = nil\nunless x\n x = 1\nend\np x\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "manual": false,
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "x = nil\nx ||= 1\np x\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "def m(x)\n unless x\n  x = 1\n end\n x\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "manual": false,
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def m(x)\n x ||= 1\n x\nend\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless @x\n @x = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "manual": false,
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "@x ||= 1\n"
   }
 ]

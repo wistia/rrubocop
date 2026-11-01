@@ -13,17 +13,19 @@ pub(super) fn hash_except(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if (c.method(n) == "reject") != kind {
         return vec![];
     }
+    vec![hash_finding(c, n, except)]
+}
+fn hash_finding(c: &Context<'_>, n: Node<'_>, except: Node<'_>) -> Finding {
     let preferred = format!("except({})", key_content(c, except));
     let start = method_node(n).start_byte();
-    vec![
-        Finding::range(start, n.end_byte(), format!("Use `{preferred}` instead.")).edit_with(
-            c,
-            start,
-            n.end_byte(),
-            || preferred,
-        ),
-    ]
+    let finding = Finding::range(start, n.end_byte(), format!("Use `{preferred}` instead."));
+    if descendants(n).any(|node| node.kind() == "comment") {
+        finding
+    } else {
+        finding.edit_with(c, start, n.end_byte(), || preferred)
+    }
 }
+
 fn except_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
     ["reject", "select", "filter"].contains(&c.method(n))
         && args(n).is_empty()
@@ -49,7 +51,8 @@ fn block_expression(n: Node<'_>) -> Option<(Node<'_>, Node<'_>)> {
     if p.len() != 2 {
         return None;
     }
-    Some((statements(body(b)?).first().copied()?, p[0]))
+    let statements = statements(body(b)?);
+    (statements.len() == 1).then(|| (statements[0], p[0]))
 }
 fn invalid_negation(c: &Context<'_>, n: Node<'_>, negated: bool) -> bool {
     negated

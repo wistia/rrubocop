@@ -1,6 +1,7 @@
 use super::*;
 mod indent;
 mod pattern;
+mod scopes;
 use indent::deindent;
 use pattern::parameter_pattern;
 pub(super) fn correct_body(
@@ -76,13 +77,14 @@ fn substitution_safe(c: &Context<'_>, body: Node<'_>, parameter: &str) -> bool {
     if parameter.is_empty() {
         return true;
     }
-    parameter_pattern(c, parameter)
-        .0
-        .find_iter(c.text(body))
-        .count()
-        == descendants(body)
-            .filter(|n| c.text(*n) == parameter && reference(*n))
+    !scopes::unsafe_context(c, body, parameter)
+        && parameter_pattern(c, parameter)
+            .0
+            .find_iter(c.text(body))
             .count()
+            == descendants(body)
+                .filter(|n| c.text(*n) == parameter && reference(*n))
+                .count()
 }
 fn reference(n: Node<'_>) -> bool {
     if n.kind() != "identifier" {

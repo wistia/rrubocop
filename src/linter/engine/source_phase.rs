@@ -172,6 +172,8 @@ fn uses_local_identifiers(name: &str) -> bool {
             | "Cops/NoForeignKeys"
             | "AnyCable/PeriodicalTimers"
             | "Style/TopLevelMethodDefinition"
+            | "Style/OrAssignment"
+            | "Style/FileWrite"
             | "Lint/SelfAssignment"
             | "Lint/SafeNavigationWithEmpty"
             | "Cops/RescueMustReportError"

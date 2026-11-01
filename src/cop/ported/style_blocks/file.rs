@@ -1,4 +1,5 @@
 mod heredoc;
+mod safety;
 use super::super::context::*;
 use tree_sitter::Node;
 pub(super) fn file_read(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -27,7 +28,7 @@ fn file_mode<'c>(c: &'c Context<'_>, n: Node<'_>, writing: bool) -> Option<&'c s
         return None;
     }
     let a = args(n);
-    if a.is_empty() {
+    if !argument_count(&a, writing) {
         return None;
     }
     let mode = a
@@ -63,21 +64,20 @@ fn file_finding(
     content: Option<Node<'_>>,
     method: &str,
 ) -> Finding {
-    Finding::new(target, format!("Use `File.{method}`.")).edit_with(
-        c,
-        method_node(n).start_byte(),
-        target.end_byte(),
-        || {
-            let extra = content
-                .map(|a| format!(", {}", c.text(a)))
-                .unwrap_or_default();
-            format!(
-                "{method}({}{extra}){}",
-                c.text(args(n)[0]),
-                heredoc::suffix(c, n, target, content)
-            )
-        },
-    )
+    let finding = Finding::new(target, format!("Use `File.{method}`."));
+    if content.is_some_and(|content| !safety::write(c, n, target, content)) {
+        return finding;
+    }
+    finding.edit_with(c, method_node(n).start_byte(), target.end_byte(), || {
+        let extra = content
+            .map(|a| format!(", {}", c.text(a)))
+            .unwrap_or_default();
+        format!(
+            "{method}({}{extra}){}",
+            c.text(args(n)[0]),
+            heredoc::suffix(c, n, target, content)
+        )
+    })
 }
 fn file_body<'a>(
     c: &Context<'_>,
@@ -129,4 +129,12 @@ fn call_content(n: Node<'_>, writing: bool) -> Option<Option<Node<'_>>> {
 
 fn file_open(c: &Context<'_>, n: Node<'_>) -> bool {
     c.method(n) == "open" && ["File", "::File"].contains(&c.receiver(n))
+}
+
+fn argument_count(arguments: &[Node<'_>], writing: bool) -> bool {
+    if writing {
+        arguments.len() == 2
+    } else {
+        !arguments.is_empty()
+    }
 }

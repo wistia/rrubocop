@@ -10,13 +10,12 @@ pub(super) fn or_assignment(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some((var, value)) = pair else {
         return vec![];
     };
-    vec![
-        Finding::new(n, "Use the double pipe equals operator `||=` instead.").replace_with(
-            c,
-            n,
-            || format!("{} ||= {}", c.text(var), c.text(value)),
-        ),
-    ]
+    let finding = Finding::new(n, "Use the double pipe equals operator `||=` instead.");
+    vec![if descendants(n).any(|node| node.kind() == "comment") {
+        finding
+    } else {
+        finding.replace_with(c, n, || format!("{} ||= {}", c.text(var), c.text(value)))
+    }]
 }
 fn ternary_parts<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, Node<'n>)> {
     let left = field(n, "left")?;
@@ -33,7 +32,7 @@ fn variable(n: Node<'_>) -> bool {
     )
 }
 fn ternary_default<'n>(c: &Context<'_>, left: Node<'n>, cond: Node<'n>) -> Option<Node<'n>> {
-    let (yes, no) = branches(cond);
+    let (yes, no) = branches(cond)?;
     let test = field(cond, "condition")?;
     let yes = yes?;
     let no = no?;
@@ -46,13 +45,13 @@ fn unless_parts<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, Node<'n>)
     let assignment = unless_assignment(n)?;
     let test = field(n, "condition")?;
     let left = field(assignment, "left")?;
-    if !variable(left) || c.text(test) != c.text(left) {
+    if !variable(left) || !bound_test(c, test) || c.text(test) != c.text(left) {
         return None;
     }
     Some((left, field(assignment, "right")?))
 }
 fn unless_assignment(n: Node<'_>) -> Option<Node<'_>> {
-    let (yes, no) = branches(n);
+    let (yes, no) = branches(n)?;
     if !single_arm(n) || yes.is_some() {
         return None;
     }
@@ -63,4 +62,8 @@ fn single_arm(n: Node<'_>) -> bool {
         .or_else(|| field(n, "body"))
         .or_else(|| field(n, "alternative"))
         .is_none_or(|a| statements(a).len() == 1)
+}
+
+fn bound_test(c: &Context<'_>, test: Node<'_>) -> bool {
+    test.kind() != "identifier" || local_identifier(c, test)
 }

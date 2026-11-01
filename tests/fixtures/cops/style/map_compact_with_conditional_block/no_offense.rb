@@ -1,1 +1,1 @@
-items.map { |x| x.name if allowed?(x) }.compact
+items.map { |x| if test(x); next x; else; nil; log(x); end }.compact

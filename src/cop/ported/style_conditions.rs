@@ -13,15 +13,24 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Security/CompoundHash", &["binary","operator_assignment","call"], compound_hash, false, true, false)
     );
 }
-fn branches(n: Node<'_>) -> (Option<Node<'_>>, Option<Node<'_>>) {
-    let first = field(n, "consequence")
-        .or_else(|| field(n, "body"))
-        .and_then(|b| statements(b).first().copied());
-    let second = field(n, "alternative").and_then(|b| statements(b).first().copied());
-    if n.kind().starts_with("unless") {
+fn branches(n: Node<'_>) -> Option<(Option<Node<'_>>, Option<Node<'_>>)> {
+    let first = single_statement(field(n, "consequence").or_else(|| field(n, "body")))?;
+    let second = single_statement(field(n, "alternative"))?;
+    Some(if n.kind().starts_with("unless") {
         (second, first)
     } else {
         (first, second)
+    })
+}
+fn single_statement(branch: Option<Node<'_>>) -> Option<Option<Node<'_>>> {
+    let Some(branch) = branch else {
+        return Some(None);
+    };
+    let statements = statements(branch);
+    match statements.as_slice() {
+        [] => Some(None),
+        [node] => Some(Some(*node)),
+        _ => None,
     }
 }
 
@@ -48,3 +57,6 @@ use unless_logic::unless_logic;
 
 mod compound_hash;
 use compound_hash::compound_hash;
+
+#[cfg(test)]
+mod safety_tests;

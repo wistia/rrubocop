@@ -10,26 +10,31 @@ pub(super) fn redundant_conditional(c: &Context<'_>, n: Node<'_>) -> Vec<Finding
     } else {
         replacement.clone()
     };
-    vec![
-        Finding::new(
-            n,
-            format!("This conditional expression can just be replaced by `{msg}`."),
-        )
-        .replace_with(c, n, || replacement),
-    ]
+    let finding = Finding::new(
+        n,
+        format!("This conditional expression can just be replaced by `{msg}`."),
+    );
+    vec![if descendants(n).any(|node| node.kind() == "comment") {
+        finding
+    } else {
+        finding.replace_with(c, n, || replacement)
+    }]
 }
 fn replacement(c: &Context<'_>, n: Node<'_>) -> Option<String> {
     let cond = field(n, "condition")?;
     if !comparison(c, cond) {
         return None;
     }
-    let (yes, no) = branches(n);
+    let (yes, no) = branches(n)?;
     let expression = match (c.text(yes?), c.text(no?)) {
         ("true", "false") => c.text(cond).into(),
         ("false", "true") => format!("!({})", c.text(cond)),
         _ => return None,
     };
-    Some(if n.kind() == "elsif" {
+    Some(wrap_expression(c, n, expression))
+}
+fn wrap_expression(c: &Context<'_>, n: Node<'_>, expression: String) -> String {
+    if n.kind() == "elsif" {
         format!(
             "else\n{}{}",
             " ".repeat(n.start_position().column + c.config.get_usize("IndentationWidth", 2)),
@@ -37,14 +42,12 @@ fn replacement(c: &Context<'_>, n: Node<'_>) -> Option<String> {
         )
     } else {
         expression
-    })
+    }
 }
 fn comparison(c: &Context<'_>, n: Node<'_>) -> bool {
-    ["==", "!=", "<", ">", "<=", ">=", "===", "=~", "!~", "<=>"].contains(
-        &if n.kind() == "binary" {
-            operator(c, n)
-        } else {
-            c.method(n)
-        },
-    )
+    ["==", "!=", "<", ">", "<=", ">=", "==="].contains(&if n.kind() == "binary" {
+        operator(c, n)
+    } else {
+        c.method(n)
+    })
 }

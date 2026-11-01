@@ -49,14 +49,18 @@ fn map_finding(
 ) -> Finding {
     let method = if positive { "select" } else { "reject" };
     let start = method_node(map).start_byte();
-    Finding::range(
+    let finding = Finding::range(
         start,
         n.end_byte(),
         format!("Replace `{current}` with `{method}`."),
-    )
-    .edit_with(c, start, n.end_byte(), || {
-        format!("{method} {{ |{}| {} }}", c.text(param), c.text(condition))
-    })
+    );
+    if descendants(n).any(|node| node.kind() == "comment") || condition::uncertain_guard(c, map) {
+        finding
+    } else {
+        finding.edit_with(c, start, n.end_byte(), || {
+            format!("{method} {{ |{}| {} }}", c.text(param), c.text(condition))
+        })
+    }
 }
 mod condition;
 use condition::conditional_map;

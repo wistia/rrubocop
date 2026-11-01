@@ -86,29 +86,28 @@ fn assert_manual(case: &serde_json::Value) {
 }
 
 #[test]
-fn grouped_mixins_share_one_atomic_rewrite_and_credit_every_member() {
-    let source = "class X\n include(A)\n include(B)\nend\n";
-    for mode in [AutocorrectMode::Safe, AutocorrectMode::All] {
-        let (after, diagnostics) = correct(
-            source,
-            &[
-                "Style/MixinGrouping",
-                "Layout/SpaceInsideParens",
-                "Style/MethodCallWithArgsParentheses",
-            ],
-            mode,
-            true,
-        );
-        assert!(after.contains("include B, A"), "{after}");
-        assert_eq!(after.matches("include").count(), 1, "{after}");
-        assert_eq!(
-            diagnostics
-                .iter()
-                .filter(|d| d.cop_name == "Style/MixinGrouping" && d.corrected)
-                .count(),
-            2
-        );
+fn all_mixin_grouping_rewrites_remain_manual() {
+    for (source, grouped, count) in [
+        ("class X\n include A, B\nend\n", false, 1),
+        ("class X\n include A\n include B\nend\n", true, 2),
+    ] {
+        for mode in [
+            AutocorrectMode::Off,
+            AutocorrectMode::Safe,
+            AutocorrectMode::All,
+        ] {
+            let (after, diagnostics) = correct(source, &["Style/MixinGrouping"], mode, grouped);
+            assert_eq!(after, source);
+            assert_eq!(diagnostics.len(), count);
+            assert!(diagnostics.iter().all(|d| !d.correctable && !d.corrected));
+        }
     }
+    assert!(
+        !CopRegistry::default_registry()
+            .get("Style/MixinGrouping")
+            .unwrap()
+            .supports_autocorrect()
+    );
 }
 
 #[test]
@@ -167,5 +166,22 @@ fn unsafe_shape_offense_fixtures_are_exercised() {
         ),
     ] {
         crate::testutil::assert_cop_offenses_full(registry.get(name).unwrap(), fixture);
+    }
+}
+
+#[test]
+fn parameter_substitution_respects_nested_scopes_and_pattern_bindings() {
+    let reference: serde_json::Value = serde_json::from_str(include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/tests/fixtures/retained-scope-hook-safety.json"
+    )))
+    .unwrap();
+    for case in reference
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|case| case["rust_correctable"] == false)
+    {
+        assert_manual(case);
     }
 }

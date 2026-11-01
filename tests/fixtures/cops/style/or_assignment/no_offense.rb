@@ -1,1 +1,1 @@
-foo = foo ? bar : default
+x = if x; x; log; else; fallback; end

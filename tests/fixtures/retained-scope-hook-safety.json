@@ -1,0 +1,340 @@
+[
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n def inner\n  i\n end\nend\nputs inner\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def i; 42; end\ndef inner\n 0\nend\nputs inner\n",
+    "rust_correctable": false,
+    "rust_corrected": "def i; 42; end\n1.times do |i|\n def inner\n  i\n end\nend\nputs inner\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n class C\n  def self.result; i; end\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def i; 42; end\nclass C\n def self.result; 0; end\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "def i; 42; end\n1.times do |i|\n class C\n  def self.result; i; end\n end\nend\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n case [42]\n in [i]\n  puts i\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case [42]\nin [0]\n puts 0\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n case [42]\n in [i]\n  puts i\n end\nend\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n [42] => [i]\n puts i\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "[42] => [0]\nputs 0\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n [42] => [i]\n puts i\nend\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n case {a: 42}\n in {a: i}\n  puts i\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case {a: 42}\nin {a: 0}\n puts 0\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "1.times do |i|\n case {a: 42}\n in {a: i}\n  puts i\n end\nend\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n module Inner\n  def self.result; i; end\n end\nend\nputs Inner.result\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def i; 42; end\nmodule Inner\n def self.result; 0; end\nend\nputs Inner.result\n",
+    "rust_correctable": false,
+    "rust_corrected": "def i; 42; end\n1.times do |i|\n module Inner\n  def self.result; i; end\n end\nend\nputs Inner.result\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n class << self\n  def result; i; end\n end\nend\nputs result\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def i; 42; end\nclass << self\n def result; 0; end\nend\nputs result\n",
+    "rust_correctable": false,
+    "rust_corrected": "def i; 42; end\n1.times do |i|\n class << self\n  def result; i; end\n end\nend\nputs result\n",
+    "reason": "Parameter replacement cannot cross method/class/module lexical boundaries or rewrite pattern bindings; retain the offense without reproducing the upstream unsafe substitution."
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n callback = -> { i }\n puts callback.call\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "callback = -> { 0 }\nputs callback.call\n"
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n def unrelated; 42; end\n puts i\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def unrelated; 42; end\nputs 0\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "module First\n def self.included(base)\n  base.const_set(:Second, Module.new)\n end\nend\nclass C\n include First\n include Second\nend\nputs C.ancestors.length\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 8,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module First\n def self.included(base)\n  base.const_set(:Second, Module.new)\n end\nend\nclass C\n include Second, First\nend\nputs C.ancestors.length\n",
+    "rust_correctable": false,
+    "rust_corrected": "module First\n def self.included(base)\n  base.const_set(:Second, Module.new)\n end\nend\nclass C\n include First\n include Second\nend\nputs C.ancestors.length\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "module First\n def self.included(base); puts \"old\";end\nend\nmodule Second\n def self.included(base)\n  base.const_set(:First, Module.new do\n   def self.included(base); puts \"new\";end\n  end)\n end\nend\nclass C\n include First, Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 12,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module First\n def self.included(base); puts \"old\";end\nend\nmodule Second\n def self.included(base)\n  base.const_set(:First, Module.new do\n   def self.included(base); puts \"new\";end\n  end)\n end\nend\nclass C\n include Second\n include First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "module First\n def self.included(base); puts \"old\";end\nend\nmodule Second\n def self.included(base)\n  base.const_set(:First, Module.new do\n   def self.included(base); puts \"new\";end\n  end)\n end\nend\nclass C\n include First, Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class C\n include First, Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class C\n include Second\n include First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class C\n include First, Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class C\n include First\n include Second\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class C\n include Second, First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class C\n include First\n include Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
+  }
+]

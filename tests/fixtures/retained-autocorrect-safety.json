@@ -721,7 +721,7 @@
     "corrected": "class X\n include second_module()\n include first_module()\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include first_module(), second_module()\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -750,7 +750,7 @@
     "corrected": "class X\n include B\n include A\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include A,\n # keep argument comment\n B\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -785,7 +785,7 @@
     "corrected": "class X\n include Second, First\n side_effect\n \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n side_effect\n include Second\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -820,7 +820,7 @@
     "corrected": "class X\n include Second, First\n $events << ancestors.include?(Second)\n \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n $events << ancestors.include?(Second)\n include Second\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -855,7 +855,7 @@
     "corrected": "class X\n include Second, First\n # keep group comment\n \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n # keep group comment\n include Second\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -890,7 +890,7 @@
     "corrected": "class X\n include Second, First # keep suffix comment\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n include Second # keep suffix comment\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -925,7 +925,7 @@
     "corrected": "class X\n include Second, First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n include Second # rubocop:disable Style/MixinGrouping\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -960,7 +960,7 @@
     "corrected": "class X\n include Second, First\n extend Other\n \nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include First\n extend Other\n include Second\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -989,7 +989,7 @@
     "corrected": "class X\n include()\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include()\n include A\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -1024,7 +1024,7 @@
     "corrected": "class X\n include second_module(), first_module()\nend\n",
     "rust_correctable": false,
     "rust_corrected": "class X\n include first_module()\n include second_module()\nend\n",
-    "reason": "Unsafe retained autocorrection is diagnostic-only: preserve literal/comment bytes, evaluation order, surrounding statements, and removed-block control/parameter targets rather than reproduce the upstream rewrite."
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -1050,7 +1050,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class X\n include Namespace::Second\n include ::First\nend\n"
+    "corrected": "class X\n include Namespace::Second\n include ::First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include ::First, Namespace::Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -1082,7 +1085,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class X\n include Namespace::Second, ::First\nend\n"
+    "corrected": "class X\n include Namespace::Second, ::First\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X\n include ::First\n include Namespace::Second\nend\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Style/MixinGrouping",
@@ -1114,7 +1120,10 @@
         "correctable": true
       }
     ],
-    "corrected": "class X; include Second, First; ; end\n"
+    "corrected": "class X; include Second, First; ; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "class X; include First; include Second; end\n",
+    "reason": "MixinGrouping is diagnostic-only: even plain constant arguments can depend on inclusion/extension/prepend hooks defining or replacing later constants."
   },
   {
     "cop": "Lint/UselessTimes",
