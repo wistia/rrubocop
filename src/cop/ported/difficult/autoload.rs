@@ -13,7 +13,7 @@ pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some((expected, acronyms)) = &info.0 else {
         return vec![];
     };
-    let Some(actual) = names::defined(c, n, acronyms) else {
+    let Some(actual) = names::defined(c, n, acronyms, expected.len().saturating_add(10)) else {
         return vec![];
     };
     if compatible(expected, actual.strip_prefix("Object::").unwrap_or(&actual)) {

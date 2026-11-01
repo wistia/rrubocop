@@ -21,7 +21,11 @@ fn complete(c: &Context<'_>, n: Node<'_>, parent: &str) -> bool {
     if known && direct_queue(c, n) {
         return true;
     }
-    let (included, declared) = super::super::custom_index::index(c, n).worker_queue(n);
+    let index = super::super::custom_index::index(c, n);
+    if !known && !index.may_include_worker(c) {
+        return true;
+    }
+    let (included, declared) = index.worker_queue(c, n);
     !(known || included) || declared
 }
 fn direct_queue(c: &Context<'_>, n: Node<'_>) -> bool {

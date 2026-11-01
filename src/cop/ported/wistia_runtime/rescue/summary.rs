@@ -1,10 +1,11 @@
 use super::*;
-use std::collections::HashSet;
+use std::collections::HashMap;
+use std::sync::Mutex;
 
 type Key = (usize, usize, &'static str);
-pub(super) struct Reporters(Option<HashSet<Key>>);
+pub(super) struct Reporters(Option<Mutex<HashMap<Key, bool>>>);
 impl Reporters {
-    pub(super) fn new(c: &Context<'_>, n: Node<'_>) -> Self {
+    pub(super) fn new(c: &Context<'_>, _n: Node<'_>) -> Self {
         if c.source
             .as_bytes()
             .windows(6)
@@ -15,17 +16,11 @@ impl Reporters {
         {
             return Self(None);
         }
-        let mut root = n;
-        while let Some(parent) = root.parent() {
-            root = parent;
-        }
-        let mut found = HashSet::new();
-        summarize(c, root, &mut found);
-        Self(Some(found))
+        Self(Some(Mutex::default()))
     }
     pub(super) fn contains(&self, c: &Context<'_>, n: Node<'_>) -> bool {
         match &self.0 {
-            Some(found) => found.contains(&key(n)),
+            Some(found) => summarize(c, n, &mut found.lock().unwrap(), true),
             None => descendants(n).any(|node| reports(c, node)),
         }
     }
@@ -33,14 +28,27 @@ impl Reporters {
 fn key(n: Node<'_>) -> Key {
     (n.start_byte(), n.end_byte(), n.kind())
 }
-fn summarize(c: &Context<'_>, n: Node<'_>, found: &mut HashSet<Key>) -> bool {
-    let mut reporting = reports(c, n);
-    let mut cursor = n.walk();
-    for child in n.named_children(&mut cursor) {
-        reporting |= summarize(c, child, found);
+fn summarize(c: &Context<'_>, n: Node<'_>, found: &mut HashMap<Key, bool>, cache: bool) -> bool {
+    if cache && let Some(reporting) = found.get(&key(n)) {
+        return *reporting;
     }
-    if reporting {
-        found.insert(key(n));
+    let mut cursor = n.walk();
+    let reporting = reports(c, n)
+        || n.named_children(&mut cursor)
+            .any(|child| summarize(c, child, found, handler(n, child)));
+    if cache {
+        found.insert(key(n), reporting);
     }
     reporting
 }
+
+fn handler(parent: Node<'_>, child: Node<'_>) -> bool {
+    match parent.kind() {
+        "rescue" => body(parent) == Some(child),
+        "rescue_modifier" => field(parent, "handler") == Some(child),
+        _ => false,
+    }
+}
+
+#[cfg(test)]
+mod tests;

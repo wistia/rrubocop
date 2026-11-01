@@ -1,10 +1,12 @@
 use super::context::*;
 use std::collections::{HashMap, HashSet};
-use std::sync::Arc;
+use std::sync::{Arc, OnceLock};
 use tree_sitter::Node;
 
 mod ancestors;
-mod build;
+mod methods;
+mod policies;
+mod queues;
 pub(super) use ancestors::{in_class, in_spec};
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq)]
@@ -12,76 +14,53 @@ struct Key(usize, usize, &'static str);
 fn key(n: Node<'_>) -> Key {
     Key(n.start_byte(), n.end_byte(), n.kind())
 }
-#[derive(Clone, Copy)]
-struct Record {
-    range: (usize, usize),
-    parent: Option<Key>,
-    owner: Option<Key>,
-    policy: Option<Key>,
-}
-#[derive(Default)]
-struct Queue {
-    worker: bool,
-    declared: bool,
+fn root(mut n: Node<'_>) -> Node<'_> {
+    while let Some(parent) = n.parent() {
+        n = parent;
+    }
+    n
 }
 #[derive(Default)]
 pub(super) struct Index {
-    records: HashMap<Key, Record>,
-    methods: HashMap<String, Vec<usize>>,
-    owned_methods: HashMap<Key, HashSet<String>>,
-    queues: HashMap<Key, Queue>,
-    disabled: Vec<usize>,
-    scopes: Vec<usize>,
+    methods: OnceLock<methods::Methods>,
+    queues: OnceLock<queues::Queues>,
+    policies: OnceLock<policies::Policies>,
+    worker_marker: OnceLock<bool>,
 }
-pub(super) fn index(c: &Context<'_>, n: Node<'_>) -> Arc<Index> {
-    c.source.cached(0, || {
-        let mut root = n;
-        while let Some(parent) = root.parent() {
-            root = parent;
-        }
-        build::index(c, root)
-    })
+pub(super) fn index(c: &Context<'_>, _n: Node<'_>) -> Arc<Index> {
+    c.source.cached(0, Index::default)
 }
 impl Index {
-    pub(super) fn method(&self, n: Node<'_>, name: &str, strict: bool) -> bool {
-        let Some(record) = self.records.get(&key(n)) else {
-            return false;
-        };
-        if strict {
-            return record.owner.is_some_and(|owner| {
-                self.owned_methods
-                    .get(&owner)
-                    .is_some_and(|methods| methods.contains(name))
-            });
-        }
-        let parent = record.parent.and_then(|p| self.records.get(&p));
-        parent.is_some_and(|p| {
-            self.methods
-                .get(name)
-                .is_some_and(|positions| in_range(positions, p.range))
+    pub(super) fn method(&self, c: &Context<'_>, n: Node<'_>, name: &str, strict: bool) -> bool {
+        self.methods
+            .get_or_init(|| methods::Methods::new(c, root(n)))
+            .contains(n, name, strict)
+    }
+    pub(super) fn may_include_worker(&self, c: &Context<'_>) -> bool {
+        *self.worker_marker.get_or_init(|| {
+            c.source
+                .as_bytes()
+                .windows(b"Sidekiq::Worker".len())
+                .any(|w| w == b"Sidekiq::Worker")
         })
     }
-    pub(super) fn worker_queue(&self, n: Node<'_>) -> (bool, bool) {
+    pub(super) fn worker_queue(&self, c: &Context<'_>, n: Node<'_>) -> (bool, bool) {
         self.queues
-            .get(&key(n))
-            .map_or((false, false), |q| (q.worker, q.declared))
+            .get_or_init(|| queues::Queues::new(c, root(n)))
+            .get(n)
     }
-    fn contains(&self, n: Node<'_>, positions: &[usize]) -> bool {
-        self.records
-            .get(&key(n))
-            .is_some_and(|r| in_range(positions, r.range))
+    fn policies(&self, c: &Context<'_>, n: Node<'_>) -> &policies::Policies {
+        self.policies
+            .get_or_init(|| policies::Policies::new(c, root(n)))
     }
-    pub(super) fn policy_disabled(&self, n: Node<'_>) -> bool {
-        self.contains(n, &self.disabled)
+    pub(super) fn policy_disabled(&self, c: &Context<'_>, n: Node<'_>) -> bool {
+        self.policies(c, n).disabled(n)
     }
-    pub(super) fn policy_scope(&self, n: Node<'_>) -> bool {
-        self.contains(n, &self.scopes)
+    pub(super) fn policy_scope(&self, c: &Context<'_>, n: Node<'_>) -> bool {
+        self.policies(c, n).scope(n)
     }
-    pub(super) fn parent_policy_disabled(&self, n: Node<'_>) -> Option<bool> {
-        self.records
-            .get(&key(n))?
-            .policy
-            .map(|policy| in_range(&self.disabled, self.records[&policy].range))
+    pub(super) fn parent_policy_disabled(&self, c: &Context<'_>, n: Node<'_>) -> Option<bool> {
+        self.policies(c, n).parent_disabled(n)
     }
 }
 fn in_range(positions: &[usize], (start, end): (usize, usize)) -> bool {

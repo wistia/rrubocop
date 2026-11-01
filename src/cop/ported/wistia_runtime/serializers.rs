@@ -59,7 +59,7 @@ pub(super) fn method_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn matching_method(c: &Context<'_>, n: Node<'_>, attribute: Node<'_>) -> bool {
-    super::super::custom_index::index(c, n).method(n, c.value(attribute), false)
+    super::super::custom_index::index(c, n).method(c, n, c.value(attribute), false)
 }
 
 fn attribute_block(c: &Context<'_>, n: Node<'_>) -> bool {

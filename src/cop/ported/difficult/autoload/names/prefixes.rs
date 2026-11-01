@@ -1,52 +1,54 @@
 use super::*;
 use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
+use std::sync::Mutex;
+mod state;
+pub(super) use state::Namespace;
 
-type State = Option<Arc<Vec<String>>>;
+type State = Option<Namespace>;
 type Key = (usize, usize, u16);
 #[derive(Default)]
 struct Prefixes(Mutex<HashMap<Key, State>>);
 
-pub(super) fn parent(c: &Context<'_>, node: Node<'_>) -> Option<String> {
-    let prefixes = c.source.cached(0, Prefixes::default);
+pub(super) fn parent(c: &Context<'_>, node: Node<'_>, limit: usize) -> State {
+    let prefixes = c.source.cached(limit, Prefixes::default);
     node.parent().map_or_else(
-        || Some("Object".into()),
-        |parent| after(c, parent, &prefixes).map(|parts| scope_name(&parts)),
+        || Some(Namespace::default()),
+        |parent| after(c, parent, &prefixes, limit),
     )
 }
-
-fn after(c: &Context<'_>, node: Node<'_>, prefixes: &Prefixes) -> State {
+fn after(c: &Context<'_>, node: Node<'_>, prefixes: &Prefixes, limit: usize) -> State {
     let key = (node.start_byte(), node.end_byte(), node.kind_id());
     if let Some(state) = prefixes.0.lock().unwrap().get(&key).cloned() {
         return state;
     }
-    let inherited = inherited(c, node, prefixes);
-    let state = extend(c, node, inherited);
+    let state = extend(c, node, inherited(c, node, prefixes, limit), limit);
     prefixes.0.lock().unwrap().insert(key, state.clone());
     state
 }
-
-fn inherited(c: &Context<'_>, node: Node<'_>, prefixes: &Prefixes) -> State {
+fn inherited(c: &Context<'_>, node: Node<'_>, prefixes: &Prefixes, limit: usize) -> State {
     node.parent().map_or_else(
-        || Some(Arc::new(Vec::new())),
-        |parent| after(c, parent, prefixes),
+        || Some(Namespace::default()),
+        |parent| after(c, parent, prefixes, limit),
     )
 }
-
-fn extend(c: &Context<'_>, node: Node<'_>, inherited: State) -> State {
-    let mut parts = inherited?;
-    if changes(c, node) {
-        add_namespace(c, node, Arc::make_mut(&mut parts))?;
+fn extend(c: &Context<'_>, node: Node<'_>, inherited: State, limit: usize) -> State {
+    let prefix = inherited?;
+    let mut parts = Vec::new();
+    if singleton_self(c, node) {
+        parts.push(format!("#<Class:{}>", prefix.full_name()));
+    } else {
+        add_namespace(c, node, &mut parts)?;
     }
-    Some(parts)
+    Some(match parts.pop() {
+        Some(part) => prefix.append(part, limit),
+        None => prefix,
+    })
 }
-
-fn changes(c: &Context<'_>, node: Node<'_>) -> bool {
-    match node.kind() {
-        "class" | "module" | "singleton_class" | "block" | "do_block" => true,
-        "assignment" => field(node, "right").is_some_and(|right| new_class_call(c, right)),
-        _ => false,
-    }
+fn singleton_self(c: &Context<'_>, node: Node<'_>) -> bool {
+    node.kind() == "singleton_class"
+        && field(node, "value")
+            .or_else(|| kids(node).first().copied())
+            .is_some_and(|object| c.text(object) == "self")
 }
 
 #[cfg(test)]
@@ -76,7 +78,12 @@ mod tests {
         let config = CopConfig::default();
         let c = Context::new(&source, &config);
         for node in descendants(tree.root_node()) {
-            assert_eq!(parent(&c, node), replay(&c, node), "{} {text}", node.kind());
+            assert_eq!(
+                parent(&c, node, usize::MAX).map(|p| p.full_name()),
+                replay(&c, node),
+                "{} {text}",
+                node.kind()
+            );
         }
     }
     fn replay(c: &Context<'_>, node: Node<'_>) -> Option<String> {

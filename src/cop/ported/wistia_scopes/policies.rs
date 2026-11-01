@@ -9,7 +9,7 @@ pub(super) fn no_show(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "show?" {
         return vec![];
     }
-    if super::super::custom_index::index(c, n).parent_policy_disabled(n) != Some(false) {
+    if super::super::custom_index::index(c, n).parent_policy_disabled(c, n) != Some(false) {
         return vec![];
     }
     vec![Finding::new(
@@ -28,7 +28,7 @@ pub(super) fn policy_scope(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     }
     let index = super::super::custom_index::index(c, n);
-    if index.policy_scope(n) != index.policy_disabled(n) {
+    if index.policy_scope(c, n) != index.policy_disabled(c, n) {
         return vec![];
     }
     vec![Finding::new(

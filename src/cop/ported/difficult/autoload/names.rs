@@ -1,6 +1,7 @@
 use super::super::super::context::*;
 use super::inflections;
 use tree_sitter::Node;
+mod head;
 mod prefixes;
 use prefixes::parent;
 
@@ -8,32 +9,47 @@ pub(super) fn defined(
     c: &Context<'_>,
     n: Node<'_>,
     acronyms: &inflections::Acronyms,
+    limit: usize,
 ) -> Option<String> {
     if matches!(n.kind(), "class" | "module") {
         Some(join(
-            parent(c, n).as_deref(),
+            parent(c, n, limit).as_ref().map(|p| p.head()),
             c.text(field(n, "name")?).trim_start_matches("::"),
+            limit,
         ))
     } else {
-        assigned(c, n, acronyms)
+        assigned(c, n, acronyms, limit)
     }
 }
-fn assigned(c: &Context<'_>, n: Node<'_>, acronyms: &inflections::Acronyms) -> Option<String> {
+fn assigned(
+    c: &Context<'_>,
+    n: Node<'_>,
+    acronyms: &inflections::Acronyms,
+    limit: usize,
+) -> Option<String> {
     let left = field(n, "left").unwrap_or(n);
-    Some(join(
-        assignment_namespace(c, n, left).as_deref(),
-        &inflections::normalized(c.text(field(left, "name").unwrap_or(left)), acronyms),
-    ))
+    let name = inflections::normalized(c.text(field(left, "name").unwrap_or(left)), acronyms);
+    Some(assignment_head(c, n, left, &name, limit))
 }
-fn assignment_namespace(c: &Context<'_>, n: Node<'_>, left: Node<'_>) -> Option<String> {
-    field(left, "scope")
-        .map(|scope| c.text(scope).rsplit("::").next().unwrap_or("").to_owned())
-        .or_else(|| parent(c, n))
+fn assignment_head(
+    c: &Context<'_>,
+    n: Node<'_>,
+    left: Node<'_>,
+    name: &str,
+    limit: usize,
+) -> String {
+    if let Some(scope) = field(left, "scope") {
+        return join(
+            Some(c.text(scope).rsplit("::").next().unwrap_or("")),
+            name,
+            limit,
+        );
+    }
+    join(parent(c, n, limit).as_ref().map(|p| p.head()), name, limit)
 }
-fn join(namespace: Option<&str>, name: &str) -> String {
-    namespace
-        .filter(|s| !s.is_empty())
-        .map_or_else(|| name.to_owned(), |p| format!("{p}::{name}"))
+
+fn join(namespace: Option<&str>, name: &str, limit: usize) -> String {
+    head::join(namespace.filter(|s| !s.is_empty()), name, limit)
 }
 fn scope_name(parts: &[String]) -> String {
     if parts.is_empty() {

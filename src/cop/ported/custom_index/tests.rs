@@ -29,7 +29,7 @@ fn check_methods(c: &Context<'_>, root: Node<'_>) {
         for strict in [true, false] {
             for name in ["nested", "own", "missing"] {
                 assert_eq!(
-                    summary.method(call, name, strict),
+                    summary.method(c, call, name, strict),
                     old_method(c, call, name, strict),
                     "{} {name} {strict}",
                     c.text(call)
@@ -52,7 +52,7 @@ fn check_policy(c: &Context<'_>, root: Node<'_>, summary: &Index) {
     let show = descendants(root)
         .find(|n| n.kind() == "method" && c.method(*n) == "show?")
         .unwrap();
-    assert_eq!(summary.parent_policy_disabled(show), Some(true));
+    assert_eq!(summary.parent_policy_disabled(c, show), Some(true));
 }
 fn old_queue(c: &Context<'_>, class: Node<'_>) -> (bool, bool) {
     let calls = old_calls(class);
@@ -81,7 +81,7 @@ fn old_calls(class: Node<'_>) -> Vec<Node<'_>> {
 fn check_queues(c: &Context<'_>, root: Node<'_>, summary: &Index) {
     for class in descendants(root).filter(|n| n.kind() == "class") {
         assert_eq!(
-            summary.worker_queue(class),
+            summary.worker_queue(c, class),
             old_queue(c, class),
             "{}",
             c.text(class)
@@ -105,3 +105,5 @@ fn old_excluded(class: Node<'_>) -> Option<Node<'_>> {
     let statements = body(class).map(statements).unwrap_or_default();
     (statements.len() == 1).then(|| statements[0])
 }
+
+mod lazy;
