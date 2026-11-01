@@ -60,3 +60,5 @@ The full corpus retains identical complete diagnostic arrays (14,762 files, 27 o
 `correct-N` fixes N ordinary trailing-whitespace lines; `wide-comma-N` fixes N spaces before commas on one long literal-array line. All paired synthetic offense arrays and corrected bytes match. The 16,000-comma stress input reaches roughly 0.8 GiB peak RSS in both binaries due to the large parse/correction workload; it is a scaling probe, not typical application input. `map-independent-32000` selects only OutOfRangeRegexpRef on an array of 32,000 strings with no regexp-reference marker. Its gain is modest because parsing remains necessary.
 
 [Raw timings, provenance, diagnostic hashes, reference comparisons, and runner](correctness-and-correction-measurements.json).
+
+The [subsequent review fixes](review-correctness-and-memory-fixes.md) address percent-literal delimiters, CRLF removal, multi-cop highlights, selector re-enables, and allocation overhead found during independent review.

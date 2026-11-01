@@ -1,0 +1,1676 @@
+{
+  "baseline_commit": "f31620a7dcddf720952c28802b2a8186fd2aa611",
+  "implementation_commit": "91cfe88ea38f4f1940d9636dc1205742e6da9ef3",
+  "corpus_commit": "404394655f71e35560f1c24bf773af3de098c534",
+  "sample_manifest_sha256": "7fbf72ab7810acac93f547d0224fac276b66a2853dfc35874bca5b005c0324f1",
+  "binary_sha256": {
+    "before": "9ac09fc6b5fae7ac70e2419228f55437ff12be19de6c2d943be777b3b8bab59d",
+    "after": "b4d6b4863f3fac398b9f8357c72a42d80848c8edab4746d934dc1499ddacf7b1"
+  },
+  "benchmark_runner": "import json,subprocess,os,time,resource,statistics\nfrom pathlib import Path\nroot=Path('/home/ubuntu/code/rrubocop-wistia-parity'); project=Path('/tmp/rr-review-fixes-project');project.mkdir(exist_ok=True);(project/'Gemfile').write_text('');(project/'.rubocop.yml').write_text('AllCops:\\n  NewCops: enable\\n  TargetRubyVersion: 3.4\\nCops/NoSleep:\\n  Enabled: true\\n  Include: [\"**/*\"]\\n')\npath=project/'probe.rb'; bins={'before':'/tmp/rrubocop-before-review-f31620a','after':str(root/'target/release/rrubocop')};cache=Path('/tmp/rr-review-fixes-cache');cache.mkdir(exist_ok=True);(cache/'unavailable').write_text('benchmark-only unavailable backend');rows=[];outputs={}\ndef run(binary,scope,args,cwd=project,source=None):\n if source is not None:path.write_text(source)\n env={**os.environ,'RRUBOCOP_CACHE_DIR':str(cache/binary/scope if scope in ['sample','full'] else cache/'unavailable')};rss=Path('/tmp/rr-review-fixes-rss.txt');u=resource.getrusage(resource.RUSAGE_CHILDREN);start=time.perf_counter()\n p=subprocess.run(['/usr/bin/time','-q','-f','%M','-o',str(rss),bins[binary],'--cache','false','--format','json']+args,cwd=cwd,env=env,capture_output=True,text=True,timeout=120);e=resource.getrusage(resource.RUSAGE_CHILDREN)\n if p.returncode not in (0,1):raise RuntimeError((scope,p.stderr))\n data=json.loads(p.stdout);assert not any(o['cop_name']=='Lint/Syntax' for o in data['offenses']),(scope,data)\n rows.append({'binary':binary,'scope':scope,'wall':time.perf_counter()-start,'user':e.ru_utime-u.ru_utime,'system':e.ru_stime-u.ru_stime,'max_rss_kib':int(rss.read_text().strip()),'metadata':data['metadata']});outputs.setdefault(scope,{})[binary]={'offenses':data['offenses'],'source':path.read_text() if source is not None else None}\n Path('/tmp/rr-review-fixes-timings.json').write_text(json.dumps(rows,indent=2));Path('/tmp/rr-review-fixes-'+binary+'-'+scope+'.json').write_text(json.dumps(data,indent=2));print(rows[-1],flush=True)\nfor n in [4000,64000]:\n for repeat in range(3):\n  for b in (['before','after'] if repeat%2==0 else ['after','before']):run(b,'percent-'+str(n),['--only','Layout/SpaceAfterComma',str(path)],source='value = %w['+'word '*n+']\\n')\nfor scope,source in [('ascii-1m','sleep # '+'x'*1000000+'\\n'),('unicode-sparse-1m','sleep # '+'x'*1000000+'\u00e9\\n'),('unicode-dense-250k','sleep # '+'\ud83d\ude00'*250000+'\\n')]:\n for repeat in range(3):\n  for b in (['before','after'] if repeat%2==0 else ['after','before']):run(b,scope,['--only','Cops/NoSleep',str(path)],source=source)\nfor repeat in range(3):\n for b in (['before','after'] if repeat%2==0 else ['after','before']):run(b,'correct-8000',['--only','Layout/TrailingWhitespace','-A',str(path)],source='x = 1  \\n'*8000)\ncorpus=Path('/home/ubuntu/code/wistia-rrubocop-benchmark');inputs=json.load(open('/tmp/rr-performance-inputs.json'))\nfor repeat in range(3):\n for b in (['before','after'] if repeat%2==0 else ['after','before']):run(b,'sample',inputs['sample'],corpus)\nfor repeat in range(2):\n for b in (['before','after'] if repeat==0 else ['after','before']):run(b,'full',[],corpus)\ncomparisons={s:{'identical_offenses':v['before']['offenses']==v['after']['offenses'],'identical_source':v['before']['source']==v['after']['source']} for s,v in outputs.items()};Path('/tmp/rr-review-fixes-benchmark-comparisons.json').write_text(json.dumps(comparisons,indent=2))\nfor s in outputs:print(s,{b:statistics.median(r['wall'] for r in rows if r['scope']==s and r['binary']==b) for b in bins},comparisons[s],flush=True)\n",
+  "summaries": {
+    "percent-4000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.023432685993611813,
+        "user": 0.018423000000000002,
+        "system": 0.00613,
+        "max_rss_kib": 14196
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.022590417880564928,
+        "user": 0.017439999999999997,
+        "system": 0.0061280000000000015,
+        "max_rss_kib": 14584
+      }
+    },
+    "percent-64000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.16612536925822496,
+        "user": 0.14360800000000007,
+        "system": 0.02418199999999998,
+        "max_rss_kib": 39028
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.1502941739745438,
+        "user": 0.12624200000000002,
+        "system": 0.025152000000000008,
+        "max_rss_kib": 39292
+      }
+    },
+    "ascii-1m": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.037913866341114044,
+        "user": 0.03359599999999996,
+        "system": 0.005268000000000023,
+        "max_rss_kib": 14324
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.03860074980184436,
+        "user": 0.032871000000000095,
+        "system": 0.006845000000000018,
+        "max_rss_kib": 15036
+      }
+    },
+    "unicode-sparse-1m": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.042887809220701456,
+        "user": 0.03201300000000007,
+        "system": 0.011716000000000032,
+        "max_rss_kib": 22264
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.03987863287329674,
+        "user": 0.03467799999999999,
+        "system": 0.006253999999999982,
+        "max_rss_kib": 15028
+      }
+    },
+    "unicode-dense-250k": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.025121671613305807,
+        "user": 0.020936000000000066,
+        "system": 0.005170999999999981,
+        "max_rss_kib": 16372
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.026284335181117058,
+        "user": 0.01985999999999999,
+        "system": 0.007242000000000026,
+        "max_rss_kib": 16948
+      }
+    },
+    "correct-8000": {
+      "before": {
+        "repeats": 3,
+        "wall": 0.28831466706469655,
+        "user": 0.25809300000000013,
+        "system": 0.019179,
+        "max_rss_kib": 34420
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 0.28116566222161055,
+        "user": 0.24693799999999966,
+        "system": 0.024069000000000007,
+        "max_rss_kib": 32060
+      }
+    },
+    "sample": {
+      "before": {
+        "repeats": 3,
+        "wall": 1.7128387498669326,
+        "user": 6.724671999999998,
+        "system": 0.24931899999999996,
+        "max_rss_kib": 75392
+      },
+      "after": {
+        "repeats": 3,
+        "wall": 1.7190307518467307,
+        "user": 6.731251,
+        "system": 0.25925600000000004,
+        "max_rss_kib": 75276
+      }
+    },
+    "full": {
+      "before": {
+        "repeats": 2,
+        "wall": 20.80064777750522,
+        "user": 149.31865749999997,
+        "system": 0.9569510000000001,
+        "max_rss_kib": 137384.0
+      },
+      "after": {
+        "repeats": 2,
+        "wall": 20.519381603691727,
+        "user": 149.834344,
+        "system": 0.968963,
+        "max_rss_kib": 140646.0
+      }
+    }
+  },
+  "timings": [
+    {
+      "binary": "before",
+      "scope": "percent-4000",
+      "wall": 0.023432685993611813,
+      "user": 0.016644,
+      "system": 0.007833999999999999,
+      "max_rss_kib": 14196,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "percent-4000",
+      "wall": 0.022770992945879698,
+      "user": 0.020624999999999998,
+      "system": 0.003189000000000001,
+      "max_rss_kib": 14840,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "percent-4000",
+      "wall": 0.022456742823123932,
+      "user": 0.017258000000000003,
+      "system": 0.006366999999999999,
+      "max_rss_kib": 14584,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "percent-4000",
+      "wall": 0.02346512395888567,
+      "user": 0.018423000000000002,
+      "system": 0.00613,
+      "max_rss_kib": 14200,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "percent-4000",
+      "wall": 0.023234151303768158,
+      "user": 0.019026,
+      "system": 0.005246000000000001,
+      "max_rss_kib": 14196,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "percent-4000",
+      "wall": 0.022590417880564928,
+      "user": 0.017439999999999997,
+      "system": 0.0061280000000000015,
+      "max_rss_kib": 14516,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "percent-64000",
+      "wall": 0.16612536925822496,
+      "user": 0.14883199999999996,
+      "system": 0.018269999999999995,
+      "max_rss_kib": 39032,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "percent-64000",
+      "wall": 0.15005947602912784,
+      "user": 0.12624200000000002,
+      "system": 0.024921000000000006,
+      "max_rss_kib": 39664,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "percent-64000",
+      "wall": 0.15032942686229944,
+      "user": 0.121637,
+      "system": 0.029765999999999987,
+      "max_rss_kib": 39288,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "percent-64000",
+      "wall": 0.1656428719870746,
+      "user": 0.13965399999999994,
+      "system": 0.027117000000000016,
+      "max_rss_kib": 39028,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "percent-64000",
+      "wall": 0.16664377367123961,
+      "user": 0.14360800000000007,
+      "system": 0.02418199999999998,
+      "max_rss_kib": 39028,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "percent-64000",
+      "wall": 0.1502941739745438,
+      "user": 0.12632699999999997,
+      "system": 0.025152000000000008,
+      "max_rss_kib": 39292,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "ascii-1m",
+      "wall": 0.037913866341114044,
+      "user": 0.033102999999999994,
+      "system": 0.005837000000000009,
+      "max_rss_kib": 14324,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "ascii-1m",
+      "wall": 0.03832694189622998,
+      "user": 0.032193999999999945,
+      "system": 0.0072189999999999754,
+      "max_rss_kib": 15036,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "ascii-1m",
+      "wall": 0.03860074980184436,
+      "user": 0.032871000000000095,
+      "system": 0.006845000000000018,
+      "max_rss_kib": 15096,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "ascii-1m",
+      "wall": 0.03817430417984724,
+      "user": 0.03409100000000009,
+      "system": 0.005061999999999983,
+      "max_rss_kib": 14324,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "ascii-1m",
+      "wall": 0.037854730151593685,
+      "user": 0.03359599999999996,
+      "system": 0.005268000000000023,
+      "max_rss_kib": 14328,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "ascii-1m",
+      "wall": 0.03903954569250345,
+      "user": 0.03410099999999994,
+      "system": 0.006014999999999993,
+      "max_rss_kib": 14960,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "unicode-sparse-1m",
+      "wall": 0.042887809220701456,
+      "user": 0.03343699999999994,
+      "system": 0.010578000000000004,
+      "max_rss_kib": 22328,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "unicode-sparse-1m",
+      "wall": 0.03987863287329674,
+      "user": 0.03467799999999999,
+      "system": 0.006253999999999982,
+      "max_rss_kib": 14636,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "unicode-sparse-1m",
+      "wall": 0.03904413478448987,
+      "user": 0.03615900000000005,
+      "system": 0.003970000000000001,
+      "max_rss_kib": 15096,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "unicode-sparse-1m",
+      "wall": 0.04277262091636658,
+      "user": 0.03201300000000007,
+      "system": 0.011716000000000032,
+      "max_rss_kib": 22264,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "unicode-sparse-1m",
+      "wall": 0.04308125330135226,
+      "user": 0.031050000000000022,
+      "system": 0.013053999999999955,
+      "max_rss_kib": 22260,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "unicode-sparse-1m",
+      "wall": 0.04047470912337303,
+      "user": 0.034664999999999946,
+      "system": 0.006975000000000009,
+      "max_rss_kib": 15028,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "unicode-dense-250k",
+      "wall": 0.02602366078644991,
+      "user": 0.02013699999999985,
+      "system": 0.007062999999999986,
+      "max_rss_kib": 16372,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "unicode-dense-250k",
+      "wall": 0.026284335181117058,
+      "user": 0.021236000000000033,
+      "system": 0.006315000000000015,
+      "max_rss_kib": 16504,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "unicode-dense-250k",
+      "wall": 0.025996710173785686,
+      "user": 0.01985999999999999,
+      "system": 0.007242000000000026,
+      "max_rss_kib": 17016,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "unicode-dense-250k",
+      "wall": 0.025121671613305807,
+      "user": 0.02198600000000006,
+      "system": 0.004164999999999974,
+      "max_rss_kib": 16360,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "unicode-dense-250k",
+      "wall": 0.025050960015505552,
+      "user": 0.020936000000000066,
+      "system": 0.005170999999999981,
+      "max_rss_kib": 16376,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "unicode-dense-250k",
+      "wall": 0.02650557504966855,
+      "user": 0.019424000000000108,
+      "system": 0.008202000000000043,
+      "max_rss_kib": 16948,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 1,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "correct-8000",
+      "wall": 0.2857742668129504,
+      "user": 0.257533,
+      "system": 0.017152,
+      "max_rss_kib": 34552,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 8000,
+        "corrected_count": 8000
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "correct-8000",
+      "wall": 0.28116566222161055,
+      "user": 0.2467149999999998,
+      "system": 0.024069000000000007,
+      "max_rss_kib": 32060,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 8000,
+        "corrected_count": 8000
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "correct-8000",
+      "wall": 0.2807190422900021,
+      "user": 0.24998900000000002,
+      "system": 0.019991999999999954,
+      "max_rss_kib": 32048,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 8000,
+        "corrected_count": 8000
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "correct-8000",
+      "wall": 0.2959108059294522,
+      "user": 0.25891200000000003,
+      "system": 0.025016000000000038,
+      "max_rss_kib": 34420,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 8000,
+        "corrected_count": 8000
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "correct-8000",
+      "wall": 0.28831466706469655,
+      "user": 0.25809300000000013,
+      "system": 0.019179,
+      "max_rss_kib": 34420,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 8000,
+        "corrected_count": 8000
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "correct-8000",
+      "wall": 0.2829932370223105,
+      "user": 0.24693799999999966,
+      "system": 0.026069999999999982,
+      "max_rss_kib": 32124,
+      "metadata": {
+        "files_inspected": 1,
+        "offense_count": 8000,
+        "corrected_count": 8000
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "sample",
+      "wall": 1.7111020139418542,
+      "user": 6.705641000000001,
+      "system": 0.24931899999999996,
+      "max_rss_kib": 74116,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "sample",
+      "wall": 1.7190307518467307,
+      "user": 6.731251,
+      "system": 0.25925600000000004,
+      "max_rss_kib": 75708,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "sample",
+      "wall": 1.7153286160901189,
+      "user": 6.723167,
+      "system": 0.24394300000000002,
+      "max_rss_kib": 75020,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "sample",
+      "wall": 1.7140600713901222,
+      "user": 6.756003,
+      "system": 0.24534600000000006,
+      "max_rss_kib": 75392,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "sample",
+      "wall": 1.7128387498669326,
+      "user": 6.724671999999998,
+      "system": 0.25571699999999975,
+      "max_rss_kib": 75704,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "sample",
+      "wall": 1.7652533650398254,
+      "user": 6.802333000000004,
+      "system": 0.26456999999999997,
+      "max_rss_kib": 75276,
+      "metadata": {
+        "files_inspected": 632,
+        "offense_count": 0,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "full",
+      "wall": 19.9159107147716,
+      "user": 149.066034,
+      "system": 0.9326800000000004,
+      "max_rss_kib": 133040,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "full",
+      "wall": 20.255241486243904,
+      "user": 149.56705100000002,
+      "system": 1.007456,
+      "max_rss_kib": 139368,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "after",
+      "scope": "full",
+      "wall": 20.78352172113955,
+      "user": 150.10163699999998,
+      "system": 0.9304700000000001,
+      "max_rss_kib": 141924,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    },
+    {
+      "binary": "before",
+      "scope": "full",
+      "wall": 21.68538484023884,
+      "user": 149.57128099999994,
+      "system": 0.9812219999999998,
+      "max_rss_kib": 141728,
+      "metadata": {
+        "files_inspected": 14762,
+        "offense_count": 27,
+        "corrected_count": 0
+      }
+    }
+  ],
+  "benchmark_comparisons": {
+    "percent-4000": {
+      "identical_offenses": true,
+      "identical_source": true
+    },
+    "percent-64000": {
+      "identical_offenses": true,
+      "identical_source": true
+    },
+    "ascii-1m": {
+      "identical_offenses": true,
+      "identical_source": true
+    },
+    "unicode-sparse-1m": {
+      "identical_offenses": true,
+      "identical_source": true
+    },
+    "unicode-dense-250k": {
+      "identical_offenses": true,
+      "identical_source": true
+    },
+    "correct-8000": {
+      "identical_offenses": true,
+      "identical_source": true
+    },
+    "sample": {
+      "identical_offenses": true,
+      "identical_source": true
+    },
+    "full": {
+      "identical_offenses": true,
+      "identical_source": true
+    }
+  },
+  "benchmark_offense_sha256": {
+    "percent-4000": {
+      "before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "percent-64000": {
+      "before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "ascii-1m": {
+      "before": "6c1d10207a6305e3bcfe41cc6a633320c3a4a04ecd635217b99e1094549e421e",
+      "after": "6c1d10207a6305e3bcfe41cc6a633320c3a4a04ecd635217b99e1094549e421e"
+    },
+    "unicode-sparse-1m": {
+      "before": "6c1d10207a6305e3bcfe41cc6a633320c3a4a04ecd635217b99e1094549e421e",
+      "after": "6c1d10207a6305e3bcfe41cc6a633320c3a4a04ecd635217b99e1094549e421e"
+    },
+    "unicode-dense-250k": {
+      "before": "6c1d10207a6305e3bcfe41cc6a633320c3a4a04ecd635217b99e1094549e421e",
+      "after": "6c1d10207a6305e3bcfe41cc6a633320c3a4a04ecd635217b99e1094549e421e"
+    },
+    "correct-8000": {
+      "before": "0ca2d579f76e7661df5bf0990f5d25ff256d7b1d2b5bdb5e8467dd2e6807dda0",
+      "after": "0ca2d579f76e7661df5bf0990f5d25ff256d7b1d2b5bdb5e8467dd2e6807dda0"
+    },
+    "sample": {
+      "before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "full": {
+      "before": "cfa96263352ba0864eeddac275d5760bdafcdb8421df31a5c6229601201a608d",
+      "after": "cfa96263352ba0864eeddac275d5760bdafcdb8421df31a5c6229601201a608d"
+    }
+  },
+  "standalone_memory": {
+    "baseline_commit": "f31620a7dcddf720952c28802b2a8186fd2aa611",
+    "method": "Standalone actual source snapshots compiled rustc --edition2024 -O; three alternating before/after repeats. Synthetic memory probes, not corpus impact. Corrections:32disjoint edits with1MiBreplacement each. MostlyASCII:1million ASCII x plus\u00e9. Unicodeheavy:200000 repetitions of\u00e9\ud83d\ude00\u03b2. Coordinate queries atcolumn0 force same cache construction.",
+    "sources": {
+      "src/correction/selection.rs": {
+        "baseline_sha256": "c11aec1bbf6a63831c3715371438c86a43141133aaf2fe514b00d3489b13517e",
+        "current_sha256": "d5d3f98aacf1355d60e92c3b6478de9f74698c204b22a0564dfe198f92db17d0"
+      },
+      "src/correction/selection/index.rs": {
+        "baseline_sha256": "37c8b0e621bd7556f112add4e1ab0039dc7b5fb074428a7220fa9fba7b189518",
+        "current_sha256": "f1173455fd18a9ce1f18210a51180289938a4fd135d3dee518b2b6a01cc7ef50"
+      },
+      "src/parse/source/coordinates.rs": {
+        "baseline_sha256": "c7616779f589ded7297ce80eb894388f1746b8cdc3ba3c21f45313fba90075de",
+        "current_sha256": "691363e7553d15059e0d15e585a89d703a10289d76caabdff4cde6f9650e84c0"
+      },
+      "src/parse/source/coordinates/sparse.rs": {
+        "baseline_sha256": null,
+        "current_sha256": "e161c189637789c30da70806ae2e1e5fd41e0fc6b586d25dce56ac85804edc16"
+      }
+    },
+    "rows": [
+      {
+        "scope": "replacement_payloads",
+        "binary": "before",
+        "wall": 0.09083131700754166,
+        "max_rss_kib": 100136
+      },
+      {
+        "scope": "replacement_payloads",
+        "binary": "after",
+        "wall": 0.05490192025899887,
+        "max_rss_kib": 34660
+      },
+      {
+        "scope": "replacement_payloads",
+        "binary": "after",
+        "wall": 0.05433630105108023,
+        "max_rss_kib": 34596
+      },
+      {
+        "scope": "replacement_payloads",
+        "binary": "before",
+        "wall": 0.08828792255371809,
+        "max_rss_kib": 100132
+      },
+      {
+        "scope": "replacement_payloads",
+        "binary": "before",
+        "wall": 0.08814697386696935,
+        "max_rss_kib": 100204
+      },
+      {
+        "scope": "replacement_payloads",
+        "binary": "after",
+        "wall": 0.05443504126742482,
+        "max_rss_kib": 34584
+      },
+      {
+        "scope": "mostly_ascii_coordinates",
+        "binary": "before",
+        "wall": 0.007807514630258083,
+        "max_rss_kib": 10980
+      },
+      {
+        "scope": "mostly_ascii_coordinates",
+        "binary": "after",
+        "wall": 0.004874805919826031,
+        "max_rss_kib": 3616
+      },
+      {
+        "scope": "mostly_ascii_coordinates",
+        "binary": "after",
+        "wall": 0.00486443005502224,
+        "max_rss_kib": 3616
+      },
+      {
+        "scope": "mostly_ascii_coordinates",
+        "binary": "before",
+        "wall": 0.00782187981531024,
+        "max_rss_kib": 10980
+      },
+      {
+        "scope": "mostly_ascii_coordinates",
+        "binary": "before",
+        "wall": 0.007609602063894272,
+        "max_rss_kib": 10916
+      },
+      {
+        "scope": "mostly_ascii_coordinates",
+        "binary": "after",
+        "wall": 0.004855060949921608,
+        "max_rss_kib": 3556
+      },
+      {
+        "scope": "unicode_heavy_coordinates",
+        "binary": "before",
+        "wall": 0.006305079907178879,
+        "max_rss_kib": 7908
+      },
+      {
+        "scope": "unicode_heavy_coordinates",
+        "binary": "after",
+        "wall": 0.007073945831507444,
+        "max_rss_kib": 7908
+      },
+      {
+        "scope": "unicode_heavy_coordinates",
+        "binary": "after",
+        "wall": 0.007175682112574577,
+        "max_rss_kib": 7960
+      },
+      {
+        "scope": "unicode_heavy_coordinates",
+        "binary": "before",
+        "wall": 0.006108453031629324,
+        "max_rss_kib": 7908
+      },
+      {
+        "scope": "unicode_heavy_coordinates",
+        "binary": "before",
+        "wall": 0.00621755188331008,
+        "max_rss_kib": 7972
+      },
+      {
+        "scope": "unicode_heavy_coordinates",
+        "binary": "after",
+        "wall": 0.007030394859611988,
+        "max_rss_kib": 7908
+      }
+    ],
+    "summaries": {
+      "replacement_payloads": {
+        "before": {
+          "median_wall": 0.08828792255371809,
+          "median_rss_kib": 100136
+        },
+        "after": {
+          "median_wall": 0.05443504126742482,
+          "median_rss_kib": 34596
+        }
+      },
+      "mostly_ascii_coordinates": {
+        "before": {
+          "median_wall": 0.007807514630258083,
+          "median_rss_kib": 10980
+        },
+        "after": {
+          "median_wall": 0.00486443005502224,
+          "median_rss_kib": 3616
+        }
+      },
+      "unicode_heavy_coordinates": {
+        "before": {
+          "median_wall": 0.00621755188331008,
+          "median_rss_kib": 7908
+        },
+        "after": {
+          "median_wall": 0.007073945831507444,
+          "median_rss_kib": 7908
+        }
+      }
+    },
+    "selector_oracle_cases": 200000,
+    "coordinate_oracle_vectors": 4096
+  },
+  "independent_directive_range_model": {
+    "cases": 1000,
+    "failures": []
+  },
+  "independent_directive_range_model_runner": "require 'rubocop';require 'json'\nrng=Random.new(119);cop='Layout/SpaceAfterComma';config=RuboCop::ConfigLoader.default_configuration;failures=[]\n1000.times do |index|\n switches=Array.new(8){[rng.rand(2)==0 ? 'disable' : 'enable', ['all','Layout',cop,'Lint'].sample(random:rng), rng.rand(3)]}\n source=switches.each_with_index.map{|(mode,name,kind),i| [kind==0 ? '' : kind==1 ? 'foo(1, 2) ' : '# note ',\"# rubocop:#{mode} #{name}\\nfoo(1, 2)\\n\"].join}.join\n p=RuboCop::ProcessedSource.new(source,3.4,'/tmp/probe.rb');p.registry=RuboCop::Cop::Registry.global;p.config=config\n actual=p.comment_config.cop_disabled_line_ranges[cop]||[];expected=[];start=nil\n switches.each_with_index do |(mode,name,kind),i|\n  next unless ['all','Layout',cop].include?(name)\n  line=i*2+1\n  if kind>0\n   expected << (line..line) if mode=='disable'\n  else\n   expected << (start..line) if start\n   start=mode=='disable' ? line : nil\n  end\n end\n expected << (start..Float::INFINITY) if start\n if actual!=expected\n  failures<<{index:index,source:source,actual:actual.map(&:to_s),expected:expected.map(&:to_s)}\n  break if failures.size>10\n end\nend\nFile.write('/tmp/rr-independent-directive-ranges.json',JSON.pretty_generate({cases:1000,failures:failures}));puts \"range cases=1000 failures=#{failures.size}\";puts failures.first.inspect unless failures.empty?\n",
+  "inspection_comparisons": [
+    {
+      "case": 0,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; attribute :x; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 1,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; attribute :x;end;class A;def x;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 2,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; def outer; attribute :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 3,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; class << self; attribute :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 4,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "class A; attribute(:x) {nil}; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 5,
+      "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "source": "module A; attribute :x,:y;def x;end;def self.y;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 6,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; attributes :x; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 7,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; attributes :x;end;class A;def x;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 8,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; def outer; attributes :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 9,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; class << self; attributes :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 10,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "class A; attributes(:x) {nil}; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 11,
+      "cop": "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "source": "module A; attributes :x,:y;def x;end;def self.y;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 12,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; attribute :x; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 13,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; attribute :x;end;class A;def x;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 14,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; def outer; attribute :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 15,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; class << self; attribute :x; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 16,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "class A; attribute(:x) {nil}; class B; def x;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 17,
+      "cop": "Serializers/AvoidMethodAndBlock",
+      "source": "module A; attribute :x,:y;def x;end;def self.y;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 18,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A;include Sidekiq::Worker;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 19,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A\ninclude Sidekiq::Worker\n# comment\nend\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 20,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A < BaseWorker;def m;sidekiq_options queue: :x;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 21,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A < BaseWorker;module B;sidekiq_options queue: :x;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 22,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A < BaseWorker;include Sidekiq::Worker;class B;use_default_queue!;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 23,
+      "cop": "Cops/ExplicitSidekiqQueue",
+      "source": "class A;class B < BaseWorker;use_default_queue!;end;work;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 24,
+      "cop": "Cops/RescueMustReportError",
+      "source": "begin;work;rescue;-> {Sentry.capture_exception($!)};end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 25,
+      "cop": "Cops/RescueMustReportError",
+      "source": "begin;work;rescue;raise=1;raise;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 26,
+      "cop": "Cops/RescueMustReportError",
+      "source": "begin;work;rescue;def m;Rails.error.report($!);end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 27,
+      "cop": "Cops/RescueMustReportError",
+      "source": "begin;work;rescue;Sentry&.capture_exception($!);end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 28,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "redis.multi do |t|;t.set(\"a\",\"v\");end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 29,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "redis.multi do |t|\nt.set(\"a\",\"v\")\n# comment\nend\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 30,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "redis.multi do |t|;t.set(\"a\",\"v\");t.set(\"b\",\"v\",ex:60);end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 31,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "redis.multi do |t|;items.each { |t| t.set(\"a\",\"v\") };noop;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 32,
+      "cop": "Cops/NoSetWithoutExpiration",
+      "source": "other.multi do |t|;t.set(\"a\",\"v\");marker=\"redis\";end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 33,
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "source": "class FooPolicy;class Other;def show?;true;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 34,
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "source": "class FooPolicy;class Other;disable_scoping!;def show?;true;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 35,
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "source": "class FooPolicy;class Other;class Scope < ApplicationPolicy::Scope;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 36,
+      "cop": "Cops/EnforceNoShowInPolicies",
+      "source": "class FooPolicy;class OtherPolicy;disable_scoping!;def show?;true;end;end;def show?;true;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 37,
+      "cop": "Cops/EnforceScopeInPolicies",
+      "source": "class FooPolicy;class Other;def show?;true;end;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 38,
+      "cop": "Cops/EnforceScopeInPolicies",
+      "source": "class FooPolicy;class Other;disable_scoping!;def show?;true;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 39,
+      "cop": "Cops/EnforceScopeInPolicies",
+      "source": "class FooPolicy;class Other;class Scope < ApplicationPolicy::Scope;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 40,
+      "cop": "Cops/EnforceScopeInPolicies",
+      "source": "class FooPolicy;class OtherPolicy;disable_scoping!;def show?;true;end;end;def show?;true;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 41,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;class B;end;class C;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 42,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "A=Class.new do;B=1;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 43,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "A.class_eval do;B=1;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 44,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;class << self;B=1;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 45,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "items.each do;class A;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 46,
+      "cop": "AnyCable/InstanceVars",
+      "source": "module A;@x=1;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 47,
+      "cop": "AnyCable/InstanceVars",
+      "source": "class A;module B;@x=1;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 48,
+      "cop": "Cops/NoSleep",
+      "source": "sleep\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 49,
+      "cop": "Cops/NoSleep",
+      "source": "sleep=1;sleep\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 50,
+      "cop": "Cops/NoSleep",
+      "source": "def m(sleep);sleep;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 51,
+      "cop": "Cops/NoForeignKeys",
+      "source": "add_foreign_key\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 52,
+      "cop": "Cops/NoForeignKeys",
+      "source": "add_foreign_key=1;add_foreign_key\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 53,
+      "cop": "Cops/NoForeignKeys",
+      "source": "def m(add_foreign_key);add_foreign_key;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 54,
+      "cop": "AnyCable/PeriodicalTimers",
+      "source": "periodically\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 55,
+      "cop": "AnyCable/PeriodicalTimers",
+      "source": "periodically=1;periodically\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 56,
+      "cop": "AnyCable/PeriodicalTimers",
+      "source": "def m(periodically);periodically;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 57,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A\ud801\udc00;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 58,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A\ud801\udc00::B;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 59,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "module Object;class A;end;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 60,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class Object::A;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 61,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class ABCDEFGHIJKLMNOPQRSTUVWXYZ;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 62,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "module A;class << self;class << self;B=1;end;end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 63,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;(B,(C,D),E)=nil;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 64,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;B::C,D=nil;end\n",
+      "identical": true,
+      "before_count": 1,
+      "after_count": 1
+    },
+    {
+      "case": 65,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;(*B,C)=[];end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    },
+    {
+      "case": 66,
+      "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+      "source": "class A;for B,C in [];end;end\n",
+      "identical": true,
+      "before_count": 0,
+      "after_count": 0
+    }
+  ],
+  "correction_comparisons": [
+    {
+      "case": "codemap-0",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-0",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-0",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-1",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-1",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-1",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-2",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-2",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-2",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-3",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-3",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-3",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-4",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-4",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-4",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-5",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-5",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "codemap-5",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "nested-options",
+      "mode": [],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "nested-options",
+      "mode": [
+        "-a"
+      ],
+      "identical_offenses_and_source": true
+    },
+    {
+      "case": "nested-options",
+      "mode": [
+        "-A"
+      ],
+      "identical_offenses_and_source": true
+    }
+  ],
+  "clippy_comparison": {
+    "baseline": 224,
+    "current": 224,
+    "new": [],
+    "removed": []
+  },
+  "ruby_reference": {
+    "fixture": "tests/fixtures/engine/review-fixes-reference.json",
+    "sha256": "3e86fcb1116cec902120ee622f56c8dc5b6566aacc3c8c1c95d464bf593b6c1a",
+    "runs": 90,
+    "exact_offense_metadata_matches": 90,
+    "exact_ruby_corrected_bytes": 86,
+    "preserved_crlf_overrides": 4
+  },
+  "validation": {
+    "all_target_tests": 761,
+    "selector_snapshot_random_cases": 200000,
+    "coordinate_random_byte_vectors": 4096,
+    "abc_function_offenses": 0,
+    "abc_module_offenses": 0,
+    "abc_used_once_advisories": 80,
+    "abc_never_used": 0
+  }
+}
