@@ -38249,5 +38249,711 @@
       }
     ],
     "corrected": "def m(foo);if cond;foo=1;end;other { puts foo };foo=2;puts foo;end\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n include Sidekiq::Worker\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Sidekiq::Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n include Sidekiq::Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include ::Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n include ::Sidekiq::Worker\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include ::Sidekiq::Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n include ::Sidekiq::Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Sidekiq::\n Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n include Sidekiq::\n Worker\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Sidekiq::\n Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n include Sidekiq::\n Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include ::Sidekiq::\n Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A\n include ::Sidekiq::\n Worker\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include ::Sidekiq::\n Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n include ::Sidekiq::\n Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Other::Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n include Other::Sidekiq::Worker\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Other::Sidekiq::Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n include Other::Sidekiq::Worker\n sidekiq_options queue: :work\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Sidekiq::Other\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n include Sidekiq::Other\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Sidekiq::Other\n sidekiq_options queue: :work\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "class A\n include Sidekiq::Other\n sidekiq_options queue: :work\n def perform; work; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:protected => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(:protected => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:\"prot\\x65cted\", true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_column(:\"prot\\x65cted\", true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:\"prot\\x65cted\" => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(:\"prot\\x65cted\" => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:\"prot\\u0065cted\", true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_column(:\"prot\\u0065cted\", true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:\"prot\\u0065cted\" => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(:\"prot\\u0065cted\" => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:\"prot\\u{65}cted\", true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_column(:\"prot\\u{65}cted\", true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:\"prot\\u{65}cted\" => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(:\"prot\\u{65}cted\" => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:\"prot\\145cted\", true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_column(:\"prot\\145cted\", true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:\"prot\\145cted\" => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(:\"prot\\145cted\" => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(%s[protected], true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_column(%s[protected], true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(%s[protected] => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(%s[protected] => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:'prot\\x65cted', true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_column(:'prot\\x65cted', true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:'prot\\x65cted' => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_all(:'prot\\x65cted' => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:\"#{name}\", true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_column(:\"#{name}\", true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:\"#{name}\" => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_all(:\"#{name}\" => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:\"prot\\\r\nected\", true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_column(:\"prot\\\r\nected\", true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:\"prot\\\r\nected\" => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(:\"prot\\\r\nected\" => true)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", :ex => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"key\", \"value\", :ex => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", :\"\\x65x\" => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"key\", \"value\", :\"\\x65x\" => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", :\"\\u0065x\" => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"key\", \"value\", :\"\\u0065x\" => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", :\"\\u{65 78}\" => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"key\", \"value\", :\"\\u{65 78}\" => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", :\"\\145x\" => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"key\", \"value\", :\"\\145x\" => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", :\"\\u{0065 0078}\" => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"key\", \"value\", :\"\\u{0065 0078}\" => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", :'\\x65x' => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.set(\"key\", \"value\", :'\\x65x' => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", %s[ex] => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"key\", \"value\", %s[ex] => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", %s[\\x65x] => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.set(\"key\", \"value\", %s[\\x65x] => 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"key\", \"value\", :\"e\\\r\nx\" => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"key\", \"value\", :\"e\\\r\nx\" => 60)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(\"prot\\x65cted\": true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(\"prot\\x65cted\": true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(\"protected\" => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_all(\"protected\" => true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(\"prot\\u0065cted\": true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "media.update_all(\"prot\\u0065cted\": true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(\"протектед\": true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_all(\"протектед\": true)\n"
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(\"#{name}\": true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "media.update_all(\"#{name}\": true)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"k\", \"v\", \"\\x65x\": 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [],
+    "corrected": "$redis.set(\"k\", \"v\", \"\\x65x\": 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\"k\", \"v\", \"ex\" => 60)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false
+      }
+    ],
+    "corrected": "$redis.set(\"k\", \"v\", \"ex\" => 60)\n"
   }
 ]

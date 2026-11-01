@@ -78,7 +78,7 @@ impl Cop for MissingCopEnableDirective {
     fn check_source(
         &self,
         source: &SourceFile,
-        _tree: &tree_sitter::Tree,
+        tree: &tree_sitter::Tree,
         _code_map: &CodeMap,
         config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
@@ -89,11 +89,37 @@ impl Cop for MissingCopEnableDirective {
             return;
         }
         let mut open: HashMap<String, usize> = HashMap::new();
-        let mut last_line = 0usize;
-        for (i, line) in source.lines().enumerate() {
-            last_line = i + 1;
-            apply_line(&mut open, String::from_utf8_lossy(line).trim_start(), i + 1);
+        let directives = crate::parse::directives::for_source(source, tree);
+        for &line_no in directives.comment_lines() {
+            if let Some(line) = directives.comment_line(source, line_no) {
+                apply_line(&mut open, line.trim_start(), line_no);
+            }
         }
-        report_open(self, source, open, last_line, maximum, diagnostics);
+        report_open(
+            self,
+            source,
+            open,
+            source.line_count(),
+            maximum,
+            diagnostics,
+        );
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn fake_literal_directives_do_not_require_an_enable_comment() {
+        let mut config = CopConfig::default();
+        config.options.insert("MaximumRangeSize".into(), 0.into());
+        crate::testutil::assert_cop_no_offenses_full_with_config(
+            &MissingCopEnableDirective,
+            include_bytes!(
+                "../../../tests/fixtures/cops/lint/missing_cop_enable_directive/literal_directive.rb"
+            ),
+            config,
+        );
     }
 }

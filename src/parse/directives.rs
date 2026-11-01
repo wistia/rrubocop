@@ -13,9 +13,26 @@ pub struct Directives {
     /// Cop name → inclusive ranges disabled by block directives.
     range_disables: HashMap<String, Vec<(usize, usize)>>,
     open_blocks: HashMap<String, usize>,
+    comment_lines: Vec<usize>,
+    comment_starts: Vec<usize>,
 }
 
 impl Directives {
+    pub(crate) fn comment_lines(&self) -> &[usize] {
+        &self.comment_lines
+    }
+
+    pub(crate) fn comment_line<'a>(
+        &self,
+        source: &'a crate::parse::source::SourceFile,
+        line: usize,
+    ) -> Option<std::borrow::Cow<'a, str>> {
+        let index = self.comment_lines.binary_search(&line).ok()?;
+        let text = source.line_text(line)?;
+        let prefix = self.comment_starts[index] - source.line_start(line)?;
+        Some(mask_prefix(text, prefix))
+    }
+
     pub fn suppresses(&self, cop_name: &str, line: usize) -> bool {
         if self.line_disabled("all", line) || self.range_disabled("all", line) {
             return true;
@@ -41,6 +58,22 @@ impl Directives {
             k.eq_ignore_ascii_case(name) && ranges.iter().any(|&(a, b)| a <= line && line <= b)
         })
     }
+}
+
+fn mask_prefix(text: &str, prefix: usize) -> std::borrow::Cow<'_, str> {
+    if text.as_bytes()[..prefix]
+        .iter()
+        .all(u8::is_ascii_whitespace)
+    {
+        return std::borrow::Cow::Borrowed(text);
+    }
+    let mut masked = text.as_bytes().to_vec();
+    for byte in &mut masked[..prefix] {
+        if byte.is_ascii() && !byte.is_ascii_whitespace() {
+            *byte = b'_';
+        }
+    }
+    std::borrow::Cow::Owned(String::from_utf8(masked).unwrap())
 }
 
 fn apply_enable(d: &mut Directives, rest: &str, line_no: usize) {
@@ -78,15 +111,6 @@ fn apply_disable(d: &mut Directives, rest: &str, line: &str, line_no: usize) {
     }
 }
 
-fn apply_line(d: &mut Directives, line: &str, line_no: usize) {
-    let Some(comment) = extract_rubocop_comment(line) else {
-        return;
-    };
-    for directive in MARKER.split(comment) {
-        apply_directive(d, directive.trim(), line, line_no);
-    }
-}
-
 fn apply_directive(d: &mut Directives, comment: &str, line: &str, line_no: usize) {
     if let Some(rest) = comment.strip_prefix("enable") {
         apply_enable(d, rest, line_no);
@@ -100,30 +124,9 @@ fn apply_directive(d: &mut Directives, comment: &str, line: &str, line_no: usize
     }
 }
 
-pub fn parse(src: &str) -> Directives {
-    let mut d = Directives::default();
-    let mut line_no = 0usize;
-    for line in src.lines() {
-        line_no += 1;
-        apply_line(&mut d, line, line_no);
-    }
-    for (name, start) in d.open_blocks.drain() {
-        d.range_disables
-            .entry(name)
-            .or_default()
-            .push((start, line_no.max(1)));
-    }
-    d
-}
-
-fn extract_rubocop_comment(line: &str) -> Option<&str> {
-    let idx = crate::parse::comment_hash::first_comment_hash(line.as_bytes())?;
-    let comment = line[idx..].trim_start();
-    // RuboCop matches `# rubocop:` anywhere in the trailing comment (e.g.
-    // `# note # rubocop:disable Cop`), not only at the first `#`.
-    let found = MARKER.find(comment)?;
-    Some(comment[found.end()..].trim_start())
-}
+mod source;
+pub use source::parse;
+pub(crate) use source::{cached, for_source};
 
 fn cop_names(after: &str) -> Vec<String> {
     let after = after.split("--").next().unwrap_or(after);
@@ -204,3 +207,6 @@ fn qualify(name: String) -> String {
         .map(|n| n.into_owned())
         .unwrap_or(name)
 }
+
+#[cfg(test)]
+mod syntax_tests;

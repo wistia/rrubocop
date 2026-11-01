@@ -116,7 +116,7 @@ fn run_plain_source_cops(
         return;
     }
     // Build CodeMap once, only when plain source cops need it.
-    let code_map = CodeMap::from_tree(tree.root_node(), source.as_bytes());
+    let code_map = source_map(source, tree, &plain);
     for (cop, cfg, idx) in plain {
         one_plain_source_cop(
             source,
@@ -129,6 +129,14 @@ fn run_plain_source_cops(
             diagnostics,
             corrections,
         );
+    }
+}
+
+fn source_map(source: &SourceFile, tree: &tree_sitter::Tree, cops: &[&ActiveCop<'_>]) -> CodeMap {
+    if cops.iter().any(|(cop, _, _)| cop.needs_code_map()) {
+        CodeMap::from_tree(tree.root_node(), source.as_bytes())
+    } else {
+        CodeMap::default()
     }
 }
 
@@ -187,3 +195,6 @@ fn seed_local_identifiers(
         });
     }
 }
+
+#[cfg(test)]
+mod tests;

@@ -1,6 +1,6 @@
 use super::RedundantCopDisableDirective;
 use super::directives::{
-    DisableDirective, collect_directives, cop_highlight, cop_names, disable_marker, redundant_col,
+    DisableDirective, collect_directives, cop_names, disable_marker, offense_span,
 };
 use super::removal::push_removal;
 use crate::cop::{Cop, CopConfig, cop_ran_in_lint};
@@ -74,19 +74,20 @@ fn redundant_offense(
     dir: &DisableDirective,
     name: &str,
 ) -> Diagnostic {
-    let col = redundant_col(line, name, dir.column);
+    let (col, length) = offense_span(line, dir, name);
     let mut diag = cop.diagnostic(
         source,
         dir.line,
         col,
         format!("Unnecessary disabling of `{name}`."),
     );
-    diag.highlight_length = cop_highlight(line, col, name);
+    diag.highlight_length = length;
     diag
 }
 
 fn block_disable_cops(source: &SourceFile, line_no: usize) -> Option<Vec<String>> {
-    let line = source.line_text(line_no)?;
+    let directives = crate::parse::directives::cached(source);
+    let line = directives.comment_line(source, line_no)?;
     if !line.trim_start().starts_with('#') {
         return None;
     }
@@ -206,7 +207,10 @@ pub fn audit_redundant_disables(
     mut corrections: Option<&mut Vec<Correction>>,
 ) {
     for dir in collect_directives(source) {
-        let line = source.line_text(dir.line).unwrap_or("").to_string();
+        let directives = crate::parse::directives::cached(source);
+        let line = directives
+            .comment_line(source, dir.line)
+            .unwrap_or_default();
         report_directive_redundancies(
             cop,
             source,

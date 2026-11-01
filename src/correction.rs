@@ -1,6 +1,7 @@
 //! Source-level autocorrect edits (adapted from nitrocop).
 
 use crate::diagnostic::Diagnostic;
+mod credits;
 mod ownership;
 mod selection;
 pub(crate) use ownership::{assign_owners, filter_disabled};
@@ -58,15 +59,6 @@ impl CorrectionSet {
     pub fn len(&self) -> usize {
         self.corrections.len()
     }
-
-    fn credits(&self, cop: &str, off: usize) -> bool {
-        self.corrections
-            .iter()
-            .zip(&self.aliases)
-            .any(|(edit, aliases)| {
-                credits(edit, cop, off) || aliases.iter().any(|alias| credits(alias, cop, off))
-            })
-    }
 }
 
 /// Clear `corrected` on diagnostics whose cop edit was dropped or not applied.
@@ -81,21 +73,16 @@ pub fn reconcile_corrected(
         }
         return;
     }
+    let credits = credits::Credits::new(set);
     for d in diagnostics.iter_mut().filter(|d| d.corrected) {
         let Some(off) = source.line_col_to_offset(d.location.line, d.location.column) else {
             d.corrected = false;
             continue;
         };
-        if !set.credits(&d.cop_name, off) {
+        if !credits.contains(&d.cop_name, off) {
             d.corrected = false;
         }
     }
-}
-
-fn credits(c: &Correction, cop: &str, off: usize) -> bool {
-    c.cop_name == cop
-        && c.owner
-            .map_or_else(|| off >= c.start && off <= c.end, |owner| owner == off)
 }
 
 #[cfg(test)]

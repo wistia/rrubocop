@@ -301,3 +301,6 @@ mod syntax;
 
 #[cfg(test)]
 mod syntax_tests;
+
+#[cfg(test)]
+mod directive_tests;

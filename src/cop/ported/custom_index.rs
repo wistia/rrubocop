@@ -40,8 +40,8 @@ impl Index {
         *self.worker_marker.get_or_init(|| {
             c.source
                 .as_bytes()
-                .windows(b"Sidekiq::Worker".len())
-                .any(|w| w == b"Sidekiq::Worker")
+                .windows(b"Sidekiq".len())
+                .any(|w| w == b"Sidekiq")
         })
     }
     pub(super) fn worker_queue(&self, c: &Context<'_>, n: Node<'_>) -> (bool, bool) {

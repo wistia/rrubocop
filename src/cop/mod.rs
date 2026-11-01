@@ -166,6 +166,11 @@ pub trait Cop: Send + Sync {
         false
     }
 
+    /// Opt into literal-region mapping for source checks that query [`CodeMap`].
+    fn needs_code_map(&self) -> bool {
+        false
+    }
+
     /// When true, engine builds one shared [`crate::model::FileModel`] and
     /// calls [`Self::check_file_model`] instead of [`Self::check_source`].
     fn needs_file_model(&self) -> bool {

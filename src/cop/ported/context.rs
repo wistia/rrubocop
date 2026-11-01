@@ -55,6 +55,9 @@ impl<'a> Context<'a> {
             "simple_symbol" | "delimited_symbol" | "hash_key_symbol"
         )
     }
+    pub fn static_symbol(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
+        symbols::value(self, node)
+    }
     pub fn symbol_pair_value<'n>(&self, node: Node<'n>, key: &str) -> Option<Node<'n>> {
         option_pairs(node).find_map(|pair| {
             let name = field(pair, "key")?;
@@ -177,3 +180,5 @@ mod finding;
 pub(super) use finding::Finding;
 mod walk;
 pub(super) use walk::{ancestors, descendants};
+
+mod symbols;

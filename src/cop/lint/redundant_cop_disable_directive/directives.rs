@@ -117,9 +117,11 @@ fn flush_open_directives(
 pub(super) fn collect_directives(source: &SourceFile) -> Vec<DisableDirective> {
     let mut out = Vec::new();
     let mut open = HashMap::new();
-    for (i, line) in source.lines().enumerate() {
-        let s = String::from_utf8_lossy(line);
-        let line_no = i + 1;
+    let directives = crate::parse::directives::cached(source);
+    for &line_no in directives.comment_lines() {
+        let Some(s) = directives.comment_line(source, line_no) else {
+            continue;
+        };
         if let Some(rest) = enable_marker(&s) {
             apply_enable(&mut open, &mut out, line_no, rest);
         }
@@ -166,6 +168,19 @@ pub(super) fn cop_token_column(line: &str, cop: &str, occurrence: usize) -> usiz
     nth_cop_token(line, cop, occurrence)
         .map(|(byte, _)| byte_index_to_column(line, byte))
         .unwrap_or(0)
+}
+
+pub(super) fn offense_span(line: &str, dir: &DisableDirective, name: &str) -> (usize, usize) {
+    if dir.cops.len() == 1
+        && let Some((_, end)) = nth_cop_token(line, name, 1)
+    {
+        return (
+            dir.column,
+            byte_index_to_column(line, end).saturating_sub(dir.column),
+        );
+    }
+    let column = redundant_col(line, name, dir.column);
+    (column, cop_highlight(line, column, name))
 }
 
 pub(super) fn redundant_col(line: &str, name: &str, fallback: usize) -> usize {

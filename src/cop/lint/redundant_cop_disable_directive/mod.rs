@@ -37,18 +37,22 @@ impl Cop for RedundantCopDisableDirective {
     fn check_source(
         &self,
         source: &SourceFile,
-        _tree: &tree_sitter::Tree,
+        tree: &tree_sitter::Tree,
         _code_map: &CodeMap,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        for (i, line) in source.lines().enumerate() {
-            if let Some((_, rest)) = disable_marker(&String::from_utf8_lossy(line)) {
+        let directives = crate::parse::directives::for_source(source, tree);
+        for &line_no in directives.comment_lines() {
+            let Some(line) = directives.comment_line(source, line_no) else {
+                continue;
+            };
+            if let Some((_, rest)) = disable_marker(&line) {
                 scan_duplicate_cops(
                     self,
                     source,
-                    i + 1,
+                    line_no,
                     &cop_names(rest),
                     diagnostics,
                     &mut corrections,
@@ -266,9 +270,12 @@ mod tests {
             None,
         );
         assert_eq!(diags.len(), 1);
-        let col = byte_index_to_column(line, line.find("Rails/Output").unwrap());
+        let col = byte_index_to_column(line, line.find("# rubocop:disable").unwrap());
         assert_eq!(diags[0].location.column, col);
-        assert_eq!(diags[0].highlight_length, "Rails/Output".len());
+        assert_eq!(
+            diags[0].highlight_length,
+            "# rubocop:disable Rails/Output".len()
+        );
     }
 
     #[test]

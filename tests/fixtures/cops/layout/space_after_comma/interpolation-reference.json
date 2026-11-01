@@ -1,0 +1,190 @@
+{
+  "rubocop_version": "1.65.1",
+  "cases": [
+    {
+      "source": "puts \"a,b #{foo(1,2)} c,d\"\n",
+      "corrected": "puts \"a,b #{foo(1, 2)} c,d\"\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 17,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts /a,b #{foo(1,2)} c,d/\n",
+      "corrected": "puts /a,b #{foo(1, 2)} c,d/\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 17,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts %W[a,b #{foo(1,2)} c,d]\n",
+      "corrected": "puts %W[a,b #{foo(1, 2)} c,d]\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 19,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts %I[a,b #{foo(1,2)} c,d]\n",
+      "corrected": "puts %I[a,b #{foo(1, 2)} c,d]\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 19,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts %Q[a,b #{foo(1,2)} c,d]\n",
+      "corrected": "puts %Q[a,b #{foo(1, 2)} c,d]\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 19,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts %x[a,b #{foo(1,2)} c,d]\n",
+      "corrected": "puts %x[a,b #{foo(1, 2)} c,d]\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 19,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts <<~TEXT\na,b #{foo(1,2)} c,d\nTEXT\n",
+      "corrected": "puts <<~TEXT\na,b #{foo(1, 2)} c,d\nTEXT\n",
+      "offenses": [
+        {
+          "line": 2,
+          "column": 11,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts \"#{foo(1,2);foo(1,2)}\"\n",
+      "corrected": "puts \"#{foo(1, 2);foo(1, 2)}\"\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 13,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        },
+        {
+          "line": 1,
+          "column": 22,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts \"#{foo(1,2)}#{foo(1,2)}\"\n",
+      "corrected": "puts \"#{foo(1, 2)}#{foo(1, 2)}\"\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 13,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        },
+        {
+          "line": 1,
+          "column": 24,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts \"#{foo(1,2,\"a,b #{foo(1,2)} c,d\")}\"\n",
+      "corrected": "puts \"#{foo(1, 2, \"a,b #{foo(1, 2)} c,d\")}\"\n",
+      "offenses": [
+        {
+          "line": 1,
+          "column": 13,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        },
+        {
+          "line": 1,
+          "column": 15,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        },
+        {
+          "line": 1,
+          "column": 28,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    },
+    {
+      "source": "puts <<~OUTER\na,b #{foo(1,2,<<~INNER)} c,d\ne,f #{foo(1,2)} g,h\nINNER\nOUTER\n",
+      "corrected": "puts <<~OUTER\na,b #{foo(1, 2, <<~INNER)} c,d\ne,f #{foo(1, 2)} g,h\nINNER\nOUTER\n",
+      "offenses": [
+        {
+          "line": 2,
+          "column": 11,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        },
+        {
+          "line": 2,
+          "column": 13,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        },
+        {
+          "line": 3,
+          "column": 11,
+          "length": 1,
+          "message": "Space missing after comma.",
+          "correctable": true
+        }
+      ]
+    }
+  ]
+}

@@ -50,9 +50,21 @@ fn single_statement(n: Node<'_>) -> Option<Key> {
 }
 fn update(c: &Context<'_>, n: Node<'_>, queue: &mut Queue) {
     match c.method(n) {
-        "include" => queue.worker |= args(n).iter().any(|a| c.text(*a) == "Sidekiq::Worker"),
+        "include" => queue.worker |= args(n).iter().any(|a| worker_constant(c, *a)),
         "use_default_queue!" => queue.declared = true,
         "sidekiq_options" => queue.declared |= c.pair_value(n, "queue").is_some(),
         _ => {}
     }
+}
+
+fn worker_constant(c: &Context<'_>, n: Node<'_>) -> bool {
+    n.kind() == "scope_resolution"
+        && field(n, "name").is_some_and(|name| c.text(name) == "Worker")
+        && field(n, "scope").is_some_and(|scope| sidekiq_constant(c, scope))
+}
+fn sidekiq_constant(c: &Context<'_>, n: Node<'_>) -> bool {
+    n.kind() == "constant" && c.text(n) == "Sidekiq"
+        || n.kind() == "scope_resolution"
+            && field(n, "scope").is_none()
+            && field(n, "name").is_some_and(|name| c.text(name) == "Sidekiq")
 }

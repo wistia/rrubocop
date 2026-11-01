@@ -62,7 +62,10 @@ fn entire_disable_span(
     if line_str.trim_start().starts_with('#') {
         return Some(comment_only_span(source, line_start, line));
     }
-    let pos = line_str.to_ascii_lowercase().find("# rubocop:disable")?;
+    let directives = crate::parse::directives::cached(source);
+    let (line_no, _) = source.offset_to_line_col(line_start);
+    let masked = directives.comment_line(source, line_no)?;
+    let pos = masked.to_ascii_lowercase().find("# rubocop:disable")?;
     Some(inline_span(source, line_start, pos, line.len()))
 }
 
@@ -102,10 +105,11 @@ fn partial_cop_removal_range(
     occurrence: usize,
 ) -> Option<(usize, usize)> {
     let line_start = source.line_start(line_no)?;
-    let line_str = std::str::from_utf8(line_bytes(source, line_no)?).ok()?;
-    disable_marker(line_str)?;
-    nth_cop_token(line_str, cop, occurrence).map(|(s, e)| {
-        let (rs, re) = partial_token_span(line_str, s, e - s);
+    let directives = crate::parse::directives::cached(source);
+    let line_str = directives.comment_line(source, line_no)?;
+    disable_marker(&line_str)?;
+    nth_cop_token(&line_str, cop, occurrence).map(|(s, e)| {
+        let (rs, re) = partial_token_span(&line_str, s, e - s);
         (line_start + rs, line_start + re)
     })
 }
@@ -149,10 +153,12 @@ pub(super) fn report_duplicate_cops(
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<&mut Vec<Correction>>,
 ) {
+    let directives = crate::parse::directives::cached(source);
+    let line = directives.comment_line(source, line_no).unwrap_or_default();
     let mut diag = cop.diagnostic(
         source,
         line_no,
-        cop_token_column(source.line_text(line_no).unwrap_or(""), name, occurrence),
+        cop_token_column(&line, name, occurrence),
         format!("Unnecessary disabling of `{name}`."),
     );
     push_removal(

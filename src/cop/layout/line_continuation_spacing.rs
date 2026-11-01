@@ -75,6 +75,10 @@ impl Cop for LineContinuationSpacing {
         true
     }
 
+    fn needs_code_map(&self) -> bool {
+        true
+    }
+
     fn check_source(
         &self,
         source: &SourceFile,

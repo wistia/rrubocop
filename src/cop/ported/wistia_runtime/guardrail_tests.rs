@@ -146,3 +146,119 @@ fn nested_reporters_keep_existing_descendant_semantics() {
         2
     );
 }
+
+#[test]
+fn static_symbol_spellings_preserve_protected_and_expiration_semantics() {
+    for symbol in [
+        r#":protected"#,
+        r#":'protected'"#,
+        r#":"protected""#,
+        r#":"prot\x65cted""#,
+        r#":"prot\u0065cted""#,
+        r#":"prot\u{65}cted""#,
+        r#":"prot\145cted""#,
+        "%s[protected]",
+        "%s(protected)",
+        "%s{protected}",
+        "%s<protected>",
+        "%s!protected!",
+        r#"%s"protected""#,
+    ] {
+        for source in [
+            format!("media.update_column({symbol}, true)"),
+            format!("media.update_columns({symbol} => true)"),
+            format!("media.update_all({symbol} => true)"),
+        ] {
+            assert_eq!(
+                count("Cops/NoCallbackSkippingProtectedWrites", &source),
+                1,
+                "{source}"
+            );
+        }
+    }
+    for symbol in [
+        r#":ex"#,
+        r#":'ex'"#,
+        r#":"ex""#,
+        r#":"\x65x""#,
+        r#":"\u0065x""#,
+        r#":"\u{65 78}""#,
+        r#":"\145x""#,
+        "%s[ex]",
+        "%s(ex)",
+        "%s{ex}",
+        "%s<ex>",
+        "%s!ex!",
+        r#"%s"ex""#,
+    ] {
+        let source = format!("$redis.set('key', 'value', {symbol} => 60)");
+        assert_eq!(count("Cops/NoSetWithoutExpiration", &source), 0, "{source}");
+    }
+    for (symbol, expected) in [
+        (r#":'\x65x'"#, 1),
+        (r#"%s[\x65x]"#, 1),
+        (r##":"#{name}""##, 1),
+    ] {
+        let source = format!("$redis.set('key', 'value', {symbol} => 60)");
+        assert_eq!(
+            count("Cops/NoSetWithoutExpiration", &source),
+            expected,
+            "{source}"
+        );
+    }
+    assert_eq!(
+        count(
+            "Cops/NoCallbackSkippingProtectedWrites",
+            r##"media.update_column(:"#{name}", true)"##
+        ),
+        0
+    );
+    assert_eq!(
+        count(
+            "Cops/NoCallbackSkippingProtectedWrites",
+            r#"media.update_all("protected": true)"#
+        ),
+        1
+    );
+    assert_eq!(
+        count(
+            "Cops/NoCallbackSkippingProtectedWrites",
+            r#"media.update_all("protected" => true)"#
+        ),
+        0
+    );
+    assert_eq!(
+        count(
+            "Cops/NoSetWithoutExpiration",
+            r#"$redis.set('k', 'v', "ex": 60)"#
+        ),
+        0
+    );
+}
+
+#[test]
+fn sidekiq_worker_constants_allow_root_scopes_and_newlines() {
+    for name in [
+        "Sidekiq::Worker",
+        "::Sidekiq::Worker",
+        "Sidekiq::\n Worker",
+        "::Sidekiq::\n Worker",
+    ] {
+        let source = format!("class A\n include {name}\n def perform; work; end\nend\n");
+        assert_eq!(count("Cops/ExplicitSidekiqQueue", &source), 1, "{source}");
+        let declared = source.replace("def perform", "sidekiq_options queue: :work\n def perform");
+        assert_eq!(
+            count("Cops/ExplicitSidekiqQueue", &declared),
+            0,
+            "{declared}"
+        );
+    }
+    for name in [
+        "Other::Sidekiq::Worker",
+        "Sidekiq::Other",
+        "Sidekiq::Worker.call",
+    ] {
+        let source = format!("class A; include {name}; def perform; end; end");
+        assert_eq!(count("Cops/ExplicitSidekiqQueue", &source), 0, "{source}");
+    }
+}

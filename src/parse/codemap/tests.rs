@@ -63,7 +63,7 @@ fn exclusive_ends_and_maximum_offsets_do_not_overflow() {
 }
 
 #[test]
-fn ruby_regions_keep_original_byte_coverage_in_any_query_order() {
+fn ruby_regions_match_their_normalized_ranges_in_any_query_order() {
     for text in [
         "a = 'a,b'; b = \"#{call(1, 2)}\" # comment\n",
         "a = /(?<name>a)[b,]/x; b = %r{a#{value}b}; c = ?x\n",
@@ -86,4 +86,30 @@ fn assert_source(text: &str) {
     collect_ranges(root, source.as_bytes(), &mut ranges);
     let map = CodeMap::from_tree(root, source.as_bytes());
     assert_map(&map, &ranges, (0..=text.len() + 1).rev());
+}
+
+#[test]
+fn interpolation_delimiters_and_nested_literal_text_remain_covered() {
+    let text = "puts \"Ü,#{foo(1,2,\"🌟,#{bar(3,4)}\")};#{first;second}#@var\"\n";
+    let source = SourceFile::from_bytes("example.rb", text.as_bytes().to_vec());
+    let tree = parse_ruby(&source).unwrap();
+    assert!(!tree.root_node().has_error());
+    let map = CodeMap::from_tree(tree.root_node(), source.as_bytes());
+    assert_literal_coverage(text, &map);
+    for code in ["foo(1,2,", "bar(3,4)", "first;second"] {
+        let start = text.find(code).unwrap();
+        for offset in start..start + code.len() {
+            assert!(!map.covers(offset), "{code} at {offset}");
+        }
+    }
+}
+
+fn assert_literal_coverage(text: &str, map: &CodeMap) {
+    for literal in ["Ü,", "🌟,", "#{", "}", "#"] {
+        for (start, matched) in text.match_indices(literal) {
+            for offset in start..start + matched.len() {
+                assert!(map.covers(offset), "{literal} at {offset}");
+            }
+        }
+    }
 }

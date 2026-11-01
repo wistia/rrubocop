@@ -66,7 +66,9 @@ fn collect_ranges(node: Node<'_>, src: &[u8], out: &mut Vec<(usize, usize)>) {
     ) || kind.contains("string")
         || kind.contains("heredoc")
     {
-        out.push((node.start_byte(), node.end_byte()));
+        let mut start = node.start_byte();
+        collect_interpolations(node, src, out, &mut start);
+        out.push((start, node.end_byte()));
         return;
     }
     // Still walk children for nested comments outside strings
@@ -74,7 +76,38 @@ fn collect_ranges(node: Node<'_>, src: &[u8], out: &mut Vec<(usize, usize)>) {
     for child in node.children(&mut cursor) {
         collect_ranges(child, src, out);
     }
-    let _ = src;
+}
+
+fn collect_interpolations(
+    node: Node<'_>,
+    src: &[u8],
+    out: &mut Vec<(usize, usize)>,
+    start: &mut usize,
+) {
+    if node.kind() == "interpolation" {
+        out.push((*start, node.start_byte()));
+        collect_interpolation(node, src, out);
+        *start = node.end_byte();
+        return;
+    }
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        collect_interpolations(child, src, out, start);
+    }
+}
+
+fn collect_interpolation(node: Node<'_>, src: &[u8], out: &mut Vec<(usize, usize)>) {
+    let start = node.start_byte();
+    if src[node.byte_range()].starts_with(b"#{") {
+        out.push((start, start + 2));
+        out.push((node.end_byte() - 1, node.end_byte()));
+    } else {
+        out.push((start, start + 1));
+    }
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        collect_ranges(child, src, out);
+    }
 }
 
 #[cfg(test)]

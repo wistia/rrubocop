@@ -1,1 +1,1 @@
-media.update(protected: true)
+media.update_all("protected" => true)

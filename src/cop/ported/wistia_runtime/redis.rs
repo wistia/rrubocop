@@ -17,7 +17,8 @@ pub(super) fn redis_expiry(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 fn expiration(c: &Context<'_>, n: Node<'_>) -> bool {
     option_pairs(n).any(|pair| {
         field(pair, "key").is_some_and(|key| {
-            c.symbol(key) && ["ex", "exat", "px", "pxat"].contains(&c.value(key))
+            c.static_symbol(key)
+                .is_some_and(|key| ["ex", "exat", "px", "pxat"].contains(&key.as_ref()))
         })
     })
 }

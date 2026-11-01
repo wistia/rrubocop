@@ -5,6 +5,7 @@ use anyhow::{Context, Result};
 use crate::diagnostic::Location;
 
 mod cache;
+mod coordinates;
 mod operation;
 use cache::AnalysisCache;
 pub(crate) use operation::LintOperation;
@@ -15,6 +16,7 @@ pub struct SourceFile {
     pub path: PathBuf,
     pub content: Vec<u8>,
     line_starts: Vec<usize>,
+    ascii: bool,
     analysis: AnalysisCache,
     operation: OnceLock<Arc<LintOperation>>,
 }
@@ -31,6 +33,7 @@ impl SourceFile {
         Self {
             path: path.into(),
             line_starts: compute_line_starts(&content),
+            ascii: content.is_ascii(),
             content,
             analysis: AnalysisCache::default(),
             operation: OnceLock::new(),
@@ -83,8 +86,13 @@ impl SourceFile {
             Ok(idx) => idx,
             Err(idx) => idx.saturating_sub(1),
         };
-        let line_bytes = &self.content[self.line_starts[line_idx]..byte_offset];
-        (line_idx + 1, utf8_byte_index_to_column(line_bytes))
+        let offset = byte_offset - self.line_starts[line_idx];
+        let column = if self.ascii {
+            offset
+        } else {
+            self.columns(line_idx + 1).column_at(offset)
+        };
+        (line_idx + 1, column)
     }
 
     pub fn line_start(&self, line: usize) -> Option<usize> {
@@ -109,10 +117,20 @@ impl SourceFile {
         .ok()
     }
 
-    /// Byte offset of (1-based line, 0-based display column). Best-effort for ASCII.
+    /// Byte offset of (1-based line, 0-based Unicode codepoint column).
     pub fn line_col_to_offset(&self, line: usize, column: usize) -> Option<usize> {
         let start = self.line_start(line)?;
-        Some(start + column)
+        if self.ascii {
+            let end = self
+                .line_starts
+                .get(line)
+                .copied()
+                .unwrap_or(self.content.len());
+            return (column <= end - start).then_some(start + column);
+        }
+        self.columns(line)
+            .offset_at(column)
+            .map(|offset| start + offset)
     }
 
     pub fn location_at(&self, byte_offset: usize) -> Location {
@@ -171,3 +189,6 @@ fn compute_line_starts(content: &[u8]) -> Vec<usize> {
     }
     starts
 }
+
+#[cfg(test)]
+mod coordinates_tests;

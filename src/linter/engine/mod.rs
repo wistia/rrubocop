@@ -78,6 +78,9 @@ pub(super) fn lint_source_prepared(
         &mut diagnostics,
         &mut corrections,
     )?;
+    if !ignore_disable {
+        directives::for_source(source, &tree);
+    }
     apply_directives(
         source,
         context,
@@ -194,9 +197,13 @@ fn apply_directives(
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<Vec<Correction>>,
 ) {
-    let pre_filter = diagnostics.clone();
+    let audit = !ignore_disable
+        && active
+            .iter()
+            .any(|(cop, _, _)| cop.name() == "Lint/RedundantCopDisableDirective");
+    let pre_filter = audit.then(|| diagnostics.clone());
     filter_directives(source, ignore_disable, diagnostics);
-    if !ignore_disable {
+    if let Some(pre_filter) = pre_filter {
         run_redundant_disable_audit(
             source,
             context,
@@ -264,7 +271,7 @@ fn filter_directives(source: &SourceFile, ignore_disable: bool, diagnostics: &mu
     if ignore_disable {
         return;
     }
-    let dirs = directives::parse(&String::from_utf8_lossy(source.as_bytes()));
+    let dirs = directives::cached(source);
     diagnostics.retain(|d| !dirs.suppresses(&d.cop_name, d.location.line));
 }
 

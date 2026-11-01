@@ -1,5 +1,7 @@
 use super::Correction;
 use std::collections::HashMap;
+mod index;
+use index::ConflictIndex;
 
 pub(super) struct Accepted {
     pub edit: Correction,
@@ -8,9 +10,11 @@ pub(super) struct Accepted {
 
 pub(super) fn select(raw: Vec<Correction>) -> Vec<Accepted> {
     let mut accepted = Vec::new();
+    let mut conflicts = ConflictIndex::default();
+    let mut duplicates = HashMap::new();
     for group in groups(raw) {
-        if compatible(&group, &accepted) {
-            accept(group, &mut accepted);
+        if compatible(&group, &conflicts) {
+            accept(group, &mut accepted, &mut conflicts, &mut duplicates);
         }
     }
     accepted.sort_by_key(|a| order(&a.edit));
@@ -38,17 +42,29 @@ fn group_index(
         *indices.entry((edit.cop_name, owner)).or_insert(next)
     })
 }
-fn compatible(group: &[Correction], accepted: &[Accepted]) -> bool {
-    group.iter().enumerate().all(|(index, edit)| {
-        !group[..index].iter().any(|other| conflicts(edit, other))
-            && !accepted.iter().any(|other| conflicts(edit, &other.edit))
-    })
-}
-fn accept(group: Vec<Correction>, accepted: &mut Vec<Accepted>) {
+fn compatible(group: &[Correction], accepted: &ConflictIndex) -> bool {
+    let mut within_group = ConflictIndex::default();
     for edit in group {
-        if let Some(duplicate) = accepted.iter_mut().find(|a| identical(&a.edit, &edit)) {
-            duplicate.aliases.push(edit);
+        if accepted.conflicts(edit) || within_group.conflicts(edit) {
+            return false;
+        }
+        within_group.insert(edit);
+    }
+    true
+}
+fn accept(
+    group: Vec<Correction>,
+    accepted: &mut Vec<Accepted>,
+    conflicts: &mut ConflictIndex,
+    duplicates: &mut HashMap<(usize, usize, String), usize>,
+) {
+    for edit in group {
+        let key = (edit.start, edit.end, edit.replacement.clone());
+        if let Some(&index) = duplicates.get(&key) {
+            accepted[index].aliases.push(edit);
         } else {
+            duplicates.insert(key, accepted.len());
+            conflicts.insert(&edit);
             accepted.push(Accepted {
                 edit,
                 aliases: Vec::new(),
@@ -85,3 +101,6 @@ fn same_owner(a: &Correction, b: &Correction) -> bool {
 fn order(edit: &Correction) -> (usize, bool, usize) {
     (edit.start, edit.start != edit.end, edit.cop_index)
 }
+
+#[cfg(test)]
+mod tests;

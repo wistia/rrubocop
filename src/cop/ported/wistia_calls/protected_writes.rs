@@ -24,7 +24,7 @@ fn protected_column(c: &Context<'_>, n: Node<'_>) -> bool {
         .into_iter()
         .filter(|a| a.kind() != "comment")
         .collect::<Vec<_>>();
-    arguments.len() == 2 && c.symbol(arguments[0]) && c.value(arguments[0]) == "protected"
+    arguments.len() == 2 && c.static_symbol(arguments[0]).as_deref() == Some("protected")
 }
 
 fn protected_hash(c: &Context<'_>, n: Node<'_>) -> bool {
@@ -34,5 +34,5 @@ fn protected_hash(c: &Context<'_>, n: Node<'_>) -> bool {
 fn protected_pair(c: &Context<'_>, n: Node<'_>) -> bool {
     n.kind() == "pair"
         && n.child_by_field_name("key")
-            .is_some_and(|key| c.symbol(key) && c.value(key) == "protected")
+            .is_some_and(|key| c.static_symbol(key).as_deref() == Some("protected"))
 }

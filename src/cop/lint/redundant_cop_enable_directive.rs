@@ -70,7 +70,8 @@ fn partial_enable_cop_range(
     cop: &str,
 ) -> Option<(usize, usize)> {
     let line_start = source.line_start(line_no)?;
-    let line = source.line_text(line_no)?;
+    let directives = crate::parse::directives::cached(source);
+    let line = directives.comment_line(source, line_no)?;
     nth_cop_token(&line, cop, 1).map(|(start, end)| {
         let (rs, re) = partial_token_span(&line, start, end - start);
         (line_start + rs, line_start + re)
@@ -214,7 +215,7 @@ impl Cop for RedundantCopEnableDirective {
     fn check_source(
         &self,
         source: &SourceFile,
-        _tree: &tree_sitter::Tree,
+        tree: &tree_sitter::Tree,
         _code_map: &CodeMap,
         config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
@@ -222,8 +223,11 @@ impl Cop for RedundantCopEnableDirective {
     ) {
         // RuboCop seeds disable counts with cops disabled in config.
         let mut disabled = config_disabled(config);
-        for (i, line) in source.lines().enumerate() {
-            let s = String::from_utf8_lossy(line);
+        let directives = crate::parse::directives::for_source(source, tree);
+        for &line_no in directives.comment_lines() {
+            let Some(s) = directives.comment_line(source, line_no) else {
+                continue;
+            };
             if let Some(rest) = s.split("# rubocop:disable").nth(1) {
                 for name in directive_names(rest) {
                     disabled.insert(name);
@@ -234,7 +238,7 @@ impl Cop for RedundantCopEnableDirective {
                 source,
                 &mut disabled,
                 &s,
-                i + 1,
+                line_no,
                 diagnostics,
                 corrections.as_deref_mut(),
             );
