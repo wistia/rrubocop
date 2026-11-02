@@ -31,7 +31,10 @@ def observe(executable, options, path, source, cwd, environment):
     corrected = path.read_bytes()
     second = subprocess.run(command, cwd=cwd, env=environment, capture_output=True, text=True, timeout=30)
     stderr = first.stderr + second.stderr
-    cop_error = "An error occurred while" in stderr and "cop was inspecting" in stderr
+    cop_error = (
+        "Infinite loop detected in" in stderr
+        or ("An error occurred while" in stderr and "cop was inspecting" in stderr)
+    )
     return {
         "exit": first.returncode,
         "final_exit": second.returncode,

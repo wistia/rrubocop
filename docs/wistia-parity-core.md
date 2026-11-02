@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Twenty-four owned rules now have implemented behavior backed by original-Ruby
+Twenty-five owned rules now have implemented behavior backed by original-Ruby
 comparisons, including all thirteen original direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. Additional UselessAssignment capture combinations
 remain under review. The exhaustive
-367-rule inventory retains 343 queued validation entries; some already had
+367-rule inventory retains 342 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -537,3 +537,16 @@ Reviewed the pinned original cop and parser3.3.5.0's lexer/literal.rb monolithic
 The60-state original replay covers comments/shebangs/block comments, trailing EOF comment ranges, ordinary/interpolated/percent/command strings, physical versus escaped LF/CRLF, numeric/rational/imaginary tokens, symbols, heredocs, Unicode/BOM, continuations and semicolons. All detection and corrected-byte states match with no declared safeguards. CRLF normalization occurs only when a correction is made, matching the original source buffer; empty/no-offense source remains byte-identical. Separate final algorithm review and original-Ruby replay passed.
 
 Real CLI validation covers120 safe/aggressive modes, all matching original bytes and exits; all240 second passes are stable. Four production-config app/models modes and final clean states pass. Full native validation passes890 tests, one pre-existing ignored. Encoded source, additional parser token families and code-plus-DATA CRLF behavior are not established by this bounded corpus; generic correction scheduling remains deferred.
+
+
+## Style/NilComparison
+
+Reviewed the entire pinned original cop, its two exact send NodePatterns, supported styles/defaults, first textual substitution and parent-negation wrapping. All six unchanged original examples pass, yielding10 original source/config states. Independent source investigations add135 states, including26 original AST observations for signed numeric receivers. The145-state replay matches every diagnostic/message/selector range;129 first corrected states match exactly and16 explicitly preserve source for unsafe or insufficiently proven conversions. Existing fixture pointers were corrected to the original selector positions.
+
+Coverage includes both styles, equality/triple equality versus negative controls, nil on either side, explicit operator sends, safe navigation, argument/block shapes, whitespace/comments/continuations, negation and parentheses, chains/indexing/operators, assignment/logical/ternary contexts, Unicode/CRLF, source literals and defined? observations. Signed numeric prefixes preserve Ruby's folded receiver semantics while ordinary unary predicate results retain safeguards. Supported no-op substitutions preserve source; original negation wrapping and CRLF buffer normalization still occur where applicable. The implementation edits exact spans and never decodes/rebuilds arbitrary receiver bytes.
+
+The16 safeguards cover invalid Ruby generated around continuations, explicit operators, empty-call parentheses and blocks; precedence/receiver changes around chains, indexes and unary/binary parents; defined? observation and first-match substitution inside receiver literals. Static parsing records invalid original corrections. Trusted authored Ruby probes confirm changed receiver arguments, String versus FalseClass chain results, changed unary failure behavior and BasicObject method-availability observations. No fixture programs were executed.
+
+Real CLI validation covers290 modes:258 equal corrected-byte pairs,258 equal exits and32 byte differences exactly corresponding to those16 safeguards. Ten additional exit-only differences are original infinite-loop failures on no-op corrections (exit2 versus native uncorrectable offense/exit1). All580 second passes are byte-stable, including those original failure states; stability does not turn the failing Ruby runs into passes. The driver now recognizes the original loop diagnostic and replays those10 modes separately without an allowlist. One further nested-predicate source triggers original Parser::ClobberingError and writes invalid code in both CLI modes; native reports both offenses and preserves valid source. Its nondestructive original diagnostics and failure evidence are recorded separately. No scheduling-engine changes were made.
+
+Four actual-production-config modes and final clean states pass; the full native suite passes894 tests, one pre-existing ignored. Additional command-unary receiver forms, encoded source, code-plus-DATA normalization and unreviewed dynamic/reflective method behavior remain bounded follow-ups; generic scheduling and syntax expansion remain deferred.
