@@ -543,6 +543,17 @@ fn regex_parts<'a>(source: &SourceFile, node: Node<'a>) -> Option<(Vec<RegexPart
     Some((parts, options))
 }
 
+pub(crate) fn static_regex_value(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let (mut parts, options) = regex_parts(source, node)?;
+    if !options.is_empty() || parts.len() != 1 {
+        return None;
+    }
+    match parts.pop()? {
+        RegexPart::Text(bytes) => String::from_utf8(bytes).ok(),
+        RegexPart::Expression(_) => None,
+    }
+}
+
 fn same_regex(source: &SourceFile, left: Node<'_>, right: Node<'_>, strict: bool) -> bool {
     let same_expression = |source: &SourceFile, left: Node<'_>, right: Node<'_>| {
         compare_expression(source, left, right, strict)

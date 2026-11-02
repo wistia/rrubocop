@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Eighteen owned rules now have implemented behavior backed by original-Ruby
-comparisons, including eight of the original thirteen direct-file Style
+Nineteen owned rules now have implemented behavior backed by original-Ruby
+comparisons, including nine of the original thirteen direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. HashSyntax shorthand branches and additional
 UselessAssignment capture combinations remain under review. The exhaustive
-367-rule inventory retains 349 queued validation entries; some already had
+367-rule inventory retains 348 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -437,3 +437,13 @@ Repeated NodePattern bindings use the shared original-AST `==` comparator, not s
 ## Shared implicit numbered parameter classification
 
 A separate scoped model regression follows the original pinned Ruby AST: `items.each { _1; _2 }` is a `numblock` with local-variable reads; a following top-level `_1` is a send; `-> { _1 }` is another `numblock`; `obj._1` and `_1()` remain sends. The native scope builder now predeclares actual `_1` through `_9` read identifiers only inside blocks without explicit parameters, stopping at nested scope boundaries. The cached local-identifier test checks the original seven identifier roles, including a nested block, rather than merely comparing two native caches. The integrated 868-test suite passes. This addresses the shared getter-classification gap; implicit Ruby 3.4 `it` and invalid explicit-parameter/numbered-parameter mixtures are outside this patch.
+
+## Style/ExactRegexpMatch
+
+Reviewed the complete pinned `rubocop-1.65.1/lib/rubocop/cop/style/exact_regexp_match.rb`, its unchanged 12 original examples, and `regexp_parser` 2.12.0 token behavior. Fourteen captured states plus 117 independent probes cover all five methods, safe navigation, escaped delimiters, the printable ASCII literal/metacharacter classes, intervals, options/interpolation negatives, Unicode plain literals, result context and capture state. The dedicated predicate follows the original first-three-token check: bos, an unquantified literal, eos. It preserves even the original diagnostic for an extra suffix after eos.
+
+All 131 diagnostic/range/message states match. Corrected bytes match in 119 states; 12 retain the original offense while withholding unsafe edits. Recorded differences cover invalid single-quote replacement, unknown escape semantics, the ignored regex suffix, observed MatchData/index/case-equality/safe-navigation results, capture reads, an attached block, and deleted comments. Trusted authored Ruby probes confirm MatchData versus Boolean, stale capture state, String case equality versus string equality, and nil versus false differences. Negative `!~` retains ordinary correction when its Boolean result is observed and no capture is read. All original correction bytes remain in the explicit safeguard fixture; there is no parity allowlist.
+
+Real original/native CLI validation initially covers 258 modes (236 equal bytes, 240 equal exit statuses, exactly 22 deliberate byte differences), with all 516 second passes stable; the final two result-context probes add four modes (two equal bytes/exits and two explicit case-equality safeguards), with all eight second passes stable. Combined: 262 modes, 238 equal bytes, 242 equal exits, 24 explicit safeguard differences, and 524 stable second passes. Four additional actual-production-config CLI modes under `app/models` produce the expected bytes and clean final states. The integrated native suite passes 870 tests, one pre-existing ignored. The separate native parity review then rechecks all 131 states after simplification.
+
+This implements the original cop's bounded token predicate rather than a complete Regexp::Parser replacement. Escaped non-ASCII atoms, uncommon regexp escape/version branches, encoded non-UTF8 input and reflective capture access remain explicitly unproven. Comment and observed-result safeguards are conservative; no claim of universal Ruby semantics is made.

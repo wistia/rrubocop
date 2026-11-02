@@ -1,0 +1,302 @@
+[
+  {
+    "id": "ASCII atom \"'\"",
+    "original": "string.match?(/\\A'\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 22,
+        "message": "Use `string == '''`."
+      }
+    ],
+    "ruby_corrected": "string == '''\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.match?(/\\A'\\z/)\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "unknown escape",
+    "original": "string.match?(/\\A\\q\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 23,
+        "message": "Use `string == '\\q'`."
+      }
+    ],
+    "ruby_corrected": "string == '\\q'\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.match?(/\\A\\q\\z/)\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "extra tail",
+    "original": "string.match?(/\\Afoo\\zbar\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 29,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "string == 'foo'\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.match?(/\\Afoo\\zbar\\z/)\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "observed match",
+    "original": "result = string.match(/\\Afoo\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 23,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "result = string == 'foo'\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "result = string.match(/\\Afoo\\z/)\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "observed =~",
+    "original": "result = string =~ /\\Afoo\\z/\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 19,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "result = string == 'foo'\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "result = string =~ /\\Afoo\\z/\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "safe nav observed",
+    "original": "result = string&.match?(/\\Afoo\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 25,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "result = string == 'foo'\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "result = string&.match?(/\\Afoo\\z/)\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "captures",
+    "original": "string =~ /\\Afoo\\z/; puts $~\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 19,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "string == 'foo'; puts $~\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string =~ /\\Afoo\\z/; puts $~\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "last_match",
+    "original": "string.match(/\\Afoo\\z/); Regexp.last_match\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 23,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "string == 'foo'; Regexp.last_match\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.match(/\\Afoo\\z/); Regexp.last_match\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "block",
+    "original": "string.match(/\\Afoo\\z/) { |m| m }\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 23,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "string == 'foo' { |m| m }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.match(/\\Afoo\\z/) { |m| m }\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "comment",
+    "original": "string.match?( # retain\n /\\Afoo\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 35,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "string == 'foo'\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.match?( # retain\n /\\Afoo\\z/)\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "method return",
+    "original": "def m; string.match(/\\Afoo\\z/); end\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 23,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "def m; string == 'foo'; end\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def m; string.match(/\\Afoo\\z/); end\n",
+    "safeguard_reason": "Preserve observed result/capture state, attached block, literal semantics, or source comments."
+  },
+  {
+    "id": "observed case equality",
+    "original": "result = string === /\\Afoo\\z/\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 20,
+        "message": "Use `string == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "result = string == 'foo'\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "result = string === /\\Afoo\\z/\n",
+    "safeguard_reason": "String case equality against a Regexp always returns false; equality against the literal can return true."
+  }
+]
