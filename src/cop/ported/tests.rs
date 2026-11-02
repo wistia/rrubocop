@@ -69,3 +69,5 @@ fn all_ported_cops_have_fixture_pairs() {
 mod pipeline;
 
 mod parity;
+
+mod audit;

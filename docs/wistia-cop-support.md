@@ -353,3 +353,5 @@ The [fork-specific custom-rule parity fixes](reviews/fork-specific-parity-fixes.
 The [next custom-rule parity follow-up](reviews/custom-parity-round-three.md) fixes quoted literal matching, runtime argument shapes and rescue suppression, spec constant targets, migration matching, and autoload conditional guards.
 
 The [literal and scope parity fixes](reviews/custom-parity-round-four.md) cover file-mode safety, Ruby static-string classification, serializer boundaries, CSV ranges, and parenthesized/numbered-block scope shapes.
+
+The [single-command custom cop audit](custom-parity-audit.md) replays live Ruby comparisons, generated syntax/literal variants, compiler checks, and explicit runtime scenarios, with per-cop coverage and machine-readable findings.

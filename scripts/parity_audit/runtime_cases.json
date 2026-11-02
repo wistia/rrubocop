@@ -1,0 +1,93 @@
+[
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('sample.txt', \"w'\") { |f| f.write('new') }\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {
+        "sample.txt": "old"
+      },
+      "watch": [
+        "sample.txt"
+      ]
+    }
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('sample.txt', %q(w)) { |f| f.write('new') }\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {
+        "sample.txt": "old"
+      },
+      "watch": [
+        "sample.txt"
+      ]
+    }
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open('sample.txt', \"r'\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {
+        "sample.txt": "old"
+      },
+      "watch": [
+        "sample.txt"
+      ]
+    }
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open('sample.txt', ?r) { |f| f.read }\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {
+        "sample.txt": "old"
+      },
+      "watch": [
+        "sample.txt"
+      ]
+    }
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"true'\"\n",
+    "path": "probe.rb",
+    "config": {
+      "Safe": false
+    },
+    "runtime": {}
+  },
+  {
+    "cop": "Style/RedundantAssignment",
+    "source": "def x; 9; end\ndef f\n x = x || 1\n x\nend\np f\n",
+    "path": "probe.rb",
+    "runtime": {}
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "def f\n x = true\n x = 1 unless x\nend\np f\n",
+    "path": "probe.rb",
+    "runtime": {}
+  },
+  {
+    "cop": "Lint/SafeNavigationWithEmpty",
+    "source": "$i = 0\ndef xs; $i += 1; $i == 1 ? [] : nil; end\np(xs&.empty? ? :empty : :full)\n",
+    "path": "probe.rb",
+    "runtime": {}
+  },
+  {
+    "cop": "Style/RedundantRegexpEscape",
+    "source": "p /[a\\&\\&b]/.match?('a')\n",
+    "path": "probe.rb",
+    "runtime": {}
+  },
+  {
+    "cop": "Style/StderrPuts",
+    "source": "$VERBOSE = nil\nSTDERR.puts('notice')\n",
+    "path": "probe.rb",
+    "runtime": {}
+  }
+]
