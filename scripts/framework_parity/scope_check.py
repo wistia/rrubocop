@@ -11,11 +11,13 @@ p = argparse.ArgumentParser()
 p.add_argument('--ruby-project', required=True, type=Path)
 p.add_argument('--native', required=True, type=Path)
 p.add_argument('--output', required=True, type=Path)
+p.add_argument('--cop', action='append', help='Run only named cops and their auxiliary policy cases')
 a = p.parse_args()
 model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/RedundantAllowNil', 'validates :name, allow_nil: true, allow_blank: true', model, service),
  ('Rails/RedundantReceiverInWithOptions', 'with_options(flag: true) { |m| m.foo }', model, service),
  ('Rails/LexicallyScopedActionFilter', 'class C; before_action :authorize, only: :missing; end', 'app/controllers/framework_parity_probe.rb', model),
  ('Rails/IndexBy', 'x.map { |el| [el.to_sym, el] }.to_h', model, service),
@@ -76,6 +78,12 @@ cases += [dict(cop='Lint/RedundantCopDisableDirective', extra_cops=['Rails/Valid
 cases += [dict(cop='Rails/LexicallyScopedActionFilter', source='class C; before_action :authorize, only: :missing; end\n', path='app/mailers/framework_parity_probe.rb', positive=True),
           dict(cop='Rails/LexicallyScopedActionFilter', source='class C; before_action :authorize, only: :missing; end # rubocop:disable Rails/LexicallyScopedActionFilter\n', path='app/controllers/framework_parity_probe.rb', positive=False)]
 cases += [dict(cop='Rails/RedundantReceiverInWithOptions', source='with_options(flag: true) do |m|\n m.foo # rubocop:disable Rails/RedundantReceiverInWithOptions\n m.bar\nend\n', path=model, positive=True)]
+if a.cop:
+    selected = set(a.cop)
+    known = {case['cop'] for case in cases} | {cop for case in cases for cop in case.get('extra_cops', [])}
+    if selected - known:
+        p.error('Unknown scope cop: ' + ', '.join(sorted(selected - known)))
+    cases = [case for case in cases if case['cop'] in selected or selected.intersection(case.get('extra_cops', []))]
 severity = dict(C='convention', W='warning', E='error', F='fatal', R='refactor', I='info')
 env = {**os.environ, 'ASDF_RUBY_VERSION':'3.4.9', 'RRUBOCOP_CACHE_DIR':str(a.output/'native-cache'), 'RUBOCOP_CACHE_ROOT':str(a.output/'ruby-cache')}
 a.output.mkdir(parents=True, exist_ok=True)

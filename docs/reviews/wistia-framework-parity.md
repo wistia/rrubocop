@@ -1,9 +1,9 @@
 # Framework cop parity implementation
 
 The initial inventory covers 90 enabled Rails, Migration, Performance and FactoryBot cops.
-Seven remaining Performance stubs are now delegated to `feat/wistia-parity-performance`; this branch retains the other 83 rules.
-The baseline inventory contained 67 no-op stubs. The current branch replaces 42 stubs and reviews three existing implementations.
-Twenty-five baseline stubs (18 retained here, seven delegated) and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
+Seven Performance stubs are implemented on `feat/wistia-parity-performance` at `00c5d3f` and await integration; this branch retains the other 83 rules.
+The baseline inventory contained 67 no-op stubs. The current branch replaces 43 stubs and reviews three existing implementations.
+Seventeen retained Rails baseline stubs and the remaining existing-cop gaps still need work. Seven delegated baseline stubs are implemented separately. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
 
@@ -815,3 +815,11 @@ Confirmed unsafe original transforms remain warnings without native correction: 
 Original explicit/private-call dispatch can differ from receiverless dispatch on OptionMerger. The 73 private method names in `src/resources/option_merger_private_methods_ruby_3_4.txt` were captured directly from Ruby3.4.9 / ActiveSupport8.1.3.1 with `ActiveSupport::OptionMerger.private_instance_methods.map(&:to_s).sort`. Actual `puts` and `__method__` programs prove the guard; this is visibility metadata, not offense suppression. Unknown/default/rest/block/shadow parameter semantics remain conservatively uncorrected; broader visibility versions, monkeypatches, parser-error recovery and additional frame cases stay explicitly open.
 
 Validation: **929 native tests pass, one ignored**. **All 102 actual CLI/config probes pass** (98 production scopes across 45 rules plus four auxiliary policy probes), including partial inline-disable detection. Shared shorthand roles additionally match 45 original cases/48 roles; binding identities cover shadowing/numbered/lambda/field distinctions. Totals: 42 baseline stubs replaced, three existing rules reviewed; 25 original stubs remain globally (18 retained Rails, seven delegated Performance).
+
+### RedundantAllowNil source/spec review
+
+Read pinned `rubocop-rails-2.26.0/lib/rubocop/cop/rails/redundant_allow_nil.rb` and its separate upstream v2.26.0 specs. Preserved the recursive first-complete-pair search, exact bare-label key matching, original AST type comparison, both messages and first/middle/last sibling deletion ranges. Typed values reuse existing literal/send/local/numbered helpers; the root send excludes its attached block while nested argument expressions remain searchable. Source review covers nested/different validators, literal/dynamic values, receivers, quoted/rocket keys, shorthand, duplicate keys, splats, comments and disabled policy.
+
+Final gate: **187 original cases, 374 second passes, five trusted ActiveModel programs**. All warning counts/messages/ranges match; all native programs preserve original behavior. **269 retained events** are 87 correction-metadata, 87 safe-byte, 87 all-byte and eight runtime differences. Native declines dynamic flag evaluation, arbitrary nested callback data, duplicate/spread precedence and comment deletion. Trusted programs prove original changes validation/evaluation when dropping a dynamic true/false flag, removes callback data, or exposes an earlier duplicate/spread option. Standard literal flags and nested validator options correct exactly. Non-primitive correction/value-encoding shapes remain explicitly bounded follow-up work.
+
+Native suite: **929 pass, one ignored**. Scope tooling now accepts an explicit `--cop` filter (default full catalog unchanged) for focused implementation checks; this rule's two production model/service probes are recorded separately. Previous 102 scope/policy cases are unchanged, bringing the catalog to 104 (100 production, four auxiliary) across 46 rules. Totals on this branch: 43 original stubs replaced, three existing rules reviewed; **17 retained Rails stubs remain**. The seven delegated Performance stubs are completed separately at `00c5d3f`; this inventory now marks that external implementation explicitly rather than treating them as still unimplemented.
