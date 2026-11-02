@@ -1,8 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The first four batches replace
-17 stubs and repair an existing ReverseEach detector/corrector; 50 stubs and the remaining implemented-cop gaps
+The baseline inventory contained 67 no-op stubs. The first five batches replace
+21 stubs and repair an existing ReverseEach detector/corrector; 46 stubs and the remaining implemented-cop gaps
 still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
@@ -181,3 +181,18 @@ cross-cop interactions. AttributeDefinedStatically declines unsupported
 multi-positional-value rewrites instead of generating invalid Ruby. Factory list
 binding analysis remains conservative. No Wistia enforcement changes, rule
 retirements, rollout changes or S3 releases are included.
+
+## Fifth batch: Rails declarations and assertions
+
+Reviewed the complete original rubocop-rails 2.26.0 implementations after
+implementation: ScopeArgs receiver/arity/send versus block, local and safe-call
+branches; AssertNot negation, delimiters and correction policy;
+HasAndBelongsToMany receiverless selector forms; ActiveRecordOverride nearest
+class, exact superclass source, four persistence names and forwarding versus
+explicit-argument super. Added 47 original-rule differential specimens.
+The matrix now covers 342 original specimens, 684 second-pass specimens and
+20 trusted runtime programs, retaining exactly the same 121 explicit earlier
+safety/upstream-hazard events, with no new differences. The Rails native suite
+passes all 53 tests. AssertNot declines unsupported comment/newline/not
+spellings rather than entering an original no-progress autocorrection loop;
+these guarded syntax variants still require expanded differential evidence.

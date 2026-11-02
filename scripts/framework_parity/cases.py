@@ -88,4 +88,15 @@ def cases():
     add("Performance/UriDefaultParser", "URI::Parser.new( # keep this\n)")
     add("Performance/UriDefaultParser", "URI::Parser.new { # keep this\n foo }")
     add("Performance/Caller", "caller.first { # keep this\n foo }")
+    for source in ("scope :active, where(active: true)", "scope(:active, User.where(active: true))", "scope :active, query", "query = User.where(active: true)\nscope :active, query", "scope :active, -> { where(active: true) }", "self.scope :active, where(active: true)", "scope :active, User&.where(active: true)", "scope :active, where { |x| x.active? }"):
+        add("Rails/ScopeArgs",source)
+    for source in ("assert !valid?", "assert(!valid?)", "assert( ! valid?)", "assert !valid?, 'message'", "self.assert !valid?", "assert_not valid?", "assert !!valid?", "assert !value.ready?", "assert  !   valid?"):
+        add("Rails/AssertNot",source)
+    for base in ("ApplicationRecord", "ActiveModel::Base", "ActiveRecord::Base", "::ApplicationRecord", "Other"):
+        for method in ("save", "update", "destroy", "create"):
+            add("Rails/ActiveRecordOverride", f"class User < {base}\n def {method}\n  super\n end\nend")
+    for source in ("class User < ApplicationRecord\n def save; super(); end\nend", "class User < ApplicationRecord\n def self.save; super; end\nend", "class User < ApplicationRecord\n def save; super(value); end\nend", "class User < ApplicationRecord\n def save; yield; end\nend"):
+        add("Rails/ActiveRecordOverride",source)
+    for source in ("has_and_belongs_to_many :roles", "has_and_belongs_to_many(:roles)", "self.has_and_belongs_to_many :roles", "model.has_and_belongs_to_many :roles", "has_and_belongs_to_many", "has_and_belongs_to_many = value\nhas_and_belongs_to_many"):
+        add("Rails/HasAndBelongsToMany",source)
     return rows
