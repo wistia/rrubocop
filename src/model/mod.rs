@@ -197,6 +197,38 @@ mod tests {
     use super::*;
 
     #[test]
+    fn destructured_assignment_and_for_targets_bind_all_nested_names() {
+        for source in [
+            b"a, (b, (c, d)) = values\nputs a, b, c, d\n".as_slice(),
+            b"for a, b in values\n puts a,b\nend\n",
+        ] {
+            let file = crate::parse::source::SourceFile::from_bytes("test.rb", source.to_vec());
+            let tree = crate::parse::parse_ruby(&file).unwrap();
+            let model = super::build(file.as_bytes(), tree);
+            let names = if source.starts_with(b"for") {
+                vec!["a", "b"]
+            } else {
+                vec!["a", "b", "c", "d"]
+            };
+            for name in names {
+                let entry = &model.scopes[0].entries[name];
+                assert_eq!(entry.writes.len(), 1, "{name}");
+                assert_eq!(entry.reads.len(), 1, "{name}");
+            }
+        }
+    }
+    #[test]
+    fn module_name_receiver_reads_the_outer_local() {
+        let file = crate::parse::source::SourceFile::from_bytes(
+            "test.rb",
+            b"namespace = Object.new\nmodule namespace::Nested\nend\n".to_vec(),
+        );
+        let tree = crate::parse::parse_ruby(&file).unwrap();
+        let model = super::build(file.as_bytes(), tree);
+        assert_eq!(model.scopes[0].entries["namespace"].reads.len(), 1);
+        assert!(model.scopes[1].entries.is_empty());
+    }
+    #[test]
     fn rebind_inside_block_hits_shared_outer_binding() {
         assert_eq!(
             build_from_str("x = 1\n[1].each { x = 2 }\n").scopes[0]

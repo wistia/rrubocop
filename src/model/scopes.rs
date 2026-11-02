@@ -25,6 +25,11 @@ impl Builder<'_> {
                 } else if let Some(sc) = n.child_by_field_name("superclass") {
                     self.walk(sc, parent, false);
                 }
+                if matches!(kind, "class" | "module") {
+                    if let Some(name) = n.child_by_field_name("name") {
+                        self.walk(name, parent, false);
+                    }
+                }
                 let s = self.scope_for(n, ScopeKind::ClassLike, None);
                 if let Some(body) = n.child_by_field_name("body") {
                     self.walk(body, s, false);

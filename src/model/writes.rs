@@ -140,6 +140,16 @@ impl Builder<'_> {
             };
             self.record_write(scope, &name, w, IntroKind::Binding);
         }
+        if let Some(pat) = pattern.filter(|pat| {
+            matches!(
+                pat.kind(),
+                "left_assignment_list"
+                    | "destructured_left_assignment"
+                    | "destructured_left_assignment_list"
+            )
+        }) {
+            self.collect_masgn_targets(pat, scope);
+        }
         let mut cursor = n.walk();
         for child in n.children(&mut cursor) {
             if pattern.map(|p| p.id()) == Some(child.id()) {

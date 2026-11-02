@@ -354,3 +354,17 @@ Ruby formatting/storage changes, re-running all 203 original specs produced
 the identical 324 captured states. Running Wistia's full Ruby lint config on
 this external standalone helper still reports its existing documentation,
 metrics and Wistia-specific script/spec scope assumptions; none were disabled.
+
+## Shared binding model checkpoint during UselessAssignment work
+
+The original UselessAssignment matrix exposed three model defects: the
+actual tree-sitter nested-target kind is `destructured_left_assignment`,
+for-loop destructuring was not bound, and a module/class name receiver such
+as `namespace::Nested` was not read in the outer scope. Those cases now
+produce bindings/reads consistently with the pinned original Ruby specimens.
+Two model regression tests exercise all nested names, their reads, and scope
+isolation of module receivers. The full current native suite passes 862
+tests with one unrelated existing ignored test; the only failing test is the
+new in-progress UselessAssignment reference matrix (two named-capture gaps
+and four explicit operator-declaration safety differences). This checkpoint
+does not claim completion of that cop.
