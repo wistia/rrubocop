@@ -7,6 +7,8 @@ mod integer;
 mod numbered_parameters;
 pub use numbered_parameters::numbered_parameter_arity;
 pub(crate) use numbered_parameters::{numbered_reference, outer_scope_values};
+mod ruby_tokens;
+pub(crate) use ruby_tokens::{atomic as ruby_token_leaf, nodes as ruby_token_nodes};
 mod regexp;
 pub use regexp::{captures_observed, decode_ruby_double_quoted_content, is_literal_regexp_text};
 pub mod ruby_expression;
