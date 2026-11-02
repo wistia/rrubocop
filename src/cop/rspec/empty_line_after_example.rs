@@ -1,35 +1,70 @@
-//! RSpec/EmptyLineAfterExample — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
+use crate::cop::rspec::helpers::{RSPEC_INCLUDE, call_block};
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::rspec::separation::{next_code_sibling, numbered_block, separate};
+use crate::cop::shared::call_receiver;
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct EmptyLineAfterExample;
-
 impl Cop for EmptyLineAfterExample {
     fn name(&self) -> &'static str {
         "RSpec/EmptyLineAfterExample"
     }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
-    }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call"]
+    }
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        // Breadth-first stub: not implemented — avoid method-name false positives.
-        let _ = (source, node, diagnostics);
+        if safe_send(source, node) {
+            return;
+        }
+        let Some(method) = name(source, node) else {
+            return;
+        };
+        if call_receiver(node).is_some()
+            || !crate::cop::rspec::helpers::is_example(method)
+            || call_block(node).is_none()
+            || numbered_block(source, node)
+        {
+            return;
+        }
+        if config.get_bool("AllowConsecutiveOneLiners", true)
+            && node.start_position().row == node.end_position().row
+            && next_code_sibling(node).is_some_and(|next| {
+                call_receiver(next).is_none()
+                    && name(source, next).is_some_and(crate::cop::rspec::helpers::is_example)
+                    && call_block(next).is_some()
+                    && !numbered_block(source, next)
+                    && next.start_position().row == next.end_position().row
+            })
+        {
+            return;
+        }
+        separate(
+            self,
+            source,
+            node,
+            format!(
+                "Add an empty line after `{}`.",
+                String::from_utf8_lossy(method)
+            ),
+            diagnostics,
+            &mut corrections,
+        );
     }
 }

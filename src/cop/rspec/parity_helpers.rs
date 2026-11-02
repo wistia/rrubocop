@@ -593,3 +593,18 @@ pub(super) fn literal_replacement(replacement: &str, expected: &str, symbol: boo
         })
     })
 }
+
+pub(super) fn pure_literal(source: &SourceFile, node: Node<'_>) -> bool {
+    if crate::cop::ported::static_literal(source, node).is_some()
+        || matches!(
+            node.kind(),
+            "integer" | "float" | "true" | "false" | "nil" | "hash_key_symbol"
+        )
+    {
+        return true;
+    }
+    matches!(node.kind(), "array" | "hash" | "pair" | "unary" | "range")
+        && code_children(node)
+            .iter()
+            .all(|child| pure_literal(source, *child))
+}

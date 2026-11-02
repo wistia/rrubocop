@@ -395,5 +395,132 @@
         "severity": "convention"
       }
     ]
+  },
+  {
+    "id": "sort_metadata_spec:8",
+    "cop": "RSpec/SortMetadata",
+    "source": "it 'Something', variable, 'B', :a, key => {}, foo: ->(x) { bar(x) }, Identifier.sample => true, baz: Snafu.new do\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it 'Something', variable, 'B', :a, key => {}, foo: ->(x) { bar(x) }, Identifier.sample => true, baz: Snafu.new do\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/sort_metadata_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 16,
+          "message": "Sort metadata alphabetically.",
+          "correctable": true,
+          "length": 94,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it 'Something', :a, 'B', variable, baz: Snafu.new, foo: ->(x) { bar(x) }, Identifier.sample => true, key => {} do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it 'Something', :a, 'B', variable, baz: Snafu.new, foo: ->(x) { bar(x) }, Identifier.sample => true, key => {} do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Original Ruby reorders dynamic metadata expressions, changing evaluation order and side effects. Rust detects the offense but preserves original source."
+  },
+  {
+    "id": "batch5:dynamic-values",
+    "cop": "RSpec/SortMetadata",
+    "source": "it \"x\", z: record(:z), a: record(:a) do\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "it \"x\", z: record(:z), a: record(:a) do\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 8,
+          "message": "Sort metadata alphabetically.",
+          "correctable": true,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it \"x\", a: record(:a), z: record(:z) do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it \"x\", a: record(:a), z: record(:z) do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Sorting dynamic metadata changes evaluation order; preserve original expression order."
+  },
+  {
+    "id": "batch5:dynamic-keys",
+    "cop": "RSpec/SortMetadata",
+    "source": "it \"x\", z_key() => true, a_key() => true do\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "it \"x\", z_key() => true, a_key() => true do\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 8,
+          "message": "Sort metadata alphabetically.",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it \"x\", a_key() => true, z_key() => true do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it \"x\", a_key() => true, z_key() => true do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Sorting dynamic metadata changes evaluation order; preserve original expression order."
   }
 ]

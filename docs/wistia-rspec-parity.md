@@ -130,3 +130,33 @@ The other eight safety cases retain comments rather than copying their deletion
 or invalid syntax from the Ruby correction. The EmptyHook comment case is
 explicitly classified here, rather than silently omitted from the upstream
 matrix. These safety cases are differences, not exact-parity successes.
+
+## Batch 5: separation and metadata
+
+Six more original stubs are implemented: EmptyLineAfterExample,
+EmptyLineAfterExampleGroup, EmptyLineAfterFinalLet, EmptyLineAfterSubject,
+IsExpectedSpecify, and SortMetadata. The pre-existing EmptyLineAfterHook has also
+been replaced and reviewed against the original implementation. Forty-six initial
+stubs and one existing implementation are now covered; thirty-four initial stubs
+and fifteen existing implementations remain open.
+
+This batch's distinct post-implementation review used the pinned Ruby source and
+all importable upstream examples, including the shared EmptyLineSeparation,
+FinalEndLocation, and Metadata algorithms. Original Ruby checks exposed delayed
+heredoc endpoints and the Metadata mixin's treatment of the final argument. Those
+were corrected before counting parity. Explicit extra cases cover multiple
+heredocs, one-liner configuration in both directions, safe navigation, numbered
+blocks, static nested metadata, dynamic metadata values and keys. The existing
+string decoder supplies heredoc terminator positions; whitespace fixes do not
+insert bytes inside heredoc bodies.
+
+SortMetadata reports dynamic expressions but refuses to reorder their evaluation.
+Three explicit comparisons (one upstream and two additional key/value probes)
+record that difference. The trusted metadata semantics replay proves that the
+original source and retained Rust source evaluate z before a, while Ruby's
+correction evaluates a before z. These are safeguards, not parity successes.
+The other nine earlier safeguards remain explicit. The matrix has 685 strict
+original-Ruby cases across 47 reviewed rules, plus 12 safety differences. The
+upstream import contains 489 specimens; thirteen host-generated templates and
+two invalid original yield specimens remain documented limitations. Disabled
+correction controls now cover 23 added or repaired correction capabilities.

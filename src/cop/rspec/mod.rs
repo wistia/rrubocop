@@ -86,6 +86,7 @@ mod repeated_subject_call;
 mod return_from_stub;
 mod scattered_let;
 mod scattered_setup;
+mod separation;
 mod shared_context;
 mod shared_examples;
 mod single_argument_message_chain;
