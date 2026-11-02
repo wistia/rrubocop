@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Seventeen owned rules now have implemented behavior backed by original-Ruby
-comparisons, including seven of the original thirteen direct-file Style
+Eighteen owned rules now have implemented behavior backed by original-Ruby
+comparisons, including eight of the original thirteen direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. HashSyntax shorthand branches and additional
 UselessAssignment capture combinations remain under review. The exhaustive
-367-rule inventory retains 350 queued validation entries; some already had
+367-rule inventory retains 349 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -425,3 +425,11 @@ The original-spec matrix is complete at this checkpoint. Additional
 multi-capture, encoded-name and binder/reflection combinations remain queued
 for separate original-source branch review before a broader parity claim.
 No rule is retired or weakened to obtain these counts.
+
+## Style/ComparableClamp
+
+Reviewed the complete pinned `rubocop-1.65.1/lib/rubocop/cop/style/comparable_clamp.rb`, its `Alignment` indentation behavior, and all 23 unchanged original examples. All eight conditional comparison permutations, four nested array min/max patterns, the Ruby 2.4 gate, elsif indentation and absence of array autocorrection are represented in 25 captured original states. Eleven independent edge probes add explicit calls, normalized integer literals, empty statements, negative operators/branch shapes, attached blocks and three documented original correction hazards.
+
+The separate parity review compares 36 exact diagnostic/message/range states. Thirty-three states also match corrected bytes; three keep the original offense but withhold correction: original raw-source bound inference can reverse otherwise equal AST sends (`x()` versus `x`), a statically reversed integer range raises in `clamp`, and an intervening comment would be deleted. The reference bytes remain recorded separately in `intentional-safeguards.json`. The real Ruby and native CLIs were each run twice in both `-a` and `-A`: 66/72 first-pass byte and exit comparisons match, with exactly those six deliberate differences, and all 144 second passes are stable. The comparison driver returns nonzero for these differences rather than masking them. Native replay also compares the three safeguards' exact original diagnostics. Four additional original/native production-config CLI modes under an actual `app/models` path produce the expected bytes and clean final states. The final integrated native suite passes 868 tests with one pre-existing ignored test.
+
+Repeated NodePattern bindings use the shared original-AST `==` comparator, not source-text equality or the stricter grouping `eql?` relation. This imports the framework helper's 48 original expression pairs and preserves its documented conservative limits. Additional dynamic side-effect, encoding and unreviewed AST families remain unproven; this is a bounded original-spec port. Receiver precedence, invalid UTF-8 and delayed heredoc corrections are conservative guards, not claimed exhaustive semantic proof.

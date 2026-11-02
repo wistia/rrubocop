@@ -9,12 +9,12 @@ import subprocess
 import sys
 import tempfile
 
-COP = "Lint/UselessAssignment"
 VALID_EXITS = (0, 1)
 
 
 def arguments():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--cop", default="Lint/UselessAssignment")
     parser.add_argument("--fixture", type=pathlib.Path, nargs="+", required=True)
     parser.add_argument("--rust", type=pathlib.Path, required=True)
     parser.add_argument("--ruby", type=pathlib.Path, required=True)
@@ -55,10 +55,10 @@ def compare(index_case, settings, environment):
                 "NewCops": "disable",
                 "TargetRubyVersion": case["config"]["TargetRubyVersion"],
             },
-            COP: options | {"Enabled": True},
+            settings.cop: options | {"Enabled": True},
         }))
         for mode in ("-a", "-A"):
-            cli_options = ["--config", str(config), "--only", COP, "--cache", "false", "--format", "json", mode]
+            cli_options = ["--config", str(config), "--only", settings.cop, "--cache", "false", "--format", "json", mode]
             observations = {
                 name: observe(executable, cli_options, path, case["original"], settings.ruby.parent.parent, environment)
                 for name, executable in (("ruby", settings.ruby), ("rust", settings.rust))

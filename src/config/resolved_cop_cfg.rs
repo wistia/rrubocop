@@ -44,7 +44,18 @@ impl ResolvedConfig {
     }
 
     fn inject_method_body_width(&self, name: &str, config: &mut CopConfig) {
-        if name != "Style/TrailingBodyOnMethodDefinition" {
+        if !matches!(
+            name,
+            "Style/TrailingBodyOnMethodDefinition" | "Style/ComparableClamp"
+        ) {
+            return;
+        }
+        if name == "Style/ComparableClamp"
+            && config
+                .options
+                .get("IndentationWidth")
+                .is_some_and(|value| value.as_u64().is_some())
+        {
             return;
         }
         if let Some(width) = self

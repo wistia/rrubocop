@@ -26,6 +26,8 @@ module CaptureOperatorSpec
       condition = configuration.for_cop('Style/ParenthesesAroundCondition')
       config['ParenthesesAroundConditionEnabled'] = condition['Enabled']
       config['AllowInMultilineConditions'] = condition['AllowInMultilineConditions']
+    elsif cop.class.cop_name == 'Style/ComparableClamp'
+      config['IndentationWidth'] ||= configuration.for_cop('Layout/IndentationWidth')['Width']
     end
     config['TargetRubyVersion'] = configuration['AllCops']['TargetRubyVersion']
     CaptureOperatorSpec.captured << {
