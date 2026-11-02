@@ -1,198 +1,1426 @@
 [
   {
+    "cop": "Performance/Detect",
+    "source": "[1, 2, 3].detect { |i| i % 2 == 0 }",
+    "config": {},
+    "upstream": "detect_spec.rb",
+    "line": 191,
+    "assertion": "expect_no_offenses"
+  },
+  {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 5
+    "line": 5,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call()\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 20
+    "line": 20,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def self.method(&block)\n  block.call\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 35
+    "line": 35,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call 1, 2\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 50
+    "line": 50,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call 1\n  block.call 2\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 65
+    "line": 65,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&func)\n  func.call\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 83
+    "line": 83,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n something.call\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 98
+    "line": 98,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 106
+    "line": 106,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call(&some_proc)\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 113
+    "line": 113,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call { do_something }\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 121
+    "line": 121,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call { _1.do_something }\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 129
+    "line": 129,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call(1, &some_proc)\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 137
+    "line": 137,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call(1, &some_proc)\n  block.call(2)\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 145
+    "line": 145,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block ||= ->(i) { puts i }\n  block.call(1)\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 154
+    "line": 154,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block = ->(i) { puts i }\n  block.call(1)\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 163
+    "line": 163,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  ->(i) { puts i }.then do |block|\n    block.call(1)\n  end\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 172
+    "line": 172,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  ->(i) { puts i }.then do |_block|\n    block.call(1)\n  end\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 182
+    "line": 182,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&func)\n  func.call(1)\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 201
+    "line": 201,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  block.call(a, b)\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 210
+    "line": 210,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantBlockCall",
     "source": "def method(&block)\n  each_with_object({}) do |(key, value), acc|\n    acc.merge!(block.call(key) => rhs[value])\n  end\nend\n",
     "config": {},
     "upstream": "redundant_block_call_spec.rb",
-    "line": 225
+    "line": 225,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "something if str.match(/regex/)",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 14,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "something unless str.match(/regex/)",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 19,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "while str.match(/regex/)\n  do_something\nend\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 24,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "until str.match(/regex/)\n  do_something\nend\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 37,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "def method(str)\n  str.match(/regex/)\n  true\nend\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 50,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "something if str.match(\"string\")",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 65,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "def method(str)\n something(str.match(/regex/))\nend\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 70,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "def method(str)\n @var = str.match(/regex/)\n true\nend\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 78,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "def method(str)\n str.match(/regex/)\nend\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 87,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "/regex/.match(str) do |m|\n  something(m)\nend\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 95,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "match(\"bar\")",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 103,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "something if str.match(/regex/)\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 107,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "something if /regex/.match(str)\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 114,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "something if /regex/.match(%{arg})\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 126,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/RedundantMatch",
+    "source": "something if /regex/.match(%{arg})\n",
+    "config": {},
+    "upstream": "redundant_match_spec.rb",
+    "line": 152,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash.merge!(a: 1)",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 9,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash.merge!(\"abc\" => \"value\")",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 14,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nhash.merge!(a: 1, b: 2)\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 20,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash.merge!(a: 1, b: 2)",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 34,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "merge!(foo: 1, bar: 2)",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 41,
+    "assertion": "autocorrect_source"
   },
   {
     "cop": "Performance/RedundantMerge",
     "source": "foo.merge!(**bar)\n",
-    "config": {},
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
     "upstream": "redundant_merge_spec.rb",
-    "line": 48
+    "line": 48,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantMerge",
     "source": "foo.merge!(baz: qux, **bar)\n",
-    "config": {},
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
     "upstream": "redundant_merge_spec.rb",
-    "line": 54
+    "line": 54,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.each_with_object({}) do |f, hash|\n  hash.merge!(a: 1, b: 2)\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 67,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.each_with_object({}) do |f, hash|\n  some_method\n  hash.merge!(a: 1, b: 2)\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 84,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.each_with_object({}) do |f, hash|\n  hash.merge!(a: 1, b: 2)\n  why_are_you_doing_this?\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 102,
+    "assertion": "autocorrect_source"
   },
   {
     "cop": "Performance/RedundantMerge",
     "source": "foo.each_with_object({}) do |f, hash|\n  changes = hash.merge!(a: 1, b: 2)\n  why_are_you_doing_this?\nend\n",
-    "config": {},
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
     "upstream": "redundant_merge_spec.rb",
-    "line": 114
+    "line": 114,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.each_with_object(bar) do |f, hash|\n  hash[:a].merge!(b: \"\")\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 128,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.each_with_object(bar) do |f, hash|\n  hash[:a][:b].merge!(c: \"\")\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 143,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.each_with_object(bar) do |f, hash|\n  hash.bar.merge!(c: \"\")\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 158,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nhash.merge!(a: 1, b: 2) if condition1 && condition2\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 171,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2) if condition1\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 188,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nhash.merge!(a: 1, b: 2) unless condition1 && condition2\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 171,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2) unless condition1\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 188,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nhash.merge!(a: 1, b: 2) while condition1 && condition2\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 171,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2) while condition1\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 188,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nhash.merge!(a: 1, b: 2) until condition1 && condition2\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 171,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2) until condition1\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 188,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2)\nend\n",
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
+    "upstream": "redundant_merge_spec.rb",
+    "line": 212,
+    "assertion": "autocorrect_source"
   },
   {
     "cop": "Performance/RedundantMerge",
     "source": "foo.merge!({})\n",
-    "config": {},
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
     "upstream": "redundant_merge_spec.rb",
-    "line": 229
+    "line": 229,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantMerge",
     "source": "variable = hash.merge!(a: 1)\nputs variable\n",
-    "config": {},
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
     "upstream": "redundant_merge_spec.rb",
-    "line": 235
+    "line": 235,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantMerge",
     "source": "hash.merge!(a: 1)\n",
-    "config": {},
+    "config": {
+      "MaxKeyValuePairs": 2
+    },
     "upstream": "redundant_merge_spec.rb",
-    "line": 242
+    "line": 242,
+    "assertion": "expect_offense"
   },
   {
     "cop": "Performance/RedundantMerge",
     "source": "hash = {}\nhash.merge!(a: 1, b: 2)\n",
-    "config": {},
+    "config": {
+      "MaxKeyValuePairs": 1
+    },
     "upstream": "redundant_merge_spec.rb",
-    "line": 254
+    "line": 254,
+    "assertion": "expect_no_offenses"
   },
   {
     "cop": "Performance/RedundantMerge",
     "source": "hash = {}\nhash.merge!(a: 1, b: 2)\n",
-    "config": {},
+    "config": {
+      "MaxKeyValuePairs": null
+    },
     "upstream": "redundant_merge_spec.rb",
-    "line": 267
+    "line": 267,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/RegexpMatch",
+    "source": "if /re/.match?(str)\n  do_something\nend\n",
+    "config": {},
+    "upstream": "regexp_match_spec.rb",
+    "line": 351,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RegexpMatch",
+    "source": "if str.match?(/re/)\n  do_something\nend\n",
+    "config": {},
+    "upstream": "regexp_match_spec.rb",
+    "line": 359,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RegexpMatch",
+    "source": "code if match\n",
+    "config": {},
+    "upstream": "regexp_match_spec.rb",
+    "line": 367,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RegexpMatch",
+    "source": "if /alias_(?<alias_id>.*)/ =~ something\n  do_something\nend\n",
+    "config": {},
+    "upstream": "regexp_match_spec.rb",
+    "line": 373,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RegexpMatch",
+    "source": "if CONST.match(var)\n  do_something\nend\n",
+    "config": {},
+    "upstream": "regexp_match_spec.rb",
+    "line": 381,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/RegexpMatch",
+    "source": "def foo\n  /re/ === re # A regexp used independently is not yet supported.\n\n  do_something if /re/ === re\nend\n",
+    "config": {},
+    "upstream": "regexp_match_spec.rb",
+    "line": 389,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/RegexpMatch",
+    "source": "if 'foo'.match(re)\nend\n",
+    "config": {},
+    "upstream": "regexp_match_spec.rb",
+    "line": 401,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.insert(2, 'a')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 5,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/ /, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 98,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'&.gsub(/ /, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 109,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/b/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/b/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/c/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/c/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/'/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/'/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\"/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\"/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/%/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/%/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/!/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/!/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/=/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/=/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/</, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/</, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/>/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/>/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/#/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/#/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/&/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/&/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/;/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/;/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/:/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/:/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/`/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/`/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/~/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/~/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/1/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/1/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/2/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/2/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/3/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/3/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/-/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/-/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/_/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/_/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/,/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/,/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\r/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\r/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\\\/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\\\/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\y/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\y/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\u1234/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\u1234/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\x65/, 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 122,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\x65/, '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a/, 'def')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 137,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\n/, ',')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 141,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'/abc'.gsub(%r{a}, 'd')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 148,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(Regexp.new('b'), '2')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 157,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(Regexp.new(/b/), '2')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 164,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'123'.gsub(Regexp.compile('1'), 'a')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 171,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a+/, 'def')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 181,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a*/, 'def')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 185,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/^/, '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 189,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/$/, '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 193,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a?/, 'def')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 197,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/./, 'a')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 201,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a|b/, 'd')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 205,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/(ab)/, 'd')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 209,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'(abc)'.gsub(/(ab)/, 'd')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 213,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a{3,}/, 'd')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 217,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/[a-z]/, 'd')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 221,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "\"abc\".gsub(/\\s/, \"d\")",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 225,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "foo = 'a'\n\"abc\".gsub(/#{foo}/, \"d\")\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 229,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "foo = 'a'\n\"abc\".gsub(Regexp.new(\"#{foo}\"), \"d\")\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 236,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "foo = 'a'\n\"abc\".gsub(Regexp.new(/#{foo}/), \"d\")\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 243,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'a + c'.gsub('+', '-')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 251,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub('a', '1')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 258,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub!('a', '1')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 265,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub!('a', '')\n",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 272,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub('a', 'd')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 281,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a/, '1')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 287,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(%r{a}, '1')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 293,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(Regexp.new('a'), '1')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 299,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(Regexp.compile('a'), '1')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 305,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub('a', '\n')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 311,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "\"\".gsub('/', '\\\\')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 317,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub('\n', ',')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 323,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "''.gsub('\\\\', '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 329,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "\"a`b\".gsub(\"`\", \"'\")",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 335,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "\"a`b\".gsub(\"`\", \"\\\"\")",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 341,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub!('a', '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 349,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/a/, '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 355,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub('\n', '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 361,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(Regexp.new('a'), '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 367,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'ab'.gsub(Regexp.compile('a'), '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 373,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub! 'a', ''",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 379,
+    "assertion": "autocorrect_source"
+  },
+  {
+    "cop": "Performance/StringReplacement",
+    "source": "'abc'.gsub(/\\n/, '')",
+    "config": {},
+    "upstream": "string_replacement_spec.rb",
+    "line": 385,
+    "assertion": "autocorrect_source"
   }
 ]

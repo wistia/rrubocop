@@ -42,3 +42,33 @@ The actual production CLI/config scope gate passes 91 controls, including this
 rule's positive and vendor-excluded files. Shared harness dependency gating was
 imported as c6baaeb (framework 3517783). Generic disabled-correction metadata is a
 separate integration concern; this cop explicitly matches the original flag.
+
+## RedundantMerge and shared expression properties
+
+All 28 original RedundantMerge spec sources are imported, including modifier
+loops and MaxKeyValuePairs inheritance. Fifty-eight originals and 116 second-pass
+states match diagnostics, ranges, messages and correction metadata exactly. The
+unchanged strict gate retains 111 unsafe-mode byte differences and two runtime
+differences; no diagnostic, compilation or idempotence mismatch was observed.
+Corrections currently require one primitive literal pair on a literal Hash
+receiver. Trusted programs demonstrate why unknown receivers and multi-pair RHS
+ordering require safeguards; a literal Hash control preserves runtime output.
+Invalid/coercion-error configuration and broader Ruby Integer string spellings
+remain explicit bounded-evidence branches.
+
+The shared Ruby pure?/value_used? adapter is checked against 101 direct original
+AST observations, covering operators, dynamic word arrays, delayed heredocs,
+numbered locals and expression/statement/condition/rescue/ensure contexts. It
+uses the canonical Parser pair_label role adapter (79c8aab), not a new local
+scanner. Original underscore shorthand values are CONST even when the VM may read
+a local; AST purity is never treated as a general semantic-safety proof.
+DoubleStartEndWith delegates to this helper: all ten added purity probes match.
+Its existing receiver/comment safeguards and two original zero-argument errors
+remain visible in the 66-original/132-second-state strict matrix. Generic combined
+cop scheduling remains deferred.
+
+The full native library gate passes 929 tests with one ignored; the final shared
+helper gate passes after importing the canonical shorthand adapter. Production
+CLI/config scope passes 93 controls across 42 rules. The static upstream importer
+now records unresolved host templates for the five pending rules explicitly;
+those are unfinished evidence, not clean scans or implemented registrations.

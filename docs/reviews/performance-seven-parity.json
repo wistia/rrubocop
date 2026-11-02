@@ -38,328 +38,296 @@
       "all_native_runtime_states_preserve_original": true,
       "safeguards": [
         {
-          "id": "Performance/RedundantBlockCall:2491",
+          "id": "Performance/RedundantBlockCall:performance-seven:1",
           "source": "def method(&block)\n  block.call\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2492",
+          "id": "Performance/RedundantBlockCall:performance-seven:2",
           "source": "def method(&block)\n  block.call()\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2493",
+          "id": "Performance/RedundantBlockCall:performance-seven:3",
           "source": "def self.method(&block)\n  block.call\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2494",
+          "id": "Performance/RedundantBlockCall:performance-seven:4",
           "source": "def method(&block)\n  block.call 1, 2\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2495",
+          "id": "Performance/RedundantBlockCall:performance-seven:5",
           "source": "def method(&block)\n  block.call 1\n  block.call 2\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2496",
+          "id": "Performance/RedundantBlockCall:performance-seven:6",
           "source": "def method(&func)\n  func.call\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2507",
+          "id": "Performance/RedundantBlockCall:performance-seven:17",
           "source": "def method(&block)\n  ->(i) { puts i }.then do |_block|\n    block.call(1)\n  end\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2508",
+          "id": "Performance/RedundantBlockCall:performance-seven:18",
           "source": "def method(&func)\n  func.call(1)\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2509",
+          "id": "Performance/RedundantBlockCall:performance-seven:19",
           "source": "def method(&block)\n  block.call(a, b)\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2510",
+          "id": "Performance/RedundantBlockCall:performance-seven:20",
           "source": "def method(&block)\n  each_with_object({}) do |(key, value), acc|\n    acc.merge!(block.call(key) => rhs[value])\n  end\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2519",
+          "id": "Performance/RedundantBlockCall:performance-seven:21",
           "source": "def example(&block)\nblock.call\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2521",
+          "id": "Performance/RedundantBlockCall:performance-seven:23",
           "source": "def example(&block)\nblock.call()\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2523",
+          "id": "Performance/RedundantBlockCall:performance-seven:25",
           "source": "def example(&block)\nblock.call(1, 2)\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2525",
+          "id": "Performance/RedundantBlockCall:performance-seven:27",
           "source": "def example(&block)\nblock.call 1,2\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2527",
+          "id": "Performance/RedundantBlockCall:performance-seven:29",
           "source": "def example(&block)\nblock.(1)\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2529",
+          "id": "Performance/RedundantBlockCall:performance-seven:31",
           "source": "def example(&block)\nblock::call(1)\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2537",
+          "id": "Performance/RedundantBlockCall:performance-seven:39",
           "source": "def example(&block)\nblock.call(a:1,b:2)\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2539",
+          "id": "Performance/RedundantBlockCall:performance-seven:41",
           "source": "def example(&block)\nblock.call({a:1,b:2})\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2541",
+          "id": "Performance/RedundantBlockCall:performance-seven:43",
           "source": "def example(&block)\nblock.call(1, a: 2, b: 3)\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2552",
+          "id": "Performance/RedundantBlockCall:performance-seven:54",
           "source": "def example(&block); block.call unless block; end\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2558",
+          "id": "Performance/RedundantBlockCall:performance-seven:60",
           "source": "def example(&block); marker; items.each { |block| block.call }; end\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2560",
+          "id": "Performance/RedundantBlockCall:performance-seven:62",
           "source": "def example(&block); if block; block.call( # keep\n 1\n ); end; end\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2562",
+          "id": "Performance/RedundantBlockCall:performance-seven:64",
           "source": "def example(&block); block.call(1); block.call(2) { work }; end\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2563",
+          "id": "Performance/RedundantBlockCall:performance-seven:65",
           "source": "def example(&block); def nested(block); block.call; end; end\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2564",
+          "id": "Performance/RedundantBlockCall:performance-seven:66",
           "source": "def example(&block); def nested(&block); if block; block.call; end; end; end\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2565",
+          "id": "Performance/RedundantBlockCall:performance-seven:67",
           "source": "def example(&block); if block; value => block; block.call; end; end\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2570",
+          "id": "Performance/RedundantBlockCall:performance-seven:72",
           "source": "def example(&block)\n if block\n  block.call(\n   __LINE__\n  )\n end\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:2571",
+          "id": "Performance/RedundantBlockCall:performance-seven:73",
           "source": "def example(&block)\n if block\n  block.call(\n   <<~TEXT\n    payload\n   TEXT\n  )\n end\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2573",
+          "id": "Performance/RedundantBlockCall:trusted-performance-seven:1",
           "source": "def probe(&block)\n block.call\nend\nbegin\n probe\nrescue => error\n p error.class.name\nend\n",
           "config": {},
           "failure_kinds": [
             "all",
             "runtime",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2574",
+          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2",
           "source": "def probe(&block)\n marker = :outside\n [-> { :inner }].map { |block| block.call }\nend\np probe { :outer }\n",
           "config": {},
           "failure_kinds": [
             "all",
             "runtime",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2575",
+          "id": "Performance/RedundantBlockCall:trusted-performance-seven:3",
           "source": "def probe(&block)\n if block\n  block.call\n end\nend\ncallback = proc { :body }\ndef callback.call\n :override\nend\np probe(&callback)\n",
           "config": {},
           "failure_kinds": [
             "all",
             "runtime",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         },
         {
-          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2576",
+          "id": "Performance/RedundantBlockCall:trusted-performance-seven:4",
           "source": "def probe(&block)\n if block\n  block.call(\n   __LINE__\n  )\n end\nend\nprobe { |line| p line }\n",
           "config": {},
           "failure_kinds": [
             "all",
             "runtime",
             "safe"
-          ],
-          "native_preserves_original_source": true
+          ]
         }
       ],
       "review": [
@@ -377,8 +345,377 @@
     },
     {
       "cop": "Performance/RedundantMerge",
-      "status": "pending",
-      "baseline": "unimplemented_noop_stub"
+      "status": "implemented_source_reviewed_with_safeguards",
+      "baseline": "unimplemented_noop_stub",
+      "original_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/redundant_merge.rb",
+      "original_spec": "tests/fixtures/performance-seven-upstream/redundant_merge_spec.rb",
+      "original_cases": 58,
+      "second_pass_cases": 116,
+      "exact_original_cases": 21,
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "strict_driver_exit": 1,
+      "strict_driver_failures": {
+        "all": 111,
+        "runtime": 2
+      },
+      "trusted_runtime_programs": 3,
+      "safeguards": [
+        {
+          "id": "Performance/RedundantMerge:performance-seven:1",
+          "source": "hash.merge!(a: 1)\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:2",
+          "source": "hash.merge!(\"abc\" => \"value\")\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:3",
+          "source": "hash = {}\nhash.merge!(a: 1, b: 2)\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:8",
+          "source": "foo.each_with_object({}) do |f, hash|\n  hash.merge!(a: 1, b: 2)\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:9",
+          "source": "foo.each_with_object({}) do |f, hash|\n  some_method\n  hash.merge!(a: 1, b: 2)\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:10",
+          "source": "foo.each_with_object({}) do |f, hash|\n  hash.merge!(a: 1, b: 2)\n  why_are_you_doing_this?\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:12",
+          "source": "foo.each_with_object(bar) do |f, hash|\n  hash[:a].merge!(b: \"\")\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:13",
+          "source": "foo.each_with_object(bar) do |f, hash|\n  hash[:a][:b].merge!(c: \"\")\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:14",
+          "source": "foo.each_with_object(bar) do |f, hash|\n  hash.bar.merge!(c: \"\")\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:15",
+          "source": "hash = {}\nhash.merge!(a: 1, b: 2) if condition1 && condition2\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:16",
+          "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2) if condition1\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:17",
+          "source": "hash = {}\nhash.merge!(a: 1, b: 2) unless condition1 && condition2\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:18",
+          "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2) unless condition1\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:19",
+          "source": "hash = {}\nhash.merge!(a: 1, b: 2) while condition1 && condition2\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:20",
+          "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2) while condition1\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:21",
+          "source": "hash = {}\nhash.merge!(a: 1, b: 2) until condition1 && condition2\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:22",
+          "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2) until condition1\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:23",
+          "source": "hash = {}\nbegin\n  hash.merge!(a: 1, b: 2)\nend\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:26",
+          "source": "hash.merge!(a: 1)\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:28",
+          "source": "hash = {}\nhash.merge!(a: 1, b: 2)\n",
+          "config": {
+            "MaxKeyValuePairs": null
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:29",
+          "source": "h = {}; h.merge!(a:1)\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:32",
+          "source": "h={}; h.merge!(a:1,b:2)\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:33",
+          "source": "h={}; h.merge!(a:1,b:h[:a])\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:35",
+          "source": "h={}; [h.merge!(a:1)]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:39",
+          "source": "items.each_with_object({}) { |item,h| h.merge!(a:1) }\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:40",
+          "source": "items.each_with_object({}) do |item,h|\n marker\n h.merge!(a:1)\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:41",
+          "source": "h={}; h.merge!(a:1,b:2) if ready\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:42",
+          "source": "h={}; h.merge!(a:1,b:2) while ready\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:43",
+          "source": "h={}; h.merge!(\"a\":1)\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:44",
+          "source": "h={}; h.merge!(\"\":1)\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:45",
+          "source": "h={}; a=1; h.merge!(a:)\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:49",
+          "source": "h={}; h.merge!(a:1,b:2)\n",
+          "config": {
+            "MaxKeyValuePairs": 2
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:50",
+          "source": "h={}; h.merge!(a:1,b:2)\n",
+          "config": {
+            "MaxKeyValuePairs": 3
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:51",
+          "source": "h={}; h.merge!(a:1,b:2)\n",
+          "config": {
+            "MaxKeyValuePairs": null
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:performance-seven:52",
+          "source": "h={}; h.merge!(a:1,b:2)\n",
+          "config": {
+            "MaxKeyValuePairs": false
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:trusted-performance-seven:5",
+          "source": "h={}; h.merge!(a:1,b:h[:a]); p h\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMerge:trusted-performance-seven:6",
+          "source": "class Receiver; def merge!(other); puts :merge; end; def []=(key,value); puts :store; end; end; receiver=Receiver.new; receiver.merge!(a:1)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime"
+          ]
+        }
+      ],
+      "safety_review": [
+        "Original multi-pair rewrite changes RHS evaluation order; trusted dependent lookup differs.",
+        "Unknown receivers may override merge! versus []=; trusted custom Receiver differs.",
+        "Corrections bounded to one primitive literal pair on a literal Hash receiver; other unsafe-mode bytes deliberately differ.",
+        "MaxKeyValuePairs numeric, nil, false and decimal-string branches tested; invalid/coercion-error config and broader Integer string forms remain bounded evidence.",
+        "Quoted/empty label key AST types, value-used contexts, each_with_object, safe calls, splats and modifiers covered."
+      ]
     },
     {
       "cop": "Performance/RegexpMatch",
@@ -390,5 +727,31 @@
       "status": "pending",
       "baseline": "unimplemented_noop_stub"
     }
-  ]
+  ],
+  "production_scope": {
+    "cases": 93,
+    "differences": 0,
+    "rules": 42
+  },
+  "native_gate": {
+    "passed": 929,
+    "ignored": 1,
+    "shared_purity_value_used_observations": 101,
+    "post_shorthand_helper_gate": "passed"
+  },
+  "additional_shared_review": {
+    "cop": "Performance/DoubleStartEndWith",
+    "original_cases": 66,
+    "second_pass_cases": 132,
+    "new_purity_cases": 10,
+    "new_case_differences": 0,
+    "retained_failures": {
+      "diagnostics": 84,
+      "safe": 84,
+      "all": 84,
+      "error": 6,
+      "runtime": 2
+    },
+    "helper_commit": "e7f2cc8"
+  }
 }
