@@ -1,32 +1,25 @@
-//! RSpec/ItBehavesLike — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{call_method_name, method_node, push_replace};
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct ItBehavesLike;
-
 impl Cop for ItBehavesLike {
     fn name(&self) -> &'static str {
         "RSpec/ItBehavesLike"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
     fn supports_autocorrect(&self) -> bool {
         true
     }
-
-    fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
-    }
-
     fn check_node(
         &self,
         source: &SourceFile,
@@ -35,37 +28,40 @@ impl Cop for ItBehavesLike {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some(method) = call_method_name(source, node) else {
-            return;
-        };
-        let prefer = config.get_str("EnforcedStyle", "it_behaves_like");
-        let wrong = if prefer == "it_behaves_like" {
-            "it_should_behave_like"
-        } else {
-            "it_behaves_like"
-        };
-        if method != wrong.as_bytes() {
+        if safe_send(source, node) {
             return;
         }
-        let meth = method_node(node).unwrap_or(node);
-        let (line, col) = source.offset_to_line_col(meth.start_byte());
-        let mut diag = self.diagnostic(
+        let style = config.get_str("EnforcedStyle", "it_behaves_like");
+        let wrong = if style == "it_behaves_like" {
+            b"it_should_behave_like".as_slice()
+        } else {
+            b"it_behaves_like".as_slice()
+        };
+        if name(source, node) != Some(wrong) {
+            return;
+        }
+        let index = report(
+            self,
             source,
-            line,
-            col,
+            node.start_byte(),
+            header_end(node),
             format!(
-                "Prefer `{prefer}` over `{wrong}` when including examples in a nested context."
+                "Prefer `{style}` over `{}` when including examples in a nested context.",
+                String::from_utf8_lossy(wrong)
             ),
+            diagnostics,
         );
-        if push_replace(
+        let target = selector(node);
+        if preserving_replace(
+            source,
+            node,
             &mut corrections,
-            meth.start_byte(),
-            meth.end_byte(),
-            prefer,
+            target.start_byte(),
+            target.end_byte(),
+            style,
             self.name(),
         ) {
-            diag.corrected = true;
+            diagnostics[index].corrected = true;
         }
-        diagnostics.push(diag);
     }
 }

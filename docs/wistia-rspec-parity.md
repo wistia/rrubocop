@@ -290,3 +290,27 @@ identified in batch 10. Original Ruby confirms repeated bodies using
 compares interpolated expression nodes structurally and removes only escaped
 literal delimiters; distinct /i and /m flags remain distinct. Three more strict
 cases bring the matrix to 968 comparisons across the same 63 reviewed rules.
+
+## Batch 11: predicate style, focus, and inclusion style
+
+RedundantPredicateMatcher replaces another initial stub. Existing Focus and
+ItBehavesLike implementations are repaired and reviewed. The reviewed total is
+57 original stubs plus nine existing rules; 23 original stubs and seven existing
+implementations remain open. The strict matrix has 1,006 comparisons across 66
+rules, 15 explicit safeguards and 35 correction-disable controls. The pinned
+upstream import retains 737 specimens, with thirteen earlier templates and three
+invalid yield originals still explicit.
+
+Separate original-source review covered block/numbered-block distinctions,
+be_all's send-only first argument and report-only correction metadata, all focus
+aliases and metadata forms, method-definition and chained-call exclusions,
+explicit RSpec versus unrelated receivers, both inclusion styles and send versus
+safe-navigation behavior. Original Ruby marks bare focus and be_all report-only;
+those per-offense correction capabilities now match exactly.
+
+The trusted inclusion/predicate replay runs four actual RSpec examples and proves
+that both inclusion methods preserve shared-group setup/helper behavior and that
+be_include/include both match the same collection. RSpec core defines the two
+inclusion methods through the same nested-shared-group builder, with intentionally
+different report labels; the style correction preserves that original behavior.
+The runtime script passes original Ruby lint without changing the original forms.
