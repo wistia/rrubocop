@@ -5841,5 +5841,773 @@
       }
     },
     "safety_difference": "Preserve unknown getter semantics, positive-runner requirement and comments; Integer-to-Float runtime proves delta zero is not unchanged hash/value."
+  },
+  {
+    "id": "empty_example_group_spec:5",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    warn 'Ruby > 2.3 is supported'\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n\ndescribe 'Ruby 2.3 syntax' do\n  if RUBY_VERSION < 2.3\n  else\n  end\nend\n\ndescribe 'Ruby 2.3 syntax' do\n  if RUBY_VERSION >= 2.3\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    warn 'Ruby > 2.3 is supported'\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n\ndescribe 'Ruby 2.3 syntax' do\n  if RUBY_VERSION < 2.3\n  else\n  end\nend\n\ndescribe 'Ruby 2.3 syntax' do\n  if RUBY_VERSION >= 2.3\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        },
+        {
+          "line": 11,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        },
+        {
+          "line": 17,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    warn 'Ruby > 2.3 is supported'\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n\ndescribe 'Ruby 2.3 syntax' do\n  if RUBY_VERSION < 2.3\n  else\n  end\nend\n\ndescribe 'Ruby 2.3 syntax' do\n  if RUBY_VERSION >= 2.3\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          },
+          {
+            "line": 11,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          },
+          {
+            "line": 17,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "\n\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Do not delete executed registration statements, conditional effects, unknown helper invocations or arbitrary iterator bodies; pinned RSpec runtime demonstrates preserved setup and description effects."
+  },
+  {
+    "id": "empty_example_group_spec:8",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  case bar\n  when baz\n    warn 'Enforce appropriate warnings.'\n  else\n    warn 'Enforce appropriate warnings.'\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n  else\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  case bar\n  when baz\n    warn 'Enforce appropriate warnings.'\n  else\n    warn 'Enforce appropriate warnings.'\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n  else\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        },
+        {
+          "line": 17,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  case bar\n  when baz\n    warn 'Enforce appropriate warnings.'\n  else\n    warn 'Enforce appropriate warnings.'\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n  else\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          },
+          {
+            "line": 17,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "\n\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Do not delete executed registration statements, conditional effects, unknown helper invocations or arbitrary iterator bodies; pinned RSpec runtime demonstrates preserved setup and description effects."
+  },
+  {
+    "id": "empty_example_group_spec:11",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'RuboCop Sunday' do\n  some_method\n  [1, 2, 3].each do |page|\n    no_examples_here\n    and_no_ads_either\n  end\n  more_surroundings\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'RuboCop Sunday' do\n  some_method\n  [1, 2, 3].each do |page|\n    no_examples_here\n    and_no_ads_either\n  end\n  more_surroundings\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'RuboCop Sunday' do\n  some_method\n  [1, 2, 3].each do |page|\n    no_examples_here\n    and_no_ads_either\n  end\n  more_surroundings\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 25,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Do not delete executed registration statements, conditional effects, unknown helper invocations or arbitrary iterator bodies; pinned RSpec runtime demonstrates preserved setup and description effects."
+  },
+  {
+    "id": "empty_example_group_spec:20",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  context \"when I do something clever\" do\n    it_has_special_behavior\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  context \"when I do something clever\" do\n    it_has_special_behavior\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#20",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  context \"when I do something clever\" do\n    it_has_special_behavior\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 36,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Do not delete executed registration statements, conditional effects, unknown helper invocations or arbitrary iterator bodies; pinned RSpec runtime demonstrates preserved setup and description effects."
+  },
+  {
+    "id": "empty_example_group_spec:21",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  context \"when I do something clever\" do\n    it_has_special_behavior\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  context \"when I do something clever\" do\n    it_has_special_behavior\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#21",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  context \"when I do something clever\" do\n    it_has_special_behavior\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 36,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Do not delete executed registration statements, conditional effects, unknown helper invocations or arbitrary iterator bodies; pinned RSpec runtime demonstrates preserved setup and description effects."
+  },
+  {
+    "id": "batch26:dynamic-description",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe(description.call) {}\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe(description.call) {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
+  },
+  {
+    "id": "batch26:registration-effect",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n events << :registered\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n events << :registered\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
+  },
+  {
+    "id": "batch26:comment",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n # keep\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n # keep\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
+  },
+  {
+    "id": "batch26:neighbor",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe(\"x\") {}; work\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe(\"x\") {}; work\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
+  },
+  {
+    "id": "batch26:rescue",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n work\n rescue\n it(\"x\") {}\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n work\n rescue\n it(\"x\") {}\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
+  },
+  {
+    "id": "batch26:explicit-example-ancestor",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "RSpec.it(\"x\") { RSpec.describe(\"y\") {} }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 16,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 19,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.it(\"x\") { RSpec.describe(\"y\") {} }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 16,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
+  },
+  {
+    "id": "batch26:numbered-iterator",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe(\"x\") { values.each { it(_1) {} } }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe(\"x\") { values.each { it(_1) {} } }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
+  },
+  {
+    "id": "batch26:single-nested-if",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n if a\n  if b\n   it(\"x\") {}\n  end\n end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n if a\n  if b\n   it(\"x\") {}\n  end\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
   }
 ]

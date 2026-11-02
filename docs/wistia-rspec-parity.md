@@ -698,3 +698,26 @@ The original raises NoMethodError at change_by_zero.rb:121 for a standalone
 change(Foo, :bar).by(0), because the matcher has no parent. This fifth original-rule
 error is retained separately; native reports the offense without crashing or
 changing the standalone matcher. Generic correction scheduling remains deferred.
+
+## Batch 26: empty example groups
+
+EmptyExampleGroup replaces another initial stub: 77 initial stubs plus all sixteen
+existing implementations are reviewed (93 of 96). There are 1,745 strict original
+cases, 133 explicit safeguards and 50 correction-disable controls. Original-source
+and post-implementation review cover all 25 upstream source specimens plus
+conditional/elsif/ternary/modifier/case branches, nested iterators and arbitrary
+blocks, hooks, method/example ancestors, numbered blocks, rescue and scope
+negatives. Group classification distinguishes shared groups from example groups.
+
+Whole-line deletion preserves neighboring statements and comments. Corrections
+also retain executed registration statements and dynamic descriptions. A separate
+trusted RSpec runtime runs six real examples: unused hook/helper declarations have
+no effect, whereas removing setup statements or description evaluation changes
+observable values. These safeguards remain separate from strict correction parity.
+
+The upstream custom-Includes context mutates global RSpec Language at runtime.
+Our snapshot intentionally reflects actual Wistia production configuration, which
+has no custom Language aliases; that context's default-configuration specimen
+must not be read as coverage for the host mutation. Generic custom global Language
+alias propagation remains an explicit integration gap. Combined-cop scheduling
+remains deferred as requested.

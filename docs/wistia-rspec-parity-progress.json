@@ -175,8 +175,24 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/empty_example_group.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 34,
+    "deliberate_safeguards": [
+      "empty_example_group_spec:5",
+      "empty_example_group_spec:8",
+      "empty_example_group_spec:11",
+      "empty_example_group_spec:20",
+      "empty_example_group_spec:21",
+      "batch26:dynamic-description",
+      "batch26:registration-effect",
+      "batch26:comment",
+      "batch26:neighbor",
+      "batch26:rescue",
+      "batch26:explicit-example-ancestor",
+      "batch26:numbered-iterator",
+      "batch26:single-nested-if"
+    ],
+    "post_implementation_review": "Original empty_example_group.rb/Language source and 25 upstream specimens reviewed separately against actual production configuration. Additional branches cover if/unless/elsif/ternary/modifier/case, single versus multi-expression bodies, arbitrary nested blocks versus hooks, numbered blocks, rescue, method/example ancestors, shared/qualified group negatives, whole-line deletion and comments. Corrections preserve executed registration/description effects and neighboring statements; pinned RSpec six-example runtime confirms these hazards and safe unused helper/hook controls. Upstream host mutation adding custom global Language Includes alias is NOT reproduced by production-default snapshot and remains explicitly excluded from custom-alias coverage."
   },
   {
     "name": "RSpec/EmptyHook",

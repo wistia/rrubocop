@@ -85362,5 +85362,1361 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "empty_example_group_spec:0",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  context 'when bar' do\n\n    let(:foo) { bar }\n  end\n\n  describe '#thingy?' do\n    specify do\n      expect(whatever.thingy?).to be(true)\n    end\n  end\n\n  it { should be_true }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  context 'when bar' do\n\n    let(:foo) { bar }\n  end\n\n  describe '#thingy?' do\n    specify do\n      expect(whatever.thingy?).to be(true)\n    end\n  end\n\n  it { should be_true }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 18,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  context 'when bar' do\n\n    let(:foo) { bar }\n  end\n\n  describe '#thingy?' do\n    specify do\n      expect(whatever.thingy?).to be(true)\n    end\n  end\n\n  it { should be_true }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 18,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n\n  describe '#thingy?' do\n    specify do\n      expect(whatever.thingy?).to be(true)\n    end\n  end\n\n  it { should be_true }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:1",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:2",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "context 'hook with implicit scope' do\n  before do\n    it { is_expected.to never_run }\n  end\nend\n\ncontext 'hook with explicit scope' do\n  around(:example) do\n    it { is_expected.to never_run }\n  end\nend\n\ncontext 'hook with explicit scope and metadata' do\n  after(:each, :corrupt, type: :cop) do\n    it { is_expected.to never_run }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "context 'hook with implicit scope' do\n  before do\n    it { is_expected.to never_run }\n  end\nend\n\ncontext 'hook with explicit scope' do\n  around(:example) do\n    it { is_expected.to never_run }\n  end\nend\n\ncontext 'hook with explicit scope and metadata' do\n  after(:each, :corrupt, type: :cop) do\n    it { is_expected.to never_run }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        },
+        {
+          "line": 13,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "context 'hook with implicit scope' do\n  before do\n    it { is_expected.to never_run }\n  end\nend\n\ncontext 'hook with explicit scope' do\n  around(:example) do\n    it { is_expected.to never_run }\n  end\nend\n\ncontext 'hook with explicit scope and metadata' do\n  after(:each, :corrupt, type: :cop) do\n    it { is_expected.to never_run }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 13,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "\n\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:3",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    it { expect(use_safe_navigation_operator?(code)).to be(true) }\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    it { expect(use_safe_navigation_operator?(code)).to be(true) }\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    it { expect(use_safe_navigation_operator?(code)).to be(true) }\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    it { expect(use_safe_navigation_operator?(code)).to be(true) }\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:4",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION < version\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\n\n  it { expect(newspaper(page)).to have_ads }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION < version\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\n\n  it { expect(newspaper(page)).to have_ads }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION < version\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\n\n  it { expect(newspaper(page)).to have_ads }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'Ruby 2.3 syntax' do\n  version = 2.3\n\n  if RUBY_VERSION < version\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\n\n  it { expect(newspaper(page)).to have_ads }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:6",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  case bar\n  when baz\n    it { expect(result).to be(true) }\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n    it { expect(result).to be(true) }\n  else\n    warn 'Enforce appropriate warnings.'\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  case bar\n  when baz\n    it { expect(result).to be(true) }\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n    it { expect(result).to be(true) }\n  else\n    warn 'Enforce appropriate warnings.'\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  case bar\n  when baz\n    it { expect(result).to be(true) }\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n    it { expect(result).to be(true) }\n  else\n    warn 'Enforce appropriate warnings.'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  case bar\n  when baz\n    it { expect(result).to be(true) }\n  end\nend\n\ndescribe Foo do\n  case bar\n  when baz\n    it { expect(result).to be(true) }\n  else\n    warn 'Enforce appropriate warnings.'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:7",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  case bar\n  when baz\n    warn 'Enforce appropriate warnings.'\n  end\n\n  it { expect(result).to have_ads }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  case bar\n  when baz\n    warn 'Enforce appropriate warnings.'\n  end\n\n  it { expect(result).to have_ads }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  case bar\n  when baz\n    warn 'Enforce appropriate warnings.'\n  end\n\n  it { expect(result).to have_ads }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  case bar\n  when baz\n    warn 'Enforce appropriate warnings.'\n  end\n\n  it { expect(result).to have_ads }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:9",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'RuboCop monthly' do\n  [1, 2, 3].each do |page|\n    it { expect(newspaper(page)).to have_ads }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'RuboCop monthly' do\n  [1, 2, 3].each do |page|\n    it { expect(newspaper(page)).to have_ads }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'RuboCop monthly' do\n  [1, 2, 3].each do |page|\n    it { expect(newspaper(page)).to have_ads }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'RuboCop monthly' do\n  [1, 2, 3].each do |page|\n    it { expect(newspaper(page)).to have_ads }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:10",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'RuboCop weekly' do\n  some_method\n  [1, 2, 3].each do |page|\n    it { expect(newspaper(page)).to have_ads }\n  end\n  more_surroundings\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'RuboCop weekly' do\n  some_method\n  [1, 2, 3].each do |page|\n    it { expect(newspaper(page)).to have_ads }\n  end\n  more_surroundings\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'RuboCop weekly' do\n  some_method\n  [1, 2, 3].each do |page|\n    it { expect(newspaper(page)).to have_ads }\n  end\n  more_surroundings\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'RuboCop weekly' do\n  some_method\n  [1, 2, 3].each do |page|\n    it { expect(newspaper(page)).to have_ads }\n  end\n  more_surroundings\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:12",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'RuboCop monthly' do\n  [1, 2, 3].each do |page|\n    version = 2.3\n\n    if RUBY_VERSION >= version\n      it { expect(use_safe_navigation_operator?(code)).to be(true) }\n    else\n      warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'RuboCop monthly' do\n  [1, 2, 3].each do |page|\n    version = 2.3\n\n    if RUBY_VERSION >= version\n      it { expect(use_safe_navigation_operator?(code)).to be(true) }\n    else\n      warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#12",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'RuboCop monthly' do\n  [1, 2, 3].each do |page|\n    version = 2.3\n\n    if RUBY_VERSION >= version\n      it { expect(use_safe_navigation_operator?(code)).to be(true) }\n    else\n      warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'RuboCop monthly' do\n  [1, 2, 3].each do |page|\n    version = 2.3\n\n    if RUBY_VERSION >= version\n      it { expect(use_safe_navigation_operator?(code)).to be(true) }\n    else\n      warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:13",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'RuboCop weekly' do\n  some_method\n  [1, 2, 3].each do |page|\n    [4, 5, 6].each do |index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n  more_surroundings\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'RuboCop weekly' do\n  some_method\n  [1, 2, 3].each do |page|\n    [4, 5, 6].each do |index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n  more_surroundings\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'RuboCop weekly' do\n  some_method\n  [1, 2, 3].each do |page|\n    [4, 5, 6].each do |index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n  more_surroundings\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'RuboCop weekly' do\n  some_method\n  [1, 2, 3].each do |page|\n    [4, 5, 6].each do |index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n  more_surroundings\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:14",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'RuboCop monthly' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    if RUBY_VERSION <= 3.1\n      it { expect(use_safe_navigation_operator?(code)).to be(true) }\n    else\n      warn 'Ruby > 3.1 is barely supported, please use a newer version for development.'\n    end\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'RuboCop monthly' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    if RUBY_VERSION <= 3.1\n      it { expect(use_safe_navigation_operator?(code)).to be(true) }\n    else\n      warn 'Ruby > 3.1 is barely supported, please use a newer version for development.'\n    end\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'RuboCop monthly' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    if RUBY_VERSION <= 3.1\n      it { expect(use_safe_navigation_operator?(code)).to be(true) }\n    else\n      warn 'Ruby > 3.1 is barely supported, please use a newer version for development.'\n    end\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'RuboCop monthly' do\n  version = 2.3\n\n  if RUBY_VERSION >= version\n    if RUBY_VERSION <= 3.1\n      it { expect(use_safe_navigation_operator?(code)).to be(true) }\n    else\n      warn 'Ruby > 3.1 is barely supported, please use a newer version for development.'\n    end\n  else\n    warn 'Ruby < 2.3 is barely supported, please use a newer version for development.'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:15",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "context 'without arguments' do\n  mute_warnings do\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n\ncontext 'with an argument' do\n  with_role :reader do\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n\ncontext 'with a block argument' do\n  for_all_species_coming_from(:fish) do |creature|\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "context 'without arguments' do\n  mute_warnings do\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n\ncontext 'with an argument' do\n  with_role :reader do\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n\ncontext 'with a block argument' do\n  for_all_species_coming_from(:fish) do |creature|\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "context 'without arguments' do\n  mute_warnings do\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n\ncontext 'with an argument' do\n  with_role :reader do\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n\ncontext 'with a block argument' do\n  for_all_species_coming_from(:fish) do |creature|\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "context 'without arguments' do\n  mute_warnings do\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n\ncontext 'with an argument' do\n  with_role :reader do\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n\ncontext 'with a block argument' do\n  for_all_species_coming_from(:fish) do |creature|\n    it { expect(newspaper(page)).to have_a_lot_of_ads }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:16",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'RuboCop Friday night' do\n  context 'with each.with_object' do\n    [1, 2, 3].each.with_object(0) do |page, price|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with each_with_index' do\n    [1, 2, 3].each_with_index do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with map' do\n    [1, 2, 3].map do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with count' do\n    [1, 2, 3].count do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'RuboCop Friday night' do\n  context 'with each.with_object' do\n    [1, 2, 3].each.with_object(0) do |page, price|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with each_with_index' do\n    [1, 2, 3].each_with_index do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with map' do\n    [1, 2, 3].map do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with count' do\n    [1, 2, 3].count do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#16",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'RuboCop Friday night' do\n  context 'with each.with_object' do\n    [1, 2, 3].each.with_object(0) do |page, price|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with each_with_index' do\n    [1, 2, 3].each_with_index do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with map' do\n    [1, 2, 3].map do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with count' do\n    [1, 2, 3].count do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'RuboCop Friday night' do\n  context 'with each.with_object' do\n    [1, 2, 3].each.with_object(0) do |page, price|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with each_with_index' do\n    [1, 2, 3].each_with_index do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with map' do\n    [1, 2, 3].map do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\n\n  context 'with count' do\n    [1, 2, 3].count do |page, index|\n      it { expect(newspaper(page)).to have_ads }\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:17",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe 'RuboCop daily' do\n  some_method\n  [1, 2, 3].each do |page|\n    some_method\n    [1, 2, 3].each do |paragraph|\n      it { expect(newspaper(page, paragraph)).to have_ads }\n    end\n    more_surroundings\n  end\n  more_surroundings\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'RuboCop daily' do\n  some_method\n  [1, 2, 3].each do |page|\n    some_method\n    [1, 2, 3].each do |paragraph|\n      it { expect(newspaper(page, paragraph)).to have_ads }\n    end\n    more_surroundings\n  end\n  more_surroundings\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#17",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'RuboCop daily' do\n  some_method\n  [1, 2, 3].each do |page|\n    some_method\n    [1, 2, 3].each do |paragraph|\n      it { expect(newspaper(page, paragraph)).to have_ads }\n    end\n    more_surroundings\n  end\n  more_surroundings\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'RuboCop daily' do\n  some_method\n  [1, 2, 3].each do |page|\n    some_method\n    [1, 2, 3].each do |paragraph|\n      it { expect(newspaper(page, paragraph)).to have_ads }\n    end\n    more_surroundings\n  end\n  more_surroundings\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:18",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  context \"when something is true\" do\n    include_examples \"some expectations\"\n  end\n\n  context \"when something else is true\" do\n    include_context \"some expectations\"\n  end\n\n  context \"when the third thing is true\" do\n    it_behaves_like \"some thingy\"\n  end\n\n  context \"when the fourth thing is true\" do\n    it_behaves_like \"some thingy\" do\n      let(:a) { 'foo' }\n    end\n  end\n\n  context \"when the fifth thing is true\" do\n    it_behaves_like \"some thingy\", &block\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  context \"when something is true\" do\n    include_examples \"some expectations\"\n  end\n\n  context \"when something else is true\" do\n    include_context \"some expectations\"\n  end\n\n  context \"when the third thing is true\" do\n    it_behaves_like \"some thingy\"\n  end\n\n  context \"when the fourth thing is true\" do\n    it_behaves_like \"some thingy\" do\n      let(:a) { 'foo' }\n    end\n  end\n\n  context \"when the fifth thing is true\" do\n    it_behaves_like \"some thingy\", &block\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#18",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  context \"when something is true\" do\n    include_examples \"some expectations\"\n  end\n\n  context \"when something else is true\" do\n    include_context \"some expectations\"\n  end\n\n  context \"when the third thing is true\" do\n    it_behaves_like \"some thingy\"\n  end\n\n  context \"when the fourth thing is true\" do\n    it_behaves_like \"some thingy\" do\n      let(:a) { 'foo' }\n    end\n  end\n\n  context \"when the fifth thing is true\" do\n    it_behaves_like \"some thingy\", &block\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  context \"when something is true\" do\n    include_examples \"some expectations\"\n  end\n\n  context \"when something else is true\" do\n    include_context \"some expectations\"\n  end\n\n  context \"when the third thing is true\" do\n    it_behaves_like \"some thingy\"\n  end\n\n  context \"when the fourth thing is true\" do\n    it_behaves_like \"some thingy\" do\n      let(:a) { 'foo' }\n    end\n  end\n\n  context \"when the fifth thing is true\" do\n    it_behaves_like \"some thingy\", &block\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:19",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  it 'yields a block when given' do\n    value = nil\n\n    helper.feature('whatevs') { value = 5 }\n\n    expect(value).to be 5\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'yields a block when given' do\n    value = nil\n\n    helper.feature('whatevs') { value = 5 }\n\n    expect(value).to be 5\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#19",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'yields a block when given' do\n    value = nil\n\n    helper.feature('whatevs') { value = 5 }\n\n    expect(value).to be 5\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'yields a block when given' do\n    value = nil\n\n    helper.feature('whatevs') { value = 5 }\n\n    expect(value).to be 5\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:22",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe Foo do\n  it 'will be implemented later'\nend\n\ndescribe Foo do\n  it 'will be implemented later', year: 2030\nend\n\ndescribe Foo do\n  pending\nend\n\ndescribe Foo do\n  pending 'too hard to specify'\nend\n\ndescribe Foo do\n  skip\nend\n\ndescribe Foo do\n  skip 'undefined behavior'\nend\n\nxdescribe Foo\n\ndescribe Foo\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'will be implemented later'\nend\n\ndescribe Foo do\n  it 'will be implemented later', year: 2030\nend\n\ndescribe Foo do\n  pending\nend\n\ndescribe Foo do\n  pending 'too hard to specify'\nend\n\ndescribe Foo do\n  skip\nend\n\ndescribe Foo do\n  skip 'undefined behavior'\nend\n\nxdescribe Foo\n\ndescribe Foo\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#22",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'will be implemented later'\nend\n\ndescribe Foo do\n  it 'will be implemented later', year: 2030\nend\n\ndescribe Foo do\n  pending\nend\n\ndescribe Foo do\n  pending 'too hard to specify'\nend\n\ndescribe Foo do\n  skip\nend\n\ndescribe Foo do\n  skip 'undefined behavior'\nend\n\nxdescribe Foo\n\ndescribe Foo\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'will be implemented later'\nend\n\ndescribe Foo do\n  it 'will be implemented later', year: 2030\nend\n\ndescribe Foo do\n  pending\nend\n\ndescribe Foo do\n  pending 'too hard to specify'\nend\n\ndescribe Foo do\n  skip\nend\n\ndescribe Foo do\n  skip 'undefined behavior'\nend\n\nxdescribe Foo\n\ndescribe Foo\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:23",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "RSpec.describe Foo do\n  def self.with_yaml_loaded(&block)\n    context 'with YAML loaded' do\n      module_exec(&block)\n    end\n  end\n\n  class << self\n    def without_yaml_loaded(&block)\n      context 'without YAML loaded' do\n        module_exec(&block)\n      end\n    end\n  end\n\n  with_yaml_loaded do\n    it_behaves_like 'normal YAML serialization'\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  def self.with_yaml_loaded(&block)\n    context 'with YAML loaded' do\n      module_exec(&block)\n    end\n  end\n\n  class << self\n    def without_yaml_loaded(&block)\n      context 'without YAML loaded' do\n        module_exec(&block)\n      end\n    end\n  end\n\n  with_yaml_loaded do\n    it_behaves_like 'normal YAML serialization'\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#23",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  def self.with_yaml_loaded(&block)\n    context 'with YAML loaded' do\n      module_exec(&block)\n    end\n  end\n\n  class << self\n    def without_yaml_loaded(&block)\n      context 'without YAML loaded' do\n        module_exec(&block)\n      end\n    end\n  end\n\n  with_yaml_loaded do\n    it_behaves_like 'normal YAML serialization'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  def self.with_yaml_loaded(&block)\n    context 'with YAML loaded' do\n      module_exec(&block)\n    end\n  end\n\n  class << self\n    def without_yaml_loaded(&block)\n      context 'without YAML loaded' do\n        module_exec(&block)\n      end\n    end\n  end\n\n  with_yaml_loaded do\n    it_behaves_like 'normal YAML serialization'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "empty_example_group_spec:24",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "RSpec.describe 'rspec-core' do\n  it 'runs an example group' do\n    group = RSpec.describe { }\n    group.run\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe 'rspec-core' do\n  it 'runs an example group' do\n    group = RSpec.describe { }\n    group.run\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_example_group_spec.rb#24",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe 'rspec-core' do\n  it 'runs an example group' do\n    group = RSpec.describe { }\n    group.run\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe 'rspec-core' do\n  it 'runs an example group' do\n    group = RSpec.describe { }\n    group.run\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:numbered-group",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe(\"x\") { _1 }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe(\"x\") { _1 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe(\"x\") { _1 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:shared-group",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "shared_examples(\"x\") {}\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "shared_examples(\"x\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "shared_examples(\"x\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:qualified-group",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "Custom.describe(\"x\") {}\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "Custom.describe(\"x\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "Custom.describe(\"x\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:safe-group",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "RSpec&.describe(\"x\") {}\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec&.describe(\"x\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec&.describe(\"x\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:explicit-group",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "::RSpec.describe(\"x\") {}\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "::RSpec.describe(\"x\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:empty-helper",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n let(:x) { work }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 12,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n let(:x) { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 12,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:metadata",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\", :tag, type: :model do\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Empty example group detected.",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\", :tag, type: :model do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Empty example group detected.",
+            "correctable": true,
+            "length": 32,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:ternary",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n flag ? it(\"x\") {} : work\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n flag ? it(\"x\") {} : work\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n flag ? it(\"x\") {} : work\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:modifier",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n it(\"x\") {} if flag\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n it(\"x\") {} if flag\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n it(\"x\") {} if flag\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:elsif",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n if flag\n  work\n elsif other\n  it(\"x\") {}\n end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n if flag\n  work\n elsif other\n  it(\"x\") {}\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n if flag\n  work\n elsif other\n  it(\"x\") {}\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:case-else",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n case flag\n when :a\n  work\n else\n  it(\"x\") {}\n end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n case flag\n when :a\n  work\n else\n  it(\"x\") {}\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n case flag\n when :a\n  work\n else\n  it(\"x\") {}\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:numbered-example",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "it { RSpec.describe(\"y\") { _1 } }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it { RSpec.describe(\"y\") { _1 } }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it { RSpec.describe(\"y\") { _1 } }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:qualified-hook",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe(\"x\") { Custom.before { it(\"x\") {} } }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe(\"x\") { Custom.before { it(\"x\") {} } }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe(\"x\") { Custom.before { it(\"x\") {} } }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch26:multiple-branches",
+    "cop": "RSpec/EmptyExampleGroup",
+    "source": "describe \"x\" do\n if a\n  work\n else\n  work\n  it(\"x\") {}\n end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "SafeAutoCorrect": false,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original EmptyExampleGroup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n if a\n  work\n else\n  work\n  it(\"x\") {}\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n if a\n  work\n else\n  work\n  it(\"x\") {}\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]
