@@ -5,10 +5,11 @@ pub(super) fn capitalized(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "attribute" {
         return vec![];
     }
-    let Some(value) = c
-        .static_symbol_pair_value(n, "key")
-        .or_else(|| args(n).first().copied())
-    else {
+    let Some(value) = c.static_symbol_pair_value(n, "key").or_else(|| {
+        args(n)
+            .into_iter()
+            .find(|argument| argument.kind() != "comment")
+    }) else {
         return vec![];
     };
     if !capitalized_literal(c, value) {
@@ -51,7 +52,11 @@ pub(super) fn method_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !attribute_block(c, n) {
         return vec![];
     }
-    let Some(attribute) = args(n).first().copied().filter(|a| c.symbol(*a)) else {
+    let Some(attribute) = args(n)
+        .into_iter()
+        .find(|argument| argument.kind() != "comment")
+        .filter(|a| c.symbol(*a))
+    else {
         return vec![];
     };
     if !matching_method(c, n, attribute) {

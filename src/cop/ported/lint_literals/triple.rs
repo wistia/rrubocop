@@ -10,25 +10,31 @@ pub(super) fn triple(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
             n,
             "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
         )
-        .replace_with(c, n, || replacement(c, &kids(n))),
+        .replace_with(c, n, || replacement(c, n)),
     ]
 }
-fn replacement(c: &Context<'_>, strings: &[Node<'_>]) -> String {
-    let mut kept_empty = false;
+fn replacement(c: &Context<'_>, n: Node<'_>) -> String {
+    let strings = kids(n);
     let all_empty = strings.iter().all(|s| c.text(*s).len() == 2);
-    strings
-        .iter()
-        .filter(|s| keep(c, **s, all_empty, &mut kept_empty))
-        .map(|s| c.text(*s))
-        .collect()
-}
-fn keep(c: &Context<'_>, n: Node<'_>, all_empty: bool, kept_empty: &mut bool) -> bool {
-    if c.text(n).len() != 2 {
-        return true;
+    let mut text = c.text(n).to_string();
+    for (index, string) in strings.iter().enumerate().rev() {
+        if redundant_empty(c, *string, all_empty, index) {
+            remove_string(&mut text, n, *string);
+        }
     }
-    if all_empty && !*kept_empty {
-        *kept_empty = true;
-        return true;
-    }
-    false
+    text
 }
+
+fn redundant_empty(c: &Context<'_>, n: Node<'_>, all_empty: bool, index: usize) -> bool {
+    c.text(n).len() == 2 && !(all_empty && index == 0)
+}
+
+fn remove_string(text: &mut String, chain: Node<'_>, string: Node<'_>) {
+    text.replace_range(
+        string.start_byte() - chain.start_byte()..string.end_byte() - chain.start_byte(),
+        "",
+    );
+}
+
+#[cfg(test)]
+mod tests;

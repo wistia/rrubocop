@@ -1,0 +1,166 @@
+[
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"a\" \\\n\"#{__LINE__}\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"a\" \\\n\"#{__LINE__}\"\n",
+    "runtime_stdout": "\"a2\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p '''a' \\\n'b'''\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p 'a' \\\n'b'\n",
+    "runtime_stdout": "\"ab\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"\" \\\n\"\"\np __LINE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"\" \\\n\np __LINE__\n",
+    "runtime_stdout": "\"\"\n3\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"#{__LINE__}\" \\\n\"#{__LINE__}\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"#{__LINE__}\" \\\n\"#{__LINE__}\"\n",
+    "runtime_stdout": "\"12\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"abc\" \"def\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"abc\" \"def\"\n",
+    "runtime_stdout": "\"abcdef\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"a\nb\"\"\"\np __LINE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"a\nb\"\np __LINE__\n",
+    "runtime_stdout": "\"a\\nb\"\n3\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"\"\n",
+    "runtime_stdout": "\"\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"a\"\"\" # keep this\np __LINE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"a\" # keep this\np __LINE__\n",
+    "runtime_stdout": "\"a\"\n2\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"a\" \\\n\"#{__LINE__}\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p \"a\" \\\n\"#{__LINE__}\"\n",
+    "runtime_stdout": "\"a2\"\n"
+  }
+]

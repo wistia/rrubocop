@@ -24,3 +24,6 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Serializers/AvoidMethodAndBlock", &["call"], method_block, false, true, true)
     );
 }
+
+#[cfg(test)]
+mod parity_tests;

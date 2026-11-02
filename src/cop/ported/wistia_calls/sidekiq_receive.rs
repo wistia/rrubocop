@@ -14,8 +14,9 @@ pub(super) fn sidekiq_receive(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 fn receives_async(c: &Context<'_>, n: Node<'_>) -> bool {
     c.method(n) == "receive"
         && args(n)
-            .first()
-            .is_some_and(|argument| async_symbol(c, *argument))
+            .into_iter()
+            .find(|argument| argument.kind() != "comment")
+            .is_some_and(|argument| async_symbol(c, argument))
 }
 
 fn async_symbol(c: &Context<'_>, n: Node<'_>) -> bool {

@@ -1,0 +1,377 @@
+[
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async)\n end\nend\n",
+    "fixture": "tests/fixtures/cops/cops/no_sidekiq_receive/argument_comment.rb"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_in)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_in)\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_at)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_at)\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async).and_call_original\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async).and_call_original\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async).never\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async).never\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :ordinary)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :ordinary)\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(\n # name\n :Uppercase)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(\n # name\n :Uppercase)\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_capitalized_keys/argument_comment.rb"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(\n # name\n :lowercase)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute(\n # name\n :lowercase)\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(\n # name\n :Uppercase, key: :lowercase)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute(\n # name\n :Uppercase, key: :lowercase)\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(\n # name\n :lowercase, key: :Uppercase)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 18,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(\n # name\n :lowercase, key: :Uppercase)\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n def title; 'x'; end\n attribute(\n # name\n :title) { 'y' }\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class S\n def title; 'x'; end\n attribute(\n # name\n :title) { 'y' }\nend\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_method_and_block/argument_comment.rb"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n def title; 'x'; end\n attribute(\n # name\n :other) { 'y' }\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n def title; 'x'; end\n attribute(\n # name\n :other) { 'y' }\nend\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n attribute(\n # name\n :title) { 'y' }\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n attribute(\n # name\n :title) { 'y' }\nend\n"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n 'known')\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Calling `require` on an autoloaded path breaks autoloading",
+        "correctable": false
+      }
+    ],
+    "corrected": "require(\n # autoload\n 'known')\n",
+    "fixture": "tests/fixtures/cops/cops/no_require_on_auto_loaded_paths/argument_comment.rb"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n 'unknown')\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\n # autoload\n 'unknown')\n"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n path)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\n # autoload\n path)\n"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n 'kn' 'own')\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\n # autoload\n 'kn' 'own')\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :\"co\\x64er\" => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', :\"co\\x64er\" => JSON)\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/encoded_coder.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', %s[coder] => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', %s[coder] => JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :\"co\\u0064er\" => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', :\"co\\u0064er\" => JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :\"co\\x64er\" => ActiveSupport::JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', :\"co\\x64er\" => ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', %s[coder] => ActiveSupport::JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', %s[coder] => ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :'co\\x64er' => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', :'co\\x64er' => JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :\"#{name}\" => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', :\"#{name}\" => JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', 'coder' => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', 'coder' => JSON)\n"
+  }
+]

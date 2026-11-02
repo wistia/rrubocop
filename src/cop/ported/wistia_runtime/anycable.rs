@@ -54,7 +54,7 @@ fn custom_coder(c: &Context<'_>, n: Node<'_>) -> bool {
 
 fn coder_key(c: &Context<'_>, n: Node<'_>) -> bool {
     n.child_by_field_name("key")
-        .is_some_and(|k| c.symbol(k) && c.value(k) == "coder")
+        .is_some_and(|k| c.static_symbol(k).as_deref() == Some("coder"))
 }
 
 fn valid_stream_arguments(c: &Context<'_>, n: Node<'_>, values: &[Node<'_>]) -> bool {

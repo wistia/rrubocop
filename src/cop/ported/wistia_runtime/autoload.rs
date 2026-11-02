@@ -27,8 +27,8 @@ pub(super) fn require_autoload(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 
 fn require_argument(n: Node<'_>) -> Option<Node<'_>> {
     args(n)
-        .first()
-        .copied()
+        .into_iter()
+        .find(|argument| argument.kind() != "comment")
         .filter(|argument| argument.kind() == "string")
 }
 

@@ -44781,5 +44781,771 @@
     "rust_corrected": "h = {[:a, :b] => 1, :a => 2}\np h.reject { |k, v| k.eql?([:a, :b]) }\n",
     "rust_correctable": false,
     "reason": "Manual rewrite: eql? compares an array as a scalar key; rendering its elements as separate except arguments changes the key removed."
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async)\n end\nend\n",
+    "fixture": "tests/fixtures/cops/cops/no_sidekiq_receive/argument_comment.rb"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_in)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_in)\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_at)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false
+      }
+    ],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_at)\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async).and_call_original\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async).and_call_original\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async).never\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async).never\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :ordinary)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :ordinary)\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(\n # name\n :Uppercase)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(\n # name\n :Uppercase)\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_capitalized_keys/argument_comment.rb"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(\n # name\n :lowercase)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute(\n # name\n :lowercase)\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(\n # name\n :Uppercase, key: :lowercase)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute(\n # name\n :Uppercase, key: :lowercase)\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(\n # name\n :lowercase, key: :Uppercase)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 18,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(\n # name\n :lowercase, key: :Uppercase)\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n def title; 'x'; end\n attribute(\n # name\n :title) { 'y' }\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class S\n def title; 'x'; end\n attribute(\n # name\n :title) { 'y' }\nend\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_method_and_block/argument_comment.rb"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n def title; 'x'; end\n attribute(\n # name\n :other) { 'y' }\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n def title; 'x'; end\n attribute(\n # name\n :other) { 'y' }\nend\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n attribute(\n # name\n :title) { 'y' }\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n attribute(\n # name\n :title) { 'y' }\nend\n"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n 'known')\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Calling `require` on an autoloaded path breaks autoloading",
+        "correctable": false
+      }
+    ],
+    "corrected": "require(\n # autoload\n 'known')\n",
+    "fixture": "tests/fixtures/cops/cops/no_require_on_auto_loaded_paths/argument_comment.rb"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n 'unknown')\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\n # autoload\n 'unknown')\n"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n path)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\n # autoload\n path)\n"
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n 'kn' 'own')\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\n # autoload\n 'kn' 'own')\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :\"co\\x64er\" => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', :\"co\\x64er\" => JSON)\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/encoded_coder.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', %s[coder] => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', %s[coder] => JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :\"co\\u0064er\" => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', :\"co\\u0064er\" => JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :\"co\\x64er\" => ActiveSupport::JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', :\"co\\x64er\" => ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', %s[coder] => ActiveSupport::JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', %s[coder] => ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :'co\\x64er' => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', :'co\\x64er' => JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', :\"#{name}\" => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', :\"#{name}\" => JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', 'coder' => JSON)\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', 'coder' => JSON)\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class Foo::Bar; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo::Bar; end\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class Foo::\n Bar; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Foo::\n Bar; end\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Foo::\n Bar; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module Foo::\n Bar; end\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class ::Foo::\n Bar; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class ::Foo::\n Bar; end\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module ::Foo::\n Bar; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module ::Foo::\n Bar; end\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Foo\n class Bar\n  VALUE = 1\n end\nend\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module Foo\n class Bar\n  VALUE = 1\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Foo::\n Bar\n class Child; end\n VALUE = 1\nend\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module Foo::\n Bar\n class Child; end\n VALUE = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class ::Foo::\n Bar\n class Child; end\n VALUE = 1\nend\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class ::Foo::\n Bar\n class Child; end\n VALUE = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo::\n Bar = Class.new do\n class Child; end\nend\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo::\n Bar = Class.new do\n class Child; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo::\n Bar.class_eval do\n VALUE = 1\nend\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo::\n Bar.class_eval do\n VALUE = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "::Foo::\n Bar.class_eval do\n class Child; end\nend\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "::Foo::\n Bar.class_eval do\n class Child; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class << Foo::\n Bar\n VALUE = 1\nend\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class << Foo::\n Bar\n VALUE = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class Foo::\n Wrong; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class Foo::\n Wrong; end\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Wrong::\n Bar; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "module Wrong::\n Bar; end\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Foo::\n Bar\n class Wrong; end\nend\n",
+    "path": "$PROJECT/app/models/foo/bar/child.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "module Foo::\n Bar\n class Wrong; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Foo::\n Bar\n Wrong = 1\nend\n",
+    "path": "$PROJECT/app/models/foo/bar/child.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "module Foo::\n Bar\n Wrong = 1\nend\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"a\" \\\n\"#{__LINE__}\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"a\" \\\n\"#{__LINE__}\"\n",
+    "runtime_stdout": "\"a2\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p '''a' \\\n'b'''\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p 'a' \\\n'b'\n",
+    "runtime_stdout": "\"ab\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"\" \\\n\"\"\np __LINE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"\" \\\n\np __LINE__\n",
+    "runtime_stdout": "\"\"\n3\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"#{__LINE__}\" \\\n\"#{__LINE__}\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"#{__LINE__}\" \\\n\"#{__LINE__}\"\n",
+    "runtime_stdout": "\"12\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"abc\" \"def\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"abc\" \"def\"\n",
+    "runtime_stdout": "\"abcdef\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"a\nb\"\"\"\np __LINE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"a\nb\"\np __LINE__\n",
+    "runtime_stdout": "\"a\\nb\"\n3\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"\"\n",
+    "runtime_stdout": "\"\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"a\"\"\" # keep this\np __LINE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"a\" # keep this\np __LINE__\n",
+    "runtime_stdout": "\"a\"\n2\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"a\" \\\n\"#{__LINE__}\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p \"a\" \\\n\"#{__LINE__}\"\n",
+    "runtime_stdout": "\"a2\"\n"
   }
 ]

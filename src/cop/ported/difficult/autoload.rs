@@ -56,3 +56,6 @@ fn constant(n: Node<'_>) -> bool {
 
 #[cfg(test)]
 mod tests;
+
+#[cfg(test)]
+mod qualified_tests;

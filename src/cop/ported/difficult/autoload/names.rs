@@ -14,7 +14,7 @@ pub(super) fn defined(
     if matches!(n.kind(), "class" | "module") {
         Some(join(
             parent(c, n, limit).as_ref().map(|p| p.head()),
-            c.text(field(n, "name")?).trim_start_matches("::"),
+            &constant_name(c, field(n, "name")?),
             limit,
         ))
     } else {
@@ -40,7 +40,7 @@ fn assignment_head(
 ) -> String {
     if let Some(scope) = field(left, "scope") {
         return join(
-            Some(c.text(scope).rsplit("::").next().unwrap_or("")),
+            Some(constant_name(c, scope).rsplit("::").next().unwrap_or("")),
             name,
             limit,
         );
@@ -60,11 +60,7 @@ fn scope_name(parts: &[String]) -> String {
 }
 fn add_namespace(c: &Context<'_>, n: Node<'_>, parts: &mut Vec<String>) -> Option<()> {
     match n.kind() {
-        "class" | "module" => parts.push(
-            c.text(field(n, "name")?)
-                .trim_start_matches("::")
-                .to_owned(),
-        ),
+        "class" | "module" => parts.push(constant_name(c, field(n, "name")?).into_owned()),
         "assignment" => assignment_parent(c, n, parts),
         "singleton_class" => return singleton(c, n, parts),
         "block" | "do_block" => return block_namespace(c, n, parts),
@@ -79,7 +75,7 @@ fn assignment_parent(c: &Context<'_>, n: Node<'_>, parts: &mut Vec<String>) {
     if let Some(left) =
         field(n, "left").filter(|n| matches!(n.kind(), "constant" | "scope_resolution"))
     {
-        parts.push(c.text(left).trim_start_matches("::").to_owned());
+        parts.push(constant_name(c, left).into_owned());
     }
 }
 fn singleton(c: &Context<'_>, n: Node<'_>, parts: &mut Vec<String>) -> Option<()> {
@@ -87,7 +83,7 @@ fn singleton(c: &Context<'_>, n: Node<'_>, parts: &mut Vec<String>) -> Option<()
     let name = if c.text(object) == "self" {
         scope_name(parts)
     } else if matches!(object.kind(), "constant" | "scope_resolution") {
-        c.text(object).into()
+        constant_name(c, object).into_owned()
     } else {
         return None;
     };
@@ -106,7 +102,7 @@ fn class_eval_namespace(c: &Context<'_>, call: Node<'_>, parts: &mut Vec<String>
         if !matches!(receiver.kind(), "constant" | "scope_resolution") {
             return None;
         }
-        parts.push(c.text(receiver).trim_start_matches("::").into());
+        parts.push(constant_name(c, receiver).into_owned());
     }
     Some(())
 }
@@ -119,4 +115,9 @@ fn new_class_call(c: &Context<'_>, call: Node<'_>) -> bool {
             c.receiver(call),
             "Class" | "Module" | "::Class" | "::Module"
         )
+}
+
+fn constant_name<'a>(c: &Context<'a>, node: Node<'_>) -> std::borrow::Cow<'a, str> {
+    c.constant_name(node)
+        .unwrap_or_else(|| c.text(node).trim_start_matches("::").into())
 }
