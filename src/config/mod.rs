@@ -408,6 +408,45 @@ mod tests {
     }
 
     #[test]
+    fn inherit_standard_vendored_needs_no_install() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(
+            dir.path().join("Gemfile.lock"),
+            "GEM\n  specs:\n    standard (1.40.0)\n",
+        )
+        .unwrap();
+        let config = load_config(
+            Some(&write_config(
+                dir.path(),
+                "require:\n  - standard\ninherit_gem:\n  standard: config/base.yml\n",
+            )),
+            Some(dir.path()),
+            None,
+        )
+        .expect("Standard inheritance must work without an installed bundle");
+        assert!(!config.is_cop_enabled("Bundler/OrderedGems", Path::new("Gemfile"), &[], &[]));
+        assert!(config.is_cop_enabled("Bundler/DuplicatedGem", Path::new("Gemfile"), &[], &[]));
+    }
+
+    #[test]
+    fn require_anycable_vendored_needs_no_install() {
+        let dir = tempfile::tempdir().unwrap();
+        let config = load_config(
+            Some(&write_config(
+                dir.path(),
+                "require:\n  - anycable/rails/compatibility/rubocop\n",
+            )),
+            Some(dir.path()),
+            None,
+        )
+        .expect("AnyCable defaults must work without an installed bundle");
+        let cop =
+            config.cop_config_for_file("AnyCable/InstanceVars", Path::new("app/channels/chat.rb"));
+        assert_eq!(cop.enabled, crate::cop::EnabledState::True);
+        assert!(cop.include.iter().any(|path| path.contains("channels")));
+    }
+
+    #[test]
     fn inherit_gem_omakase_vendored_needs_no_install() {
         // rails/rubocop-rails-omakase: file is `rubocop.yml` (not config/default.yml)
         // and pulls in nested plugins:/require: (rubocop-performance, rubocop-rails).
