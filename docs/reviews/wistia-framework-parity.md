@@ -670,3 +670,32 @@ The full 1807-case/3614-second-pass matrix (55 trusted programs) retains exactly
 917 tests, 1 ignored probe. All 79 production CLI scope probes across 37 reviewed
 rules pass, with every positive control firing. Totals: 37 reviewed
 implementations, 34 baseline stubs replaced, 33 baseline stubs remaining.
+
+### Shared command unary-plus token roles
+
+Validation review exposed `validates_presence_of +1.5`: original Ruby parses a
+command call with a numeric literal argument, while tree-sitter presents binary
+addition. Core independently confirmed an unsafe existing layout correction:
+`puts +1.5` became `puts + 1.5`, changing command-call semantics; nested
+`foo +1 +2` must only space the second plus. The new
+`shared::command_unary_plus(source, node)` identifies the original lexer role
+using the existing cached local/vcall model, explicit-argument/block boundaries,
+receiver calls and exact whitespace/continuation spelling. It does not edit
+source and does not claim a complete logical-call argument projection.
+
+The original lexer, not guessed AST text, supplies 318 observations (106 source
+forms across Ruby targets 2.5, 3.0 and 3.4). Every native binary-plus token is
+checked against original tPLUS versus tUPLUS/tUNARY_NUM roles, including declared
+locals/parameters, explicit parentheses, receiver/safe receiver/operator calls,
+compound expression grouping, comments, LF/CRLF continuations and Unicode
+positions. The reproducible command_reference.rb accepts this fixture directly;
+regeneration is identical, and its Ruby lint check passes. The focused native
+role test passes all observations. Existing scope-model fixes remain owned by
+core; this helper reuses that model without duplicating lexical bindings.
+
+The fixture explicitly records invalid original grammar too: e.g. `[foo +1]`
+gets a unary token but is rejected by original Ruby/RuboCop, whereas tree-sitter
+accepts it. Preserving its token role avoids inventing a binary-spacing edit;
+complete syntax equivalence and logical argument grouping remain separate work.
+Core owns the operator-spacing consumer, while Validation integration continues.
+No additional cop is counted implemented by this helper checkpoint.

@@ -1,6 +1,8 @@
 //! Shared tree-sitter helpers for cops (nitrocop-inspired, AST-adapted).
 
 mod bare_args;
+mod command_call;
+pub use command_call::{CommandUnaryPlus, command_unary_plus};
 mod regexp;
 pub use regexp::{captures_observed, decode_ruby_double_quoted_content, is_literal_regexp_text};
 mod block_pass;
