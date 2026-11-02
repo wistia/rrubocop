@@ -1,8 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The first eleven batches replace
-27 stubs and repair an existing ReverseEach detector/corrector; 40 stubs and the remaining implemented-cop gaps
+The baseline inventory contained 67 no-op stubs. The first twelve batches replace
+28 stubs and repair an existing ReverseEach detector/corrector; 39 stubs and the remaining implemented-cop gaps
 still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
@@ -168,8 +168,8 @@ python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-Complete native suite: **908 passed, with 1 intentionally ignored audit probe**.
-The strict command exits 1 with **459 explicit difference events**: 454 documented
+Complete native suite: **910 passed, with 1 intentionally ignored audit probe**.
+The strict command exits 1 with **472 explicit difference events**: 467 documented
 safety/upstream-hazard events, two unresolved parser-related corrected-byte
 differences and three upstream stale-hash detection differences. `failures.json`, `summary.json` and `runtime.json` retain every event.
 Detection, message and range differences in the selected specimens are confined
@@ -454,3 +454,36 @@ nor claimed as exact detection parity. Symbol multiline/byte-encoding and other
 unreviewed AST families remain open; this checkpoint is a reusable bounded
 comparison adapter, not a claim to model every Ruby construct. No new cop counts:
 30 reviewed, 27 baseline stubs replaced, 40 baseline stubs remaining.
+
+## Twelfth batch: Rails-aware dates
+
+Rails/Date implements core/root-qualified Date recognition, flexible/strict day
+policies, ancestor-send chain handling, AllowToTime controls, string zone suffixes,
+deprecated conversions, exact selector ranges and unsafe correction metadata.
+Post-port review compared the complete original 2.26.0 algorithm and TimeZone's
+accepted-method vocabulary, reused from the existing constant. All ten accepted
+methods have flexible/strict controls. Explicit strict style still honors
+AllowToTime:true, matching original code despite broader prose documentation.
+Block-body send roles, unrelated namespaces, safe navigation, option arguments
+and disabled correction policy have authored cases.
+
+The new date cohort adds 111 original specimens, including two trusted
+ActiveSupport programs. Thirteen retained safeguard events concern strict
+Date.current only: original correction replaces Date with Time.zone but leaves
+current, introducing NoMethodError (TimeZone has no current method). Rust warns
+but declines that unsupported correction; the trusted UTC-zone program preserves
+the original Date result. Other unsafe -A corrections match original behavior,
+and -a leaves these unsafe transformations unchanged. Symbol receivers are not
+misclassified as string receivers after typed-part helper expansion.
+
+RSpec's isolated 95fc00e symbol-shape follow-up is included as f259f70: multiline
+dsym versus escaped sym and quoted-label shapes now have six additional original
+pairs. Shared direct AST fixture has 54 pairs/108 equality assertions. Latest
+strict rule matrix: 791 originals, 1582 second-pass cases, 32 trusted programs;
+472 retained events (467 guards/upstream correction hazards, two emoji spelling
+events, three stale-node-hash detection differences). No unexpected new date
+detection/message/range or corrected-byte differences remain in the selected
+cases. Full native suite passes 910 tests, 1 ignored probe. Actual production
+CLI scope/metadata matrix passes all 67 probes across 31 reviewed rules with
+every positive control firing. Totals: 31 reviewed implementations, 28 baseline
+stubs replaced, 39 baseline stubs remaining.

@@ -10,7 +10,7 @@ use crate::parse::source::SourceFile;
 
 pub(super) const DANGEROUS: &[&[u8]] = &[b"now", b"local", b"new", b"parse", b"at"];
 pub(super) const GOOD: &[&[u8]] = &[b"zone", b"zone_default", b"find_zone", b"find_zone!"];
-pub(super) const ACCEPTED: &[&[u8]] = &[
+pub(in crate::cop::rails) const ACCEPTED: &[&[u8]] = &[
     b"in_time_zone",
     b"utc",
     b"getlocal",

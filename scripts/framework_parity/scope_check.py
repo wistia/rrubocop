@@ -16,6 +16,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/Date', 'Date.today', model, service),
  ('Rails/Blank', 'items.nil? || items.empty?', model, service),
  ('Rails/Present', '!items.blank?', model, service),
  ('Rails/OutputSafety', 'input.html_safe', model, service),

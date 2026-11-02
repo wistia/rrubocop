@@ -1,6 +1,7 @@
 //! Rails/TimeZone — Time methods without zone (tree-sitter port).
 
 mod detect;
+pub(super) use detect::ACCEPTED as ACCEPTED_METHODS;
 
 use tree_sitter::Node;
 

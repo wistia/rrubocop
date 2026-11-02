@@ -48,8 +48,8 @@ def cases():
     for source in ("3.times { create(:user) { |user| user.active = true } }", "3.times { create(:user) { notify } }", "3.times do\n create(:user) do |user|\n  user.active = true\n  user.name = 'Ada'\n end\nend", "age = 18\n3.times { create :user, age: age }", "3.times { |unused| create :user }", "create_list(:user, 0x3)"):
         add("FactoryBot/CreateList", source, **({"EnforcedStyle":"n_times"} if source.startswith("create_list") else {}))
     from runtime_cases import PROGRAMS
-    for cop, source in PROGRAMS:
-        rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/models/example.rb", source=source, expected=[], corrected=source, config={}, trusted_runtime=True))
+    for cop, source, *options in PROGRAMS:
+        rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/models/example.rb", source=source, expected=[], corrected=source, config=options[0] if options else {}, trusted_runtime=True))
     for source in ("[1, 2].size", "{}.length", "'text'.size", ":text.size", "'text'.count('t')", "'text'.count(variable)", "[1, 2].count(1)", "COUNT = [1, 2].size", "items.each { [1, 2].size }", "[*items].size", "{ **options }.size", "[1].count { |n| n.odd? }", "\"#{value}\".size", "items.size", "[1]&.size"):
         add("Performance/FixedSize", source)
     for source in ("items.map { |n| [n] }.flatten(1)", "items.collect { |n| [n] }.flatten(1)", "items.map(&:children).flatten(1)", "items&.map { |n| [n] }&.flatten(1)", "items.map { |n| [n] }.flatten", "items.map { |n| [n] }.flatten(2)", "items.map { |n| [n] }.flatten(depth)", "items.map.flatten(1)"):
@@ -163,4 +163,16 @@ def cases():
         add("Rails/OutputSafety", source)
     from expression_cases import extend
     extend(add)
+    for source in ("Date.today", "::Date.today", "Other::Date.today", "Date&.today", "Date.current", "Date.yesterday", "Date.tomorrow", "Date.new.today", "Date.today.current", "Date.today.today", "wrapper(Date.today).tomorrow", "wrapper { Date.today }.current", "Date.today { work }", "Date.today = value", "date.to_time", "date.to_time(:utc)", "date&.to_time", "date.to_time_in_current_zone", "date.to_time_in_current_zone()", "date.to_time.utc", "date.to_time.in_time_zone", "wrapper(date.to_time).utc", "wrapper { date.to_time }.utc", "'2020-01-01T00:00:00Z'.to_time", "'2020-01-01+09:30'.to_time", "'2020-01-01Z'.to_time", "'2020-01-01'.to_time", "'2020-01-01'.to_time(:utc)"):
+        add("Rails/Date",source)
+        add("Rails/Date",source,AllowToTime=False)
+        add("Rails/Date",source,EnforcedStyle="strict",AllowToTime=False)
+    add("Rails/Date","Date.today",AutoCorrect="disabled")
+    add("Rails/Date","date.to_time_in_current_zone",AutoCorrect="disabled")
+    for method in ("in_time_zone", "utc", "getlocal", "xmlschema", "iso8601", "jisx0301", "rfc3339", "httpdate", "to_i", "to_f"):
+        add("Rails/Date",f"date.to_time.{method}",AllowToTime=False)
+        add("Rails/Date",f"date.to_time.{method}",EnforcedStyle="strict",AllowToTime=False)
+    add("Rails/Date","date.to_time",EnforcedStyle="strict")
+    add("Rails/Date","Date.today.to_time",EnforcedStyle="strict")
+    add("Rails/Date", ":'2020-01-01Z'.to_time",AllowToTime=False)
     return rows
