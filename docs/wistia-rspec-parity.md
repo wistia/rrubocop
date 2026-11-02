@@ -186,3 +186,21 @@ implicit and explicit subject forms each construct the subject once. Results are
 stored in `subject-spy-runtime.json`. This finite proof is supplemental to the
 original-engine diagnostic/range/correction/idempotence comparisons, not a claim
 that every arbitrary Ruby program has been exhaustively explored.
+
+## Batch 7: around hooks and implicit block expectations
+
+AroundBlock and ImplicitBlockExpectation replace two more original stubs. The
+reviewed total is 51 original stubs plus one existing rule, with 29 original stubs
+and 15 existing implementations still open. There are 775 strict original-Ruby
+cases across 52 reviewed rules; 12 safety differences remain separate.
+
+The distinct source review covered optional/rest and numbered hook arguments,
+permitted proxy call/run and argument/block-pass/yield usage, the symbol-only hook
+scope, lambda/proc/Proc.new forms, nearest subject lookup and overrides, nested
+example groups and safe-navigation branches. Additional cases exercise valid
+method-local yield rather than executing any arbitrary fixture. A third upstream
+specimen contains top-level yield and fails RubyVM compilation; its explicit
+error remains in the invalid-originals fixture and it is not counted as parity.
+The upstream import now retains 553 specimens, with thirteen host-generated
+templates still explicitly unimported. Neither of these two rules autocorrects;
+the existing correction-disable count remains 26.

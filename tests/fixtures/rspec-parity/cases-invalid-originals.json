@@ -52,5 +52,30 @@
         "error": "probe.rb:3: Invalid yield"
       }
     }
+  },
+  {
+    "id": "around_block_spec:10",
+    "cop": "RSpec/AroundBlock",
+    "source": "around do |test|\n  foo { yield(some_arg, test) }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Description": "Checks that around blocks actually run the test.",
+      "Enabled": true,
+      "VersionAdded": "1.11",
+      "Reference": "https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/AroundBlock",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "around do |test|\n  foo { yield(some_arg, test) }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/around_block_spec.rb#10",
+    "reference": {
+      "original_invalid": true,
+      "original_compile": {
+        "valid": false,
+        "error": "probe.rb:2: Invalid yield"
+      }
+    }
   }
 ]
