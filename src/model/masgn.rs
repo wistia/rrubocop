@@ -12,7 +12,9 @@ impl Builder<'_> {
         for child in list.children(&mut cursor) {
             match child.kind() {
                 "identifier" => self.bind_masgn_target(child, scope),
-                "rest_assignment" | "destructured_left_assignment_list" => {
+                "rest_assignment"
+                | "destructured_left_assignment_list"
+                | "destructured_left_assignment" => {
                     self.collect_masgn_targets_inner(child, scope);
                 }
                 _ => {}

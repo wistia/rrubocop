@@ -73,6 +73,7 @@ impl Builder<'_> {
                 Read {
                     byte,
                     under_defined,
+                    synthetic: byte == key.end_byte(),
                 },
             );
         }
@@ -134,6 +135,7 @@ impl Builder<'_> {
         let r = Read {
             byte: n.start_byte(),
             under_defined,
+            synthetic: false,
         };
         if self.lookup(scope, r.byte, &name).is_some() {
             self.record_read(scope, &name, r);
@@ -191,6 +193,7 @@ fn mark_reads(
             Read {
                 byte,
                 under_defined,
+                synthetic: true,
             },
         );
     }

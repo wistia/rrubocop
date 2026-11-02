@@ -113,6 +113,7 @@ pub(in crate::cop::ported::difficult::shadow) fn reads(
             .map(|site| Read {
                 byte: site.0,
                 under_defined: false,
+                synthetic: true,
             }),
     );
     reads

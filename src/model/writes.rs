@@ -108,6 +108,7 @@ impl Builder<'_> {
                     crate::model::Read {
                         byte: l.start_byte(),
                         under_defined: false,
+                        synthetic: false,
                     },
                 );
                 let w = Write {
@@ -139,6 +140,16 @@ impl Builder<'_> {
                 rhs: None,
             };
             self.record_write(scope, &name, w, IntroKind::Binding);
+        }
+        if let Some(pat) = pattern.filter(|pat| {
+            matches!(
+                pat.kind(),
+                "left_assignment_list"
+                    | "destructured_left_assignment"
+                    | "destructured_left_assignment_list"
+            )
+        }) {
+            self.collect_masgn_targets(pat, scope);
         }
         let mut cursor = n.walk();
         for child in n.children(&mut cursor) {
