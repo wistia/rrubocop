@@ -8,8 +8,1192 @@
   "rules": [
     {
       "cop": "Performance/CompareWithBlock",
-      "status": "pending",
-      "baseline": "unimplemented_noop_stub"
+      "status": "implemented_source_reviewed_with_safeguards",
+      "baseline": "unimplemented_noop_stub",
+      "original_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/compare_with_block.rb",
+      "original_spec": "tests/fixtures/performance-seven-upstream/compare_with_block_spec.rb",
+      "original_cases": 231,
+      "second_pass_cases": 462,
+      "exact_original_cases": 102,
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "strict_driver_exit": 1,
+      "strict_driver_failures": {
+        "safe": 129,
+        "all": 129,
+        "runtime": 2
+      },
+      "trusted_runtime_programs": 6,
+      "safeguards": [
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:1",
+          "source": "array.sort { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:2",
+          "source": "array.sort { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:3",
+          "source": "array.sort { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:4",
+          "source": "array.sort { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:7",
+          "source": "array.sort! { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:8",
+          "source": "array.sort! { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:9",
+          "source": "array.sort! { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:10",
+          "source": "array.sort! { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:13",
+          "source": "array.max { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:14",
+          "source": "array.max { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:15",
+          "source": "array.max { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:16",
+          "source": "array.max { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:19",
+          "source": "array.min { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:20",
+          "source": "array.min { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:21",
+          "source": "array.min { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:22",
+          "source": "array.min { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:25",
+          "source": "array.minmax { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:26",
+          "source": "array.minmax { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:27",
+          "source": "array.minmax { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:28",
+          "source": "array.minmax { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:31",
+          "source": "array.sort { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:32",
+          "source": "array.sort { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:33",
+          "source": "array.sort { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:34",
+          "source": "array.sort { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:37",
+          "source": "array.sort! { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:38",
+          "source": "array.sort! { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:39",
+          "source": "array.sort! { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:40",
+          "source": "array.sort! { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:43",
+          "source": "array.max { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:44",
+          "source": "array.max { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:45",
+          "source": "array.max { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:46",
+          "source": "array.max { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:49",
+          "source": "array.min { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:50",
+          "source": "array.min { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:51",
+          "source": "array.min { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:52",
+          "source": "array.min { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:55",
+          "source": "array.minmax { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:56",
+          "source": "array.minmax { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:57",
+          "source": "array.minmax { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:58",
+          "source": "array.minmax { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:71",
+          "source": "array.sort do |left,right|\n left.foo <=> right.foo\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:72",
+          "source": "array.sort { |a,b| a.[](0x1) <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:trusted-performance-seven:11",
+          "source": "class Item; attr_reader :value; def initialize(value); @value=value; end; def key; $calls+=1; value; end; end; $calls=0; values=[3,1,4,2].map { |v| Item.new(v) }; p values.sort { |a,b| a.key <=> b.key }.map(&:value); p $calls\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:1:safe:second-pass",
+          "source": "array.sort { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:1:all:second-pass",
+          "source": "array.sort { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:2:safe:second-pass",
+          "source": "array.sort { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:2:all:second-pass",
+          "source": "array.sort { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:3:safe:second-pass",
+          "source": "array.sort { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:3:all:second-pass",
+          "source": "array.sort { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:4:safe:second-pass",
+          "source": "array.sort { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:4:all:second-pass",
+          "source": "array.sort { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:7:safe:second-pass",
+          "source": "array.sort! { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:7:all:second-pass",
+          "source": "array.sort! { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:8:safe:second-pass",
+          "source": "array.sort! { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:8:all:second-pass",
+          "source": "array.sort! { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:9:safe:second-pass",
+          "source": "array.sort! { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:9:all:second-pass",
+          "source": "array.sort! { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:10:safe:second-pass",
+          "source": "array.sort! { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:10:all:second-pass",
+          "source": "array.sort! { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:13:safe:second-pass",
+          "source": "array.max { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:13:all:second-pass",
+          "source": "array.max { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:14:safe:second-pass",
+          "source": "array.max { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:14:all:second-pass",
+          "source": "array.max { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:15:safe:second-pass",
+          "source": "array.max { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:15:all:second-pass",
+          "source": "array.max { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:16:safe:second-pass",
+          "source": "array.max { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:16:all:second-pass",
+          "source": "array.max { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:19:safe:second-pass",
+          "source": "array.min { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:19:all:second-pass",
+          "source": "array.min { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:20:safe:second-pass",
+          "source": "array.min { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:20:all:second-pass",
+          "source": "array.min { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:21:safe:second-pass",
+          "source": "array.min { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:21:all:second-pass",
+          "source": "array.min { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:22:safe:second-pass",
+          "source": "array.min { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:22:all:second-pass",
+          "source": "array.min { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:25:safe:second-pass",
+          "source": "array.minmax { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:25:all:second-pass",
+          "source": "array.minmax { |a, b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:26:safe:second-pass",
+          "source": "array.minmax { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:26:all:second-pass",
+          "source": "array.minmax { |a, b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:27:safe:second-pass",
+          "source": "array.minmax { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:27:all:second-pass",
+          "source": "array.minmax { |a, b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:28:safe:second-pass",
+          "source": "array.minmax { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:28:all:second-pass",
+          "source": "array.minmax { |a, b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:31:safe:second-pass",
+          "source": "array.sort { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:31:all:second-pass",
+          "source": "array.sort { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:32:safe:second-pass",
+          "source": "array.sort { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:32:all:second-pass",
+          "source": "array.sort { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:33:safe:second-pass",
+          "source": "array.sort { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:33:all:second-pass",
+          "source": "array.sort { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:34:safe:second-pass",
+          "source": "array.sort { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:34:all:second-pass",
+          "source": "array.sort { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:37:safe:second-pass",
+          "source": "array.sort! { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:37:all:second-pass",
+          "source": "array.sort! { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:38:safe:second-pass",
+          "source": "array.sort! { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:38:all:second-pass",
+          "source": "array.sort! { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:39:safe:second-pass",
+          "source": "array.sort! { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:39:all:second-pass",
+          "source": "array.sort! { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:40:safe:second-pass",
+          "source": "array.sort! { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:40:all:second-pass",
+          "source": "array.sort! { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:43:safe:second-pass",
+          "source": "array.max { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:43:all:second-pass",
+          "source": "array.max { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:44:safe:second-pass",
+          "source": "array.max { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:44:all:second-pass",
+          "source": "array.max { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:45:safe:second-pass",
+          "source": "array.max { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:45:all:second-pass",
+          "source": "array.max { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:46:safe:second-pass",
+          "source": "array.max { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:46:all:second-pass",
+          "source": "array.max { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:49:safe:second-pass",
+          "source": "array.min { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:49:all:second-pass",
+          "source": "array.min { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:50:safe:second-pass",
+          "source": "array.min { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:50:all:second-pass",
+          "source": "array.min { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:51:safe:second-pass",
+          "source": "array.min { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:51:all:second-pass",
+          "source": "array.min { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:52:safe:second-pass",
+          "source": "array.min { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:52:all:second-pass",
+          "source": "array.min { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:55:safe:second-pass",
+          "source": "array.minmax { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:55:all:second-pass",
+          "source": "array.minmax { |a,b| a.foo <=> b.foo }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:56:safe:second-pass",
+          "source": "array.minmax { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:56:all:second-pass",
+          "source": "array.minmax { |a,b| a[:foo] <=> b[:foo] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:57:safe:second-pass",
+          "source": "array.minmax { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:57:all:second-pass",
+          "source": "array.minmax { |a,b| a['foo'] <=> b['foo'] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:58:safe:second-pass",
+          "source": "array.minmax { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:58:all:second-pass",
+          "source": "array.minmax { |a,b| a[1] <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:71:safe:second-pass",
+          "source": "array.sort do |left,right|\n left.foo <=> right.foo\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:71:all:second-pass",
+          "source": "array.sort do |left,right|\n left.foo <=> right.foo\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:72:safe:second-pass",
+          "source": "array.sort { |a,b| a.[](0x1) <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:performance-seven:72:all:second-pass",
+          "source": "array.sort { |a,b| a.[](0x1) <=> b[1] }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:trusted-performance-seven:11:safe:second-pass",
+          "source": "class Item; attr_reader :value; def initialize(value); @value=value; end; def key; $calls+=1; value; end; end; $calls=0; values=[3,1,4,2].map { |v| Item.new(v) }; p values.sort { |a,b| a.key <=> b.key }.map(&:value); p $calls\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/CompareWithBlock:trusted-performance-seven:11:all:second-pass",
+          "source": "class Item; attr_reader :value; def initialize(value); @value=value; end; def key; $calls+=1; value; end; end; $calls=0; values=[3,1,4,2].map { |v| Item.new(v) }; p values.sort { |a,b| a.key <=> b.key }.map(&:value); p $calls\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        }
+      ],
+      "safety_review": [
+        "All30 original shared-example expansions ported.",
+        "Key projection evaluation count changes under sort_by; trusted Item.key counter differs.",
+        "Correction bounded to literal arrays with literal data and primitive [] key; unknown projection/receiver sources preserved."
+      ]
     },
     {
       "cop": "Performance/Detect",
@@ -344,9 +1528,9 @@
       "baseline": "unimplemented_noop_stub",
       "original_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/redundant_match.rb",
       "original_spec": "tests/fixtures/performance-seven-upstream/redundant_match_spec.rb",
-      "original_cases": 159,
-      "second_pass_cases": 318,
-      "exact_original_cases": 117,
+      "original_cases": 240,
+      "second_pass_cases": 480,
+      "exact_original_cases": 192,
       "diagnostic_differences": 0,
       "invalid_native_corrections": 0,
       "idempotence_differences": 0,
@@ -354,9 +1538,10 @@
       "strict_driver_failures": {
         "safe": 42,
         "all": 42,
+        "original_invalid": 6,
         "runtime": 4
       },
-      "trusted_runtime_programs": 3,
+      "trusted_runtime_programs": 9,
       "safeguards": [
         {
           "id": "Performance/RedundantMatch:performance-seven:1",
@@ -413,7 +1598,23 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:32",
+          "id": "Performance/RedundantMatch:performance-seven:19",
+          "source": "something if /regex/.match(yield a)\n",
+          "config": {},
+          "failure_kinds": [
+            "original_invalid"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:25",
+          "source": "something if /regex/.match(yield)\n",
+          "config": {},
+          "failure_kinds": [
+            "original_invalid"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:59",
           "source": "case x.match(/a/); when 0; :zero; end\n",
           "config": {},
           "failure_kinds": [
@@ -422,7 +1623,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:37",
+          "id": "Performance/RedundantMatch:performance-seven:64",
           "source": "x.match(/a/) # keep\n",
           "config": {},
           "failure_kinds": [
@@ -431,7 +1632,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:38",
+          "id": "Performance/RedundantMatch:performance-seven:65",
           "source": "x.match( # keep\n/a/)\n",
           "config": {},
           "failure_kinds": [
@@ -440,7 +1641,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:41",
+          "id": "Performance/RedundantMatch:performance-seven:68",
           "source": "def example; x.match(/a/); nil; end\n",
           "config": {},
           "failure_kinds": [
@@ -449,7 +1650,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:43",
+          "id": "Performance/RedundantMatch:performance-seven:70",
           "source": "/a/.match(&block)\n",
           "config": {},
           "failure_kinds": [
@@ -458,7 +1659,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:47",
+          "id": "Performance/RedundantMatch:performance-seven:74",
           "source": "x.match(/a/) if ready\n",
           "config": {},
           "failure_kinds": [
@@ -595,7 +1796,39 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:32:safe:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:19:safe:second-pass",
+          "source": "something if /regex/.match(yield a)\n",
+          "config": {},
+          "failure_kinds": [
+            "original_invalid"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:19:all:second-pass",
+          "source": "something if /regex/.match(yield a)\n",
+          "config": {},
+          "failure_kinds": [
+            "original_invalid"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:25:safe:second-pass",
+          "source": "something if /regex/ =~ yield\n",
+          "config": {},
+          "failure_kinds": [
+            "original_invalid"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:25:all:second-pass",
+          "source": "something if /regex/ =~ yield\n",
+          "config": {},
+          "failure_kinds": [
+            "original_invalid"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:59:safe:second-pass",
           "source": "case x.match(/a/); when 0; :zero; end\n",
           "config": {},
           "failure_kinds": [
@@ -604,7 +1837,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:32:all:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:59:all:second-pass",
           "source": "case x.match(/a/); when 0; :zero; end\n",
           "config": {},
           "failure_kinds": [
@@ -613,7 +1846,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:37:safe:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:64:safe:second-pass",
           "source": "x.match(/a/) # keep\n",
           "config": {},
           "failure_kinds": [
@@ -622,7 +1855,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:37:all:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:64:all:second-pass",
           "source": "x.match(/a/) # keep\n",
           "config": {},
           "failure_kinds": [
@@ -631,7 +1864,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:38:safe:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:65:safe:second-pass",
           "source": "x.match( # keep\n/a/)\n",
           "config": {},
           "failure_kinds": [
@@ -640,7 +1873,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:38:all:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:65:all:second-pass",
           "source": "x.match( # keep\n/a/)\n",
           "config": {},
           "failure_kinds": [
@@ -649,7 +1882,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:41:safe:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:68:safe:second-pass",
           "source": "def example; x.match(/a/); nil; end\n",
           "config": {},
           "failure_kinds": [
@@ -658,7 +1891,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:41:all:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:68:all:second-pass",
           "source": "def example; x.match(/a/); nil; end\n",
           "config": {},
           "failure_kinds": [
@@ -667,7 +1900,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:43:safe:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:70:safe:second-pass",
           "source": "/a/.match(&block)\n",
           "config": {},
           "failure_kinds": [
@@ -676,7 +1909,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:43:all:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:70:all:second-pass",
           "source": "/a/.match(&block)\n",
           "config": {},
           "failure_kinds": [
@@ -685,7 +1918,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:47:safe:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:74:safe:second-pass",
           "source": "x.match(/a/) if ready\n",
           "config": {},
           "failure_kinds": [
@@ -694,7 +1927,7 @@
           ]
         },
         {
-          "id": "Performance/RedundantMatch:performance-seven:47:all:second-pass",
+          "id": "Performance/RedundantMatch:performance-seven:74:all:second-pass",
           "source": "x.match(/a/) if ready\n",
           "config": {},
           "failure_kinds": [
@@ -1132,9 +2365,10 @@
     }
   ],
   "production_scope": {
-    "cases": 93,
+    "cases": 95,
     "differences": 0,
-    "rules": 42
+    "rules": 43,
+    "next_compare_scope_gate": "running"
   },
   "native_gate": {
     "passed": 929,
@@ -1156,5 +2390,11 @@
       "runtime": 2
     },
     "helper_commit": "e7f2cc8"
+  },
+  "upstream_importer": {
+    "imported": 4720,
+    "unresolved": 0,
+    "execution": "Prism static literals/shared templates/closed literal loops only; specimens never executed",
+    "config_note": "Sibling-config bridge for Detect is in progress; seven-cop completion gate remains per rule."
   }
 }

@@ -86,3 +86,24 @@ receiver shows match versus =~ calling different behavior. Native retains those
 sources. A literal regexp control preserves global match captures. Comments and
 invalid generated syntax also retain source. Unknown receiver corrections remain
 conservative; this is documented safety divergence, not exact correction parity.
+
+## CompareWithBlock and expanded upstream templates
+
+All thirty original shared-example expansions are retained. Seventy-seven
+originals and 154 second-pass states match diagnostics/metadata exactly; strict
+correction comparison retains 129 safe-byte, 129 all-byte and two runtime
+differences. A trusted Item#key counter proves that key extraction changes method
+evaluation counts. Correction is bounded to literal data arrays and a primitive
+index projection; a trusted literal-array control preserves output. Comparison
+uses the shared original AST send projection and expression equality, including
+explicit operator calls, differing numeric spellings, safe calls, nonliteral keys,
+block shapes and configuration controls.
+
+The nonexecuting Prism importer now expands closed literal loops and shared
+examples, yielding 4,720 original sources with no unresolved templates/placeholders.
+This includes pending-rule evidence and does not mark those rules implemented.
+Detect's sibling Style/CollectionMethods settings require the explicit global
+fixture/config adapter being developed next. The expanded RedundantMatch gate has
+80 originals/160 second states, still no diagnostic differences, and additionally
+retains two invalid top-level yield host specimens (six original_invalid states).
+Valid method-scoped yield controls are retained for the next gate.
