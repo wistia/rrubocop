@@ -60,7 +60,10 @@ impl Cop for Size {
     }
 }
 fn known_collection(source: &SourceFile, node: Node<'_>) -> bool {
-    if matches!(node.kind(), "array" | "hash") {
+    if matches!(
+        node.kind(),
+        "array" | "string_array" | "symbol_array" | "hash"
+    ) {
         return true;
     }
     if matches!(call_method_name(source, node), Some(b"to_a" | b"to_h"))

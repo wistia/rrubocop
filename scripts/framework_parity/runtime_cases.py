@@ -10,4 +10,9 @@ PROGRAMS = [
     ("Rails/Present", "require 'active_support/core_ext/object/blank'\n[nil, [], [1], '', 'text'].each { |value| p(value && !value.empty?) }\n"),
     ("FactoryBot/FactoryClassName", "class User; end\ndef factory(name, **options); p options[:class].to_s; end\nfactory :user, class: User\n"),
     ("FactoryBot/CreateList", "$calls = []\ndef create(name, **options); $calls << [name, options]; Object.new; end\ndef create_list(name, count, **options); Array.new(count) { create(name, **options) }; end\n3.times { create :user, age: 18 }\np $calls\n"),
+    ("Performance/Count", "items = [1]\np items.select { |item| break [7] }.count\n"),
+    ("Performance/Count", "items = [1, 2]\np items.reject { |item| if item == 1; next false; end; true }.count\n"),
+    ("Performance/FlatMap", "p [1, 2].map { |item| [item] }.flatten(1)\n"),
+    ("Performance/FlatMap", "p [1, 2].map { |item| item }.flatten!(1)\n"),
+    ("Performance/FlatMap", "p [1].map { |item| break [[7]] }.flatten(1)\n"),
 ]

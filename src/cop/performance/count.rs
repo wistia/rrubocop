@@ -108,6 +108,16 @@ fn edits(
     pass: Option<Node<'_>>,
 ) -> Option<Vec<(usize, usize, String)>> {
     let method = method_node(filter)?;
+    if let Some(block) = block {
+        let mut changes_control_value = false;
+        crate::cop::shared::for_each_descendant(block, |n| {
+            changes_control_value |=
+                n.kind() == "break" || reject && matches!(n.kind(), "next" | "redo" | "retry");
+        });
+        if changes_control_value {
+            return None;
+        }
+    }
     if source.as_bytes()[filter.end_byte()..node.end_byte()].contains(&b'#') {
         return None;
     }
@@ -188,6 +198,19 @@ mod tests {
         assert_eq!(after, before);
         assert_eq!(diagnostics.len(), 1);
         assert!(!diagnostics[0].correctable);
+    }
+
+    #[test]
+    fn preserves_block_control_flow_values() {
+        for before in [
+            b"items.select { |item| break [7] }.count\n".as_slice(),
+            b"items.reject { |item| if item == 1; next false; end; true }.count\n",
+        ] {
+            let (after, diagnostics) = corrected(before);
+            assert_eq!(after, before);
+            assert_eq!(diagnostics.len(), 1);
+            assert!(!diagnostics[0].correctable);
+        }
     }
 
     #[test]

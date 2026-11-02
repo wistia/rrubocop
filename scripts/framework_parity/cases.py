@@ -50,4 +50,23 @@ def cases():
     from runtime_cases import PROGRAMS
     for cop, source in PROGRAMS:
         rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/models/example.rb", source=source, expected=[], corrected=source, config={}, trusted_runtime=True))
+    for source in ("[1, 2].size", "{}.length", "'text'.size", ":text.size", "'text'.count('t')", "'text'.count(variable)", "[1, 2].count(1)", "COUNT = [1, 2].size", "items.each { [1, 2].size }", "[*items].size", "{ **options }.size", "[1].count { |n| n.odd? }", "\"#{value}\".size", "items.size", "[1]&.size"):
+        add("Performance/FixedSize", source)
+    for source in ("items.map { |n| [n] }.flatten(1)", "items.collect { |n| [n] }.flatten(1)", "items.map(&:children).flatten(1)", "items&.map { |n| [n] }&.flatten(1)", "items.map { |n| [n] }.flatten", "items.map { |n| [n] }.flatten(2)", "items.map { |n| [n] }.flatten(depth)", "items.map.flatten(1)"):
+        add("Performance/FlatMap", source)
+    add("Performance/FlatMap", "items.map { |n| [n] }.flatten", EnabledForFlattenWithoutParams=True)
+    add("Performance/FlatMap", "items.map { |n| [n] }.flatten(1)", AutoCorrect="disabled")
+    for source in ("Table[\"*\"]", "Table['*']", "User.arel_table[\"*\"]", "arel_table[\"*\"]", "table[\"*\"]", "Table[:*]", "Table[\"name\"]", "Table[\"*\", :name]", "Table.[](\"*\")", "Table[%q{*}]", "Table[\"\\x2A\"]"):
+        add("Rails/ArelStar",source)
+    for source in ("User.where(id: 1).take", "User.where(id: 1).first", "User.where(id: 1).take(2)", "User.where(id: 1)&.take", "User&.where(id: 1)&.take", "where(id: 1).take", "User.where(id: 1).take()", "User.where { |x| x.active? }.take"):
+        add("Rails/FindBy",source)
+    add("Rails/FindBy", "User.where(id: 1).first", IgnoreWhereFirst=False)
+    for source in ("User.pluck(:name).first", "User.pluck(:name, :age).first", "User.pluck(:name).first(2)", "User&.pluck(:name)&.first", "pluck(:name).first", "User.pluck(:name).first()", "User.pluck.first"):
+        add("Rails/Pick",source)
+    add("Rails/ArelStar", "arel_table = table\narel_table[\"*\"]")
+    for cop in ("Performance/FixedSize", "Performance/Size"):
+        for source in ("%w[a b].count", "%i[a b].count"):
+            add(cop, source)
+    for source in ("items.map { |n| [n] }.flatten(0x1)", "items.map { |n| [n] }.flatten(+1)"):
+        add("Performance/FlatMap",source)
     return rows

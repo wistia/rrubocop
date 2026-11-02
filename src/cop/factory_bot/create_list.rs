@@ -242,71 +242,11 @@ fn dynamic_arguments(source: &SourceFile, node: Node<'_>) -> bool {
     let mut found = false;
     for argument in argument_nodes(node).iter().skip(1) {
         for_each_descendant(*argument, |n| {
-            found |=
-                n.kind() == "call" || (n.kind() == "identifier" && !local_identifier(source, n))
+            found |= n.kind() == "call"
+                || (n.kind() == "identifier" && !crate::cop::ported::local_identifier(source, n))
         });
     }
     found
-}
-fn local_identifier(source: &SourceFile, identifier: Node<'_>) -> bool {
-    let name = node_bytes(source, identifier);
-    let mut ancestor = identifier.parent();
-    let mut scope = identifier;
-    while let Some(node) = ancestor {
-        if let Some(parameters) = node.child_by_field_name("parameters") {
-            let mut declared = false;
-            for_each_descendant(parameters, |n| {
-                declared |= n.kind() == "identifier" && node_bytes(source, n) == name
-            });
-            if declared {
-                return true;
-            }
-        }
-        scope = node;
-        if matches!(
-            node.kind(),
-            "method" | "singleton_method" | "class" | "module" | "program"
-        ) {
-            break;
-        }
-        ancestor = node.parent();
-    }
-    fn scan(
-        source: &SourceFile,
-        node: Node<'_>,
-        root: Node<'_>,
-        identifier: Node<'_>,
-        name: &[u8],
-    ) -> bool {
-        if node.start_byte() >= identifier.start_byte() {
-            return false;
-        }
-        if node != root
-            && matches!(
-                node.kind(),
-                "method" | "singleton_method" | "class" | "module"
-            )
-        {
-            return false;
-        }
-        if matches!(node.kind(), "block" | "do_block")
-            && !(node.start_byte() <= identifier.start_byte()
-                && identifier.end_byte() <= node.end_byte())
-        {
-            return false;
-        }
-        if matches!(node.kind(), "assignment" | "operator_assignment") {
-            if let Some(left) = node.child_by_field_name("left") {
-                if left.kind() == "identifier" && node_bytes(source, left) == name {
-                    return true;
-                }
-            }
-        }
-        named_kids(node)
-            .into_iter()
-            .any(|n| scan(source, n, root, identifier, name))
-    }
-    scan(source, scope, scope, identifier, name)
 }
 
 fn used_parameter(source: &SourceFile, block: Node<'_>, body: Node<'_>) -> bool {
