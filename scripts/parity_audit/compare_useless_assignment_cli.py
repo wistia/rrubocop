@@ -24,6 +24,14 @@ def arguments():
     return parser.parse_args()
 
 
+def inspected_files(completed):
+    try:
+        report = json.loads(completed.stdout)
+    except ValueError:
+        return None
+    return report.get("summary", {}).get("inspected_file_count", report.get("metadata", {}).get("files_inspected"))
+
+
 def observe(executable, options, path, source, cwd, environment):
     path.write_text(source)
     command = [str(executable), *options, str(path)]
@@ -37,6 +45,8 @@ def observe(executable, options, path, source, cwd, environment):
     )
     return {
         "exit": first.returncode,
+        "inspected_files": inspected_files(first),
+        "final_inspected_files": inspected_files(second),
         "final_exit": second.returncode,
         "bytes": corrected.decode(),
         "idempotent": corrected == path.read_bytes(),
@@ -50,7 +60,14 @@ def compare(index_case, settings, environment):
     rows = []
     with tempfile.TemporaryDirectory() as directory:
         root = pathlib.Path(directory)
-        config, path = root / "config.yml", root / "input.rb"
+        config = root / "config.yml"
+        fixture_path = pathlib.PurePosixPath(case.get("path") or "input.rb")
+        if fixture_path.name == "(string)":
+            fixture_path = pathlib.PurePosixPath("input.rb")
+        if not fixture_path.name or fixture_path.is_absolute() or ".." in fixture_path.parts:
+            raise ValueError(f"CLI fixtures require a relative path beneath the temporary root: {fixture_path}")
+        path = root.joinpath(*fixture_path.parts)
+        path.parent.mkdir(parents=True, exist_ok=True)
         options = {key: value for key, value in case["config"].items() if value is not None and key != "TargetRubyVersion"}
         document = {
             "AllCops": {
@@ -73,6 +90,11 @@ def compare(index_case, settings, environment):
                 "id": case["id"],
                 "original": case["original"],
                 "mode": mode,
+                "equal_scope": all(
+                    observations["ruby"][key] is not None
+                    and observations["ruby"][key] == observations["rust"][key]
+                    for key in ("inspected_files", "final_inspected_files")
+                ),
                 "equal_bytes": observations["ruby"]["bytes"] == observations["rust"]["bytes"],
                 "equal_exit": observations["ruby"]["exit"] == observations["rust"]["exit"],
                 "observations": observations,
@@ -81,7 +103,7 @@ def compare(index_case, settings, environment):
 
 
 def differs(row):
-    return not row["equal_bytes"] or not row["equal_exit"] or any(
+    return not row["equal_bytes"] or not row["equal_exit"] or not row["equal_scope"] or any(
         not observation["idempotent"] or observation["exit"] not in VALID_EXITS or observation["final_exit"] not in VALID_EXITS or observation["cop_error"]
         for observation in row["observations"].values()
     )
@@ -105,6 +127,7 @@ def main():
     print(json.dumps({
         "mode_comparisons": len(rows),
         "equal_bytes": sum(row["equal_bytes"] for row in rows),
+        "equal_scope": sum(row["equal_scope"] for row in rows),
         "equal_exit": sum(row["equal_exit"] for row in rows),
         "ruby_idempotent": sum(row["observations"]["ruby"]["idempotent"] for row in rows),
         "rust_idempotent": sum(row["observations"]["rust"]["idempotent"] for row in rows),

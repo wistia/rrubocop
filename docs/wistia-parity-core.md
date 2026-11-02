@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Twenty-five owned rules now have implemented behavior backed by original-Ruby
+Twenty-six owned rules now have implemented behavior backed by original-Ruby
 comparisons, including all thirteen original direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. Additional UselessAssignment capture combinations
 remain under review. The exhaustive
-367-rule inventory retains 342 queued validation entries; some already had
+367-rule inventory retains 341 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -550,3 +550,14 @@ The16 safeguards cover invalid Ruby generated around continuations, explicit ope
 Real CLI validation covers290 modes:258 equal corrected-byte pairs,258 equal exits and32 byte differences exactly corresponding to those16 safeguards. Ten additional exit-only differences are original infinite-loop failures on no-op corrections (exit2 versus native uncorrectable offense/exit1). All580 second passes are byte-stable, including those original failure states; stability does not turn the failing Ruby runs into passes. The driver now recognizes the original loop diagnostic and replays those10 modes separately without an allowlist. One further nested-predicate source triggers original Parser::ClobberingError and writes invalid code in both CLI modes; native reports both offenses and preserves valid source. Its nondestructive original diagnostics and failure evidence are recorded separately. No scheduling-engine changes were made.
 
 Four actual-production-config modes and final clean states pass; the full native suite passes894 tests, one pre-existing ignored. Additional command-unary receiver forms, encoded source, code-plus-DATA normalization and unreviewed dynamic/reflective method behavior remain bounded follow-ups; generic scheduling and syntax expansion remain deferred.
+
+
+## Layout/LeadingCommentSpace
+
+Reviewed the complete pinned original cop's regexp, first-line exceptions, Doxygen and Gemfile option branches. All21 unchanged original examples pass and26 path-aware source/config states regenerate identically. The additional112 original states give138 exact diagnostic/message/full-comment range and corrected-byte matches, with no declared safeguards in the pinned supported-option domain.
+
+The port fixes the incorrect one-character highlight and acceptance of consecutive shebangs after line1, and uses Ruby's ASCII whitespace set including vertical tab. Coverage includes hash runs/toggles/equals, inline comments, Unicode, whitespace, CRLF, magic comments, string/heredoc/block-comment negatives, data-only input and all four supported option combinations. Gemfile/config.ru and nested-name cases use their actual fixture paths. Existing opt-in native RBS/Steep annotation settings, absent from pinned1.65.1 and unused by Wistia, remain separately tested native extensions; parity is not claimed for enabling those unsupported reference options.
+
+The original capture helper now records paths and retains distinct path cases during deduplication; the Rust replay honors them. The real CLI comparator creates relative fixture paths inside its temporary root and checks both engines' first/final inspected-file counts, avoiding a filename-only false pass. Unsupported absolute/escaping paths fail explicitly instead of silently changing the specimen. Existing fixtures without paths retain the prior default. The Ruby helper passes the Wistia Ruby3.4 lint configuration, and its style-only normalization leaves all26 original observations unchanged.
+
+Real CLI validation covers276 safe/aggressive modes: all276 match bytes, exits and inspected-file counts, with one inspected file per engine in every mode. All552 second passes are stable. Four actual-production-config modes and final clean states pass; the complete native suite passes896 tests, one pre-existing ignored. Additional encoded/BOM source, code-plus-DATA normalization and unreviewed comment/token families remain bounded follow-ups; correction scheduling remains deferred.

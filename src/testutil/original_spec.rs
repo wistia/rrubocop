@@ -11,7 +11,12 @@ pub fn assert_original_spec_parity(cop: &dyn Cop, fixture: &str) {
     let mut failures = Vec::new();
     for case in cases.as_array().unwrap() {
         let original = case["original"].as_str().unwrap();
-        let source = SourceFile::from_bytes("test.rb", original.as_bytes().to_vec());
+        let source = SourceFile::from_bytes(
+            case.get("path")
+                .and_then(serde_json::Value::as_str)
+                .unwrap_or("test.rb"),
+            original.as_bytes().to_vec(),
+        );
         let tree = crate::parse::parse_ruby(&source).unwrap();
         let map = CodeMap::from_tree(tree.root_node(), source.as_bytes());
         let config = CopConfig {
