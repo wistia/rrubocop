@@ -16,6 +16,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/Validation', 'validates_presence_of :name', model, service),
  ('Performance/StartWith', r"str.match?(/\Aabc/)", model, service),
  ('Performance/EndWith', r"str.match?(/abc\z/)", model, service),
  ('Performance/DeletePrefix', r"str.gsub(/\Aprefix/, '')", model, service),
@@ -61,13 +62,20 @@ cases += [dict(cop='Rails/CreateTableWithTimestamps', source='create_table :user
 cases += [dict(cop='Rails/CreateTableWithTimestamps', source='create_table :users\n', path='db/schema.rb', positive=True, force_exclusion=False),
           dict(cop='Rails/Blank', source='items.nil? || items.empty?\n', path='vendor/framework_parity_probe.rb', positive=False),
           dict(cop='Rails/Blank', source='items.nil? || items.empty?\n', path='vendor/framework_parity_probe.rb', positive=True, force_exclusion=False)]
+cases += [dict(cop='Lint/RedundantCopDisableDirective', extra_cops=['Rails/Validation'],
+               source='# rubocop:disable Rails/Validation\n'+body+'\n# rubocop:enable Rails/Validation\n',
+               path=str(a.ruby_project/model), positive=positive)
+          for body,positive in [('validates_presence_of attrs',False),('validates_presence_of :name',False),('validates_presence_of',True),('puts :hello',True)]]
 severity = dict(C='convention', W='warning', E='error', F='fatal', R='refactor', I='info')
 env = {**os.environ, 'ASDF_RUBY_VERSION':'3.4.9', 'RRUBOCOP_CACHE_DIR':str(a.output/'native-cache'), 'RUBOCOP_CACHE_ROOT':str(a.output/'ruby-cache')}
 a.output.mkdir(parents=True, exist_ok=True)
+auxiliary_config=a.output/'auxiliary-policy.yml'
+auxiliary_config.write_text('inherit_from: '+json.dumps(str(a.ruby_project/'.rubocop.yml'))+'\nLint/RedundantCopDisableDirective:\n  Enabled: true\nRails/Validation:\n  Include:\n    - '+json.dumps(str(a.ruby_project/'app/models/**/*.rb'))+'\n')
 
 def observe(command, case):
     flags = ['--force-exclusion'] if case.get('force_exclusion',True) else []
-    result = subprocess.run(command + ['--stdin', case['path'], '--only', case['cop'], '--format', 'json', '--cache', 'false'] + flags, input=case['source'], capture_output=True, text=True, cwd=a.ruby_project, env=env, timeout=30)
+    selection=['--config',str(auxiliary_config)] if case.get('extra_cops') else ['--only',case['cop']]
+    result = subprocess.run(command + ['--stdin', case['path'], '--format', 'json', '--cache', 'false'] + selection + flags, input=case['source'], capture_output=True, text=True, cwd=a.ruby_project, env=env, timeout=30)
     if result.returncode not in (0, 1):
         return dict(error=result.stderr, code=result.returncode)
     output=json.loads(result.stdout)
@@ -95,7 +103,7 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
 failures=[row for row in results if not row['matches']]
 missing_positives=[row['cop'] for row in results if row['positive'] and ('offenses' not in row['ruby'] or not row['ruby']['offenses'])]
 (a.output/'results.json').write_text(json.dumps(results,indent=2)+'\n')
-summary=dict(cases=len(results),rules=len(rows),differences=len(failures),missing_positive_controls=missing_positives)
+summary=dict(cases=len(results),production_scope_cases=sum(not c.get('extra_cops') for c in cases),auxiliary_policy_cases=sum(bool(c.get('extra_cops')) for c in cases),rules=len(rows),auxiliary_rules=sorted({c['cop'] for c in cases}-{r[0] for r in rows}),differences=len(failures),missing_positive_controls=missing_positives)
 (a.output/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps(summary,indent=2))
 raise SystemExit(bool(failures or missing_positives))

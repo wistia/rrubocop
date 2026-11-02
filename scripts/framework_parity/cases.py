@@ -85,6 +85,21 @@ def cases():
     for cop,pattern in (("Performance/StartWith",r"\Aabc"),("Performance/EndWith",r"abc\z")):
         for source in (f"str\r\n .match?(/{pattern}/)",f"str.match?(\r\n /{pattern}/)",f"if str =~\r\n /{pattern}/; work; end"):
             add(cop,source)
+    for kind in ("acceptance","comparison","confirmation","exclusion","format","inclusion","length","numericality","presence","absence","size","uniqueness"):
+        for args in (":name", ":name, :age", "[:name, :age]", "[:name, :age].freeze", "%i[name age]", "%i[name age].freeze", "%w[name age]", ":name, minimum: 1", ":name, {minimum: 1}"):
+            add("Rails/Validation",f"validates_{kind}_of {args}")
+        add("Rails/Validation",f"validates_{kind}_of(:name, :age)")
+    for source in ("validates_presence_of", "validates_presence_of()", "self.validates_presence_of :name", "Other.validates_presence_of :name", "validates_presence_of attrs", "validates_presence_of ATTRS", "attrs = [:name]; validates_presence_of attrs", "validates_presence_of *attrs", "validates_presence_of :name, *attrs, :age, allow_nil: true", "validates_presence_of [:name, [:age]]", "validates_presence_of [:name, attributes]", "validates_presence_of []", "validates_presence_of %i[]", "validates_presence_of %W[#{field}]", "validates_presence_of %I[#{field}]", r"validates_presence_of %w[a\ b]", "validates_presence_of %w[é]", "validates_presence_of [:name, # keep\n :age]", "validates_presence_of [:name].freeze(&probe)", "validates_presence_of [:name].freeze(1)", "validates_presence_of ATTRS.freeze", "validates_presence_of 'name'.freeze", "validates_presence_of [:name]&.freeze", "validates_presence_of freeze", "validates_presence_of freeze()", "def configure(freeze); validates_presence_of freeze; end", "validates_presence_of :name, **options", "validates_presence_of :name, allow_nil: true, allow_blank: false", "validates_presence_of :name, :allow_nil => true", "validates_presence_of :name, 'allow_nil' => true", "validates_presence_of :name, # keep\n allow_nil: true", "validates_presence_of :name do; work; end", "validates_presence_of [:name].freeze do; work; end", "validates_presence_of :name, options.freeze", "validates_presence_of 1", "validates_presence_of -1", "validates_presence_of +1.5", "validates_presence_of ~1", "validates_presence_of 1..2", "validates_presence_of true", "validates_presence_of nil", "validates_presence_of /name/", "validates_presence_of :\"#{field}\"", "validates_presence_of \"#{field}\"", "validates_presence_of <<~ATTR\nname\nATTR", "def configure(*); validates_presence_of(*); end"):
+        add("Rails/Validation",source)
+    add("Rails/Validation","validates_presence_of :name",AutoCorrect="disabled")
+    for source in ("validates_presence_of attrs", "validates_presence_of :name", "validates_presence_of", "puts :hello"):
+        add("Rails/Validation",f"# rubocop:disable Rails/Validation\n{source}\n# rubocop:enable Rails/Validation")
+    for argument in ("+1", "+1.5", "+1.2r", "+1i", "+name", '+"name"', "+(1)", "++1", "+1 +2", "+1..2", "+1 && ready", "+1 and ready", "+1 ? yes : no", "+1 rescue fallback"):
+        add("Rails/Validation",f"validates_presence_of {argument}")
+    for source in ("validates_presence_of(+1.5)", "wrapper(validates_presence_of +1, :name)", "!validates_presence_of +1.5", "self.validates_presence_of +1", "validates_presence_of = 1; validates_presence_of +1.5"):
+        add("Rails/Validation",source)
+    for source in ("validates_presence_of [:name, :age], allow_nil: true", "validates_presence_of fields, allow_nil: true", "validates_presence_of *[:name, :age]", "validates_presence_of *[:name, [:age]]", "validates_presence_of [:name], :age", "validates_presence_of :age, [:name]"):
+        add("Rails/Validation",source)
     for selector in ("select", "filter", "find_all", "reject"):
         for counter in ("count", "length", "size"):
             add("Performance/Count", f"items.{selector} {{ |item| item.active? }}.{counter}")

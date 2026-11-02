@@ -699,3 +699,52 @@ accepts it. Preserving its token role avoids inventing a binary-spacing edit;
 complete syntax equivalence and logical argument grouping remain separate work.
 Core owns the operator-spacing consumer, while Validation integration continues.
 No additional cop is counted implemented by this helper checkpoint.
+
+### Rails/Validation and command argument bounds
+
+Ported and post-reviewed rubocop-rails 2.26.0 `validation.rb`, every original
+validation spec, all 12 macro names (including actual size alias behavior), and
+the pinned AST Node#literal? categories. Covers positional/parenthesized attributes,
+arrays/frozen/percent arrays, implicit/explicit hashes and splats, argument/type
+negatives, receiver/local-variable roles, interpolation, comments, disabled
+correction and signed command grouping. Uses existing local/vcall scope helpers;
+shared `command_unary_plus_call` now preserves original call bounds and argument
+partitions through binary/range/ternary grouping and first command arguments.
+The 234 original syntax-accepted/error-free-native source/target combinations
+match original selector, receiver, call-source and argument-source bounds. Native
+parser-error forms remain explicitly unsupported instead of inventing an AST.
+For bare signed commands whose generated keyword arguments cannot be represented
+by the native parser, detection is retained and correction is declined.
+
+Original on_send returns from *inside* its corrector for unsupported trailing
+arguments, before Base#add_offense appends the offense. Disabled lines bypass
+that block and still register disabled offenses. Native reproduces this pre-filter
+behavior, retaining ordinary no-offense negatives and correct redundant-disable
+policy. Four actual CLI policy probes cover supported/unsupported/no-argument/
+unrelated bodies. Wistia disables Lint/RedundantCopDisableDirective by default;
+the auxiliary probes explicitly enable it in an inherited temporary test config
+and use the full cop set, because original CLI forbids selecting that auditor
+with --only. No production configuration or enforcement changed.
+
+The old ActiveModel 8.1.3.1 `_merge_attributes` recursively flattens attributes;
+generic `validates` does not. Original correction breaks valid nested arrays,
+array attributes followed by options, and unknown/nested splats. Native requires
+known scalar attributes or proved-flat literal splats, expands only supported
+last arrays, and preserves uncertain/known unsafe cases as uncorrectable warnings.
+It also guards empty/dynamic percent-array invalid output, erased comments,
+frozen-call argument side effects and non-array frozen receivers. Original frozen
+bare calls crash on nil#parent; frozen hashes crash on HashNode#percent_literal?.
+These remain explicit upstream errors, including the unavailable corrected
+runtime comparison for the frozen-hash program. The strict writer now records
+that missing reference result and native preservation rather than aborting with
+a KeyError; no difference is suppressed.
+
+Focused gate: 207 original cases, 414 second-pass states, 11 trusted ActiveModel
+programs, all native programs preserving behavior. Non-crashing detections,
+messages and ranges match. There are 340 retained events: 105 metadata, 105 safe
+bytes, 105 all bytes, 14 runtime, nine upstream errors and two unavailable runtime
+references. Full regression: 2014 originals, 4028 second passes, 66 trusted programs;
+2715 total prior/explicit events (previous 2375 plus these 340), with no unexplained
+new difference. Native suite passes 919 tests, 1 ignored probe. All 81 production
+scope probes across 38 reviewed rules and four auxiliary policy probes pass.
+Totals: 38 reviewed implementations, 35 baseline stubs replaced, 32 stubs remain.

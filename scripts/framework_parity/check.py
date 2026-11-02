@@ -64,8 +64,15 @@ for case in rows:
     original = observe(case['source'])
     row = dict(id=case['id'], original=original, modes={})
     for mode in ('safe', 'all'):
-        ruby = observe(reference[case['id']][mode]['source'])
+        expected = reference[case['id']].get(mode)
         rust = observe(results[case['id'], mode]['source'])
+        if not isinstance(expected, dict) or 'source' not in expected:
+            unavailable = dict(unavailable=True, error=reference[case['id']].get('error', 'No corrected source returned'))
+            row['modes'][mode] = dict(ruby=unavailable, rust=rust, equivalent=False,
+                                     native_preserves_original=original['exit_code'] == rust['exit_code'] and original['stdout'] == rust['stdout'])
+            failures.append(dict(id=case['id'], kind='runtime_reference_unavailable', mode=mode, ruby=unavailable, rust=rust))
+            continue
+        ruby = observe(expected['source'])
         equal = ruby['exit_code'] == rust['exit_code'] and ruby['stdout'] == rust['stdout']
         row['modes'][mode] = dict(ruby=ruby, rust=rust, equivalent=equal, native_preserves_original=original['exit_code'] == rust['exit_code'] and original['stdout'] == rust['stdout'])
         if not equal:

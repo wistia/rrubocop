@@ -1,5 +1,16 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; validates_presence_of [:name, :age], allow_nil: true; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; fields = [:name, [:age]]; validates_presence_of *fields; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; fields = [:name, :age]; validates_presence_of fields, allow_nil: true; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name; validates_presence_of :name, allow_nil: true; end\nform = Form.new(name: nil)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :age; validates_numericality_of :age, greater_than: 0; end\nform = Form.new(age: -1)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; validates_presence_of [:name, :age].freeze; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; validates_presence_of [:name, [:age]]; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; fields = [:name, :age]; validates_presence_of [fields]; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name; field = :name; validates_presence_of %I[#{field}]; end\nform = Form.new(name: nil)\np [form.valid?, form.errors.details]\n"),
+    ("Rails/Validation", "require 'active_model'\n$calls = 0\nclass Form; include ActiveModel::Model; attr_accessor :name; def self.probe; $calls += 1; -> {}; end; validates_presence_of [:name].freeze(&probe); end\nform = Form.new(name: nil)\np [form.valid?, form.errors.details, $calls]\n"),
+    ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name; validates_presence_of :name, {message: 'missing'}.freeze; end\nform = Form.new(name: nil)\np [form.valid?, form.errors.details]\n"),
     ("Performance/EndWith", "left = 'no'\nright = 'suffix'\np(/suffix\\z/.match?(left || right))\n"),
     ("Performance/StartWith", "value = 'prefixbody'\np :yes if value.match(/\\Aprefix/) { p :work; true }\n"),
     ("Performance/EndWith", "value = 'bodysuffix'\np :yes if value.match(/suffix\\z/) { p :work; true }\n"),
