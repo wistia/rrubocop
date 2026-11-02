@@ -260,3 +260,30 @@ while accessing the missing previous argument. Rust still reports those
 inputs but withholds the corresponding correction; both safeguards have
 dedicated regression tests. These cases are separate from the 82 exact
 reference replays.
+
+## RedundantArrayConstructor
+
+The sixth formerly inert Style rule is implemented from the complete pinned
+Ruby 1.65.1 `lib/rubocop/cop/style/redundant_array_constructor.rb`. All 13
+unchanged upstream specs pass in Ruby; the matrix includes 37 exact original
+source/config states after independent probes. Branches include root and
+qualified Array.new, Array[], bare Array conversion, percent word/symbol
+arrays, splats, nested element expressions, receiver chains, comments inside
+retained arrays, and negative argument-count/namespace/safe-navigation cases.
+All 134 Style tests pass. Actual CLI modes pass 74 correction comparisons
+and 74 idempotence checks.
+
+Independent original-Ruby probes confirm that an attached constructor block
+is left on a bare literal after correction and that explicit `Array.[](1)`
+becomes invalid `[](1)`; Ruby's compiler rejects both corrected forms. The
+original also removes constructor comments outside the retained array. Rust
+reports without correcting those inputs. It also refuses lossy conversion of
+non-UTF-8 literal bytes. These explicit safeguards pass dedicated Rust tests
+and eight actual CLI source-preservation/reporting checks. The no-argument
+explicit `Array.[]` form remains safely correctable and is compared to Ruby.
+
+Seven of the original 13 Style stubs remain: ComparableClamp, EachWithObject,
+ExactRegexpMatch, RedundantRegexpArgument, RedundantRegexpConstructor,
+NonNilCheck and TrivialAccessors. Remaining correction gaps such as
+RedundantParentheses and UselessAssignment, plus HashSyntax shorthand branches,
+remain queued in the exhaustive inventory.
