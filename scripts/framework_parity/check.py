@@ -54,8 +54,26 @@ for case in rows:
         name = case['id'] + ':' + mode + ':second-pass'
         if results[name, mode].get('source') != initial[case['id'], mode].get('source'):
             failures.append(dict(id=case['id'], kind='non_idempotent', mode=mode))
+runtime_results = []
+def observe(source):
+    result = subprocess.run(['ruby', '-e', source], cwd=args.ruby_project, capture_output=True, text=True, timeout=5)
+    return dict(exit_code=result.returncode, stdout=result.stdout, stderr=result.stderr)
+for case in rows:
+    if not case.get('trusted_runtime'):
+        continue
+    original = observe(case['source'])
+    row = dict(id=case['id'], original=original, modes={})
+    for mode in ('safe', 'all'):
+        ruby = observe(reference[case['id']][mode]['source'])
+        rust = observe(results[case['id'], mode]['source'])
+        equal = ruby['exit_code'] == rust['exit_code'] and ruby['stdout'] == rust['stdout']
+        row['modes'][mode] = dict(ruby=ruby, rust=rust, equivalent=equal, native_preserves_original=original['exit_code'] == rust['exit_code'] and original['stdout'] == rust['stdout'])
+        if not equal:
+            failures.append(dict(id=case['id'],kind='runtime',mode=mode,ruby=ruby,rust=rust))
+    runtime_results.append(row)
+(args.output / 'runtime.json').write_text(json.dumps(runtime_results, indent=2))
 (args.output / 'failures.json').write_text(json.dumps(failures, indent=2))
-summary = dict(original_cases=len(rows), second_pass_cases=len(state_rows), failures=len(failures), failing_cops=sorted(set(f['id'].split(':')[0] for f in failures)))
+summary = dict(original_cases=len(rows), second_pass_cases=len(state_rows), trusted_runtime_scenarios=len(runtime_results), failures=len(failures), failing_cops=sorted(set(f['id'].split(':')[0] for f in failures)))
 (args.output / 'summary.json').write_text(json.dumps(summary, indent=2))
 print(json.dumps(summary, indent=2))
 raise SystemExit(bool(failures))
