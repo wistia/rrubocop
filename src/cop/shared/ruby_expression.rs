@@ -286,6 +286,17 @@ pub fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> 
 pub fn eql_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
     compare_expression(source, left, right, true)
 }
+fn integer_ast(source: &SourceFile, node: Node<'_>) -> Option<num_bigint::BigInt> {
+    if node.kind() == "identifier"
+        && node_bytes(source, node) == b"__LINE__"
+        && crate::cop::ported::bare_call_identifier(source, node)
+    {
+        Some((node.start_position().row + 1).into())
+    } else {
+        integer_value(source, node)
+    }
+}
+
 fn compare_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>, strict: bool) -> bool {
     let same_expression = |source: &SourceFile, left: Node<'_>, right: Node<'_>| {
         compare_expression(source, left, right, strict)
@@ -296,7 +307,7 @@ fn compare_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>, stri
     if let (Some(a), Some(b)) = (rational_value(source, left), rational_value(source, right)) {
         return a == b;
     }
-    if let (Some(a), Some(b)) = (integer_value(source, left), integer_value(source, right)) {
+    if let (Some(a), Some(b)) = (integer_ast(source, left), integer_ast(source, right)) {
         return a == b;
     }
     if let (Some(a), Some(b)) = (float_value(source, left), float_value(source, right)) {
