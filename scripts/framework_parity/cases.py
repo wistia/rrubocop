@@ -10,6 +10,25 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    for body in ("(has_many :children)", "begin; has_many :children; end", "if flag; has_many :children; end", "(has_many :children do; work; end)"):
+        for prefix in ("", "work; "):
+            add("Rails/HasManyOrHasOneDependent",f"class Model; with_options dependent: :destroy do; {prefix}{body}; end; end")
+    for ruby in (2.5,2.7,3.4):
+        for source in ("with_options dependent: :destroy do; _1.has_many :children; end", "with_options dependent: :destroy do; has_many :children do; _1; end; end"):
+            add("Rails/HasManyOrHasOneDependent",source,TargetRubyVersion=ruby)
+    for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-dependent-original-spec.json").read_text())["cases"]:
+        add("Rails/HasManyOrHasOneDependent",row["source"].rstrip("\n"),**row["config"])
+    for macro in ("has_many", "has_one"):
+        for receiver in ("", "self.", "object.", "object&."):
+            for options in ("", ", dependent: nil", ", dependent: false", ", dependent: :destroy", ", through: nil", ", through: false", ", through: :other", ", class_name: :Child", ", **options", ", **{dependent: :destroy}", ", **{}, dependent: :destroy", ", **options, dependent: nil", ", 'dependent' => :destroy", ", {dependent: :destroy}", ", {}"):
+                add("Rails/HasManyOrHasOneDependent", f"class Model; {receiver}{macro} :children{options}; end")
+    for body in ("has_many :children", "has_many :children; work", "work; has_many :children", "has_many :children do; work; end", "has_one :child do; work; end", "has_many :children do |x|; work; end", "has_many :children do; _1; end"):
+        for wrapper in ("{}", "class Model; {}; end", "class Model < ActiveResource::Base; {}; end", "class Model < ::ActiveResource::Base; {}; end", "class Model < Other::ActiveResource::Base; {}; end", "with_options dependent: :destroy do; {}; end", "with_options dependent: :destroy do; work; {}; end", "with_options dependent: :destroy do; with_options class_name: 'Child' do; {}; end; end", "with_options dependent: :destroy do; work; with_options class_name: 'Child' do; {}; end; end", "object.with_options dependent: :destroy do; {}; end"):
+            add("Rails/HasManyOrHasOneDependent", wrapper.format(body))
+    for definition in ("def readonly? = true", "def readonly? = false", "def readonly? = (true)", "def readonly?; true; end", "def readonly?(); true; end", "def readonly?; false; end", "def readonly?(x); true; end", "def self.readonly?; true; end", "def readonly?; work; true; end", "def readonly?; (true); end", "def readonly?; true; ensure; work; end", "class Nested; def readonly?; true; end; end", "ActiveResource::Base"):
+        add("Rails/HasManyOrHasOneDependent",f"class Model; has_many :children; {definition}; end")
+    for source in ("class Model; has_many; end", "class Model; has_many dependent: :destroy; end", "class Model; has_many :children, -> { work }; end", "class Model; has_many :children, dependent:; end", "with_options({}) { has_many :children }", "with_options dependent: nil do |a,b|; a.has_many :children; end"):
+        add("Rails/HasManyOrHasOneDependent",source)
     for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-inverse-of-original-spec.json").read_text())["cases"]:
         add("Rails/InverseOf",row["source"].rstrip("\n"),**row["config"])
     for macro in ("has_many", "has_one", "belongs_to"):
