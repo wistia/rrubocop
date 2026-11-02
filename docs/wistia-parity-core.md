@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Twenty-two owned rules now have implemented behavior backed by original-Ruby
-comparisons, including twelve of the original thirteen direct-file Style
+Twenty-three owned rules now have implemented behavior backed by original-Ruby
+comparisons, including all thirteen original direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. HashSyntax shorthand branches and additional
 UselessAssignment capture combinations remain under review. The exhaustive
-367-rule inventory retains 345 queued validation entries; some already had
+367-rule inventory retains 344 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -509,3 +509,14 @@ A separate14-mode original/native CLI probe confirmed a source-semantics gap bey
 Imported framework1ad6ac3's verified `shared::command_unary_plus` role adapter and made SpaceAroundOperators skip those unary signs while retaining genuine binary operators. The adapter is deliberately an operator-role projection, not a full command-argument AST. All318 original lexer-role observations regenerate unchanged across target Ruby2.5/3.0/3.4; focused native checks and Ruby helper lint pass. The Layout corpus now replays138 exact diagnostic/message/range/correction states.
 
 The previously failing14 real CLI modes now match original bytes and exits completely, and all28 original/native second passes remain stable. The regression includes prints, nested command operators, explicit parentheses, receiver calls and declared-local controls. Eight actual-production-config modes under app/models and eight final-state checks also pass. The integrated native suite passes883 tests, one pre-existing ignored. Full command-call argument grouping remains a separate framework adapter task; cross-cop scheduling is still deferred.
+
+
+## Style/TrivialAccessors
+
+Reviewed the full pinned `rubocop-1.65.1/lib/rubocop/cop/style/trivial_accessors.rb`, AllowedMethods defaults, MethodIdentifierPredicates assignment-method classification, and the unchanged upstream spec. All37 original examples pass. Independent scope/configuration investigations expand the captured corpus to166 exact diagnostic/message/range states:155 exact corrected states and11 explicitly withheld unsafe or insufficiently proven corrections.
+
+Branches cover readers/writers and argument roles, ExactNameMatch, AllowedMethods overrides and initialize, AllowPredicates, AllowDSLWriters, IgnoreClassMethods, arbitrary/self singleton receivers, nearest class/module/eigenclass scope, ordinary versus numbered instance_eval blocks, top-level method grouping, visibility calls, endless methods, Unicode, comments and observed definition values. The previously verified numbered-parameter traversal is shared with EachWithObject rather than duplicated; that cop's115 original states remain unchanged.
+
+The safeguards retain offenses for comments, observed method-definition results, predicate singleton readers, nested methods, instance_exec, numbered instance_eval and conservative unknown-block contexts. Trusted authored Ruby probes confirm that the predicate correction raises NameError, replacing an observed def result changes Symbol to Array, and instance_exec replacement raises NoMethodError. These are separate intentional differences rather than parity successes. Arbitrary dynamic attribute-method overrides, encoded source and additional reflective contexts remain unproven.
+
+Real original/native CLI validation covers332 safe/aggressive modes:310 equal corrected-byte pairs,312 equal exit pairs, exactly22 documented safeguard byte differences and no internal cop errors. All664 original/native second passes remain stable. Four actual Wistia-config app/models modes produce expected bytes and clean final states. The integrated native suite passes885 tests, one pre-existing ignored. A separate final source/branch review and unchanged37-example original-spec rerun passed before checkpointing; these are isolated-rule results, with generic correction scheduling still deferred.

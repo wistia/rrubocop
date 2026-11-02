@@ -83,51 +83,7 @@ pub(super) fn assigned(source: &SourceFile, node: Node<'_>, name: &[u8]) -> bool
             .into_iter()
             .any(|n| assigned(source, n, name))
 }
-pub(super) fn numbered(source: &SourceFile, node: Node<'_>) -> Option<u8> {
-    if node.kind() == "identifier" {
-        if node.parent().is_some_and(|p| {
-            p.child_by_field_name("method") == Some(node) || matches!(p.kind(), "alias" | "undef")
-        }) {
-            return None;
-        }
-    } else {
-        return None;
-    }
-    match node_bytes(source, node) {
-        [b'_', digit @ b'1'..=b'9'] => Some(*digit - b'0'),
-        _ => None,
-    }
-}
-pub(super) fn outer_values(node: Node<'_>) -> Option<Vec<Node<'_>>> {
-    match node.kind() {
-        "block" | "do_block" | "lambda" | "method" | "alias" | "undef" => Some(Vec::new()),
-        "singleton_method" => Some(node.child_by_field_name("object").into_iter().collect()),
-        "singleton_class" => Some(node.child_by_field_name("value").into_iter().collect()),
-        "class" | "module" => Some(
-            [
-                node.child_by_field_name("name"),
-                node.child_by_field_name("superclass"),
-            ]
-            .into_iter()
-            .flatten()
-            .collect(),
-        ),
-        _ => None,
-    }
-}
-pub(super) fn arity(source: &SourceFile, node: Node<'_>) -> u8 {
-    if let Some(headers) = outer_values(node) {
-        return headers
-            .into_iter()
-            .map(|n| arity(source, n))
-            .max()
-            .unwrap_or(0);
-    }
-    numbered(source, node).unwrap_or(0).max(
-        children(node)
-            .into_iter()
-            .map(|n| arity(source, n))
-            .max()
-            .unwrap_or(0),
-    )
-}
+pub(super) use crate::cop::shared::{
+    numbered_parameter_arity as arity, numbered_reference as numbered,
+    outer_scope_values as outer_values,
+};
