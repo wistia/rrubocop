@@ -157,6 +157,9 @@ fn string_shape(source: &SourceFile, node: Node<'_>) -> Option<StringAst> {
 }
 fn symbol_shape(source: &SourceFile, node: Node<'_>) -> Option<StringAst> {
     let value = crate::cop::ported::static_symbol(source, node)?;
+    if value.is_empty() {
+        return Some(StringAst::Dstr(Vec::new()));
+    }
     let parts = crate::cop::ported::ruby_string_parts(source, node);
     if let Some(parts) = parts.filter(|parts| parts.len() > 1) {
         Some(StringAst::Dstr(
@@ -166,6 +169,13 @@ fn symbol_shape(source: &SourceFile, node: Node<'_>) -> Option<StringAst> {
         Some(StringAst::Str(value))
     }
 }
+pub fn plain_symbol(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    match symbol_shape(source, node)? {
+        StringAst::Str(value) => Some(value),
+        StringAst::Dstr(_) => None,
+    }
+}
+
 fn same_heredoc(source: &SourceFile, left: Node<'_>, right: Node<'_>, strict: bool) -> bool {
     let same_expression = |source: &SourceFile, left: Node<'_>, right: Node<'_>| {
         compare_expression(source, left, right, strict)
@@ -657,6 +667,30 @@ mod tests {
                 "Node#eql?: {}",
                 case.source
             );
+        }
+    }
+    #[test]
+    fn plain_symbols_preserve_runtime_decoding_but_exclude_dynamic_ast_shapes() {
+        for (text, expected) in [
+            (":a", Some("a")),
+            (":\"a\"", Some("a")),
+            ("%s(a)", Some("a")),
+            (":\"\"", None),
+            (":''", None),
+            ("%s()", None),
+            (":\"a\nb\"", None),
+            ("\"a\"", None),
+        ] {
+            let source = SourceFile::from_bytes("symbol.rb", text.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            let node = tree.root_node().named_child(0).unwrap();
+            assert_eq!(plain_symbol(&source, node).as_deref(), expected, "{text}");
+            if matches!(text, ":\"\"" | ":''" | "%s()") {
+                assert_eq!(
+                    crate::cop::ported::static_symbol(&source, node).as_deref(),
+                    Some("")
+                );
+            }
         }
     }
 }
