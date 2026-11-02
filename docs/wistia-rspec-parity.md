@@ -469,3 +469,26 @@ outside strict parity successes. The trusted subject-hook runtime script passes
 four real RSpec examples, compares original/corrected memoized helpers and
 proxy-hook execution, and demonstrates registration, worker and scope effects
 that Ruby's broader deletion could discard. Fixture programs are not executed.
+
+## Batch 18: yielding stub implementations
+
+Yield replaces another initial stub, bringing the reviewed total to 67 original
+stubs plus fourteen existing rules (81 of 96). Thirteen original stubs and two
+existing implementations remain. The matrix contains 1,340 strict original-Ruby
+comparisons, 38 correction-disable controls and 29 separate safety safeguards.
+The native suite includes a regression for an additional original-rule crash.
+
+Distinct source review covers stub discovery within send expressions, sole block
+arguments, normal versus numbered parameters, safe and qualified calls, single,
+multiple and parenthesized bodies, and exact argument joining. Original Ruby
+moves yielded expressions from callback invocation to stub setup. Native reports
+these offenses but retains dynamic arguments, constants and mutable allocations,
+as well as comments. Trusted real RSpec mocks prove immutable yield sequences
+and return values match, and demonstrate both changed evaluation timing and
+mutable objects being unexpectedly shared by the broader Ruby rewrite.
+
+The valid source `receive(:bar) { |&block| }` crashes the original rule with
+NoMethodError at yield.rb:54 because it calls begin_type? on a nil body. Its source,
+pinned version and error are retained in original-rule-errors.json, separate from
+strict parity successes and invalid original syntax. Native preserves this source
+without crashing in detection, safe correction or all-correction modes.

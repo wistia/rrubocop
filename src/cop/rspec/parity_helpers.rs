@@ -853,3 +853,11 @@ fn same_regex(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
             _ => false,
         })
 }
+
+pub(super) fn stable_immutable_value(source: &SourceFile, node: Node<'_>) -> bool {
+    matches!(
+        node.kind(),
+        "integer" | "float" | "rational" | "complex" | "nil" | "true" | "false"
+    ) || symbol_node(node) && crate::cop::ported::static_symbol(source, node).is_some()
+        || node.kind() == "unary" && literal_or_const(source, node)
+}

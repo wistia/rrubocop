@@ -1115,5 +1115,177 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-dynamic-arg",
+    "source": "receive(:bar) { |&block| block.call(next_value) }\n",
+    "corrected": "receive(:bar) { |&block| block.call(next_value) }\n",
+    "safety_difference": "Retain lazy evaluation, fresh mutable yielded values and callback comments rather than moving them into stub setup.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_yield(next_value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_yield(next_value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-mutable-arg",
+    "source": "receive(:bar) { |&block| block.call([]) }\n",
+    "corrected": "receive(:bar) { |&block| block.call([]) }\n",
+    "safety_difference": "Retain lazy evaluation, fresh mutable yielded values and callback comments rather than moving them into stub setup.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 27,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_yield([])\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_yield([])\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-constant-arg",
+    "source": "receive(:bar) { |&block| block.call(Current) }\n",
+    "corrected": "receive(:bar) { |&block| block.call(Current) }\n",
+    "safety_difference": "Retain lazy evaluation, fresh mutable yielded values and callback comments rather than moving them into stub setup.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_yield(Current)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_yield(Current)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-comment",
+    "source": "receive(:bar) do |&block|\n # keep note\n block.call(1)\nend\n",
+    "corrected": "receive(:bar) do |&block|\n # keep note\n block.call(1)\nend\n",
+    "safety_difference": "Retain lazy evaluation, fresh mutable yielded values and callback comments rather than moving them into stub setup.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_yield(1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_yield(1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]

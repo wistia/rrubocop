@@ -201,5 +201,25 @@ fn explicit_autocorrection_disable_preserves_sources() {
             assert!(!diagnostics.is_empty());
         }
     }
-    assert_eq!(checked.len(), 37);
+    assert_eq!(checked.len(), 38);
+}
+
+#[test]
+fn original_rule_errors_do_not_crash_or_modify_source() {
+    let cases: Vec<Value> = serde_json::from_str(include_str!(
+        "../../../tests/fixtures/rspec-parity/original-rule-errors.json"
+    ))
+    .unwrap();
+    for case in cases {
+        let original = case["source"].as_str().unwrap();
+        for mode in [
+            AutocorrectMode::Off,
+            AutocorrectMode::Safe,
+            AutocorrectMode::All,
+        ] {
+            let (after, diagnostics) = inspect(&case, original, mode);
+            assert_eq!(after, original);
+            assert!(diagnostics.is_empty(), "{}", case["id"]);
+        }
+    }
 }

@@ -1,0 +1,21 @@
+[
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-empty-body",
+    "source": "receive(:bar) { |&block| }\n",
+    "corrected": "receive(:bar) { |&block| }\n",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "NoMethodError",
+      "message": "undefined method 'begin_type?' for nil",
+      "source": "lib/rubocop/cop/rspec/yield.rb:54 calling_block?",
+      "native_behavior": "No offense; preserve empty callback without crashing."
+    }
+  }
+]

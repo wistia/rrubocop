@@ -67225,5 +67225,848 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "yield_spec:0",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar) { |&block| block.call }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar) { |&block| block.call }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 28,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar).and_yield\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar).and_yield\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "yield_spec:1",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar) do |&block|\n  block.call\n  block.call\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar) do |&block|\n  block.call\n  block.call\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 28,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar).and_yield.and_yield\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar).and_yield.and_yield\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "yield_spec:2",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar) { |&block| block.call(1, 2) }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar) { |&block| block.call(1, 2) }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 28,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar).and_yield(1, 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar).and_yield(1, 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "yield_spec:3",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar) do |&block|\n   block.call(1)\n   block.call(2)\n end\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar) do |&block|\n   block.call(1)\n   block.call(2)\n end\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 28,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar).and_yield(1).and_yield(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar).and_yield(1).and_yield(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "yield_spec:4",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar).with(anything) { |&block| block.call }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar).with(anything) { |&block| block.call }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 43,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar).with(anything).and_yield\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar).with(anything).and_yield\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "yield_spec:5",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar) { |block| block.call }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar) { |block| block.call }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar) { |block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar) { |block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "yield_spec:6",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar) do |&block|\n  result = block.call\n  transform(result)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar) do |&block|\n  result = block.call\n  transform(result)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar) do |&block|\n  result = block.call\n  transform(result)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar) do |&block|\n  result = block.call\n  transform(result)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "yield_spec:7",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar) { _1.call }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar) { _1.call }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar) { _1.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar) { _1.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "yield_spec:8",
+    "cop": "RSpec/Yield",
+    "source": "allow(foo).to receive(:bar) do\n  result = _1.call\n  transform(result)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar) do\n  result = _1.call\n  transform(result)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/yield_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar) do\n  result = _1.call\n  transform(result)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar) do\n  result = _1.call\n  transform(result)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-qualified-receive",
+    "source": "allow(foo).to foo.receive(:bar) { |&block| block.call }\n",
+    "corrected": "allow(foo).to foo.receive(:bar) { |&block| block.call }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to foo.receive(:bar) { |&block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to foo.receive(:bar) { |&block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-safe-receive",
+    "source": "allow(foo).to foo&.receive(:bar) { |&block| block.call }\n",
+    "corrected": "allow(foo).to foo&.receive(:bar) { |&block| block.call }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to foo&.receive(:bar) { |&block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to foo&.receive(:bar) { |&block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-safe-block-call",
+    "source": "receive(:bar) { |&block| block&.call }\n",
+    "corrected": "receive(:bar) { |&block| block&.call }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { |&block| block&.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { |&block| block&.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-extra-parameter",
+    "source": "receive(:bar) { |value, &block| block.call }\n",
+    "corrected": "receive(:bar) { |value, &block| block.call }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { |value, &block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { |value, &block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-block-local",
+    "source": "receive(:bar) { |&block; local| block.call }\n",
+    "corrected": "receive(:bar) { |&block; local| block.call }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { |&block; local| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { |&block; local| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-explicit-block-call",
+    "source": "receive(:bar) { |&block| block.call {} }\n",
+    "corrected": "receive(:bar) { |&block| block.call {} }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { |&block| block.call {} }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { |&block| block.call {} }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-different-local",
+    "source": "receive(:bar) { |&block| other.call }\n",
+    "corrected": "receive(:bar) { |&block| other.call }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { |&block| other.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { |&block| other.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-no-receive",
+    "source": "other(:bar) { |&block| block.call }\n",
+    "corrected": "other(:bar) { |&block| block.call }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "other(:bar) { |&block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "other(:bar) { |&block| block.call }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-immutable-args",
+    "source": "receive(:bar) { |&block| block.call(:tag, nil, true, -2, 1r) }\n",
+    "corrected": "receive(:bar) { |&block| block.call(:tag, nil, true, -2, 1r) }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 48,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_yield(:tag, nil, true, -2, 1r)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_yield(:tag, nil, true, -2, 1r)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-nested-receive-argument",
+    "source": "configure(receive(:bar)) { |&block| block.call }\n",
+    "corrected": "configure(receive(:bar)) { |&block| block.call }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 25,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "configure(receive(:bar)).and_yield\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "configure(receive(:bar)).and_yield\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-parenthesized-single",
+    "source": "receive(:bar) { |&block| (block.call(1)) }\n",
+    "corrected": "receive(:bar) { |&block| (block.call(1)) }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_yield(1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_yield(1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-parenthesized-many",
+    "source": "receive(:bar) { |&block| (block.call(1); block.call(2)) }\n",
+    "corrected": "receive(:bar) { |&block| (block.call(1); block.call(2)) }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 43,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_yield(1).and_yield(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_yield(1).and_yield(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-empty-parentheses",
+    "source": "receive(:bar) { |&block| () }\n",
+    "corrected": "receive(:bar) { |&block| () }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `.and_yield`.",
+          "correctable": true,
+          "length": 15,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]

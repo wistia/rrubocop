@@ -921,7 +921,14 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/yield.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 22,
+    "deliberate_safeguards": [
+      "batch18:yield-dynamic-arg",
+      "batch18:yield-mutable-arg",
+      "batch18:yield-constant-arg",
+      "batch18:yield-comment"
+    ],
+    "post_implementation_review": "Pinned original algorithm and upstream specs reviewed separately: receive search, sole block argument, normal/numbered parameters, direct/parenthesized/multiple calls, exact argument formatting, qualified/safe negatives and comment preservation. Corrections require immutable literal arguments to preserve invocation timing and fresh allocations; trusted real RSpec mocks verify return/yield parity and expose timing/mutable hazards. Original empty callback crashes at yield.rb:54; recorded separately and native regression tested."
   }
 ]
