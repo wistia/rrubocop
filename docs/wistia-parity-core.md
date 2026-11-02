@@ -136,3 +136,24 @@ inline closers, per-item line separation, comment trivia, heredoc markers and
 last-line highlight selection are exercised. The pre-existing hash fixture's
 message was corrected to the unchanged pinned Ruby rule's `item of a hash`
 wording rather than preserving the old Rust placeholder wording.
+
+## EachForSimpleLoop
+
+The fifth batch implements this former Style stub from the complete pinned Ruby
+source and its 20 unchanged upstream specs. All 32 captured original/independent
+cases pass, including inclusive/exclusive ranges, nonzero/negative/radix bounds,
+explicit block parameters, safe navigation and numbered parameters. Actual CLI
+safe/all modes pass 64 correction comparisons and 64 idempotence checks.
+
+Additional explicit safety guards retain diagnostics without rewriting when the
+loop's Range return value is observed, when replacing the iterator would delete
+comments, or when Ruby 3.4's implicit `it` would receive different values. For
+example, the original Ruby rule rewrites `result = (1..5).each {}` into an Integer
+result, and `(3..7).each { puts it }` into `5.times { puts it }`. A trusted authored
+runtime probe confirms the latter changes `it` from `[3,4,5,6,7]` to `[0,1,2,3,4]`.
+Those semantic changes are not copied into Rust.
+
+A reverse-range concern was separately tested and disproven: Ruby's
+`(5..1).each {}` and its `-3.times {}` correction both execute zero iterations.
+This correction is retained and covered by the reference replay rather than
+being incorrectly treated as an upstream hazard.
