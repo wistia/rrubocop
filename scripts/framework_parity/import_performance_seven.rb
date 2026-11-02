@@ -7,6 +7,7 @@ UNKNOWN = Object.new.freeze
 
 def scalar(node, environment)
   case node
+  when Prism::InterpolatedStringNode then literal_text(node, environment) || UNKNOWN
   when Prism::StringNode then node.unescaped
   when Prism::SymbolNode then node.unescaped.to_sym
   when Prism::IntegerNode, Prism::FloatNode then node.value
@@ -28,6 +29,11 @@ def scalar(node, environment)
   when Prism::LocalVariableReadNode
     environment.fetch(node.name, UNKNOWN)
   when Prism::CallNode
+    if node.name == :new && node.receiver&.slice == "RuboCop::Config"
+      return scalar(node.arguments&.arguments&.first, environment)
+    end
+    return scalar(node.receiver, environment) if node.name == :freeze && node.receiver && node.arguments.nil?
+
     node.receiver.nil? && node.arguments.nil? ? environment.fetch(node.name, UNKNOWN) : UNKNOWN
   else UNKNOWN
   end
@@ -62,6 +68,22 @@ def let_definition(node)
 end
 
 def visit(node, environment, config_expression, path, rows, unresolved)
+  if node.is_a?(Prism::CallNode)
+    return if %i[shared_examples shared_examples_for].include?(node.name)
+
+    if %i[include_examples it_behaves_like].include?(node.name)
+      arguments = node.arguments&.arguments || []
+      name = scalar(arguments.first, environment)
+      if (block = environment.fetch(:__shared__, {})[name])
+        values = arguments.drop(1).map { |argument| scalar(argument, environment) }
+        parameters = block.parameters&.parameters&.requireds || []
+        child_environment = environment.dup
+        parameters.zip(values).each { |parameter, value| child_environment[parameter.name] = value }
+        visit(block, child_environment, config_expression, path, rows, unresolved)
+        return
+      end
+    end
+  end
   if node.is_a?(Prism::BlockNode)
     environment = environment.dup
     definitions = (node.body&.body || []).filter_map { |child| let_definition(child) }
@@ -69,6 +91,8 @@ def visit(node, environment, config_expression, path, rows, unresolved)
       definitions.each do |name, expression|
         if name == :cop_config
           config_expression = expression
+        elsif name == :config
+          environment[:__global_expression__] = expression
         else
           environment[name] = scalar(expression, environment)
         end
@@ -82,8 +106,18 @@ def visit(node, environment, config_expression, path, rows, unresolved)
   if node.is_a?(Prism::CallNode) && %i[expect_offense expect_no_offenses autocorrect_source].include?(node.name)
     argument = node.arguments&.arguments&.first
     source = literal_text(argument, environment)
+    substitutions = node.arguments&.arguments&.drop(1)&.filter_map do |argument|
+      scalar(argument, environment) if argument.is_a?(Prism::KeywordHashNode)
+    end || []
+    substitutions.each do |values|
+      next unless source.is_a?(String) && values.is_a?(Hash)
+
+      values.each { |key, value| source = source.gsub("%{#{key}}", value.to_s) unless value.equal?(UNKNOWN) }
+    end
     config = config_expression ? scalar(config_expression, environment) : {}
-    if source.is_a?(String) && config.is_a?(Hash)
+    global_config = environment[:__global_expression__] ? scalar(environment[:__global_expression__], environment) : {}
+    config = config.merge("GlobalConfig" => global_config) if config.is_a?(Hash) && global_config.is_a?(Hash) && !global_config.empty?
+    if source.is_a?(String) && config.is_a?(Hash) && global_config.is_a?(Hash)
       source = source.lines.reject { |line| line.match?(/\A[ \t]*\^/) }.join
       name = File.basename(path, "_spec.rb").split("_").map(&:capitalize).join
       rows << {cop: "Performance/#{name}", source:, config:, upstream: File.basename(path),
@@ -114,7 +148,17 @@ input, output = ARGV
 rows = []
 unresolved = []
 Dir[File.join(input, "*_spec.rb")].sort.each do |path|
-  visit(Prism.parse_file(path).value, {}, nil, path, rows, unresolved)
+  root = Prism.parse_file(path).value
+  shared = {}
+  pending = [root]
+  until pending.empty?
+    node = pending.pop
+    if node.is_a?(Prism::CallNode) && %i[shared_examples shared_examples_for].include?(node.name) && node.block
+      shared[scalar(node.arguments&.arguments&.first, {})] = node.block
+    end
+    pending.concat(node.compact_child_nodes)
+  end
+  visit(root, {__shared__: shared}, nil, path, rows, unresolved)
 end
 File.write(output, JSON.pretty_generate(rows) + "\n")
 File.write(output.sub(/\.json\z/, "-unresolved.json"), JSON.pretty_generate(unresolved) + "\n")

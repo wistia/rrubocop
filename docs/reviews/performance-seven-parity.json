@@ -1197,8 +1197,3317 @@
     },
     {
       "cop": "Performance/Detect",
-      "status": "pending",
-      "baseline": "unimplemented_noop_stub"
+      "status": "implemented_source_reviewed_with_safeguards",
+      "baseline": "unimplemented_noop_stub",
+      "original_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/detect.rb",
+      "original_spec": "tests/fixtures/performance-seven-upstream/detect_spec.rb",
+      "original_cases": 477,
+      "second_pass_cases": 954,
+      "exact_original_cases": 237,
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "strict_driver_exit": 1,
+      "strict_driver_failures": {
+        "all": 240,
+        "runtime": 1
+      },
+      "trusted_runtime_programs": 9,
+      "safeguards": [
+        {
+          "id": "Performance/Detect:performance-seven:1",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:2",
+          "source": "array&.select { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:4",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:6",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:7",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:8",
+          "source": "[1, 2, 3].select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:9",
+          "source": "array&.select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:10",
+          "source": "[1, 2, 3].select(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:11",
+          "source": "[1, 2, 3].select(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:12",
+          "source": "[1, 2, 3].select(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:13",
+          "source": "lazy.select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:14",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:15",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:20",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:21",
+          "source": "array&.find_all { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:23",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:25",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:26",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:27",
+          "source": "[1, 2, 3].find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:28",
+          "source": "array&.find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:29",
+          "source": "[1, 2, 3].find_all(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:30",
+          "source": "[1, 2, 3].find_all(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:31",
+          "source": "[1, 2, 3].find_all(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:32",
+          "source": "lazy.find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:33",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:34",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:39",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:40",
+          "source": "array&.filter { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:42",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:44",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:45",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:46",
+          "source": "[1, 2, 3].filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:47",
+          "source": "array&.filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:48",
+          "source": "[1, 2, 3].filter(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:49",
+          "source": "[1, 2, 3].filter(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:50",
+          "source": "[1, 2, 3].filter(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:51",
+          "source": "lazy.filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:52",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:53",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:59",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:60",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:62",
+          "source": "[1, 2, 3].select(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:63",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:64",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:66",
+          "source": "[1, 2, 3].find_all(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:67",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:68",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:70",
+          "source": "[1, 2, 3].filter(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:71",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:72",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:74",
+          "source": "[1, 2, 3].select(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:75",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:76",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:78",
+          "source": "[1, 2, 3].find_all(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:79",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:80",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:82",
+          "source": "[1, 2, 3].filter(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:85",
+          "source": "[1,2,3].select(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:88",
+          "source": "[1,2,3].select(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:91",
+          "source": "[1,2,3].select(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:94",
+          "source": "[1,2,3].select(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:95",
+          "source": "[1,2,3].select{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:97",
+          "source": "[1,2,3].select(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:106",
+          "source": "[1,2,3].find_all(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:109",
+          "source": "[1,2,3].find_all(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:112",
+          "source": "[1,2,3].find_all(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:115",
+          "source": "[1,2,3].find_all(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:116",
+          "source": "[1,2,3].find_all{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:118",
+          "source": "[1,2,3].find_all(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:127",
+          "source": "[1,2,3].filter(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:130",
+          "source": "[1,2,3].filter(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:133",
+          "source": "[1,2,3].filter(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:136",
+          "source": "[1,2,3].filter(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:137",
+          "source": "[1,2,3].filter{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:139",
+          "source": "[1,2,3].filter(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:147",
+          "source": "items.select { |item| item.even? }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:150",
+          "source": "lazy.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:151",
+          "source": "items&.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:trusted-performance-seven:13",
+          "source": "$calls=0; value=[1,2,3].select { |i| $calls+=1; true }.first; p [value,$calls]\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime"
+          ]
+        },
+        {
+          "id": "Performance/Detect:trusted-performance-seven:15",
+          "source": "value={a:1,b:2}; p value.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:1:safe:second-pass",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:1:all:second-pass",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:2:safe:second-pass",
+          "source": "array&.select { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:2:all:second-pass",
+          "source": "array&.select { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:4:safe:second-pass",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:4:all:second-pass",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:6:safe:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:6:all:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:7:safe:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:7:all:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:8:safe:second-pass",
+          "source": "[1, 2, 3].select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:8:all:second-pass",
+          "source": "[1, 2, 3].select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:9:safe:second-pass",
+          "source": "array&.select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:9:all:second-pass",
+          "source": "array&.select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:10:safe:second-pass",
+          "source": "[1, 2, 3].select(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:10:all:second-pass",
+          "source": "[1, 2, 3].select(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:11:safe:second-pass",
+          "source": "[1, 2, 3].select(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:11:all:second-pass",
+          "source": "[1, 2, 3].select(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:12:safe:second-pass",
+          "source": "[1, 2, 3].select(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:12:all:second-pass",
+          "source": "[1, 2, 3].select(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:13:safe:second-pass",
+          "source": "lazy.select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:13:all:second-pass",
+          "source": "lazy.select(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:14:safe:second-pass",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:14:all:second-pass",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:15:safe:second-pass",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:15:all:second-pass",
+          "source": "[1, 2, 3].select { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:20:safe:second-pass",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:20:all:second-pass",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:21:safe:second-pass",
+          "source": "array&.find_all { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:21:all:second-pass",
+          "source": "array&.find_all { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:23:safe:second-pass",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:23:all:second-pass",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:25:safe:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:25:all:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:26:safe:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:26:all:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:27:safe:second-pass",
+          "source": "[1, 2, 3].find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:27:all:second-pass",
+          "source": "[1, 2, 3].find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:28:safe:second-pass",
+          "source": "array&.find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:28:all:second-pass",
+          "source": "array&.find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:29:safe:second-pass",
+          "source": "[1, 2, 3].find_all(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:29:all:second-pass",
+          "source": "[1, 2, 3].find_all(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:30:safe:second-pass",
+          "source": "[1, 2, 3].find_all(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:30:all:second-pass",
+          "source": "[1, 2, 3].find_all(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:31:safe:second-pass",
+          "source": "[1, 2, 3].find_all(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:31:all:second-pass",
+          "source": "[1, 2, 3].find_all(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:32:safe:second-pass",
+          "source": "lazy.find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:32:all:second-pass",
+          "source": "lazy.find_all(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:33:safe:second-pass",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:33:all:second-pass",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:34:safe:second-pass",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:34:all:second-pass",
+          "source": "[1, 2, 3].find_all { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:39:safe:second-pass",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:39:all:second-pass",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:40:safe:second-pass",
+          "source": "array&.filter { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:40:all:second-pass",
+          "source": "array&.filter { |i| i % 2 == 0 }.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:42:safe:second-pass",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:42:all:second-pass",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:44:safe:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:44:all:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:45:safe:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:45:all:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:46:safe:second-pass",
+          "source": "[1, 2, 3].filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:46:all:second-pass",
+          "source": "[1, 2, 3].filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:47:safe:second-pass",
+          "source": "array&.filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:47:all:second-pass",
+          "source": "array&.filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:48:safe:second-pass",
+          "source": "[1, 2, 3].filter(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:48:all:second-pass",
+          "source": "[1, 2, 3].filter(&:even?).last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:49:safe:second-pass",
+          "source": "[1, 2, 3].filter(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:49:all:second-pass",
+          "source": "[1, 2, 3].filter(&:even?)[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:50:safe:second-pass",
+          "source": "[1, 2, 3].filter(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:50:all:second-pass",
+          "source": "[1, 2, 3].filter(&:even?)[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:51:safe:second-pass",
+          "source": "lazy.filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:51:all:second-pass",
+          "source": "lazy.filter(&:even?).first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:52:safe:second-pass",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:52:all:second-pass",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }[0]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:53:safe:second-pass",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:53:all:second-pass",
+          "source": "[1, 2, 3].filter { |i| i % 2 == 0 }[-1]\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": null
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:59:safe:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:59:all:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:60:safe:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:60:all:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:62:safe:second-pass",
+          "source": "[1, 2, 3].select(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:62:all:second-pass",
+          "source": "[1, 2, 3].select(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:63:safe:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:63:all:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:64:safe:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:64:all:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:66:safe:second-pass",
+          "source": "[1, 2, 3].find_all(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:66:all:second-pass",
+          "source": "[1, 2, 3].find_all(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:67:safe:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:67:all:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:68:safe:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:68:all:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:70:safe:second-pass",
+          "source": "[1, 2, 3].filter(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:70:all:second-pass",
+          "source": "[1, 2, 3].filter(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "detect"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:71:safe:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:71:all:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:72:safe:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:72:all:second-pass",
+          "source": "[1, 2, 3].select do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:74:safe:second-pass",
+          "source": "[1, 2, 3].select(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:74:all:second-pass",
+          "source": "[1, 2, 3].select(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:75:safe:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:75:all:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:76:safe:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:76:all:second-pass",
+          "source": "[1, 2, 3].find_all do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:78:safe:second-pass",
+          "source": "[1, 2, 3].find_all(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:78:all:second-pass",
+          "source": "[1, 2, 3].find_all(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:79:safe:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:79:all:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.first\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:80:safe:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:80:all:second-pass",
+          "source": "[1, 2, 3].filter do |i|\n  i % 2 == 0\nend.last\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:82:safe:second-pass",
+          "source": "[1, 2, 3].filter(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:82:all:second-pass",
+          "source": "[1, 2, 3].filter(&:blank?)\n.first['x']\n",
+          "config": {
+            "GlobalConfig": {
+              "Style/CollectionMethods": {
+                "PreferredMethods": {
+                  "detect": "find"
+                }
+              }
+            }
+          },
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:85:safe:second-pass",
+          "source": "[1,2,3].select(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:85:all:second-pass",
+          "source": "[1,2,3].select(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:88:safe:second-pass",
+          "source": "[1,2,3].select(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:88:all:second-pass",
+          "source": "[1,2,3].select(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:91:safe:second-pass",
+          "source": "[1,2,3].select(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:91:all:second-pass",
+          "source": "[1,2,3].select(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:94:safe:second-pass",
+          "source": "[1,2,3].select(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:94:all:second-pass",
+          "source": "[1,2,3].select(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:95:safe:second-pass",
+          "source": "[1,2,3].select{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:95:all:second-pass",
+          "source": "[1,2,3].select{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:97:safe:second-pass",
+          "source": "[1,2,3].select(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:97:all:second-pass",
+          "source": "[1,2,3].select(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:106:safe:second-pass",
+          "source": "[1,2,3].find_all(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:106:all:second-pass",
+          "source": "[1,2,3].find_all(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:109:safe:second-pass",
+          "source": "[1,2,3].find_all(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:109:all:second-pass",
+          "source": "[1,2,3].find_all(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:112:safe:second-pass",
+          "source": "[1,2,3].find_all(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:112:all:second-pass",
+          "source": "[1,2,3].find_all(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:115:safe:second-pass",
+          "source": "[1,2,3].find_all(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:115:all:second-pass",
+          "source": "[1,2,3].find_all(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:116:safe:second-pass",
+          "source": "[1,2,3].find_all{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:116:all:second-pass",
+          "source": "[1,2,3].find_all{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:118:safe:second-pass",
+          "source": "[1,2,3].find_all(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:118:all:second-pass",
+          "source": "[1,2,3].find_all(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:127:safe:second-pass",
+          "source": "[1,2,3].filter(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:127:all:second-pass",
+          "source": "[1,2,3].filter(&:even?).first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:130:safe:second-pass",
+          "source": "[1,2,3].filter(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:130:all:second-pass",
+          "source": "[1,2,3].filter(&:even?).last\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:133:safe:second-pass",
+          "source": "[1,2,3].filter(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:133:all:second-pass",
+          "source": "[1,2,3].filter(&:even?)[0]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:136:safe:second-pass",
+          "source": "[1,2,3].filter(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:136:all:second-pass",
+          "source": "[1,2,3].filter(&:even?)[-1]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:137:safe:second-pass",
+          "source": "[1,2,3].filter{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:137:all:second-pass",
+          "source": "[1,2,3].filter{ true }.first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:139:safe:second-pass",
+          "source": "[1,2,3].filter(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:139:all:second-pass",
+          "source": "[1,2,3].filter(&:even?).first()\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:147:safe:second-pass",
+          "source": "items.select { |item| item.even? }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:147:all:second-pass",
+          "source": "items.select { |item| item.even? }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:150:safe:second-pass",
+          "source": "lazy.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:150:all:second-pass",
+          "source": "lazy.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:151:safe:second-pass",
+          "source": "items&.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:performance-seven:151:all:second-pass",
+          "source": "items&.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:trusted-performance-seven:13:safe:second-pass",
+          "source": "$calls=0; value=[1,2,3].select { |i| $calls+=1; true }.first; p [value,$calls]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:trusted-performance-seven:13:all:second-pass",
+          "source": "$calls=0; value=[1,2,3].select { |i| $calls+=1; true }.first; p [value,$calls]\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:trusted-performance-seven:15:safe:second-pass",
+          "source": "value={a:1,b:2}; p value.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        },
+        {
+          "id": "Performance/Detect:trusted-performance-seven:15:all:second-pass",
+          "source": "value={a:1,b:2}; p value.select { true }.first\n",
+          "config": {},
+          "failure_kinds": [
+            "all"
+          ]
+        }
+      ],
+      "safety_review": [
+        "Trusted callback invocation count changes under early-exit find; unknown Array/Hash receiver semantics not assumed.",
+        "Corrections bounded to literal primitive Array receivers and literal predicates; numbered blocks, lazy chains, tails and sibling preferred-method branches source-reviewed."
+      ]
     },
     {
       "cop": "Performance/RedundantBlockCall",
@@ -2360,15 +5669,202 @@
     },
     {
       "cop": "Performance/StringReplacement",
-      "status": "pending",
-      "baseline": "unimplemented_noop_stub"
+      "status": "implemented_source_reviewed_with_safeguards",
+      "baseline": "unimplemented_noop_stub",
+      "original_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/string_replacement.rb",
+      "original_spec": "tests/fixtures/performance-seven-upstream/string_replacement_spec.rb",
+      "original_cases": 450,
+      "second_pass_cases": 900,
+      "exact_original_cases": 432,
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "strict_driver_exit": 1,
+      "strict_driver_failures": {
+        "safe": 18,
+        "all": 18,
+        "runtime": 4
+      },
+      "trusted_runtime_programs": 9,
+      "safeguards": [
+        {
+          "id": "Performance/StringReplacement:performance-seven:134",
+          "source": "'abc'.gsub(/a/,'b'); p $~\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:141",
+          "source": "'abc'.gsub( # keep\n 'a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:142",
+          "source": "gsub('a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:143",
+          "source": "value.gsub('a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:trusted-performance-seven:16",
+          "source": "p \"abc\".gsub(/a/,\"b\"); p [$~[0],$&]\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:trusted-performance-seven:17",
+          "source": "class << Regexp; def new(pattern); puts :constructor; /a/; end; end; p \"abc\".gsub(Regexp.new(\"a\"),\"b\")\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:134:safe:second-pass",
+          "source": "'abc'.gsub(/a/,'b'); p $~\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:134:all:second-pass",
+          "source": "'abc'.gsub(/a/,'b'); p $~\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:141:safe:second-pass",
+          "source": "'abc'.gsub( # keep\n 'a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:141:all:second-pass",
+          "source": "'abc'.gsub( # keep\n 'a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:142:safe:second-pass",
+          "source": "gsub('a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:142:all:second-pass",
+          "source": "gsub('a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:143:safe:second-pass",
+          "source": "value.gsub('a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:performance-seven:143:all:second-pass",
+          "source": "value.gsub('a','b')\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:trusted-performance-seven:16:safe:second-pass",
+          "source": "p \"abc\".gsub(/a/,\"b\"); p [$~[0],$&]\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:trusted-performance-seven:16:all:second-pass",
+          "source": "p \"abc\".gsub(/a/,\"b\"); p [$~[0],$&]\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:trusted-performance-seven:17:safe:second-pass",
+          "source": "class << Regexp; def new(pattern); puts :constructor; /a/; end; end; p \"abc\".gsub(Regexp.new(\"a\"),\"b\")\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/StringReplacement:trusted-performance-seven:17:all:second-pass",
+          "source": "class << Regexp; def new(pattern); puts :constructor; /a/; end; end; p \"abc\".gsub(Regexp.new(\"a\"),\"b\")\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        }
+      ],
+      "safety_review": [
+        "All132 original upstream expansions match exactly before added safety specimens.",
+        "Trusted regexp capture-state and visible Regexp constructor overrides change under original correction; native preserves source.",
+        "Comments/unknown receivers retain source; literal-receiver ordinary transformations have trusted preserved runtime output.",
+        "StringInterpreter control-escape behavior is preserved separately from the actual Ruby escape decoder. Shared non-UTF8 literal families remain bounded evidence."
+      ]
     }
   ],
   "production_scope": {
-    "cases": 95,
+    "cases": 97,
     "differences": 0,
-    "rules": 43,
-    "next_compare_scope_gate": "running"
+    "rules": 44,
+    "next_detect_string_scope_gate": "running"
   },
   "native_gate": {
     "passed": 929,
@@ -2395,6 +5891,6 @@
     "imported": 4720,
     "unresolved": 0,
     "execution": "Prism static literals/shared templates/closed literal loops only; specimens never executed",
-    "config_note": "Sibling-config bridge for Detect is in progress; seven-cop completion gate remains per rule."
+    "config_note": "GlobalConfig sibling override replay implemented fd52bae; Detect nil/detect/find branches validated."
   }
 }

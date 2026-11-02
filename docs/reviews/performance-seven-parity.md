@@ -107,3 +107,32 @@ fixture/config adapter being developed next. The expanded RedundantMatch gate ha
 80 originals/160 second states, still no diagnostic differences, and additionally
 retains two invalid top-level yield host specimens (six original_invalid states).
 Valid method-scoped yield controls are retained for the next gate.
+
+## Detect
+
+The original algorithm and all 82 upstream template expansions are reviewed.
+The final gate has 159 originals and 318 second-pass states, with exact diagnostics
+and metadata. It retains 240 unsafe-mode byte differences and one trusted runtime
+difference: an early-exit search changes predicate invocation counts. Corrections
+require primitive literal Array data and a literal predicate. Numbered blocks
+reuse the scoped model adapter (bef4c25); safe calls, lazy chains, first/last/index
+forms, arities, empty bodies and disabled correction are tested. The fixture bridge
+replays the original sibling PreferredMethods nil/detect/find configuration.
+
+## StringReplacement
+
+All 132 original upstream template expansions match diagnostics, corrected bytes,
+final state and idempotence exactly before additional safety cases. The expanded
+150-original/300-second-state gate has no diagnostic/compilation/idempotence
+mismatches. It intentionally retains 18 safe and 18 all-correction byte differences
+and four runtime differences. Trusted programs expose lost regexp captures and
+removed visibly overridden Regexp constructors; the native source is preserved.
+Ordinary literal-string transformations retain trusted output. Constructors,
+regexp flags, static string/symbol AST distinctions, StringInterpreter escape
+semantics, bang variants, comments, arities and disabled correction are reviewed.
+Non-UTF8 shared literal families remain bounded evidence.
+
+The completed numbered-model import preserves synthetic-read filtering and the
+existing cached binding identity test once. Its six focused numbered/context
+checks pass. RegexpMatch remains under its separate 4,386-original upstream gate;
+its new source is not included in this completed six-rule checkpoint.

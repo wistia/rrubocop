@@ -73,3 +73,20 @@ def extend(record, rows):
     for source in ('array.sort { |a,b| a.foo <=> b.bar }', 'array.sort { |a,b| a.foo(1) <=> b.foo(1) }', 'array.sort { |a,b| a[:x] <=> b[:y] }', 'array.sort { |a,b| a[1,2] <=> b[1,2] }', 'array.sort { |a,b| a[value] <=> b[value] }', 'array.sort { |a,b| a&.foo <=> b&.foo }', 'array&.sort { |a,b| a.foo <=> b.foo }', 'array.sort(1) { |a,b| a.foo <=> b.foo }', 'array.sort { |a,b,c| a.foo <=> b.foo }', 'array.sort { |a,b| marker; a.foo <=> b.foo }', 'array.sort do |left,right|\n left.foo <=> right.foo\nend', 'array.sort { |a,b| a.[](0x1) <=> b[1] }', '[[2],[1]].sort { |a,b| a[0] <=> b[0] }', 'array.sort { |a,b| a[1i] <=> b[1i] }'):
         add('Performance/CompareWithBlock', source)
     add('Performance/CompareWithBlock', '[[2],[1]].sort { |a,b| a[0] <=> b[0] }', AutoCorrect='disabled')
+
+    for argument in ('yield a', 'yield'):
+        add('Performance/RedundantMatch', f'def probe; something if /regex/.match({argument}); end', TargetRubyVersion=3.2)
+    add('Performance/CompareWithBlock', 'array.sort { |a,b| (a.foo {}) <=> (b.foo {}) }')
+
+    for selector in ('select','find_all','filter'):
+        for tail in ('.first','.last','[0]','[-1]','.first()','.first(2)','[2]'):
+            for block in ('{ true }','{ }','(&:even?)'):
+                add('Performance/Detect', f'[1,2,3].{selector}{block}{tail}')
+    for source in ('items.select { _1.even? }.first','items.select { |item| item.even? }.first','items.select.first','items.lazy.select { true }.first','lazy.select { true }.first','items&.select { true }.first','items&.select { true }[0]', 'items.select { true }&.first', 'items.select(1) { true }.first'):
+        add('Performance/Detect', source)
+    add('Performance/Detect', '[1,2].select { true }.first', AutoCorrect='disabled')
+    add('Performance/Detect', '[1,2].select { true }.first', GlobalConfig={'Style/CollectionMethods':{'PreferredMethods':{'detect':'find'}}})
+
+    for source in ("'abc'.gsub('a','b')", "'abc'.gsub(/a/,'b'); p $~", "'abc'.gsub(/a/i,'b')", "'abc'.gsub(Regexp.new('a'),'b')", "'abc'.gsub(::Regexp.new('a'),'b')", "'abc'.gsub(Regexp.new('a',0),'b')", "'abc'.gsub(Regexp.compile(/a/),'')", "'abc'.gsub('a','b') { work }", "'abc'.gsub( # keep\n 'a','b')", "gsub('a','b')", "value.gsub('a','b')", "'abc'.gsub(\"a\\n\",'b')", "'abc'.gsub('a',\"\\x01\")", "'abc'.gsub(Regexp.new('\\\\cA'),'b')"):
+        add('Performance/StringReplacement', source)
+    add('Performance/StringReplacement', "'abc'.gsub('a','b')", AutoCorrect='disabled')

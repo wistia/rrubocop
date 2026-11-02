@@ -13,6 +13,12 @@ PROGRAMS = [
  ('Performance/RedundantMatch', 'puts :yes if /a/.match("alpha"); p [$~[0],$&]\n'),
  ('Performance/CompareWithBlock', 'class Item; attr_reader :value; def initialize(value); @value=value; end; def key; $calls+=1; value; end; end; $calls=0; values=[3,1,4,2].map { |v| Item.new(v) }; p values.sort { |a,b| a.key <=> b.key }.map(&:value); p $calls\n'),
  ('Performance/CompareWithBlock', 'p [[2],[1]].sort { |a,b| a[0] <=> b[0] }\n'),
+ ('Performance/Detect', '$calls=0; value=[1,2,3].select { |i| $calls+=1; true }.first; p [value,$calls]\n'),
+ ('Performance/Detect', 'p [1,2,3].select { true }.last; p [1,2,3].select { false }.first\n'),
+ ('Performance/Detect', 'value={a:1,b:2}; p value.select { true }.first\n'),
+ ('Performance/StringReplacement', 'p "abc".gsub(/a/,"b"); p [$~[0],$&]\n'),
+ ('Performance/StringReplacement', 'class << Regexp; def new(pattern); puts :constructor; /a/; end; end; p "abc".gsub(Regexp.new("a"),"b")\n'),
+ ('Performance/StringReplacement', 'p "abc".gsub("a","b"); p "abc".gsub("a",""); p "abc".gsub!("a","a")\n'),
 ]
 
 def extend(rows):
