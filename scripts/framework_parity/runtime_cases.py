@@ -1,5 +1,13 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Performance/DeletePrefix", "require 'pathname'\np Pathname.new('prefixbody').sub(/\\Aprefix/, '').to_s\n"),
+    ("Performance/DeleteSuffix", "require 'pathname'\np Pathname.new('bodysuffix').sub(/suffix\\z/, '').to_s\n"),
+    ("Performance/DeletePrefix", "value = 'prefixbody'\np value.gsub(/\\Aprefix/, '')\n"),
+    ("Performance/DeleteSuffix", "value = 'bodysuffix'\np value.gsub(/suffix\\z/, '')\n"),
+    ("Performance/DeletePrefix", "value = 'prefixbody'\np value.sub(/\\Aprefix/, '')\np $~.to_s\n"),
+    ("Performance/DeleteSuffix", "value = 'bodysuffix'\np value.sub(/suffix\\z/, '')\np Regexp.last_match.to_s\n"),
+    ("Performance/DeletePrefix", "value = \"body\\nprefixbody\"\np value.gsub(/^prefix/, '')\n", {"SafeMultiline":False}),
+    ("Performance/DeleteSuffix", "value = \"bodysuffix\\nbody\"\np value.gsub(/suffix$/, '')\n", {"SafeMultiline":False}),
     ("Rails/EnvironmentComparison", "require 'active_support/all'\nrequire 'active_support/environment_inquirer'\nmodule Rails; def self.env; ActiveSupport::EnvironmentInquirer.new('development'); end; end\np(Rails.env == 'local')\n"),
     ("Rails/EnvironmentComparison", "require 'active_support/all'\nmodule Rails; def self.env; ActiveSupport::StringInquirer.new('production'); end; end\np(Rails.env == 'production')\n"),
     ("Rails/EnvironmentComparison", "require 'active_support/all'\nmodule Rails; def self.env; ActiveSupport::StringInquirer.new('production'); end; end\np(Rails.env == :production)\n"),

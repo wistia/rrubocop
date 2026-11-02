@@ -37,6 +37,30 @@ def cases():
         add("Rails/EnvironmentComparison","Rails.env == 'local'",TargetRailsVersion=version)
     for name in ("acts_like", "acts_like_string", "ascii_only", "between", "blank", "casecmp", "duplicable", "empty", "end_with", "ends_with", "eql", "equal", "exclude", "frozen", "html_safe", "in", "include", "instance_of", "instance_variable_defined", "is_a", "is_utf8", "kind_of", "match", "nil", "present", "respond_to", "start_with", "starts_with", "unicode_normalized", "valid_encoding"):
         add("Rails/EnvironmentComparison",f"Rails.env == '{name}'")
+    for cop,anchor_start,anchor_end in (("Performance/DeletePrefix",r"\A",""),("Performance/DeleteSuffix","",r"\z")):
+        for method in ("gsub","gsub!","sub","sub!"):
+            for content in ("prefix",r"foo\.bar",r"a\/b",r"a\nb",r"a\tb",r"a\x41",r"a\x01",r"a\x7f",r"a\u2028",r"a\u0041",r"a\u{41}",r"a\cA",r"a\C-A","a'b",'a"b',r"a\\b",r"a\#b","été","",r"\d+","foo.*","foo|bar",r"\Afoo\z"):
+                add(cop,f"str.{method}(/{anchor_start}{content}{anchor_end}/, '')")
+            add(cop,f"str&.{method}(/{anchor_start}prefix{anchor_end}/, '')")
+            add(cop,f"str.{method}(/{anchor_start}prefix{anchor_end}/, 'x')")
+            add(cop,f"str.{method}(/{anchor_start}prefix{anchor_end}/i, '')")
+            add(cop,f"str.{method}(/{anchor_start}prefix{anchor_end}/, '')",TargetRubyVersion=2.4)
+            add(cop,f"str.{method}(/{anchor_start}prefix{anchor_end}/, '')",TargetRubyVersion=2.5)
+        for safe in (True,False):
+            pattern="^prefix" if anchor_start else "prefix$"
+            add(cop,f"str.gsub(/{pattern}/, '')",SafeMultiline=safe)
+            add(cop,f"str.gsub(/{anchor_start}prefix{anchor_end}/, '')",SafeMultiline=safe)
+        for source in (f"str.sub(/{anchor_start}prefix{anchor_end}/, '') {{ work }}", f"str.sub(/{anchor_start}prefix{anchor_end}/, '')\np $~", f"str.sub(/{anchor_start}prefix{anchor_end}/, # keep\n '')"):
+            add(cop,source)
+        add(cop,f"str.sub(/{anchor_start}prefix{anchor_end}/, '')",AutoCorrect="disabled")
+    for version in (2.5,3.0,3.1,3.4):
+        for cop,pattern in (("Performance/DeletePrefix",r"\Aa\cA"),("Performance/DeleteSuffix",r"a\cA\z")):
+            add(cop,f"str.sub(/{pattern}/, '')",TargetRubyVersion=version)
+    add("Performance/DeletePrefix",r"Pathname.new('prefixbody').sub(/\Aprefix/, '')")
+    add("Performance/DeleteSuffix",r"Pathname('bodysuffix').sub(/suffix\z/, '')")
+    add("Rails/EnumHash", r'enum :status, [:"\u2028"]')
+    add("Rails/EnumHash", r'enum :status, ["\u0001", "\u2028"]')
+    add("Rails/EnumHash", r'enum :status, [:"a\u0001"]')
     for selector in ("select", "filter", "find_all", "reject"):
         for counter in ("count", "length", "size"):
             add("Performance/Count", f"items.{selector} {{ |item| item.active? }}.{counter}")

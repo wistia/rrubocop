@@ -1,3 +1,4 @@
+mod anchored_substitution;
 mod big_decimal_with_numeric_argument;
 mod bind_call;
 mod caller;

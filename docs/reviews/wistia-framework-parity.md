@@ -580,3 +580,45 @@ fixture has 56 pairs/112 assertions. Both focused native helper tests pass.
 The differential reference's ProcessedSource parser now also honors each case's
 TargetRubyVersion (it previously changed cop config but always parsed as 3.4).
 This is required to test the lexer branch rather than configuration alone.
+
+### Performance/DeletePrefix and DeleteSuffix
+
+Ported rubocop-performance 1.21.1 `delete_prefix.rb` / `delete_suffix.rb`, original
+`RegexpMetacharacter`, and every branch of both original spec files. One shared
+anchored-substitution implementation covers gsub/sub, bang methods, safe sends,
+Ruby 2.4/2.5 minimum gate, absolute versus multiline anchors, SafeMultiline,
+nonempty deterministic literal recognition, regexp options, replacement-string
+shape, disabled correction, selector ranges, and original unsafe correction
+policy. Uses the shared original literal predicate, version-aware regexp AST
+adapter, existing string decoder and capture-state scan. No second regexp or
+Ruby string decoder was introduced.
+
+Util#to_string_literal requires String#inspect spelling, distinct from
+String#dump and Symbol#inspect. Existing shared ruby_literal now models those
+three quote styles explicitly: ASCII controls use Unicode escapes for string
+inspect but hex escapes for dump/symbol inspect; line/paragraph separators are
+escaped. The bare-symbol candidate guard rejects ASCII controls and line/paragraph
+separators even when tree-sitter incorrectly accepts them. Nine exact original
+Util spelling observations and dump/symbol differences are native regressions;
+44 EnumHash cases/88 second passes (two trusted programs) retain only its prior
+20 documented differences, including the open emoji spelling gap. New control
+and separator cases match original corrected bytes.
+
+Native preserves original detection/message/range but declines unsafe original
+corrections when regexp state is observed, comments/heredocs would be erased,
+old-parser control/meta escapes are misinterpreted by StringInterpreter,
+multiline anchors would change matching, or the receiver is a known Pathname
+factory lacking these methods. Arbitrary application types remain governed by
+the original unsafe-cop contract; no general type inference is claimed. Core
+owns further structural Regexp.last_match receiver and raw CRLF adapter review.
+
+Focused original gate: 258 cases, 516 second-pass states, eight trusted programs.
+All native runtime programs preserve original behavior. The strict driver
+retains 114 safeguard events: 54 metadata, 54 all-mode byte and six runtime
+changes; safe-mode bytes match. The complete 1230-case/2460-second-pass matrix
+(44 trusted programs) retains exactly 1132 prior/explicit events: 472 historical,
+546 EnvironmentComparison guards and 114 DeletePrefix/Suffix guards. No new
+unexplained detection/message/range differences remain. Native suite passes
+916 tests, 1 ignored probe; all 75 production CLI scope probes across 35 reviewed
+rules pass with positive controls firing. Totals: 35 reviewed implementations,
+32 baseline stubs replaced, 35 baseline stubs remaining.
