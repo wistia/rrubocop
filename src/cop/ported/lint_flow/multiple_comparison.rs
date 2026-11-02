@@ -25,11 +25,19 @@ fn comparison(c: &Context<'_>, n: Node<'_>) -> bool {
 fn comparison_center<'a>(c: &Context<'_>, n: Node<'a>) -> Option<Node<'a>> {
     let left = field(n, "left").filter(|l| comparison(c, *l))?;
     let center = center_argument(left)?;
-    if center.kind() == "binary" && ["&", "|", "^"].contains(&operator(c, center)) {
+    if bitwise(c, center) {
         None
     } else {
         Some(center)
     }
+}
+fn bitwise(c: &Context<'_>, n: Node<'_>) -> bool {
+    let method = if n.kind() == "binary" {
+        operator(c, n)
+    } else {
+        c.method(n)
+    };
+    ["&", "|", "^"].contains(&method)
 }
 
 fn center_argument(left: Node<'_>) -> Option<Node<'_>> {

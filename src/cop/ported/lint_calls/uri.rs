@@ -4,21 +4,26 @@ pub(super) fn uri_regexp(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "regexp" || !["URI", "::URI"].contains(&c.receiver(n)) {
         return vec![];
     }
-    let argument = semantic_args(n)
-        .first()
-        .map(|a| format!("({})", c.text(*a)))
-        .unwrap_or_default();
-    let preferred = format!("{}::DEFAULT_PARSER.make_regexp{argument}", c.receiver(n));
+    let preferred = preferred_regexp(c, n);
+    let current = c.text(n)[..send_end(n) - n.start_byte()].trim_end();
+    let end = n.start_byte() + current.len();
     vec![
         Finding::new(
             method_node(n),
             format!(
                 "`{}` is obsolete and should not be used. Instead, use `{preferred}`.",
-                c.text(n)
+                current
             ),
         )
-        .replace_with(c, n, || preferred),
+        .edit_with(c, n.start_byte(), end, || preferred),
     ]
+}
+fn preferred_regexp(c: &Context<'_>, n: Node<'_>) -> String {
+    let argument = semantic_args(n)
+        .first()
+        .map(|a| format!("({})", c.text(*a)))
+        .unwrap_or_default();
+    format!("{}::DEFAULT_PARSER.make_regexp{argument}", c.receiver(n))
 }
 pub(super) fn uri_escape(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !["URI", "::URI"].contains(&c.receiver(n)) {

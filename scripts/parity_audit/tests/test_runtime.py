@@ -38,6 +38,22 @@ class RuntimeCaptureTest(unittest.TestCase):
         result = self.execute('nil', {"files": {"../outside": "bad"}})
         self.assertIn("runner_error", result)
 
+    def test_file_execution_honors_top_level_return_and_ensure(self):
+        result = self.execute('begin\n puts "before"\n return 42\nensure\n puts "cleanup"\nend\nputs "unreachable"\n',
+                              {"execution": "file"})
+        self.assertNotIn("exception", result)
+        self.assertEqual(base64.b64decode(result["stdout"]), b"before\ncleanup\n")
+
+    def test_file_execution_preserves_argument_effects_and_watched_files(self):
+        result = self.execute('return File.write("seen", "called")\n',
+                              {"execution": "file", "watch": ["seen"]})
+        self.assertNotIn("exception", result)
+        self.assertEqual(base64.b64decode(result["files"]["seen"]), b"called")
+
+    def test_unknown_execution_mode_is_a_runner_failure(self):
+        result = self.execute('puts "unexpected"', {"execution": "other"})
+        self.assertIn("runner_error", result)
+
     def test_literal_generator_covers_mode_quote_regressions(self):
         import tempfile
         from types import SimpleNamespace

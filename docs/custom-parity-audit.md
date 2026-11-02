@@ -75,3 +75,5 @@ AUDIT_RUBY_PROJECT=/path/to/project \
 Without `AUDIT_RUBY_PROJECT`, classifier tests still run and Ruby process/descriptor tests are explicitly skipped. Tests inject failures to verify strict exception boundaries, native crashes on invalid mutations, duplicate ranges, incomplete worker output, file-state isolation, binary streams, and exit statuses.
 
 Grouped deep-audit fixtures also exercise forced-enabled autocorrection and reviewed runtime spies; see [the ten-rule deep audit](reviews/deep-custom-rule-audit.md). The separate combined-rule regression suite can be run with `cargo test interacting_custom_corrections_keep_reviewed_output`; it checks reviewed correction output with several cops enabled together. Runtime execution remains restricted to the explicit trusted manifest.
+
+Trusted scenarios default to evaluation in the top-level binding. Set `runtime.execution` to `file` when actual file semantics are required, such as top-level returns; the runner writes and loads `probe.rb` inside its fresh sandbox. Unknown modes are runner failures. This flag is retained only for explicit trusted scenarios and is never inherited by generated mutations.

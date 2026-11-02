@@ -11,7 +11,7 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 823 Rust tests, including 3,395 pinned Ruby reference examples across 98 added cops,
+- 823 Rust tests, including 3,426 pinned Ruby reference examples across 98 added cops,
   plus 11 interpolation reference cases.
   The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
   the 30 newly added regressions and correction-mode coverage. The
@@ -369,3 +369,5 @@ The [next runtime coverage batch](reviews/next-runtime-coverage.md) adds 24 scen
 The [evaluation/regexp/definition runtime batch](reviews/runtime-round-three.md) adds 29 scenarios across six more rules, raising unified execution coverage to 101 scenarios across 37 rules. It narrows eval highlights and guards high-precedence negated regexp corrections.
 
 The [migration/require/string/constant runtime batch](reviews/runtime-round-four.md) adds 26 scenarios across six more rules, raising unified execution coverage to 127 scenarios across 43 rules. It also pins six exact forms of existing migration and encoded-filename safeguards.
+
+The [remaining source-rewriting runtime batch](reviews/runtime-round-five.md) adds 28 scenarios and file execution for top-level returns. Unified runtime coverage is now 155 scenarios across 49 rules, including all 48 source-rewriting additions. It fixes URI callback preservation and explicit bitwise comparison matching.

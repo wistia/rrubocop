@@ -3041,5 +3041,685 @@
     },
     "expected": [],
     "corrected": "module RuntimeAlias; end\nRuntimeAlias.const_set(:Other, String)\np \"value\".is_a?(RuntimeAlias::Other)\n"
+  },
+  {
+    "cop": "Lint/InterpolationCheck",
+    "source": "value = 'ok'\np '#{value}'\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = 'ok'\np \"#{value}\"\n"
+  },
+  {
+    "cop": "Lint/InterpolationCheck",
+    "source": "seen = []\np '#{seen << :called; 42}'\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\np \"#{seen << :called; 42}\"\np seen\n"
+  },
+  {
+    "cop": "Lint/InterpolationCheck",
+    "source": "value = 'ok'\np %q{say \"#{value}\"}\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = 'ok'\np %{say \"#{value}\"}\n"
+  },
+  {
+    "cop": "Lint/InterpolationCheck",
+    "source": "value = 'ok'\np '\\#{value}'\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "value = 'ok'\np '\\#{value}'\n"
+  },
+  {
+    "cop": "Lint/InterpolationCheck",
+    "source": "p 'plain value'\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "p 'plain value'\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "begin\n p(1 < 2 < 3)\nrescue NoMethodError\n puts \"invalid chain\"\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 3,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin\n p(1 < 2 && 2 < 3)\nrescue NoMethodError\n puts \"invalid chain\"\nend\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "seen = []\ndef middle(seen); seen << :middle; 2; end\nbegin\n p(1 < middle(seen) < 3)\nrescue NoMethodError\n puts \"invalid chain\"\nend\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 3,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\ndef middle(seen); seen << :middle; 2; end\nbegin\n p(1 < middle(seen) && middle(seen) < 3)\nrescue NoMethodError\n puts \"invalid chain\"\nend\np seen\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "class Chain\n def <(other); self; end\nend\na = Chain.new\nb = Chain.new\nc = Chain.new\np(((a).<(b) < c).class.name)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "rust_correctable": false,
+    "rust_corrected": "class Chain\n def <(other); self; end\nend\na = Chain.new\nb = Chain.new\nc = Chain.new\np(((a).<(b) < c).class.name)\n",
+    "reason": "Existing explicit-comparison safeguard prevents Ruby repeatedly expanding the same comparison argument.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 3,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Chain\n def <(other); self; end\nend\na = Chain.new\nb = Chain.new\nc = Chain.new\np(((a).<(b && b) < c).class.name)\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "p((1 < 2) & (2 < 3))\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "p((1 < 2) & (2 < 3))\n"
+  },
+  {
+    "cop": "Lint/RescueType",
+    "source": "begin\n raise \"boom\"\nrescue StandardError, 1 => error\n p error.message\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescuing from `1` will raise a `TypeError` instead of catching the actual exception.",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin\n raise \"boom\"\nrescue StandardError => error\n p error.message\nend\n"
+  },
+  {
+    "cop": "Lint/RescueType",
+    "source": "begin\n begin\n  raise \"boom\"\n rescue 1\n  puts \"handled\"\n end\nrescue TypeError\n puts \"invalid rescue\"\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Rescuing from `1` will raise a `TypeError` instead of catching the actual exception.",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin\n begin\n  raise \"boom\"\n rescue\n  puts \"handled\"\n end\nrescue TypeError\n puts \"invalid rescue\"\nend\n"
+  },
+  {
+    "cop": "Lint/RescueType",
+    "source": "seen = []\nbegin\n begin\n  raise \"boom\"\n rescue [RuntimeError]\n  seen << :handled\n ensure\n  seen << :cleanup\n end\nrescue TypeError\n seen << :invalid\nend\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 1,
+        "message": "Rescuing from `[RuntimeError]` will raise a `TypeError` instead of catching the actual exception.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nbegin\n begin\n  raise \"boom\"\n rescue\n  seen << :handled\n ensure\n  seen << :cleanup\n end\nrescue TypeError\n seen << :invalid\nend\np seen\n"
+  },
+  {
+    "cop": "Lint/RescueType",
+    "source": "begin\n raise \"boom\"\nrescue RuntimeError => error\n p error.message\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin\n raise \"boom\"\nrescue RuntimeError => error\n p error.message\nend\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "require \"uri\"\npattern = URI.regexp([\"https\"])\np [pattern.match?(\"https://example.test/path\"), pattern.match?(\"ftp://example.test/path\")]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 14,
+        "message": "`URI.regexp([\"https\"])` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp([\"https\"])`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require \"uri\"\npattern = URI::DEFAULT_PARSER.make_regexp([\"https\"])\np [pattern.match?(\"https://example.test/path\"), pattern.match?(\"ftp://example.test/path\")]\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "require \"uri\"\npattern = URI.regexp\np pattern.match?(\"http://example.test/path\")\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 14,
+        "message": "`URI.regexp` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require \"uri\"\npattern = URI::DEFAULT_PARSER.make_regexp\np pattern.match?(\"http://example.test/path\")\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "module RuntimeUri\n module URI\n  DEFAULT_PARSER = Object.new\n  def DEFAULT_PARSER.make_regexp(schemes = nil)\n   [schemes, block_given? ? yield : :none]\n  end\n  def self.regexp(schemes = nil, &callback)\n   DEFAULT_PARSER.make_regexp(schemes, &callback)\n  end\n end\n seen = []\n p URI.regexp([\"https\"]) { seen << :called; :result }\n p seen\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 12,
+        "column": 7,
+        "message": "`URI.regexp([\"https\"])` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp([\"https\"])`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module RuntimeUri\n module URI\n  DEFAULT_PARSER = Object.new\n  def DEFAULT_PARSER.make_regexp(schemes = nil)\n   [schemes, block_given? ? yield : :none]\n  end\n  def self.regexp(schemes = nil, &callback)\n   DEFAULT_PARSER.make_regexp(schemes, &callback)\n  end\n end\n seen = []\n p URI::DEFAULT_PARSER.make_regexp([\"https\"]) { seen << :called; :result }\n p seen\nend\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "require \"uri\"\np ::URI.regexp([\"http\"]).match?(\"http://example.test/path\")\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "`::URI.regexp([\"http\"])` is obsolete and should not be used. Instead, use `::URI::DEFAULT_PARSER.make_regexp([\"http\"])`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require \"uri\"\np ::URI::DEFAULT_PARSER.make_regexp([\"http\"]).match?(\"http://example.test/path\")\n"
+  },
+  {
+    "cop": "Lint/TrailingCommaInAttributeDeclaration",
+    "source": "class Probe\n attr_reader :foo,\n def bar; :method; end\n def initialize; @foo = :value; end\nend\np [Probe.new.foo, Probe.new.bar]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 17,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n attr_reader :foo\n def bar; :method; end\n def initialize; @foo = :value; end\nend\np [Probe.new.foo, Probe.new.bar]\n"
+  },
+  {
+    "cop": "Lint/TrailingCommaInAttributeDeclaration",
+    "source": "class Probe\n attr_accessor :foo,\n def bar; :method; end\nend\nobject = Probe.new\nobject.foo = 3\np object.foo\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 19,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n attr_accessor :foo\n def bar; :method; end\nend\nobject = Probe.new\nobject.foo = 3\np object.foo\n"
+  },
+  {
+    "cop": "Lint/TrailingCommaInAttributeDeclaration",
+    "source": "class Probe\n attr_reader(:foo,\n def bar; :method; end)\n def initialize; @foo = :value; end\nend\np [Probe.new.foo, Probe.new.bar]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "rust_correctable": false,
+    "rust_corrected": "class Probe\n attr_reader(:foo,\n def bar; :method; end)\n def initialize; @foo = :value; end\nend\np [Probe.new.foo, Probe.new.bar]\n",
+    "reason": "Existing parenthesized-attribute safeguard keeps the diagnostic manual because comma removal generates invalid Ruby.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 17,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n attr_reader(:foo\n def bar; :method; end)\n def initialize; @foo = :value; end\nend\np [Probe.new.foo, Probe.new.bar]\n"
+  },
+  {
+    "cop": "Lint/TrailingCommaInAttributeDeclaration",
+    "source": "class Probe\n attr_reader :foo\n def initialize; @foo = :value; end\n def bar; :method; end\nend\np [Probe.new.foo, Probe.new.bar]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Probe\n attr_reader :foo\n def initialize; @foo = :value; end\n def bar; :method; end\nend\np [Probe.new.foo, Probe.new.bar]\n"
+  },
+  {
+    "cop": "Lint/TopLevelReturnWithArgument",
+    "source": "puts \"before\"\nreturn 42\nputs \"unreachable\"\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": [],
+      "execution": "file"
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Top level return with argument detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "puts \"before\"\nreturn\nputs \"unreachable\"\n"
+  },
+  {
+    "cop": "Lint/TopLevelReturnWithArgument",
+    "source": "seen = []\nbegin\n return (seen << :argument; 42)\nensure\n p seen\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": [],
+      "execution": "file"
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Top level return with argument detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nbegin\n return\nensure\n p seen\nend\n"
+  },
+  {
+    "cop": "Lint/TopLevelReturnWithArgument",
+    "source": "begin\n return 42\nensure\n puts \"cleanup\"\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": [],
+      "execution": "file"
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Top level return with argument detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin\n return\nensure\n puts \"cleanup\"\nend\n"
+  },
+  {
+    "cop": "Lint/TopLevelReturnWithArgument",
+    "source": "def value; return 42; end\np value\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": [],
+      "execution": "file"
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def value; return 42; end\np value\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "class RuntimeValue\n def initialize(seen); @seen = seen; end\n def &(other); @seen << :and; self; end\n def |(other); @seen << :or; self; end\n def ^(other); @seen << :xor; self; end\n def >=(other); @seen << :ge; self; end\n def <(other); @seen << :lt; true; end\nend\nseen = []\nx = RuntimeValue.new(seen)\ny = RuntimeValue.new(seen)\nz = RuntimeValue.new(seen)\np(x >= (y).&(x) < z)\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class RuntimeValue\n def initialize(seen); @seen = seen; end\n def &(other); @seen << :and; self; end\n def |(other); @seen << :or; self; end\n def ^(other); @seen << :xor; self; end\n def >=(other); @seen << :ge; self; end\n def <(other); @seen << :lt; true; end\nend\nseen = []\nx = RuntimeValue.new(seen)\ny = RuntimeValue.new(seen)\nz = RuntimeValue.new(seen)\np(x >= (y).&(x) < z)\np seen\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "class RuntimeValue\n def initialize(seen); @seen = seen; end\n def &(other); @seen << :and; self; end\n def |(other); @seen << :or; self; end\n def ^(other); @seen << :xor; self; end\n def >=(other); @seen << :ge; self; end\n def <(other); @seen << :lt; true; end\nend\nseen = []\nx = RuntimeValue.new(seen)\ny = RuntimeValue.new(seen)\nz = RuntimeValue.new(seen)\np(x >= (y).|(x) < z)\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class RuntimeValue\n def initialize(seen); @seen = seen; end\n def &(other); @seen << :and; self; end\n def |(other); @seen << :or; self; end\n def ^(other); @seen << :xor; self; end\n def >=(other); @seen << :ge; self; end\n def <(other); @seen << :lt; true; end\nend\nseen = []\nx = RuntimeValue.new(seen)\ny = RuntimeValue.new(seen)\nz = RuntimeValue.new(seen)\np(x >= (y).|(x) < z)\np seen\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "class RuntimeValue\n def initialize(seen); @seen = seen; end\n def &(other); @seen << :and; self; end\n def |(other); @seen << :or; self; end\n def ^(other); @seen << :xor; self; end\n def >=(other); @seen << :ge; self; end\n def <(other); @seen << :lt; true; end\nend\nseen = []\nx = RuntimeValue.new(seen)\ny = RuntimeValue.new(seen)\nz = RuntimeValue.new(seen)\np(x >= (y).^(x) < z)\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class RuntimeValue\n def initialize(seen); @seen = seen; end\n def &(other); @seen << :and; self; end\n def |(other); @seen << :or; self; end\n def ^(other); @seen << :xor; self; end\n def >=(other); @seen << :ge; self; end\n def <(other); @seen << :lt; true; end\nend\nseen = []\nx = RuntimeValue.new(seen)\ny = RuntimeValue.new(seen)\nz = RuntimeValue.new(seen)\np(x >= (y).^(x) < z)\np seen\n"
   }
 ]
