@@ -15,9 +15,11 @@ pub(super) fn name<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<&'a [u8
         }) {
             return None;
         }
-        (!local_read(source, node)).then(|| node_bytes(source, node))
-    } else {
+        crate::cop::ported::bare_call_identifier(source, node).then(|| node_bytes(source, node))
+    } else if node.kind() == "call" {
         call_method_name(source, node)
+    } else {
+        None
     }
 }
 
@@ -80,49 +82,6 @@ pub(super) fn report(
 }
 pub(super) fn selector(node: Node<'_>) -> Node<'_> {
     method_node(node).unwrap_or(node)
-}
-
-fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
-    let binding = node_bytes(source, node);
-    if ![
-        b"be".as_slice(),
-        b"double",
-        b"spy",
-        b"is_expected",
-        b"subject",
-        b"be_nil",
-        b"be_a",
-        b"be_an",
-        b"be_kind_of",
-        b"be_a_kind_of",
-        b"not_to",
-        b"to_not",
-        b"it_behaves_like",
-        b"it_should_behave_like",
-        b"fdescribe",
-        b"fcontext",
-        b"ffeature",
-        b"fit",
-        b"fexample",
-        b"fspecify",
-        b"fscenario",
-        b"focus",
-        b"expect",
-        b"receive_message_chain",
-        b"stub_chain",
-        b"raise_error",
-        b"raise_exception",
-        b"contain_exactly",
-        b"should",
-        b"should_not",
-        b"should_receive",
-        b"should_not_receive",
-    ]
-    .contains(&binding)
-    {
-        return false;
-    }
-    local_binding(source, node)
 }
 
 pub(super) fn local_binding(source: &SourceFile, node: Node<'_>) -> bool {
@@ -380,10 +339,17 @@ pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'
     if let (Some(a), Some(b)) = (integer_value(source, left), integer_value(source, right)) {
         return a == b;
     }
-    let literal_kind = |node: Node<'_>| match node.kind() {
-        "string" | "chained_string" | "heredoc_beginning" => Some("string"),
-        "simple_symbol" | "delimited_symbol" | "hash_key_symbol" => Some("symbol"),
-        _ => None,
+    let literal_kind = |node: Node<'_>| {
+        if symbol_node(node) {
+            Some("symbol")
+        } else if matches!(
+            node.kind(),
+            "string" | "chained_string" | "heredoc_beginning"
+        ) {
+            Some("string")
+        } else {
+            None
+        }
     };
     if let Some(kind) = literal_kind(left) {
         if Some(kind) == literal_kind(right) {
@@ -497,7 +463,16 @@ pub(super) fn integer_value(source: &SourceFile, node: Node<'_>) -> Option<num_b
 }
 
 pub(super) fn symbol_node(node: Node<'_>) -> bool {
-    matches!(node.kind(), "simple_symbol" | "delimited_symbol" | "symbol")
+    matches!(
+        node.kind(),
+        "simple_symbol" | "delimited_symbol" | "symbol" | "hash_key_symbol"
+    ) || node.kind() == "string"
+        && node.parent().is_some_and(|parent| {
+            parent.kind() == "pair" && parent.child_by_field_name("key") == Some(node)
+        })
+        && node
+            .next_sibling()
+            .is_some_and(|operator| operator.kind() == ":")
 }
 
 pub(super) fn constant_description(value: &str) -> bool {

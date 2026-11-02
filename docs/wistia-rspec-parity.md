@@ -337,3 +337,37 @@ suffixes and relative components are preserved beneath /tmp/spec so production
 Include scoping is exercised; the importer does not evaluate filename-producing
 Ruby. No source correction or runtime fixture execution is introduced by either
 of these detection-only rules.
+
+## Batch 13: file path format and source roles
+
+SpecFilePathFormat replaces another initial stub. The reviewed total is 59
+original stubs plus ten existing implementations; 21 original stubs and six
+existing rules remain open. There are 1,081 strict comparisons across 69 rules,
+15 explicit safeguards and 35 correction-disable controls. All 48 RSpec/RSpecRails
+tests pass. The pinned import retains 789 specimens; thirteen earlier templates
+and three invalid original yield specimens remain explicit.
+
+Separate source review covered the Namespace/FileHelp/TopLevelGroup algorithms,
+ASCII camel/acronym transforms and method sanitization, custom transforms,
+IgnoreMethods and exact symbol-only IgnoreMetadata behavior. All 38 upstream
+cases retain their filenames; nearest-block literal filename bindings are resolved
+with Prism and the original File.expand_path stub result is materialized as an
+explicit path. No Ruby filename expressions or mocks are executed. Added probes
+cover Unicode method strings, absolute constants beneath namespaces, quoted hash
+labels, metadata string negatives and mixed shared/ordinary top-level groups.
+Cop-specific Include defaults now match the original file rules, including
+malformed suffixes outside a spec directory.
+
+The reference fixture snapshot now records the effective production cop options
+used by the existing Ruby investigation, including its explicit correction-mode
+override. Previously custom probes retained just their overrides, while Ruby
+merged production defaults. Existing expected offenses and corrected bytes were
+unchanged; backfilling those resolved options and rerunning the entire matrix
+passed. This makes the configuration evidence explicit rather than relying on
+coincidental matching defaults.
+
+The framework agent's isolated static_symbol/bare_call_identifier helper is reused
+(commit e49a15d, from 3ca6c2d), replacing the RSpec-only local-name whitelist.
+Additional original-engine probes cover aliases, undef, method definition names,
+block parameters, local variables named let, and defined expectation helpers.
+Quoted labels are classified as symbols while string-arrow keys remain strings.

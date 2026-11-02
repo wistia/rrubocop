@@ -23,6 +23,34 @@ module RSpecUpstreamSources
       "HOST_INTERPOLATION_MARKER"
     end
   end
+
+  def self.literal_filename(syntax, call, argument)
+    return argument.unescaped if argument.is_a?(Prism::StringNode)
+    return unless argument.is_a?(Prism::LocalVariableReadNode)
+
+    blocks = []
+    pending = [syntax]
+    until pending.empty?
+      node = pending.pop
+      next unless node.location.start_offset <= call.location.start_offset && node.location.end_offset >= call.location.end_offset
+
+      blocks << node if node.is_a?(Prism::BlockNode)
+      pending.concat(node.compact_child_nodes)
+    end
+    block = blocks.min_by { |node| node.location.length }
+    return unless block
+
+    assignments = []
+    pending = block.compact_child_nodes
+    until pending.empty?
+      node = pending.pop
+      if node.is_a?(Prism::LocalVariableWriteNode) && node.name == argument.name && node.value.is_a?(Prism::StringNode) && node.location.start_offset < call.location.start_offset
+        assignments << node
+      end
+      pending.concat(node.compact_child_nodes)
+    end
+    assignments.max_by { |node| node.location.start_offset }&.value&.unescaped
+  end
 end
 
 upstream, inventory_path, output, manifest = ARGV
@@ -31,7 +59,8 @@ JSON.parse(File.read(inventory_path)).each { |row| inventory.store(row.fetch("na
 cases = []
 not_imported = []
 Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
-  pending = [Prism.parse_file(path).value]
+  syntax = Prism.parse_file(path).value
+  pending = [syntax]
   calls = []
   until pending.empty?
     node = pending.pop
@@ -46,13 +75,19 @@ Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
       next
     end
     fixture_path = "/tmp/spec/parity_spec.rb"
-    if %i[expect_global_offense expect_no_global_offenses].include?(call.name)
-      filename = call.arguments&.arguments&.[](1)
-      unless filename.is_a?(Prism::StringNode)
-        not_imported << {id:, reason: "Global offense filename requires host interpolation"}
-        next
+    filename = call.arguments&.arguments&.[](1)
+    filename = RSpecUpstreamSources.literal_filename(syntax, call, filename)
+    if filename
+      fixture_path = if filename.start_with?("/")
+        filename
+      elsif filename.start_with?("spec/")
+        "/tmp/#{filename}"
+      else
+        "/tmp/spec/#{filename}"
       end
-      fixture_path = filename.unescaped.start_with?("spec/") ? "/tmp/#{filename.unescaped}" : "/tmp/spec/#{filename.unescaped}"
+    elsif %i[expect_global_offense expect_no_global_offenses].include?(call.name)
+      not_imported << {id:, reason: "Global offense filename requires host interpolation"}
+      next
     end
     source = RSpecUpstreamSources.literal_parts(argument).lines.reject { |line| line.match?(/\A\s*[\^~]+/) }.join
     variants = if File.basename(path) == "repeated_include_example_spec.rb" && source.include?("%{include_method}")

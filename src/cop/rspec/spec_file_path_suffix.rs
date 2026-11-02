@@ -1,4 +1,3 @@
-use crate::cop::rspec::helpers::RSPEC_INCLUDE;
 use crate::cop::rspec::parity_helpers::*;
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
@@ -11,7 +10,7 @@ impl Cop for SpecFilePathSuffix {
         "RSpec/SpecFilePathSuffix"
     }
     fn default_include(&self) -> &'static [&'static str] {
-        RSPEC_INCLUDE
+        &["**/*_spec*rb*", "**/spec/**/*"]
     }
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["program"]

@@ -4,7 +4,9 @@
     "cop": "RSpec/BeEmpty",
     "source": "expect(array).to match_array([\n  # important note\n])\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "expect(array).to match_array([\n  # important note\n])\n",
     "origin": "reference",
@@ -45,7 +47,9 @@
     "cop": "RSpec/ContainExactly",
     "source": "expect(array).to contain_exactly(*first, # important note\n *second)\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "expect(array).to contain_exactly(*first, # important note\n *second)\n",
     "origin": "reference",
@@ -86,7 +90,9 @@
     "cop": "RSpec/MatchArray",
     "source": "expect(array).to match_array([first, # important note\n second])\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "expect(array).to match_array([first, # important note\n second])\n",
     "origin": "reference",
@@ -127,7 +133,10 @@
     "cop": "RSpec/HookArgument",
     "source": "before( # important note\n :each) { setup }\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "EnforcedStyle": "implicit",
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "before( # important note\n :each) { setup }\n",
     "origin": "reference",
@@ -168,7 +177,9 @@
     "cop": "RSpec/EmptyMetadata",
     "source": "describe \"example\", # important note\n {} do\n  it(\"works\") { run }\nend\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "describe \"example\", # important note\n {} do\n  it(\"works\") { run }\nend\n",
     "origin": "reference",
@@ -213,7 +224,9 @@
     "cop": "RSpec/DuplicatedMetadata",
     "source": "describe \"example\", :tag, # important note\n :tag do\n  it(\"works\") { run }\nend\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "describe \"example\", :tag, # important note\n :tag do\n  it(\"works\") { run }\nend\n",
     "origin": "reference",
@@ -258,7 +271,9 @@
     "cop": "RSpec/EmptyOutput",
     "source": "expect { run }.to output( # important note\n \"\").to_stdout\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "expect { run }.to output( # important note\n \"\").to_stdout\n",
     "origin": "reference",
@@ -346,6 +361,7 @@
     "source": "expect(value).to receive(:method).exactly(0x1).times\n",
     "path": "/tmp/spec/parity_spec.rb",
     "config": {
+      "AutoCorrect": true,
       "__RubocopVersion": "1.65.1",
       "TargetRubyVersion": 3.4
     },
@@ -402,6 +418,7 @@
     "source": "it 'Something', variable, 'B', :a, key => {}, foo: ->(x) { bar(x) }, Identifier.sample => true, baz: Snafu.new do\nend\n",
     "path": "/tmp/spec/parity_spec.rb",
     "config": {
+      "AutoCorrect": true,
       "__RubocopVersion": "1.65.1",
       "TargetRubyVersion": 3.4
     },
@@ -446,7 +463,9 @@
     "cop": "RSpec/SortMetadata",
     "source": "it \"x\", z: record(:z), a: record(:a) do\nend\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "it \"x\", z: record(:z), a: record(:a) do\nend\n",
     "origin": "reference",
@@ -487,7 +506,9 @@
     "cop": "RSpec/SortMetadata",
     "source": "it \"x\", z_key() => true, a_key() => true do\nend\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "it \"x\", z_key() => true, a_key() => true do\nend\n",
     "origin": "reference",
@@ -528,7 +549,10 @@
     "cop": "RSpec/BeNil",
     "source": "object.be(nil)\nobject&.be(nil)\nbe(nil, true)\nbe(\n # preserve\n nil\n)\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "EnforcedStyle": "be_nil",
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "object.be(nil)\nobject&.be(nil)\nbe(nil, true)\nbe(\n # preserve\n nil\n)\n",
     "origin": "reference",
@@ -569,7 +593,9 @@
     "cop": "RSpec/SingleArgumentMessageChain",
     "source": "receive_message_chain([\n # preserve\n :one\n])\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "receive_message_chain([\n # preserve\n :one\n])\n",
     "origin": "reference",
@@ -610,7 +636,9 @@
     "cop": "RSpec/SingleArgumentMessageChain",
     "source": "receive_message_chain(:\"hello world\" => 42)\n",
     "path": "/tmp/spec/parity_spec.rb",
-    "config": {},
+    "config": {
+      "AutoCorrect": true
+    },
     "expected": [],
     "corrected": "receive_message_chain(:\"hello world\" => 42)\n",
     "origin": "reference",

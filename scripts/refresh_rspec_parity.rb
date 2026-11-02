@@ -23,7 +23,7 @@ class RSpecParityReference < AuditReference
         after = test.merge("source" => result[mode].fetch(:source))
         result[mode][:diagnostics] = diagnostics(investigation(after, source(after, index), false))
       end
-      options = test.fetch("config").reject { |key| METADATA.include?(key) || key.start_with?("Supported") }
+      options = @config.for_cop(test.fetch("cop")).merge("AutoCorrect" => true).merge(test.fetch("config")).reject { |key| METADATA.include?(key) || key.start_with?("Supported") }
       test.merge("config" => options, "reference" => result)
     end
     File.write(output, JSON.pretty_generate(rows) + "\n")
