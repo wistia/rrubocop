@@ -665,3 +665,12 @@ Four singleton-method-on-literal source/config states are rejected by the origin
 The supplemental original CLI gate now passes12 safe/aggressive cases for each of ArrayAlignment and ParameterAlignment (48 engine observations total). Missing/null own widths, explicit own2/0, global4/0 and null-global fallback2 all match bytes, exits and corrected flags. This closes the previously untested global-width branch for both consumers; no Wistia configuration or generic scheduling behavior changed.
 
 ParameterAlignment's9 detection/correction metadata controls (18 engine observations) and8 actual Wistia-config engine/mode probes also pass. Its broader CLI/fresh-final-state gates are still running.
+
+
+### ParameterAlignment final bounded gate
+
+The pinned real CLI matrix completed372 safe/aggressive modes:348 byte matches and exactly24 reviewed literal-preservation safeguards, with all372 exits/scopes matching,744 stable second passes and zero cop errors. Every final mode is clean; every guarded native CLI output matches its reviewed safe output. The original19 examples/22 states regenerate identically.
+
+A fresh original replay validates145 unique final native source/configuration states, including the protected literal outputs: all diagnostics/messages/ranges and bytes match, all parse successfully, no offenses remain and no further correction is emitted. Nine metadata/no-correction controls,12 width-fallback/precedence modes and8 actual Wistia-config engine/mode probes pass. The full native checkpoint remains916 passing tests/one ignored, followed by the additional focused final-state replay.
+
+The separately reviewed bounded ParameterAlignment port is complete, bringing owned bounded ports to30;13/13 direct Style stubs remain implemented and337 owned rules still await their full gate. The shared layout helper retains the complete ArrayAlignment first/final replay and original Unicode checks. Additional source/version/encoding/directive/wire-format families and combined-cop scheduling remain outside this bounded claim. ArgumentAlignment is next and requires original-verified logical ownership of command-call arguments, not an assumption that raw tree-sitter siblings are Ruby arguments.
