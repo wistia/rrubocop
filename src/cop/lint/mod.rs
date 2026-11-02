@@ -37,6 +37,7 @@ mod mixed_case_range;
 mod nested_method_definition;
 mod next_without_accumulator;
 mod no_return_in_begin_end_blocks;
+mod non_deterministic_require_order;
 mod non_local_exit_from_iterator;
 mod ordered_magic_comments;
 mod parentheses_as_grouped_expression;
@@ -136,6 +137,7 @@ pub fn register_all(registry: &mut CopRegistry) {
         shadowed_exception::ShadowedException,
         suppressed_exception::SuppressedException,
         syntax::Syntax,
+        non_deterministic_require_order::NonDeterministicRequireOrder,
         underscore_prefixed_variable_name::UnderscorePrefixedVariableName,
         unified_integer::UnifiedInteger,
         unreachable_code::UnreachableCode,

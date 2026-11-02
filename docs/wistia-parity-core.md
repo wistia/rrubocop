@@ -235,3 +235,28 @@ keyword options and colon dispatch. All 48 exact detection/correction replays
 pass. Actual CLI safe/all modes pass 96 correction comparisons and 96
 idempotence checks; safe mode leaves pre-3.1 calls unchanged. This gate is
 represented in executable behavior rather than silently omitting the rule.
+
+## NonDeterministicRequireOrder explicit version gate
+
+Registers the previously absent rule from pinned Ruby 1.65.1
+`lib/rubocop/cop/lint/non_deterministic_require_order.rb`, including the
+explicit Ruby >=3.0 early return. Older targets cover Dir/::Dir indexing and
+glob calls, direct blocks, each blocks, numbered parameters and
+`&method(:require)` / `&method(:require_relative)` callbacks. Explicit method
+receivers, safe navigation, other namespaces, invalid block shapes and
+already sorted receivers remain accepted. Numbered parameter discovery
+respects nested lexical scopes and method-name identifiers.
+
+All 28 unchanged original specs pass in Ruby (40 captured states). Another
+42 original-Ruby probes cover positive/negative matcher branches and the
+production Ruby3.4 gate. All 82 exact message/range/correction replays pass;
+actual safe/all CLI modes pass 164 correction comparisons and 164 idempotence
+checks. The original unsafe policy is retained: safe mode reports without
+reordering older-target sources.
+
+Two independent original-Ruby hazard probes confirm that moving the block
+pass deletes an intervening comment and that a callback-only glob crashes
+while accessing the missing previous argument. Rust still reports those
+inputs but withholds the corresponding correction; both safeguards have
+dedicated regression tests. These cases are separate from the 82 exact
+reference replays.
