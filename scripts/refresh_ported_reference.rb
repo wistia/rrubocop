@@ -97,7 +97,8 @@ class PortedReference
   end
 
   def source(test, index)
-    source = RuboCop::ProcessedSource.new(test.fetch('source'), 3.4,
+    version = test.fetch('config', {}).fetch('TargetRubyVersion', 3.4).to_f
+    source = RuboCop::ProcessedSource.new(test.fetch('source'), version,
                                           test.fetch('path').sub('$PROJECT', project.to_s))
     raise "Invalid Ruby syntax in case #{index}" unless source.valid_syntax?
 

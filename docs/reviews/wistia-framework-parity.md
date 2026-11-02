@@ -571,3 +571,12 @@ ordinary escapes, literal-delimiter escapes, static/dynamic/options negatives
 and LF/CRLF/CR distinctions. The helper and existing 54 AST equality pairs pass;
 full native suite passes 914 tests, 1 ignored probe. Invalid UTF-8 meta-escape
 sources rejected by Ruby's compiler are not valid-source equality fixtures.
+
+The follow-up adapter gate adds empty continued-regexp text: original parser
+omits the empty text child after removing the continuation, including before
+interpolation. Both original equality modes group those forms with empty/textless
+counterparts. The direct fixture now has 68 version observations; shared AST
+fixture has 56 pairs/112 assertions. Both focused native helper tests pass.
+The differential reference's ProcessedSource parser now also honors each case's
+TargetRubyVersion (it previously changed cop config but always parsed as 3.4).
+This is required to test the lexer branch rather than configuration alone.
