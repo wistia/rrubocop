@@ -297,3 +297,7 @@ pub(super) fn decode_regexp_parts(
 ) -> Option<Vec<Vec<u8>>> {
     context::decode_regexp_parts(inner, opening, closing, ruby_version)
 }
+
+pub(super) fn local_binding(source: &SourceFile, node: Node<'_>) -> Option<usize> {
+    context::local_binding(&Context::new(source, &CopConfig::default()), node)
+}

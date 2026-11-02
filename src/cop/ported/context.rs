@@ -199,7 +199,7 @@ mod options;
 pub(super) use options::option_pairs;
 
 mod bindings;
-pub(super) use bindings::local_identifier;
+pub(super) use bindings::{local_binding, local_identifier};
 
 #[cfg(test)]
 mod tests;

@@ -1,0 +1,394 @@
+{
+  "base_checkpoint": "b4ffbb8",
+  "ruby": "3.4.9",
+  "rubocop": "1.65.1",
+  "rubocop_performance": "1.21.1",
+  "parser": "3.3.5.0",
+  "scope": "Seven explicitly transferred enabled Performance no-op stubs; RSpec branch unchanged.",
+  "rules": [
+    {
+      "cop": "Performance/CompareWithBlock",
+      "status": "pending",
+      "baseline": "unimplemented_noop_stub"
+    },
+    {
+      "cop": "Performance/Detect",
+      "status": "pending",
+      "baseline": "unimplemented_noop_stub"
+    },
+    {
+      "cop": "Performance/RedundantBlockCall",
+      "status": "implemented_source_reviewed_with_safeguards",
+      "baseline": "unimplemented_noop_stub",
+      "original_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/redundant_block_call.rb",
+      "original_spec": "tests/fixtures/performance-seven-upstream/redundant_block_call_spec.rb",
+      "original_cases": 78,
+      "second_pass_cases": 156,
+      "exact_original_cases": 46,
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "strict_driver_exit": 1,
+      "strict_driver_failures": {
+        "safe": 96,
+        "all": 96,
+        "runtime": 8
+      },
+      "trusted_runtime_programs": 5,
+      "all_native_runtime_states_preserve_original": true,
+      "safeguards": [
+        {
+          "id": "Performance/RedundantBlockCall:2491",
+          "source": "def method(&block)\n  block.call\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2492",
+          "source": "def method(&block)\n  block.call()\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2493",
+          "source": "def self.method(&block)\n  block.call\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2494",
+          "source": "def method(&block)\n  block.call 1, 2\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2495",
+          "source": "def method(&block)\n  block.call 1\n  block.call 2\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2496",
+          "source": "def method(&func)\n  func.call\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2507",
+          "source": "def method(&block)\n  ->(i) { puts i }.then do |_block|\n    block.call(1)\n  end\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2508",
+          "source": "def method(&func)\n  func.call(1)\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2509",
+          "source": "def method(&block)\n  block.call(a, b)\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2510",
+          "source": "def method(&block)\n  each_with_object({}) do |(key, value), acc|\n    acc.merge!(block.call(key) => rhs[value])\n  end\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2519",
+          "source": "def example(&block)\nblock.call\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2521",
+          "source": "def example(&block)\nblock.call()\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2523",
+          "source": "def example(&block)\nblock.call(1, 2)\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2525",
+          "source": "def example(&block)\nblock.call 1,2\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2527",
+          "source": "def example(&block)\nblock.(1)\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2529",
+          "source": "def example(&block)\nblock::call(1)\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2537",
+          "source": "def example(&block)\nblock.call(a:1,b:2)\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2539",
+          "source": "def example(&block)\nblock.call({a:1,b:2})\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2541",
+          "source": "def example(&block)\nblock.call(1, a: 2, b: 3)\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2552",
+          "source": "def example(&block); block.call unless block; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2558",
+          "source": "def example(&block); marker; items.each { |block| block.call }; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2560",
+          "source": "def example(&block); if block; block.call( # keep\n 1\n ); end; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2562",
+          "source": "def example(&block); block.call(1); block.call(2) { work }; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2563",
+          "source": "def example(&block); def nested(block); block.call; end; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2564",
+          "source": "def example(&block); def nested(&block); if block; block.call; end; end; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2565",
+          "source": "def example(&block); if block; value => block; block.call; end; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2570",
+          "source": "def example(&block)\n if block\n  block.call(\n   __LINE__\n  )\n end\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:2571",
+          "source": "def example(&block)\n if block\n  block.call(\n   <<~TEXT\n    payload\n   TEXT\n  )\n end\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2573",
+          "source": "def probe(&block)\n block.call\nend\nbegin\n probe\nrescue => error\n p error.class.name\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2574",
+          "source": "def probe(&block)\n marker = :outside\n [-> { :inner }].map { |block| block.call }\nend\np probe { :outer }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2575",
+          "source": "def probe(&block)\n if block\n  block.call\n end\nend\ncallback = proc { :body }\ndef callback.call\n :override\nend\np probe(&callback)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        },
+        {
+          "id": "Performance/RedundantBlockCall:trusted-performance-seven:2576",
+          "source": "def probe(&block)\n if block\n  block.call(\n   __LINE__\n  )\n end\nend\nprobe { |line| p line }\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ],
+          "native_preserves_original_source": true
+        }
+      ],
+      "review": [
+        "Original def/defs + named final block parameter, lvar call selection, recursive assignment/block-pass exclusions, sole-body block parameter shadowing, literal/numbered block exclusions and exact argument formatting reviewed after implementation.",
+        "Cached declaration identity protects nested/destructured/block-parameter shadowing without a new lexical scanner or second model cache.",
+        "Corrections require a dominating block-presence check, matching declaration identity, no visible call override, preserved comments/line values, UTF-8 source and valid rewritten syntax.",
+        "Missing block changes NoMethodError to LocalJumpError in original; nested shadowing changes callee; overridden Proc#call changes dispatched method; multiline __LINE__ and heredoc rewrites change data or syntax. Trusted programs/native controls retain these as explicit differences.",
+        "Production CLI scope comparison passes 91 controls, including positive and vendor-excluded controls for this rule; metadata under AutoCorrect disabled matches original."
+      ]
+    },
+    {
+      "cop": "Performance/RedundantMatch",
+      "status": "pending",
+      "baseline": "unimplemented_noop_stub"
+    },
+    {
+      "cop": "Performance/RedundantMerge",
+      "status": "pending",
+      "baseline": "unimplemented_noop_stub"
+    },
+    {
+      "cop": "Performance/RegexpMatch",
+      "status": "pending",
+      "baseline": "unimplemented_noop_stub"
+    },
+    {
+      "cop": "Performance/StringReplacement",
+      "status": "pending",
+      "baseline": "unimplemented_noop_stub"
+    }
+  ]
+}

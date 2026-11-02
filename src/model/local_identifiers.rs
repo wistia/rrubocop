@@ -1,5 +1,5 @@
 use super::ScopeData;
-use std::collections::HashSet;
+use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 pub(crate) struct LocalIdentifierScopes(Mutex<Option<Arc<Vec<ScopeData>>>>);
@@ -35,22 +35,31 @@ impl LocalIdentifierScopes {
 }
 
 #[derive(Default)]
-pub(crate) struct LocalIdentifiers(HashSet<usize>);
+pub(crate) struct LocalIdentifiers(HashMap<usize, usize>);
 
 impl LocalIdentifiers {
     pub(crate) fn from_scopes(scopes: &[ScopeData]) -> Self {
-        let mut bytes = HashSet::new();
+        let mut bytes = HashMap::new();
         for scope in scopes {
             for entry in scope.entries.values() {
-                bytes.insert(entry.intro_byte);
-                bytes.extend(entry.writes.iter().map(|write| write.byte));
-                bytes.extend(entry.reads.iter().map(|read| read.byte));
+                bytes.insert(entry.intro_byte, entry.intro_byte);
+                bytes.extend(
+                    entry
+                        .writes
+                        .iter()
+                        .map(|write| (write.byte, entry.intro_byte)),
+                );
+                bytes.extend(entry.reads.iter().map(|read| (read.byte, entry.intro_byte)));
             }
         }
         Self(bytes)
     }
 
+    pub(crate) fn binding(&self, byte: usize) -> Option<usize> {
+        self.0.get(&byte).copied()
+    }
+
     pub(crate) fn contains(&self, byte: usize) -> bool {
-        self.0.contains(&byte)
+        self.0.contains_key(&byte)
     }
 }

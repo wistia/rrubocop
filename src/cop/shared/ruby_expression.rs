@@ -170,8 +170,10 @@ fn symbol_shape(source: &SourceFile, node: Node<'_>) -> Option<StringAst> {
     }
 }
 pub fn plain_string(source: &SourceFile, node: Node<'_>) -> Option<String> {
-    if !matches!(node.kind(), "string" | "chained_string" | "character" | "heredoc_beginning")
-        || crate::cop::ported::static_symbol(source, node).is_some()
+    if !matches!(
+        node.kind(),
+        "string" | "chained_string" | "character" | "heredoc_beginning"
+    ) || crate::cop::ported::static_symbol(source, node).is_some()
     {
         return None;
     }

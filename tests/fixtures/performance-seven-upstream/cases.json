@@ -1,0 +1,198 @@
+[
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 5
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call()\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 20
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def self.method(&block)\n  block.call\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 35
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call 1, 2\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 50
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call 1\n  block.call 2\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 65
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&func)\n  func.call\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 83
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n something.call\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 98
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 106
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call(&some_proc)\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 113
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call { do_something }\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 121
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call { _1.do_something }\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 129
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call(1, &some_proc)\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 137
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call(1, &some_proc)\n  block.call(2)\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 145
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block ||= ->(i) { puts i }\n  block.call(1)\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 154
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block = ->(i) { puts i }\n  block.call(1)\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 163
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  ->(i) { puts i }.then do |block|\n    block.call(1)\n  end\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 172
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  ->(i) { puts i }.then do |_block|\n    block.call(1)\n  end\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 182
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&func)\n  func.call(1)\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 201
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  block.call(a, b)\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 210
+  },
+  {
+    "cop": "Performance/RedundantBlockCall",
+    "source": "def method(&block)\n  each_with_object({}) do |(key, value), acc|\n    acc.merge!(block.call(key) => rhs[value])\n  end\nend\n",
+    "config": {},
+    "upstream": "redundant_block_call_spec.rb",
+    "line": 225
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.merge!(**bar)\n",
+    "config": {},
+    "upstream": "redundant_merge_spec.rb",
+    "line": 48
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.merge!(baz: qux, **bar)\n",
+    "config": {},
+    "upstream": "redundant_merge_spec.rb",
+    "line": 54
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.each_with_object({}) do |f, hash|\n  changes = hash.merge!(a: 1, b: 2)\n  why_are_you_doing_this?\nend\n",
+    "config": {},
+    "upstream": "redundant_merge_spec.rb",
+    "line": 114
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "foo.merge!({})\n",
+    "config": {},
+    "upstream": "redundant_merge_spec.rb",
+    "line": 229
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "variable = hash.merge!(a: 1)\nputs variable\n",
+    "config": {},
+    "upstream": "redundant_merge_spec.rb",
+    "line": 235
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash.merge!(a: 1)\n",
+    "config": {},
+    "upstream": "redundant_merge_spec.rb",
+    "line": 242
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nhash.merge!(a: 1, b: 2)\n",
+    "config": {},
+    "upstream": "redundant_merge_spec.rb",
+    "line": 254
+  },
+  {
+    "cop": "Performance/RedundantMerge",
+    "source": "hash = {}\nhash.merge!(a: 1, b: 2)\n",
+    "config": {},
+    "upstream": "redundant_merge_spec.rb",
+    "line": 267
+  }
+]

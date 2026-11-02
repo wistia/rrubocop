@@ -124,3 +124,29 @@ fn seed_scopes(source: &SourceFile) -> std::sync::Arc<crate::model::LocalIdentif
     assert!(scopes.shares(&model.scopes));
     scopes
 }
+
+#[test]
+fn cached_local_bindings_distinguish_shadowed_parameters() {
+    let (source, config) = fixture(
+        "def m(&callback); callback.call; [1].each { |callback| callback.call }; callback.call; end",
+    );
+    let tree = crate::parse::parse_ruby(&source).unwrap();
+    let c = Context::new(&source, &config);
+    let nodes = descendants(tree.root_node())
+        .filter(|node| node.kind() == "identifier" && c.text(*node) == "callback")
+        .collect::<Vec<_>>();
+    assert_eq!(nodes.len(), 5);
+    let reads = [nodes[1], nodes[3], nodes[4]].map(|node| local_binding(&c, node).unwrap());
+    assert_eq!(reads[0], reads[2]);
+    assert_ne!(reads[0], reads[1]);
+    assert_eq!(reads[1], nodes[2].start_byte());
+    let method_parameter = tree
+        .root_node()
+        .named_child(0)
+        .unwrap()
+        .child_by_field_name("parameters")
+        .unwrap()
+        .named_child(0)
+        .unwrap();
+    assert_eq!(reads[0], local_binding(&c, method_parameter).unwrap());
+}

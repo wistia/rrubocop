@@ -296,4 +296,8 @@ def cases():
     add("Rails/Date","date.to_time",EnforcedStyle="strict")
     add("Rails/Date","Date.today.to_time",EnforcedStyle="strict")
     add("Rails/Date", ":'2020-01-01Z'.to_time",AllowToTime=False)
+    from performance_seven_cases import extend as extend_transferred_performance
+    extend_transferred_performance(add)
+    from performance_seven_runtime import extend as extend_transferred_runtime
+    extend_transferred_runtime(rows)
     return rows
