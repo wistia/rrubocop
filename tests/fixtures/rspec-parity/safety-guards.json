@@ -11962,5 +11962,1044 @@
       }
     },
     "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "scattered_setup_spec:1",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  after { bar }\n  after(:each) { baz }\n  after(:example) { baz }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  after { bar }\n  after(:each) { baz }\n  after(:example) { baz }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not define multiple `after` hooks in the same example group (also defined on lines 3, 4).",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Do not define multiple `after` hooks in the same example group (also defined on lines 2, 4).",
+          "correctable": true,
+          "length": 20,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Do not define multiple `after` hooks in the same example group (also defined on lines 2, 3).",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  after { bar\nbaz \nbaz  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  after { bar\nbaz \nbaz  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Combining after hooks in source order reverses their original runtime callback order. Pinned real RSpec runtime proves this; native reports and preserves these hooks."
+  },
+  {
+    "id": "batch29:prepend-before",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n prepend_before { first }\n prepend_before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `prepend_before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `prepend_before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n prepend_before { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n prepend_before { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:locals",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { value = 1 }\n before { events << defined?(value) }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 20,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { value = 1\nevents << defined?(value)  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { value = 1\nevents << defined?(value)  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:parameters",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { |example| first(example) }\n before { |other| second(other) }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { |example| first(example)\nsecond(other)  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { |example| first(example)\nsecond(other)  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:invalid-scope",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(:invalid) { first }\n before(:invalid) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 26,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 27,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(:invalid) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(:invalid) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:metadata-effects",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(tag: compute) { first }\n before(tag: compute) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(tag: compute) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(tag: compute) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:comment",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first } # keep\n before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first\nsecond  } # keep\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first\nsecond  } # keep\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:interposed-eager",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n let!(:eager) { effect }\n before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 4).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first\nsecond  }\n let!(:eager) { effect }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first\nsecond  }\n let!(:eager) { effect }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:interposed-hook",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n before(:each, :tag) { effect }\n before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 4).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first\nsecond  }\n before(:each, :tag) { effect }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first\nsecond  }\n before(:each, :tag) { effect }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:numbered-hooks",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(:each, :a) { _1 }\n before(:each, :b) { _1 }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(:each, :a) { _1\n_1  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(:each, :a) { _1\n_1  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:numbered-nested-group",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n context(\"y\") { _1; before { second } }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 20,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:line-literal",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { events << __LINE__ }\n before { events << __LINE__ }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { events << __LINE__\nevents << __LINE__  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { events << __LINE__\nevents << __LINE__  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:for-local",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { for value in [1]; value; end }\n before { events << defined?(value) }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { for value in [1]; value; end\nevents << defined?(value)  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { for value in [1]; value; end\nevents << defined?(value)  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:return",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { return }\n before { effect }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 17,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { return\neffect  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { return\neffect  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:around-different",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n around { |example| events << :first; example.run }\n around { |example| events << :second; example.run }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `around` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 50,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `around` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 51,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n around { |example| events << :first; example.run\nevents << :second; example.run  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n around { |example| events << :first; example.run\nevents << :second; example.run  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:mixed-identical-hooks",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n before { first }\n before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 3, 4).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 2, 4).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 2, 3).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first\nsecond\nfirst   }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first\nsecond\nfirst   }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:method-hooks",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n def register\n  before { first }\n  before { second }\n end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 4).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n def register\n  before { first\nsecond  }\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n def register\n  before { first\nsecond  }\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:first-heredoc",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before do\n  events << <<~TEXT\n   original\n  TEXT\n end\n before { events << :second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 7).",
+          "correctable": false,
+          "length": 9,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before do\n  events << <<~TEXT\nevents << :second \n   original\n  TEXT\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before do\n  events << <<~TEXT\nevents << :second \n   original\n  TEXT\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:spread-metadata",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(**metadata) { first }\n before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 28,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(**metadata) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(**metadata) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
+  },
+  {
+    "id": "batch29:spread-and-tag",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(**metadata, tag: true) { first }\n before(tag: true) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(**metadata, tag: true) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(**metadata, tag: true) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve callback registration/execution order, around continuations, local bindings, parameters, metadata evaluation, line/heredoc payloads, comments and scope ownership. Original identical-node skipping can reorder callbacks across correction passes; pinned RSpec runtime proves independent hazards."
   }
 ]

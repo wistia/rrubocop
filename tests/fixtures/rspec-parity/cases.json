@@ -94301,5 +94301,1537 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "scattered_setup_spec:0",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before { bar }\n  before { baz }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before { bar }\n  before { baz }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 14,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 14,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before { bar\nbaz  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before { bar\nbaz  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:2",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before(:all) { bar }\n  before(:all) { baz }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before(:all) { bar }\n  before(:all) { baz }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 20,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 20,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before(:all) { bar\nbaz  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before(:all) { bar\nbaz  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:3",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before { bar }\n  after { baz }\n  around { qux }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before { bar }\n  after { baz }\n  around { qux }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before { bar }\n  after { baz }\n  around { qux }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before { bar }\n  after { baz }\n  around { qux }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:4",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before { bar }\n  before(:all) { baz }\n  before(:suite) { baz }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before { bar }\n  before(:all) { baz }\n  before(:suite) { baz }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before { bar }\n  before(:all) { baz }\n  before(:suite) { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before { bar }\n  before(:all) { baz }\n  before(:suite) { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:5",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before { bar }\n\n  describe '.baz' do\n    before { baz }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before { bar }\n\n  describe '.baz' do\n    before { baz }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before { bar }\n\n  describe '.baz' do\n    before { baz }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before { bar }\n\n  describe '.baz' do\n    before { baz }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:6",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  shared_context 'one' do\n    before { bar }\n  end\n\n  shared_context 'two' do\n    before { baz }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  shared_context 'one' do\n    before { bar }\n  end\n\n  shared_context 'two' do\n    before { baz }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  shared_context 'one' do\n    before { bar }\n  end\n\n  shared_context 'two' do\n    before { baz }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  shared_context 'one' do\n    before { bar }\n  end\n\n  shared_context 'two' do\n    before { baz }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:7",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before { bar }\n\n  it 'uses an instance method called before' do\n    expect(before { tricky }).to_not confuse_rubocop_rspec\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before { bar }\n\n  it 'uses an instance method called before' do\n    expect(before { tricky }).to_not confuse_rubocop_rspec\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before { bar }\n\n  it 'uses an instance method called before' do\n    expect(before { tricky }).to_not confuse_rubocop_rspec\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before { bar }\n\n  it 'uses an instance method called before' do\n    expect(before { tricky }).to_not confuse_rubocop_rspec\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:8",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before(:example) { foo }\n  before(:example, :special_case) { bar }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before(:example) { foo }\n  before(:example, :special_case) { bar }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before(:example) { foo }\n  before(:example, :special_case) { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before(:example) { foo }\n  before(:example, :special_case) { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:9",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before(:each, :special_case) { foo }\n  before(:example, :special_case) { bar }\n  before(:example, special_case: true) { bar }\n  before(special_case: true) { bar }\n  before(:example, special_case: false) { bar }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before(:each, :special_case) { foo }\n  before(:example, :special_case) { bar }\n  before(:example, special_case: true) { bar }\n  before(special_case: true) { bar }\n  before(:example, special_case: false) { bar }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 3, 4, 5).",
+          "correctable": false,
+          "length": 36,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 2, 4, 5).",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 2, 3, 5).",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 2, 3, 4).",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before(:each, :special_case) { foo\nbar \nbar \nbar  }\n  before(:example, special_case: false) { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before(:each, :special_case) { foo\nbar \nbar \nbar  }\n  before(:example, special_case: false) { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:10",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before { do_something }\n  before { }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before { do_something }\n  before { }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before { do_something\n }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before { do_something\n }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_setup_spec:11",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe Foo do\n  before { foo }\n  before do\n    bar(<<~'TEXT')\n      Hello World!\n    TEXT\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  before { foo }\n  before do\n    bar(<<~'TEXT')\n      Hello World!\n    TEXT\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_setup_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 14,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  before { foo\nbar(<<~'TEXT')\n      Hello World!\n    TEXT\n   }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  before { foo\nbar(<<~'TEXT')\n      Hello World!\n    TEXT\n   }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:three-before",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n before { second }\n before { third }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 3, 4).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 2, 4).",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on lines 2, 3).",
+          "correctable": true,
+          "length": 16,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first\nsecond \nthird  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first\nsecond \nthird  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:around",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n around { |example| example.run }\n around { |example| example.run }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `around` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 32,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `around` hooks in the same example group (also defined on line 2).",
+          "correctable": false,
+          "length": 32,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n around { |example| example.run }\n around { |example| example.run }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `around` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 32,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Do not define multiple `around` hooks in the same example group (also defined on line 2).",
+            "correctable": false,
+            "length": 32,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n around { |example| example.run }\n around { |example| example.run }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `around` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 32,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Do not define multiple `around` hooks in the same example group (also defined on line 2).",
+            "correctable": false,
+            "length": 32,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch29:append-before",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n append_before { first }\n append_before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `append_before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `append_before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n append_before { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n append_before { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:first-empty",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before {}\n before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 9,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": false,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before {}\n before { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 9,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+            "correctable": false,
+            "length": 17,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n before {}\n before { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 9,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+            "correctable": false,
+            "length": 17,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch29:both-empty",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before {}\n before {}\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 9,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": false,
+          "length": 9,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before {}\n before {}\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 9,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+            "correctable": false,
+            "length": 9,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n before {}\n before {}\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 9,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+            "correctable": false,
+            "length": 9,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch29:unknown-scope",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(scope) { first }\n before(scope) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(scope) { first }\n before(scope) { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(scope) { first }\n before(scope) { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:nil-scope",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(nil) { first }\n before(nil) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(nil) { first }\n before(nil) { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(nil) { first }\n before(nil) { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:empty-hash",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n before({}) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:suite",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(:suite) { first }\n before(:suite) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(:suite) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(:suite) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:hash-order",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(a: true, b: true) { first }\n before(b: true, a: true) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 34,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(a: true, b: true) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(a: true, b: true) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:true-normalization",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(:each, :tag) { first }\n before(:example, tag: true) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 38,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(:each, :tag) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(:each, :tag) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:different-value",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(tag: 1) { first }\n before(tag: 1.0) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(tag: 1) { first }\n before(tag: 1.0) { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(tag: 1) { first }\n before(tag: 1.0) { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:inline-disable",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n before { second } # rubocop:disable RSpec/ScatteredSetup\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first }\n before { second } # rubocop:disable RSpec/ScatteredSetup\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 16,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first }\n before { second } # rubocop:disable RSpec/ScatteredSetup\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 16,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch29:nested-group-negative",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n context(\"y\") { before { second } }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first }\n context(\"y\") { before { second } }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first }\n context(\"y\") { before { second } }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:shared-root-negative",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "shared_context \"x\" do\n before { first }\n before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "shared_context \"x\" do\n before { first }\n before { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "shared_context \"x\" do\n before { first }\n before { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:includes-negative",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n include_examples(\"y\") { before { second } }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first }\n include_examples(\"y\") { before { second } }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first }\n include_examples(\"y\") { before { second } }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:qualified-hooks-negative",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n RSpec.before { first }\n RSpec.before { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n RSpec.before { first }\n RSpec.before { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n RSpec.before { first }\n RSpec.before { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:identical-hooks",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before { first }\n before { first }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": false,
+          "length": 16,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before { first }\n before { first }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 16,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+            "correctable": false,
+            "length": 16,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n before { first }\n before { first }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+            "correctable": false,
+            "length": 16,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+            "correctable": false,
+            "length": 16,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch29:metadata-overwrite-false",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(:each, :tag, tag: false) { first }\n before(tag: false) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 41,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(:each, :tag, tag: false) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(:each, :tag, tag: false) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch29:metadata-overwrite-true",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(:each, {tag: false}, :tag) { first }\n before(tag: true) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 3).",
+          "correctable": false,
+          "length": 43,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Do not define multiple `before` hooks in the same example group (also defined on line 2).",
+          "correctable": true,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n before(:each, {tag: false}, :tag) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n before(:each, {tag: false}, :tag) { first\nsecond  }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]

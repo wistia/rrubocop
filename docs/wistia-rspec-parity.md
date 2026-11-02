@@ -768,3 +768,41 @@ call counts in broader Ruby corrections. Unsupported allow signatures, unknown
 returns/receivers and noncontiguous groups remain explicit safeguards. Unsafe
 correction metadata remains unchanged: safe mode preserves source. Combined-cop
 scheduling remains deferred.
+
+## Batch 29: scattered hook setup and completed inventory
+
+ScatteredSetup replaces the final initial stub. All 80 initial no-op stubs and all
+sixteen existing implementations now have original-source and differential review
+entries (96 of 96). The corpus contains 1,936 strict cases, 211 explicit safeguards,
+53 correction-disable controls, eight separate original-rule errors and four
+invalid-original-syntax specimens. These categories are not interchangeable parity
+successes. All 51 RSpec/RSpecRails tests pass. The complete native library suite passes
+842 tests with one existing ignored test; the non-test library check also passes.
+
+Review covers the original ScatteredSetup, ExampleGroup scope walker, Hook scope
+and metadata transformations and FinalEndLocation source algorithms. Twelve
+upstream specimens and 39 successful additional probes exercise scope aliases,
+true tag normalization, key overwrites/order, ignored hash splats, unknown scopes,
+numbered hooks/groups, parameters, empty/identical bodies, comments, suppression,
+callback order, local binding, line values and heredocs. Three further valid-source
+probes retain two original same-line Parser::ClobberingErrors and a non-hash
+metadata Hook#pairs NoMethodError separately; native preserves source safely.
+
+The original first-occurrence guard uses AST equality rather than identity.
+Identical hooks can therefore remain untouched, or move to a later correction pass
+and reorder execution around a different hook. Native preserves affected groups.
+After/prepend hooks also reverse registration order; around hooks preserve nested
+continuations rather than sequential execution. Safe contiguous before/append_before
+hooks merge atomically using existing correction ownership. Registration metadata
+evaluation, local bindings, parameters, comments, eager/interposed hooks and
+line/heredoc payloads retain explicit safeguards. A trusted RSpec runtime runs
+fourteen examples covering safe before/heredoc controls and five order/binding
+hazard families. No scheduling engine expansion was introduced.
+
+Shared checkpoint 9019831 models bare __LINE__ as the original integer AST value
+at its physical source line, with method-name tokens excluded. Seven additional
+original AST pairs pass (71 on this branch; integration must union the framework
+agent's additional pairs rather than overwrite them). __FILE__/__ENCODING__ and
+broader unsupported AST families remain bounded evidence, not blanket equality
+claims. The 14 unresolved upstream host templates, custom global Language aliases,
+explicit safety differences and deferred combined-cop scheduling remain open.

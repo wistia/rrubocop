@@ -958,8 +958,31 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/scattered_setup.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 31,
+    "deliberate_safeguards": [
+      "scattered_setup_spec:1",
+      "batch29:prepend-before",
+      "batch29:locals",
+      "batch29:parameters",
+      "batch29:invalid-scope",
+      "batch29:metadata-effects",
+      "batch29:comment",
+      "batch29:interposed-eager",
+      "batch29:interposed-hook",
+      "batch29:numbered-hooks",
+      "batch29:numbered-nested-group",
+      "batch29:line-literal",
+      "batch29:for-local",
+      "batch29:return",
+      "batch29:around-different",
+      "batch29:mixed-identical-hooks",
+      "batch29:method-hooks",
+      "batch29:first-heredoc",
+      "batch29:spread-metadata",
+      "batch29:spread-and-tag"
+    ],
+    "post_implementation_review": "Original scattered_setup.rb, ExampleGroup scoped traversal, Hook metadata and FinalEndLocation algorithms reviewed separately. Twelve upstream specimens plus 39 successful branch probes and three separately retained original-rule crashes cover scope aliases, hash/symbol metadata true normalization and overwrites, ignored hash splats, unknown scope/metadata, numbered hooks/groups, callback parameters, first/identical empty bodies, comments, suppression and heredocs. First-occurrence suppression uses original Node#==, not identity; mixed identical hooks can reorder bodies over repeated correction passes. Safe contiguous before/append_before groups merge atomically through existing correction ownership. Trusted real RSpec runtime runs 14 examples, proving before/heredoc controls and after/around/local/eager/iterative-order hazards. Those transformations, line/heredoc payloads, unsupported metadata and scope ownership are explicit safeguards. Two same-line original Parser::ClobberingErrors and one Hook#pairs NoMethodError remain separate; native preserves source without crashing."
   },
   {
     "name": "RSpec/SharedContext",
