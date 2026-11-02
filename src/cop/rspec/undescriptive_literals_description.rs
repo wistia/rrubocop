@@ -25,6 +25,9 @@ impl Cop for UndescriptiveLiteralsDescription {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         let Some(method) = bare_rspec_call(source, node) else {
             return;
         };

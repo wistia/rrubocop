@@ -96,3 +96,37 @@ and an alternate explicit prefix. Arbitrary Ruby-only regexp features in custom
 configuration, all numbered-block forms, and every possible AST spelling are not
 claimed as proven. These remain finite differential results, not a proof of
 complete equivalence for each rule or the whole RSpec department.
+
+## Fourth batch
+
+Eight additional former stubs are implemented: ReceiveCounts, ReceiveNever,
+EmptyHook, SharedExamples, VariableDefinition, VariableName, ContextWording, and
+SkipBlockInsideExample. Forty original RSpec stubs are now implemented; forty
+stubs and sixteen pre-existing implementations still require review.
+
+The strict matrix passes 571 Ruby-comparable cases across all forty rules. The
+pinned upstream import contains 387 specimens, with thirteen host-generated
+templates still unimported. Two upstream EmptyHook examples use `yield` outside a
+method and fail RubyVM compilation; their explicit original errors are retained
+in `cases-invalid-originals.json` and they are not counted as valid comparisons.
+Nine safety differences are recorded separately. All 48 RSpec/RSpecRails tests
+pass, including spec-file scope and disabled correction controls for sixteen
+new correction capabilities.
+
+This batch reuses the shared cached local-binding classifier, removing the
+RSpec-only lexical scan. New original-engine probes cover `send` versus safe
+navigation `csend`, configured name/description styles and ignore patterns,
+metadata type distinctions, and alternative numeric spellings.
+
+One original-Ruby bug is deliberately not copied: ReceiveCounts detects integer
+`0x1` as one but uses decimal `source.to_i` while correcting it, changing
+`.exactly(0x1).times` into `.twice`. Rust correctly uses `.once`. The trusted
+`scripts/rspec_parity_count_semantics.rb` replay proves that original and Rust
+accept exactly one call, while Ruby's correction accepts two instead. Observed
+outcomes are retained in `receive-counts-runtime.json`; the diagnostic and both
+engines' corrected bytes remain explicit in `safety-guards.json`.
+
+The other eight safety cases retain comments rather than copying their deletion
+or invalid syntax from the Ruby correction. The EmptyHook comment case is
+explicitly classified here, rather than silently omitted from the upstream
+matrix. These safety cases are differences, not exact-parity successes.

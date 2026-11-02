@@ -3,19 +3,22 @@
 require "json"
 require "prism"
 
-def literal_parts(node)
-  case node
-  when Prism::StringNode
-    node.unescaped
-  when Prism::InterpolatedStringNode
-    node.parts.map { |part| literal_parts(part) }.join
-  else
-    "HOST_INTERPOLATION_MARKER"
+module RSpecUpstreamSources
+  def self.literal_parts(node)
+    case node
+    when Prism::StringNode
+      node.unescaped
+    when Prism::InterpolatedStringNode
+      node.parts.map { |part| literal_parts(part) }.join
+    else
+      "HOST_INTERPOLATION_MARKER"
+    end
   end
 end
 
 upstream, inventory_path, output, manifest = ARGV
-inventory = JSON.parse(File.read(inventory_path)).index_by { |row| row.fetch("name") }
+inventory = {}
+JSON.parse(File.read(inventory_path)).each { |row| inventory.store(row.fetch("name"), row) }
 cases = []
 not_imported = []
 Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
@@ -33,7 +36,7 @@ Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
       not_imported << {id:, reason: "Fixture template requires host interpolation"}
       next
     end
-    source = literal_parts(argument).lines.reject { |line| line.match?(/\A\s*[\^~]+/) }.join
+    source = RSpecUpstreamSources.literal_parts(argument).lines.reject { |line| line.match?(/\A\s*[\^~]+/) }.join
     if source.include?("HOST_INTERPOLATION_MARKER") || source.match?(/%\{\w+\}/)
       not_imported << {id:, reason: "Fixture template requires parameter substitution"}
       next

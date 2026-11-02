@@ -26,6 +26,9 @@ impl Cop for MissingExpectationTargetMethod {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if runner(source, node) {
             return;
         }

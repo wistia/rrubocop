@@ -26,6 +26,9 @@ impl Cop for VerifiedDoubles {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if call_receiver(node).is_some() || !matches!(name(source, node), Some(b"double" | b"spy"))
         {
             return;

@@ -57,6 +57,12 @@ pub fn is_let_helper(name: &[u8]) -> bool {
 }
 
 pub fn bare_rspec_call<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<&'a [u8]> {
+    if node
+        .child_by_field_name("operator")
+        .is_some_and(|operator| node_bytes(source, operator) == b"&.")
+    {
+        return None;
+    }
     let name = call_method_name(source, node)?;
     if let Some(recv) = call_receiver(node) {
         if !((recv.kind() == "constant" && node_bytes(source, recv) == b"RSpec")

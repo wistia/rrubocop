@@ -29,6 +29,9 @@ impl Cop for ContainExactly {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if !bare(source, node, b"contain_exactly") {
             return;
         }

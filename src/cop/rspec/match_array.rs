@@ -29,6 +29,9 @@ impl Cop for MatchArray {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if name(source, node) != Some(b"match_array") {
             return;
         }

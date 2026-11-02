@@ -26,6 +26,9 @@ impl Cop for IdenticalEqualityAssertion {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if name(source, node) != Some(b"to") {
             return;
         }

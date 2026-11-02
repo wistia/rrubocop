@@ -29,6 +29,9 @@ impl Cop for EmptyMetadata {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if !metadata_call(source, node) {
             return;
         }

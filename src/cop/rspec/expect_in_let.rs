@@ -26,6 +26,9 @@ impl Cop for ExpectInLet {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if call_receiver(node).is_some()
             || !name(source, node).is_some_and(|method| expectations().contains(&method))
         {

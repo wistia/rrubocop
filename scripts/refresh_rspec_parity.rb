@@ -4,8 +4,13 @@ require_relative "parity_audit/reference"
 
 class RSpecParityReference < AuditReference
   def refresh_all(input, output)
-    rows = JSON.parse(File.read(input)).map.with_index do |test, index|
+    invalid = []
+    rows = JSON.parse(File.read(input)).filter_map.with_index do |test, index|
       result = audit(test, index)
+      if result[:original_invalid]
+        invalid << test.merge("reference" => result)
+        next
+      end
       %w[safe all].each do |mode|
         next unless result[mode]
 
@@ -22,6 +27,7 @@ class RSpecParityReference < AuditReference
       test.merge("config" => options, "reference" => result)
     end
     File.write(output, JSON.pretty_generate(rows) + "\n")
+    File.write(output.sub(/\.json\z/, "-invalid-originals.json"), JSON.pretty_generate(invalid) + "\n")
   end
 
   private

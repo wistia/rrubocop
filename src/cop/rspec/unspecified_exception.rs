@@ -26,6 +26,9 @@ impl Cop for UnspecifiedException {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if !matches!(
             name(source, node),
             Some(b"raise_error" | b"raise_exception")
@@ -36,7 +39,7 @@ impl Cop for UnspecifiedException {
         }
         let mut parent = node.parent();
         while let Some(ancestor) = parent {
-            if name(source, ancestor) == Some(b"to") {
+            if !safe_send(source, ancestor) && name(source, ancestor) == Some(b"to") {
                 if let Some(receiver) = call_receiver(ancestor) {
                     if bare(source, receiver, b"expect") && call_block(receiver).is_some() {
                         if call_block(ancestor)

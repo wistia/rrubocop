@@ -29,6 +29,9 @@ impl Cop for HookArgument {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         let Some(method) = name(source, node) else {
             return;
         };

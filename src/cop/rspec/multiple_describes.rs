@@ -25,6 +25,9 @@ impl Cop for MultipleDescribes {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if !bare_rspec_call(source, node).is_some_and(is_example_group) {
             return;
         }

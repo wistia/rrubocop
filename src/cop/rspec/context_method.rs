@@ -28,6 +28,9 @@ impl Cop for ContextMethod {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if bare_rspec_call(source, node) != Some(b"context") || call_block(node).is_none() {
             return;
         }

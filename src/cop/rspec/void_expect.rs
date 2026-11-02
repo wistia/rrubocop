@@ -25,6 +25,9 @@ impl Cop for VoidExpect {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if !bare(source, node, b"expect") {
             return;
         }

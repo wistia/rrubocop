@@ -29,6 +29,9 @@ impl Cop for Eq {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if !runner(source, node) {
             return;
         }

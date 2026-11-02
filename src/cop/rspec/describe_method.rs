@@ -25,6 +25,9 @@ impl Cop for DescribeMethod {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if bare_rspec_call(source, node) != Some(b"describe")
             || !top_groups(source, node).contains(&node)
         {

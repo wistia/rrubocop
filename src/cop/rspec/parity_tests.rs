@@ -101,7 +101,7 @@ fn pinned_rspec_original_ruby_detection_and_correction_parity() {
 }
 
 #[test]
-fn source_comments_are_preserved_instead_of_copying_unsafe_reference_rewrites() {
+fn documented_safety_differences_preserve_source_or_correct_behavior() {
     let cases: Vec<Value> = serde_json::from_str(include_str!(
         "../../../tests/fixtures/rspec-parity/safety-guards.json"
     ))
@@ -109,16 +109,26 @@ fn source_comments_are_preserved_instead_of_copying_unsafe_reference_rewrites() 
     for case in cases {
         let original = case["source"].as_str().unwrap();
         let (_, detected) = inspect(&case, original, AutocorrectMode::Off);
-        assert!(
-            !detected.is_empty(),
-            "{} must still report the unsafe-to-correct offense",
+        assert_eq!(
+            normalized(&detected),
+            case.get("rust_diagnostics")
+                .unwrap_or(&case["reference"]["diagnostics"])
+                .clone(),
+            "{} must report the expected guarded offense",
             case["id"]
         );
-        for mode in [AutocorrectMode::Safe, AutocorrectMode::All] {
+        for (name, mode) in [
+            ("rust_safe", AutocorrectMode::Safe),
+            ("rust_all", AutocorrectMode::All),
+        ] {
             let (after, _) = inspect(&case, original, mode);
+            let expected = case
+                .get(name)
+                .and_then(|value| value.as_str())
+                .unwrap_or(original);
             assert_eq!(
-                after, original,
-                "{} must preserve the comment and behavior",
+                after, expected,
+                "{} must preserve source or original runtime behavior",
                 case["id"]
             );
         }
@@ -169,5 +179,5 @@ fn explicit_autocorrection_disable_preserves_sources() {
             assert!(!diagnostics.is_empty());
         }
     }
-    assert_eq!(checked.len(), 11);
+    assert_eq!(checked.len(), 16);
 }

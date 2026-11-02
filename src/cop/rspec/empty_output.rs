@@ -29,6 +29,9 @@ impl Cop for EmptyOutput {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if !runner(source, node) {
             return;
         }
@@ -40,6 +43,9 @@ impl Cop for EmptyOutput {
         }
         let args = call_args(node);
         if args.len() != 1 {
+            return;
+        }
+        if safe_send(source, args[0]) {
             return;
         }
         let Some(output) = call_receiver(args[0]) else {

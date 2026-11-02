@@ -293,5 +293,107 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "empty_hook_spec:27",
+    "cop": "RSpec/EmptyHook",
+    "source": "let(:foo) { 'bar' }\n\nbefore do\n  # commented out code\nend\n\nit do\n  expect(foo).to eq('bar')\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "let(:foo) { 'bar' }\n\nbefore do\n  # commented out code\nend\n\nit do\n  expect(foo).to eq('bar')\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_hook_spec.rb#27",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Empty hook detected.",
+          "correctable": true,
+          "length": 6,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "let(:foo) { 'bar' }\n\nit do\n  expect(foo).to eq('bar')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "let(:foo) { 'bar' }\n\nit do\n  expect(foo).to eq('bar')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Original Ruby deletes the hook comment; preserve source instead."
+  },
+  {
+    "id": "batch4-edge:ReceiveCounts:571",
+    "cop": "RSpec/ReceiveCounts",
+    "source": "expect(value).to receive(:method).exactly(0x1).times\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(value).to receive(:method).exactly(0x1).times\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 33,
+          "message": "Use `.twice` instead of `.exactly(0x1).times`.",
+          "correctable": true,
+          "length": 19,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(value).to receive(:method).twice\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(value).to receive(:method).twice\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Original Ruby reads hexadecimal source with decimal to_i and changes a one-call expectation into twice. Rust preserves exactly-one-call semantics.",
+    "rust_safe": "expect(value).to receive(:method).once\n",
+    "rust_all": "expect(value).to receive(:method).once\n",
+    "rust_diagnostics": [
+      {
+        "line": 1,
+        "column": 33,
+        "message": "Use `.once` instead of `.exactly(0x1).times`.",
+        "correctable": true,
+        "length": 19,
+        "severity": "convention"
+      }
+    ]
   }
 ]

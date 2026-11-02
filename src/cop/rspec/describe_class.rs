@@ -25,6 +25,9 @@ impl Cop for DescribeClass {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if bare_rspec_call(source, node) != Some(b"describe")
             || !top_groups(source, node).contains(&node)
         {
@@ -37,7 +40,7 @@ impl Cop for DescribeClass {
         if matches!(first.kind(), "constant" | "scope_resolution") {
             return;
         }
-        if matches!(first.kind(), "string" | "chained_string")
+        if first.kind() == "string"
             && crate::cop::ported::static_literal(source, first)
                 .is_some_and(|value| constant_description(&value))
         {

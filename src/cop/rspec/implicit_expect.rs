@@ -29,6 +29,9 @@ impl Cop for ImplicitExpect {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         let style = config.get_str("EnforcedStyle", "is_expected");
         let method = name(source, node);
         let (start, end, current, replacement) =

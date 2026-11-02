@@ -25,7 +25,8 @@ pub(super) fn bare(source: &SourceFile, node: Node<'_>, expected: &[u8]) -> bool
     call_receiver(node).is_none() && name(source, node) == Some(expected)
 }
 pub(super) fn runner(source: &SourceFile, node: Node<'_>) -> bool {
-    name(source, node).is_some_and(|n| [b"to".as_slice(), b"not_to", b"to_not"].contains(&n))
+    !safe_send(source, node)
+        && name(source, node).is_some_and(|n| [b"to".as_slice(), b"not_to", b"to_not"].contains(&n))
 }
 pub(super) fn symbol<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<&'a [u8]> {
     match node.kind() {
@@ -81,29 +82,6 @@ pub(super) fn selector(node: Node<'_>) -> Node<'_> {
     method_node(node).unwrap_or(node)
 }
 
-fn contains_binding(source: &SourceFile, root: Node<'_>, target: Node<'_>, binding: &[u8]) -> bool {
-    if root.start_byte() >= target.start_byte() {
-        return false;
-    }
-    if matches!(
-        root.kind(),
-        "method" | "singleton_method" | "class" | "module" | "block" | "do_block"
-    ) && !(root.start_byte() <= target.start_byte() && target.end_byte() <= root.end_byte())
-    {
-        return false;
-    }
-    if matches!(root.kind(), "assignment" | "operator_assignment") {
-        if let Some(left) = root.child_by_field_name("left") {
-            if left.kind() == "identifier" && node_bytes(source, left) == binding {
-                return true;
-            }
-        }
-    }
-    let mut cursor = root.walk();
-    root.named_children(&mut cursor)
-        .any(|child| contains_binding(source, child, target, binding))
-}
-
 fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
     let binding = node_bytes(source, node);
     if ![
@@ -119,6 +97,8 @@ fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
         b"contain_exactly",
         b"should",
         b"should_not",
+        b"should_receive",
+        b"should_not_receive",
     ]
     .contains(&binding)
     {
@@ -128,34 +108,7 @@ fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
 }
 
 pub(super) fn local_binding(source: &SourceFile, node: Node<'_>) -> bool {
-    let binding = node_bytes(source, node);
-    let mut current = node.parent();
-    while let Some(scope) = current {
-        if matches!(
-            scope.kind(),
-            "method" | "singleton_method" | "block" | "do_block" | "lambda"
-        ) {
-            if let Some(params) = scope.child_by_field_name("parameters") {
-                let mut pending = vec![params];
-                while let Some(parameter) = pending.pop() {
-                    if parameter.kind() == "identifier" && node_bytes(source, parameter) == binding
-                    {
-                        return true;
-                    }
-                    let mut cursor = parameter.walk();
-                    pending.extend(parameter.named_children(&mut cursor));
-                }
-            }
-        }
-        if matches!(
-            scope.kind(),
-            "method" | "singleton_method" | "class" | "module" | "program"
-        ) {
-            return contains_binding(source, scope, node, binding);
-        }
-        current = scope.parent();
-    }
-    false
+    crate::cop::ported::local_identifier(source, node)
 }
 
 pub(super) fn hooks() -> &'static [&'static [u8]] {
@@ -408,7 +361,7 @@ pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'
     }
     if left.kind() != right.kind() {
         let literal_kind = |node: Node<'_>| match node.kind() {
-            "string" | "chained_string" => Some("string"),
+            "string" => Some("string"),
             "simple_symbol" | "delimited_symbol" => Some("symbol"),
             _ => None,
         };
@@ -459,7 +412,7 @@ pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'
             .all(|(a, b)| same_expression(source, *a, *b))
 }
 
-fn integer_value(source: &SourceFile, node: Node<'_>) -> Option<num_bigint::BigInt> {
+pub(super) fn integer_value(source: &SourceFile, node: Node<'_>) -> Option<num_bigint::BigInt> {
     if node.kind() == "unary" {
         let operator = node.child_by_field_name("operator")?;
         let operand = node.child_by_field_name("operand")?;
@@ -500,4 +453,143 @@ pub(super) fn constant_description(value: &str) -> bool {
     PATTERN
         .get_or_init(|| regex::Regex::new(r"(?m)^(?:(?:::)?[A-Z][A-Za-z0-9_]*)+$").unwrap())
         .is_match(value)
+}
+
+pub(super) fn contains_bare_method(source: &SourceFile, node: Node<'_>, method: &[u8]) -> bool {
+    let mut pending = vec![node];
+    while let Some(current) = pending.pop() {
+        if bare(source, current, method) {
+            return true;
+        }
+        let mut cursor = current.walk();
+        pending.extend(current.named_children(&mut cursor));
+    }
+    false
+}
+pub(super) fn inside_root_spec_group(source: &SourceFile, node: Node<'_>) -> bool {
+    let mut current = node;
+    while let Some(parent) = current.parent() {
+        if parent.kind() == "program" {
+            return crate::cop::rspec::helpers::bare_rspec_call(source, current)
+                .is_some_and(crate::cop::rspec::helpers::is_group)
+                && crate::cop::rspec::helpers::call_block(current).is_some();
+        }
+        current = parent;
+    }
+    false
+}
+pub(super) fn ruby_string(value: &str) -> String {
+    let mut output = String::from("\"");
+    let mut chars = value.chars().peekable();
+    while let Some(character) = chars.next() {
+        match character {
+            '"' => output.push_str("\\\""),
+            '\\' => output.push_str("\\\\"),
+            '\x07' => output.push_str("\\a"),
+            '\x08' => output.push_str("\\b"),
+            '\t' => output.push_str("\\t"),
+            '\n' => output.push_str("\\n"),
+            '\x0b' => output.push_str("\\v"),
+            '\x0c' => output.push_str("\\f"),
+            '\r' => output.push_str("\\r"),
+            '\x1b' => output.push_str("\\e"),
+            '#' if chars
+                .peek()
+                .is_some_and(|next| ['{', '@', '$'].contains(next)) =>
+            {
+                output.push_str("\\#")
+            }
+            control if control.is_control() => {
+                output.push_str(&format!("\\u{:04X}", control as u32))
+            }
+            other => output.push(other),
+        }
+    }
+    output.push('"');
+    output
+}
+pub(super) fn ruby_symbol(value: &str) -> String {
+    let candidate = format!(":{value}");
+    let source = SourceFile::from_bytes("symbol.rb", candidate.as_bytes().to_vec());
+    if crate::parse::parse_ruby(&source).ok().is_some_and(|tree| {
+        !tree.root_node().has_error()
+            && tree.root_node().named_child_count() == 1
+            && tree.root_node().named_child(0).is_some_and(|node| {
+                node.kind() == "simple_symbol" && node.end_byte() == candidate.len()
+            })
+    }) {
+        candidate
+    } else {
+        format!(":{}", ruby_string(value))
+    }
+}
+pub(super) fn string_options(config: &crate::cop::CopConfig, key: &str) -> Vec<String> {
+    match config.options.get(key) {
+        Some(serde_yml::Value::String(value)) => vec![value.clone()],
+        Some(serde_yml::Value::Sequence(values)) => values
+            .iter()
+            .filter_map(|value| value.as_str().map(str::to_string))
+            .collect(),
+        _ => Vec::new(),
+    }
+}
+pub(super) fn variable_style(name: &str, style: &str) -> bool {
+    static SNAKE: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    static CAMEL: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    if style == "camelCase" {
+        CAMEL
+            .get_or_init(|| {
+                regex::Regex::new(r"(?m)^@{0,2}(?:_|_?[\p{Ll}][0-9\p{Ll}\p{Lu}]*)[!?=]?$").unwrap()
+            })
+            .is_match(name)
+    } else {
+        SNAKE
+            .get_or_init(|| regex::Regex::new(r"(?m)^@{0,2}[0-9\p{Ll}_]+[!?=]?$").unwrap())
+            .is_match(name)
+    }
+}
+pub(super) fn ruby_regexp_escape(value: &str) -> String {
+    let mut output = String::new();
+    for c in value.chars() {
+        match c {
+            '\n' => output.push_str("\\n"),
+            '\r' => output.push_str("\\r"),
+            '\t' => output.push_str("\\t"),
+            '\x0b' => output.push_str("\\v"),
+            '\x0c' => output.push_str("\\f"),
+            c if "\\[]{}()|^$.*+?-# ".contains(c) => {
+                output.push('\\');
+                output.push(c);
+            }
+            c => output.push(c),
+        }
+    }
+    output
+}
+
+pub(super) fn safe_send(source: &SourceFile, node: Node<'_>) -> bool {
+    node.child_by_field_name("operator")
+        .is_some_and(|operator| node_bytes(source, operator) == b"&.")
+}
+pub(super) fn runner_including_safe(source: &SourceFile, node: Node<'_>) -> bool {
+    name(source, node).is_some_and(|name| [b"to".as_slice(), b"not_to", b"to_not"].contains(&name))
+}
+
+pub(super) fn literal_replacement(replacement: &str, expected: &str, symbol: bool) -> bool {
+    let source = SourceFile::from_bytes("replacement.rb", replacement.as_bytes().to_vec());
+    crate::parse::parse_ruby(&source).ok().is_some_and(|tree| {
+        let root = tree.root_node();
+        if root.has_error() || root.named_child_count() != 1 {
+            return false;
+        }
+        root.named_child(0).is_some_and(|node| {
+            node.end_byte() == replacement.len()
+                && if symbol {
+                    symbol_node(node)
+                } else {
+                    node.kind() == "string"
+                }
+                && crate::cop::ported::static_literal(&source, node).as_deref() == Some(expected)
+        })
+    })
 }

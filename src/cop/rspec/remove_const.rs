@@ -25,6 +25,9 @@ impl Cop for RemoveConst {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if !matches!(name(source, node), Some(b"send" | b"__send__")) {
             return;
         }

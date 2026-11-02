@@ -32,6 +32,9 @@ impl Cop for VerifiedDoubleReference {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if safe_send(source, node) {
+            return;
+        }
         if call_receiver(node).is_some()
             || !name(source, node).is_some_and(|method| {
                 [
