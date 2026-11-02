@@ -11,7 +11,7 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 799 Rust tests, including 2,520 pinned Ruby reference examples across 98 added cops,
+- 807 Rust tests, including 2,654 pinned Ruby reference examples across 98 added cops,
   plus 11 interpolation reference cases.
   The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
   the 30 newly added regressions and correction-mode coverage. The
@@ -351,3 +351,5 @@ The [return-value and key-eligibility safeguards](reviews/unsafe-value-eligibili
 The [fork-specific custom-rule parity fixes](reviews/fork-specific-parity-fixes.md) cover comment arguments, decoded coder symbols, preserved string continuations, and multiline constant names.
 
 The [next custom-rule parity follow-up](reviews/custom-parity-round-three.md) fixes quoted literal matching, runtime argument shapes and rescue suppression, spec constant targets, migration matching, and autoload conditional guards.
+
+The [literal and scope parity fixes](reviews/custom-parity-round-four.md) cover file-mode safety, Ruby static-string classification, serializer boundaries, CSV ranges, and parenthesized/numbered-block scope shapes.
