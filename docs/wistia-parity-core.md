@@ -658,3 +658,10 @@ The full native suite passes916 tests, one pre-existing ignored. The shared widt
 This review also found an untested configuration branch in the preceding Array gate: the original Alignment mixin falls back from a missing/null per-cop IndentationWidth to Layout/IndentationWidth, then2. The preceding synthetic matrices specified per-cop widths explicitly. Native config resolution now supplies the fallback for ArrayAlignment and ParameterAlignment while preserving explicit numeric widths, including0;12 resolution/precedence assertions pass. Existing ComparableClamp and body-rule resolution semantics are preserved. Real CLI fallback controls are pending separately.
 
 Four singleton-method-on-literal source/config states are rejected by the original parser and accepted by native grammar. They remain documented in docs/evidence/parameter-alignment-invalid-singleton-literal.json as deferred generic syntax behavior; valid Unicode-bearing receiver-call replacements are used in the cop corpus. Additional source/version/encoding/directive/wire-format families and combined-cop scheduling remain outside this bounded checkpoint.
+
+
+### Alignment indentation-width fallback follow-up
+
+The supplemental original CLI gate now passes12 safe/aggressive cases for each of ArrayAlignment and ParameterAlignment (48 engine observations total). Missing/null own widths, explicit own2/0, global4/0 and null-global fallback2 all match bytes, exits and corrected flags. This closes the previously untested global-width branch for both consumers; no Wistia configuration or generic scheduling behavior changed.
+
+ParameterAlignment's9 detection/correction metadata controls (18 engine observations) and8 actual Wistia-config engine/mode probes also pass. Its broader CLI/fresh-final-state gates are still running.
