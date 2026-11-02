@@ -1,0 +1,2791 @@
+[
+  {
+    "id": "operator_assignment",
+    "original": "x=1\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 2,
+        "severity": "convention",
+        "message": "Surrounding space missing for operator `=`.",
+        "length": 1
+      }
+    ],
+    "ruby_safe": "x = 1\n"
+  },
+  {
+    "id": "operator_op_assignment",
+    "original": "x+=1\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 2,
+        "severity": "convention",
+        "message": "Surrounding space missing for operator `+=`.",
+        "length": 2
+      }
+    ],
+    "ruby_safe": "x += 1\n"
+  },
+  {
+    "id": "operator_multiple_assignment",
+    "original": "x,y=1,2\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 4,
+        "severity": "convention",
+        "message": "Surrounding space missing for operator `=`.",
+        "length": 1
+      }
+    ],
+    "ruby_safe": "x,y = 1,2\n"
+  },
+  {
+    "id": "operator_binary",
+    "original": "a+1\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 2,
+        "severity": "convention",
+        "message": "Surrounding space missing for operator `+`.",
+        "length": 1
+      }
+    ],
+    "ruby_safe": "a + 1\n"
+  },
+  {
+    "id": "operator_comparison",
+    "original": "a==b\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 2,
+        "severity": "convention",
+        "message": "Surrounding space missing for operator `==`.",
+        "length": 2
+      }
+    ],
+    "ruby_safe": "a == b\n"
+  },
+  {
+    "id": "operator_keyword",
+    "original": "a &&b\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 3,
+        "severity": "convention",
+        "message": "Surrounding space missing for operator `&&`.",
+        "length": 2
+      }
+    ],
+    "ruby_safe": "a && b\n"
+  },
+  {
+    "id": "operator_exponent",
+    "original": "2 ** 3\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 3,
+        "severity": "convention",
+        "message": "Space around operator `**` detected.",
+        "length": 2
+      }
+    ],
+    "ruby_safe": "2**3\n"
+  },
+  {
+    "id": "operator_comment",
+    "original": "a+ # important note\n  b\n",
+    "ruby_diagnostics": [],
+    "ruby_safe": "a+ # important note\n  b\n"
+  },
+  {
+    "id": "operator_continuation",
+    "original": "a+\\\n  b\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 2,
+        "severity": "convention",
+        "message": "Surrounding space missing for operator `+`.",
+        "length": 1
+      }
+    ],
+    "ruby_safe": "a + \\\n  b\n"
+  },
+  {
+    "id": "operator_multiline_comment",
+    "original": "a+# important note\n  b\n",
+    "ruby_diagnostics": [],
+    "ruby_safe": "a+# important note\n  b\n"
+  },
+  {
+    "id": "operator_unicode",
+    "original": "é+1\n",
+    "ruby_diagnostics": [
+      {
+        "cop": "Layout/SpaceAroundOperators",
+        "line": 1,
+        "column": 2,
+        "severity": "convention",
+        "message": "Surrounding space missing for operator `+`.",
+        "length": 1
+      }
+    ],
+    "ruby_safe": "é + 1\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts operator surrounded by tabs",
+    "original": "a\t+\tb",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "a\t+\tb"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts operator symbols",
+    "original": "func(:-)",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(:-)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts ranges",
+    "original": "a, b = (1..2), (1...3)",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "a, b = (1..2), (1...3)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts rational",
+    "original": "x = 2/3r",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = 2/3r"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts multiple spaces between an operator and a tailing comment",
+    "original": "foo +  # comment\n  bar\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo +  # comment\n  bar\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts scope operator",
+    "original": "@io.class == Zlib::GzipWriter",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "@io.class == Zlib::GzipWriter"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts ::Kernel::raise",
+    "original": "::Kernel::raise IllegalBlockError.new",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "::Kernel::raise IllegalBlockError.new"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers an offense and corrects exclamation point negation",
+    "original": "x = !a&&!b\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 2,
+        "message": "Surrounding space missing for operator `&&`."
+      }
+    ],
+    "ruby_safe": "x = !a && !b\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers an offense and corrects exclamation point negation",
+    "original": "x = !a && !b\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = !a && !b\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts exclamation point definition",
+    "original": "def !\n  !__getobj__\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def !\n  !__getobj__\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts the result of the ExtraSpacing Cop",
+    "original": "def batch\n  @areas   = params[:param].map do\n               var_1      = 123_456\n               variable_2 = 456_123\n             end\n  @another = params[:param].map do\n               char_1 = begin\n                          variable_1_1  = 'a'\n                          variable_1_20 = 'b'\n\n                          variable_1_300  = 'c'\n                          # A Comment\n                          variable_1_4000 = 'd'\n\n                          variable_1_50000           = 'e'\n                          puts 'a non-assignment statement without a blank line'\n                          some_other_length_variable = 'f'\n                        end\n               var_2  = 456_123\n             end\n\n  render json: @areas\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def batch\n  @areas   = params[:param].map do\n               var_1      = 123_456\n               variable_2 = 456_123\n             end\n  @another = params[:param].map do\n               char_1 = begin\n                          variable_1_1  = 'a'\n                          variable_1_20 = 'b'\n\n                          variable_1_300  = 'c'\n                          # A Comment\n                          variable_1_4000 = 'd'\n\n                          variable_1_50000           = 'e'\n                          puts 'a non-assignment statement without a blank line'\n                          some_other_length_variable = 'f'\n                        end\n               var_2  = 456_123\n             end\n\n  render json: @areas\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts a unary",
+    "original": "def bm(label_width = 0, *labels, &blk)\n  benchmark(CAPTION, label_width, FORMAT,\n            *labels, &blk)\nend\n\ndef each &block\n  +11\nend\n\ndef self.search *args\nend\n\ndef each *args\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def bm(label_width = 0, *labels, &blk)\n  benchmark(CAPTION, label_width, FORMAT,\n            *labels, &blk)\nend\n\ndef each &block\n  +11\nend\n\ndef self.search *args\nend\n\ndef each *args\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts splat operator",
+    "original": "return *list if options",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "return *list if options"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts def of operator",
+    "original": "def +(other); end\ndef self.===(other); end\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def +(other); end\ndef self.===(other); end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts an operator at the end of a line",
+    "original": "['Favor unless over if for negative ' +\n 'conditions.'] * 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "['Favor unless over if for negative ' +\n 'conditions.'] * 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts an assignment with spaces",
+    "original": "x = 0",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = 0"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts an assignment with the same alignment margins",
+    "original": "@integer_message = 12345\n@output  = StringIO.new\n@logger  = Logger.new(@output)\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "@integer_message = 12345\n@output  = StringIO.new\n@logger  = Logger.new(@output)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts an assignment with a blank line",
+    "original": "expected = posts(:welcome)\n\ntagging  = Tagging.all.merge!(includes: :taggable).find(taggings(:welcome_general).id)\nassert_no_queries { assert_equal expected, tagging.taggable }\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "expected = posts(:welcome)\n\ntagging  = Tagging.all.merge!(includes: :taggable).find(taggings(:welcome_general).id)\nassert_no_queries { assert_equal expected, tagging.taggable }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts an assignment by `for` statement",
+    "original": "for a in [] do; end\nfor A in [] do; end\nfor @a in [] do; end\nfor @@a in [] do; end\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "for a in [] do; end\nfor A in [] do; end\nfor @a in [] do; end\nfor @@a in [] do; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts vertical alignment with operator",
+    "original": "down? && !migrated.include?(migration.version.to_i)\nup?   &&  migrated.include?(migration.version.to_i)\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "down? && !migrated.include?(migration.version.to_i)\nup?   &&  migrated.include?(migration.version.to_i)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts an operator called with method syntax",
+    "original": "Date.today.+(1).to_s",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "Date.today.+(1).to_s"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts operators with spaces",
+    "original": "x += a + b - c * d / e % f ^ g | h & i || j\ny -= k && l\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x += a + b - c * d / e % f ^ g | h & i || j\ny -= k && l\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts some operators that are exceptions & don't need spaces",
+    "original": "(1..3)\nActionController::Base\neach { |s, t| }\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "(1..3)\nActionController::Base\neach { |s, t| }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts an assignment followed by newline",
+    "original": "x =\n0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x =\n0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts an operator at the beginning of a line",
+    "original": "a = b \\\n    && c\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "a = b \\\n    && c\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers an offenses for exponent operator with spaces",
+    "original": "x = a * b ** 2\ny = a * b** 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 2,
+        "message": "Space around operator `**` detected."
+      },
+      {
+        "line": 2,
+        "column": 10,
+        "length": 2,
+        "message": "Space around operator `**` detected."
+      }
+    ],
+    "ruby_safe": "x = a * b**2\ny = a * b**2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers an offenses for exponent operator with spaces",
+    "original": "x = a * b**2\ny = a * b**2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = a * b**2\ny = a * b**2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts exponent operator without spaces",
+    "original": "x = a * b**2",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = a * b**2"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers an offenses for slash in rational literals with spaces",
+    "original": "x = a * b / 42r\ny = a * b/ 42r\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 1,
+        "message": "Space around operator `/` detected."
+      },
+      {
+        "line": 2,
+        "column": 10,
+        "length": 1,
+        "message": "Space around operator `/` detected."
+      }
+    ],
+    "ruby_safe": "x = a * b/42r\ny = a * b/42r\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers an offenses for slash in rational literals with spaces",
+    "original": "x = a * b/42r\ny = a * b/42r\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = a * b/42r\ny = a * b/42r\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts slash in rational literals without spaces",
+    "original": "x = a * b/42r",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = a * b/42r"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators does not register an offenses for slash in non rational literals without spaces",
+    "original": "x = a * b / 42\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = a * b / 42\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers slash in non rational literals without spaces",
+    "original": "x = a * b/42\ny = a * b/ 42\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 1,
+        "message": "Surrounding space missing for operator `/`."
+      },
+      {
+        "line": 2,
+        "column": 10,
+        "length": 1,
+        "message": "Surrounding space missing for operator `/`."
+      }
+    ],
+    "ruby_safe": "x = a * b / 42\ny = a * b / 42\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers slash in non rational literals without spaces",
+    "original": "x = a * b / 42\ny = a * b / 42\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = a * b / 42\ny = a * b / 42\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts unary operators without space",
+    "original": "[].map(&:size)\na.(b)\n-3\nfoo::~\narr.collect { |e| -e }\nx = +2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "[].map(&:size)\na.(b)\n-3\nfoo::~\narr.collect { |e| -e }\nx = +2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts [arg] without space",
+    "original": "files[2]",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "files[2]"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts [] without space",
+    "original": "files[]",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "files[]"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts []= without space",
+    "original": "files[:key], files[:another] = method",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "files[:key], files[:another] = method"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts argument default values without space",
+    "original": "def init(name=nil)\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def init(name=nil)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers an offense and corrects singleton class operator`",
+    "original": "class<<self\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 2,
+        "message": "Surrounding space missing for operator `<<`."
+      }
+    ],
+    "ruby_safe": "class << self\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators registers an offense and corrects singleton class operator`",
+    "original": "class << self\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "class << self\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators >= Ruby 2.7 does not register an offenses for one-line pattern matching syntax (`in`)",
+    "original": "\"\"in foo\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "\"\"in foo\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators >= Ruby 3.0 registers an offenses for one-line pattern matching syntax (`=>`)",
+    "original": "\"\"=>foo\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 2,
+        "message": "Surrounding space missing for operator `=>`."
+      }
+    ],
+    "ruby_safe": "\"\" => foo\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators >= Ruby 3.0 registers an offenses for one-line pattern matching syntax (`=>`)",
+    "original": "\"\" => foo\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "\"\" => foo\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators when EnforcedStyleForExponentOperator is space registers an offenses for exponent operator without spaces",
+    "original": "x = a * b**2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": "space",
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 2,
+        "message": "Surrounding space missing for operator `**`."
+      }
+    ],
+    "ruby_safe": "x = a * b ** 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators when EnforcedStyleForExponentOperator is space registers an offenses for exponent operator without spaces",
+    "original": "x = a * b ** 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": "space",
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = a * b ** 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators when EnforcedStyleForRationalLiterals is space registers an offenses for rational literals without spaces",
+    "original": "x = a * b/42r\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": "space",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 1,
+        "message": "Surrounding space missing for operator `/`."
+      }
+    ],
+    "ruby_safe": "x = a * b / 42r\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators when EnforcedStyleForRationalLiterals is space registers an offenses for rational literals without spaces",
+    "original": "x = a * b / 42r\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": "space",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = a * b / 42r\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense for assignment without space on both sides",
+    "original": "x=0\ny+= 0\nz[0] =0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 2,
+        "column": 2,
+        "length": 2,
+        "message": "Surrounding space missing for operator `+=`."
+      },
+      {
+        "line": 3,
+        "column": 6,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      }
+    ],
+    "ruby_safe": "x = 0\ny += 0\nz[0] = 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense for assignment without space on both sides",
+    "original": "x = 0\ny += 0\nz[0] = 0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x = 0\ny += 0\nz[0] = 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense for binary operators that could be unary",
+    "original": "a-3\nx&0xff\nz+0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `-`."
+      },
+      {
+        "line": 2,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `&`."
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `+`."
+      }
+    ],
+    "ruby_safe": "a - 3\nx & 0xff\nz + 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense for binary operators that could be unary",
+    "original": "a - 3\nx & 0xff\nz + 0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "a - 3\nx & 0xff\nz + 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects arguments to a method",
+    "original": "puts 1+2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 1,
+        "message": "Surrounding space missing for operator `+`."
+      }
+    ],
+    "ruby_safe": "puts 1 + 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects arguments to a method",
+    "original": "puts 1 + 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "puts 1 + 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense for operators without spaces",
+    "original": "x+= a+b-c*d/e%f^g|h&i||j\ny -=k&&l\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 2,
+        "message": "Surrounding space missing for operator `+=`."
+      },
+      {
+        "line": 1,
+        "column": 6,
+        "length": 1,
+        "message": "Surrounding space missing for operator `+`."
+      },
+      {
+        "line": 1,
+        "column": 8,
+        "length": 1,
+        "message": "Surrounding space missing for operator `-`."
+      },
+      {
+        "line": 1,
+        "column": 10,
+        "length": 1,
+        "message": "Surrounding space missing for operator `*`."
+      },
+      {
+        "line": 1,
+        "column": 12,
+        "length": 1,
+        "message": "Surrounding space missing for operator `/`."
+      },
+      {
+        "line": 1,
+        "column": 14,
+        "length": 1,
+        "message": "Surrounding space missing for operator `%`."
+      },
+      {
+        "line": 1,
+        "column": 16,
+        "length": 1,
+        "message": "Surrounding space missing for operator `^`."
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "length": 1,
+        "message": "Surrounding space missing for operator `|`."
+      },
+      {
+        "line": 1,
+        "column": 20,
+        "length": 1,
+        "message": "Surrounding space missing for operator `&`."
+      },
+      {
+        "line": 1,
+        "column": 22,
+        "length": 2,
+        "message": "Surrounding space missing for operator `||`."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Surrounding space missing for operator `-=`."
+      },
+      {
+        "line": 2,
+        "column": 6,
+        "length": 2,
+        "message": "Surrounding space missing for operator `&&`."
+      }
+    ],
+    "ruby_safe": "x += a + b - c * d / e % f ^ g | h & i || j\ny -= k && l\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects a setter call without spaces",
+    "original": "x.y=2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      }
+    ],
+    "ruby_safe": "x.y = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects a setter call without spaces",
+    "original": "x.y = 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x.y = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects match operators without space",
+    "original": "x=~/abc/\ny !~/abc/\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 2,
+        "message": "Surrounding space missing for operator `=~`."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Surrounding space missing for operator `!~`."
+      }
+    ],
+    "ruby_safe": "x =~ /abc/\ny !~ /abc/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects match operators without space",
+    "original": "x =~ /abc/\ny !~ /abc/\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x =~ /abc/\ny !~ /abc/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects various assignments without space",
+    "original": "x||=0\ny&&=0\nz*=2\n@a=0\n@@a=0\na,b=0\nA=0\nx[3]=0\n$A=0\nA||=0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 3,
+        "message": "Surrounding space missing for operator `||=`."
+      },
+      {
+        "line": 2,
+        "column": 2,
+        "length": 3,
+        "message": "Surrounding space missing for operator `&&=`."
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "length": 2,
+        "message": "Surrounding space missing for operator `*=`."
+      },
+      {
+        "line": 4,
+        "column": 3,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 5,
+        "column": 4,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 6,
+        "column": 4,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 7,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 8,
+        "column": 5,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 9,
+        "column": 3,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 10,
+        "column": 2,
+        "length": 3,
+        "message": "Surrounding space missing for operator `||=`."
+      }
+    ],
+    "ruby_safe": "x ||= 0\ny &&= 0\nz *= 2\n@a = 0\n@@a = 0\na,b = 0\nA = 0\nx[3] = 0\n$A = 0\nA ||= 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects various assignments without space",
+    "original": "x ||= 0\ny &&= 0\nz *= 2\n@a = 0\n@@a = 0\na,b = 0\nA = 0\nx[3] = 0\n$A = 0\nA ||= 0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x ||= 0\ny &&= 0\nz *= 2\n@a = 0\n@@a = 0\na,b = 0\nA = 0\nx[3] = 0\n$A = 0\nA ||= 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects equality operators without space",
+    "original": "x==0\ny!=0\nHash===z\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 2,
+        "message": "Surrounding space missing for operator `==`."
+      },
+      {
+        "line": 2,
+        "column": 2,
+        "length": 2,
+        "message": "Surrounding space missing for operator `!=`."
+      },
+      {
+        "line": 3,
+        "column": 5,
+        "length": 3,
+        "message": "Surrounding space missing for operator `===`."
+      }
+    ],
+    "ruby_safe": "x == 0\ny != 0\nHash === z\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects equality operators without space",
+    "original": "x == 0\ny != 0\nHash === z\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x == 0\ny != 0\nHash === z\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects `-` without space with a negative lhs operand",
+    "original": "-1-arg\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 1,
+        "message": "Surrounding space missing for operator `-`."
+      }
+    ],
+    "ruby_safe": "-1 - arg\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects `-` without space with a negative lhs operand",
+    "original": "-1 - arg\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "-1 - arg\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects inheritance < without space",
+    "original": "class ShowSourceTestClass<ShowSourceTestSuperClass\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 26,
+        "length": 1,
+        "message": "Surrounding space missing for operator `<`."
+      }
+    ],
+    "ruby_safe": "class ShowSourceTestClass < ShowSourceTestSuperClass\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects inheritance < without space",
+    "original": "class ShowSourceTestClass < ShowSourceTestSuperClass\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "class ShowSourceTestClass < ShowSourceTestSuperClass\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects hash rocket without space at rescue",
+    "original": "begin\nrescue Exception=>e\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 17,
+        "length": 2,
+        "message": "Surrounding space missing for operator `=>`."
+      }
+    ],
+    "ruby_safe": "begin\nrescue Exception => e\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects hash rocket without space at rescue",
+    "original": "begin\nrescue Exception => e\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "begin\nrescue Exception => e\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects string concatenation without messing up new lines",
+    "original": "'Here is a'+\n'joined string'+\n'across three lines'\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 12,
+        "length": 1,
+        "message": "Surrounding space missing for operator `+`."
+      },
+      {
+        "line": 2,
+        "column": 16,
+        "length": 1,
+        "message": "Surrounding space missing for operator `+`."
+      }
+    ],
+    "ruby_safe": "'Here is a' +\n'joined string' +\n'across three lines'\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators registers an offense and corrects string concatenation without messing up new lines",
+    "original": "'Here is a' +\n'joined string' +\n'across three lines'\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "'Here is a' +\n'joined string' +\n'across three lines'\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators ternary operators registers an offense and corrects operators with no spaces",
+    "original": "x == 0?1:2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 1,
+        "message": "Surrounding space missing for operator `?`."
+      },
+      {
+        "line": 1,
+        "column": 9,
+        "length": 1,
+        "message": "Surrounding space missing for operator `:`."
+      }
+    ],
+    "ruby_safe": "x == 0 ? 1 : 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators ternary operators registers an offense and corrects operators with no spaces",
+    "original": "x == 0 ? 1 : 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x == 0 ? 1 : 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators ternary operators registers an offense and corrects operators with just a trailing space",
+    "original": "x == 0? 1: 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 1,
+        "message": "Surrounding space missing for operator `?`."
+      },
+      {
+        "line": 1,
+        "column": 10,
+        "length": 1,
+        "message": "Surrounding space missing for operator `:`."
+      }
+    ],
+    "ruby_safe": "x == 0 ? 1 : 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators ternary operators registers an offense and corrects operators with just a leading space",
+    "original": "x == 0 ?1 :2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 1,
+        "message": "Surrounding space missing for operator `?`."
+      },
+      {
+        "line": 1,
+        "column": 11,
+        "length": 1,
+        "message": "Surrounding space missing for operator `:`."
+      }
+    ],
+    "ruby_safe": "x == 0 ? 1 : 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators behaves like modifier with missing space registers an offense in presence of modifier if statement",
+    "original": "a=1 if condition\nc=2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 2,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      }
+    ],
+    "ruby_safe": "a = 1 if condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators behaves like modifier with missing space registers an offense in presence of modifier if statement",
+    "original": "a = 1 if condition\nc = 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "a = 1 if condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators behaves like modifier with missing space registers an offense in presence of modifier unless statement",
+    "original": "a=1 unless condition\nc=2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 2,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      }
+    ],
+    "ruby_safe": "a = 1 unless condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators behaves like modifier with missing space registers an offense in presence of modifier unless statement",
+    "original": "a = 1 unless condition\nc = 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "a = 1 unless condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators behaves like modifier with missing space registers an offense in presence of modifier while statement",
+    "original": "a=1 while condition\nc=2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 2,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      }
+    ],
+    "ruby_safe": "a = 1 while condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators behaves like modifier with missing space registers an offense in presence of modifier while statement",
+    "original": "a = 1 while condition\nc = 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "a = 1 while condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators behaves like modifier with missing space registers an offense in presence of modifier until statement",
+    "original": "a=1 until condition\nc=2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      },
+      {
+        "line": 2,
+        "column": 2,
+        "length": 1,
+        "message": "Surrounding space missing for operator `=`."
+      }
+    ],
+    "ruby_safe": "a = 1 until condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators behaves like modifier with missing space registers an offense in presence of modifier until statement",
+    "original": "a = 1 until condition\nc = 2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "a = 1 until condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators when a hash literal is on a single line and Layout/HashAlignment:EnforcedHashRocketStyle is key registers an offense and corrects a hash rocket without spaces",
+    "original": "{ 1=>2, a: b }\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 2,
+        "message": "Surrounding space missing for operator `=>`."
+      }
+    ],
+    "ruby_safe": "{ 1 => 2, a: b }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators when a hash literal is on a single line and Layout/HashAlignment:EnforcedHashRocketStyle is key registers an offense and corrects a hash rocket without spaces",
+    "original": "{ 1 => 2, a: b }\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{ 1 => 2, a: b }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators when a hash literal is on a single line and Layout/HashAlignment:EnforcedHashRocketStyle is table registers an offense and corrects a hash rocket without spaces",
+    "original": "{ 1=>2, a: b }\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "table",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 2,
+        "message": "Surrounding space missing for operator `=>`."
+      }
+    ],
+    "ruby_safe": "{ 1 => 2, a: b }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators when a hash literal is on a single line and Layout/HashAlignment:EnforcedHashRocketStyle is table registers an offense and corrects a hash rocket without spaces",
+    "original": "{ 1 => 2, a: b }\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "table",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{ 1 => 2, a: b }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators when a hash literal is on multiple lines and Layout/HashAlignment:EnforcedHashRocketStyle is key registers an offense and corrects a hash rocket without spaces",
+    "original": "{\n  1=>2,\n  a: b\n}\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 4,
+        "length": 2,
+        "message": "Surrounding space missing for operator `=>`."
+      }
+    ],
+    "ruby_safe": "{\n  1 => 2,\n  a: b\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators when a hash literal is on multiple lines and Layout/HashAlignment:EnforcedHashRocketStyle is key registers an offense and corrects a hash rocket without spaces",
+    "original": "{\n  1 => 2,\n  a: b\n}\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{\n  1 => 2,\n  a: b\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators missing space around operators when a hash literal is on multiple lines and Layout/HashAlignment:EnforcedHashRocketStyle is table doesn't register an offense for a hash rocket without spaces",
+    "original": "{\n  1=>2,\n  a: b\n}\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "table",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{\n  1=>2,\n  a: b\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects assignment with too many spaces on either side",
+    "original": "x   = 0\ny +=   0\nz[0]  =  0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 5,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Operator `+=` should be surrounded by a single space."
+      },
+      {
+        "line": 3,
+        "column": 7,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "x = 0\ny += 0\nz[0] = 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects ternary operator with too many spaces",
+    "original": "x == 0  ? 1 :  2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 9,
+        "length": 1,
+        "message": "Operator `?` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 13,
+        "length": 1,
+        "message": "Operator `:` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "x == 0 ? 1 : 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects binary operators that could be unary",
+    "original": "a -  3\nx &   0xff\nz +  0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `-` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `&` should be surrounded by a single space."
+      },
+      {
+        "line": 3,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `+` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "a - 3\nx & 0xff\nz + 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects arguments to a method",
+    "original": "puts 1 +  2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 1,
+        "message": "Operator `+` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "puts 1 + 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects operators with too many spaces",
+    "original": "x +=  a\na  + b\nb  -  c\nc  * d\nd  /  e\ne  % f\nf  ^ g\ng  | h\nh  &  i\ni  ||  j\ny  -=  k   &&        l\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 2,
+        "message": "Operator `+=` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `+` should be surrounded by a single space."
+      },
+      {
+        "line": 3,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `-` should be surrounded by a single space."
+      },
+      {
+        "line": 4,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `*` should be surrounded by a single space."
+      },
+      {
+        "line": 5,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `/` should be surrounded by a single space."
+      },
+      {
+        "line": 6,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `%` should be surrounded by a single space."
+      },
+      {
+        "line": 7,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `^` should be surrounded by a single space."
+      },
+      {
+        "line": 8,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `|` should be surrounded by a single space."
+      },
+      {
+        "line": 9,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `&` should be surrounded by a single space."
+      },
+      {
+        "line": 10,
+        "column": 4,
+        "length": 2,
+        "message": "Operator `||` should be surrounded by a single space."
+      },
+      {
+        "line": 11,
+        "column": 4,
+        "length": 2,
+        "message": "Operator `-=` should be surrounded by a single space."
+      },
+      {
+        "line": 11,
+        "column": 12,
+        "length": 2,
+        "message": "Operator `&&` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "x += a\na + b\nb - c\nc * d\nd / e\ne % f\nf ^ g\ng | h\nh & i\ni || j\ny -= k && l\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects operators with too many spaces",
+    "original": "x += a\na + b\nb - c\nc * d\nd / e\ne % f\nf ^ g\ng | h\nh & i\ni || j\ny -= k && l\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x += a\na + b\nb - c\nc * d\nd / e\ne % f\nf ^ g\ng | h\nh & i\ni || j\ny -= k && l\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects operators with too many spaces on the same line",
+    "original": "x +=  a  + b -  c  * d /  e  % f  ^ g   | h &  i  ||  j\ny  -=  k   &&        l\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 2,
+        "message": "Operator `+=` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 10,
+        "length": 1,
+        "message": "Operator `+` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 14,
+        "length": 1,
+        "message": "Operator `-` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 20,
+        "length": 1,
+        "message": "Operator `*` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 24,
+        "length": 1,
+        "message": "Operator `/` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 30,
+        "length": 1,
+        "message": "Operator `%` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 35,
+        "length": 1,
+        "message": "Operator `^` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 41,
+        "length": 1,
+        "message": "Operator `|` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 45,
+        "length": 1,
+        "message": "Operator `&` should be surrounded by a single space."
+      },
+      {
+        "line": 1,
+        "column": 51,
+        "length": 2,
+        "message": "Operator `||` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 4,
+        "length": 2,
+        "message": "Operator `-=` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 12,
+        "length": 2,
+        "message": "Operator `&&` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "x += a + b - c * d / e % f ^ g | h & i || j\ny -= k && l\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects a setter call with too many spaces",
+    "original": "x.y  =  2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "x.y = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects a hash rocket with too many spaces",
+    "original": "{ 1  =>   2, a: b }\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 2,
+        "message": "Operator `=>` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "{ 1 => 2, a: b }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects a hash rocket with an extra space on multiple line",
+    "original": "{\n  1 =>  2\n}\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 2,
+        "message": "Operator `=>` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "{\n  1 => 2\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects a hash rocket with an extra space on multiple line",
+    "original": "{\n  1 => 2\n}\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{\n  1 => 2\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators accepts for a hash rocket with an extra space for alignment on multiple line",
+    "original": "{\n  1 =>  2,\n  11 => 3\n}\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{\n  1 =>  2,\n  11 => 3\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects match operators with too many spaces",
+    "original": "x  =~ /abc/\ny !~   /abc/\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 2,
+        "message": "Operator `=~` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Operator `!~` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "x =~ /abc/\ny !~ /abc/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators does not register an offenses match operators between `<<` and `+=`",
+    "original": "x  << foo\nyz += bar\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x  << foo\nyz += bar\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators does not register an offenses match operators between `+=` and `<<`",
+    "original": "x  += foo\nyz << bar\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x  += foo\nyz << bar\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects various assignments with too many spaces",
+    "original": "x ||=  0\ny  &&=  0\nz  *=   2\n@a   = 0\n@@a   = 0\na,b    =   0\nA  = 0\nx[3]   = 0\n$A    =   0\nA  ||=  0\nA  +=    0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 3,
+        "message": "Operator `||=` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 4,
+        "length": 3,
+        "message": "Operator `&&=` should be surrounded by a single space."
+      },
+      {
+        "line": 3,
+        "column": 4,
+        "length": 2,
+        "message": "Operator `*=` should be surrounded by a single space."
+      },
+      {
+        "line": 4,
+        "column": 6,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 5,
+        "column": 7,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 6,
+        "column": 8,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 7,
+        "column": 4,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 8,
+        "column": 8,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 9,
+        "column": 7,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 10,
+        "column": 4,
+        "length": 3,
+        "message": "Operator `||=` should be surrounded by a single space."
+      },
+      {
+        "line": 11,
+        "column": 4,
+        "length": 2,
+        "message": "Operator `+=` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "x ||= 0\ny &&= 0\nz *= 2\n@a = 0\n@@a = 0\na,b = 0\nA = 0\nx[3] = 0\n$A = 0\nA ||= 0\nA += 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects various assignments with too many spaces",
+    "original": "x ||= 0\ny &&= 0\nz *= 2\n@a = 0\n@@a = 0\na,b = 0\nA = 0\nx[3] = 0\n$A = 0\nA ||= 0\nA += 0\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "x ||= 0\ny &&= 0\nz *= 2\n@a = 0\n@@a = 0\na,b = 0\nA = 0\nx[3] = 0\n$A = 0\nA ||= 0\nA += 0\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects equality operators with too many spaces",
+    "original": "x  ==  0\ny   != 0\nHash   ===   z\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 2,
+        "message": "Operator `==` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 5,
+        "length": 2,
+        "message": "Operator `!=` should be surrounded by a single space."
+      },
+      {
+        "line": 3,
+        "column": 8,
+        "length": 3,
+        "message": "Operator `===` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "x == 0\ny != 0\nHash === z\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects `-` with too many spaces with negative lhs operand",
+    "original": "-1  - arg\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 5,
+        "length": 1,
+        "message": "Operator `-` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "-1 - arg\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects inheritance < with too many spaces",
+    "original": "class Foo  <  Bar\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 12,
+        "length": 1,
+        "message": "Operator `<` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "class Foo < Bar\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects inheritance < with too many spaces",
+    "original": "class Foo < Bar\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "class Foo < Bar\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators registers an offense and corrects hash rocket with too many spaces at rescue",
+    "original": "begin\nrescue Exception   =>      e\nend\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 20,
+        "length": 2,
+        "message": "Operator `=>` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "begin\nrescue Exception => e\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators behaves like modifier with extra space registers an offense in presence of modifier if statement",
+    "original": "a =  1 if condition\nc =   2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "a = 1 if condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators behaves like modifier with extra space registers an offense in presence of modifier unless statement",
+    "original": "a =  1 unless condition\nc =   2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "a = 1 unless condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators behaves like modifier with extra space registers an offense in presence of modifier while statement",
+    "original": "a =  1 while condition\nc =   2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "a = 1 while condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators behaves like modifier with extra space registers an offense in presence of modifier until statement",
+    "original": "a =  1 until condition\nc =   2\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      },
+      {
+        "line": 2,
+        "column": 3,
+        "length": 1,
+        "message": "Operator `=` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "a = 1 until condition\nc = 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators when does not allowed for alignment registers an offense and corrects an extra space",
+    "original": "{\n  1 =>  2,\n  11 => 3\n}\n",
+    "config": {
+      "AllowForAlignment": false,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 2,
+        "message": "Operator `=>` should be surrounded by a single space."
+      }
+    ],
+    "ruby_safe": "{\n  1 => 2,\n  11 => 3\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators extra space around operators when does not allowed for alignment registers an offense and corrects an extra space",
+    "original": "{\n  1 => 2,\n  11 => 3\n}\n",
+    "config": {
+      "AllowForAlignment": false,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": false,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{\n  1 => 2,\n  11 => 3\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators when Layout/ExtraSpacing has `ForceEqualSignAlignment` configured to true allows variables to be aligned",
+    "original": "first  = {\n  x: y\n}.freeze\nsecond = true\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": true,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "first  = {\n  x: y\n}.freeze\nsecond = true\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::SpaceAroundOperators when Layout/ExtraSpacing has `ForceEqualSignAlignment` configured to true allows constants to be aligned",
+    "original": "FIRST  = {\n  x: y\n}.freeze\nSECOND = true\n",
+    "config": {
+      "AllowForAlignment": true,
+      "EnforcedStyleForExponentOperator": null,
+      "EnforcedStyleForRationalLiterals": null,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": "key",
+      "ForceEqualSignAlignment": true,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "FIRST  = {\n  x: y\n}.freeze\nSECOND = true\n"
+  }
+]

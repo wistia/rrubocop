@@ -355,3 +355,28 @@ pub(crate) fn inject_config_disabled_cops(
                 .collect(),
         ));
 }
+
+pub(crate) fn inject_operator_spacing(cfg: &ResolvedConfig, name: &str, config: &mut CopConfig) {
+    if name != "Layout/SpaceAroundOperators" {
+        return;
+    }
+    inject_sibling_str(
+        &mut config.options,
+        &cfg.cop_configs,
+        "Layout/HashAlignment",
+        "EnforcedHashRocketStyle",
+        "EnforcedHashRocketStyle",
+        "key",
+    );
+    let force_alignment = cfg
+        .cop_configs
+        .get("Layout/ExtraSpacing")
+        .and_then(|extra| extra.options.get("ForceEqualSignAlignment"))
+        .and_then(Value::as_bool)
+        .unwrap_or(false);
+    inject_bool(
+        &mut config.options,
+        "ForceEqualSignAlignment",
+        force_alignment,
+    );
+}
