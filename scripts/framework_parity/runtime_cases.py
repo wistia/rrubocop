@@ -1,5 +1,7 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Rails/IgnoredSkipActionFilterOption", "$calls = 0\ndef condition; $calls += 1; -> { true }; end\ndef skip_before_action(*args, **options); p :callback; end\nskip_before_action :login, only: :show, if: condition\np $calls\n"),
+    ("Rails/SafeNavigationWithBlank", "require 'active_support/core_ext/object/blank'\np [nil, '', 'text'].map { |value| value&.blank? ? :yes : :no }\n"),
     ("Performance/Caller", "def probe; caller(- 1).first; end\nbegin; p probe; rescue ArgumentError => error; p [error.class.name, error.message]; end\n"),
     ("Rails/EnumHash", "def enum(name, values); p(values.is_a?(Array) ? values.each_with_index.to_h : values); end\nenum :status, [:active, :archived]\n"),
     ("Rails/EnumHash", "def enum(name, values); p(values.is_a?(Array) ? values.each_with_index.to_h : values); end\nenum :status, ['été', '😀']\n"),

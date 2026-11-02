@@ -1,8 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The first nine batches replace
-24 stubs and repair an existing ReverseEach detector/corrector; 43 stubs and the remaining implemented-cop gaps
+The baseline inventory contained 67 no-op stubs. The first ten batches replace
+26 stubs and repair an existing ReverseEach detector/corrector; 41 stubs and the remaining implemented-cop gaps
 still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
@@ -168,8 +168,8 @@ python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-Complete native suite: **898 passed, with 1 intentionally ignored audit probe**.
-The strict command exits 1 with **418 explicit difference events**: 416 documented
+Complete native suite: **902 passed, with 1 intentionally ignored audit probe**.
+The strict command exits 1 with **456 explicit difference events**: 454 documented
 safety/upstream-hazard events and two unresolved parser-related corrected-byte
 differences. `failures.json`, `summary.json` and `runtime.json` retain every event.
 Detection, message and range differences in the selected specimens are confined
@@ -323,3 +323,35 @@ programs, with 418 retained events (416 guards/upstream hazards, two existing
 emoji spelling gaps). Full native suite: 898 passed, 1 ignored probe. No new
 rule implementations in this follow-up; inventory remains 27 reviewed,
 24 baseline stubs replaced, 43 remaining.
+
+## Tenth batch: conditional blankness and skipped callback options
+
+Rails/SafeNavigationWithBlank implements if/unless/ternary and modifier forms,
+original whole-conditional ranges and exact dot-token correction. Its original
+SafeAutoCorrect:false metadata is preserved: -a leaves source unchanged; -A
+intentionally changes nil's blankness behavior, identically in both engines.
+Parenthesized/negated conditions, arguments, loops and comments have authored
+negative/positive cases. A trusted ActiveSupport program covers the nil branch.
+
+Rails/IgnoredSkipActionFilterOption implements all four callback selectors,
+receiver/last-options requirements, precedence of only/if/except, symbol-key
+filtering, duplicate-key handling and original left-space/comma ranges.
+Post-port review compared the complete original 2.26.0 cop and core RangeHelp
+space/comma algorithms. Thirty-nine added specimens (including two trusted
+programs) cover aliases, quoted/rocket keys, explicit/implicit hashes, multiline
+options, lambda values, duplicate keys, correction policy and negative contexts.
+
+Thirty-eight retained safeguard events are confined to IgnoredSkipActionFilterOption:
+original deletion of a first explicit-hash option leaves invalid `{, ...}`;
+removing an option can delete comments or eager expression side effects. Rust
+reports those offenses but declines the correction. The trusted option factory
+increments a counter and returns a valid predicate lambda; Ruby correction drops
+the increment, Rust preserves it. All new differences were checked independently
+to be those correctability/source/runtime guards, not detector/message/range gaps.
+
+Latest strict evidence: 580 original cases, 1160 second-pass cases, 30 trusted
+runtime programs; 456 events (454 documented guards/hazards, two existing emoji
+spelling gaps). Full native suite passes 902 tests, 1 ignored probe; Rails subset
+passes 61 tests. Remaining unusual syntax and actual production path scopes are
+still open. Totals: 29 reviewed implementations, 26 baseline stubs replaced,
+41 baseline stubs remain.

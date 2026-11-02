@@ -142,4 +142,12 @@ def cases():
     for source in ("enum :status, [- 1, -1, + 1, 1]", "enum :status, [- -1, 1]", "enum :status, [~1, -2]"):
         add("Rails/EnumUniqueness", source)
     add("Performance/Caller", "caller(+ 1).first")
+    for source in ("perform if value&.blank?", "perform unless value&.blank?", "if value&.blank?; perform; end", "unless value&.blank?; perform; else; other; end", "value&.blank? ? perform : other", "perform if (value&.blank?)", "perform if !value&.blank?", "perform if value.blank?", "perform if value&.blank?(extra)", "perform while value&.blank?", "if value&.blank?\n # keep\n perform\nend"):
+        add("Rails/SafeNavigationWithBlank", source)
+    add("Rails/SafeNavigationWithBlank", "perform if value&.blank?", AutoCorrect="disabled")
+    for source in ("skip_before_action :login, only: :show, if: :trusted?", "skip_after_action :login, if: :trusted?, only: :show", "skip_around_action :login, except: :admin, if: :trusted?", "skip_action_callback :login, if: :trusted?, except: :admin", "skip_before_action :login, only: :show, except: :admin, if: :trusted?", "skip_before_action :login, only: :show", "skip_before_action :login, if: :trusted?", "controller.skip_before_action :login, only: :show, if: :trusted?", "before_action :login, only: :show, if: :trusted?", "skip_before_action :login, {if: :trusted?, only: :show}", "skip_before_action :login, {only: :show, if: :trusted?}", "skip_before_action :login, {'only' => :show, 'if' => :trusted?}", "skip_before_action :login, only: :show, if: -> { trusted? }", "skip_before_action :login, only: :show, if: compute", "skip_before_action :login, only: :show, if: :first, if: :last", "skip_before_action :login, only: :show, if: :trusted?, raise: false"):
+        add("Rails/IgnoredSkipActionFilterOption", source)
+    add("Rails/IgnoredSkipActionFilterOption", "skip_before_action :login, only: :show, if: :trusted?", AutoCorrect="disabled")
+    for source in ("skip_before_action :login, :only => :show, :if => :trusted?", "skip_before_action :login, \"only\": :show, \"if\": :trusted?", "skip_before_action :login, only: :show,\n if: :trusted?", "skip_before_action :login, only: :show, if: -> { # keep\n trusted? }", "skip_before_action(:login, only: :show, if: :trusted?)", "skip_before_action :login, {only: :show, if: :trusted?,}", "skip_before_action :login, **options", "skip_before_action :login, if: :first, only: :show, if: :last"):
+        add("Rails/IgnoredSkipActionFilterOption", source)
     return rows
