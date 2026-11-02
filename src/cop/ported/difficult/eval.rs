@@ -134,7 +134,7 @@ fn missing(
     arguments: &[Node<'_>],
     base: usize,
 ) -> Finding {
-    let f = Finding::range(n.start_byte(), send_end(n), missing_message(c, n));
+    let f = Finding::send(n, missing_message(c, n));
     if !missing_correctable(c, n, arguments, base) {
         return f;
     }

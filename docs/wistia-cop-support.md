@@ -11,7 +11,7 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 823 Rust tests, including 3,334 pinned Ruby reference examples across 98 added cops,
+- 823 Rust tests, including 3,363 pinned Ruby reference examples across 98 added cops,
   plus 11 interpolation reference cases.
   The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
   the 30 newly added regressions and correction-mode coverage. The
@@ -365,3 +365,5 @@ The [follow-up autocorrect hazard fixes](reviews/final-autocorrect-hazard-fixes.
 The [deep audit of ten custom rules](reviews/deep-custom-rule-audit.md) adds 281 scoped rows, 25 trusted runtime scenarios and a combined-rule suite; it fixes HashConversion/Dir block boundaries, ERB argument shapes and numbered-parameter scope matching.
 
 The [next runtime coverage batch](reviews/next-runtime-coverage.md) adds 24 scenarios across six more rules, bringing unified runtime coverage to 72 scenarios across 31 rules. It also preserves outer identity-comparison blocks and guards duplicate-require removal across closing delimiters.
+
+The [evaluation/regexp/definition runtime batch](reviews/runtime-round-three.md) adds 29 scenarios across six more rules, raising unified execution coverage to 101 scenarios across 37 rules. It narrows eval highlights and guards high-precedence negated regexp corrections.

@@ -12810,8 +12810,9 @@
       }
     ],
     "corrected": "if !/foo/ =~ $_\nend\n",
-    "rust_corrected": "if !/foo/ =~ $_\nend\n",
-    "reason": "Pinned Ruby iteratively adds a second match operator and emits invalid Ruby; retain the existing single-pass native correction instead of reproducing that invalid follow-up."
+    "rust_corrected": "if !/foo/\nend\n",
+    "reason": "Keep negated regexp conditions report-only: inserting =~ changes operator binding, and Ruby repeats its correction into invalid Ruby.",
+    "rust_correctable": false
   },
   {
     "cop": "Lint/RegexpAsCondition",
@@ -62509,5 +62510,650 @@
     "rust_correctable": false,
     "rust_corrected": "if x; require(\n# parity audit\n\"a\"); else; require \"a\"; end\n",
     "reason": "Keep report-only when whole-line removal would erase a closing delimiter belonging to an earlier line; Ruby generates invalid Ruby."
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "value = 3\np eval(\"value + 1\", binding)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Pass a binding, `__FILE__`, and `__LINE__` to `eval`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = 3\np eval(\"value + 1\", binding, __FILE__, __LINE__)\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "klass = Class.new\nklass.class_eval(\"def answer; 42; end\")\np klass.new.answer\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Pass `__FILE__` and `__LINE__` to `class_eval`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "klass = Class.new\nklass.class_eval(\"def answer; 42; end\", __FILE__, __LINE__)\np klass.new.answer\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "object = Object.new\nobject.instance_variable_set(:@value, 3)\np object.instance_eval(\"@value += 1\")\np object.instance_variable_get(:@value)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Pass `__FILE__` and `__LINE__` to `instance_eval`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "object = Object.new\nobject.instance_variable_set(:@value, 3)\np object.instance_eval(\"@value += 1\", __FILE__, __LINE__)\np object.instance_variable_get(:@value)\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "seen = []\np eval(\"1 + 2\") { seen << :ignored }\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Pass a binding, `__FILE__`, and `__LINE__` to `eval`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "seen = []\np eval(\"1 + 2\") { seen << :ignored }\np seen\n"
+  },
+  {
+    "cop": "Style/EvalWithLocation",
+    "source": "value = 4\np eval(<<~RUBY, binding)\n value * 2\nRUBY\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Pass a binding, `__FILE__`, and `__LINE__` to `eval`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = 4\np eval(<<~RUBY, binding, __FILE__, __LINE__ + 1)\n value * 2\nRUBY\n"
+  },
+  {
+    "cop": "Style/RedundantRegexpCharacterClass",
+    "source": "pattern = /[a]/\np [pattern.match?(\"cat\"), pattern.match?(\"dog\"), \"banana\".scan(pattern)]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Redundant single-element character class, `[a]` can be replaced with `a`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "pattern = /a/\np [pattern.match?(\"cat\"), pattern.match?(\"dog\"), \"banana\".scan(pattern)]\n"
+  },
+  {
+    "cop": "Style/RedundantRegexpCharacterClass",
+    "source": "pattern = /[é]/u\np [pattern.match?(\"café\"), pattern.match?(\"cafe\")]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Redundant single-element character class, `[é]` can be replaced with `é`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "pattern = /é/u\np [pattern.match?(\"café\"), pattern.match?(\"cafe\")]\n"
+  },
+  {
+    "cop": "Style/RedundantRegexpCharacterClass",
+    "source": "pattern = /[.]/\np [pattern.match?(\".\"), pattern.match?(\"a\"), \"a.b\".gsub(pattern, \"x\")]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "pattern = /[.]/\np [pattern.match?(\".\"), pattern.match?(\"a\"), \"a.b\".gsub(pattern, \"x\")]\n"
+  },
+  {
+    "cop": "Style/RedundantRegexpCharacterClass",
+    "source": "pattern = /([a])/\npattern.match(\"cat\")\np [Regexp.last_match(0), Regexp.last_match(1)]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Redundant single-element character class, `[a]` can be replaced with `a`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "pattern = /(a)/\npattern.match(\"cat\")\np [Regexp.last_match(0), Regexp.last_match(1)]\n"
+  },
+  {
+    "cop": "Style/RedundantRegexpCharacterClass",
+    "source": "pattern = %r{[/]}\np [pattern.match?(\"/\"), pattern.match?(\"x\")]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Redundant single-element character class, `[/]` can be replaced with `/`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "pattern = %r{/}\np [pattern.match?(\"/\"), pattern.match?(\"x\")]\n"
+  },
+  {
+    "cop": "Style/RedundantRegexpCharacterClass",
+    "source": "pattern = /[\n]/\np [pattern.match?(\"\\n\"), pattern.match?(\"n\")]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Redundant single-element character class, `[\n]` can be replaced with `\n`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "pattern = /\n/\np [pattern.match?(\"\\n\"), pattern.match?(\"n\")]\n"
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"apple\"\np(if /app/; :matched; else; :missing; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 5,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$_ = \"apple\"\np(if /app/ =~ $_; :matched; else; :missing; end)\n"
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"pear\"\np(if /app/; :matched; else; :missing; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 5,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$_ = \"pear\"\np(if /app/ =~ $_; :matched; else; :missing; end)\n"
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"apple\"\np(unless /app/; :missing; else; :matched; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$_ = \"apple\"\np(unless /app/ =~ $_; :missing; else; :matched; end)\n"
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"apple\"\np(if !/app/; :missing; else; :matched; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$_ = \"apple\"\np(if !/app/ =~ $_; :missing; else; :matched; end)\n",
+    "rust_correctable": false,
+    "rust_corrected": "$_ = \"apple\"\np(if !/app/; :missing; else; :matched; end)\n",
+    "reason": "Keep negated regexp conditions report-only: inserting =~ changes operator binding, and Ruby repeats its correction into invalid Ruby."
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"apple\"\np(if /app/ && /le/; :matched; else; :missing; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 5,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      },
+      {
+        "line": 2,
+        "column": 14,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$_ = \"apple\"\np(if /app/ =~ $_ && /le/ =~ $_; :matched; else; :missing; end)\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def sample(value); seen = [:entered]\n seen << value\n seen\nend\np sample(3)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def sample(value) \n  seen = [:entered]\n seen << value\n seen\nend\np sample(3)\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "class Probe\n def self.sample(value); result = value + 1\n  result * 2\n end\nend\np Probe.sample(3)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 25,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n def self.sample(value) \n   result = value + 1\n  result * 2\n end\nend\np Probe.sample(3)\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def sample; value = 3 # retained\n value + 1\nend\np sample\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "# retained\ndef sample \n  value = 3 \n value + 1\nend\np sample\n",
+    "rust_correctable": false,
+    "rust_corrected": "def sample; value = 3 # retained\n value + 1\nend\np sample\n",
+    "reason": "Existing first-line-comment safeguard keeps the method-body rewrite report-only rather than moving its comment."
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def sample(value)\n value + 1; end\np sample(3)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def sample(value)\n value + 1; \nend\np sample(3)\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "class Probe\n def sample\n  \"end\"; end\nend\np Probe.new.sample\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 9,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n def sample\n  \"end\"; \n end\nend\np Probe.new.sample\n"
+  },
+  {
+    "cop": "Style/TrailingMethodEndStatement",
+    "source": "def sample(value)\n begin\n  value + 1\n ensure\n  value.to_s\n end; end\np sample(3)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 6,
+        "message": "Place the end statement of a multi-line method on its own line.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def sample(value)\n begin\n  value + 1\n ensure\n  value.to_s\n end; \nend\np sample(3)\n"
+  },
+  {
+    "cop": "Lint/OrAssignmentToConstant",
+    "source": "module Probe\n seen = []\n Value ||= (seen << :rhs; 4)\n p [Value, seen]\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 7,
+        "message": "Avoid using or-assignment with constants.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe\n seen = []\n Value = (seen << :rhs; 4)\n p [Value, seen]\nend\n"
+  },
+  {
+    "cop": "Lint/OrAssignmentToConstant",
+    "source": "module Probe; end\nProbe::Value ||= 5\np Probe::Value\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Avoid using or-assignment with constants.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe; end\nProbe::Value = 5\np Probe::Value\n"
+  },
+  {
+    "cop": "Lint/OrAssignmentToConstant",
+    "source": "module Probe\n Value = 4\n seen = []\n Value ||= (seen << :rhs; 5)\n p [Value, seen]\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 7,
+        "message": "Avoid using or-assignment with constants.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe\n Value = 4\n seen = []\n Value = (seen << :rhs; 5)\n p [Value, seen]\nend\n"
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"pear\"\np(if !/app/; :missing; else; :matched; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$_ = \"pear\"\np(if !/app/ =~ $_; :missing; else; :matched; end)\n",
+    "rust_correctable": false,
+    "rust_corrected": "$_ = \"pear\"\np(if !/app/; :missing; else; :matched; end)\n",
+    "reason": "Keep negated regexp conditions report-only: inserting =~ changes operator binding, and Ruby repeats its correction into invalid Ruby."
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"pear\"\np(if not /app/; :yes; else; :no; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$_ = \"pear\"\np(if not /app/ =~ $_; :yes; else; :no; end)\n"
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"pear\"\np(if ~/app/; :yes; else; :no; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$_ = \"pear\"\np(if ~/app/; :yes; else; :no; end)\n"
+  },
+  {
+    "cop": "Lint/RegexpAsCondition",
+    "source": "$_ = \"pear\"\np(if !!/app/; :yes; else; :no; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use regexp literal as a condition. The regexp literal matches `$_` implicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "$_ = \"pear\"\np(if !!/app/ =~ $_; :yes; else; :no; end)\n",
+    "rust_correctable": false,
+    "rust_corrected": "$_ = \"pear\"\np(if !!/app/; :yes; else; :no; end)\n",
+    "reason": "Keep high-precedence ! regexp conditions report-only: inserting =~ changes operator binding and Ruby repeats the correction into invalid Ruby."
   }
 ]
