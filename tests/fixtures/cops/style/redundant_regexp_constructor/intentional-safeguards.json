@@ -1,0 +1,94 @@
+[
+  {
+    "id": "RuboCop::Cop::Style::RedundantRegexpConstructor original percent-regexp slash correction is invalid",
+    "original": "Regexp.new(%r{a/b})",
+    "config": {
+      "Description": "Checks for the instantiation of regexp using redundant `Regexp.new` or `Regexp.compile`.",
+      "Enabled": true,
+      "VersionAdded": "1.52",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 19,
+        "message": "Remove the redundant `Regexp.new`."
+      }
+    ],
+    "ruby_corrected": "/a/b/",
+    "rust_corrected": "Regexp.new(%r{a/b})"
+  },
+  {
+    "id": "RuboCop::Cop::Style::RedundantRegexpConstructor original character-class slash correction is invalid",
+    "original": "Regexp.new(%r{[/]})",
+    "config": {
+      "Description": "Checks for the instantiation of regexp using redundant `Regexp.new` or `Regexp.compile`.",
+      "Enabled": true,
+      "VersionAdded": "1.52",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 19,
+        "message": "Remove the redundant `Regexp.new`."
+      }
+    ],
+    "ruby_corrected": "/[/]/",
+    "rust_corrected": "Regexp.new(%r{[/]})"
+  },
+  {
+    "id": "RuboCop::Cop::Style::RedundantRegexpConstructor original attached block correction is invalid",
+    "original": "Regexp.new(/x/) { nil }",
+    "config": {
+      "Description": "Checks for the instantiation of regexp using redundant `Regexp.new` or `Regexp.compile`.",
+      "Enabled": true,
+      "VersionAdded": "1.52",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 15,
+        "message": "Remove the redundant `Regexp.new`."
+      }
+    ],
+    "ruby_corrected": "/x/ { nil }",
+    "rust_corrected": "Regexp.new(/x/) { nil }"
+  },
+  {
+    "id": "RuboCop::Cop::Style::RedundantRegexpConstructor edge 19",
+    "original": "Regexp.compile(/x/ # inside argument\n)\n",
+    "config": {
+      "Description": "Checks for the instantiation of regexp using redundant `Regexp.new` or `Regexp.compile`.",
+      "Enabled": true,
+      "VersionAdded": "1.52",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 38,
+        "message": "Remove the redundant `Regexp.compile`."
+      }
+    ],
+    "ruby_corrected": "/x/\n",
+    "rust_corrected": "Regexp.compile(/x/ # inside argument\n)\n"
+  }
+]

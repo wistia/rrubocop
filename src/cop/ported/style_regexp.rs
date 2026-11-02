@@ -122,3 +122,33 @@ mod mixed_ranges;
 pub(super) fn mixed_case_ranges(c: &Context<'_>, node: Node<'_>) -> Vec<(usize, usize)> {
     mixed_ranges::ranges(c, node)
 }
+
+pub(super) fn constructor_literal(c: &Context<'_>, node: Node<'_>) -> Option<String> {
+    let pattern = Pattern::new(c, node)?;
+    let mut offset = 0;
+    let mut interpolations = pattern.interpolations.iter().peekable();
+    let bytes = pattern.text.as_bytes();
+    while offset < bytes.len() {
+        if let Some((start, end)) = interpolations.peek() {
+            if *start == offset {
+                offset = *end;
+                interpolations.next();
+                continue;
+            }
+        }
+        if bytes[offset] == b'/' {
+            return None;
+        }
+        offset += if bytes[offset] == b'\\' { 2 } else { 1 };
+    }
+    let raw = c.text(node);
+    let suffix = &raw[pattern.offset - node.start_byte()
+        + pattern.text.len()
+        + pattern.delimiters[1].len_utf8()..];
+    let flags: std::collections::BTreeSet<_> = suffix.chars().collect();
+    Some(format!(
+        "/{}/{}",
+        pattern.text,
+        flags.into_iter().collect::<String>()
+    ))
+}

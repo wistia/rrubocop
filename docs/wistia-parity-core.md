@@ -287,3 +287,29 @@ ExactRegexpMatch, RedundantRegexpArgument, RedundantRegexpConstructor,
 NonNilCheck and TrivialAccessors. Remaining correction gaps such as
 RedundantParentheses and UselessAssignment, plus HashSyntax shorthand branches,
 remain queued in the exhaustive inventory.
+
+## RedundantRegexpConstructor
+
+The seventh of the original 13 Style stubs is ported from the complete
+pinned Ruby 1.65.1 `lib/rubocop/cop/style/redundant_regexp_constructor.rb`.
+All ten unchanged upstream specs pass in Ruby; 32 exact source/config states
+cover root/qualified constructors, new/compile, percent delimiters,
+interpolation, escaped delimiters, empty patterns, Unicode, canonical flag
+ordering/deduplication and negative receiver/argument shapes. Exact Rust
+replays and 64 native CLI correction comparisons plus 64 idempotence checks
+pass. All 13 regexp-filtered regression tests passed before the additional
+safeguard-only test was added; all three constructor tests then passed.
+
+Independent original-Ruby compiler probes confirm invalid corrections for
+`Regexp.new(%r{a/b})`, slash character classes, and attached blocks. The
+original also deletes comments surrounding the retained regexp. Rust keeps
+those diagnostics while withholding unsafe correction; four explicit
+reference fixtures retain both original corrected bytes and the unchanged
+Rust expectation, with exact diagnostic ranges/messages still compared.
+The delimiter guard ignores slashes inside interpolated Ruby expressions,
+retains existing escapes, and refuses non-UTF-8 replacement text. Twelve
+actual CLI safeguard checks preserve source bytes and retain diagnostics.
+
+Six original Style stubs remain: ComparableClamp, EachWithObject,
+ExactRegexpMatch, RedundantRegexpArgument, NonNilCheck and TrivialAccessors.
+The next priority is the broader RedundantParentheses correction/detection gap.

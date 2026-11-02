@@ -255,3 +255,8 @@ pub(super) fn static_ruby_string(source: &SourceFile, node: Node<'_>) -> Option<
         .ruby_static_string(node)
         .map(|value| value.into_owned())
 }
+
+pub(super) fn redundant_regexp_literal(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    std::str::from_utf8(&source.as_bytes()[node.start_byte()..node.end_byte()]).ok()?;
+    style_regexp::constructor_literal(&Context::new(source, &CopConfig::default()), node)
+}
