@@ -4,7 +4,9 @@ mod bare_args;
 mod block_pass;
 mod integer;
 mod node_util;
+mod send_range;
 pub use integer::integer_value;
+pub use send_range::{end as send_end, is_setter_call};
 pub(crate) mod ruby_expression;
 pub(crate) mod ruby_literal;
 

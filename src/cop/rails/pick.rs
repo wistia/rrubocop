@@ -32,6 +32,9 @@ impl Cop for Pick {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         if config.get_f64("TargetRailsVersion", 8.1) < 6.0
             || call_method_name(source, node) != Some(b"first")
             || !argument_nodes(node).is_empty()

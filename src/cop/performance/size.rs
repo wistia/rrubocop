@@ -30,6 +30,9 @@ impl Cop for Size {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         if call_method_name(source, node) != Some(b"count")
             || !argument_nodes(node).is_empty()
             || node.child_by_field_name("block").is_some()

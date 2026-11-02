@@ -25,6 +25,9 @@ impl Cop for FixedSize {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         if !matches!(
             call_method_name(source, node),
             Some(b"count" | b"length" | b"size")

@@ -37,6 +37,9 @@ impl Cop for Count {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         let Some(counter @ (b"count" | b"length" | b"size")) = call_method_name(source, node)
         else {
             return;

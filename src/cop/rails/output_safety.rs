@@ -25,6 +25,9 @@ impl Cop for OutputSafety {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         let Some(method @ (b"html_safe" | b"raw" | b"safe_concat")) =
             call_method_name(source, node)
         else {
@@ -74,23 +77,32 @@ fn has_translation(source: &SourceFile, node: Node<'_>) -> bool {
         }) {
             return;
         }
-        if n.kind() == "identifier"
-            && !n
-                .parent()
-                .is_some_and(|parent| parent.child_by_field_name("method") == Some(n))
+        if crate::cop::ported::bare_call_identifier(source, n)
             && matches!(
                 node_text(source, n).as_str(),
                 "t" | "translate" | "l" | "localize"
             )
-            && !crate::cop::ported::local_identifier(source, n)
         {
             found = true;
         }
-        if matches!(
-            call_method_name(source, n),
-            Some(b"t" | b"translate" | b"l" | b"localize")
-        ) && call_receiver(n)
-            .is_none_or(|r| matches!(node_text(source, r).as_str(), "I18n" | "::I18n"))
+        if n.kind() == "call"
+            && !crate::cop::shared::is_setter_call(n)
+            && !n
+                .child_by_field_name("operator")
+                .is_some_and(|op| crate::cop::shared::node_bytes(source, op) == b"&.")
+            && matches!(
+                call_method_name(source, n),
+                Some(b"t" | b"translate" | b"l" | b"localize")
+            )
+            && call_receiver(n).is_none_or(|receiver| {
+                receiver.kind() == "constant"
+                    && crate::cop::shared::node_bytes(source, receiver) == b"I18n"
+                    || receiver.kind() == "scope_resolution"
+                        && receiver.child_by_field_name("scope").is_none()
+                        && receiver.child_by_field_name("name").is_some_and(|name| {
+                            crate::cop::shared::node_bytes(source, name) == b"I18n"
+                        })
+            })
         {
             found = true;
         }

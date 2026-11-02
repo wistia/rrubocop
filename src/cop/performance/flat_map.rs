@@ -30,6 +30,9 @@ impl Cop for FlatMap {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         let Some(flatten @ (b"flatten" | b"flatten!")) = call_method_name(source, node) else {
             return;
         };

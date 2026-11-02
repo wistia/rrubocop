@@ -27,6 +27,9 @@ impl Cop for BindCall {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         if config.get_f64("TargetRubyVersion", 3.4) < 2.7
             || !matches!(call_method_name(source, node), Some(b"call") | None)
         {

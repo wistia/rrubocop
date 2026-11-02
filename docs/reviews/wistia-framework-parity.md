@@ -1,8 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The first ten batches replace
-26 stubs and repair an existing ReverseEach detector/corrector; 41 stubs and the remaining implemented-cop gaps
+The baseline inventory contained 67 no-op stubs. The first eleven batches replace
+27 stubs and repair an existing ReverseEach detector/corrector; 40 stubs and the remaining implemented-cop gaps
 still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
@@ -168,7 +168,7 @@ python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-Complete native suite: **902 passed, with 1 intentionally ignored audit probe**.
+Complete native suite: **904 passed, with 1 intentionally ignored audit probe**.
 The strict command exits 1 with **456 explicit difference events**: 454 documented
 safety/upstream-hazard events and two unresolved parser-related corrected-byte
 differences. `failures.json`, `summary.json` and `runtime.json` retain every event.
@@ -355,3 +355,41 @@ spelling gaps). Full native suite passes 902 tests, 1 ignored probe; Rails subse
 passes 61 tests. Remaining unusual syntax and actual production path scopes are
 still open. Totals: 29 reviewed implementations, 26 baseline stubs replaced,
 41 baseline stubs remain.
+
+## Eleventh batch: table timestamps and Ruby send roles
+
+Rails/CreateTableWithTimestamps implements id:false search, exact one-argument
+block matching, timestamp/datetime searches, &:timestamps exemption and original
+header-versus-block ranges, preserving the official migration scopes and generated
+ActiveStorage exclusions. Post-implementation review compared the complete
+original cop and ActiveRecordMigrationsHelper block matcher. Bare identifiers,
+local bindings, definitions, block parameters/locals, numbered blocks, nested
+options and safe navigation have authored original-rule cases.
+
+This review also closed concrete send-role gaps across earlier ports. New small
+ported wrappers expose existing symbol decoding and classify bare-call identifiers
+without confusing definition/alias/undef names or locals. OutputSafety now accepts
+only actual regular translation sends, so raw(def t; end), translation setters
+and safe-navigation translations still warn; root-qualified I18n constants are
+recognized structurally. A shared setter-role helper excludes regular-getter
+patterns on shorthand assignment targets, including multiple assignment and for
+targets, while preserving nested getter and operator-assignment positive cases.
+Fourteen owned ports use this opt-in helper; there is no global walker suppression.
+The existing send-end helper moved to shared code with its Performance API retained.
+
+Latest isolated-rule matrix: 638 original cases, 1276 second-pass cases and
+30 trusted runtime programs. Exactly the prior 456 retained events remain;
+no new detector, message, range, corrected-byte or idempotence differences in
+these added specimens. Full native suite: 904 passed, 1 ignored probe.
+
+New scope_check.py exercises actual production configuration through both CLIs
+using virtual stdin filenames, without creating Wistia files. All 30 reviewed
+rules have firing positive controls; 61/62 path probes match on common diagnostic
+fields (cop, message, severity, start line/column). Cop-specific model, service,
+spec, test, controller, migration and generated-storage scopes match. One global
+runner issue remains: --stdin db/schema.rb --force-exclusion ignores Wistia's
+AllCops exclusion in native, while Ruby skips it. Without --force-exclusion both
+correctly inspect that path. This is delegated to root/core; no cop exception
+was added. Scope script intentionally remains failing until the runner is fixed.
+The separate emoji corrected-byte gap remains open as previously recorded.
+Totals: 30 reviewed implementations, 27 baseline stubs replaced, 40 remaining.

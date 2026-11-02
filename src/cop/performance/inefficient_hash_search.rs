@@ -32,6 +32,9 @@ impl Cop for InefficientHashSearch {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         if call_method_name(source, node) != Some(b"include?") {
             return;
         }

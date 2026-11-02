@@ -28,10 +28,7 @@ impl Cop for HasAndBelongsToMany {
     ) {
         if node.kind() == "identifier" {
             if crate::cop::shared::node_bytes(source, node) != b"has_and_belongs_to_many"
-                || crate::cop::ported::local_identifier(source, node)
-                || node
-                    .parent()
-                    .is_some_and(|parent| parent.child_by_field_name("method") == Some(node))
+                || !crate::cop::ported::bare_call_identifier(source, node)
             {
                 return;
             }

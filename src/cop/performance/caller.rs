@@ -32,6 +32,9 @@ impl Cop for Caller {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         let (receiver, index) = if node.kind() == "element_reference" {
             let Some(object) = node.child_by_field_name("object") else {
                 return;

@@ -32,6 +32,9 @@ impl Cop for UnfreezeString {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         let version = config.get_f64("TargetRubyVersion", 3.4);
         if version < 2.3
             || node

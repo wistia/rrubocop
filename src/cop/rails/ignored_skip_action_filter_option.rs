@@ -83,15 +83,7 @@ impl Cop for IgnoredSkipActionFilterOption {
             let Some(key) = pair.child_by_field_name("key") else {
                 continue;
             };
-            if !matches!(
-                key.kind(),
-                "hash_key_symbol" | "simple_symbol" | "delimited_symbol"
-            ) && !(key.kind() == "string"
-                && source.as_bytes().get(key.end_byte()) == Some(&b':'))
-            {
-                continue;
-            }
-            match crate::cop::ported::static_literal(source, key).as_deref() {
+            match crate::cop::ported::static_symbol(source, key).as_deref() {
                 Some("if") => conditional = Some(*pair),
                 Some("only") => only = Some(*pair),
                 Some("except") => except = Some(*pair),

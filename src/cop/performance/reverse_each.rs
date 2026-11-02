@@ -30,6 +30,9 @@ impl Cop for ReverseEach {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
         if call_method_name(source, node) != Some(b"each")
             || !argument_nodes(node).is_empty()
             || return_value_used(source, node)
