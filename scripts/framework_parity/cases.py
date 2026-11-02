@@ -6,6 +6,18 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    for method in ("second", "minute", "hour", "day", "week", "fortnight", "month", "year", "byte", "kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte", "exabyte", "zettabyte"):
+        for number in ("-1", "-1.0", "1", "1.0", "-23", "-0.5", "0", "0.125", "42"):
+            for suffix in ("", "s"):
+                add("Rails/PluralizationGrammar", f"{number}.{method}{suffix}.ago")
+    for number in ("0x1", "01", "0b10", "+1", "1_000", "1e-5", "1e-4", "1e14", "1e15", "1.2345678901234567e20", "1e309", "-1e309", "-0.0", "__LINE__", "(1)", "(1.0)", "value", "1r", "1i"):
+        for suffix in ("", "s"):
+            add("Rails/PluralizationGrammar", f"{number}.day{suffix}")
+    for source in ("2.day(1)", "2.day { work }", "2&.day", "1.days(&block)", "2.day = 1", "def day; end", "2.days", "1.day", "2.dayss", "2.millisecond", "- 1.days", "+ 1.days", "1.day; __LINE__.day"):
+        add("Rails/PluralizationGrammar",source)
+    for source in ("- 2.day", "- 1.0.days", "- 1.days(2)", "- 1.days { work }", "- -1.days", "-(1.days)", "- (1.days)", "-\n1.days", "- 1 .days", "- 0x1.days", "+ 1.0.days", "+ 1.days(2)"):
+        add("Rails/PluralizationGrammar",source)
+    add("Rails/PluralizationGrammar", "2.day", AutoCorrect="disabled")
     for method in ("has_many", "has_one", "belongs_to"):
         for value in ("Account", "Account.name", "Account.to_s", "Account.other", "Account.name(1)", "::Account", "A::Account", "A::Account.name", "value", "value.to_s", "value.name", "nil", "false", "1", ":Account", ':""', '"Account"', '"#{prefix}Account"', "(Account)"):
             add("Rails/ReflectionClassName", f"{method} :accounts, class_name: {value}")

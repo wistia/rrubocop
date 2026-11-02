@@ -1,8 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The current branch replaces 36 stubs and reviews three existing implementations.
-Thirty-one baseline stubs and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
+The baseline inventory contained 67 no-op stubs. The current branch replaces 37 stubs and reviews three existing implementations.
+Thirty baseline stubs and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
 
@@ -759,3 +759,13 @@ Added 23 positive/negative enum-name/member specimens. The focused matrix now ha
 Pinned source: `rubocop-rails-2.26.0/lib/rubocop/cop/rails/reflection_class_name.rb`; upstream `v2.26.0/spec/rubocop/cop/rails/reflection_class_name_spec.rb` was read separately after the first port. All upstream branches are represented: the three association macros; optional scope argument; string/interpolated-string/plain-symbol exemptions; receiverless send exclusion; `to_s` on nonconstant receivers; local variables assigned string/symbol versus constants; shorthand options; correction limited to unqualified constants and their no-argument `name`/`to_s` sends. Additional negatives cover receivers, association arity, scoped constants, dynamic symbols, duplicate keys, splats, nested/forward local assignments, block arguments, safe sends, non-symbol keys and disabled autocorrection.
 
 The final focused gate contains 99 original cases (including three trusted ActiveRecord reflection programs), 198 second passes and **zero differences** in detections, locations/messages/metadata, safe/all bytes, final states or idempotence. Original `Safe: false` is respected: `-a` retains source, `-A` performs the bounded original corrections. No new semantic safeguard discrepancy was found in these trusted programs; dynamic class-name contracts remain the upstream documented unsafe assumption. The post-port review repaired shorthand-value detection and safe-mode classification before this checkpoint. Actual production CLI: 83 scope probes across 39 rules plus four auxiliary disabled-policy probes all pass. Native suite: 921 pass, one ignored. This replaces one baseline stub; totals are 36 replaced, three existing reviewed, 31 stubs remaining.
+
+### PluralizationGrammar original-rule review
+
+Read pinned `rubocop-rails-2.26.0/lib/rubocop/cop/rails/pluralization_grammar.rb` and upstream `v2.26.0/spec/rubocop/cop/rails/pluralization_grammar_spec.rb`. Ported all 16 singular/plural method pairs, original absolute-value-one classification, integer/float receiver restriction, full send highlight and selector-only edit. Shared original-AST integer and float decoders are reused unchanged; `__LINE__` follows the already reviewed Int branch. Ruby float display is covered at decimal/scientific boundaries, Infinity and negative zero.
+
+The separate post-port source review added safe sends, setters, arguments/blocks, unsupported methods, parenthesized/rational/complex receivers, integer radix/underscores, disabled policy and spaced unary signs. The initial gate exposed `- 1.days`: native syntax wraps the call in unary minus while original Ruby folds minus into its numeric receiver. A bounded direct-parent/numeric-token projection restores the original value and range; nested minus and explicit-parentheses controls are separate fixtures.
+
+Final gate: **355 original cases, 710 second passes, three trusted ActiveSupport numeric/time/byte programs; zero differences** in detection, ranges/messages/metadata, `-a`/`-A` bytes, final states, runtime behavior or idempotence. Upstream randomized numeric specs were replaced with deterministic negative/zero/fractional/integer cases across every method pair. No deliberate correction divergence was needed in this bounded review. Totals: 37 original stubs replaced, three existing rules reviewed, 30 original stubs remaining.
+
+Pluralization checkpoint validation: full native suite 921 pass, one ignored; all 89 CLI probes pass (85 unchanged production-config scopes across 40 rules, four auxiliary disabled-policy probes).

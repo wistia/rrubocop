@@ -1,5 +1,9 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Rails/PluralizationGrammar", "require 'active_support/all'\np [1.days.to_i, 2.day.to_i, -1.months.to_i, 0.year.to_i]\n"),
+    ("Rails/PluralizationGrammar", "require 'active_support/all'\np [1.0.hours.to_i, 0.5.hour.to_i, -1.0.hours.to_i, 2.5.hour.to_i]\n"),
+    ("Rails/PluralizationGrammar", "require 'active_support/all'\np [1.megabytes, 2.megabyte, -1.kilobytes, 0.byte]\n"),
+
     ("Rails/ReflectionClassName", "require 'active_record'\nclass Account; end\nclass Team < ActiveRecord::Base\nself.abstract_class = true\nhas_many :accounts, class_name: Account\nend\np Team.reflect_on_association(:accounts).class_name\n"),
     ("Rails/ReflectionClassName", "require 'active_record'\nclass Account; end\nclass Team < ActiveRecord::Base\nself.abstract_class = true\nhas_many :accounts, class_name: Account.name\nend\np Team.reflect_on_association(:accounts).class_name\n"),
     ("Rails/ReflectionClassName", "require 'active_record'\nclass Account; end\nclass Team < ActiveRecord::Base\nself.abstract_class = true\nhas_many :accounts, class_name: Account.to_s\nend\np Team.reflect_on_association(:accounts).class_name\n"),

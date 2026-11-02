@@ -240,7 +240,7 @@ fn interpolation_nodes<'a>(root: Node<'a>, start: usize, end: usize) -> Vec<Node
     nodes
 }
 
-fn float_value(source: &SourceFile, node: Node<'_>) -> Option<f64> {
+pub fn float_value(source: &SourceFile, node: Node<'_>) -> Option<f64> {
     let (number, negative) = if node.kind() == "unary" {
         let operand = node.child_by_field_name("operand")?;
         if operand.kind() != "float" || !matches!(operator(source, node), Some(b"+" | b"-")) {
@@ -298,7 +298,7 @@ pub fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> 
 pub fn eql_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
     compare_expression(source, left, right, true)
 }
-fn integer_ast(source: &SourceFile, node: Node<'_>) -> Option<num_bigint::BigInt> {
+pub fn integer_ast(source: &SourceFile, node: Node<'_>) -> Option<num_bigint::BigInt> {
     if node.kind() == "identifier"
         && node_bytes(source, node) == b"__LINE__"
         && crate::cop::ported::bare_call_identifier(source, node)

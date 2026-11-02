@@ -16,6 +16,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/PluralizationGrammar', '2.day', model, service),
  ('Rails/ReflectionClassName', 'has_many :accounts, class_name: Account', model, service),
  ('Rails/Validation', 'validates_presence_of :name', model, service),
  ('Performance/StartWith', r"str.match?(/\Aabc/)", model, service),
