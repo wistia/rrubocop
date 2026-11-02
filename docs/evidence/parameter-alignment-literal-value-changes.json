@@ -1,0 +1,734 @@
+[
+  {
+    "id": "multiline-regexp-positive-with_first_parameter-2",
+    "source": "def foo(one,\ntwo=/a\n b/,\n third=3)\nend\n",
+    "corrected": "def foo(one,\n        two=/a\n         b/,\n        third=3)\nend\n",
+    "native_expected": "def foo(one,\n        two=/a\n b/,\n        third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"         b\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "multiline-regexp-positive-with_first_parameter-4",
+    "source": "def foo(one,\ntwo=/a\n b/,\n third=3)\nend\n",
+    "corrected": "def foo(one,\n        two=/a\n         b/,\n        third=3)\nend\n",
+    "native_expected": "def foo(one,\n        two=/a\n b/,\n        third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"         b\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "multiline-regexp-positive-with_fixed_indentation-2",
+    "source": "def foo(one,\ntwo=/a\n b/,\n third=3)\nend\n",
+    "corrected": "def foo(one,\n  two=/a\n   b/,\n  third=3)\nend\n",
+    "native_expected": "def foo(one,\n  two=/a\n b/,\n  third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"   b\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "multiline-regexp-positive-with_fixed_indentation-4",
+    "source": "def foo(one,\ntwo=/a\n b/,\n third=3)\nend\n",
+    "corrected": "def foo(one,\n    two=/a\n     b/,\n    third=3)\nend\n",
+    "native_expected": "def foo(one,\n    two=/a\n b/,\n    third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"     b\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "multiline-symbol-positive-with_first_parameter-2",
+    "source": "def foo(one,\ntwo=:\"a\n b\",\n third=3)\nend\n",
+    "corrected": "def foo(one,\n        two=:\"a\n         b\",\n        third=3)\nend\n",
+    "native_expected": "def foo(one,\n        two=:\"a\n b\",\n        third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"         b\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "multiline-symbol-positive-with_first_parameter-4",
+    "source": "def foo(one,\ntwo=:\"a\n b\",\n third=3)\nend\n",
+    "corrected": "def foo(one,\n        two=:\"a\n         b\",\n        third=3)\nend\n",
+    "native_expected": "def foo(one,\n        two=:\"a\n b\",\n        third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"         b\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "multiline-symbol-positive-with_fixed_indentation-2",
+    "source": "def foo(one,\ntwo=:\"a\n b\",\n third=3)\nend\n",
+    "corrected": "def foo(one,\n  two=:\"a\n   b\",\n  third=3)\nend\n",
+    "native_expected": "def foo(one,\n  two=:\"a\n b\",\n  third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"   b\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "multiline-symbol-positive-with_fixed_indentation-4",
+    "source": "def foo(one,\ntwo=:\"a\n b\",\n third=3)\nend\n",
+    "corrected": "def foo(one,\n    two=:\"a\n     b\",\n    third=3)\nend\n",
+    "native_expected": "def foo(one,\n    two=:\"a\n b\",\n    third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"     b\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"a\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\" b\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "percent-word-positive-with_first_parameter-2",
+    "source": "def foo(one,\ntwo=%w(first\nsecond\\\nword),\n third=3)\nend\n",
+    "corrected": "def foo(one,\n        two=%w(first\n        second\\\n        word),\n        third=3)\nend\n",
+    "native_expected": "def foo(one,\n        two=%w(first\n        second\\\nword),\n        third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\nword\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"word\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\nword\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "percent-word-positive-with_first_parameter-4",
+    "source": "def foo(one,\ntwo=%w(first\nsecond\\\nword),\n third=3)\nend\n",
+    "corrected": "def foo(one,\n        two=%w(first\n        second\\\n        word),\n        third=3)\nend\n",
+    "native_expected": "def foo(one,\n        two=%w(first\n        second\\\nword),\n        third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\nword\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"word\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\nword\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "percent-word-positive-with_fixed_indentation-2",
+    "source": "def foo(one,\ntwo=%w(first\nsecond\\\nword),\n third=3)\nend\n",
+    "corrected": "def foo(one,\n  two=%w(first\n  second\\\n  word),\n  third=3)\nend\n",
+    "native_expected": "def foo(one,\n  two=%w(first\n  second\\\nword),\n  third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\nword\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"word\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\nword\""
+            ]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "percent-word-positive-with_fixed_indentation-4",
+    "source": "def foo(one,\ntwo=%w(first\nsecond\\\nword),\n third=3)\nend\n",
+    "corrected": "def foo(one,\n    two=%w(first\n    second\\\n    word),\n    third=3)\nend\n",
+    "native_expected": "def foo(one,\n    two=%w(first\n    second\\\nword),\n    third=3)\nend\n",
+    "observations": {
+      "before": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\nword\""
+            ]
+          ]
+        ]
+      },
+      "original_corrected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\n\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"word\""
+            ]
+          ]
+        ]
+      },
+      "native_expected": {
+        "parser_errors": [],
+        "literal_values": [
+          [
+            "str",
+            [
+              "\"first\""
+            ]
+          ],
+          [
+            "str",
+            [
+              "\"second\\nword\""
+            ]
+          ]
+        ]
+      }
+    }
+  }
+]

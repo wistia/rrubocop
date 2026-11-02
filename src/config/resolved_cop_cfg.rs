@@ -25,7 +25,7 @@ impl ResolvedConfig {
 
     fn inject_cop_options(&self, name: &str, config: &mut CopConfig) {
         inject_globals(self, config);
-        self.inject_method_body_width(name, config);
+        self.inject_indentation_width_fallback(name, config);
         inject_rack_version(self, name, config);
         inject_line_length(self, name, config);
         inject_redundant_line_break(self, name, config);
@@ -45,14 +45,17 @@ impl ResolvedConfig {
         inject_config_disabled_cops(self, name, config);
     }
 
-    fn inject_method_body_width(&self, name: &str, config: &mut CopConfig) {
+    fn inject_indentation_width_fallback(&self, name: &str, config: &mut CopConfig) {
         if !matches!(
             name,
-            "Style/TrailingBodyOnMethodDefinition" | "Style/ComparableClamp"
+            "Style/TrailingBodyOnMethodDefinition"
+                | "Style/ComparableClamp"
+                | "Layout/ArrayAlignment"
+                | "Layout/ParameterAlignment"
         ) {
             return;
         }
-        if name == "Style/ComparableClamp"
+        if name != "Style/TrailingBodyOnMethodDefinition"
             && config
                 .options
                 .get("IndentationWidth")
@@ -76,5 +79,46 @@ impl ResolvedConfig {
     pub fn cop_config_for_file(&self, name: &str, file_path: &std::path::Path) -> CopConfig {
         self.effective_config_for_file(file_path)
             .map_or_else(|| self.cop_config(name), |config| config.cop_config(name))
+    }
+}
+
+#[cfg(test)]
+mod alignment_width_tests {
+    use super::*;
+    #[test]
+    fn cop_numeric_width_precedes_global_and_nil_falls_back() {
+        for name in ["Layout/ArrayAlignment", "Layout/ParameterAlignment"] {
+            for (own, global, expected) in [
+                (None, Some(4), 4),
+                (Some(serde_yml::Value::Null), Some(4), 4),
+                (Some(0.into()), Some(4), 0),
+                (Some(2.into()), Some(4), 2),
+                (None, Some(0), 0),
+                (None, None, 2),
+            ] {
+                let mut config = ResolvedConfig::empty();
+                let mut specific = CopConfig::default();
+                if let Some(own) = own {
+                    specific.options.insert("IndentationWidth".into(), own);
+                }
+                config.cop_configs.insert(name.into(), specific);
+                config.cop_configs.insert(
+                    "Layout/IndentationWidth".into(),
+                    CopConfig {
+                        options: [(
+                            "Width".into(),
+                            global.map_or(serde_yml::Value::Null, serde_yml::Value::from),
+                        )]
+                        .into(),
+                        ..CopConfig::default()
+                    },
+                );
+                assert_eq!(
+                    config.cop_config(name).get_usize("IndentationWidth", 2),
+                    expected,
+                    "{name}"
+                );
+            }
+        }
     }
 }

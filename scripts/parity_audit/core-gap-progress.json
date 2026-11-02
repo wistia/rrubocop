@@ -49,7 +49,8 @@
       "ruby_autocorrect": true,
       "rust_autocorrect": true,
       "work_status": "original_spec_port_validated_with_literal_safeguards",
-      "evidence": "25 original examples/27 states;243 exact diagnostic states,225 exact first corrections plus18 proven literal-value safeguards;486 CLI modes,450 exact bytes/all exits+scopes match,972 stable second passes;184 exact fresh final states with5 original no-op offense states;9 correction-metadata controls;8 production modes;911 full native tests pass plus final focused replay"
+      "evidence": "25 original examples/27 states;243 exact diagnostic states,225 exact first corrections plus18 proven literal-value safeguards;486 CLI modes,450 exact bytes/all exits+scopes match,972 stable second passes;184 exact fresh final states with5 original no-op offense states;9 correction-metadata controls;8 production modes;911 full native tests pass plus final focused replay",
+      "additional_review": "Shared original_alignment extraction preserves243 first-pass/184 final replays. Missing/null per-cop width fallback to global Layout/IndentationWidth is now implemented/unit-tested; supplemental real CLI gate pending."
     },
     {
       "name": "Layout/AssignmentIndentation",
@@ -381,7 +382,8 @@
       "initial_status": "not_behavior_tested",
       "ruby_autocorrect": true,
       "rust_autocorrect": true,
-      "work_status": "queued"
+      "work_status": "original_spec_port_first_pass_validated_cli_pending",
+      "evidence": "19 original examples/22 states;186 exact diagnostic states,174 exact first corrections plus12 proven literal-value safeguards;32 CRLF states;916 full native tests pass;real CLI/metadata/production/final-state gates pending"
     },
     {
       "name": "Layout/RescueEnsureAlignment",
@@ -2597,6 +2599,12 @@
       "status": "confirmed_deferred",
       "evidence": "docs/evidence/hash-alignment-invalid-grammar.json",
       "scope": "Seven config states share one invalid original Ruby source accepted by native grammar; generic syntax expansion is deferred."
+    },
+    {
+      "id": "singleton-method-on-literal-invalid-grammar",
+      "status": "confirmed_deferred",
+      "evidence": "docs/evidence/parameter-alignment-invalid-singleton-literal.json",
+      "scope": "Four config states share one method definition rejected by original parser singleton_literal diagnostics; valid receiver-call controls replace it in cop fixtures. Generic syntax expansion remains deferred."
     }
   ]
 }
