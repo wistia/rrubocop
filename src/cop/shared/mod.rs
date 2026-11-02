@@ -17,6 +17,7 @@ pub use send_range::{end as send_end, is_setter_call};
 mod ruby_word;
 pub use ruby_word::word_value;
 pub mod ruby_expression;
+pub mod ruby_inflection;
 pub(crate) mod ruby_literal;
 pub mod ruby_semantics;
 
