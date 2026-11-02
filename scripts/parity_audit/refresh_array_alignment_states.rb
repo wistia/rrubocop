@@ -10,7 +10,7 @@ cases = JSON.parse(File.read(input))
 cases.each do |entry|
   options = entry.fetch("config")
   config = RuboCop::Config.new("AllCops" => {"TargetRubyVersion" => options.fetch("TargetRubyVersion")},
-    "Layout/ArrayAlignment" => options, "Layout/IndentationWidth" => entry.fetch("sibling_cops").fetch("Layout/IndentationWidth"))
+    "Layout/ArrayAlignment" => options, "Layout/IndentationWidth" => entry.fetch("sibling_cops", {}).fetch("Layout/IndentationWidth", {"Width" => options.fetch("IndentationWidth", 2)}))
   klass = RuboCop::Cop::Layout::ArrayAlignment
   cop = klass.new(config, autocorrect: true)
   processed = RuboCop::ProcessedSource.new(entry.fetch("original"), options.fetch("TargetRubyVersion"))

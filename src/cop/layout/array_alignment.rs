@@ -394,6 +394,16 @@ mod tests {
         );
     }
     #[test]
+    fn original_final_offense_states() {
+        crate::testutil::assert_original_spec_parity(
+            &ArrayAlignment,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/layout/array_alignment/final-parity.json"
+            )),
+        );
+    }
+    #[test]
     fn original_spec_states() {
         crate::testutil::assert_original_spec_parity(
             &ArrayAlignment,
