@@ -4272,5 +4272,949 @@
       }
     },
     "safety_difference": "Preserve RSpec symbol-tag precedence against later false values/spreads, comments and quoted tag identity."
+  },
+  {
+    "id": "expect_change_spec:7",
+    "cop": "RSpec/ExpectChange",
+    "source": "it do\n  expect { run }.to change { user.name }.to('Jack')\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "method_call",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { run }.to change { user.name }.to('Jack')\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_change_spec.rb#7",
+    "upstream_configuration": "Restored original EnforcedStyle method_call/block context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer `change(user, :name)`.",
+          "correctable": true,
+          "length": 20,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { run }.to change { user.name }.to('Jack')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer `change(user, :name)`.",
+            "correctable": true,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { run }.to change(user, :name).to('Jack')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation count and object capture when a change matcher moves between a block and argument form."
+  },
+  {
+    "id": "expect_change_spec:12",
+    "cop": "RSpec/ExpectChange",
+    "source": "it do\n  expect { run }.to change(user, :count)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { run }.to change(user, :count)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_change_spec.rb#12",
+    "upstream_configuration": "Restored original EnforcedStyle method_call/block context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer `change { user.count }`.",
+          "correctable": true,
+          "length": 20,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { run }.to change(user, :count)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer `change { user.count }`.",
+            "correctable": true,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { run }.to change { user.count }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation count and object capture when a change matcher moves between a block and argument form."
+  },
+  {
+    "id": "expect_change_spec:13",
+    "cop": "RSpec/ExpectChange",
+    "source": "it do\n  expect { run }.to change(user, 'status')\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { run }.to change(user, 'status')\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_change_spec.rb#13",
+    "upstream_configuration": "Restored original EnforcedStyle method_call/block context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer `change { user.status }`.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { run }.to change(user, 'status')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer `change { user.status }`.",
+            "correctable": true,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { run }.to change { user.status }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation count and object capture when a change matcher moves between a block and argument form."
+  },
+  {
+    "id": "expect_change_spec:14",
+    "cop": "RSpec/ExpectChange",
+    "source": "it do\n  expect { paint_users! }.to change(users.green, :count).by(1)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { paint_users! }.to change(users.green, :count).by(1)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_change_spec.rb#14",
+    "upstream_configuration": "Restored original EnforcedStyle method_call/block context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 29,
+          "message": "Prefer `change { users.green.count }`.",
+          "correctable": true,
+          "length": 27,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { paint_users! }.to change(users.green, :count).by(1)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 29,
+            "message": "Prefer `change { users.green.count }`.",
+            "correctable": true,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { paint_users! }.to change { users.green.count }.by(1)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation count and object capture when a change matcher moves between a block and argument form."
+  },
+  {
+    "id": "expect_change_spec:16",
+    "cop": "RSpec/ExpectChange",
+    "source": "it do\n  expect { paint_users! }.to change(@food, :taste).to(:sour)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { paint_users! }.to change(@food, :taste).to(:sour)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_change_spec.rb#16",
+    "upstream_configuration": "Restored original EnforcedStyle method_call/block context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 29,
+          "message": "Prefer `change { @food.taste }`.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { paint_users! }.to change(@food, :taste).to(:sour)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 29,
+            "message": "Prefer `change { @food.taste }`.",
+            "correctable": true,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { paint_users! }.to change { @food.taste }.to(:sour)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation count and object capture when a change matcher moves between a block and argument form."
+  },
+  {
+    "id": "expect_change_spec:17",
+    "cop": "RSpec/ExpectChange",
+    "source": "it do\n  expect { paint_users! }.to change($token, :value).to(nil)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { paint_users! }.to change($token, :value).to(nil)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_change_spec.rb#17",
+    "upstream_configuration": "Restored original EnforcedStyle method_call/block context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 29,
+          "message": "Prefer `change { $token.value }`.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { paint_users! }.to change($token, :value).to(nil)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 29,
+            "message": "Prefer `change { $token.value }`.",
+            "correctable": true,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { paint_users! }.to change { $token.value }.to(nil)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation count and object capture when a change matcher moves between a block and argument form."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:constant-swap",
+    "source": "expect { stub_const(\"Foo\", Other) }.to change { Foo.count }\n",
+    "corrected": "expect { stub_const(\"Foo\", Other) }.to change { Foo.count }\n",
+    "config": {
+      "EnforcedStyle": "method_call",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 39,
+          "message": "Prefer `change(Foo, :count)`.",
+          "correctable": true,
+          "length": 20,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { stub_const(\"Foo\", Other) }.to change { Foo.count }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 39,
+            "message": "Prefer `change(Foo, :count)`.",
+            "correctable": true,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { stub_const(\"Foo\", Other) }.to change(Foo, :count)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:method-receiver",
+    "source": "expect { work }.to change { holder().value }\n",
+    "corrected": "expect { work }.to change { holder().value }\n",
+    "config": {
+      "EnforcedStyle": "method_call",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `change(holder(), :value)`.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { holder().value }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `change(holder(), :value)`.",
+            "correctable": true,
+            "length": 25,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change(holder(), :value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:comment",
+    "source": "expect { work }.to change {\n # keep\n Foo.count\n}\n",
+    "corrected": "expect { work }.to change {\n # keep\n Foo.count\n}\n",
+    "config": {
+      "EnforcedStyle": "method_call",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `change(Foo, :count)`.",
+          "correctable": true,
+          "length": 8,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change {\n # keep\n Foo.count\n}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `change(Foo, :count)`.",
+            "correctable": true,
+            "length": 8,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change(Foo, :count)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:captured-local",
+    "source": "holder = object\nexpect { holder = other }.to change(holder, :value)\n",
+    "corrected": "holder = object\nexpect { holder = other }.to change(holder, :value)\n",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 29,
+          "message": "Prefer `change { holder.value }`.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "holder = object\nexpect { holder = other }.to change(holder, :value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 29,
+            "message": "Prefer `change { holder.value }`.",
+            "correctable": true,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "holder = object\nexpect { holder = other }.to change { holder.value }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:mutable-identity",
+    "source": "expect { work }.to change(\"text\", :object_id)\n",
+    "corrected": "expect { work }.to change(\"text\", :object_id)\n",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `change { \"text\".object_id }`.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change(\"text\", :object_id)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `change { \"text\".object_id }`.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change { \"text\".object_id }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:precedence",
+    "source": "expect { work }.to change(1 + 2, :to_s)\n",
+    "corrected": "expect { work }.to change(1 + 2, :to_s)\n",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `change { 1 + 2.to_s }`.",
+          "correctable": true,
+          "length": 20,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change(1 + 2, :to_s)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `change { 1 + 2.to_s }`.",
+            "correctable": true,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change { 1 + 2.to_s }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:negative-precedence",
+    "source": "expect { work }.to change(-1, :to_s)\n",
+    "corrected": "expect { work }.to change(-1, :to_s)\n",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `change { -1.to_s }`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change(-1, :to_s)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `change { -1.to_s }`.",
+            "correctable": true,
+            "length": 17,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change { -1.to_s }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:invalid-message",
+    "source": "expect { work }.to change(Foo, :\"has space\")\n",
+    "corrected": "expect { work }.to change(Foo, :\"has space\")\n",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `change { Foo.has space }`.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change(Foo, :\"has space\")\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `change { Foo.has space }`.",
+            "correctable": true,
+            "length": 25,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change { Foo.has space }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:attached-block",
+    "source": "expect { work }.to change(Foo, :count) { other }\n",
+    "corrected": "expect { work }.to change(Foo, :count) { other }\n",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `change { Foo.count }`.",
+          "correctable": true,
+          "length": 19,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change(Foo, :count) { other }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `change { Foo.count }`.",
+            "correctable": true,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change { Foo.count } { other }\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax error found\n> 1 | ... { other }\n    |     ^~~~~~~~~ unexpected '{' after a method call without parenthesis\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:dynamic-namespace",
+    "source": "expect { work }.to change { provider::Foo.count }\n",
+    "corrected": "expect { work }.to change { provider::Foo.count }\n",
+    "config": {
+      "EnforcedStyle": "method_call",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `change(provider::Foo, :count)`.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { provider::Foo.count }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `change(provider::Foo, :count)`.",
+            "correctable": true,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change(provider::Foo, :count)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/ExpectChange",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch24:frozen-interpolated-identity",
+    "source": "# frozen_string_literal: true\nvalue = 0\nexpect { work }.to change(\"value#{value}\", :object_id)\n",
+    "corrected": "# frozen_string_literal: true\nvalue = 0\nexpect { work }.to change(\"value#{value}\", :object_id)\n",
+    "config": {
+      "EnforcedStyle": "block",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 19,
+          "message": "Prefer `change { \"value#{value}\".object_id }`.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "# frozen_string_literal: true\nvalue = 0\nexpect { work }.to change(\"value#{value}\", :object_id)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 19,
+            "message": "Prefer `change { \"value#{value}\".object_id }`.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "# frozen_string_literal: true\nvalue = 0\nexpect { work }.to change { \"value#{value}\".object_id }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
   }
 ]

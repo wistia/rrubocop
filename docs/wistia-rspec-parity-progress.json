@@ -327,8 +327,28 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/expect_change.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 22,
+    "deliberate_safeguards": [
+      "expect_change_spec:7",
+      "expect_change_spec:12",
+      "expect_change_spec:13",
+      "expect_change_spec:14",
+      "expect_change_spec:16",
+      "expect_change_spec:17",
+      "batch24:constant-swap",
+      "batch24:method-receiver",
+      "batch24:comment",
+      "batch24:captured-local",
+      "batch24:mutable-identity",
+      "batch24:precedence",
+      "batch24:negative-precedence",
+      "batch24:invalid-message",
+      "batch24:attached-block",
+      "batch24:dynamic-namespace",
+      "batch24:frozen-interpolated-identity"
+    ],
+    "post_implementation_review": "Original expect_change.rb and all 20 upstream contexts reviewed separately: method_call/block styles, constant versus bare-send receivers, normal/numbered blocks, parameter and argument arity, static string/symbol attributes and exact ranges. Unsafe autocorrection metadata retained. Corrections guard receiver capture/re-evaluation, constant mutation, mutable allocations, precedence, invalid getter names and comments. Trusted original RSpec expectations/mocks demonstrate concrete dynamic-receiver, local, object identity and stub_const differences; stable receiver and literal length controls preserve outcomes."
   },
   {
     "name": "RSpec/ExpectInHook",

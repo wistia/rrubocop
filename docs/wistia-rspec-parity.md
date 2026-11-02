@@ -655,3 +655,23 @@ location that an implicit splat hash does not have. This fourth original-rule er
 is retained separately. Native inserts the true pair after the splat, preserves
 RSpec precedence, and verifies final offense state and idempotence in both modes.
 The earlier four invalid-original-syntax specimens remain separate.
+
+## Batch 24: expectation change forms
+
+ExpectChange replaces another original stub: 75 initial stubs plus all sixteen
+existing implementations are reviewed (91 of 96), with five initial stubs left.
+The strict corpus now contains 1,685 original cases, alongside 109 explicit
+safeguards and 48 correction-disable controls. All twenty original upstream
+contexts were inspected with the original source and both configured styles.
+Unsafe autocorrection metadata is retained; safe mode preserves the source.
+
+Detection covers constant/bare method receiver distinctions, regular versus
+numbered blocks, block parameters, getter arity and static symbol/string messages.
+Corrections additionally validate the generated getter syntax and receiver AST,
+preserve comments, and guard receiver capture, allocation identity and constant
+replacement. A separate pinned RSpec expectations/mocks runtime artifact proves
+stable-receiver controls and demonstrates changed call counts, local values,
+mutable object identity and stub_const behavior in the broader Ruby rewrites.
+Signed numeric receiver precedence is explicitly guarded. These deliberate
+safeguards are excluded from strict correction equality claims. Combined-cop
+scheduling remains deferred as requested.
