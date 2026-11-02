@@ -17,11 +17,11 @@ fn comparison_parts<'a, 'c>(
     if n.kind() == "binary" {
         Some((field(n, "left")?, field(n, "right")?, operator(c, n)))
     } else {
-        Some((
-            field(n, "receiver")?,
-            *semantic_args(n).first()?,
-            c.method(n),
-        ))
+        let args = semantic_args(n);
+        if args.len() != 1 || block(n).is_some() {
+            return None;
+        }
+        Some((field(n, "receiver")?, args[0], c.method(n)))
     }
 }
 fn equality_key<'a>(

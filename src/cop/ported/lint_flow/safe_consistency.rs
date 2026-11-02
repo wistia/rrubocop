@@ -1,4 +1,5 @@
 use super::super::context::*;
+use std::collections::HashMap;
 use tree_sitter::Node;
 
 pub(super) fn safe_consistency(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -6,6 +7,12 @@ pub(super) fn safe_consistency(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     }
     let conditions = logical_conditions(c, n);
+    if !conditions
+        .iter()
+        .any(|condition| unsafe_call(c, *condition))
+    {
+        return vec![];
+    }
     consistency_findings(c, &conditions, &safe_calls(c, &conditions))
 }
 fn logical(c: &Context<'_>, n: Node<'_>) -> bool {
@@ -20,12 +27,12 @@ fn logical_parent(c: &Context<'_>, n: Node<'_>) -> bool {
     }
     logical(c, parent)
 }
-fn safe_calls<'a>(c: &Context<'_>, conditions: &[Node<'a>]) -> Vec<Node<'a>> {
-    conditions
-        .iter()
-        .filter(|d| safe_expression(c, **d))
-        .copied()
-        .collect()
+fn safe_calls<'a>(c: &Context<'_>, conditions: &[Node<'a>]) -> HashMap<Option<String>, Node<'a>> {
+    let mut calls = HashMap::new();
+    for condition in conditions.iter().filter(|d| safe_expression(c, **d)) {
+        calls.entry(receiver(c, *condition)).or_insert(*condition);
+    }
+    calls
 }
 fn safe_expression(c: &Context<'_>, n: Node<'_>) -> bool {
     call_expression(n).is_some_and(|call| safe(c, call))
@@ -65,18 +72,23 @@ fn unsafe_call(c: &Context<'_>, n: Node<'_>) -> bool {
 fn consistency_findings(
     c: &Context<'_>,
     conditions: &[Node<'_>],
-    safe_calls: &[Node<'_>],
+    safe_calls: &HashMap<Option<String>, Node<'_>>,
 ) -> Vec<Finding> {
+    if safe_calls.is_empty() {
+        return vec![];
+    }
     conditions
         .iter()
         .filter(|d| unsafe_call(c, **d))
         .filter_map(|d| consistency_finding(c, *d, safe_calls))
         .collect()
 }
-fn consistency_finding(c: &Context<'_>, n: Node<'_>, safe_calls: &[Node<'_>]) -> Option<Finding> {
-    let original = safe_calls
-        .iter()
-        .find(|s| receiver(c, **s) == receiver(c, n))?;
+fn consistency_finding(
+    c: &Context<'_>,
+    n: Node<'_>,
+    safe_calls: &HashMap<Option<String>, Node<'_>>,
+) -> Option<Finding> {
+    let original = safe_calls.get(&receiver(c, n))?;
     let (start, end) = joined_range(*original, n);
     Some(with_safe_navigation(
         c,

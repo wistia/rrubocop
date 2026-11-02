@@ -2,6 +2,8 @@ use super::super::context::*;
 use std::collections::HashMap;
 use std::sync::Mutex;
 use tree_sitter::Node;
+mod matcher;
+use matcher::{class_call, comparison, comparison_end};
 pub(super) fn class_equality(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some((left, right)) = comparison(c, n) else {
         return vec![];
@@ -21,27 +23,11 @@ pub(super) fn class_equality(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         !named || right.kind() != "string" || !c.text(right).contains('\\'),
     )]
 }
-fn comparison<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, Node<'n>)> {
-    if n.kind() == "binary" && operator(c, n) == "==" {
-        field(n, "left").zip(field(n, "right"))
-    } else if ["==", "eql?", "equal?"].contains(&c.method(n)) {
-        field(n, "receiver").zip(semantic_args(n).first().copied())
-    } else {
-        None
-    }
-}
 fn interpolated(n: Node<'_>) -> bool {
     descendants(n).any(|d| d.kind() == "interpolation")
 }
 fn name_method(c: &Context<'_>, n: Node<'_>) -> bool {
     ["name", "to_s", "inspect"].contains(&c.method(n))
-}
-fn class_call<'n>(c: &Context<'_>, n: Node<'n>, named: bool) -> Option<Node<'n>> {
-    if block(n).is_some() {
-        return None;
-    }
-    (if named { field(n, "receiver") } else { Some(n) })
-        .filter(|cl| c.method(*cl) == "class" && block(*cl).is_none())
 }
 fn class_finding(
     c: &Context<'_>,
@@ -55,13 +41,14 @@ fn class_finding(
         .map(|a| format!("({a})"))
         .unwrap_or_default();
     let start = method_node(class).start_byte();
+    let end = comparison_end(c, n);
     let f = Finding::range(
         start,
-        n.end_byte(),
+        end,
         format!("Use `instance_of?{suffix}` instead of comparing classes."),
     );
     if argument.is_some() && correctable {
-        f.edit_with(c, start, n.end_byte(), || format!("instance_of?{suffix}"))
+        f.edit_with(c, start, end, || format!("instance_of?{suffix}"))
     } else {
         f
     }

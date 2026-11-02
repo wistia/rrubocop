@@ -153,5 +153,77 @@
     "rust_correctable": false,
     "rust_corrected": "items = [1, 2]\np items.[](0..-1)\n",
     "reason": "Explicit useless .[] stays report-only because Ruby removes only the method token, converting indexing into .call and changing behavior."
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj = Object.new\ndef obj.class(arg); arg; end\np obj.class(String) == String\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "key = Object.new\ndef key.==(other, seen)\n seen << :called\n true\nend\nseen = []\nhash = {key => 1}\np [hash.reject { |k,v| k.==(:a, seen) }.size, seen]\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "key = Object.new\ndef key.eql?(other)\n yield\n true\nend\nseen = []\nhash = {key => 1}\np [hash.reject { |k,v| k.eql?(:a) { seen << :called } }.size, seen]\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items = [1, 2, 3, 4]\np items[0..--1]\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "srand(1)\np rand(--6) + 1\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items = [1, 2, 3, 4]\np items[0..+-1]\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "srand(1)\np rand(+-6) + 1\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "p \"ab\".unpack(\"C*\")[--0]\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
   }
 ]

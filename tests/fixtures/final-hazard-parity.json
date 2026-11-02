@@ -1,0 +1,655 @@
+[
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items = [1, 2, 3, 4]\np items[0..--1]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items = [1, 2, 3, 4]\np items[0..--1]\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "srand(1)\np rand(--6) + 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "srand(1)\np rand(--6) + 1\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items = [1, 2, 3, 4]\np items[0..+-1]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items = [1, 2, 3, 4]\np items[0..+-1]\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "p rand(+-6) + 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "p rand(+-6) + 1\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "p \"ab\".unpack(\"C*\")[--0]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "p \"ab\".unpack(\"C*\")[--0]\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "p \"x\".class(puts(:called)) == String\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "p \"x\".class(puts(:called)) == String\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "p \"x\".class.==(String, puts(:called))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "p \"x\".class.==(String, puts(:called))\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "p \"x\".class.name(puts(:called)) == \"String\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "p \"x\".class.name(puts(:called)) == \"String\"\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {a: 1}\np hash.reject { |k,v| k.==(:a, puts(:called)) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash = {a: 1}\np hash.reject { |k,v| k.==(:a, puts(:called)) }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {a: 1}\np hash.reject { |k,v| k.eql?(:a) { puts(:called) } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash = {a: 1}\np hash.reject { |k,v| k.eql?(:a) { puts(:called) } }\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "srand(1)\np rand(6).succ(puts(:called))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "srand(1)\np rand(6).succ(puts(:called))\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj = Object.new\ndef obj.class(arg); arg; end\np obj.class(String) == String\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj = Object.new\ndef obj.class(arg); arg; end\np obj.class(String) == String\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "key = Object.new\ndef key.==(other, seen)\n seen << :called\n true\nend\nseen = []\nhash = {key => 1}\np [hash.reject { |k,v| k.==(:a, seen) }.size, seen]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = Object.new\ndef key.==(other, seen)\n seen << :called\n true\nend\nseen = []\nhash = {key => 1}\np [hash.reject { |k,v| k.==(:a, seen) }.size, seen]\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "key = Object.new\ndef key.eql?(other)\n yield\n true\nend\nseen = []\nhash = {key => 1}\np [hash.reject { |k,v| k.eql?(:a) { seen << :called } }.size, seen]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = Object.new\ndef key.eql?(other)\n yield\n true\nend\nseen = []\nhash = {key => 1}\np [hash.reject { |k,v| k.eql?(:a) { seen << :called } }.size, seen]\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\")[--0]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\")[--0]\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\")[+-0]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\")[+-0]\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\")[0x0]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0x0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items[0..-+1]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items[0..-+1]\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items[0..-(-1)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items[0..-(-1)]\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items[0..-0x1]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0..-0x1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items[0x0..-1]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0x0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(6) + --1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "rand(6) + --1\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(-+6) + 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "rand(-+6) + 1\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(0x6) + 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(1..6)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(+6) + 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(1..6)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.eql?(String) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "obj.instance_of?(String) { work }\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.equal?(String, other)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj.class.equal?(String, other)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.name(other) == \"String\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj.class.name(other) == \"String\"\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class(other).name == \"String\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj.class(other).name == \"String\"\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class(\n# retained\n) == String\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "obj.instance_of?(String)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k,v| k.eql?(:a) { work } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash.reject { |k,v| k.eql?(:a) { work } }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k,v| k.==(:a, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash.reject { |k,v| k.==(:a, other) }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k,v| [:a].include?(k, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash.reject { |k,v| [:a].include?(k, other) }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k,v| [:a].include?(k) { work } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash.reject { |k,v| [:a].include?(k) { work } }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k,v| k.eql?(\n# retained\n:a) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_correctable": false,
+    "rust_corrected": "hash.reject { |k,v| k.eql?(\n# retained\n:a) }\n",
+    "reason": "Keep report-only when replacing the predicate would delete its comment."
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo&.one && foo.one && foo&.two && foo.two\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo&.one && foo&.one && foo&.two && foo&.two\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo&.one && bar&.two && foo.three && bar.four\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo&.one && bar&.two && foo&.three && bar&.four\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo(\n# retained\n)&.one && foo.two && foo.three\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo(\n# retained\n)&.one && foo&.two && foo&.three\n"
+  }
+]
