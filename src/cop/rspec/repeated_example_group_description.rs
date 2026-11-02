@@ -7,7 +7,7 @@ use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 use tree_sitter::Node;
 
-fn pending_group(source: &SourceFile, node: Node<'_>) -> bool {
+pub(super) fn pending_group(source: &SourceFile, node: Node<'_>) -> bool {
     if numbered_block(source, node) {
         return false;
     }
@@ -16,6 +16,7 @@ fn pending_group(source: &SourceFile, node: Node<'_>) -> bool {
     };
     let children = code_children(body);
     children.len() == 1
+        && call_block(children[0]).is_none()
         && call_receiver(children[0]).is_none()
         && !safe_send(source, children[0])
         && matches!(name(source, children[0]), Some(b"skip" | b"pending"))

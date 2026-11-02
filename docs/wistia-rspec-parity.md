@@ -256,3 +256,30 @@ lint_bytes traversal order is not CLI output order. Counts, every message/range,
 correction capability, correction bytes, final offense state and idempotence
 remain exact comparisons. The normal correction-disable count remains 32 because
 neither of these two rules corrects source.
+
+## Batch 10: repeated example bodies and includes
+
+RepeatedExample, RepeatedExampleGroupBody, and RepeatedIncludeExample replace
+three more initial stubs. The reviewed total is 56 original stubs plus seven
+existing implementations, leaving 24 original stubs and nine existing
+implementations open. The matrix contains 965 strict cases across 63 rules,
+with 15 explicit safeguards and 32 correction-disable controls unchanged.
+
+Separate original-source review included the RSpec Node extension's
+recursive_literal_or_const? classification, group-scoped example lookup, body
+and metadata signatures, const-only group discriminators and direct skip/pending
+statements versus skip/pending blocks. The include-rule upstream templates now
+expand all three known include_method values using closed, Prism-only
+substitution; arbitrary host Ruby is never executed. This increases the pinned
+import to 707 specimens while leaving the earlier thirteen unrelated templates
+and three invalid original yield cases explicit.
+
+Additional original-engine probes verify metadata spelling equivalence,
+no-argument versus described examples, iterator scopes, constant groups, empty
+groups, dynamic/blocked include exclusions and nested composite literals.
+Rational spellings use exact BigInt numerator/denominator reduction: Ruby groups
+1r with 1.0r, but keeps 1i and 1.0i distinct. Static regex equality preserves flags
+while normalizing their order and delimiters, matching /a/im versus /a/mi and /a/
+versus %r(a). These concrete branches pass the original engine; dynamic regex
+interpolation remains conservatively compared and broader AST equality is still
+a documented finite-evidence boundary for future shared-helper consolidation.

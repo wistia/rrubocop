@@ -10,6 +10,15 @@ module RSpecUpstreamSources
       node.unescaped
     when Prism::InterpolatedStringNode
       node.parts.map { |part| literal_parts(part) }.join
+    when Prism::EmbeddedStatementsNode
+      expression = node.statements&.body&.first
+      parameter = expression.is_a?(Prism::LocalVariableReadNode) && expression.name == :include_method
+      bare_call = expression.is_a?(Prism::CallNode) && expression.receiver.nil? && expression.name == :include_method && expression.arguments.nil?
+      if node.statements&.body&.one? && (parameter || bare_call)
+        "%{include_method}"
+      else
+        "HOST_INTERPOLATION_MARKER"
+      end
     else
       "HOST_INTERPOLATION_MARKER"
     end
@@ -37,14 +46,21 @@ Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
       next
     end
     source = RSpecUpstreamSources.literal_parts(argument).lines.reject { |line| line.match?(/\A\s*[\^~]+/) }.join
-    if source.include?("HOST_INTERPOLATION_MARKER") || source.match?(/%\{\w+\}/)
-      not_imported << {id:, reason: "Fixture template requires parameter substitution"}
-      next
+    variants = if File.basename(path) == "repeated_include_example_spec.rb" && source.include?("%{include_method}")
+      %w[include_examples it_behaves_like it_should_behave_like].map { |method| ["#{id}:#{method}", source.gsub("%{include_method}", method)] }
+    else
+      [[id, source]]
     end
-    name = File.basename(path, "_spec.rb").split("_").map(&:capitalize).join
-    cop = "RSpec/#{name}"
-    options = inventory.fetch(cop).fetch("scopes").fetch("Gemfile").merge("__RubocopVersion" => "1.65.1", "TargetRubyVersion" => 3.4)
-    cases << {id:, cop:, source:, path: "/tmp/spec/parity_spec.rb", config: options, expected: [], corrected: source, origin: "reference", upstream: "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/#{File.basename(path)}##{index}"}
+    variants.each do |variant_id, variant_source|
+      if variant_source.include?("HOST_INTERPOLATION_MARKER") || variant_source.match?(/%\{\w+\}/)
+        not_imported << {id: variant_id, reason: "Fixture template requires parameter substitution"}
+        next
+      end
+      name = File.basename(path, "_spec.rb").split("_").map(&:capitalize).join
+      cop = "RSpec/#{name}"
+      options = inventory.fetch(cop).fetch("scopes").fetch("Gemfile").merge("__RubocopVersion" => "1.65.1", "TargetRubyVersion" => 3.4)
+      cases << {id: variant_id, cop:, source: variant_source, path: "/tmp/spec/parity_spec.rb", config: options, expected: [], corrected: variant_source, origin: "reference", upstream: "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/#{File.basename(path)}##{index}"}
+    end
   end
 end
 File.write(output, JSON.pretty_generate(cases) + "\n")

@@ -364,6 +364,9 @@ pub(super) fn skipped_metadata(source: &SourceFile, node: Node<'_>) -> bool {
     })
 }
 pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
+    if let (Some(a), Some(b)) = (rational_value(source, left), rational_value(source, right)) {
+        return a == b;
+    }
     if let (Some(a), Some(b)) = (integer_value(source, left), integer_value(source, right)) {
         return a == b;
     }
@@ -420,7 +423,10 @@ pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'
         return false;
     }
     if left.kind() == "regex" {
-        return node_bytes(source, left) == node_bytes(source, right);
+        return match (regex_value(source, left), regex_value(source, right)) {
+            (Some(a), Some(b)) => a == b,
+            _ => node_bytes(source, left) == node_bytes(source, right),
+        };
     }
     if left.kind() == "float" {
         return String::from_utf8_lossy(node_bytes(source, left))
@@ -677,4 +683,147 @@ pub(super) fn same_arguments(source: &SourceFile, left: &[Node<'_>], right: &[No
             (Some(a), Some(b)) => same(&a, &b),
             _ => false,
         }
+}
+
+pub(super) fn scoped_examples<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node<'a>> {
+    use crate::cop::rspec::helpers::{bare_rspec_call, call_block, is_example, is_group};
+    use crate::cop::rspec::separation::numbered_block;
+    let mut examples = Vec::new();
+    let mut pending = code_children(node);
+    while let Some(child) = pending.pop() {
+        if numbered_block(source, child) {
+            pending.extend(code_children(child));
+            continue;
+        }
+        let method = bare_rspec_call(source, child);
+        if call_block(child).is_some()
+            && call_receiver(child).is_none()
+            && method.is_some_and(is_example)
+        {
+            examples.push(child);
+            continue;
+        }
+        if call_block(child).is_some()
+            && (method.is_some_and(is_group)
+                || call_receiver(child).is_none()
+                    && matches!(
+                        name(source, child),
+                        Some(
+                            b"include_examples"
+                                | b"include_context"
+                                | b"it_behaves_like"
+                                | b"it_should_behave_like"
+                        )
+                    ))
+        {
+            continue;
+        }
+        pending.extend(code_children(child));
+    }
+    examples.sort_by_key(Node::start_byte);
+    examples
+}
+
+pub(super) fn literal_or_const(source: &SourceFile, node: Node<'_>) -> bool {
+    if crate::cop::ported::static_literal(source, node).is_some()
+        || matches!(
+            node.kind(),
+            "constant"
+                | "scope_resolution"
+                | "integer"
+                | "float"
+                | "rational"
+                | "complex"
+                | "true"
+                | "false"
+                | "nil"
+                | "hash_key_symbol"
+                | "string_content"
+                | "escape_sequence"
+                | "regex_options"
+        )
+    {
+        return true;
+    }
+    if node.kind() == "unary" {
+        return node
+            .child_by_field_name("operator")
+            .is_some_and(|operator| matches!(node_bytes(source, operator), b"+" | b"-"))
+            && node.child_by_field_name("operand").is_some_and(|operand| {
+                matches!(operand.kind(), "integer" | "float" | "rational" | "complex")
+            });
+    }
+    if matches!(
+        node.kind(),
+        "string"
+            | "chained_string"
+            | "delimited_symbol"
+            | "subshell"
+            | "regex"
+            | "range"
+            | "array"
+            | "hash"
+            | "pair"
+            | "parenthesized_statements"
+            | "interpolation"
+    ) {
+        return code_children(node)
+            .into_iter()
+            .all(|child| literal_or_const(source, child));
+    }
+    false
+}
+
+fn rational_value(
+    source: &SourceFile,
+    node: Node<'_>,
+) -> Option<(num_bigint::BigInt, num_bigint::BigInt)> {
+    use num_bigint::BigInt;
+    if node.kind() == "unary" {
+        let (value, denominator) = rational_value(source, node.child_by_field_name("operand")?)?;
+        return match node_bytes(source, node.child_by_field_name("operator")?) {
+            b"-" => Some((-value, denominator)),
+            b"+" => Some((value, denominator)),
+            _ => None,
+        };
+    }
+    if node.kind() != "rational" {
+        return None;
+    }
+    let number = code_children(node).first().copied()?;
+    if let Some(integer) = integer_value(source, number) {
+        return Some((integer, BigInt::from(1u8)));
+    }
+    let text = String::from_utf8_lossy(node_bytes(source, number)).replace('_', "");
+    let (whole, fraction) = text.split_once('.')?;
+    let numerator = BigInt::parse_bytes(format!("{whole}{fraction}").as_bytes(), 10)?;
+    let denominator = BigInt::from(10u8).pow(fraction.len().try_into().ok()?);
+    let mut a = numerator.clone();
+    let mut b = denominator.clone();
+    let zero = BigInt::from(0u8);
+    while b != zero {
+        let remainder = a % &b;
+        a = b;
+        b = remainder;
+    }
+    if a < zero {
+        a = -a;
+    }
+    Some((numerator / &a, denominator / a))
+}
+
+fn regex_value(source: &SourceFile, node: Node<'_>) -> Option<(Vec<u8>, Vec<u8>)> {
+    let parts = code_children(node);
+    if parts.iter().any(|part| part.kind() == "interpolation") {
+        return None;
+    }
+    let content = parts
+        .iter()
+        .flat_map(|part| node_bytes(source, *part).iter().copied())
+        .collect();
+    let last = node.child(node.child_count().checked_sub(1)?.try_into().ok()?)?;
+    let mut options = node_bytes(source, last).get(1..)?.to_vec();
+    options.sort_unstable();
+    options.dedup();
+    Some((content, options))
 }
