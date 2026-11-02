@@ -17,12 +17,6 @@ pub(super) fn no_show(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         "Do not define a `show?` method in policies, `show?` logic should be encapsulated\nby the policy's scope unless the policy explicity disables scoping with `disable_scoping!`.\n",
     )]
 }
-pub(super) fn superclass<'a>(c: &'a Context<'_>, n: Node<'_>) -> &'a str {
-    n.child_by_field_name("superclass")
-        .and_then(|s| s.named_child(0))
-        .map(|s| c.text(s).trim_start_matches("::"))
-        .unwrap_or("")
-}
 pub(super) fn constant_superclass<'a>(
     c: &Context<'a>,
     n: Node<'_>,

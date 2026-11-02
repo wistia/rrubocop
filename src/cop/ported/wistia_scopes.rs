@@ -14,8 +14,11 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Cops/EnforceNoShowInPolicies", &["method"], no_show, false, true, true),
         ("Cops/EnforceScopeInPolicies", &["class"], policy_scope, false, true, true),
         ("Cops/ExplicitSidekiqQueue", &["class"], queue, false, true, true),
-        ("Cops/NoConstantDefinitionsInSpecs", &["class","module","assignment"], spec_constants, false, true, true),
+        ("Cops/NoConstantDefinitionsInSpecs", &["class","module","assignment","operator_assignment","for"], spec_constants, false, true, true),
         ("Cops/NoTopLevelSideEffectsInAutoloadedFiles", &["program"], top_level, false, true, true),
         ("Rails/ReversibleMigrationMethodDefinition", &["class"], migration, false, true, false)
     );
 }
+
+#[cfg(test)]
+mod parity_tests;

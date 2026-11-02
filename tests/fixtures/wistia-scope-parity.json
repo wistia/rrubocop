@@ -1,0 +1,776 @@
+[
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A, B = 1, 2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A, B = 1, 2\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A ||= 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A ||= 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A &&= 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A &&= 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A += 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A += 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A::B, ::C::D = values\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A::B, ::C::D = values\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A, (B, *C) = values\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A, (B, *C) = values\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "for A in [] do; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "for A in [] do; end\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "for A, B in rows do; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "for A, B in rows do; end\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A = 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A = 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "value = A\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "value = A\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "obj[A] = 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj[A] = 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n A, B = 1,2\n A ||= 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n A, B = 1,2\n A ||= 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "RSpec.describe X do\n for A in rows; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "RSpec.describe X do\n for A in rows; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "class A; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub class constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A; end\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "module A; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub module constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "module A; end\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A, obj.foo, @bar = values\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A, obj.foo, @bar = values\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migrationish; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migrationish; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration::Runner; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration::Runner; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::\n Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::\n Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ::ActiveRecord::Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ::ActiveRecord::Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class ::X < ActiveRecord::Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class ::X < ActiveRecord::Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class Ns::X < ActiveRecord::Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Ns::X < ActiveRecord::Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration[7]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0, 8.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration[7.0, 8.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration.[](7.0); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration.[](7.0); end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[-7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration[-7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]\n def change; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration[7.0]\n def change; end\nend\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]\n def up; end\n def down; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration[7.0]\n def up; end\n def down; end\nend\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]\n def change(arg); end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration[7.0]\n def change(arg); end\nend\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? require(\"a\") : require(\"b\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "flag ? require(\"a\") : require(\"b\")\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? (A = 1) : (B = 2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "flag ? (A = 1) : (B = 2)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? Foo.run : Bar.run\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "flag ? Foo.run : Bar.run\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? (A = 1; B = 2) : (C = 3)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "flag ? (A = 1; B = 2) : (C = 3)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if $PROGRAM_NAME.==(__FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo.run if $PROGRAM_NAME.==(__FILE__)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if __FILE__.==($0)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo.run if __FILE__.==($0)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if $PROGRAM_NAME&.==(__FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo.run if $PROGRAM_NAME&.==(__FILE__)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if ($PROGRAM_NAME == __FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo.run if ($PROGRAM_NAME == __FILE__)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "if flag; require \"a\"; else; require \"b\"; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "if flag; require \"a\"; else; require \"b\"; end\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? require(\"a\") : (other ? require(\"b\") : require_relative(\"c\"))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "flag ? require(\"a\") : (other ? require(\"b\") : require_relative(\"c\"))\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(A = 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "(A = 1)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(A = 1; B = 2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "(A = 1; B = 2)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if $PROGRAM_NAME == __FILE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo.run if $PROGRAM_NAME == __FILE__\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run unless __FILE__.==($PROGRAM_NAME)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo.run unless __FILE__.==($PROGRAM_NAME)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "if flag; class X; end; elsif another; require \"x\"; else; Foo.run; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "if flag; class X; end; elsif another; require \"x\"; else; Foo.run; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration.[](\n # version\n 7.0\n); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration.[](\n # version\n 7.0\n); end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration.[](7.0) { 1 }; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration.[](7.0) { 1 }; end\n"
+  }
+]

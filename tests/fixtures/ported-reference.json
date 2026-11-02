@@ -45547,5 +45547,1773 @@
     "expected": [],
     "corrected": "p \"a\" \\\n\"#{__LINE__}\"\n",
     "runtime_stdout": "\"a2\"\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "key = :lowercase\nattribute :Uppercase, key:\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = :lowercase\nattribute :Uppercase, key:\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_capitalized_keys/shorthand_key.rb"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "key = :display_name\nattribute(:name, key:) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = :display_name\nattribute(:name, key:) { 'value' }\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :Uppercase, key: :lowercase\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :Uppercase, key: :lowercase\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(:name, key: :display_name) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute(:name, key: :display_name) { 'value' }\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :Uppercase, key: nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :Uppercase, key: nil\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(:name, :\"k\\x65y\" => nil) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute(:name, :\"k\\x65y\" => nil) { 'value' }\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "key = :lowercase\nattribute :Uppercase, key:\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = :lowercase\nattribute :Uppercase, key:\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "key = :display_name\nattribute(:name, key:) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "key = :display_name\nattribute(:name, key:) { 'value' }\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_key_and_block/shorthand_key.rb"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute :Uppercase, key: :lowercase\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :Uppercase, key: :lowercase\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute(:name, key: :display_name) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(:name, key: :display_name) { 'value' }\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute :Uppercase, key: nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :Uppercase, key: nil\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute(:name, :\"k\\x65y\" => nil) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(:name, :\"k\\x65y\" => nil) { 'value' }\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work(\"rescue\") rescue nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "work(\"rescue\") rescue nil\n",
+    "fixture": "tests/fixtures/cops/cops/rescue_must_report_error/keyword_in_string.rb"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work rescue nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "work rescue nil\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work(\n \"rescue\"\n) rescue nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "work(\n \"rescue\"\n) rescue nil\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work(\"rescue\") rescue raise\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "work(\"rescue\") rescue raise\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work(\"rescue\") rescue Sentry.capture_exception(error)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "work(\"rescue\") rescue Sentry.capture_exception(error)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(topic, -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(topic, -> {})\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/dynamic_topic_callback.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {}, coder: JSON)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 28,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', -> {}, coder: JSON)\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/callback_with_coder.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {}, coder: ActiveSupport::JSON)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', -> {}, coder: ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, -> {}, coder: JSON)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 26,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, -> {}, coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', Kernel.lambda {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', Kernel.lambda {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, Kernel.lambda {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_for(record, Kernel.lambda {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', lambda {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', lambda {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, callback, -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, callback, -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', coder: JSON) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', coder: JSON) {}\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/block_with_coder.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {}) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', -> {}) {}\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(topic, coder: JSON) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(topic, coder: JSON) {}\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, -> {}, coder: JSON) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 26,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, -> {}, coder: JSON) {}\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\n # topic\n 'topic',\n # lambda\n -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(\n # topic\n 'topic',\n # lambda\n -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', &callback)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', &callback)\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A, B = 1, 2\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A, B = 1, 2\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A ||= 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A ||= 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A &&= 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A &&= 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A += 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A += 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A::B, ::C::D = values\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A::B, ::C::D = values\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A, (B, *C) = values\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A, (B, *C) = values\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "for A in [] do; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "for A in [] do; end\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "for A, B in rows do; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "for A, B in rows do; end\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A = 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A = 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "value = A\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "value = A\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "obj[A] = 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj[A] = 1\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n A, B = 1,2\n A ||= 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n A, B = 1,2\n A ||= 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "RSpec.describe X do\n for A in rows; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "RSpec.describe X do\n for A in rows; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "class A; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub class constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class A; end\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "module A; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub module constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "module A; end\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "A, obj.foo, @bar = values\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "A, obj.foo, @bar = values\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migrationish; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migrationish; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration::Runner; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration::Runner; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::\n Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::\n Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ::ActiveRecord::Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ::ActiveRecord::Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class ::X < ActiveRecord::Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class ::X < ActiveRecord::Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class Ns::X < ActiveRecord::Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Ns::X < ActiveRecord::Migration[7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration[7]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0, 8.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration[7.0, 8.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration.[](7.0); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration.[](7.0); end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[-7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration[-7.0]; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]\n def change; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration[7.0]\n def change; end\nend\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]\n def up; end\n def down; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration[7.0]\n def up; end\n def down; end\nend\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]\n def change(arg); end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration[7.0]\n def change(arg); end\nend\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? require(\"a\") : require(\"b\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "flag ? require(\"a\") : require(\"b\")\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? (A = 1) : (B = 2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "flag ? (A = 1) : (B = 2)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? Foo.run : Bar.run\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "flag ? Foo.run : Bar.run\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? (A = 1; B = 2) : (C = 3)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "flag ? (A = 1; B = 2) : (C = 3)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if $PROGRAM_NAME.==(__FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo.run if $PROGRAM_NAME.==(__FILE__)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if __FILE__.==($0)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo.run if __FILE__.==($0)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if $PROGRAM_NAME&.==(__FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo.run if $PROGRAM_NAME&.==(__FILE__)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if ($PROGRAM_NAME == __FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo.run if ($PROGRAM_NAME == __FILE__)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "if flag; require \"a\"; else; require \"b\"; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "if flag; require \"a\"; else; require \"b\"; end\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? require(\"a\") : (other ? require(\"b\") : require_relative(\"c\"))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "flag ? require(\"a\") : (other ? require(\"b\") : require_relative(\"c\"))\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(A = 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "(A = 1)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(A = 1; B = 2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "(A = 1; B = 2)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run if $PROGRAM_NAME == __FILE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo.run if $PROGRAM_NAME == __FILE__\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run unless __FILE__.==($PROGRAM_NAME)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo.run unless __FILE__.==($PROGRAM_NAME)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "if flag; class X; end; elsif another; require \"x\"; else; Foo.run; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "if flag; class X; end; elsif another; require \"x\"; else; Foo.run; end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration.[](\n # version\n 7.0\n); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class X < ActiveRecord::Migration.[](\n # version\n 7.0\n); end\n"
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration.[](7.0) { 1 }; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X < ActiveRecord::Migration.[](7.0) { 1 }; end\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"true'\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p :\"true'\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"'false\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p :\"'false\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :'true\"'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p :'true\"'\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"true\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"true\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"false\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `false`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"false\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"tr\\u0075e\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"tr\\u0075e\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"fal\\x73e\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `false`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"fal\\x73e\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :true\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p true\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p({true: 1})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({true => 1})\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p %i[true false]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p %i[true false]\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p %s(true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p %s(true)\n",
+    "rust_corrected": "p %s(true)\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Percent symbols remain manual because pinned RuboCop leaves the offending source unchanged and enters an autocorrection loop."
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"#{true}\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p :\"#{true}\"\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require 'json.rb'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require 'json'\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require \"json.rb\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require \"json\"\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require %q(json.rb)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require %q(json)\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require %Q[json.rb]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require %Q[json]\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require %{json.rb}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 14,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require %{json}\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require_relative(path); p path; end\nrequire_relative %q[../json.rb]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 27,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require_relative(path); p path; end\nrequire_relative %q[../json]\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire 'json.rb\"'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def require(path); p path; end\nrequire 'json.rb\"'\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json.rb'\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def require(path); p path; end\nrequire \"json.rb'\"\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire 'a\"b.rb'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire 'a\"b'\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json\\u002erb\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 18,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire \"json\\u002\"\n",
+    "rust_corrected": "def require(path); p path; end\nrequire \"json\\u002erb\"\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence or percent-literal delimiter; preserve decoded path semantics."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json.\\x72b\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 16,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire \"json.\\x\"\n",
+    "rust_corrected": "def require(path); p path; end\nrequire \"json.\\x72b\"\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence or percent-literal delimiter; preserve decoded path semantics."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire %q.json\\.rb.\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 16,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire %q.json\\.\n",
+    "rust_corrected": "def require(path); p path; end\nrequire %q.json\\.rb.\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence or percent-literal delimiter; preserve decoded path semantics."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json\\.rb\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 14,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire \"json\\\"\n",
+    "rust_corrected": "def require(path); p path; end\nrequire \"json\\.rb\"\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence or percent-literal delimiter; preserve decoded path semantics."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json#{1}.rb\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def require(path); p path; end\nrequire \"json#{1}.rb\"\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire 'json.so'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def require(path); p path; end\nrequire 'json.so'\n"
   }
 ]

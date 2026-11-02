@@ -16,9 +16,10 @@ pub(super) fn allowed(c: &Context<'_>, n: Node<'_>) -> bool {
             "private_constant",
         ]
         .contains(&c.method(n)),
-        "if" | "unless" | "if_modifier" | "unless_modifier" => {
+        "if" | "unless" | "if_modifier" | "unless_modifier" | "conditional" => {
             guard(c, n) || conditional_definitions(c, n)
         }
+        "parenthesized_statements" => kids(n).into_iter().all(|child| allowed(c, child)),
         _ => false,
     }
 }
@@ -26,17 +27,24 @@ pub(super) fn guard(c: &Context<'_>, n: Node<'_>) -> bool {
     let Some(cond) = n.child_by_field_name("condition") else {
         return false;
     };
-    if cond.kind() != "binary"
-        || cond
-            .child_by_field_name("operator")
-            .is_none_or(|o| c.text(o) != "==")
-    {
-        return false;
-    }
-    kids(cond)
-        .iter()
-        .any(|s| ["$PROGRAM_NAME", "$0"].contains(&c.text(*s)))
+    equality_sides(c, cond).iter().any(|side| {
+        side.kind() == "global_variable" && ["$PROGRAM_NAME", "$0"].contains(&c.text(*side))
+    })
 }
+
+fn equality_sides<'n>(c: &Context<'_>, n: Node<'n>) -> Vec<Node<'n>> {
+    if n.kind() == "binary" && operator(c, n) == "==" {
+        kids(n)
+    } else if is_call(n) && !safe(c, n) && c.method(n) == "==" {
+        field(n, "receiver")
+            .into_iter()
+            .chain(args(n).into_iter().take(1))
+            .collect()
+    } else {
+        vec![]
+    }
+}
+
 pub(super) fn conditional_definitions(c: &Context<'_>, n: Node<'_>) -> bool {
     kids(n)
         .into_iter()

@@ -17,8 +17,14 @@ fn modifier(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if field(n, "handler").is_some_and(|handler| reports_in(c, handler)) {
         return vec![];
     }
-    let start = c.text(n).find("rescue").unwrap_or(0) + n.start_byte();
-    vec![Finding::range(start, n.end_byte(), MESSAGE)]
+    let mut cursor = n.walk();
+    let Some(keyword) = n
+        .children(&mut cursor)
+        .find(|child| child.kind() == "rescue")
+    else {
+        return vec![];
+    };
+    vec![Finding::range(keyword.start_byte(), n.end_byte(), MESSAGE)]
 }
 
 fn broad_rescue(c: &Context<'_>, n: Node<'_>) -> bool {

@@ -76,14 +76,6 @@ impl<'a> Context<'a> {
                 .flatten()
         })
     }
-    pub fn static_symbol_pair_value<'n>(&self, node: Node<'n>, key: &str) -> Option<Node<'n>> {
-        option_pairs(node).find_map(|pair| {
-            let name = field(pair, "key")?;
-            (self.static_symbol(name).as_deref() == Some(key))
-                .then(|| field(pair, "value"))
-                .flatten()
-        })
-    }
     pub fn pair_value<'n>(&self, node: Node<'n>, key: &str) -> Option<Node<'n>> {
         option_pairs(node).find_map(|p| {
             let k = p.child_by_field_name("key")?;

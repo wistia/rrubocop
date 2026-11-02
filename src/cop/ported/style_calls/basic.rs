@@ -75,20 +75,19 @@ pub(super) fn require_extension(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     };
     if a.kind() != "string"
-        || descendants(a).any(|d| d.kind() == "interpolation")
-        || !c.value(a).ends_with(".rb")
+        || !c
+            .static_string(a)
+            .is_some_and(|value| value.ends_with(".rb"))
     {
         return vec![];
     }
     let start = a.end_byte() - 4;
-    vec![
-        Finding::range(start, start + 3, "Redundant `.rb` file extension detected.").edit_with(
-            c,
-            start,
-            start + 3,
-            || "",
-        ),
-    ]
+    let finding = Finding::range(start, start + 3, "Redundant `.rb` file extension detected.");
+    vec![if literal_extension(c.text(a)) {
+        finding.edit_with(c, start, start + 3, || "")
+    } else {
+        finding
+    }]
 }
 fn require_argument<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
     if !["require", "require_relative"].contains(&c.method(n)) || !c.receiver(n).is_empty() {
@@ -96,4 +95,20 @@ fn require_argument<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
     }
     let a = args(n);
     (a.len() == 1).then(|| a[0])
+}
+
+fn literal_extension(text: &str) -> bool {
+    let Some(content) = text.get(..text.len().saturating_sub(1)) else {
+        return false;
+    };
+    let Some(prefix) = content.strip_suffix(".rb") else {
+        return false;
+    };
+    prefix
+        .bytes()
+        .rev()
+        .take_while(|byte| *byte == b'\\')
+        .count()
+        % 2
+        == 0
 }

@@ -5,13 +5,14 @@ pub(super) fn capitalized(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "attribute" {
         return vec![];
     }
-    let Some(value) = c.static_symbol_pair_value(n, "key").or_else(|| {
+    let value = if let Some(pair) = attribute_key(c, n) {
+        field(pair, "value")
+    } else {
         args(n)
             .into_iter()
             .find(|argument| argument.kind() != "comment")
-    }) else {
-        return vec![];
     };
+    let Some(value) = value else { return vec![] };
     if !capitalized_literal(c, value) {
         return vec![];
     }
@@ -35,10 +36,7 @@ fn capitalized_literal(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 pub(super) fn key_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    if c.method(n) == "attribute"
-        && block(n).is_some()
-        && c.static_symbol_pair_value(n, "key").is_some()
-    {
+    if c.method(n) == "attribute" && block(n).is_some() && attribute_key(c, n).is_some() {
         vec![Finding::new(
             n,
             "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
@@ -75,4 +73,10 @@ fn matching_method(c: &Context<'_>, n: Node<'_>, attribute: Node<'_>) -> bool {
 
 fn attribute_block(c: &Context<'_>, n: Node<'_>) -> bool {
     c.method(n) == "attribute" && block(n).is_some() && c.receiver(n).is_empty()
+}
+
+fn attribute_key<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
+    option_pairs(n).find(|pair| {
+        field(*pair, "key").is_some_and(|key| c.static_symbol(key).as_deref() == Some("key"))
+    })
 }

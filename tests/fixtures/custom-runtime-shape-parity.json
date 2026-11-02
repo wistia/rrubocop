@@ -1,0 +1,541 @@
+[
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "key = :lowercase\nattribute :Uppercase, key:\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = :lowercase\nattribute :Uppercase, key:\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_capitalized_keys/shorthand_key.rb"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "key = :display_name\nattribute(:name, key:) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = :display_name\nattribute(:name, key:) { 'value' }\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :Uppercase, key: :lowercase\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :Uppercase, key: :lowercase\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(:name, key: :display_name) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute(:name, key: :display_name) { 'value' }\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :Uppercase, key: nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :Uppercase, key: nil\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(:name, :\"k\\x65y\" => nil) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute(:name, :\"k\\x65y\" => nil) { 'value' }\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "key = :lowercase\nattribute :Uppercase, key:\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = :lowercase\nattribute :Uppercase, key:\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "key = :display_name\nattribute(:name, key:) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "key = :display_name\nattribute(:name, key:) { 'value' }\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_key_and_block/shorthand_key.rb"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute :Uppercase, key: :lowercase\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :Uppercase, key: :lowercase\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute(:name, key: :display_name) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(:name, key: :display_name) { 'value' }\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute :Uppercase, key: nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :Uppercase, key: nil\n"
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute(:name, :\"k\\x65y\" => nil) { 'value' }\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(:name, :\"k\\x65y\" => nil) { 'value' }\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work(\"rescue\") rescue nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "work(\"rescue\") rescue nil\n",
+    "fixture": "tests/fixtures/cops/cops/rescue_must_report_error/keyword_in_string.rb"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work rescue nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "work rescue nil\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work(\n \"rescue\"\n) rescue nil\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false
+      }
+    ],
+    "corrected": "work(\n \"rescue\"\n) rescue nil\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work(\"rescue\") rescue raise\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "work(\"rescue\") rescue raise\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "work(\"rescue\") rescue Sentry.capture_exception(error)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "work(\"rescue\") rescue Sentry.capture_exception(error)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(topic, -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(topic, -> {})\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/dynamic_topic_callback.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {}, coder: JSON)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 28,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', -> {}, coder: JSON)\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/callback_with_coder.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {}, coder: ActiveSupport::JSON)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', -> {}, coder: ActiveSupport::JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, -> {}, coder: JSON)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 26,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, -> {}, coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', Kernel.lambda {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', Kernel.lambda {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, Kernel.lambda {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_for(record, Kernel.lambda {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', lambda {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', lambda {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, callback, -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, callback, -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', coder: JSON) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', coder: JSON) {}\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/block_with_coder.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {}) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from('topic', -> {}) {}\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(topic, coder: JSON) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(topic, coder: JSON) {}\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_for(record, -> {}, coder: JSON) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 26,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_for(record, -> {}, coder: JSON) {}\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\n # topic\n 'topic',\n # lambda\n -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(\n # topic\n 'topic',\n # lambda\n -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', &callback)\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('topic', &callback)\n"
+  }
+]

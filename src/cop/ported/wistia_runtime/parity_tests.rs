@@ -5,15 +5,23 @@ use serde_json::Value;
 use std::path::Path;
 
 fn cases() -> Vec<Value> {
-    serde_json::from_str(include_str!(concat!(
+    let mut cases: Vec<Value> = serde_json::from_str(include_str!(concat!(
         env!("CARGO_MANIFEST_DIR"),
         "/tests/fixtures/custom-call-parity-regressions.json"
     )))
-    .unwrap()
+    .unwrap();
+    cases.extend(
+        serde_json::from_str::<Vec<Value>>(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/custom-runtime-shape-parity.json"
+        )))
+        .unwrap(),
+    );
+    cases
 }
 
 #[test]
-fn comment_arguments_and_encoded_coder_keys_match_ruby_in_every_mode() {
+fn custom_runtime_shapes_match_ruby_in_every_mode() {
     let registry = CopRegistry::default_registry();
     for case in cases() {
         for mode in [
@@ -119,5 +127,31 @@ fn annotated_custom_call_regressions_match_reference_inputs() {
             parsed.expected.len(),
             case["expected"].as_array().unwrap().len()
         );
+    }
+}
+
+#[test]
+fn rescue_modifier_directives_follow_the_keyword_not_string_contents() {
+    let registry = CopRegistry::default_registry();
+    let reference = cases()
+        .into_iter()
+        .find(|case| case["source"] == "work(\n \"rescue\"\n) rescue nil\n")
+        .unwrap();
+    for mode in [
+        AutocorrectMode::Off,
+        AutocorrectMode::Safe,
+        AutocorrectMode::All,
+    ] {
+        let mut keyword_disabled = reference.clone();
+        keyword_disabled["source"] =
+            "work(\n \"rescue\"\n) rescue nil # rubocop:disable Cops/RescueMustReportError\n"
+                .into();
+        keyword_disabled["expected"] = serde_json::json!([]);
+        inspect(&registry, &keyword_disabled, mode);
+        let mut string_disabled = reference.clone();
+        string_disabled["source"] =
+            "work(\n \"rescue\" # rubocop:disable Cops/RescueMustReportError\n) rescue nil\n"
+                .into();
+        inspect(&registry, &string_disabled, mode);
     }
 }

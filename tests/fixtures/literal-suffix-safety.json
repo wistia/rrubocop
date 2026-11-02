@@ -1,0 +1,457 @@
+[
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"true'\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p :\"true'\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"'false\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p :\"'false\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :'true\"'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p :'true\"'\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"true\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"true\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"false\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `false`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"false\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"tr\\u0075e\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"tr\\u0075e\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"fal\\x73e\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `false`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"fal\\x73e\"\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :true\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p true\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p({true: 1})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p({true => 1})\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p %i[true false]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p %i[true false]\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p %s(true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p %s(true)\n",
+    "rust_corrected": "p %s(true)\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Percent symbols remain manual because pinned RuboCop leaves the offending source unchanged and enters an autocorrection loop."
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :\"#{true}\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "p :\"#{true}\"\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require 'json.rb'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require 'json'\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require \"json.rb\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require \"json\"\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require %q(json.rb)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require %q(json)\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require %Q[json.rb]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require %Q[json]\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require %{json.rb}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 14,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require %{json}\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require_relative(path); p path; end\nrequire_relative %q[../json.rb]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 27,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require_relative(path); p path; end\nrequire_relative %q[../json]\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire 'json.rb\"'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def require(path); p path; end\nrequire 'json.rb\"'\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json.rb'\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def require(path); p path; end\nrequire \"json.rb'\"\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire 'a\"b.rb'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire 'a\"b'\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json\\u002erb\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 18,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire \"json\\u002\"\n",
+    "rust_corrected": "def require(path); p path; end\nrequire \"json\\u002erb\"\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence or percent-literal delimiter; preserve decoded path semantics."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json.\\x72b\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 16,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire \"json.\\x\"\n",
+    "rust_corrected": "def require(path); p path; end\nrequire \"json.\\x72b\"\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence or percent-literal delimiter; preserve decoded path semantics."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire %q.json\\.rb.\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 16,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire %q.json\\.\n",
+    "rust_corrected": "def require(path); p path; end\nrequire %q.json\\.rb.\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence or percent-literal delimiter; preserve decoded path semantics."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json\\.rb\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 14,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def require(path); p path; end\nrequire \"json\\\"\n",
+    "rust_corrected": "def require(path); p path; end\nrequire \"json\\.rb\"\n",
+    "rust_correctable": false,
+    "manual": true,
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence or percent-literal delimiter; preserve decoded path semantics."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire \"json#{1}.rb\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def require(path); p path; end\nrequire \"json#{1}.rb\"\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "def require(path); p path; end\nrequire 'json.so'\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def require(path); p path; end\nrequire 'json.so'\n"
+  }
+]
