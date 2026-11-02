@@ -71,45 +71,7 @@ fn observed(node: Node<'_>) -> bool {
         _ => true,
     }
 }
-fn captures_observed(source: &SourceFile, mut root: Node<'_>) -> bool {
-    while let Some(parent) = root.parent() {
-        root = parent;
-        if matches!(
-            root.kind(),
-            "method" | "singleton_method" | "class" | "module" | "singleton_class"
-        ) {
-            break;
-        }
-    }
-    fn scan(source: &SourceFile, node: Node<'_>, root: Node<'_>) -> bool {
-        if node != root
-            && matches!(
-                node.kind(),
-                "method" | "singleton_method" | "class" | "module" | "singleton_class"
-            )
-        {
-            return false;
-        }
-        if node.kind() == "global_variable" {
-            let text = node_bytes(source, node);
-            if matches!(text, b"$~" | b"$&" | b"$+" | b"$'" | b"$`")
-                || text.get(1).is_some_and(u8::is_ascii_digit)
-            {
-                return true;
-            }
-        }
-        if node.kind() == "call"
-            && call_method_name(source, node) == Some(b"last_match")
-            && call_receiver(node).is_some_and(|n| node_bytes(source, n) == b"Regexp")
-        {
-            return true;
-        }
-        let mut cursor = node.walk();
-        node.named_children(&mut cursor)
-            .any(|child| scan(source, child, root))
-    }
-    scan(source, root, root)
-}
+
 impl Cop for ExactRegexpMatch {
     fn name(&self) -> &'static str {
         "Style/ExactRegexpMatch"
@@ -188,7 +150,8 @@ impl Cop for ExactRegexpMatch {
         let safe = entire
             && !literal.contains(['\'', '\\'])
             && !(changes_result && observed(node))
-            && !(matches!(method, b"=~" | b"!~" | b"match") && captures_observed(source, node))
+            && !(matches!(method, b"=~" | b"!~" | b"match")
+                && crate::cop::shared::captures_observed(source, node))
             && node.child_by_field_name("block").is_none()
             && !comments
             && std::str::from_utf8(node_bytes(source, receiver)).is_ok();

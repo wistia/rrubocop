@@ -154,3 +154,7 @@ mod tests {
         assert_eq!(decode(&text, true, b'"').as_deref(), Some("\x01"));
     }
 }
+
+pub(in crate::cop::ported) fn decode_double_quoted_content(inner: &str) -> Option<String> {
+    decode(inner, true, b'"')
+}

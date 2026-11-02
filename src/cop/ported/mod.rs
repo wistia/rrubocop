@@ -300,3 +300,7 @@ pub(super) fn heredoc_span(source: &SourceFile, node: Node<'_>) -> Option<(usize
     let config = CopConfig::default();
     Context::new(source, &config).ruby_heredoc_span(node)
 }
+
+pub(super) fn decode_ruby_double_quoted_content(inner: &str) -> Option<String> {
+    context::decode_double_quoted_content(inner)
+}

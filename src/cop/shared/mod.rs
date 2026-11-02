@@ -2,6 +2,8 @@
 
 mod bare_args;
 mod integer;
+mod regexp;
+pub use regexp::{captures_observed, decode_ruby_double_quoted_content, is_literal_regexp_text};
 pub mod ruby_expression;
 mod send_range;
 pub use integer::integer_value;

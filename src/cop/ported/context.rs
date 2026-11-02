@@ -215,3 +215,5 @@ mod constants;
 
 #[cfg(test)]
 mod literal_tests;
+
+pub(super) use symbols::decode_double_quoted_content;
