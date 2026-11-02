@@ -154,3 +154,37 @@ mod tests {
         assert_eq!(decode(&text, true, b'"').as_deref(), Some("\x01"));
     }
 }
+
+pub(in crate::cop::ported) fn decode_double_quoted_content(inner: &str) -> Option<String> {
+    decode(inner, true, b'"')
+}
+
+pub(in crate::cop::ported) fn decode_regexp_content(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<u8>> {
+    let text = std::str::from_utf8(inner).ok()?;
+    let mut bytes = text.bytes().peekable();
+    let mut output = Vec::with_capacity(inner.len());
+    while let Some(byte) = bytes.next() {
+        if byte != b'\\' {
+            output.push(byte);
+            continue;
+        }
+        let escaped = *bytes.peek()?;
+        if (escaped == opening || escaped == closing) && !b"\\$()*+.<>?[]^{|}".contains(&escaped) {
+            output.push(bytes.next()?);
+        } else if escaped == b'\n'
+            || escaped == b'\r' && bytes.clone().nth(1) == Some(b'\n')
+            || ruby_version >= 3.1 && matches!(escaped, b'c' | b'C' | b'm' | b'M')
+        {
+            escapes::append(&mut bytes, &mut output)?;
+        } else {
+            output.push(byte);
+            output.push(bytes.next()?);
+        }
+    }
+    Some(output)
+}

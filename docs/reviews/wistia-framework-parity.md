@@ -551,3 +551,23 @@ differences. No failures are suppressed, and native corrected outputs compile
 and are idempotent. Native suite passes 912 tests, 1 ignored audit probe. The
 production CLI scope matrix now has 71 probes across 33 reviewed rules. Totals:
 33 reviewed implementations, 30 baseline stubs replaced, 37 stubs remaining.
+
+### Shared regexp source-version adapter
+
+Imported core's isolated 1a29876 literal-regexp predicate (545 original
+observations), existing escape-decoder wrapper, and capture-observability scan.
+Added `shared::ruby_expression::static_regex_value_for_ruby(source, node,
+ruby_version)` and kept decoding in the existing Context symbols module, reusing
+its escape implementation. The pinned parser 3.3.5.0 lexer
+`extend_string_escaped` preserves normal regexp escapes, removes escaped LF/CRLF,
+retains standalone escaped CR, and decodes c/C/m/M escapes only for Ruby >=3.1.
+The prior raw-text adapter missed this version branch. Shared AST equality uses
+the pinned Ruby 3.4 interpretation; cop consumers can supply their configured
+version. Invalid UTF-8 remains unsupported by the String-returning static helper.
+
+The reproducible `regex_reference.rb` fixture captures 64 original parser
+observations across Ruby targets 2.5, 3.0, 3.1 and 3.4, with control escapes,
+ordinary escapes, literal-delimiter escapes, static/dynamic/options negatives
+and LF/CRLF/CR distinctions. The helper and existing 54 AST equality pairs pass;
+full native suite passes 914 tests, 1 ignored probe. Invalid UTF-8 meta-escape
+sources rejected by Ruby's compiler are not valid-source equality fixtures.
