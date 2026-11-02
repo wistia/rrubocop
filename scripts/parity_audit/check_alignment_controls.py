@@ -4,13 +4,14 @@ parser.add_argument('--ruby', type=pathlib.Path, required=True)
 parser.add_argument('--rust', type=pathlib.Path, required=True)
 parser.add_argument('--gemfile', type=pathlib.Path, required=True)
 parser.add_argument('--output', type=pathlib.Path, required=True)
-parser.add_argument('--cop', choices=['Layout/ArrayAlignment', 'Layout/ParameterAlignment'], default='Layout/ArrayAlignment')
+parser.add_argument('--cop', choices=['Layout/ArrayAlignment', 'Layout/ParameterAlignment', 'Layout/ArgumentAlignment'], default='Layout/ArrayAlignment')
 parser.add_argument('--width-controls-only', action='store_true')
 settings = parser.parse_args()
 rows = []
 root = settings.gemfile.resolve().parent
 env = dict(os.environ, BUNDLE_GEMFILE=str(settings.gemfile.resolve()))
-source = 'a = [one,\n two]\n' if settings.cop == 'Layout/ArrayAlignment' else 'def foo(one,\n two)\nend\n'
+sources = {'Layout/ArrayAlignment': 'a = [one,\n two]\n', 'Layout/ParameterAlignment': 'def foo(one,\n two)\nend\n', 'Layout/ArgumentAlignment': 'foo(one,\n two)\n'}
+source = sources[settings.cop]
 corrected = source.replace('\n two', '\n  two')
 controls = [('detect', {}, None, False)]
 for option, value in [('AutoCorrect', 'disabled'), ('AutoCorrect', False), ('SafeAutoCorrect', False), ('Safe', False)]:

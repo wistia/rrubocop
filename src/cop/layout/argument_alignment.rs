@@ -183,6 +183,16 @@ mod tests {
         );
     }
     #[test]
+    fn original_crlf_states() {
+        crate::testutil::assert_original_spec_parity(
+            &ArgumentAlignment,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/layout/argument_alignment/crlf-parity.json"
+            )),
+        );
+    }
+    #[test]
     fn original_literal_changes_are_not_reproduced() {
         let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
