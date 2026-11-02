@@ -1,86 +1,38 @@
 //! Style/TrailingCommaInHashLiteral.
 
-use tree_sitter::Node;
-
-use crate::cop::shared::node_bytes;
-use crate::cop::style::trailing_comma_args::skip_single_elem_inline_close;
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct TrailingCommaInHashLiteral;
-
-fn last_non_close<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
-    let mut cur = node.walk();
-    node.children(&mut cur)
-        .collect::<Vec<_>>()
-        .into_iter()
-        .rev()
-        .find(|c| node_bytes(source, *c) != b"}" && c.kind() != "comment")
-}
-
-fn last_item(source: &SourceFile, node: Node<'_>) -> Option<(bool, usize)> {
-    let last = last_non_close(source, node)?;
-    if node_bytes(source, last) == b"," {
-        Some((true, last.start_byte()))
-    } else {
-        // RuboCop `put_comma` locates on the last line of the last item (often `}`).
-        Some((false, last.end_byte()))
-    }
-}
-
-fn report(
-    cop: &TrailingCommaInHashLiteral,
-    source: &SourceFile,
-    style: &str,
-    has_comma: bool,
-    start: usize,
-    diagnostics: &mut Vec<Diagnostic>,
-) {
-    let (line, col) = source.offset_to_line_col(start);
-    let msg = match style {
-        "comma" | "consistent_comma" if !has_comma => {
-            "Put a comma after the last item of a multiline hash."
-        }
-        "no_comma" if has_comma => "Avoid comma after the last item of a multiline hash.",
-        _ => return,
-    };
-    diagnostics.push(cop.diagnostic(source, line, col, msg.to_string()));
-}
 
 impl Cop for TrailingCommaInHashLiteral {
     fn name(&self) -> &'static str {
         "Style/TrailingCommaInHashLiteral"
     }
-
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["hash"]
     }
-
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        corrections: Option<&mut Vec<Correction>>,
     ) {
-        if node.start_position().row == node.end_position().row {
-            return;
-        }
-        if skip_single_elem_inline_close(source, node, b'}') {
-            return;
-        }
-        let Some((has_comma, start)) = last_item(source, node) else {
-            return;
-        };
-        report(
+        super::trailing_comma_literal::check_literal(
             self,
             source,
-            config.get_str("EnforcedStyleForMultiline", "no_comma"),
-            has_comma,
-            start,
+            node,
+            config,
             diagnostics,
+            corrections,
         );
     }
 }
@@ -95,6 +47,17 @@ mod tests {
         TrailingCommaInHashLiteral,
         "cops/style/trailing_comma_in_hash_literal"
     );
+
+    #[test]
+    fn original_ruby_specs() {
+        crate::testutil::assert_original_spec_parity(
+            &TrailingCommaInHashLiteral,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_hash_literal/parity.json"
+            )),
+        );
+    }
 
     #[test]
     fn comma_before_trailing_comment_consistent() {

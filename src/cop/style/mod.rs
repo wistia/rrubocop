@@ -142,6 +142,7 @@ mod trailing_comma_args;
 mod trailing_comma_in_arguments;
 mod trailing_comma_in_array_literal;
 mod trailing_comma_in_hash_literal;
+mod trailing_comma_literal;
 mod trivial_accessors;
 mod unless_else;
 mod variable_interpolation;

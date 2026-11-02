@@ -114,3 +114,25 @@ shows the ternary moving from the outer expression into the safe-navigation
 call's argument. Rust reports the offense but withholds this semantic-changing
 removal. This is an explicit safety difference beyond the original passing
 spec corpus, not a claimed exact match.
+
+## TrailingCommaInArrayLiteral and TrailingCommaInHashLiteral
+
+The fourth batch ports the shared original `TrailingComma` mixin and
+`PunctuationCorrector.swap_comma`, used by the pinned array/hash literal cops.
+It adds the missing corrections, fixes inline literal detection, and matches
+Ruby's messages and highlights on the last item or comma. Both delegates share
+one literal implementation; existing argument-list behavior is unchanged.
+
+All 33 original array specs and 28 original hash specs pass in Ruby. The Rust
+matrix contains 62 array and 36 hash source/config cases, including 24 additional
+original-Ruby branch probes for empty/commented literals, nested literals,
+keyword hashes, splats, heredocs and percent-word arrays. All 98 cases match
+messages, locations/highlights and corrected bytes. Both actual CLI modes pass
+196 correction-byte comparisons plus 196 idempotence checks. The existing
+12 trailing-comma tests and all 125 style tests pass.
+
+All three literal policies (`no_comma`, `comma`, `consistent_comma`), single-item
+inline closers, per-item line separation, comment trivia, heredoc markers and
+last-line highlight selection are exercised. The pre-existing hash fixture's
+message was corrected to the unchanged pinned Ruby rule's `item of a hash`
+wording rather than preserving the old Rust placeholder wording.
