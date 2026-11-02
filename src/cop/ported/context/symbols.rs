@@ -169,6 +169,9 @@ pub(in crate::cop::ported) fn decode_regexp_content(
     let mut bytes = text.bytes().peekable();
     let mut output = Vec::with_capacity(inner.len());
     while let Some(byte) = bytes.next() {
+        if byte == b'\r' && bytes.peek() == Some(&b'\n') {
+            continue;
+        }
         if byte != b'\\' {
             output.push(byte);
             continue;
@@ -187,4 +190,45 @@ pub(in crate::cop::ported) fn decode_regexp_content(
         }
     }
     Some(output)
+}
+
+pub(in crate::cop::ported) fn decode_regexp_parts(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<Vec<u8>>> {
+    let text = std::str::from_utf8(inner).ok()?;
+    if !text.contains('\n') {
+        let value = decode_regexp_content(inner, opening, closing, ruby_version)?;
+        return Some(if value.is_empty() {
+            Vec::new()
+        } else {
+            vec![value]
+        });
+    }
+    let text = if text.contains("\r\n") {
+        Cow::Owned(text.replace("\r\n", "\n"))
+    } else {
+        Cow::Borrowed(text)
+    };
+    let mut parts = Vec::new();
+    let mut group = String::new();
+    for line in text.split_inclusive('\n') {
+        group.push_str(line);
+        if !continued(line) {
+            let value = decode_regexp_content(group.as_bytes(), opening, closing, ruby_version)?;
+            if !value.is_empty() {
+                parts.push(value);
+            }
+            group.clear();
+        }
+    }
+    if !group.is_empty() {
+        let value = decode_regexp_content(group.as_bytes(), opening, closing, ruby_version)?;
+        if !value.is_empty() {
+            parts.push(value);
+        }
+    }
+    Some(parts)
 }

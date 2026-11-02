@@ -1,5 +1,16 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Performance/EndWith", "left = 'no'\nright = 'suffix'\np(/suffix\\z/.match?(left || right))\n"),
+    ("Performance/StartWith", "value = 'prefixbody'\np :yes if value.match(/\\Aprefix/) { p :work; true }\n"),
+    ("Performance/EndWith", "value = 'bodysuffix'\np :yes if value.match(/suffix\\z/) { p :work; true }\n"),
+    ("Performance/StartWith", "value = 'prefixbody'\np value.match?(/\\Aprefix/)\n"),
+    ("Performance/EndWith", "value = 'bodysuffix'\np value.match?(/suffix\\z/)\n"),
+    ("Performance/StartWith", "value = 'prefixbody'\np value.match(/\\Aprefix/).class.name\n"),
+    ("Performance/EndWith", "value = 'bodysuffix'\np(value =~ /suffix\\z/)\n"),
+    ("Performance/StartWith", "value = 'prefixbody'\np :yes if value.match(/\\Aprefix/)\n"),
+    ("Performance/EndWith", "value = 'bodysuffix'\np(value.match(/suffix\\z/) ? :yes : :no)\n"),
+    ("Performance/StartWith", "value = 'prefixbody'\np value.match(/\\Aprefix/).to_s\np $~.to_s\n"),
+    ("Performance/EndWith", "p(/suffix\\z/.match?(nil))\n"),
     ("Performance/DeletePrefix", "require 'pathname'\np Pathname.new('prefixbody').sub(/\\Aprefix/, '').to_s\n"),
     ("Performance/DeleteSuffix", "require 'pathname'\np Pathname.new('bodysuffix').sub(/suffix\\z/, '').to_s\n"),
     ("Performance/DeletePrefix", "value = 'prefixbody'\np value.gsub(/\\Aprefix/, '')\n"),

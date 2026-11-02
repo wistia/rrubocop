@@ -531,15 +531,16 @@ fn regex_parts<'a>(
     for child in code_children(node) {
         if child.kind() == "interpolation" {
             if !content.is_empty() {
-                let text = crate::cop::ported::decode_regexp_content(
-                    &content,
-                    opening,
-                    closing,
-                    ruby_version,
-                )?;
-                if !text.is_empty() {
-                    parts.push(RegexPart::Text(text));
-                }
+                parts.extend(
+                    crate::cop::ported::decode_regexp_parts(
+                        &content,
+                        opening,
+                        closing,
+                        ruby_version,
+                    )?
+                    .into_iter()
+                    .map(RegexPart::Text),
+                );
                 content.clear();
             }
             parts.push(RegexPart::Expression(child));
@@ -548,11 +549,11 @@ fn regex_parts<'a>(
         }
     }
     if !content.is_empty() {
-        let text =
-            crate::cop::ported::decode_regexp_content(&content, opening, closing, ruby_version)?;
-        if !text.is_empty() {
-            parts.push(RegexPart::Text(text));
-        }
+        parts.extend(
+            crate::cop::ported::decode_regexp_parts(&content, opening, closing, ruby_version)?
+                .into_iter()
+                .map(RegexPart::Text),
+        );
     }
     let last = node.child(node.child_count().checked_sub(1)?.try_into().ok()?)?;
     let mut options = node_bytes(source, last).get(1..)?.to_vec();

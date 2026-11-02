@@ -1,9 +1,7 @@
-use crate::cop::shared::ruby_expression::static_regex_value_for_ruby;
 use crate::cop::shared::ruby_literal::string_literal;
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, captures_observed, collect_comments,
-    decode_ruby_double_quoted_content, is_const_named, is_literal_regexp_text, is_setter_call,
-    method_node, node_text, push_replace, send_end,
+    is_const_named, is_setter_call, method_node, node_text, push_replace, send_end,
 };
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -44,35 +42,9 @@ pub(super) fn check(
     {
         return;
     }
-    let Some(pattern) =
-        static_regex_value_for_ruby(source, args[0], config.get_f64("TargetRubyVersion", 3.4))
-    else {
+    let Some(pattern) = super::anchored_regexp::read(source, args[0], suffix, config) else {
         return;
     };
-    let safe_multiline = config.get_bool("SafeMultiline", true);
-    let literal = if suffix {
-        pattern.strip_suffix("\\z").or_else(|| {
-            if !safe_multiline {
-                pattern.strip_suffix('$')
-            } else {
-                None
-            }
-        })
-    } else {
-        pattern.strip_prefix("\\A").or_else(|| {
-            if !safe_multiline {
-                pattern.strip_prefix('^')
-            } else {
-                None
-            }
-        })
-    };
-    let Some(literal) = literal else {
-        return;
-    };
-    if !is_literal_regexp_text(literal) {
-        return;
-    }
     let Some(selector) = method_node(node) else {
         return;
     };
@@ -93,23 +65,6 @@ pub(super) fn check(
         ),
     );
     d.highlight_length = node_text(source, selector).chars().count();
-    let mut chars = literal.chars();
-    let mut unsupported = false;
-    while let Some(c) = chars.next() {
-        if c == '\\'
-            && chars
-                .next()
-                .is_some_and(|c| matches!(c, 'c' | 'C' | 'M' | '\n'))
-        {
-            unsupported = true;
-            break;
-        }
-    }
-    let value = if unsupported {
-        None
-    } else {
-        decode_ruby_double_quoted_content(literal)
-    };
     let known_pathname = receiver.kind() == "call"
         && (call_method_name(source, receiver) == Some(b"new")
             && call_receiver(receiver).is_some_and(|n| is_const_named(source, n, b"Pathname"))
@@ -118,15 +73,11 @@ pub(super) fn check(
     let end = send_end(node);
     d.correctable = !config.autocorrect_disabled()
         && !known_pathname
-        && value.is_some()
+        && pattern.text.is_some()
         && !captures_observed(source, node)
         && collect_comments(node).is_empty()
         && args[1].kind() != "heredoc_beginning"
-        && (if suffix {
-            pattern.ends_with("\\z")
-        } else {
-            pattern.starts_with("\\A")
-        });
+        && pattern.absolute;
     if d.correctable {
         let dot = node
             .child_by_field_name("operator")
@@ -135,7 +86,7 @@ pub(super) fn check(
         let replacement = format!(
             "{}{dot}{name}({})",
             node_text(source, receiver),
-            string_literal(value.as_deref().unwrap())
+            string_literal(pattern.text.as_deref().unwrap())
         );
         d.corrected = push_replace(
             &mut corrections,

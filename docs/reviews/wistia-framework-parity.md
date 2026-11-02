@@ -622,3 +622,51 @@ unexplained detection/message/range differences remain. Native suite passes
 916 tests, 1 ignored probe; all 75 production CLI scope probes across 35 reviewed
 rules pass with positive controls firing. Totals: 35 reviewed implementations,
 32 baseline stubs replaced, 35 baseline stubs remaining.
+
+### Performance/StartWith and EndWith
+
+Ported and post-reviewed rubocop-performance 1.21.1 `start_with.rb`, `end_with.rb`,
+and both complete original specs, including every listed escape category, three
+match methods, both operand directions, safe-send asymmetry, absolute/multiline
+anchors, SafeMultiline and unsupported receiver/argument shapes. The four anchored
+rules share one original regexp-literal reader and existing literal formatter;
+DeletePrefix/Suffix's 258 cases retain their prior 114 differences after factoring.
+
+Imported core 6797c88's grouped physical-regexp str adapter, raw CRLF normalization
+and structural Regexp.last_match receiver guard. Original one-str matchers must
+reject physical multiline regexps with multiple str children, rather than joining
+them into a new accepted shape. Original adapter fixture now has 76 version
+observations and 60 AST equality pairs/120 assertions. Start/end first-line
+highlights also honor SourceBuffer CRLF normalization. Integration must retain
+core's used joined `ported::decode_regexp_content` wrapper: this isolated branch
+only needs the grouped wrapper, so its unused joined wrapper was removed for
+`deny(dead_code)`; the underlying Context joined decoder remains available.
+
+Original safe-autocorrection metadata is false. Native additionally declines
+correction when match/`=~` results are observed as values (MatchData/integer
+versus boolean), captures are observed, a block could lose effects, line anchors
+would change matching, known non-string/nil receivers would change behavior,
+comments would be lost, or a replacement changes receiver precedence. Predicate
+match? preserves its boolean contract and does not alter regexp state. Ordinary
+match/`=~` can correct in explicit truthiness conditions (if/unless/while/until,
+ternary, negation and boolean chains whose whole result is a condition). These
+are bounded syntactic/context safeguards, not whole-program type/encoding
+inference; the original unsafe String-method contract still applies.
+
+EndWith's third matcher also accepts a no-argument regexp send and captures its
+method Symbol as the supposed receiver. Its corrector calls Symbol#source and
+crashes, even when AutoCorrect is disabled because Ruby still builds correctors.
+Native follows the source-defined warning but leaves it uncorrectable. Both
+normal/disabled cases and their second passes retain six explicit upstream-error
+events; diagnostic equivalence cannot be claimed against a crashing original.
+
+The combined anchored gate has 834 original cases, 1668 second-pass states and
+19 trusted programs (11 new start/end programs). All 19 native programs preserve
+original behavior. Non-crashing original detections/messages/ranges match. The
+new start/end rules retain 1243 explicit events: 615 correction-metadata, 615
+all-mode bytes, seven runtime and six upstream errors. Safe-mode bytes match.
+The full 1807-case/3614-second-pass matrix (55 trusted programs) retains exactly
+2375 prior/explicit events: previous 1132 plus these 1243. Native suite passes
+917 tests, 1 ignored probe. All 79 production CLI scope probes across 37 reviewed
+rules pass, with every positive control firing. Totals: 37 reviewed
+implementations, 34 baseline stubs replaced, 33 baseline stubs remaining.

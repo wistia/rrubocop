@@ -1,3 +1,5 @@
+mod anchored_match;
+mod anchored_regexp;
 mod anchored_substitution;
 mod big_decimal_with_numeric_argument;
 mod bind_call;

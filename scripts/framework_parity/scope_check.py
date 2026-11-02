@@ -16,6 +16,8 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Performance/StartWith', r"str.match?(/\Aabc/)", model, service),
+ ('Performance/EndWith', r"str.match?(/abc\z/)", model, service),
  ('Performance/DeletePrefix', r"str.gsub(/\Aprefix/, '')", model, service),
  ('Performance/DeleteSuffix', r"str.gsub(/suffix\z/, '')", model, service),
  ('Rails/EnvironmentComparison', "Rails.env == 'production'", model, service),

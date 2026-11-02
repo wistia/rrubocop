@@ -61,6 +61,30 @@ def cases():
     add("Rails/EnumHash", r'enum :status, [:"\u2028"]')
     add("Rails/EnumHash", r'enum :status, ["\u0001", "\u2028"]')
     add("Rails/EnumHash", r'enum :status, [:"a\u0001"]')
+    for cop,start,end in (("Performance/StartWith",r"\A",""),("Performance/EndWith","",r"\z")):
+        patterns=[start+"abc"+end]+[start+"\\"+letter+end for letter in "aefrtnv.*?$^|wWsSdDAZzGbBhHRXi jlmoqy".replace(" ","")]+[start+r"\\"+end]
+        for pattern in patterns:
+            for method in ("match", "match?", "=~"):
+                for left,right in (("str",f"/{pattern}/"),(f"/{pattern}/","str")):
+                    source=f"{left} =~ {right}" if method=="=~" else f"{left}.{method}({right})"
+                    add(cop,source)
+        for pattern in (start+"a.*"+end,start+"a|b"+end,start+""+end,start+r"a\cA"+end,start+r"a\x01"+end,start+r"a\u2028"+end):
+            add(cop,f"str.match?(/{pattern}/)")
+        pattern=start+"abc"+end
+        for method in ("match", "match?", "=~"):
+            expr=f"str =~ /{pattern}/" if method=="=~" else f"str.{method}(/{pattern}/)"
+            for source in (f"if {expr}; work; end",f"work unless {expr}",f"while {expr}; break; end",f"!({expr})",f"{expr} ? yes : no",f"if {expr} && ready?; work; end",f"result = {expr} && ready?",f"result = ({expr})",f"str&.{method}(/{pattern}/)",f"/{pattern}/&.{method}(str)"):
+                add(cop,source)
+        for source in (f"str.match?(/{pattern}/i)",f"str.match?(/{pattern}/,offset)",f"match(/{pattern}/)",f"str.match?(/{pattern}/) {{ work }}",f"str.match?(/{pattern}/)\np $~",f"str.match(/{pattern}/)\np $~",f"/{pattern}/.match?(nil)",f"/{pattern}/.match?(foo || bar)",f"/{pattern}/.match?((foo || bar))",f"/{pattern}/.match?()",f"str.match?(/{start}a\nb{end}/)",f"str.match?(/{start}a\r\nb{end}/)"):
+            add(cop,source)
+        for safe in (True,False):
+            pattern="abc$" if end else "^abc"
+            add(cop,f"str.match?(/{pattern}/)",SafeMultiline=safe)
+        add(cop,f"str.match?(/{start}abc{end}/)",AutoCorrect="disabled")
+    add("Performance/EndWith",r"/abc\z/.match?()",AutoCorrect="disabled")
+    for cop,pattern in (("Performance/StartWith",r"\Aabc"),("Performance/EndWith",r"abc\z")):
+        for source in (f"str\r\n .match?(/{pattern}/)",f"str.match?(\r\n /{pattern}/)",f"if str =~\r\n /{pattern}/; work; end"):
+            add(cop,source)
     for selector in ("select", "filter", "find_all", "reject"):
         for counter in ("count", "length", "size"):
             add("Performance/Count", f"items.{selector} {{ |item| item.active? }}.{counter}")
