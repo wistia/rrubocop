@@ -90,3 +90,12 @@ def extend(record, rows):
     for source in ("'abc'.gsub('a','b')", "'abc'.gsub(/a/,'b'); p $~", "'abc'.gsub(/a/i,'b')", "'abc'.gsub(Regexp.new('a'),'b')", "'abc'.gsub(::Regexp.new('a'),'b')", "'abc'.gsub(Regexp.new('a',0),'b')", "'abc'.gsub(Regexp.compile(/a/),'')", "'abc'.gsub('a','b') { work }", "'abc'.gsub( # keep\n 'a','b')", "gsub('a','b')", "value.gsub('a','b')", "'abc'.gsub(\"a\\n\",'b')", "'abc'.gsub('a',\"\\x01\")", "'abc'.gsub(Regexp.new('\\\\cA'),'b')"):
         add('Performance/StringReplacement', source)
     add('Performance/StringReplacement', "'abc'.gsub('a','b')", AutoCorrect='disabled')
+
+    for source in ('if x.match(/a/); work; end', 'work unless /a/.match(x)', 'if x.match(pattern,0); work; end', 'if x.match(pattern,offset); work; end', 'if x&.match(/a/); work; end', 'if x.match(/a/) && work; work; end', 'while x.match(/a/); work; end', 'case; when x.match(/a/); work; end', 'case x.match(/a/); when 0; work; end', 'if /a/i === x; work; end', 'if /a/im === x; work; end', 'if /(?<name>a)/ =~ x; work; end', 'if /(?<name>a)/i =~ x; work; end', 'if x =~ /(?<name>a)/; work; end', 'p $~; if /a/.match(x); work; end', 'if /a/.match(x); p $~; end', 'if /a/.match(x); work; end; /b/.match(x); p $~', 'if /a/.match(x); work; end; p Regexp.public_send(:last_match)', 'if /a/.match(x); work; end; def nested; p $~; end', 'p $~ if /a/.match(x)', 'if /a/.match(x); work; end; $~ = nil', 'if /a/.match(x); work; end; $~, $other = values'):
+        add('Performance/RegexpMatch', source)
+    for version in (2.3,2.4,2.7,3.4):
+        add('Performance/RegexpMatch', 'if /a/.match("alpha"); work; end', TargetRubyVersion=version)
+    add('Performance/RegexpMatch', 'if /a/.match("alpha"); work; end', AutoCorrect='disabled')
+
+    for suffix in ('$~, $other = values', '$~ ||= value', 'for $~ in values; work; end', '$~.inspect', '$~[0] = value', '$~.clear = value'):
+        add('Performance/RegexpMatch', f'if /a/.match(x); work; end; {suffix}')

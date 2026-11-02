@@ -21,6 +21,18 @@ fn regexp_constant(source: &SourceFile, mut node: Node<'_>) -> bool {
     node.kind() == "constant" && node_bytes(source, node) == b"Regexp"
 }
 
+pub fn indirect_capture_observer(source: &SourceFile, node: Node<'_>) -> bool {
+    matches!(
+        call_method_name(source, node),
+        Some(b"send" | b"public_send" | b"__send__" | b"method")
+    ) && call_receiver(node).is_some_and(|n| regexp_constant(source, n))
+        && super::argument_nodes(node)
+            .first()
+            .and_then(|n| crate::cop::ported::static_symbol(source, *n))
+            .as_deref()
+            == Some("last_match")
+}
+
 pub fn captures_observed(source: &SourceFile, mut root: Node<'_>) -> bool {
     while let Some(parent) = root.parent() {
         root = parent;
@@ -42,8 +54,19 @@ pub fn captures_observed(source: &SourceFile, mut root: Node<'_>) -> bool {
         }
         if node.kind() == "global_variable" {
             let text = node_bytes(source, node);
-            if matches!(text, b"$~" | b"$&" | b"$+" | b"$'" | b"$`")
-                || text.get(1).is_some_and(u8::is_ascii_digit)
+            if matches!(
+                text,
+                b"$~"
+                    | b"$&"
+                    | b"$+"
+                    | b"$'"
+                    | b"$`"
+                    | b"$MATCH"
+                    | b"$PREMATCH"
+                    | b"$POSTMATCH"
+                    | b"$LAST_PAREN_MATCH"
+                    | b"$LAST_MATCH_INFO"
+            ) || text.get(1).is_some_and(u8::is_ascii_digit)
             {
                 return true;
             }
@@ -52,6 +75,9 @@ pub fn captures_observed(source: &SourceFile, mut root: Node<'_>) -> bool {
             && call_method_name(source, node) == Some(b"last_match")
             && call_receiver(node).is_some_and(|n| regexp_constant(source, n))
         {
+            return true;
+        }
+        if indirect_capture_observer(source, node) {
             return true;
         }
         let mut cursor = node.walk();
@@ -94,12 +120,23 @@ mod tests {
             ("Regexp2", false),
             ("regexp", false),
         ] {
-            let code = format!("string.partition(/f/); {receiver}.last_match");
-            let source = SourceFile::from_bytes("capture.rb", code.as_bytes().to_vec());
-            let tree = crate::parse::parse_ruby(&source).unwrap();
-            assert!(!tree.root_node().has_error(), "{code}");
-            let call = tree.root_node().named_child(0).unwrap();
-            assert_eq!(captures_observed(&source, call), expected, "{receiver}");
+            for suffix in [
+                "last_match",
+                "public_send(:last_match)",
+                "__send__(:last_match)",
+                "method(:last_match).call",
+            ] {
+                let code = format!("string.partition(/f/); {receiver}.{suffix}");
+                let source = SourceFile::from_bytes("capture.rb", code.as_bytes().to_vec());
+                let tree = crate::parse::parse_ruby(&source).unwrap();
+                assert!(!tree.root_node().has_error(), "{code}");
+                let call = tree.root_node().named_child(0).unwrap();
+                assert_eq!(
+                    captures_observed(&source, call),
+                    expected,
+                    "{receiver}.{suffix}"
+                );
+            }
         }
     }
     #[test]

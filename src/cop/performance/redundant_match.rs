@@ -45,7 +45,17 @@ fn parentheses(source: &SourceFile, node: Node<'_>) -> bool {
                     | b">>"
             )
         }),
-        "call" | "yield" | "super" => node.child_by_field_name("arguments").is_some_and(|args| {
+        "yield" => {
+            let text = node_text(source, node);
+            !text
+                .trim_start_matches("yield")
+                .trim_start()
+                .starts_with('(')
+                && crate::cop::shared::named_kids(node)
+                    .iter()
+                    .any(|n| n.kind() != "comment")
+        }
+        "call" | "super" => node.child_by_field_name("arguments").is_some_and(|args| {
             args.named_child_count() > 0 && !node_bytes(source, args).starts_with(b"(")
         }),
         _ => false,

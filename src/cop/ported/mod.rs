@@ -304,3 +304,6 @@ pub(super) fn local_binding(source: &SourceFile, node: Node<'_>) -> Option<usize
 pub(super) fn numbered_bindings(source: &SourceFile, node: Node<'_>) -> Option<Vec<usize>> {
     context::numbered_bindings(&Context::new(source, &CopConfig::default()), node)
 }
+pub(super) fn regexp_capture_counts(source: &SourceFile, node: Node<'_>) -> Option<(usize, usize)> {
+    style_regexp::capture_counts(&Context::new(source, &CopConfig::default()), node)
+}

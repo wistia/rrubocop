@@ -19,6 +19,10 @@ PROGRAMS = [
  ('Performance/StringReplacement', 'p "abc".gsub(/a/,"b"); p [$~[0],$&]\n'),
  ('Performance/StringReplacement', 'class << Regexp; def new(pattern); puts :constructor; /a/; end; end; p "abc".gsub(Regexp.new("a"),"b")\n'),
  ('Performance/StringReplacement', 'p "abc".gsub("a","b"); p "abc".gsub("a",""); p "abc".gsub!("a","a")\n'),
+ ('Performance/RegexpMatch', 'puts :yes if /a/.match("alpha")\n'),
+ ('Performance/RegexpMatch', 'class Receiver; def match(pattern); puts :match; true; end; def match?(pattern); puts :predicate; false; end; end; receiver=Receiver.new; puts :yes if receiver.match(/a/)\n'),
+ ('Performance/RegexpMatch', 'puts :yes if /a/.match("alpha"); p Regexp.public_send(:last_match)\n'),
+ ('Performance/StringReplacement', 'require "English"; p "abc".gsub(/a/,"b"); p $MATCH\n'),
 ]
 
 def extend(rows):

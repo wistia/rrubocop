@@ -136,3 +136,63 @@ The completed numbered-model import preserves synthetic-read filtering and the
 existing cached binding identity test once. Its six focused numbered/context
 checks pass. RegexpMatch remains under its separate 4,386-original upstream gate;
 its new source is not included in this completed six-rule checkpoint.
+
+## Final original-rule review and handoff
+
+All seven transferred no-op registrations now have implementations. The final
+report has 5,028 originals and 10,056 generated states, including 23 explicitly
+authored trusted runtime programs. It has zero diagnostic/metadata, generated
+syntax or idempotence differences on valid original sources. All 46 native trusted
+runtime states preserve original stdout and exit status. Strict comparison still
+fails, intentionally exposing 4,134 safe-mode byte differences, 4,485 unsafe-mode
+byte differences, 27 original-vs-native runtime differences and six invalid-host
+states. This is not a claim of exact correction equality.
+
+The report updater is committed and separates original IDs from generated
+`:second-pass` IDs. It replaces observations from older gates when a newer gate
+resolves a failure. Earlier intermediate JSON fields overcounted some originals
+by including their generated states; the final counts and safeguard lists are
+regenerated from artifacts. The table below gives the final per-rule counts.
+
+| Rule | Originals | Generated states |
+| --- | ---: | ---: |
+| CompareWithBlock | 78 | 156 |
+| Detect | 159 | 318 |
+| RedundantBlockCall | 78 | 156 |
+| RedundantMatch | 82 | 164 |
+| RedundantMerge | 58 | 116 |
+| RegexpMatch | 4,422 | 8,844 |
+| StringReplacement | 151 | 302 |
+
+RegexpMatch matches all 4,386 original upstream expansions and 36 additional
+specimens. Its original condition-only dispatch, case-without-value handling,
+next-match interval, AST traversal order, method/class/module scope, flags, named
+captures, target Ruby versions and global-reference read/write roles were reviewed
+again after implementation. Multiple-assignment global targets needed a repair;
+the final focused gate passes those controls. Unknown receiver overrides and
+indirect Regexp.last_match observations retain source, with trusted examples
+showing original behavior changes. RegexpMatch's declared incompatibility with
+ConstantRegexp remains a scheduling follow-up; the engine was not expanded.
+
+RedundantMatch's method-scoped yield-argument correction now preserves the
+original parentheses exactly. The two unscoped upstream yield specimens remain
+explicit invalid-host evidence. The shared capture guard also recognizes English
+aliases and explicit reflective last_match calls; StringReplacement's added
+English runtime control preserves original captures.
+
+Post-implementation review checked the original Ruby algorithms and independently
+replayed their relevant spec branches: CompareWithBlock uses Node#== argument
+comparison and original static literal types; Detect distinguishes block/numblock,
+block-pass and lazy forms and replays sibling preferred names; RedundantMerge
+uses the original purity/value-use algorithms and documented configuration bounds;
+RedundantBlockCall preserves bound Proc identities; StringReplacement distinguishes
+StringInterpreter semantics from Ruby literal decoding. Safety divergences and
+shared non-UTF8/dynamic-metaprogramming boundaries remain explicit in the JSON.
+
+Final native validation passes 931 tests with one ignored. The actual production
+CLI/config scope gate passes 103 controls across 47 rules, including all seven
+owned positives and excluded paths. Ruby -A was run with the actual Wistia config;
+new importer/property scripts are clean. One pre-existing application-specific
+RescueMustReportError finding remains in the standalone reference harness, which
+captures exceptions into its JSON evidence. No telemetry calls or lint exceptions
+were added to conceal that context mismatch.

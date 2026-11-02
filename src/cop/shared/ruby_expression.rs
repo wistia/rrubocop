@@ -655,19 +655,27 @@ fn regex_parts<'a>(
     Some((parts, options))
 }
 
+pub(crate) fn static_regex_value_and_options_for_ruby(
+    source: &SourceFile,
+    node: Node<'_>,
+    ruby_version: f64,
+) -> Option<(String, Vec<u8>)> {
+    let (mut parts, options) = regex_parts(source, node, ruby_version)?;
+    if parts.len() != 1 {
+        return None;
+    }
+    match parts.pop()? {
+        RegexPart::Text(bytes) => Some((String::from_utf8(bytes).ok()?, options)),
+        RegexPart::Expression(_) => None,
+    }
+}
 pub(crate) fn static_regex_value_for_ruby(
     source: &SourceFile,
     node: Node<'_>,
     ruby_version: f64,
 ) -> Option<String> {
-    let (mut parts, options) = regex_parts(source, node, ruby_version)?;
-    if !options.is_empty() || parts.len() != 1 {
-        return None;
-    }
-    match parts.pop()? {
-        RegexPart::Text(bytes) => String::from_utf8(bytes).ok(),
-        RegexPart::Expression(_) => None,
-    }
+    let (text, options) = static_regex_value_and_options_for_ruby(source, node, ruby_version)?;
+    options.is_empty().then_some(text)
 }
 
 fn same_regex(source: &SourceFile, left: Node<'_>, right: Node<'_>, strict: bool) -> bool {

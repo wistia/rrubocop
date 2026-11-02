@@ -7,7 +7,10 @@ pub use command_call::{
     command_unary_plus_call,
 };
 mod regexp;
-pub use regexp::{captures_observed, decode_ruby_double_quoted_content, is_literal_regexp_text};
+pub use regexp::{
+    captures_observed, decode_ruby_double_quoted_content, indirect_capture_observer,
+    is_literal_regexp_text,
+};
 mod block_pass;
 mod integer;
 mod node_util;
