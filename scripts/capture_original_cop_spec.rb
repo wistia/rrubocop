@@ -16,31 +16,60 @@ module CaptureOperatorSpec
 
   def _investigate(cop, processed_source)
     result = super
-    config = configuration.for_cop(cop.class.cop_name).dup
-    config['EnforcedHashRocketStyle'] = configuration.for_cop('Layout/HashAlignment')['EnforcedHashRocketStyle']
-    config['ForceEqualSignAlignment'] = configuration.for_cop('Layout/ExtraSpacing')['ForceEqualSignAlignment']
-    if cop.class.cop_name == 'Style/RedundantParentheses'
-      ternary = configuration.for_cop('Style/TernaryParentheses')
-      config['TernaryParenthesesEnabled'] = ternary['Enabled']
-      config['TernaryParenthesesEnforcedStyle'] = ternary['EnforcedStyle']
-      condition = configuration.for_cop('Style/ParenthesesAroundCondition')
-      config['ParenthesesAroundConditionEnabled'] = condition['Enabled']
-      config['AllowInMultilineConditions'] = condition['AllowInMultilineConditions']
-    elsif cop.class.cop_name == 'Style/ComparableClamp'
-      config['IndentationWidth'] ||= configuration.for_cop('Layout/IndentationWidth')['Width']
-    end
-    config['TargetRubyVersion'] = configuration['AllCops']['TargetRubyVersion']
+    config, siblings = captured_configuration(cop.class.cop_name)
     CaptureOperatorSpec.captured << {
       id: RSpec.current_example.full_description,
       original: processed_source.raw_source,
       config:,
-      ruby_diagnostics: result.sort.map do |offense|
-                          { line: offense.line, column: offense.column + 1, length: offense.location.length,
-                            message: offense.message }
-                        end,
+      sibling_cops: siblings,
+      ruby_diagnostics: captured_diagnostics(result),
       ruby_safe: @last_corrector.rewrite
     }
     result
+  end
+
+  def captured_configuration(name)
+    config = captured_base_options(name)
+    siblings = {}
+    case name
+    when 'Style/RedundantParentheses'
+      capture_parentheses_options(config)
+    when 'Style/NonNilCheck'
+      siblings = capture_non_nil_options(config)
+    when 'Style/ComparableClamp'
+      config['IndentationWidth'] ||= configuration.for_cop('Layout/IndentationWidth')['Width']
+    end
+    [config, siblings]
+  end
+
+  def captured_diagnostics(result)
+    result.sort.map do |offense|
+      { line: offense.line, column: offense.column + 1, length: offense.location.length, message: offense.message }
+    end
+  end
+
+  def captured_base_options(name)
+    config = configuration.for_cop(name).dup
+    config['EnforcedHashRocketStyle'] = configuration.for_cop('Layout/HashAlignment')['EnforcedHashRocketStyle']
+    config['ForceEqualSignAlignment'] = configuration.for_cop('Layout/ExtraSpacing')['ForceEqualSignAlignment']
+    config['TargetRubyVersion'] = configuration['AllCops']['TargetRubyVersion']
+    config
+  end
+
+  def capture_non_nil_options(config)
+    nil_comparison = configuration.for_cop('Style/NilComparison')
+    config['NilComparisonEnabled'] = nil_comparison['Enabled']
+    config['NilComparisonEnforcedStyle'] = nil_comparison['EnforcedStyle']
+    { 'Style/NilComparison' => nil_comparison.slice('Enabled', 'EnforcedStyle') }
+  end
+
+  def capture_parentheses_options(config)
+    ternary = configuration.for_cop('Style/TernaryParentheses')
+    config['TernaryParenthesesEnabled'] = ternary['Enabled']
+    config['TernaryParenthesesEnforcedStyle'] = ternary['EnforcedStyle']
+    condition = configuration.for_cop('Style/ParenthesesAroundCondition')
+    config['ParenthesesAroundConditionEnabled'] = condition['Enabled']
+    config['AllowInMultilineConditions'] = condition['AllowInMultilineConditions']
   end
 end
 CopHelper.prepend(CaptureOperatorSpec)

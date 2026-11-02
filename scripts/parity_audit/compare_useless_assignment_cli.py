@@ -49,14 +49,16 @@ def compare(index_case, settings, environment):
         root = pathlib.Path(directory)
         config, path = root / "config.yml", root / "input.rb"
         options = {key: value for key, value in case["config"].items() if value is not None and key != "TargetRubyVersion"}
-        config.write_text(json.dumps({
+        document = {
             "AllCops": {
                 "DisabledByDefault": True,
                 "NewCops": "disable",
                 "TargetRubyVersion": case["config"]["TargetRubyVersion"],
             },
             settings.cop: options | {"Enabled": True},
-        }))
+        }
+        document.update(case.get("sibling_cops", {}))
+        config.write_text(json.dumps(document))
         for mode in ("-a", "-A"):
             cli_options = ["--config", str(config), "--only", settings.cop, "--cache", "false", "--format", "json", mode]
             observations = {

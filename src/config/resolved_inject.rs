@@ -413,3 +413,22 @@ pub(crate) fn inject_redundant_parentheses(
         .is_some_and(|condition| condition.get_bool("AllowInMultilineConditions", false));
     inject_bool(&mut config.options, "AllowInMultilineConditions", allow);
 }
+
+pub(crate) fn inject_non_nil_check(cfg: &ResolvedConfig, name: &str, config: &mut CopConfig) {
+    if name != "Style/NonNilCheck" {
+        return;
+    }
+    inject_bool(
+        &mut config.options,
+        "NilComparisonEnabled",
+        sibling_enabled(&cfg.cop_configs, "Style/NilComparison"),
+    );
+    inject_sibling_str(
+        &mut config.options,
+        &cfg.cop_configs,
+        "Style/NilComparison",
+        "EnforcedStyle",
+        "NilComparisonEnforcedStyle",
+        "predicate",
+    );
+}
