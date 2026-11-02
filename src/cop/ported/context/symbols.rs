@@ -115,7 +115,7 @@ fn decoded_parts(content: &str, mode: Option<(bool, u8)>) -> Option<Vec<String>>
     Some(parts)
 }
 fn string_parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
-    if symbol_label(c, n) || descendants(n).any(|n| n.kind() == "interpolation") {
+    if descendants(n).any(|n| n.kind() == "interpolation") {
         return None;
     }
     let (content, double, delimiter) = contents(c.text(n))?;

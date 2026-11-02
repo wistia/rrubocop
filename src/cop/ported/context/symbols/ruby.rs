@@ -32,7 +32,7 @@ pub(in crate::cop::ported::context) fn heredoc_end(c: &Context<'_>, n: Node<'_>)
 
 pub(in crate::cop::ported::context) fn parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
     match n.kind() {
-        "string" => super::string_parts(c, n),
+        "string" | "delimited_symbol" => super::string_parts(c, n),
         "character" => character(c.text(n)).map(|value| vec![value.into_owned()]),
         "heredoc_beginning" => heredoc::parts(c, n),
         _ => None,
