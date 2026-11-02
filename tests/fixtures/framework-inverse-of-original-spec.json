@@ -1,0 +1,131 @@
+{
+  "source": "rubocop-rails v2.26.0/spec/rubocop/cop/rails/inverse_of_spec.rb",
+  "cases": [
+    {
+      "source": "class Person\n  has_one :foo, -> () { where(bar: true) }\nend\n",
+      "config": {},
+      "original_spec_line": 6
+    },
+    {
+      "source": "class Person\n  has_many :foo, -> () { where(bar: true) }, inverse_of: nil\nend\n",
+      "config": {},
+      "original_spec_line": 19
+    },
+    {
+      "source": "class Person\n  belongs_to :foo, foreign_key: 'foo_id'\nend\n",
+      "config": {},
+      "original_spec_line": 40
+    },
+    {
+      "source": "class Person\n  has_many :foo, dependent: :destroy, foreign_key: 'foo_id'\nend\n",
+      "config": {},
+      "original_spec_line": 57
+    },
+    {
+      "source": "class Person\n  has_many :foo, conditions: -> { where(bar: true) }\nend\n",
+      "config": {},
+      "original_spec_line": 66
+    },
+    {
+      "source": "class Person\n  has_many :foo, -> { group 'x' }, dependent: :destroy\nend\n",
+      "config": {},
+      "original_spec_line": 77
+    },
+    {
+      "source": "class Person\n  has_many :pictures, as: :imageable\nend\n",
+      "config": {
+        "TargetRailsVersion": 5.1
+      },
+      "original_spec_line": 93
+    },
+    {
+      "source": "class Physician < ApplicationRecord\n  has_many :appointments\n  has_many :patients, -> () { where(bar: true) }, through: :appointments\nend\n",
+      "config": {},
+      "original_spec_line": 123
+    },
+    {
+      "source": "class Picture < ApplicationRecord\n  belongs_to :imageable, -> () { where(bar: true) }, polymorphic: true\nend\n",
+      "config": {},
+      "original_spec_line": 132
+    },
+    {
+      "source": "class Person\n  with_options inverse_of: false do\n    has_one :foo, -> () { where(bar: true) }\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 142
+    },
+    {
+      "source": "class Person\n  with_options inverse_of: :bar do |assoc|\n    assoc.belongs_to :foo, foreign_key: 'foo_id'\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 152
+    },
+    {
+      "source": "class Person\n  with_options inverse_of: :bar do |_assoc|\n    belongs_to :foo, -> () { where(baz: true) }\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 162
+    },
+    {
+      "source": "class Book < ApplicationRecord\n  with_options inverse_of: :book do\n    with_helper do |helper|\n      helper.define_assoc\n      with_options foreign_key: 'book_id' do\n        belongs_to :author\n      end\n    end\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 173
+    },
+    {
+      "source": "class Person\n  with_options foreign_key: 'foo_id' do\n    has_one :foo\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 190
+    },
+    {
+      "source": "class Person\n  with_options foreign_key: 'foo_id' do |assoc|\n    assoc.belongs_to :foo, -> () { where(baz: true) }\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 201
+    },
+    {
+      "source": "class Book < ApplicationRecord\n  with_options conditions: -> () { where(famous: true) } do\n    with_helper do |helper|\n      helper.define_assoc\n      with_options foreign_key: \"patron_id\" do\n        belongs_to :author\n      end\n    end\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 212
+    },
+    {
+      "source": "has_many :foo, -> () { where(bar: true) }, inverse_of: false\n",
+      "config": {},
+      "original_spec_line": 15
+    },
+    {
+      "source": "has_many :foo, -> () { where(bar: true) }\n",
+      "config": {
+        "IgnoreScopes": true
+      },
+      "original_spec_line": 33
+    },
+    {
+      "source": "has_one :foo, foreign_key: 'foo_id', inverse_of: :bar\n",
+      "config": {},
+      "original_spec_line": 49
+    },
+    {
+      "source": "has_one :foo, inverse_of: :bar, foreign_key: 'foo_id'\n",
+      "config": {},
+      "original_spec_line": 53
+    },
+    {
+      "source": "has_many :foo, -> { group 'x' }, dependent: :destroy, inverse_of: :baz\n",
+      "config": {},
+      "original_spec_line": 86
+    },
+    {
+      "source": "has_many :pictures, as: :imageable\n",
+      "config": {
+        "TargetRailsVersion": 5.2
+      },
+      "original_spec_line": 104
+    },
+    {
+      "source": "has_one :foo\n",
+      "config": {},
+      "original_spec_line": 111
+    },
+    {
+      "source": "has_one :foo, dependent: :nullify\n",
+      "config": {},
+      "original_spec_line": 117
+    }
+  ]
+}

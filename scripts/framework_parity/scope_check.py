@@ -17,6 +17,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/InverseOf', 'has_many :children, foreign_key: :owner_id', model, service),
  ('Rails/DynamicFindBy', 'User.find_by_name(name)', model, service),
  ('Rails/RedundantAllowNil', 'validates :name, allow_nil: true, allow_blank: true', model, service),
  ('Rails/RedundantReceiverInWithOptions', 'with_options(flag: true) { |m| m.foo }', model, service),

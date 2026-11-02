@@ -10,6 +10,30 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-inverse-of-original-spec.json").read_text())["cases"]:
+        add("Rails/InverseOf",row["source"].rstrip("\n"),**row["config"])
+    for macro in ("has_many", "has_one", "belongs_to"):
+        for receiver in ("", "self.", "object.", "object&."):
+            for options in ("", ", foreign_key: :owner_id", ", conditions: nil", ", conditions: false", ", foreign_key: nil", ", as: :owner", ", through: false", ", polymorphic: false", ", inverse_of: nil", ", inverse_of: false", ", foreign_key: :id, inverse_of: nil", ", foreign_key: :id, through: nil", ", foreign_key: :id, through: :owners", ", foreign_key: :id, inverse_of: false", ", 'foreign_key' => :id", ", **options"):
+                for scope in ("", ", -> { where(flag: true) }", ", -> { _1 }"):
+                    add("Rails/InverseOf",receiver+macro+" :children"+scope+options)
+    for rails in (5.1,5.2,8.1):
+        for ignore in (False,True):
+            add("Rails/InverseOf","has_many :children, -> { where(flag: true) }, as: :owner",TargetRailsVersion=rails,IgnoreScopes=ignore)
+            add("Rails/InverseOf","has_many :children, as: :owner",TargetRailsVersion=rails,IgnoreScopes=ignore)
+    for header in ("with_options inverse_of: false do", "with_options inverse_of: false do ||", "with_options inverse_of: false do |assoc|", "with_options inverse_of: false do |_assoc|", "with_options inverse_of: false do |*assoc|", "object.with_options inverse_of: false do", "with_options foreign_key: :id do", "with_options inverse_of: false do"):
+        for invocation in ("has_many :children, -> { work }", "assoc.has_many :children, foreign_key: :id", "_assoc.has_many :children, foreign_key: :id", "self.has_many :children, foreign_key: :id", "other { has_many :children, -> { work } }", "with_options foreign_key: :id do; has_many :children; end"):
+            add("Rails/InverseOf",header+"; "+invocation+"; end")
+    for source in ("with_options(inverse_of: false) { _1.has_many :children, foreign_key: :id }", "has_many :children, ->(x) { x }", "has_many :children, proc { work }", "has_many :children, scope { work }", "has_many :children, -> { work }, inverse_of:", "has_many({foreign_key: :id})", "has_many(foreign_key: :id, conditions: true)", "has_many :children, {foreign_key: :id}", "has_many :children, {foreign_key: :id}, {inverse_of: false}", "has_many :children, foreign_key: :id, inverse_of: nil, inverse_of: false", "has_many :children, foreign_key: :id do; work; end"):
+        add("Rails/InverseOf",source)
+    for ruby in (2.5,2.7,3.4):
+        for scope in ("-> { _1 }", "proc { _1 }", "scope { _1 }", "->(x) { x }", "-> { value }"):
+            add("Rails/InverseOf",f"has_many :children, {scope}",TargetRubyVersion=ruby)
+    for key in (":foreign_key => :id", "'foreign_key' => :id", '"foreign_key": :id', ":'foreign_key' => :id", "foreign_key:"):
+        add("Rails/InverseOf",f"has_many :children, {key}")
+    for header in ("with_options inverse_of: false do |assoc = nil|", "with_options inverse_of: false do |**assoc|", "with_options inverse_of: false do |&assoc|", "with_options inverse_of: false do |(assoc,other)|", "with_options inverse_of: false do |assoc, other|", "with_options inverse_of: false do |; assoc|"):
+        for recv in ("assoc.", ""):
+            add("Rails/InverseOf",header+"; "+recv+"has_many :children, foreign_key: :id; end")
     for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-dynamic-find-original-spec.json").read_text())["cases"]:
         add("Rails/DynamicFindBy",row["source"].rstrip("\n"),**row["config"])
     for receiver in ("User.", "user.", "User&.", "", "page.", "Gem::Specification.", "::Gem::Specification."):
