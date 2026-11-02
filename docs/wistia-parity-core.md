@@ -9,8 +9,8 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 Twenty-three owned rules now have implemented behavior backed by original-Ruby
 comparisons, including all thirteen original direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
-version-gated cops. HashSyntax shorthand branches and additional
-UselessAssignment capture combinations remain under review. The exhaustive
+version-gated cops. Additional UselessAssignment capture combinations
+remain under review. The exhaustive
 367-rule inventory retains 344 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
@@ -520,3 +520,11 @@ Branches cover readers/writers and argument roles, ExactNameMatch, AllowedMethod
 The safeguards retain offenses for comments, observed method-definition results, predicate singleton readers, nested methods, instance_exec, numbered instance_eval and conservative unknown-block contexts. Trusted authored Ruby probes confirm that the predicate correction raises NameError, replacing an observed def result changes Symbol to Array, and instance_exec replacement raises NoMethodError. These are separate intentional differences rather than parity successes. Arbitrary dynamic attribute-method overrides, encoded source and additional reflective contexts remain unproven.
 
 Real original/native CLI validation covers332 safe/aggressive modes:310 equal corrected-byte pairs,312 equal exit pairs, exactly22 documented safeguard byte differences and no internal cop errors. All664 original/native second passes remain stable. Four actual Wistia-config app/models modes produce expected bytes and clean final states. The integrated native suite passes885 tests, one pre-existing ignored. A separate final source/branch review and unchanged37-example original-spec rerun passed before checkpointing; these are isolated-rule results, with generic correction scheduling still deferred.
+
+## Style/HashSyntax shorthand branches
+
+The shorthand follow-up ports the complete pinned `rubocop-1.65.1/lib/rubocop/cop/mixin/hash_shorthand_syntax.rb` decision tree alongside the earlier delimiter port. Reviewed all five styles, Ruby3.1 gating, per-hash omitted/omittable/needed grouping, predicate and non-symbol exclusions, modifier-form calls, bracket receivers, last-expression/assignment traversal and command-parenthesis insertion. All171 unchanged original HashSyntax examples pass; their252 source/config states and201 independently observed states now cover453 exact diagnostic/message/range cases. Of those,447 match first corrected bytes and six retain offenses while preserving source.
+
+Independent coverage includes local/send values, constants, pseudo literals, Unicode and quoted keys, explicit receiver/argument calls, keyword splats, implicit-array hashes, brackets, return/break/super/yield, blocks and block passes, nested commands, multiple assignments and already-corrected controls. Four safeguards prevent an original unmatched opening parenthesis when the final hash pair has no offense; static parsing of the original correction confirms invalid Ruby. Two safeguards preserve comments deleted by original whole-pair replacement. The same cop still handles delimiters; no enforcement option was relaxed. Source/config replays and the implementation's branch review were performed separately.
+
+Real original/native CLI validation covers906 safe/aggressive modes:894 equal corrected-byte pairs,902 equal exits and exactly12 byte differences for the six recorded safeguards. No internal cop errors occurred; all1812 second passes are stable. This includes846 main modes and60 supplemental implicit-array/splat/sibling-comment modes after their scope follow-up. Eight actual Wistia-config modes confirm that the active either setting preserves explicit values while hash rockets still convert; all final states are clean. The expanded native suite passes889 tests, one pre-existing ignored. Additional encoded-source, uncommon grammar and combined-cop interactions remain unproven; correction scheduling remains deferred.

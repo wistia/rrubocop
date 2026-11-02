@@ -7,6 +7,8 @@ use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 use tree_sitter::Node;
 
+mod shorthand;
+
 pub struct HashSyntax;
 
 fn pairs(node: Node<'_>) -> Vec<Node<'_>> {
@@ -81,6 +83,13 @@ impl Cop for HashSyntax {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        shorthand::check(
+            source,
+            node,
+            config,
+            diagnostics,
+            corrections.as_deref_mut(),
+        );
         let Some(op) = operator(node) else {
             return;
         };
@@ -230,6 +239,48 @@ impl Cop for HashSyntax {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn additional_original_argument_scopes() {
+        crate::testutil::assert_original_spec_parity(
+            &HashSyntax,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/hash_syntax/shorthand-array.json"
+            )),
+        );
+    }
+    #[test]
+    fn shorthand_source_safeguards() {
+        let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/style/hash_syntax/shorthand-safeguards.json"
+        )))
+        .unwrap();
+        for case in cases.as_array_mut().unwrap() {
+            case["ruby_corrected"] = case["rust_corrected"].clone();
+        }
+        crate::testutil::assert_original_spec_parity(&HashSyntax, &cases.to_string());
+    }
+    #[test]
+    fn independent_original_shorthand_states() {
+        crate::testutil::assert_original_spec_parity(
+            &HashSyntax,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/hash_syntax/shorthand-extra.json"
+            )),
+        );
+    }
+    #[test]
+    fn original_shorthand_specs() {
+        crate::testutil::assert_original_spec_parity(
+            &HashSyntax,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/hash_syntax/shorthand.json"
+            )),
+        );
+    }
     #[test]
     fn returned_hash_gets_one_brace_pair_instead_of_invalid_nested_hash() {
         let mut fixture: serde_json::Value = serde_json::from_str(include_str!(concat!(
