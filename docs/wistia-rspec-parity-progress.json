@@ -776,8 +776,29 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/receive_messages.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 37,
+    "deliberate_safeguards": [
+      "receive_messages_spec:0",
+      "receive_messages_spec:1",
+      "receive_messages_spec:4",
+      "receive_messages_spec:10",
+      "receive_messages_spec:11",
+      "receive_messages_spec:12",
+      "receive_messages_spec:19",
+      "batch28:invalid-label",
+      "batch28:invalid-quote",
+      "batch28:dynamic-receiver",
+      "batch28:dynamic-namespace",
+      "batch28:return-dependency",
+      "batch28:intervening-assignment",
+      "batch28:inline-comment",
+      "batch28:inline-disable",
+      "batch28:extra-allow-args",
+      "batch28:zero-allow-args",
+      "batch28:hash-allow"
+    ],
+    "post_implementation_review": "Original receive_messages.rb reviewed separately with all 21 upstream source specimens and 34 branch controls: logical return hashes, exact first-object AST grouping, duplicate-message exclusion, same-line handling, scope/begin boundaries, arity/safe/qualified negatives, quoting and conditional suppression. Distinct original Parser probes show empty quoted/%s symbols are DSym, not Sym; shared plain_symbol preserves this AST distinction without changing runtime decoding. Stable contiguous groups merge atomically through existing correction owner aliases; native test verifies both offenses receive correction credit. Trusted pinned RSpec mocks prove literal controls and receiver, return-dependency and intervening-assignment hazards. Comments/disable directives and unsupported signatures preserve source. SafeAutoCorrect false retained; no scheduling-engine changes."
   },
   {
     "name": "RSpec/ReceiveNever",

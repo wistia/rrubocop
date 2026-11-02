@@ -743,3 +743,28 @@ matching. Corrections require supported pure builtin literal predicates and reta
 unknown receiver, composite inclusion, block and precedence cases as safeguards.
 These differences are excluded from strict correction equality claims. Generic
 combined-cop scheduling and custom global Language aliases remain documented gaps.
+
+## Batch 28: grouped message stubs
+
+ReceiveMessages replaces another initial stub: 79 initial stubs plus all sixteen
+existing rules are reviewed (95 of 96). There are 1,905 strict original cases,
+191 explicit safeguards and 52 correction-disable controls. Original-source
+review covers all 21 upstream specimens plus 34 scope, arity, quoting, logical
+hash, duplicate-message, same-line, safe/qualified and suppression controls.
+Explicit begin/end is a kwbegin and is excluded; parenthesized statement sequences
+remain eligible. Original empty quoted symbols are DSym and cannot match Sym-only
+rules. Shared checkpoint 1e5bd7e exposes plain_symbol while preserving runtime
+static_symbol decoding; eight new original AST pairs and three shared tests pass.
+
+Safe contiguous groups use one atomic replacement, with identical edit aliases
+crediting each owning offense through existing correction machinery. A native
+regression verifies both stubs receive correction credit. This introduces no
+scheduling engine changes. Group rewriting preserves blank lines and validates
+quoted labels; comments and inline disable boundaries retain the source.
+
+Separate trusted RSpec mocks verify literal-return controls and demonstrate
+changed return dependencies, intervening-assignment order and dynamic receiver
+call counts in broader Ruby corrections. Unsupported allow signatures, unknown
+returns/receivers and noncontiguous groups remain explicit safeguards. Unsafe
+correction metadata remains unchanged: safe mode preserves source. Combined-cop
+scheduling remains deferred.

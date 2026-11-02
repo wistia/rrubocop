@@ -10681,5 +10681,1286 @@
       }
     },
     "safety_difference": "Original empty predicate-prefix conversion creates an invalid method selector; native reports exact original message and preserves source."
+  },
+  {
+    "id": "receive_messages_spec:0",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(baz)\n  allow(Service).to receive(:bar).and_return(true)\n  allow(Service).to receive(:baz).and_return(\"foo\")\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(baz)\n  allow(Service).to receive(:bar).and_return(true)\n  allow(Service).to receive(:baz).and_return(\"foo\")\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3, 4].",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2, 4].",
+          "correctable": true,
+          "length": 48,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2, 3].",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(baz)\n  allow(Service).to receive(:bar).and_return(true)\n  allow(Service).to receive(:baz).and_return(\"foo\")\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3, 4].",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2, 4].",
+            "correctable": true,
+            "length": 48,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2, 3].",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive_messages(foo: baz, bar: true, baz: \"foo\")\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Merging stubs changes dynamic receiver evaluation, dependency timing and intervening statement order. Preserve these groups; pinned real RSpec mocks prove all three hazards."
+  },
+  {
+    "id": "receive_messages_spec:1",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(baz)\n  allow(Service).to receive(:foo=).and_return(true)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(baz)\n  allow(Service).to receive(:foo=).and_return(true)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(baz)\n  allow(Service).to receive(:foo=).and_return(true)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive_messages(foo: baz, 'foo=': true)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Merging stubs changes dynamic receiver evaluation, dependency timing and intervening statement order. Preserve these groups; pinned real RSpec mocks prove all three hazards."
+  },
+  {
+    "id": "receive_messages_spec:4",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return({ a: 1, b: 2 })\n  allow(Service).to receive(:bar).and_return(\"baz\" => qux)\n  allow(Service).to receive(:baz).and_return(3)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return({ a: 1, b: 2 })\n  allow(Service).to receive(:bar).and_return(\"baz\" => qux)\n  allow(Service).to receive(:baz).and_return(3)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3, 4].",
+          "correctable": true,
+          "length": 58,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2, 4].",
+          "correctable": true,
+          "length": 56,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2, 3].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return({ a: 1, b: 2 })\n  allow(Service).to receive(:bar).and_return(\"baz\" => qux)\n  allow(Service).to receive(:baz).and_return(3)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3, 4].",
+            "correctable": true,
+            "length": 58,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2, 4].",
+            "correctable": true,
+            "length": 56,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2, 3].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive_messages(foo: { a: 1, b: 2 }, bar: { \"baz\" => qux }, baz: 3)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Merging stubs changes dynamic receiver evaluation, dependency timing and intervening statement order. Preserve these groups; pinned real RSpec mocks prove all three hazards."
+  },
+  {
+    "id": "receive_messages_spec:10",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(user).to receive(:foo).and_return(baz)\n  allow(user).to receive(:bar).and_return(qux)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(user).to receive(:foo).and_return(baz)\n  allow(user).to receive(:bar).and_return(qux)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(user).to receive(:foo).and_return(baz)\n  allow(user).to receive(:bar).and_return(qux)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  allow(user).to receive_messages(foo: baz, bar: qux)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Merging stubs changes dynamic receiver evaluation, dependency timing and intervening statement order. Preserve these groups; pinned real RSpec mocks prove all three hazards."
+  },
+  {
+    "id": "receive_messages_spec:11",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(1)\n  calling_some_method\n  calling_another_method\n  allow(Service).to receive(:bar).and_return(2)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(1)\n  calling_some_method\n  calling_another_method\n  allow(Service).to receive(:bar).and_return(2)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [5].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1)\n  calling_some_method\n  calling_another_method\n  allow(Service).to receive(:bar).and_return(2)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [5].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  calling_some_method\n  calling_another_method\n  allow(Service).to receive_messages(foo: 1, bar: 2)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Merging stubs changes dynamic receiver evaluation, dependency timing and intervening statement order. Preserve these groups; pinned real RSpec mocks prove all three hazards."
+  },
+  {
+    "id": "receive_messages_spec:12",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  foo = Service.new\n  allow(Service).to receive(:foo).and_return(foo)\n  bar = Service.new\n  allow(Service).to receive(:bar).and_return(bar)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  foo = Service.new\n  allow(Service).to receive(:foo).and_return(foo)\n  bar = Service.new\n  allow(Service).to receive(:bar).and_return(bar)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#12",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [5].",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  foo = Service.new\n  allow(Service).to receive(:foo).and_return(foo)\n  bar = Service.new\n  allow(Service).to receive(:bar).and_return(bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [5].",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  foo = Service.new\n  bar = Service.new\n  allow(Service).to receive_messages(foo: foo, bar: bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Merging stubs changes dynamic receiver evaluation, dependency timing and intervening statement order. Preserve these groups; pinned real RSpec mocks prove all three hazards."
+  },
+  {
+    "id": "receive_messages_spec:19",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(bar)\n  allow(Service).to receive(:bar).and_return(qux)\n  allow(Service).to receive(:foo).and_return(qux)\n  allow(Service).to receive(:baz).and_return(qux)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(bar)\n  allow(Service).to receive(:bar).and_return(qux)\n  allow(Service).to receive(:foo).and_return(qux)\n  allow(Service).to receive(:baz).and_return(qux)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#19",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [5].",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(bar)\n  allow(Service).to receive(:bar).and_return(qux)\n  allow(Service).to receive(:foo).and_return(qux)\n  allow(Service).to receive(:baz).and_return(qux)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [5].",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(bar)\n  allow(Service).to receive(:foo).and_return(qux)\n  allow(Service).to receive_messages(bar: qux, baz: qux)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Merging stubs changes dynamic receiver evaluation, dependency timing and intervening statement order. Preserve these groups; pinned real RSpec mocks prove all three hazards."
+  },
+  {
+    "id": "batch28:invalid-label",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:\"a b\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:\"a b\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive_messages(a b: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:invalid-quote",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:\"a'= \").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 48,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:\"a'= \").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 48,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive_messages(a'= : 1, bar: 2)\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | ... '= : 1, bar: 2)\n    |     ^ unterminated string meets end of file\n> 2 | \n    | ^ unexpected end-of-input; expected a `)` to close the arguments\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:dynamic-receiver",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(provider.call).to receive(:foo).and_return(1)\nallow(provider.call).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 51,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 51,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(provider.call).to receive(:foo).and_return(1)\nallow(provider.call).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 51,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 51,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(provider.call).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:dynamic-namespace",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(provider::Service).to receive(:foo).and_return(1)\nallow(provider::Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 55,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 55,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(provider::Service).to receive(:foo).and_return(1)\nallow(provider::Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 55,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 55,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(provider::Service).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:return-dependency",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(Service.foo)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 55,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(Service.foo)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 55,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive_messages(foo: 1, bar: Service.foo)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:intervening-assignment",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(value)\nvalue = 2\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(value)\nvalue = 2\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "value = 2\nallow(Service).to receive_messages(foo: value, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:inline-comment",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1) # keep\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1) # keep\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:inline-disable",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1) # rubocop:disable RSpec/ReceiveMessages\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1) # rubocop:disable RSpec/ReceiveMessages\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive(:foo).and_return(1) # rubocop:disable RSpec/ReceiveMessages\nallow(Service).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:extra-allow-args",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service, other).to receive(:foo).and_return(1)\nallow(Service, another).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 52,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 54,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service, other).to receive(:foo).and_return(1)\nallow(Service, another).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 52,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 54,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service, another).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:zero-allow-args",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow().to receive(:foo).and_return(1)\nallow().to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 38,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 38,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow().to receive(:foo).and_return(1)\nallow().to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 38,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 38,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow().to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
+  },
+  {
+    "id": "batch28:hash-allow",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(a: 1).to receive(:foo).and_return(1)\nallow({a: 1}).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 42,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(a: 1).to receive(:foo).and_return(1)\nallow({a: 1}).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 42,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow({a: 1}).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve dynamic receiver/return evaluation, intervening assignments, unsupported allow signatures, quoted key identity, comments and inline disable ownership; atomic correction only covers stable contiguous groups."
   }
 ]

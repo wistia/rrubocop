@@ -201,7 +201,7 @@ fn explicit_autocorrection_disable_preserves_sources() {
             assert!(!diagnostics.is_empty());
         }
     }
-    assert_eq!(checked.len(), 51);
+    assert_eq!(checked.len(), 52);
 }
 
 #[test]
@@ -248,4 +248,21 @@ fn original_rule_errors_have_safe_native_results() {
             }
         }
     }
+}
+
+#[test]
+fn receive_messages_atomic_rewrite_credits_each_offense() {
+    let cases: Vec<Value> = serde_json::from_str(include_str!(
+        "../../../tests/fixtures/rspec-parity/cases.json"
+    ))
+    .unwrap();
+    let case = cases
+        .iter()
+        .find(|case| case["id"] == "batch28:safe-literal")
+        .unwrap();
+    let (after, diagnostics) =
+        inspect(case, case["source"].as_str().unwrap(), AutocorrectMode::All);
+    assert_eq!(after, case["reference"]["all"]["source"].as_str().unwrap());
+    assert_eq!(diagnostics.len(), 2);
+    assert!(diagnostics.iter().all(|diagnostic| diagnostic.corrected));
 }

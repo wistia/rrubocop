@@ -92593,5 +92593,1713 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "receive_messages_spec:2",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:`).and_return(true)\n  allow(Service).to receive(:[]).and_return(true)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:`).and_return(true)\n  allow(Service).to receive(:[]).and_return(true)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 46,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:`).and_return(true)\n  allow(Service).to receive(:[]).and_return(true)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 46,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 47,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive_messages('`': true, '[]': true)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:3",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return([1, 2])\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return([1, 2])\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 50,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return([1, 2])\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 50,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive_messages(foo: [1, 2], bar: 3)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:5",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(<<~SQL)\n    SELECT * FROM users;\n  SQL\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(<<~SQL)\n    SELECT * FROM users;\n  SQL\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(<<~SQL)\n    SELECT * FROM users;\n  SQL\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(<<~SQL)\n    SELECT * FROM users;\n  SQL\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:6",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(1).once\n  allow(Service).to receive(:bar).and_return(2).twice\n  allow(Service).to receive(:baz).and_return(3).exactly(3).times\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(1).once\n  allow(Service).to receive(:bar).and_return(2).twice\n  allow(Service).to receive(:baz).and_return(3).exactly(3).times\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1).once\n  allow(Service).to receive(:bar).and_return(2).twice\n  allow(Service).to receive(:baz).and_return(3).exactly(3).times\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1).once\n  allow(Service).to receive(:bar).and_return(2).twice\n  allow(Service).to receive(:baz).and_return(3).exactly(3).times\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:7",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(*array)\n  allow(Service).to receive(:bar).and_return(*array)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(*array)\n  allow(Service).to receive(:bar).and_return(*array)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(*array)\n  allow(Service).to receive(:bar).and_return(*array)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(*array)\n  allow(Service).to receive(:bar).and_return(*array)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:8",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(1, 2)\n  allow(Service).to receive(:bar).and_return(3, 4)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(1, 2)\n  allow(Service).to receive(:bar).and_return(3, 4)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1, 2)\n  allow(Service).to receive(:bar).and_return(3, 4)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1, 2)\n  allow(Service).to receive(:bar).and_return(3, 4)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:9",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(1).ordered\n  allow(Service).to receive(:bar).and_return(2).ordered\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(1).ordered\n  allow(Service).to receive(:bar).and_return(2).ordered\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1).ordered\n  allow(Service).to receive(:bar).and_return(2).ordered\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1).ordered\n  allow(Service).to receive(:bar).and_return(2).ordered\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:13",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_return(1, 2)\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_return(1, 2)\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1, 2)\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_return(1, 2)\n  allow(Service).to receive(:bar).and_return(3)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:14",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).and_call_original\n  allow(Service).to receive(:bar).and_return(qux)\n  allow(Service).to receive(:baz).and_call_original\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).and_call_original\n  allow(Service).to receive(:bar).and_return(qux)\n  allow(Service).to receive(:baz).and_call_original\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_call_original\n  allow(Service).to receive(:bar).and_return(qux)\n  allow(Service).to receive(:baz).and_call_original\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).and_call_original\n  allow(Service).to receive(:bar).and_return(qux)\n  allow(Service).to receive(:baz).and_call_original\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:15",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Foo).to receive(:foo).and_return(baz)\n  allow(Bar).to receive(:bar).and_return(bar)\n  allow(Baz).to receive(:baz).and_return(foo)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Foo).to receive(:foo).and_return(baz)\n  allow(Bar).to receive(:bar).and_return(bar)\n  allow(Baz).to receive(:baz).and_return(foo)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Foo).to receive(:foo).and_return(baz)\n  allow(Bar).to receive(:bar).and_return(bar)\n  allow(Baz).to receive(:baz).and_return(foo)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Foo).to receive(:foo).and_return(baz)\n  allow(Bar).to receive(:bar).and_return(bar)\n  allow(Baz).to receive(:baz).and_return(foo)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:16",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Foo).to receive(:foo).and_return(bar)\n  allow(Foo).to receive(:foo).and_return(baz)\n  allow(Foo).to receive(:bar).and_return(qux)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Foo).to receive(:foo).and_return(bar)\n  allow(Foo).to receive(:foo).and_return(baz)\n  allow(Foo).to receive(:bar).and_return(qux)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#16",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Foo).to receive(:foo).and_return(bar)\n  allow(Foo).to receive(:foo).and_return(baz)\n  allow(Foo).to receive(:bar).and_return(qux)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Foo).to receive(:foo).and_return(bar)\n  allow(Foo).to receive(:foo).and_return(baz)\n  allow(Foo).to receive(:bar).and_return(qux)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:17",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo) { baz }\n  allow(Service).to receive(:bar) { bar }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo) { baz }\n  allow(Service).to receive(:bar) { bar }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#17",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo) { baz }\n  allow(Service).to receive(:bar) { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo) { baz }\n  allow(Service).to receive(:bar) { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:18",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\n  allow(Service).to receive(:foo).with(1).and_return(baz)\n  allow(Service).to receive(:bar).with(2).and_return(bar)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "before do\n  allow(Service).to receive(:foo).with(1).and_return(baz)\n  allow(Service).to receive(:bar).with(2).and_return(bar)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#18",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\n  allow(Service).to receive(:foo).with(1).and_return(baz)\n  allow(Service).to receive(:bar).with(2).and_return(bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\n  allow(Service).to receive(:foo).with(1).and_return(baz)\n  allow(Service).to receive(:bar).with(2).and_return(bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "receive_messages_spec:20",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "RSpec.describe do\n  before do\n    allow(X).to receive(:foo).and_return(1)\n    allow(X).to receive(:bar).and_return(2)\n    allow(Y).to receive(:foo).and_return(3)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe do\n  before do\n    allow(X).to receive(:foo).and_return(1)\n    allow(X).to receive(:bar).and_return(2)\n    allow(Y).to receive(:foo).and_return(3)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/receive_messages_spec.rb#20",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 4,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [4].",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 4,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe do\n  before do\n    allow(X).to receive(:foo).and_return(1)\n    allow(X).to receive(:bar).and_return(2)\n    allow(Y).to receive(:foo).and_return(3)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [4].",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 4,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe do\n  before do\n    allow(X).to receive_messages(foo: 1, bar: 2)\n    allow(Y).to receive(:foo).and_return(3)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:safe-literal",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:safe-local",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "object = Service.new\nvalue = 1\nallow(object).to receive(:foo).and_return(value)\nallow(object).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [4].",
+          "correctable": true,
+          "length": 48,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "object = Service.new\nvalue = 1\nallow(object).to receive(:foo).and_return(value)\nallow(object).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [4].",
+            "correctable": true,
+            "length": 48,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "object = Service.new\nvalue = 1\nallow(object).to receive_messages(foo: value, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:self",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(self).to receive(:foo).and_return(1)\nallow(self).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 42,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 42,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(self).to receive(:foo).and_return(1)\nallow(self).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 42,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 42,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(self).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:blank-lines",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1)\n\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1)\n\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "\nallow(Service).to receive_messages(foo: 1, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:implicit-hash",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(a: 1, b: 2)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 54,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(a: 1, b: 2)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 54,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive_messages(foo: { a: 1, b: 2 }, bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:multiline-return",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return([\n 1,\n 2\n])\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [5].",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return([\n 1,\n 2\n])\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [5].",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive_messages(foo: [\n 1,\n 2\n], bar: 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:same-line-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1); allow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1); allow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(:foo).and_return(1); allow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:duplicate-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:foo).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:foo).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:foo).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:quoted-operator",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:[]).and_return(1)\nallow(Service).to receive(:foo=).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+          "correctable": true,
+          "length": 46,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:[]).and_return(1)\nallow(Service).to receive(:foo=).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [1].",
+            "correctable": true,
+            "length": 46,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "allow(Service).to receive_messages('[]': 1, 'foo=': 2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:empty-label",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:\"\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:\"\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(:\"\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:nested-scope-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "before do\nallow(Service).to receive(:foo).and_return(1)\nend\nafter do\nallow(Service).to receive(:bar).and_return(2)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "before do\nallow(Service).to receive(:foo).and_return(1)\nend\nafter do\nallow(Service).to receive(:bar).and_return(2)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before do\nallow(Service).to receive(:foo).and_return(1)\nend\nafter do\nallow(Service).to receive(:bar).and_return(2)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:explicit-begin",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "begin\nallow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "begin\nallow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "begin\nallow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:parenthesized-begin",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "(\nallow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "(\nallow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "(\nallow(Service).to receive_messages(foo: 1, bar: 2)\n)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:branch",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "if enabled\nallow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "if enabled\nallow(Service).to receive(:foo).and_return(1)\nallow(Service).to receive(:bar).and_return(2)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [3].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Use `receive_messages` instead of multiple stubs on lines [2].",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "if enabled\nallow(Service).to receive_messages(foo: 1, bar: 2)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:different-qualifier-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1)\nallow(::Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1)\nallow(::Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(:foo).and_return(1)\nallow(::Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:qualified-allow-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "Custom.allow(Service).to receive(:foo).and_return(1)\nCustom.allow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "Custom.allow(Service).to receive(:foo).and_return(1)\nCustom.allow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "Custom.allow(Service).to receive(:foo).and_return(1)\nCustom.allow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:safe-runner-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service)&.to receive(:foo).and_return(1)\nallow(Service)&.to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service)&.to receive(:foo).and_return(1)\nallow(Service)&.to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service)&.to receive(:foo).and_return(1)\nallow(Service)&.to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:qualified-receive-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to Custom.receive(:foo).and_return(1)\nallow(Service).to Custom.receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to Custom.receive(:foo).and_return(1)\nallow(Service).to Custom.receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to Custom.receive(:foo).and_return(1)\nallow(Service).to Custom.receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:safe-return-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo)&.and_return(1)\nallow(Service).to receive(:bar)&.and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo)&.and_return(1)\nallow(Service).to receive(:bar)&.and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(:foo)&.and_return(1)\nallow(Service).to receive(:bar)&.and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:string-message-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(\"foo\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(\"foo\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(\"foo\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:splat-return-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(*values)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(*values)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(:foo).and_return(*values)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:extra-return-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:foo).and_return(1,2)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:foo).and_return(1,2)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(:foo).and_return(1,2)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch28:multiline-symbol-negative",
+    "cop": "RSpec/ReceiveMessages",
+    "source": "allow(Service).to receive(:\"foo\nbar\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ReceiveMessages branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Service).to receive(:\"foo\nbar\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Service).to receive(:\"foo\nbar\").and_return(1)\nallow(Service).to receive(:bar).and_return(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]
