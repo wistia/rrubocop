@@ -14,6 +14,9 @@ impl Cop for Present {
     fn supports_autocorrect(&self) -> bool {
         true
     }
+    fn safe_autocorrect(&self) -> bool {
+        false
+    }
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["binary", "unary", "unless", "unless_modifier"]
     }
@@ -133,4 +136,8 @@ fn exists_and_not_empty<'a>(source: &SourceFile, node: Node<'a>) -> Option<Optio
 mod tests {
     use super::*;
     crate::cop_fixture_tests!(Present, "cops/rails/present");
+    #[test]
+    fn requires_explicit_unsafe_correction_for_value_changing_rewrites() {
+        assert!(!Present.safe_autocorrect());
+    }
 }

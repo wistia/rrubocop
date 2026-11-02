@@ -1,83 +1,127 @@
 # Framework cop parity implementation
 
-This branch owns Rails, Migration, Performance and FactoryBot. The baseline
-inventory has 90 enabled cops, including 67 no-op stubs. The first batch replaces
-7 stubs with implementations; 60 stubs and the remaining implemented-cop gaps
-still need work. The exhaustive queue is `wistia-framework-parity.json`.
+This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
+The baseline inventory contained 67 no-op stubs. The first two batches replace
+10 stubs with implementations; 57 stubs and the remaining implemented-cop gaps
+still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
 
-Reference: Ruby RuboCop 1.65.1, rubocop-rails 2.26.0 and
-rubocop-performance 1.21.1 from Wistia's locked bundle. Each implementation was
-reviewed against the original Ruby source after porting, not inferred from a
-few examples. `upstream_source` in the JSON inventory records the source file.
+Reference: Ruby RuboCop 1.65.1, rubocop-rails 2.26.0,
+rubocop-performance 1.21.1 and rubocop-factory_bot 2.26.1 from Wistia's locked
+bundle. Each port was reviewed against the original Ruby algorithm after writing
+it. The inventory records each original source file.
 
-- `Rails/Blank`: nil/empty combinations (`nil?`, `== nil`, `nil ==`, negation,
-  double-negated empty), negated present, implicit receivers, `unless` statement
-  and modifier, all three configuration switches, safe-navigation exclusions,
-  direct `blank?` method-body exclusion and nested-method negative controls.
-- `Rails/Present`: plain/nonnull/double-negated receivers followed by negated
-  empty, negated blank, implicit receivers, both `unless` forms, all three
-  switches, safe-navigation negatives.
+- `Rails/Blank`: nil?/empty?, equality with nil in both orders, negation,
+  double-negated empty, negated present, implicit receivers, both unless forms,
+  configuration switches, safe-navigation exclusions and defining-blank exclusion.
+- `Rails/Present`: plain/non-null/double-negated receivers with negated empty,
+  negated blank, implicit receivers, both unless forms and configuration switches.
 - `Rails/OutputSafety`: html_safe, receiverless raw, safe_concat, literal versus
   interpolated strings, nested I18n translations and non-I18n receivers.
-- `Performance/Count`: select/filter/find_all/reject, count/length/size, blocks,
-  symbol block passes, safe navigation, counted arguments, attached outer blocks,
-  multi-statement blocks, comments, Unicode and raw-byte preservation.
+- `Performance/Count`: select/filter/find_all/reject; count/length/size; blocks,
+  symbol block passes, safe navigation, outer arguments/blocks, multiple block
+  statements, comments, Unicode and raw bytes.
 - `Performance/Size`: array/hash literals, to_a/to_h, Array/Hash constructors,
   constructor arity, blocks and count arguments.
-- `Performance/RangeInclude`: inclusive/exclusive literal ranges, member?/include?,
-  safe navigation and one versus two parenthesis layers. String ranges retain
-  the original unsafe-correction classification.
-- `Performance/UriDefaultParser`: rooted/unrooted URI::Parser, options, unrelated
-  namespaces, safe navigation and attached blocks. Correction preserves the block.
+- `Performance/RangeInclude`: inclusive/exclusive literal ranges,
+  include?/member?, safe navigation and parenthesis depth.
+- `Performance/UriDefaultParser`: rooted/unrooted constants, constructor options,
+  unrelated namespaces, safe navigation and attached blocks.
+- `FactoryBot/FactoryClassName`: rooted/namespaced constants, Hash/OpenStruct
+  exemptions, receiver forms, option hashes, symbol/string keys and correction policy.
+- `FactoryBot/AttributeDefinedStatically`: factory/trait/transient blocks,
+  reserved methods, implicit/self/proxy receivers, dynamic attributes, associations,
+  proc arguments, bare hashes, parentheses and raw-byte-preserving wrappers.
+- `FactoryBot/CreateList`: times/times.map/Array.new, repeated arrays,
+  explicit receivers, both styles, ExplicitOnly, options, dynamic calls versus
+  lexical locals, index usage, nested factory blocks and integer source forms.
 
-Post-review caught and fixed safe-navigation false positives, Hash constructor
-arity, accidental URI block deletion, multiline/Unicode highlight lengths,
-misreported disabled-autocorrection metadata, and raw-byte source loss.
+The distinct post-port review fixed safe-navigation false positives, Hash arity,
+URI block deletion, multiline/Unicode highlight lengths, correction-policy
+metadata, FactoryBot argument parentheses, lexical locals and raw-byte source loss.
 
-## Evidence and intentional differences
+## Evidence
 
-The strict differential driver compares original diagnostic count, location,
-message, severity, highlight length and correctability; safe/all corrected bytes;
-Ruby compilation; final-state specimens; and second-pass idempotence. It imports
-production cop options from Wistia's original Ruby configuration and normalizes
-fixture paths. Scope-sensitive end-to-end CLI checks remain follow-up work.
+The strict driver compares offense counts, positions, messages, severity,
+highlight length and correctability; safe/all corrected bytes; compilation;
+final-state specimens; and second-pass idempotence. Original cop options come
+from Wistia's effective Ruby configuration. Fixture scopes are normalized;
+end-to-end checks of actual configured file scopes remain pending.
 
-Current matrix: 111 original specimens and 222 second-pass specimens. Six ordinary
-implemented cops have no observed differences. The strict run intentionally
-**fails** with six events for one `Performance/Count` source repeated in the
-original and second-pass matrices: `items.reject(&predicate).count`.
-Ruby rewrites it as `items.count { !predicate.call }`, dropping the block argument.
-Rust diagnoses the offense but declines that correction and reports it as not
-correctable. This is a visible safety difference, not an allowed exception or a
-claim of complete parity. The driver contains no difference allowlist.
+The current matrix has **184 original specimens**, **368 second-pass specimens**
+and **10 explicitly authored trusted runtime programs**. Ordinary fixture code
+is parsed/compiled, never executed. Eight implemented cops have no observed
+upstream differences in this bounded matrix. Two safety policies intentionally
+differ and remain visible in every strict run; the command exits nonzero for
+all differences and has no allowlist.
 
-Additional source-preservation guards decline corrections that would remove an
-inter-call or inter-predicate comment. Rust tests assert those guards directly.
-Count correction uses independent token edits, preserving raw bytes and comments
-inside the filter block; predicate corrections preserve the receiver's original
-bytes rather than rebuilding it through a lossy UTF-8 conversion.
+### Count proc argument safeguard
 
-These are finite probes, not a proof of equivalence. Further cases are still
-needed for uncommon implicit bindings, arbitrary syntax equivalence, cross-cop
-interactions, Rails version overrides and disabled `Style/UnlessElse` interaction.
-The existing Ruby unsafe classifications remain important: correcting Blank on
-whitespace strings, Count on ActiveRecord relations, or RangeInclude on string
-ranges can intentionally change behavior even when Rust matches Ruby.
+Ruby rewrites `items.reject(&predicate).count` to
+`items.count { !predicate.call }`, dropping the element argument. A trusted
+lambda requiring one argument proves the Ruby correction raises an arity error.
+Rust diagnoses the offense but declines this correction and preserves execution.
+Two source specimens repeated through the matrices produce **12 differences**
+(six correctability reports and six unsafe byte outputs), plus **1 runtime
+difference**. The guard is deliberately not described as exact correction parity.
 
-## Validation
+### Present safety classification
+
+Pinned `Rails/Present#on_and` invokes `exists_and_not_empty?`, then replaces
+`receiver && !receiver.empty?` with `receiver.present?` without a receiver-type or
+value-context guard. The original configuration advertises safe autocorrection.
+Actual production-config Ruby `-a` probes confirm:
+
+```ruby
+require 'active_support/core_ext/object/blank'
+value = nil
+p(value && !value.empty?) # prints nil; corrected source prints false
+```
+
+For `value = " "`, the original prints true and the corrected version false.
+This is more than a hypothetical edge: nil return values and whitespace
+truthiness differ under the original rule's global matcher. Negated blank and
+unless forms have stronger method-contract equivalence, but the current engine
+classifies safety per cop. The conservative Rust classification therefore
+requires **explicit unsafe correction for the entire Present cop**. Detection
+and `-A` bytes still match the reference in the tested cases; `-a` preserves the
+source instead of silently making a value-changing rewrite.
+
+The stricter default produces **22 safe-mode byte differences** in the repeated
+matrix and **1 safe runtime difference** from Ruby. The trusted runtime report
+also records that `-A` matches Ruby while changing the original nil value. This
+is an explicit policy/safety difference, not a semantics-preservation claim.
+
+### Source-preservation guards
+
+Corrections that would discard inter-call/inter-predicate comments are declined.
+Count uses independent token edits, retaining comments and raw bytes inside the
+filter block. Predicate rewrites preserve original receiver bytes. Factory
+attribute wrappers retain raw bytes; Factory list rewrites decline raw bytes or
+comments they cannot preserve. Direct Rust tests cover these guards.
+
+## Validation and remaining work
 
 ```sh
-CARGO_TARGET_DIR=/dev/shm/rrubocop-framework-target CARGO_PROFILE_DEV_DEBUG=0 \
-  CARGO_INCREMENTAL=0 cargo test --locked --lib cop::performance
-CARGO_TARGET_DIR=/dev/shm/rrubocop-framework-target CARGO_PROFILE_DEV_DEBUG=0 \
-  CARGO_INCREMENTAL=0 cargo test --locked --lib cop::rails
+cargo test --locked --lib cop::rails
+cargo test --locked --lib cop::performance
+cargo test --locked --lib cop::factory_bot
 python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-The differential command exits nonzero for every mismatch, including the explicit
-upstream proc hazard above. Its `failures.json` and `summary.json` retain the full
-evidence. Source fixture tests and safety regression tests are ordinary Rust tests.
-No Wistia policy changes or rule retirements are included in this branch.
+Targeted suites passed: 35 Rails, 18 Performance and 11 FactoryBot tests before
+the additional Present safety-classification regression. The strict command
+currently exits 1 with **36 transparent safety-difference events** under the two
+policies above. `failures.json`, `summary.json` and `runtime.json` contain evidence;
+there are no unexpected detection, message, range, byte or idempotence differences
+in the selected specimens.
+
+This is finite evidence, not a proof over every Ruby program. Remaining branch
+coverage includes unusual bindings, arbitrary AST/source equivalence,
+version overrides, disabled Style/UnlessElse interactions, source scopes and
+cross-cop interactions. AttributeDefinedStatically declines unsupported
+multi-positional-value rewrites instead of generating invalid Ruby. Factory list
+binding analysis remains conservative. No Wistia enforcement changes, rule
+retirements, rollout changes or S3 releases are included.
