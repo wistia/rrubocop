@@ -63,3 +63,36 @@ when replacing `should_not`, owing to its inverted alternatives table. This
 implementation matches that intermediate result; RSpec/NotToNot may normalize it
 in a combined-cop run. The current per-rule matrix does not claim combined-rule
 semantic equivalence.
+
+## Third batch
+
+Nine additional no-op rules now have implementations: DescribeClass,
+DescribeMethod, ExampleWithoutDescription, ExpectOutput,
+IdenticalEqualityAssertion, MultipleDescribes,
+UndescriptiveLiteralsDescription, VoidExpect, and NoExpectationExample.
+The branch now implements 32 of the original 80 RSpec stubs. Forty-eight stubs
+and 16 previously implemented rules still await their own review.
+
+The strict matrix now contains 413 cases across all 32 implemented rules. Of
+these, 263 are imported from pinned upstream Ruby specs using Prism's decoded
+string/heredoc values, without executing specimen code. Thirteen upstream
+host-generated templates cannot be imported without evaluating their test
+context; they are explicitly listed in `import-manifest.json` and are not counted
+as compared cases. `scripts/extract_rspec_upstream.rb` makes this import repeatable.
+The remaining 150 cases exercise production/default and alternate configuration
+branches, local binding and receiver controls, symbols versus strings in
+metadata/hooks, interpolated description prefixes, and AST-equivalent literal
+forms. All 48 RSpec/RSpecRails unit tests pass on this branch.
+
+This source review also fixed a false-positive risk from treating an interpolated
+`"#{method_name}"` as a literal method-description prefix, retained the distinct
+symbol/string branches of the original hook and metadata matchers, and reused
+the existing Ruby-compatible literal decoder for equality assertions and
+constant-looking descriptions. The literal decoder is exposed through a small
+shared wrapper so other cop departments can reuse the same implementation.
+
+The configured AllowedPatterns evidence covers Wistia's simple prefix patterns
+and an alternate explicit prefix. Arbitrary Ruby-only regexp features in custom
+configuration, all numbered-block forms, and every possible AST spelling are not
+claimed as proven. These remain finite differential results, not a proof of
+complete equivalence for each rule or the whole RSpec department.

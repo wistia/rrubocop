@@ -124,6 +124,11 @@ fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
     {
         return false;
     }
+    local_binding(source, node)
+}
+
+pub(super) fn local_binding(source: &SourceFile, node: Node<'_>) -> bool {
+    let binding = node_bytes(source, node);
     let mut current = node.parent();
     while let Some(scope) = current {
         if matches!(
@@ -165,7 +170,16 @@ pub(super) fn hooks() -> &'static [&'static [u8]] {
     ]
 }
 pub(super) fn expectations() -> &'static [&'static [u8]] {
-    &[b"expect", b"expect_any_instance_of", b"is_expected"]
+    &[
+        b"are_expected",
+        b"should",
+        b"should_not",
+        b"should_receive",
+        b"should_not_receive",
+        b"expect",
+        b"expect_any_instance_of",
+        b"is_expected",
+    ]
 }
 pub(super) fn metadata_call(source: &SourceFile, node: Node<'_>) -> bool {
     use crate::cop::rspec::helpers::{bare_rspec_call, call_block, is_example, is_group};
@@ -251,4 +265,239 @@ pub(super) fn preserving_replace(
         return false;
     }
     crate::cop::shared::push_replace(corrections, start, end, replacement, cop)
+}
+
+pub(super) fn is_example_group(method: &[u8]) -> bool {
+    crate::cop::rspec::helpers::is_group(method)
+        && ![
+            b"shared_context".as_slice(),
+            b"shared_examples",
+            b"shared_examples_for",
+        ]
+        .contains(&method)
+}
+pub(super) fn top_groups<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node<'a>> {
+    let mut root = node;
+    while let Some(parent) = root.parent() {
+        root = parent;
+    }
+    crate::cop::rspec::helpers::top_level_groups(source, root)
+}
+pub(super) fn literal_starts_with(source: &SourceFile, node: Node<'_>, prefixes: &[u8]) -> bool {
+    if let Some(value) = crate::cop::ported::static_literal(source, node) {
+        return value
+            .as_bytes()
+            .first()
+            .is_some_and(|byte| prefixes.contains(byte));
+    }
+    if node.kind() == "chained_string" {
+        return code_children(node)
+            .first()
+            .is_some_and(|first| literal_starts_with(source, *first, prefixes));
+    }
+    code_children(node)
+        .first()
+        .filter(|child| child.kind() == "string_content")
+        .and_then(|child| node_bytes(source, *child).first())
+        .is_some_and(|byte| prefixes.contains(byte))
+}
+
+pub(super) fn compiled_patterns(config: &crate::cop::CopConfig, key: &str) -> Vec<regex::Regex> {
+    config
+        .options
+        .get(key)
+        .and_then(|value| value.as_sequence())
+        .into_iter()
+        .flatten()
+        .filter_map(|pattern| pattern.as_str())
+        .filter_map(|pattern| regex::Regex::new(pattern).ok())
+        .collect()
+}
+
+pub(super) fn metadata_pairs(node: Node<'_>) -> Vec<Node<'_>> {
+    call_args(node)
+        .into_iter()
+        .flat_map(|arg| {
+            if arg.kind() == "hash" {
+                code_children(arg)
+            } else {
+                vec![arg]
+            }
+        })
+        .filter(|arg| arg.kind() == "pair")
+        .collect()
+}
+pub(super) fn ignored_metadata(
+    source: &SourceFile,
+    node: Node<'_>,
+    config: &crate::cop::CopConfig,
+) -> bool {
+    let Some(ignored) = config
+        .options
+        .get("IgnoredMetadata")
+        .and_then(|value| value.as_mapping())
+    else {
+        return false;
+    };
+    metadata_pairs(node).iter().any(|pair| {
+        let Some(key) = pair.child_by_field_name("key") else {
+            return false;
+        };
+        let Some(value) = pair.child_by_field_name("value") else {
+            return false;
+        };
+        if !matches!(
+            key.kind(),
+            "hash_key_symbol" | "simple_symbol" | "delimited_symbol" | "symbol"
+        ) || !matches!(
+            value.kind(),
+            "simple_symbol" | "delimited_symbol" | "symbol"
+        ) {
+            return false;
+        }
+        let key_bytes = if key.kind() == "hash_key_symbol" {
+            Some(node_bytes(source, key))
+        } else {
+            symbol(source, key)
+        };
+        let Some(key) = key_bytes else {
+            return false;
+        };
+        let Some(value) = symbol(source, value) else {
+            return false;
+        };
+        ignored
+            .get(serde_yml::Value::String(
+                String::from_utf8_lossy(key).into_owned(),
+            ))
+            .and_then(|entry| entry.as_sequence())
+            .is_some_and(|allowed| {
+                allowed
+                    .iter()
+                    .filter_map(|value| value.as_str())
+                    .any(|entry| entry.as_bytes() == value)
+            })
+    })
+}
+pub(super) fn skipped_metadata(source: &SourceFile, node: Node<'_>) -> bool {
+    if call_args(node)
+        .into_iter()
+        .any(|arg| symbol_node(arg) && matches!(symbol(source, arg), Some(b"skip" | b"pending")))
+    {
+        return true;
+    }
+    metadata_pairs(node).iter().any(|pair| {
+        let Some(key) = pair.child_by_field_name("key") else {
+            return false;
+        };
+        let Some(value) = pair.child_by_field_name("value") else {
+            return false;
+        };
+        let key = if key.kind() == "hash_key_symbol" {
+            Some(node_bytes(source, key))
+        } else {
+            symbol(source, key)
+        };
+        matches!(key, Some(b"skip" | b"pending"))
+            && matches!(value.kind(), "true" | "string" | "chained_string")
+    })
+}
+pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
+    if let (Some(a), Some(b)) = (integer_value(source, left), integer_value(source, right)) {
+        return a == b;
+    }
+    if left.kind() != right.kind() {
+        let literal_kind = |node: Node<'_>| match node.kind() {
+            "string" | "chained_string" => Some("string"),
+            "simple_symbol" | "delimited_symbol" => Some("symbol"),
+            _ => None,
+        };
+        return literal_kind(left).is_some_and(|kind| Some(kind) == literal_kind(right))
+            && crate::cop::ported::static_literal(source, left).is_some_and(|value| {
+                Some(value) == crate::cop::ported::static_literal(source, right)
+            });
+    }
+    if left.kind() == "string" {
+        match (
+            crate::cop::ported::static_literal(source, left),
+            crate::cop::ported::static_literal(source, right),
+        ) {
+            (Some(a), Some(b)) => return a == b,
+            (Some(_), None) | (None, Some(_)) => return false,
+            _ => {}
+        }
+    }
+    if left.kind() == "regex" {
+        return node_bytes(source, left) == node_bytes(source, right);
+    }
+    if left.kind() == "float" {
+        return String::from_utf8_lossy(node_bytes(source, left))
+            .replace('_', "")
+            .parse::<f64>()
+            .ok()
+            == String::from_utf8_lossy(node_bytes(source, right))
+                .replace('_', "")
+                .parse::<f64>()
+                .ok();
+    }
+    let a = code_children(left);
+    let b = code_children(right);
+    if a.is_empty() || b.is_empty() {
+        return node_bytes(source, left) == node_bytes(source, right);
+    }
+    if let (Some(a), Some(b)) = (
+        left.child_by_field_name("operator"),
+        right.child_by_field_name("operator"),
+    ) {
+        if node_bytes(source, a) != node_bytes(source, b) {
+            return false;
+        }
+    }
+    a.len() == b.len()
+        && a.iter()
+            .zip(&b)
+            .all(|(a, b)| same_expression(source, *a, *b))
+}
+
+fn integer_value(source: &SourceFile, node: Node<'_>) -> Option<num_bigint::BigInt> {
+    if node.kind() == "unary" {
+        let operator = node.child_by_field_name("operator")?;
+        let operand = node.child_by_field_name("operand")?;
+        let value = integer_value(source, operand)?;
+        return match node_bytes(source, operator) {
+            b"-" => Some(-value),
+            b"+" => Some(value),
+            _ => None,
+        };
+    }
+    if node.kind() != "integer" {
+        return None;
+    }
+    let text = String::from_utf8_lossy(node_bytes(source, node)).replace('_', "");
+    let (radix, digits) =
+        if let Some(value) = text.strip_prefix("0x").or_else(|| text.strip_prefix("0X")) {
+            (16, value)
+        } else if let Some(value) = text.strip_prefix("0b").or_else(|| text.strip_prefix("0B")) {
+            (2, value)
+        } else if let Some(value) = text.strip_prefix("0o").or_else(|| text.strip_prefix("0O")) {
+            (8, value)
+        } else if let Some(value) = text.strip_prefix("0d").or_else(|| text.strip_prefix("0D")) {
+            (10, value)
+        } else if text.starts_with('0') && text.len() > 1 {
+            (8, &text[1..])
+        } else {
+            (10, text.as_str())
+        };
+    num_bigint::BigInt::parse_bytes(digits.as_bytes(), radix)
+}
+
+pub(super) fn symbol_node(node: Node<'_>) -> bool {
+    matches!(node.kind(), "simple_symbol" | "delimited_symbol" | "symbol")
+}
+
+pub(super) fn constant_description(value: &str) -> bool {
+    static PATTERN: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    PATTERN
+        .get_or_init(|| regex::Regex::new(r"(?m)^(?:(?:::)?[A-Z][A-Za-z0-9_]*)+$").unwrap())
+        .is_match(value)
 }

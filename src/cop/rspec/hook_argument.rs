@@ -36,7 +36,7 @@ impl Cop for HookArgument {
             return;
         }
         let args = call_args(node);
-        if args.len() > 1 {
+        if args.len() > 1 || args.first().is_some_and(|arg| !symbol_node(*arg)) {
             return;
         }
         let scope = args.first().and_then(|arg| symbol(source, *arg));

@@ -1,6 +1,5 @@
 use crate::cop::rspec::helpers::{RSPEC_INCLUDE, bare_rspec_call, call_block};
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::node_bytes;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -38,8 +37,7 @@ impl Cop for ContextMethod {
         if !matches!(arg.kind(), "string" | "chained_string") {
             return;
         }
-        let bytes = node_bytes(source, arg);
-        if !matches!(bytes.get(1), Some(b'.' | b'#')) {
+        if !literal_starts_with(source, arg, &[b'.', b'#']) {
             return;
         }
         let index = report(

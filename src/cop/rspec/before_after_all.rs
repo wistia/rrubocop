@@ -32,7 +32,10 @@ impl Cop for BeforeAfterAll {
             return;
         }
         let args = call_args(node);
-        if args.len() != 1 || !matches!(symbol(source, args[0]), Some(b"all" | b"context")) {
+        if args.len() != 1
+            || !symbol_node(args[0])
+            || !matches!(symbol(source, args[0]), Some(b"all" | b"context"))
+        {
             return;
         }
         let end = header_end(node);
