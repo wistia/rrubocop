@@ -35,6 +35,9 @@ for case in all_rows:
     name = case['id']
     ruby = reference[name]
     rust = results[name, 'off']
+    if ruby.get('original_invalid'):
+        failures.append(dict(id=name, source=case['source'], kind='original_invalid', ruby=ruby, rust=rust))
+        continue
     if 'error' in ruby or 'error' in rust:
         failures.append(dict(id=name, kind='error', ruby=ruby, rust=rust))
         continue

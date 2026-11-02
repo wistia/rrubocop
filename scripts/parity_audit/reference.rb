@@ -69,6 +69,8 @@ class AuditReference < PortedReference
     return [] if cop.class.respond_to?(:support_target_ruby_version?) &&
                  !cop.class.support_target_ruby_version?(cop.target_ruby_version)
 
+    return [] unless cop.send(:target_satisfies_all_gem_version_requirements?)
+
     [cop]
   end
 
@@ -78,7 +80,16 @@ class AuditReference < PortedReference
       'Enabled' => true, 'Include' => ['**/*'], 'Exclude' => []
     )
     all_cops = @config.for_all_cops.merge(test.fetch('config', {}).slice('TargetRubyVersion', 'TargetRailsVersion'))
-    RuboCop::Config.new(@config.merge(name => options, 'AllCops' => all_cops), @config.loaded_path)
+    config = RuboCop::Config.new(@config.merge(name => options, 'AllCops' => all_cops), @config.loaded_path)
+    with_fixture_gem_versions(config, test.fetch('config', {})['GemVersions'])
+  end
+
+  def with_fixture_gem_versions(config, gems)
+    return config unless gems
+
+    versions = gems.transform_values { |version| Gem::Version.new(version.to_s) }
+    config.instance_variable_set(:@gem_versions_in_target, versions)
+    config
   end
 
   def correction(test, index, mode)
