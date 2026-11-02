@@ -398,3 +398,28 @@ the existing ruby_static_string decoder as a fallback; no second decoder is
 introduced and its single-part guard is retained. Exact original diagnostic
 messages, including a newline in a heredoc-defined name, are covered. These three
 rules perform no source correction or fixture execution.
+
+## Batch 15: pending reasons, mock responses, eager helpers, and spies
+
+PendingWithoutReason and StubbedMock replace two more initial stubs. Existing
+LetSetup and MessageSpies implementations are repaired and reviewed. The total
+is 64 original stubs plus twelve existing rules reviewed, leaving sixteen
+original stubs and four existing implementations open. The strict matrix has
+1,242 comparisons across 76 rules; all 48 RSpec/RSpecRails tests pass. The same
+15 safeguards and 35 correction-disable controls remain separate.
+
+Distinct original-source review covered direct-parent begin/block mapping,
+normal versus numbered examples, the final metadata argument and first offense
+at a source range, response matcher arity, keyword hashes and block-pass forms,
+group-scoped eager helper definitions, no-argument references, local-variable
+shorthand and both spy styles. Additional probes distinguish a runner's response
+block from a matcher argument's block, literal keyword hashes from positional
+arguments, normal and splatted keywords, conditional/parenthesized statements,
+multiple pending tags and source-faithful spy target messages.
+
+One additional original upstream case nests numbered parameters in an outer
+numbered-parameter block. RubyVM rejects that source; its precise syntax error
+is retained with the previous three invalid original yield specimens, outside
+the strict matrix. The pinned import now retains 916 specimens, with thirteen
+remaining host-generated templates explicit. These four rules do not correct
+source or execute fixture programs.

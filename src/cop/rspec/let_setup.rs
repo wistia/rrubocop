@@ -1,132 +1,142 @@
-//! RSpec/LetSetup — unused `let!` used only for side effects.
-
-use std::collections::HashSet;
-
-use tree_sitter::Node;
-
 use crate::cop::rspec::helpers::{
-    RSPEC_INCLUDE, bare_rspec_call, block_body, call_block, first_sym_arg, is_group,
+    RSPEC_INCLUDE, bare_rspec_call, call_block, is_example, is_group,
 };
-use crate::cop::shared::{
-    call_method_name, call_receiver, for_each_descendant, method_node, node_bytes,
-};
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::rspec::separation::numbered_block;
+use crate::cop::shared::{call_receiver, node_bytes};
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
+
+fn inclusion(source: &SourceFile, node: Node<'_>) -> bool {
+    !safe_send(source, node)
+        && matches!(
+            name(source, node),
+            Some(
+                b"include_examples"
+                    | b"include_context"
+                    | b"it_behaves_like"
+                    | b"it_should_behave_like"
+            )
+        )
+}
 
 pub struct LetSetup;
-
-const MSG: &str = "Do not use `let!` to setup objects not referenced in tests.";
-
-fn skip_helper_name(name: &[u8]) -> bool {
-    matches!(
-        name,
-        b"let" | b"let!" | b"subject" | b"subject!" | b"expect"
-    )
-}
-
-/// Ruby 3.1 `foo(bar:)` — RuboCop treats the implicit value as `(send nil? bar)`.
-fn shorthand_kwarg_name(source: &SourceFile, node: Node<'_>) -> Option<Vec<u8>> {
-    if node.kind() != "hash_key_symbol" {
-        return None;
-    }
-    let parent = node.parent()?;
-    if parent.kind() != "pair" || parent.child_by_field_name("value").is_some() {
-        return None;
-    }
-    let raw = node_bytes(source, node);
-    Some(raw.strip_suffix(b":").unwrap_or(raw).to_vec())
-}
-
-fn referenced_name(source: &SourceFile, node: Node<'_>) -> Option<Vec<u8>> {
-    if let Some(n) = shorthand_kwarg_name(source, node) {
-        return Some(n);
-    }
-    match node.kind() {
-        "call" | "command" if call_receiver(node).is_none() => {
-            call_method_name(source, node).map(|n| n.to_vec())
-        }
-        "identifier" => Some(node_bytes(source, node).to_vec()),
-        _ => None,
-    }
-}
-
-fn collect_used_names(source: &SourceFile, body: Node<'_>) -> HashSet<Vec<u8>> {
-    let mut used = HashSet::new();
-    for_each_descendant(body, |node| {
-        if let Some(n) = referenced_name(source, node).filter(|n| !skip_helper_name(n)) {
-            used.insert(n);
-        }
-    });
-    used
-}
-
-fn each_let_bang<'a>(source: &SourceFile, body: Node<'a>, mut f: impl FnMut(Vec<u8>, Node<'a>)) {
-    let mut cur = body.walk();
-    for stmt in body.named_children(&mut cur) {
-        if !matches!(stmt.kind(), "call" | "command") {
-            continue;
-        }
-        if call_method_name(source, stmt) != Some(b"let!") {
-            continue;
-        }
-        if let Some(name) = first_sym_arg(source, stmt) {
-            f(name.to_vec(), stmt);
-        }
-    }
-}
-
-fn check_group(
-    cop: &LetSetup,
-    source: &SourceFile,
-    body: Node<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
-) {
-    let used = collect_used_names(source, body);
-    each_let_bang(source, body, |name, node| {
-        if used.contains(&name) {
-            return;
-        }
-        let (line, col) = source.offset_to_line_col(method_node(node).unwrap_or(node).start_byte());
-        diagnostics.push(cop.diagnostic(source, line, col, MSG.into()));
-    });
-}
-
 impl Cop for LetSetup {
     fn name(&self) -> &'static str {
         "RSpec/LetSetup"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
         RSPEC_INCLUDE
     }
-
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
+        &["call", "identifier"]
     }
-
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        let Some(method) = bare_rspec_call(source, node) else {
-            return;
-        };
-        if !is_group(method) {
+        let _ = config;
+        if numbered_block(source, node)
+            || call_block(node).is_none()
+            || !(bare_rspec_call(source, node).is_some_and(is_group)
+                || call_receiver(node).is_none() && inclusion(source, node))
+        {
             return;
         }
-        let Some(body) = call_block(node).and_then(block_body) else {
-            return;
-        };
-        check_group(self, source, body, diagnostics);
-    }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
+        let mut lets = Vec::new();
+        let mut pending = code_children(node);
+        while let Some(child) = pending.pop() {
+            let args = call_args(child);
+            let helper = !safe_send(source, child)
+                && call_receiver(child).is_none()
+                && matches!(name(source, child), Some(b"let" | b"let!"))
+                && !numbered_block(source, child)
+                && (call_block(child).is_some()
+                    || args.len() == 2 && args[1].kind() == "block_argument");
+            if helper {
+                lets.push(child);
+                continue;
+            }
+            if !numbered_block(source, child)
+                && call_block(child).is_some()
+                && (bare_rspec_call(source, child).is_some_and(is_group)
+                    || call_receiver(child).is_none()
+                        && (inclusion(source, child)
+                            || bare_rspec_call(source, child).is_some_and(is_example)))
+            {
+                continue;
+            }
+            pending.extend(code_children(child));
+        }
+        lets.sort_by_key(Node::start_byte);
+        for helper in lets {
+            if name(source, helper) != Some(b"let!") {
+                continue;
+            }
+            let args = call_args(helper);
+            let valid = if call_block(helper).is_some() {
+                args.len() == 1
+            } else {
+                args.len() == 2 && args[1].kind() == "block_argument"
+            };
+            if !valid {
+                continue;
+            }
+            let argument = args[0];
+            if !(symbol_node(argument)
+                || matches!(
+                    argument.kind(),
+                    "string" | "character" | "heredoc_beginning"
+                ))
+            {
+                continue;
+            }
+            let Some(value) = crate::cop::ported::static_literal(source, argument) else {
+                continue;
+            };
+            let mut pending = vec![node];
+            let mut used = false;
+            while let Some(child) = pending.pop() {
+                if !safe_send(source, child)
+                    && call_receiver(child).is_none()
+                    && call_args(child).is_empty()
+                    && name(source, child) == Some(value.as_bytes())
+                {
+                    used = true;
+                    break;
+                }
+                if child.kind() == "hash_key_symbol"
+                    && child.parent().is_some_and(|pair| {
+                        pair.kind() == "pair" && pair.child_by_field_name("value").is_none()
+                    })
+                    && node_bytes(source, child)
+                        .strip_suffix(b":")
+                        .unwrap_or(node_bytes(source, child))
+                        == value.as_bytes()
+                    && !local_binding(source, child)
+                {
+                    used = true;
+                    break;
+                }
+                pending.extend(code_children(child));
+            }
+            if !used {
+                report(
+                    self,
+                    source,
+                    helper.start_byte(),
+                    header_end(helper),
+                    "Do not use `let!` to setup objects not referenced in tests.".into(),
+                    diagnostics,
+                );
+            }
+        }
     }
 }
 

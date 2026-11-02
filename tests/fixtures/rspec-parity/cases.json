@@ -58175,5 +58175,5400 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "let_setup_spec:0",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  let!(:foo) { bar }\n\n  it 'does not use foo' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  let!(:foo) { bar }\n\n  it 'does not use foo' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  let!(:foo) { bar }\n\n  it 'does not use foo' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n  let!(:foo) { bar }\n\n  it 'does not use foo' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:1",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  let!(:foo) { bar }\n\n  before do\n    foo\n  end\n\n  it 'does not use foo' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  let!(:foo) { bar }\n\n  before do\n    foo\n  end\n\n  it 'does not use foo' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  let!(:foo) { bar }\n\n  before do\n    foo\n  end\n\n  it 'does not use foo' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  let!(:foo) { bar }\n\n  before do\n    foo\n  end\n\n  it 'does not use foo' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:2",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  let!(:foo) { bar }\n\n  it 'uses foo' do\n    foo\n    expect(baz).to eq(qux)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  let!(:foo) { bar }\n\n  it 'uses foo' do\n    foo\n    expect(baz).to eq(qux)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  let!(:foo) { bar }\n\n  it 'uses foo' do\n    foo\n    expect(baz).to eq(qux)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  let!(:foo) { bar }\n\n  it 'uses foo' do\n    foo\n    expect(baz).to eq(qux)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:3",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  context 'when something special happens' do\n    let!(:foo) { bar }\n\n    it 'does not use foo' do\n      expect(baz).to eq(qux)\n    end\n  end\n\n  it 'references some other foo' do\n    foo\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  context 'when something special happens' do\n    let!(:foo) { bar }\n\n    it 'does not use foo' do\n      expect(baz).to eq(qux)\n    end\n  end\n\n  it 'references some other foo' do\n    foo\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 4,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  context 'when something special happens' do\n    let!(:foo) { bar }\n\n    it 'does not use foo' do\n      expect(baz).to eq(qux)\n    end\n  end\n\n  it 'references some other foo' do\n    foo\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n  context 'when something special happens' do\n    let!(:foo) { bar }\n\n    it 'does not use foo' do\n      expect(baz).to eq(qux)\n    end\n  end\n\n  it 'references some other foo' do\n    foo\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:4",
+    "cop": "RSpec/LetSetup",
+    "source": "shared_context 'foo' do\n  let!(:bar) { baz }\n\n  it 'does not use bar' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "shared_context 'foo' do\n  let!(:bar) { baz }\n\n  it 'does not use bar' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "shared_context 'foo' do\n  let!(:bar) { baz }\n\n  it 'does not use bar' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "shared_context 'foo' do\n  let!(:bar) { baz }\n\n  it 'does not use bar' do\n    expect(baz).to eq(qux)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:5",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  it_behaves_like 'bar' do\n    let!(:baz) { foobar }\n    let(:a) { b }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it_behaves_like 'bar' do\n    let!(:baz) { foobar }\n    let(:a) { b }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 4,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it_behaves_like 'bar' do\n    let!(:baz) { foobar }\n    let(:a) { b }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n  it_behaves_like 'bar' do\n    let!(:baz) { foobar }\n    let(:a) { b }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:6",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  let!(:bar) { baz }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  let!(:bar) { baz }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  let!(:bar) { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n  let!(:bar) { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:7",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  let!('bar') { baz }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  let!('bar') { baz }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  let!('bar') { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n  let!('bar') { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:8",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  let!('bar') { baz }\n  it { expect(bar).to be_near }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  let!('bar') { baz }\n  it { expect(bar).to be_near }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  let!('bar') { baz }\n  it { expect(bar).to be_near }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  let!('bar') { baz }\n  it { expect(bar).to be_near }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:9",
+    "cop": "RSpec/LetSetup",
+    "source": "shared_context Foo do |&block|\n  let!(:bar, &block)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "shared_context Foo do |&block|\n  let!(:bar, &block)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 18,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "shared_context Foo do |&block|\n  let!(:bar, &block)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 18,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "shared_context Foo do |&block|\n  let!(:bar, &block)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 18,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "let_setup_spec:10",
+    "cop": "RSpec/LetSetup",
+    "source": "describe Foo do\n  [].each do |i|\n    let!(:bar) { i }\n\n    it 'does not use bar' do\n      expect(baz).to eq(qux)\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  [].each do |i|\n    let!(:bar) { i }\n\n    it 'does not use bar' do\n      expect(baz).to eq(qux)\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_setup_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 4,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  [].each do |i|\n    let!(:bar) { i }\n\n    it 'does not use bar' do\n      expect(baz).to eq(qux)\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n  [].each do |i|\n    let!(:bar) { i }\n\n    it 'does not use bar' do\n      expect(baz).to eq(qux)\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:0",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to receive(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#0",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:1",
+    "cop": "RSpec/MessageSpies",
+    "source": "foo = baz\nexpect(foo).to receive(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "foo = baz\nexpect(foo).to receive(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#1",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 15,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "foo = baz\nexpect(foo).to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "foo = baz\nexpect(foo).to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:2",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(@foo).to receive(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(@foo).to receive(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#2",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 16,
+          "message": "Prefer `have_received` for setting message expectations. Setup `@foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(@foo).to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 16,
+            "message": "Prefer `have_received` for setting message expectations. Setup `@foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(@foo).to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 16,
+            "message": "Prefer `have_received` for setting message expectations. Setup `@foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:3",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(Foo).to receive(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(Foo).to receive(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#3",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `have_received` for setting message expectations. Setup `Foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(Foo).to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `Foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(Foo).to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `Foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:4",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).not_to receive(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).not_to receive(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#4",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).not_to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).not_to receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:5",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to_not receive(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to_not receive(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#5",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to_not receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to_not receive(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:6",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to receive(:bar).with(:baz)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar).with(:baz)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#6",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar).with(:baz)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar).with(:baz)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:7",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to receive(:bar).at_most(42).times\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar).at_most(42).times\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#7",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar).at_most(42).times\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar).at_most(42).times\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:8",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to have_received(:bar)",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to have_received(:bar)",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#8",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to have_received(:bar)",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(foo).to have_received(:bar)",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:9",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to have_received(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to have_received(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#9",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `receive` for setting message expectations.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:10",
+    "cop": "RSpec/MessageSpies",
+    "source": "foo = baz\nexpect(foo).to have_received(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "foo = baz\nexpect(foo).to have_received(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#10",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 15,
+          "message": "Prefer `receive` for setting message expectations.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "foo = baz\nexpect(foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "foo = baz\nexpect(foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:11",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(@foo).to have_received(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(@foo).to have_received(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#11",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 16,
+          "message": "Prefer `receive` for setting message expectations.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(@foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 16,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(@foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 16,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:12",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(Foo).to have_received(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(Foo).to have_received(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#12",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `receive` for setting message expectations.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(Foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(Foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:13",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).not_to have_received(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).not_to have_received(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#13",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `receive` for setting message expectations.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).not_to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).not_to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:14",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to_not have_received(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to_not have_received(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#14",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `receive` for setting message expectations.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to_not have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to_not have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:15",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to have_received(:bar).with(:baz)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to have_received(:bar).with(:baz)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#15",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `receive` for setting message expectations.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to have_received(:bar).with(:baz)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to have_received(:bar).with(:baz)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:16",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to have_received(:bar).at_most(42).times\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to have_received(:bar).at_most(42).times\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#16",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `receive` for setting message expectations.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to have_received(:bar).at_most(42).times\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to have_received(:bar).at_most(42).times\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `receive` for setting message expectations.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "message_spies_spec:17",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to receive(:bar)",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "receive",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar)",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/message_spies_spec.rb#17",
+    "upstream_configuration": "Pinned upstream EnforcedStyle context restored explicitly.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar)",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar)",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:0",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending 'reason'\n    pending \"#{reason}\"\n    pending `echo #{reason}`\n    skip 'reason'\n    skip \"#{reason}\"\n    skip `echo #{reason}`\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something' do\n    pending 'reason'\n    pending \"#{reason}\"\n    pending `echo #{reason}`\n    skip 'reason'\n    skip \"#{reason}\"\n    skip `echo #{reason}`\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending 'reason'\n    pending \"#{reason}\"\n    pending `echo #{reason}`\n    skip 'reason'\n    skip \"#{reason}\"\n    skip `echo #{reason}`\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending 'reason'\n    pending \"#{reason}\"\n    pending `echo #{reason}`\n    skip 'reason'\n    skip \"#{reason}\"\n    skip `echo #{reason}`\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:1",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  skip 'does something'\n  pending 'does something'\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  skip 'does something'\n  pending 'does something'\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  skip 'does something'\n  pending 'does something'\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  skip 'does something'\n  pending 'does something'\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:2",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  shared_examples 'something' do\n    pending 'does something'\n    skip 'does something'\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  shared_examples 'something' do\n    pending 'does something'\n    skip 'does something'\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  shared_examples 'something' do\n    pending 'does something'\n    skip 'does something'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  shared_examples 'something' do\n    pending 'does something'\n    skip 'does something'\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:3",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something', pending: 'reason' do\n  end\n  it 'does something', skip: 'reason' do\n  end\n  it 'does something', pending: 'reason' do\n    _1\n  end\n  it 'does something', skip: 'reason' do\n    _1\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something', pending: 'reason' do\n  end\n  it 'does something', skip: 'reason' do\n  end\n  it 'does something', pending: 'reason' do\n    _1\n  end\n  it 'does something', skip: 'reason' do\n    _1\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something', pending: 'reason' do\n  end\n  it 'does something', skip: 'reason' do\n  end\n  it 'does something', pending: 'reason' do\n    _1\n  end\n  it 'does something', skip: 'reason' do\n    _1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something', pending: 'reason' do\n  end\n  it 'does something', skip: 'reason' do\n  end\n  it 'does something', pending: 'reason' do\n    _1\n  end\n  it 'does something', skip: 'reason' do\n    _1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:4",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe 'something', pending: 'reason' do\nend\ndescribe 'something', skip: 'reason' do\nend\ndescribe 'something', pending: 'reason' do\n  _1\nend\ndescribe 'something', skip: 'reason' do\n  _1\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'something', pending: 'reason' do\nend\ndescribe 'something', skip: 'reason' do\nend\ndescribe 'something', pending: 'reason' do\n  _1\nend\ndescribe 'something', skip: 'reason' do\n  _1\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'something', pending: 'reason' do\nend\ndescribe 'something', skip: 'reason' do\nend\ndescribe 'something', pending: 'reason' do\n  _1\nend\ndescribe 'something', skip: 'reason' do\n  _1\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'something', pending: 'reason' do\nend\ndescribe 'something', skip: 'reason' do\nend\ndescribe 'something', pending: 'reason' do\n  _1\nend\ndescribe 'something', skip: 'reason' do\n  _1\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:5",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "FactoryBot.define do\n  factory :task do\n    pending\n    skip\n    pending { true }\n    skip { true }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "FactoryBot.define do\n  factory :task do\n    pending\n    skip\n    pending { true }\n    skip { true }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "FactoryBot.define do\n  factory :task do\n    pending\n    skip\n    pending { true }\n    skip { true }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "FactoryBot.define do\n  factory :task do\n    pending\n    skip\n    pending { true }\n    skip { true }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:6",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something' do\n    Foo.pending\n    Foo.skip\n  end\n  it 'does something' do\n    _1.pending\n    _1.skip\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something' do\n    Foo.pending\n    Foo.skip\n  end\n  it 'does something' do\n    _1.pending\n    _1.skip\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    Foo.pending\n    Foo.skip\n  end\n  it 'does something' do\n    _1.pending\n    _1.skip\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    Foo.pending\n    Foo.skip\n  end\n  it 'does something' do\n    _1.pending\n    _1.skip\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:7",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something' do\n    expect('foo').to eq(pending)\n    expect('foo').to eq(skip)\n    foo(bar, pending, skip)\n    foo(bar, pending: pending, skip: skip)\n    is_expected.to match_array([foo, pending, skip, bar])\n    list = [skip, pending]\n    foo(list)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something' do\n    expect('foo').to eq(pending)\n    expect('foo').to eq(skip)\n    foo(bar, pending, skip)\n    foo(bar, pending: pending, skip: skip)\n    is_expected.to match_array([foo, pending, skip, bar])\n    list = [skip, pending]\n    foo(list)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    expect('foo').to eq(pending)\n    expect('foo').to eq(skip)\n    foo(bar, pending, skip)\n    foo(bar, pending: pending, skip: skip)\n    is_expected.to match_array([foo, pending, skip, bar])\n    list = [skip, pending]\n    foo(list)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    expect('foo').to eq(pending)\n    expect('foo').to eq(skip)\n    foo(bar, pending, skip)\n    foo(bar, pending: pending, skip: skip)\n    is_expected.to match_array([foo, pending, skip, bar])\n    list = [skip, pending]\n    foo(list)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:8",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  pending 'does something' do\n  end\n  skip 'does something' do\n  end\n  skip 'does something' do\n    _1\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  pending 'does something' do\n  end\n  skip 'does something' do\n  end\n  skip 'does something' do\n    _1\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  pending 'does something' do\n  end\n  skip 'does something' do\n  end\n  skip 'does something' do\n    _1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  pending 'does something' do\n  end\n  skip 'does something' do\n  end\n  skip 'does something' do\n    _1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:9",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending 'does something' do\n      do_something\n    end\n    pending 'does something' do\n      _1.do_something\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something' do\n    pending 'does something' do\n      do_something\n    end\n    pending 'does something' do\n      _1.do_something\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending 'does something' do\n      do_something\n    end\n    pending 'does something' do\n      _1.do_something\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending 'does something' do\n      do_something\n    end\n    pending 'does something' do\n      _1.do_something\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:10",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something' do\n    skip 'does something' do\n      do_something\n    end\n    skip 'does something' do\n      _1.do_something\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something' do\n    skip 'does something' do\n      do_something\n    end\n    skip 'does something' do\n      _1.do_something\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    skip 'does something' do\n      do_something\n    end\n    skip 'does something' do\n      _1.do_something\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    skip 'does something' do\n      do_something\n    end\n    skip 'does something' do\n      _1.do_something\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:11",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something', :pending do\n  end\n  it 'does something', :skip do\n  end\n  it 'does something', pending: true do\n  end\n  it 'does something', skip: true do\n  end\n  it 'does something', :pending do\n    _1\n  end\n  it 'does something', :skip do\n    _1\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something', :pending do\n  end\n  it 'does something', :skip do\n  end\n  it 'does something', pending: true do\n  end\n  it 'does something', skip: true do\n  end\n  it 'does something', :pending do\n    _1\n  end\n  it 'does something', :skip do\n    _1\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 26,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 34,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 13,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something', :pending do\n  end\n  it 'does something', :skip do\n  end\n  it 'does something', pending: true do\n  end\n  it 'does something', skip: true do\n  end\n  it 'does something', :pending do\n    _1\n  end\n  it 'does something', :skip do\n    _1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 26,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 13,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 26,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something', :pending do\n  end\n  it 'does something', :skip do\n  end\n  it 'does something', pending: true do\n  end\n  it 'does something', skip: true do\n  end\n  it 'does something', :pending do\n    _1\n  end\n  it 'does something', :skip do\n    _1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 26,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 13,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 26,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:12",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe 'something', :pending do\nend\ndescribe 'something', :skip do\nend\ndescribe 'something', pending: true do\nend\ndescribe 'something', skip: true do\nend\ndescribe 'something', :pending do\n  _1\nend\ndescribe 'something', :skip do\n  _1\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'something', :pending do\nend\ndescribe 'something', :skip do\nend\ndescribe 'something', pending: true do\nend\ndescribe 'something', skip: true do\nend\ndescribe 'something', :pending do\n  _1\nend\ndescribe 'something', :skip do\n  _1\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#12",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 32,
+          "severity": "convention"
+        },
+        {
+          "line": 9,
+          "column": 0,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 12,
+          "column": 0,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'something', :pending do\nend\ndescribe 'something', :skip do\nend\ndescribe 'something', pending: true do\nend\ndescribe 'something', skip: true do\nend\ndescribe 'something', :pending do\n  _1\nend\ndescribe 'something', :skip do\n  _1\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 32,
+            "severity": "convention"
+          },
+          {
+            "line": 9,
+            "column": 0,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 12,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'something', :pending do\nend\ndescribe 'something', :skip do\nend\ndescribe 'something', pending: true do\nend\ndescribe 'something', skip: true do\nend\ndescribe 'something', :pending do\n  _1\nend\ndescribe 'something', :skip do\n  _1\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 32,
+            "severity": "convention"
+          },
+          {
+            "line": 9,
+            "column": 0,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 12,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:13",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  pending\n  skip\nend\nRSpec.describe Foo do\n  context 'when something' do\n    pending\n  end\n  context 'when something' do\n    skip\n  end\nend\nRSpec.describe Foo do\n  it 'does something' do\n    pending\n  end\n  it 'does something' do\n    skip\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  pending\n  skip\nend\nRSpec.describe Foo do\n  context 'when something' do\n    pending\n  end\n  context 'when something' do\n    skip\n  end\nend\nRSpec.describe Foo do\n  it 'does something' do\n    pending\n  end\n  it 'does something' do\n    skip\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 4,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 4,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 4,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 4,
+          "severity": "convention"
+        },
+        {
+          "line": 15,
+          "column": 4,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        },
+        {
+          "line": 18,
+          "column": 4,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 4,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  pending\n  skip\nend\nRSpec.describe Foo do\n  context 'when something' do\n    pending\n  end\n  context 'when something' do\n    skip\n  end\nend\nRSpec.describe Foo do\n  it 'does something' do\n    pending\n  end\n  it 'does something' do\n    skip\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 4,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 4,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          },
+          {
+            "line": 15,
+            "column": 4,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 18,
+            "column": 4,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  pending\n  skip\nend\nRSpec.describe Foo do\n  context 'when something' do\n    pending\n  end\n  context 'when something' do\n    skip\n  end\nend\nRSpec.describe Foo do\n  it 'does something' do\n    pending\n  end\n  it 'does something' do\n    skip\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 4,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 4,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          },
+          {
+            "line": 15,
+            "column": 4,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 18,
+            "column": 4,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:14",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  before { buzz! }\n  pending\n  skip\n  context 'when something' do\n    let(:foo) { 'bar' }\n    pending\n    skip\n    it 'does something' do\n      do_something\n      pending\n      skip\n      do_something\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  before { buzz! }\n  pending\n  skip\n  context 'when something' do\n    let(:foo) { 'bar' }\n    pending\n    skip\n    it 'does something' do\n      do_something\n      pending\n      skip\n      do_something\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 4,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 4,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 4,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 4,
+          "severity": "convention"
+        },
+        {
+          "line": 11,
+          "column": 6,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        },
+        {
+          "line": 12,
+          "column": 6,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 4,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  before { buzz! }\n  pending\n  skip\n  context 'when something' do\n    let(:foo) { 'bar' }\n    pending\n    skip\n    it 'does something' do\n      do_something\n      pending\n      skip\n      do_something\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 4,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 4,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          },
+          {
+            "line": 11,
+            "column": 6,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 12,
+            "column": 6,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  before { buzz! }\n  pending\n  skip\n  context 'when something' do\n    let(:foo) { 'bar' }\n    pending\n    skip\n    it 'does something' do\n      do_something\n      pending\n      skip\n      do_something\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 4,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 4,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          },
+          {
+            "line": 11,
+            "column": 6,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 12,
+            "column": 6,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:16",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending if RUBY_VERSION < '3.0'\n    if RUBY_VERSION < '3.0'\n      skip\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something' do\n    pending if RUBY_VERSION < '3.0'\n    if RUBY_VERSION < '3.0'\n      skip\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#16",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending if RUBY_VERSION < '3.0'\n    if RUBY_VERSION < '3.0'\n      skip\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    pending if RUBY_VERSION < '3.0'\n    if RUBY_VERSION < '3.0'\n      skip\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:17",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe 'Foo' do\n  xdescribe 'something' do\n  end\n  xdescribe 'something' do\n    _1.do_something\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe 'Foo' do\n  xdescribe 'something' do\n  end\n  xdescribe 'something' do\n    _1.do_something\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#17",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe 'Foo' do\n  xdescribe 'something' do\n  end\n  xdescribe 'something' do\n    _1.do_something\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe 'Foo' do\n  xdescribe 'something' do\n  end\n  xdescribe 'something' do\n    _1.do_something\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:18",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.xdescribe 'something' do\nend\nRSpec.xdescribe 'something' do\n  _1.do_something\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.xdescribe 'something' do\nend\nRSpec.xdescribe 'something' do\n  _1.do_something\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#18",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.xdescribe 'something' do\nend\nRSpec.xdescribe 'something' do\n  _1.do_something\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.xdescribe 'something' do\nend\nRSpec.xdescribe 'something' do\n  _1.do_something\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:19",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe 'Foo' do\n  skip 'does something' do\n  end\n  xit 'something' do\n  end\n  xit 'something' do\n    _1.do_something\n  end\n  pending 'does something' do\n    _1\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe 'Foo' do\n  skip 'does something' do\n  end\n  xit 'something' do\n  end\n  xit 'something' do\n    _1.do_something\n  end\n  pending 'does something' do\n    _1\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#19",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Give the reason for xit.",
+          "correctable": false,
+          "length": 15,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Give the reason for xit.",
+          "correctable": false,
+          "length": 15,
+          "severity": "convention"
+        },
+        {
+          "line": 9,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe 'Foo' do\n  skip 'does something' do\n  end\n  xit 'something' do\n  end\n  xit 'something' do\n    _1.do_something\n  end\n  pending 'does something' do\n    _1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for xit.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Give the reason for xit.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          },
+          {
+            "line": 9,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe 'Foo' do\n  skip 'does something' do\n  end\n  xit 'something' do\n  end\n  xit 'something' do\n    _1.do_something\n  end\n  pending 'does something' do\n    _1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Give the reason for xit.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Give the reason for xit.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          },
+          {
+            "line": 9,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:20",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  it 'does something' do\n    skip 'does something' do\n      do_something\n    end\n    skip 'does something' do\n      _1\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  it 'does something' do\n    skip 'does something' do\n      do_something\n    end\n    skip 'does something' do\n      _1\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#20",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    skip 'does something' do\n      do_something\n    end\n    skip 'does something' do\n      _1\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  it 'does something' do\n    skip 'does something' do\n      do_something\n    end\n    skip 'does something' do\n      _1\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:21",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  shared_examples 'something' do\n    xit 'something' do\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  shared_examples 'something' do\n    xit 'something' do\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#21",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 4,
+          "message": "Give the reason for xit.",
+          "correctable": false,
+          "length": 15,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe Foo do\n  shared_examples 'something' do\n    xit 'something' do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Give the reason for xit.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe Foo do\n  shared_examples 'something' do\n    xit 'something' do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Give the reason for xit.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:0",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive(:bar).and_return('hello world')\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar).and_return('hello world')\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar).and_return('hello world')\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar).and_return('hello world')\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:1",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive(:bar) { 'hello world' }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar) { 'hello world' }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar) { 'hello world' }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar) { 'hello world' }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:2",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive(:bar) { |x| bar }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar) { |x| bar }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar) { |x| bar }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar) { |x| bar }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:3",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive(:bar).with(42).and_return('hello world')\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar).with(42).and_return('hello world')\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar).with(42).and_return('hello world')\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar).with(42).and_return('hello world')\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:4",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive(:bar).with(42) { 'hello world' }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar).with(42) { 'hello world' }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar).with(42) { 'hello world' }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar).with(42) { 'hello world' }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:5",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to have_received(:bar)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to have_received(:bar)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(foo).to have_received(:bar)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:6",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive_messages(foo: 42, bar: 777)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive_messages(foo: 42, bar: 777)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive_messages(foo: 42, bar: 777)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive_messages(foo: 42, bar: 777)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:7",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive_message_chain(:foo, bar: 777)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive_message_chain(:foo, bar: 777)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive_message_chain(:foo, bar: 777)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive_message_chain(:foo, bar: 777)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:8",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive_message_chain(:foo, :bar).and_return(777)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive_message_chain(:foo, :bar).and_return(777)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive_message_chain(:foo, :bar).and_return(777)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive_message_chain(:foo, :bar).and_return(777)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:9",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive_message_chain(:foo, :bar) { 777 }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive_message_chain(:foo, :bar) { 777 }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive_message_chain(:foo, :bar) { 777 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive_message_chain(:foo, :bar) { 777 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:10",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive(:bar) { 'hello world' }.ordered\nexpect(foo).to receive(:bar).ordered { 'hello world' }\nexpect(foo).to receive(:bar).with(42).ordered { 'hello world' }\nexpect(foo).to receive(:bar).once.with(42).ordered { 'hello world' }\nexpect(foo).to receive(:bar) { 'hello world' }.once.with(42).ordered\nexpect(foo).to receive(:bar).once.with(42).and_return('hello world').ordered\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar) { 'hello world' }.ordered\nexpect(foo).to receive(:bar).ordered { 'hello world' }\nexpect(foo).to receive(:bar).with(42).ordered { 'hello world' }\nexpect(foo).to receive(:bar).once.with(42).ordered { 'hello world' }\nexpect(foo).to receive(:bar) { 'hello world' }.once.with(42).ordered\nexpect(foo).to receive(:bar).once.with(42).and_return('hello world').ordered\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar) { 'hello world' }.ordered\nexpect(foo).to receive(:bar).ordered { 'hello world' }\nexpect(foo).to receive(:bar).with(42).ordered { 'hello world' }\nexpect(foo).to receive(:bar).once.with(42).ordered { 'hello world' }\nexpect(foo).to receive(:bar) { 'hello world' }.once.with(42).ordered\nexpect(foo).to receive(:bar).once.with(42).and_return('hello world').ordered\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar) { 'hello world' }.ordered\nexpect(foo).to receive(:bar).ordered { 'hello world' }\nexpect(foo).to receive(:bar).with(42).ordered { 'hello world' }\nexpect(foo).to receive(:bar).once.with(42).ordered { 'hello world' }\nexpect(foo).to receive(:bar) { 'hello world' }.once.with(42).ordered\nexpect(foo).to receive(:bar).once.with(42).and_return('hello world').ordered\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:11",
+    "cop": "RSpec/StubbedMock",
+    "source": "canned = -> { 42 }\nexpect(foo).to receive(:bar, &canned)\nexpect(foo).to receive(:bar).with(42, &canned)\nexpect(foo).to receive_message_chain(:foo, :bar, &canned)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "canned = -> { 42 }\nexpect(foo).to receive(:bar, &canned)\nexpect(foo).to receive(:bar).with(42, &canned)\nexpect(foo).to receive_message_chain(:foo, :bar, &canned)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "canned = -> { 42 }\nexpect(foo).to receive(:bar, &canned)\nexpect(foo).to receive(:bar).with(42, &canned)\nexpect(foo).to receive_message_chain(:foo, :bar, &canned)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "canned = -> { 42 }\nexpect(foo).to receive(:bar, &canned)\nexpect(foo).to receive(:bar).with(42, &canned)\nexpect(foo).to receive_message_chain(:foo, :bar, &canned)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:12",
+    "cop": "RSpec/StubbedMock",
+    "source": "is_expected.to receive(:bar).and_return(:baz)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "is_expected.to receive(:bar).and_return(:baz)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#12",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow(subject)` over `is_expected` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "is_expected.to receive(:bar).and_return(:baz)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow(subject)` over `is_expected` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "is_expected.to receive(:bar).and_return(:baz)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow(subject)` over `is_expected` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:13",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect_any_instance_of(Foo).to receive(:bar).and_return(:baz)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect_any_instance_of(Foo).to receive(:bar).and_return(:baz)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow_any_instance_of` over `expect_any_instance_of` when configuring a response.",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect_any_instance_of(Foo).to receive(:bar).and_return(:baz)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow_any_instance_of` over `expect_any_instance_of` when configuring a response.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect_any_instance_of(Foo).to receive(:bar).and_return(:baz)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow_any_instance_of` over `expect_any_instance_of` when configuring a response.",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:14",
+    "cop": "RSpec/StubbedMock",
+    "source": "allow(foo).to receive(:bar).and_return('hello world')\nallow(foo).to receive(:bar) { 'hello world' }\nallow(foo).to receive(:bar).with(42).and_return('hello world')\nallow(foo).to receive(:bar).with(42) { 'hello world' }\nallow(foo).to receive_messages(foo: 42, bar: 777)\nallow(foo).to receive_message_chain(:foo, bar: 777)\nallow(foo).to receive_message_chain(:foo, :bar).and_return(777)\nallow(foo).to receive_message_chain(:foo, :bar) { 777 }\nallow(foo).to receive(:bar, &canned)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(foo).to receive(:bar).and_return('hello world')\nallow(foo).to receive(:bar) { 'hello world' }\nallow(foo).to receive(:bar).with(42).and_return('hello world')\nallow(foo).to receive(:bar).with(42) { 'hello world' }\nallow(foo).to receive_messages(foo: 42, bar: 777)\nallow(foo).to receive_message_chain(:foo, bar: 777)\nallow(foo).to receive_message_chain(:foo, :bar).and_return(777)\nallow(foo).to receive_message_chain(:foo, :bar) { 777 }\nallow(foo).to receive(:bar, &canned)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(foo).to receive(:bar).and_return('hello world')\nallow(foo).to receive(:bar) { 'hello world' }\nallow(foo).to receive(:bar).with(42).and_return('hello world')\nallow(foo).to receive(:bar).with(42) { 'hello world' }\nallow(foo).to receive_messages(foo: 42, bar: 777)\nallow(foo).to receive_message_chain(:foo, bar: 777)\nallow(foo).to receive_message_chain(:foo, :bar).and_return(777)\nallow(foo).to receive_message_chain(:foo, :bar) { 777 }\nallow(foo).to receive(:bar, &canned)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(foo).to receive(:bar).and_return('hello world')\nallow(foo).to receive(:bar) { 'hello world' }\nallow(foo).to receive(:bar).with(42).and_return('hello world')\nallow(foo).to receive(:bar).with(42) { 'hello world' }\nallow(foo).to receive_messages(foo: 42, bar: 777)\nallow(foo).to receive_message_chain(:foo, bar: 777)\nallow(foo).to receive_message_chain(:foo, :bar).and_return(777)\nallow(foo).to receive_message_chain(:foo, :bar) { 777 }\nallow(foo).to receive(:bar, &canned)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "stubbed_mock_spec:15",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(Foo)\n  .to receive(:new)\n  .with(bar).and_return baz\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(Foo)\n  .to receive(:new)\n  .with(bar).and_return baz\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/stubbed_mock_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(Foo)\n  .to receive(:new)\n  .with(bar).and_return baz\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(Foo)\n  .to receive(:new)\n  .with(bar).and_return baz\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:local-shorthand",
+    "cop": "RSpec/LetSetup",
+    "source": "describe \"x\" do\n  let!(:widget) { create }\n  it do\n    widget = other\n    use(widget:)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  let!(:widget) { create }\n  it do\n    widget = other\n    use(widget:)\n  end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  let!(:widget) { create }\n  it do\n    widget = other\n    use(widget:)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  let!(:widget) { create }\n  it do\n    widget = other\n    use(widget:)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 13,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:string-blockpass",
+    "cop": "RSpec/LetSetup",
+    "source": "describe \"x\" do\n  let!(\"value\", &factory)\n  it { perform }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  let!(\"value\", &factory)\n  it { perform }\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not use `let!` to setup objects not referenced in tests.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  let!(\"value\", &factory)\n  it { perform }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  let!(\"value\", &factory)\n  it { perform }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Do not use `let!` to setup objects not referenced in tests.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:scoped-reference",
+    "cop": "RSpec/LetSetup",
+    "source": "describe \"x\" do\n  let!(:value) { create }\n  context \"child\" do\n    it { use(value) }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  let!(:value) { create }\n  context \"child\" do\n    it { use(value) }\n  end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  let!(:value) { create }\n  context \"child\" do\n    it { use(value) }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n  let!(:value) { create }\n  context \"child\" do\n    it { use(value) }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch15:root-and-punctuation",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.xdescribe(\"root\") {}\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "RSpec.xdescribe(\"root\") {}\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.xdescribe(\"root\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.xdescribe(\"root\") {}\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch15:multiple-reasons",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe \"x\" do\n  skip(:pending) {}\n  it \"x\", :skip, pending: true do; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  skip(:pending) {}\n  it \"x\", :skip, pending: true do; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 14,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  skip(:pending) {}\n  it \"x\", :skip, pending: true do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 14,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 28,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  skip(:pending) {}\n  it \"x\", :skip, pending: true do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 14,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 28,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:nested-parentheses",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe \"x\" do\n  it do\n    other\n    (skip)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it do\n    other\n    (skip)\n  end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it do\n    other\n    (skip)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it do\n    other\n    (skip)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch15:explicit-hash-splat",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe \"x\" do\n  it \"x\", {**metadata, pending: true} do; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it \"x\", {**metadata, pending: true} do; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 35,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it \"x\", {**metadata, pending: true} do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 35,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it \"x\", {**metadata, pending: true} do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 35,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:response-arity",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive(:bar).and_return(1, 2)\nexpect(foo).to receive(:bar).and_return(foo: 1, bar: 2)\nexpect(foo).to receive(:bar).and_call_original\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar).and_return(1, 2)\nexpect(foo).to receive(:bar).and_return(foo: 1, bar: 2)\nexpect(foo).to receive(:bar).and_call_original\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar).and_return(1, 2)\nexpect(foo).to receive(:bar).and_return(foo: 1, bar: 2)\nexpect(foo).to receive(:bar).and_call_original\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar).and_return(1, 2)\nexpect(foo).to receive(:bar).and_return(foo: 1, bar: 2)\nexpect(foo).to receive(:bar).and_call_original\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:hash-target",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo: 1, bar: 2).to receive(:message)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "expect(foo: 1, bar: 2).to receive(:message)\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 26,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo: 1, bar: 2` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo: 1, bar: 2).to receive(:message)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 26,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo: 1, bar: 2` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo: 1, bar: 2).to receive(:message)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 26,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo: 1, bar: 2` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:runner-block",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to receive(:bar) do\n  receive(:other)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar) do\n  receive(:other)\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar) do\n  receive(:other)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar) do\n  receive(:other)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:matcher-block",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(foo).to receive(:bar) { receive(:other) }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar) { receive(:other) }\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 15,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        },
+        {
+          "line": 1,
+          "column": 31,
+          "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar) { receive(:other) }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 1,
+            "column": 31,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar) { receive(:other) }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 15,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          },
+          {
+            "line": 1,
+            "column": 31,
+            "message": "Prefer `have_received` for setting message expectations. Setup `foo` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:metadata-symbols",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe \"x\" do\n  it \"x\", :skip, :pending do; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it \"x\", :skip, :pending do; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it \"x\", :skip, :pending do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it \"x\", :skip, :pending do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:metadata-pairs",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe \"x\" do\n  it \"x\", skip: true, pending: true do; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it \"x\", skip: true, pending: true do; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 33,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it \"x\", skip: true, pending: true do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 33,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it \"x\", skip: true, pending: true do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 33,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:metadata-tag-before-hash",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe \"x\" do\n  it \"x\", :skip, focus: true do; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it \"x\", :skip, focus: true do; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it \"x\", :skip, focus: true do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it \"x\", :skip, focus: true do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch15:metadata-hash-before-tag",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe \"x\" do\n  it \"x\", {pending: true}, :skip do; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it \"x\", {pending: true}, :skip do; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for skip.",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it \"x\", {pending: true}, :skip do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it \"x\", {pending: true}, :skip do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for skip.",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:spy-keyword-splat",
+    "cop": "RSpec/MessageSpies",
+    "source": "expect(**extra, foo: 1).to receive(:message)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "have_received",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "expect(**extra, foo: 1).to receive(:message)\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 27,
+          "message": "Prefer `have_received` for setting message expectations. Setup `**extra, foo: 1` as a spy using `allow` or `instance_spy`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(**extra, foo: 1).to receive(:message)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 27,
+            "message": "Prefer `have_received` for setting message expectations. Setup `**extra, foo: 1` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(**extra, foo: 1).to receive(:message)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 27,
+            "message": "Prefer `have_received` for setting message expectations. Setup `**extra, foo: 1` as a spy using `allow` or `instance_spy`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:stub-keyword-splat",
+    "cop": "RSpec/StubbedMock",
+    "source": "expect(foo).to receive(:bar).and_return(**extra, x: 1)\nexpect(foo).to receive_messages(**extra)\nexpect(foo).to receive_message_chain(:bar, **extra)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "expect(foo).to receive(:bar).and_return(**extra, x: 1)\nexpect(foo).to receive_messages(**extra)\nexpect(foo).to receive_message_chain(:bar, **extra)\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer `allow` over `expect` when configuring a response.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to receive(:bar).and_return(**extra, x: 1)\nexpect(foo).to receive_messages(**extra)\nexpect(foo).to receive_message_chain(:bar, **extra)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to receive(:bar).and_return(**extra, x: 1)\nexpect(foo).to receive_messages(**extra)\nexpect(foo).to receive_message_chain(:bar, **extra)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer `allow` over `expect` when configuring a response.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch15:pending-keyword-splat",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "describe \"x\" do\n  it \"x\", pending: true, **extra do; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it \"x\", pending: true, **extra do; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Give the reason for pending.",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it \"x\", pending: true, **extra do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it \"x\", pending: true, **extra do; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Give the reason for pending.",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
   }
 ]
