@@ -70757,5 +70757,2469 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "leading_subject_spec:0",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  let(:params) { foo }\n\n  subject { described_class.new }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let(:params) { foo }\n\n  subject { described_class.new }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Declare `subject` above any other `let` declarations.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  let(:params) { foo }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  let(:params) { foo }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:1",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  let!(:params) { foo }\n\n  subject { described_class.new }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let!(:params) { foo }\n\n  subject { described_class.new }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Declare `subject` above any other `let!` declarations.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  let!(:params) { foo }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  let!(:params) { foo }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:2",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  let(:user, &args[:build_user])\n\n  subject { described_class.new }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let(:user, &args[:build_user])\n\n  subject { described_class.new }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Declare `subject` above any other `let` declarations.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  let(:user, &args[:build_user])\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  let(:user, &args[:build_user])\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:3",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  subject { described_class.new }\n\n  let(:params) { foo }\n\n  context 'blah' do\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  subject { described_class.new }\n\n  let(:params) { foo }\n\n  context 'blah' do\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n\n  let(:params) { foo }\n\n  context 'blah' do\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n\n  let(:params) { foo }\n\n  context 'blah' do\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:4",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  let(:params) { foo }\n\n  context \"when something happens\" do\n    subject { described_class.new }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let(:params) { foo }\n\n  context \"when something happens\" do\n    subject { described_class.new }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  let(:params) { foo }\n\n  context \"when something happens\" do\n    subject { described_class.new }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  let(:params) { foo }\n\n  context \"when something happens\" do\n    subject { described_class.new }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:5",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  # This shouldn't really ever happen in a sane codebase but I still\n  # want to avoid false positives\n  it \"doesn't mind me calling a method called subject in the test\" do\n    let(foo)\n    subject { bar }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  # This shouldn't really ever happen in a sane codebase but I still\n  # want to avoid false positives\n  it \"doesn't mind me calling a method called subject in the test\" do\n    let(foo)\n    subject { bar }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  # This shouldn't really ever happen in a sane codebase but I still\n  # want to avoid false positives\n  it \"doesn't mind me calling a method called subject in the test\" do\n    let(foo)\n    subject { bar }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  # This shouldn't really ever happen in a sane codebase but I still\n  # want to avoid false positives\n  it \"doesn't mind me calling a method called subject in the test\" do\n    let(foo)\n    subject { bar }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:6",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  before { allow(Foo).to receive(:bar) }\n\n  subject { described_class.new }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  before { allow(Foo).to receive(:bar) }\n\n  subject { described_class.new }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Declare `subject` above any other `before` declarations.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  before { allow(Foo).to receive(:bar) }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  before { allow(Foo).to receive(:bar) }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:7",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  it { is_expected.to be_present }\n\n  subject { described_class.new }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  it { is_expected.to be_present }\n\n  subject { described_class.new }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Declare `subject` above any other `it` declarations.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  it { is_expected.to be_present }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  it { is_expected.to be_present }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:8",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe do\n  def helper_method\n  end\n\n  it { is_expected.to be_present }\n\n  subject { described_class.new }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe do\n  def helper_method\n  end\n\n  it { is_expected.to be_present }\n\n  subject { described_class.new }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 7,
+          "column": 2,
+          "message": "Declare `subject` above any other `it` declarations.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe do\n  def helper_method\n  end\n\n  subject { described_class.new }\n  it { is_expected.to be_present }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe do\n  def helper_method\n  end\n\n  subject { described_class.new }\n  it { is_expected.to be_present }\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:9",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  describe do\n    it { is_expected.to be_present }\n  end\n\n  subject { described_class.new }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  describe do\n    it { is_expected.to be_present }\n  end\n\n  subject { described_class.new }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Declare `subject` above any other `describe` declarations.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  describe do\n    it { is_expected.to be_present }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  describe do\n    it { is_expected.to be_present }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:10",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  shared_examples_for 'used later' do\n    it { is_expected.to be_present }\n  end\n\n  subject { described_class.new }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  shared_examples_for 'used later' do\n    it { is_expected.to be_present }\n  end\n\n  subject { described_class.new }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Declare `subject` above any other `shared_examples_for` declarations.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  shared_examples_for 'used later' do\n    it { is_expected.to be_present }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  subject { described_class.new }\n  shared_examples_for 'used later' do\n    it { is_expected.to be_present }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:14",
+    "cop": "RSpec/LeadingSubject",
+    "source": "RSpec.describe User do\n  let(:foo) { 'bar' }\n\n  it_behaves_like 'a good citizen' do\n    subject { described_class.new }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let(:foo) { 'bar' }\n\n  it_behaves_like 'a good citizen' do\n    subject { described_class.new }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  let(:foo) { 'bar' }\n\n  it_behaves_like 'a good citizen' do\n    subject { described_class.new }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  let(:foo) { 'bar' }\n\n  it_behaves_like 'a good citizen' do\n    subject { described_class.new }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "leading_subject_spec:15",
+    "cop": "RSpec/LeadingSubject",
+    "source": "module Support\n  subject do\n    test\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "module Support\n  subject do\n    test\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/leading_subject_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "module Support\n  subject do\n    test\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "module Support\n  subject do\n    test\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:comments",
+    "source": "describe Foo do\n let(:a) { a }\n # leading\n subject { b } # trailing\nend\n",
+    "corrected": "describe Foo do\n let(:a) { a }\n # leading\n subject { b } # trailing\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Declare `subject` above any other `let` declarations.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n # leading\n subject { b } # trailing\n let(:a) { a }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n # leading\n subject { b } # trailing\n let(:a) { a }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:blank-comment",
+    "source": "describe Foo do\n let(:a) { a }\n # leading\n\n subject { b }\nend\n",
+    "corrected": "describe Foo do\n let(:a) { a }\n # leading\n\n subject { b }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 5,
+          "column": 1,
+          "message": "Declare `subject` above any other `let` declarations.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n # leading\n\n subject { b }\n let(:a) { a }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n # leading\n\n subject { b }\n let(:a) { a }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:numbered-hook",
+    "source": "describe Foo do\n before { consume(_1) }\n subject { b }\nend\n",
+    "corrected": "describe Foo do\n before { consume(_1) }\n subject { b }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Declare `subject` above any other `before` declarations.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n subject { b }\n before { consume(_1) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n subject { b }\n before { consume(_1) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:numbered-subject",
+    "source": "describe Foo do\n let(:a) { a }\n subject { _1 }\nend\n",
+    "corrected": "describe Foo do\n let(:a) { a }\n subject { _1 }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n let(:a) { a }\n subject { _1 }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n let(:a) { a }\n subject { _1 }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:qualified-let",
+    "source": "describe Foo do\n object.let(:a) { a }\n subject { b }\nend\n",
+    "corrected": "describe Foo do\n object.let(:a) { a }\n subject { b }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n object.let(:a) { a }\n subject { b }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n object.let(:a) { a }\n subject { b }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:bare-let",
+    "source": "describe Foo do\n let(:a)\n subject { b }\nend\n",
+    "corrected": "describe Foo do\n let(:a)\n subject { b }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n let(:a)\n subject { b }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n let(:a)\n subject { b }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:nested-wrapper",
+    "source": "describe Foo do\n wrapper do\n let(:a) { a }\n subject { b }\n end\nend\n",
+    "corrected": "describe Foo do\n wrapper do\n let(:a) { a }\n subject { b }\n end\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Declare `subject` above any other `let` declarations.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n wrapper do\n subject { b }\n let(:a) { a }\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n wrapper do\n subject { b }\n let(:a) { a }\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:outside-root",
+    "source": "module Support\n describe Foo do\n let(:a) { a }\n subject { b }\n end\nend\n",
+    "corrected": "module Support\n describe Foo do\n let(:a) { a }\n subject { b }\n end\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "module Support\n describe Foo do\n let(:a) { a }\n subject { b }\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "module Support\n describe Foo do\n let(:a) { a }\n subject { b }\n end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:0",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  it { is_expected.to be_after_before_hook }\n  before { setup }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  it { is_expected.to be_after_before_hook }\n  before { setup }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Move `before` above the examples in the group.",
+          "correctable": true,
+          "length": 16,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  before { setup }\n  it { is_expected.to be_after_before_hook }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  before { setup }\n  it { is_expected.to be_after_before_hook }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:1",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  context 'a context' do\n    it { is_expected.to be_after_before_hook }\n  end\n\n  before { setup }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  context 'a context' do\n    it { is_expected.to be_after_before_hook }\n  end\n\n  before { setup }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Move `before` above the examples in the group.",
+          "correctable": true,
+          "length": 16,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  before { setup }\n  context 'a context' do\n    it { is_expected.to be_after_before_hook }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  before { setup }\n  context 'a context' do\n    it { is_expected.to be_after_before_hook }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:3",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  it { is_expected.to be_after_after_hook }\n  after { cleanup }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  it { is_expected.to be_after_after_hook }\n  after { cleanup }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Move `after` above the examples in the group.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  after { cleanup }\n  it { is_expected.to be_after_after_hook }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  after { cleanup }\n  it { is_expected.to be_after_after_hook }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:4",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  it { is_expected.to be_after_before_hook }\n  before(:each) { cleanup }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  it { is_expected.to be_after_before_hook }\n  before(:each) { cleanup }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Move `before` above the examples in the group.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  before(:each) { cleanup }\n  it { is_expected.to be_after_before_hook }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  before(:each) { cleanup }\n  it { is_expected.to be_after_before_hook }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:5",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  it { is_expected.to be_after_before_hook } # h\n  # setup the system\n  # with multiline comment\n  before { setup } # some setup\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  it { is_expected.to be_after_before_hook } # h\n  # setup the system\n  # with multiline comment\n  before { setup } # some setup\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 5,
+          "column": 2,
+          "message": "Move `before` above the examples in the group.",
+          "correctable": true,
+          "length": 16,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  # setup the system\n  # with multiline comment\n  before { setup } # some setup\n  it { is_expected.to be_after_before_hook } # h\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  # setup the system\n  # with multiline comment\n  before { setup } # some setup\n  it { is_expected.to be_after_before_hook } # h\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:6",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  before(:each) { setup }\n  after(:each) { cleanup }\n\n  it { is_expected.to be_after_hooks }\n\n  context 'a context' do\n    it { is_expected.to work }\n  end\n\n  include_examples('everything is fine')\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  before(:each) { setup }\n  after(:each) { cleanup }\n\n  it { is_expected.to be_after_hooks }\n\n  context 'a context' do\n    it { is_expected.to work }\n  end\n\n  include_examples('everything is fine')\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  before(:each) { setup }\n  after(:each) { cleanup }\n\n  it { is_expected.to be_after_hooks }\n\n  context 'a context' do\n    it { is_expected.to work }\n  end\n\n  include_examples('everything is fine')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  before(:each) { setup }\n  after(:each) { cleanup }\n\n  it { is_expected.to be_after_hooks }\n\n  context 'a context' do\n    it { is_expected.to work }\n  end\n\n  include_examples('everything is fine')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:7",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  before { setup }\n\n  context 'something else' do\n    before { additional_setup }\n    it { is_expected.to work }\n  end\n\n  include_examples('everything is fine')\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  before { setup }\n\n  context 'something else' do\n    before { additional_setup }\n    it { is_expected.to work }\n  end\n\n  include_examples('everything is fine')\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  before { setup }\n\n  context 'something else' do\n    before { additional_setup }\n    it { is_expected.to work }\n  end\n\n  include_examples('everything is fine')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  before { setup }\n\n  context 'something else' do\n    before { additional_setup }\n    it { is_expected.to work }\n  end\n\n  include_examples('everything is fine')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:8",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  include_context 'special user'\n\n  before { setup }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  include_context 'special user'\n\n  before { setup }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  include_context 'special user'\n\n  before { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  include_context 'special user'\n\n  before { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:9",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  include_examples 'special user' do\n    before { setup }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  include_examples 'special user' do\n    before { setup }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  include_examples 'special user' do\n    before { setup }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  include_examples 'special user' do\n    before { setup }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:10",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  it { is_expected.to be_after_around_hook }\n  around { _1 }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  it { is_expected.to be_after_around_hook }\n  around { _1 }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Move `around` above the examples in the group.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  around { _1 }\n  it { is_expected.to be_after_around_hook }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  around { _1 }\n  it { is_expected.to be_after_around_hook }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "hooks_before_examples_spec:11",
+    "cop": "RSpec/HooksBeforeExamples",
+    "source": "RSpec.describe User do\n  context 'a context' do\n    it { is_expected.to be_after_around_hook }\n  end\n\n  around { _1 }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  context 'a context' do\n    it { is_expected.to be_after_around_hook }\n  end\n\n  around { _1 }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/hooks_before_examples_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Move `around` above the examples in the group.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  around { _1 }\n  context 'a context' do\n    it { is_expected.to be_after_around_hook }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  around { _1 }\n  context 'a context' do\n    it { is_expected.to be_after_around_hook }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_before_examples_spec:0",
+    "cop": "RSpec/LetBeforeExamples",
+    "source": "RSpec.describe User do\n  it { is_expected.to be_after_let }\n  let(:foo) { bar }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  it { is_expected.to be_after_let }\n  let(:foo) { bar }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_before_examples_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Move `let` before the examples in the group.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  let(:foo) { bar }\n  it { is_expected.to be_after_let }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  let(:foo) { bar }\n  it { is_expected.to be_after_let }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_before_examples_spec:1",
+    "cop": "RSpec/LetBeforeExamples",
+    "source": "RSpec.describe User do\n  context 'a context' do\n    it { is_expected.to be_after_let }\n  end\n\n  let(:foo) { bar }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  context 'a context' do\n    it { is_expected.to be_after_let }\n  end\n\n  let(:foo) { bar }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_before_examples_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Move `let` before the examples in the group.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  let(:foo) { bar }\n  context 'a context' do\n    it { is_expected.to be_after_let }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  let(:foo) { bar }\n  context 'a context' do\n    it { is_expected.to be_after_let }\n  end\n\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_before_examples_spec:2",
+    "cop": "RSpec/LetBeforeExamples",
+    "source": "RSpec.describe User do\n  include_examples('should be BEFORE let as it defines `let(:foo)`, too')\n\n  let(:foo) { 'bar' }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  include_examples('should be BEFORE let as it defines `let(:foo)`, too')\n\n  let(:foo) { 'bar' }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_before_examples_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Move `let` before the examples in the group.",
+          "correctable": false,
+          "length": 19,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  include_examples('should be BEFORE let as it defines `let(:foo)`, too')\n\n  let(:foo) { 'bar' }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Move `let` before the examples in the group.",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  include_examples('should be BEFORE let as it defines `let(:foo)`, too')\n\n  let(:foo) { 'bar' }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 4,
+            "column": 2,
+            "message": "Move `let` before the examples in the group.",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "let_before_examples_spec:6",
+    "cop": "RSpec/LetBeforeExamples",
+    "source": "RSpec.describe User do\n  let(:foo) { bar }\n\n  it { is_expected.to be_after_let }\n\n  context 'a context' do\n    it { is_expected.to work }\n  end\n\n  it_behaves_like('everything is fine')\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let(:foo) { bar }\n\n  it { is_expected.to be_after_let }\n\n  context 'a context' do\n    it { is_expected.to work }\n  end\n\n  it_behaves_like('everything is fine')\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_before_examples_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  let(:foo) { bar }\n\n  it { is_expected.to be_after_let }\n\n  context 'a context' do\n    it { is_expected.to work }\n  end\n\n  it_behaves_like('everything is fine')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  let(:foo) { bar }\n\n  it { is_expected.to be_after_let }\n\n  context 'a context' do\n    it { is_expected.to work }\n  end\n\n  it_behaves_like('everything is fine')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_before_examples_spec:7",
+    "cop": "RSpec/LetBeforeExamples",
+    "source": "RSpec.describe User do\n  let(:foo) { bar }\n\n  context 'something else' do\n    let(:foo) { baz }\n    it { is_expected.to work }\n  end\n\n  it_behaves_like('everything is fine')\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let(:foo) { bar }\n\n  context 'something else' do\n    let(:foo) { baz }\n    it { is_expected.to work }\n  end\n\n  it_behaves_like('everything is fine')\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_before_examples_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  let(:foo) { bar }\n\n  context 'something else' do\n    let(:foo) { baz }\n    it { is_expected.to work }\n  end\n\n  it_behaves_like('everything is fine')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  let(:foo) { bar }\n\n  context 'something else' do\n    let(:foo) { baz }\n    it { is_expected.to work }\n  end\n\n  it_behaves_like('everything is fine')\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_before_examples_spec:8",
+    "cop": "RSpec/LetBeforeExamples",
+    "source": "RSpec.describe User do\n  include_context 'special user'\n\n  let(:foo) { bar }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  include_context 'special user'\n\n  let(:foo) { bar }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_before_examples_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  include_context 'special user'\n\n  let(:foo) { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  include_context 'special user'\n\n  let(:foo) { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "let_before_examples_spec:9",
+    "cop": "RSpec/LetBeforeExamples",
+    "source": "RSpec.describe User do\n  it_behaves_like 'special user' do\n    let(:foo) { bar }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  it_behaves_like 'special user' do\n    let(:foo) { bar }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/let_before_examples_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  it_behaves_like 'special user' do\n    let(:foo) { bar }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  it_behaves_like 'special user' do\n    let(:foo) { bar }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_let_spec:0",
+    "cop": "RSpec/ScatteredLet",
+    "source": "RSpec.describe User do\n  let(:a) { a }\n  it { expect(subject.foo).to eq(a) }\n  let(:b) { b }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let(:a) { a }\n  it { expect(subject.foo).to eq(a) }\n  let(:b) { b }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_let_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Group all let/let! blocks in the example group together.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  let(:a) { a }\n  let(:b) { b }\n  it { expect(subject.foo).to eq(a) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  let(:a) { a }\n  let(:b) { b }\n  it { expect(subject.foo).to eq(a) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_let_spec:1",
+    "cop": "RSpec/ScatteredLet",
+    "source": "describe User do\n  let(:a) { <<-BAR }\n    hello\n    world\n  BAR\n  it { expect(subject.foo).to eq(a) }\n  let(:b) { <<-BAZ }\n    again\n  BAZ\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe User do\n  let(:a) { <<-BAR }\n    hello\n    world\n  BAR\n  it { expect(subject.foo).to eq(a) }\n  let(:b) { <<-BAZ }\n    again\n  BAZ\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_let_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 7,
+          "column": 2,
+          "message": "Group all let/let! blocks in the example group together.",
+          "correctable": true,
+          "length": 18,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe User do\n  let(:a) { <<-BAR }\n    hello\n    world\n  BAR\n  let(:b) { <<-BAZ }\n    again\n  BAZ\n  it { expect(subject.foo).to eq(a) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe User do\n  let(:a) { <<-BAR }\n    hello\n    world\n  BAR\n  let(:b) { <<-BAZ }\n    again\n  BAZ\n  it { expect(subject.foo).to eq(a) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_let_spec:2",
+    "cop": "RSpec/ScatteredLet",
+    "source": "RSpec.describe User do\n  let(:a) { a } # a comment\n  # example comment\n  it { expect(subject.foo).to eq(a) }\n  it { expect(subject.fu).to eq(b) } # inline example comment\n  # define the second letter\n  # with a multi-line description\n  let(:b) { b } # inline explanation as well\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe User do\n  let(:a) { a } # a comment\n  # example comment\n  it { expect(subject.foo).to eq(a) }\n  it { expect(subject.fu).to eq(b) } # inline example comment\n  # define the second letter\n  # with a multi-line description\n  let(:b) { b } # inline explanation as well\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_let_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 8,
+          "column": 2,
+          "message": "Group all let/let! blocks in the example group together.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe User do\n  let(:a) { a } # a comment\n  # define the second letter\n  # with a multi-line description\n  let(:b) { b } # inline explanation as well\n  # example comment\n  it { expect(subject.foo).to eq(a) }\n  it { expect(subject.fu).to eq(b) } # inline example comment\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe User do\n  let(:a) { a } # a comment\n  # define the second letter\n  # with a multi-line description\n  let(:b) { b } # inline explanation as well\n  # example comment\n  it { expect(subject.foo).to eq(a) }\n  it { expect(subject.fu).to eq(b) } # inline example comment\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_let_spec:3",
+    "cop": "RSpec/ScatteredLet",
+    "source": "describe User do\n  let(:a) { a }\n  it { expect(subject.foo).to eq(a) }\n\n  describe '#property' do\n    let(:c) { c }\n\n    it { expect(subject.property).to eq c }\n\n    let(:d) { d }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe User do\n  let(:a) { a }\n  it { expect(subject.foo).to eq(a) }\n\n  describe '#property' do\n    let(:c) { c }\n\n    it { expect(subject.property).to eq c }\n\n    let(:d) { d }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_let_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 10,
+          "column": 4,
+          "message": "Group all let/let! blocks in the example group together.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe User do\n  let(:a) { a }\n  it { expect(subject.foo).to eq(a) }\n\n  describe '#property' do\n    let(:c) { c }\n    let(:d) { d }\n\n    it { expect(subject.property).to eq c }\n\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe User do\n  let(:a) { a }\n  it { expect(subject.foo).to eq(a) }\n\n  describe '#property' do\n    let(:c) { c }\n    let(:d) { d }\n\n    it { expect(subject.property).to eq c }\n\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_let_spec:4",
+    "cop": "RSpec/ScatteredLet",
+    "source": "describe User do\n  subject { User }\n\n  let(:a) { a }\n  let!(:b) { b }\n  let(:c) { c }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe User do\n  subject { User }\n\n  let(:a) { a }\n  let!(:b) { b }\n  let(:c) { c }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_let_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe User do\n  subject { User }\n\n  let(:a) { a }\n  let!(:b) { b }\n  let(:c) { c }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe User do\n  subject { User }\n\n  let(:a) { a }\n  let!(:b) { b }\n  let(:c) { c }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "scattered_let_spec:5",
+    "cop": "RSpec/ScatteredLet",
+    "source": "describe User do\n  let!(:a) { a }\n  it { expect(subject.foo).to eq(a) }\n  let!(:c) { c }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe User do\n  let!(:a) { a }\n  it { expect(subject.foo).to eq(a) }\n  let!(:c) { c }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/scattered_let_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 2,
+          "message": "Group all let/let! blocks in the example group together.",
+          "correctable": true,
+          "length": 14,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe User do\n  let!(:a) { a }\n  let!(:c) { c }\n  it { expect(subject.foo).to eq(a) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe User do\n  let!(:a) { a }\n  let!(:c) { c }\n  it { expect(subject.foo).to eq(a) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/HooksBeforeExamples",
+    "id": "batch21:HooksBeforeExamples:shared-group",
+    "source": "describe Foo do\n shared_examples(\"a\") { work }\n before { setup }\nend\n",
+    "corrected": "describe Foo do\n shared_examples(\"a\") { work }\n before { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n shared_examples(\"a\") { work }\n before { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n shared_examples(\"a\") { work }\n before { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/HooksBeforeExamples",
+    "id": "batch21:HooksBeforeExamples:numbered-example",
+    "source": "describe Foo do\n it { consume(_1) }\n before { setup }\nend\n",
+    "corrected": "describe Foo do\n it { consume(_1) }\n before { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Move `before` above the examples in the group.",
+          "correctable": true,
+          "length": 16,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n before { setup }\n it { consume(_1) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n before { setup }\n it { consume(_1) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/HooksBeforeExamples",
+    "id": "batch21:HooksBeforeExamples:qualified-group",
+    "source": "describe Foo do\n RSpec.context(\"a\") { work }\n before { setup }\nend\n",
+    "corrected": "describe Foo do\n RSpec.context(\"a\") { work }\n before { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Move `before` above the examples in the group.",
+          "correctable": true,
+          "length": 16,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n before { setup }\n RSpec.context(\"a\") { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n before { setup }\n RSpec.context(\"a\") { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/HooksBeforeExamples",
+    "id": "batch21:HooksBeforeExamples:block-pass-hook",
+    "source": "describe Foo do\n it { work }\n before(&callback)\nend\n",
+    "corrected": "describe Foo do\n it { work }\n before(&callback)\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n it { work }\n before(&callback)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n it { work }\n before(&callback)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/LetBeforeExamples",
+    "id": "batch21:LetBeforeExamples:numbered-example",
+    "source": "describe Foo do\n it { consume(_1) }\n let(:value) { setup }\nend\n",
+    "corrected": "describe Foo do\n it { consume(_1) }\n let(:value) { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n it { consume(_1) }\n let(:value) { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n it { consume(_1) }\n let(:value) { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/LetBeforeExamples",
+    "id": "batch21:LetBeforeExamples:qualified-group",
+    "source": "describe Foo do\n RSpec.context(\"a\") { work }\n let(:value) { setup }\nend\n",
+    "corrected": "describe Foo do\n RSpec.context(\"a\") { work }\n let(:value) { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n RSpec.context(\"a\") { work }\n let(:value) { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n RSpec.context(\"a\") { work }\n let(:value) { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/LetBeforeExamples",
+    "id": "batch21:LetBeforeExamples:subject-negative",
+    "source": "describe Foo do\n it { work }\n subject { setup }\nend\n",
+    "corrected": "describe Foo do\n it { work }\n subject { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n it { work }\n subject { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n it { work }\n subject { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/LetBeforeExamples",
+    "id": "batch21:LetBeforeExamples:multiple-helpers",
+    "source": "describe Foo do\n it { work }\n let(:first) { first }\n let(:second) { second }\nend\n",
+    "corrected": "describe Foo do\n it { work }\n let(:first) { first }\n let(:second) { second }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Move `let` before the examples in the group.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Move `let` before the examples in the group.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n let(:second) { second }\n let(:first) { first }\n it { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n let(:second) { second }\n let(:first) { first }\n it { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/LetBeforeExamples",
+    "id": "batch21:LetBeforeExamples:quoted-name",
+    "source": "describe Foo do\n it { work }\n let(\"value\") { setup }\nend\n",
+    "corrected": "describe Foo do\n it { work }\n let(\"value\") { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Move `let` before the examples in the group.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n let(\"value\") { setup }\n it { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n let(\"value\") { setup }\n it { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/LetBeforeExamples",
+    "id": "batch21:LetBeforeExamples:numbered-root",
+    "source": "describe Foo do\n consume(_1)\n it { work }\n let(:value) { setup }\nend\n",
+    "corrected": "describe Foo do\n consume(_1)\n it { work }\n let(:value) { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n consume(_1)\n it { work }\n let(:value) { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n consume(_1)\n it { work }\n let(:value) { setup }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/ScatteredLet",
+    "id": "batch21:ScatteredLet:multiple-helpers",
+    "source": "describe Foo do\n let(:first) { first }\n it { work }\n let(:second) { second }\n let(:third) { third }\nend\n",
+    "corrected": "describe Foo do\n let(:first) { first }\n it { work }\n let(:second) { second }\n let(:third) { third }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Group all let/let! blocks in the example group together.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 1,
+          "message": "Group all let/let! blocks in the example group together.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n let(:first) { first }\n let(:second) { second }\n let(:third) { third }\n it { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n let(:first) { first }\n let(:second) { second }\n let(:third) { third }\n it { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/ScatteredLet",
+    "id": "batch21:ScatteredLet:numbered-helper",
+    "source": "describe Foo do\n let(:first) { first }\n it { work }\n let(:second) { consume(_1) }\nend\n",
+    "corrected": "describe Foo do\n let(:first) { first }\n it { work }\n let(:second) { consume(_1) }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n let(:first) { first }\n it { work }\n let(:second) { consume(_1) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n let(:first) { first }\n it { work }\n let(:second) { consume(_1) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/ScatteredLet",
+    "id": "batch21:ScatteredLet:shared-root",
+    "source": "shared_examples \"a\" do\n let(:first) { first }\n it { work }\n let(:second) { second }\nend\n",
+    "corrected": "shared_examples \"a\" do\n let(:first) { first }\n it { work }\n let(:second) { second }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "shared_examples \"a\" do\n let(:first) { first }\n it { work }\n let(:second) { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "shared_examples \"a\" do\n let(:first) { first }\n it { work }\n let(:second) { second }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "cop": "RSpec/ScatteredLet",
+    "id": "batch21:ScatteredLet:quoted-name",
+    "source": "describe Foo do\n let(:first) { first }\n it { work }\n let(\"value\") { setup }\nend\n",
+    "corrected": "describe Foo do\n let(:first) { first }\n it { work }\n let(\"value\") { setup }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Group all let/let! blocks in the example group together.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n let(:first) { first }\n let(\"value\") { setup }\n it { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n let(:first) { first }\n let(\"value\") { setup }\n it { work }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:previous-subject",
+    "source": "describe Foo do\n subject(:first) { a }\n let(:value) { b }\n subject(:second) { c }\nend\n",
+    "corrected": "describe Foo do\n subject(:first) { a }\n let(:value) { b }\n subject(:second) { c }\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 1,
+          "message": "Declare `subject` above any other `let` declarations.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n subject(:first) { a }\n subject(:second) { c }\n let(:value) { b }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n subject(:first) { a }\n subject(:second) { c }\n let(:value) { b }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:disabled-inline",
+    "source": "describe Foo do\n let(:a) { a }\n # rubocop:disable RSpec/LeadingSubject\n subject { b }\n # rubocop:enable RSpec/LeadingSubject\nend\n",
+    "corrected": "describe Foo do\n let(:a) { a }\n # rubocop:disable RSpec/LeadingSubject\n subject { b }\n # rubocop:enable RSpec/LeadingSubject\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n let(:a) { a }\n # rubocop:disable RSpec/LeadingSubject\n subject { b }\n # rubocop:enable RSpec/LeadingSubject\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n let(:a) { a }\n # rubocop:disable RSpec/LeadingSubject\n subject { b }\n # rubocop:enable RSpec/LeadingSubject\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]

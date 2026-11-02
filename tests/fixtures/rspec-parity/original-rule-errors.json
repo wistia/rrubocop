@@ -17,5 +17,54 @@
       "source": "lib/rubocop/cop/rspec/yield.rb:54 calling_block?",
       "native_behavior": "No offense; preserve empty callback without crashing."
     }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:numbered-group",
+    "source": "describe Foo do\n consume(_1)\n let(:a) { a }\n subject { b }\nend\n",
+    "corrected": "describe Foo do\n consume(_1)\n let(:a) { a }\n subject { b }\nend\n",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "NoMethodError",
+      "message": "undefined method 'body' for nil",
+      "source": "lib/rubocop/cop/rspec/leading_subject.rb:67 parent",
+      "native_behavior": "Preserve numbered root group without crashing; original only searches ordinary block ancestors."
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:same-line",
+    "source": "describe Foo do; let(:value) { a }; subject { b }; end\n",
+    "corrected": "describe Foo do; let(:value) { a }; subject { b }; end\n",
+    "safety_difference": "Preserve eager hook execution, helper override order, dynamic name evaluation and neighboring statements when hoisting a subject.",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "Parser::ClobberingError",
+      "message": "Parser::Source::TreeRewriter detected clobbering",
+      "source": "parser/source/tree_rewriter.rb:427 from RSpec::Corrector::MoveNode",
+      "native_behavior": "Report the offense and preserve neighboring statements instead of conflicting whole-line movement."
+    },
+    "native_diagnostics": [
+      {
+        "line": 1,
+        "column": 36,
+        "length": 13,
+        "message": "Declare `subject` above any other `let` declarations.",
+        "correctable": true,
+        "severity": "convention"
+      }
+    ]
   }
 ]

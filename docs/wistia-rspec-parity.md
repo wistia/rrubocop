@@ -550,3 +550,41 @@ and labels. Physical multiline symbols with multiple str parts remain dsym;
 trailing-newline one-part symbols and escaped continuations retain sym semantics.
 Six additional original pairs cover these branches and quoted-label versus hash
 rocket equality: the shared suite now has 54 pairs and 108 mode assertions.
+
+## Batch 21: declaration ordering and atomic movement
+
+LeadingSubject is repaired and HooksBeforeExamples, LetBeforeExamples and
+ScatteredLet replace three original stubs. The reviewed total is 71 original
+stubs plus all sixteen existing implementations (87 of 96); nine original stubs
+remain. All 49 RSpec/RSpecRails tests pass with 1,465 strict original-Ruby cases,
+44 correction-disable controls and 81 explicit safeguards.
+
+Distinct original-source review includes language predicates, nearest ordinary
+block/root-group scope, marker aliases, qualified/numbered forms, include/shared
+boundaries, block-pass arity, and declaration-name lookup. Shared movement follows
+MoveNode/CommentsHelp/FinalEndLocation, preserving exact indentation, blank lines,
+attached comments and delayed heredoc bodies. Directive attachments remain intact.
+Multiple moves use explicit offense ownership to keep each insertion/deletion
+atomic: the regression probes exposed native deletion loss when colliding
+insertions were inferred as different owners. No scheduling engine was changed.
+
+Twenty-one trusted real RSpec examples verify ordinary lazy/helper/hook movement
+and demonstrate eager-hook ordering, named/implicit subject override, included
+subject override and multiple-hook reversal hazards. Native preserves original
+hook registration order; Ruby's simultaneous before-hook moves reverse it.
+Other unsafe source-order changes and directive scope changes remain separately
+recorded safeguards, outside strict parity successes.
+
+Two further original defects are retained in original-rule-errors.json. A subject
+inside a numbered root group crashes LeadingSubject#parent while looking for an
+ordinary block ancestor. A same-line move raises Parser::ClobberingError. Native
+preserves these sources, reports the applicable same-line offense, and passes
+all three original-rule-error regression cases in each mode. The four earlier
+invalid-original-syntax specimens remain separate.
+
+Combined-cop scheduling is explicitly deferred by the user. Original
+LetBeforeExamples declares autocorrect_incompatible_with [RSpec::ScatteredLet]
+at lib/rubocop/cop/rspec/let_before_examples.rb:65; the native generic scheduler has
+no equivalent metadata API. This batch makes individual-rule claims only and does
+not claim combined-cop correction parity. The canonical integration follow-up is
+maintained by the parent agent separately.

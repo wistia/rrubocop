@@ -368,8 +368,16 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/hooks_before_examples.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 15,
+    "deliberate_safeguards": [
+      "hooks_before_examples_spec:2",
+      "hooks_before_examples_spec:12",
+      "batch21:HooksBeforeExamples:eager-crossing",
+      "batch21:HooksBeforeExamples:dynamic-scope",
+      "batch21:HooksBeforeExamples:multiple-hooks"
+    ],
+    "post_implementation_review": "Pinned original algorithm, language predicates, MoveNode/CommentsHelp/FinalEndLocation and upstream specs reviewed separately. Covered ordinary/numbered/qualified groups, examples and hooks; shared/include boundaries; block-pass, static/dynamic declaration names; exact multiline/blank-comment/heredoc movement, multiple declarations and disabled correction/directive controls. Each move has explicit atomic offense ownership. Trusted21real RSpec examples prove safe hoists and eager-order, override/include and multiple-hook reversal hazards. Unsafe forms remain explicit safeguards; original numbered-root and same-line correction crashes retained separately."
   },
   {
     "name": "RSpec/IdenticalEqualityAssertion",
@@ -453,8 +461,19 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/leading_subject.rb",
     "baseline_status": "candidate_fixture_difference",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 23,
+    "deliberate_safeguards": [
+      "leading_subject_spec:11",
+      "leading_subject_spec:12",
+      "leading_subject_spec:13",
+      "batch21:eager-hook",
+      "batch21:named-collision",
+      "batch21:implicit-collision",
+      "batch21:dynamic-subject-name",
+      "batch21:other-directive"
+    ],
+    "post_implementation_review": "Pinned original algorithm, language predicates, MoveNode/CommentsHelp/FinalEndLocation and upstream specs reviewed separately. Covered ordinary/numbered/qualified groups, examples and hooks; shared/include boundaries; block-pass, static/dynamic declaration names; exact multiline/blank-comment/heredoc movement, multiple declarations and disabled correction/directive controls. Each move has explicit atomic offense ownership. Trusted21real RSpec examples prove safe hoists and eager-order, override/include and multiple-hook reversal hazards. Unsafe forms remain explicit safeguards; original numbered-root and same-line correction crashes retained separately."
   },
   {
     "name": "RSpec/LeakyConstantDeclaration",
@@ -471,8 +490,16 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/let_before_examples.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 13,
+    "deliberate_safeguards": [
+      "let_before_examples_spec:3",
+      "let_before_examples_spec:4",
+      "let_before_examples_spec:5",
+      "batch21:LetBeforeExamples:eager-crossing"
+    ],
+    "post_implementation_review": "Pinned original algorithm, language predicates, MoveNode/CommentsHelp/FinalEndLocation and upstream specs reviewed separately. Covered ordinary/numbered/qualified groups, examples and hooks; shared/include boundaries; block-pass, static/dynamic declaration names; exact multiline/blank-comment/heredoc movement, multiple declarations and disabled correction/directive controls. Each move has explicit atomic offense ownership. Trusted21real RSpec examples prove safe hoists and eager-order, override/include and multiple-hook reversal hazards. Unsafe forms remain explicit safeguards; original numbered-root and same-line correction crashes retained separately.",
+    "deferred_combined_cop_metadata": "Original self.autocorrect_incompatible_with => [RSpec::ScatteredLet] at lib/rubocop/cop/rspec/let_before_examples.rb:65. Native has no generic incompatibility scheduling API. User explicitly deferred engine/scheduling changes; individual-rule results do not claim combined-cop parity."
   },
   {
     "name": "RSpec/LetSetup",
@@ -781,8 +808,14 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/scattered_let.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 10,
+    "deliberate_safeguards": [
+      "scattered_let_spec:6",
+      "batch21:ScatteredLet:eager-crossing",
+      "batch21:ScatteredLet:name-collision"
+    ],
+    "post_implementation_review": "Pinned original algorithm, language predicates, MoveNode/CommentsHelp/FinalEndLocation and upstream specs reviewed separately. Covered ordinary/numbered/qualified groups, examples and hooks; shared/include boundaries; block-pass, static/dynamic declaration names; exact multiline/blank-comment/heredoc movement, multiple declarations and disabled correction/directive controls. Each move has explicit atomic offense ownership. Trusted21real RSpec examples prove safe hoists and eager-order, override/include and multiple-hook reversal hazards. Unsafe forms remain explicit safeguards; original numbered-root and same-line correction crashes retained separately."
   },
   {
     "name": "RSpec/ScatteredSetup",

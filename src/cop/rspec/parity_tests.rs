@@ -201,7 +201,7 @@ fn explicit_autocorrection_disable_preserves_sources() {
             assert!(!diagnostics.is_empty());
         }
     }
-    assert_eq!(checked.len(), 40);
+    assert_eq!(checked.len(), 44);
 }
 
 #[test]
@@ -219,7 +219,14 @@ fn original_rule_errors_do_not_crash_or_modify_source() {
         ] {
             let (after, diagnostics) = inspect(&case, original, mode);
             assert_eq!(after, original);
-            assert!(diagnostics.is_empty(), "{}", case["id"]);
+            assert_eq!(
+                normalized(&diagnostics),
+                case.get("native_diagnostics")
+                    .cloned()
+                    .unwrap_or_else(|| serde_json::json!([])),
+                "{}",
+                case["id"]
+            );
         }
     }
 }
