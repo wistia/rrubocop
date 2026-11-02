@@ -243,3 +243,10 @@ mod tests;
 
 #[cfg(test)]
 mod diagnostic_tests;
+
+pub(super) fn static_literal(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    Context::new(source, &config)
+        .static_value(node)
+        .map(std::borrow::Cow::into_owned)
+}
