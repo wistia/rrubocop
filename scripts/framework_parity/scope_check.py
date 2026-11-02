@@ -121,7 +121,7 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
 failures=[row for row in results if not row['matches']]
 missing_positives=[row['cop'] for row in results if row['positive'] and ('offenses' not in row['ruby'] or not row['ruby']['offenses'])]
 (a.output/'results.json').write_text(json.dumps(results,indent=2)+'\n')
-summary=dict(cases=len(results),production_scope_cases=sum(not c.get('extra_cops') for c in cases),auxiliary_policy_cases=sum(bool(c.get('extra_cops')) for c in cases),rules=len(rows),auxiliary_rules=sorted({c['cop'] for c in cases}-{r[0] for r in rows}),differences=len(failures),missing_positive_controls=missing_positives)
+summary=dict(cases=len(results),production_scope_cases=sum(not c.get('extra_cops') for c in cases),auxiliary_policy_cases=sum(bool(c.get('extra_cops')) for c in cases),rules=len({c['cop'] for c in cases if not c.get('extra_cops')}),catalog_rules=len(rows),auxiliary_rules=sorted({c['cop'] for c in cases}-{r[0] for r in rows}),differences=len(failures),missing_positive_controls=missing_positives)
 (a.output/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps(summary,indent=2))
 raise SystemExit(bool(failures or missing_positives))
