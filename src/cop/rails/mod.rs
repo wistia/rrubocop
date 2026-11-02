@@ -32,6 +32,7 @@ mod http_positional_arguments;
 mod http_status;
 mod ignored_skip_action_filter_option;
 mod index_by;
+mod index_method;
 mod index_with;
 mod inverse_of;
 mod lexically_scoped_action_filter;

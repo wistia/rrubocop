@@ -2,8 +2,8 @@
 
 The initial inventory covers 90 enabled Rails, Migration, Performance and FactoryBot cops.
 Seven remaining Performance stubs are now delegated to `feat/wistia-parity-performance`; this branch retains the other 83 rules.
-The baseline inventory contained 67 no-op stubs. The current branch replaces 38 stubs and reviews three existing implementations.
-Twenty-nine baseline stubs (22 retained here, seven delegated) and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
+The baseline inventory contained 67 no-op stubs. The current branch replaces 40 stubs and reviews three existing implementations.
+Twenty-seven baseline stubs (20 retained here, seven delegated) and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
 
@@ -782,3 +782,16 @@ Final gate: **601 original cases, 1,202 second passes, three trusted programs**.
 Checkpoint totals: 38 baseline stubs replaced, three existing rules reviewed; 29 original stubs remain globally in this inventory, including seven transferred Performance stubs and 22 retained Rails stubs. Full native suite: 921 pass, one ignored.
 
 HttpStatus production scope gate: all 91 probes pass (87 unchanged production-config scopes across 41 rules plus four auxiliary policy probes).
+
+### IndexBy and IndexWith source/spec parity review
+
+Reviewed pinned `rubocop-rails-2.26.0/lib/rubocop/cop/rails/index_by.rb`, `index_with.rb` and `mixin/index_method.rb`, then both upstream v2.26.0 spec files after implementation. Shared implementation handles all four original shapes: `each_with_object({})`, block `to_h`, `map`/`collect` followed by `to_h`, and root-qualified/unqualified `Hash[map]`. Coverage includes safe sends, multiline/empty argument parentheses, an outer `to_h` block, exact block-argument arity, unchanged element/no-op exclusions, memo reads, alternate receivers, setters, constant scope, comments, disabled correction and Ruby 2.5/2.6 boundaries. Rails dependency tests model actual `requires_gem` behavior; see `wistia-framework-dependency-fixtures.md`.
+
+Final bounded gate: **254 original cases, 508 second passes, 12 trusted ActiveSupport programs**. All native programs preserve original execution. **120 retained events** comprise 36 diagnostic correctability differences, 38 safe-byte differences, 38 all-byte differences and eight runtime differences. Warning locations/messages/counts match. The deliberate safeguards are:
+
+- Preserve comments that original suffix removal deletes; comments outside edited ranges or copied with the expression still permit correction.
+- Decline break/next/redo/retry expression rewrites. Trusted map programs prove the original correction changes a NoMethodError/TypeError into a returned value/hash. The recursive guard remains conservative about nested control-flow frames; precision there is a follow-up, not a claim of exhaustive safe correction parity.
+- Validate the entire proposed source; a captured splat array element would become an invalid bare block expression under the original correction. Native keeps the diagnostic/source.
+- Produce the valid equivalent for explicit `Hash.[](map...)`; original fixed-prefix deletion emits invalid `[](x.index_by ...` / `[](x.index_with ...`. This intentionally differs in corrected bytes.
+
+Post-port review added dependency-context fixtures, selector/setter exclusions, structural root-qualified Hash recognition and comment-range preservation. Actual CLI/config gate: **95 probes pass** (91 unchanged production scopes across 43 rules plus four auxiliary policy probes). Full native suite: **921 pass, one ignored**. Full previous-rule regression: 3,308 originals, 6,616 second passes and 75 trusted programs retain exactly expected events; final expanded Index cases were checked separately. Totals: 40 original stubs replaced, three existing rules reviewed, 27 original stubs remain (20 retained Rails, seven delegated Performance).

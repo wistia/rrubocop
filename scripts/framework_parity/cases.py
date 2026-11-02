@@ -5,9 +5,34 @@ from pathlib import Path
 def cases():
     rows = []
     def add(cop, source, **config):
+        if cop == "Rails/IndexWith":
+            config.setdefault("GemVersions", {"railties": "8.1.3.1"})
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    for cop, by in (("Rails/IndexBy", True), ("Rails/IndexWith", False)):
+        for expr in ("foo(el)", "el.to_sym", "el", "h[el]", "foo(h)", "h.foo", "foo { h }", "'value'", "1"):
+            pair=f"[{expr}, el]" if by else f"[el, {expr}]"
+            assignment=f"h[{expr}] = el" if by else f"h[el] = {expr}"
+            for source in (f"x.each_with_object({{}}) {{ |el, h| {assignment} }}", f"x.to_h {{ |el| {pair} }}", f"x.map {{ |el| {pair} }}.to_h", f"x.collect {{ |el| {pair} }}.to_h", f"Hash[x.map {{ |el| {pair} }}]", f"::Hash[x.map {{ |el| {pair} }}]", f"x&.each_with_object({{}}) {{ |el, h| {assignment} }}", f"x&.map {{ |el| {pair} }}&.to_h"):
+                add(cop, source)
+        pair="[el.to_sym, el]" if by else "[el, el.to_sym]"
+        assignment="h[el.to_sym] = el" if by else "h[el] = el.to_sym"
+        for source in (f"x.each_with_object({{}}) do |el, h|\n  {assignment}\nend", f"x.map {{ |el| {pair} }}.\n  to_h", f"x.map {{ |el| {pair} }}\n  .to_h", f"x.map {{ |el| {pair} }}.to_h {{ |k,v| [v,k] }}", f"Other::Hash[x.map {{ |el| {pair} }}]", f"Hash.[](x.map {{ |el| {pair} }})", f"x.map() {{ |el| {pair} }}.to_h()", f"x.to_h() {{ |el| {pair} }}", f"x.map(1) {{ |el| {pair} }}.to_h", f"x.map {{ |el| {pair} }}.to_h(1)", f"x.map {{ |el, other| {pair} }}.to_h", f"x.map {{ |el| work; {pair} }}.to_h", f"x.each_with_object({{a: 1}}) {{ |el,h| {assignment} }}", f"x.each_with_object({{}}) {{ |el,h,other| {assignment} }}", f"x.map {{ |el; other| {pair} }}.to_h", f"x.map {{ |el| {pair} }} # keep\n .to_h", f"x.each_with_object({{}}) {{ |el,h| # keep\n {assignment} }}"):
+            add(cop,source)
+        for ruby in (2.5,2.6,3.4):
+            for rails in (5.2,6.0,8.1):
+                add(cop,f"x.to_h {{ |el| {pair} }}",TargetRubyVersion=ruby,TargetRailsVersion=rails,GemVersions={"railties":str(rails)})
+                add(cop,f"x.map {{ |el| {pair} }}.to_h",TargetRubyVersion=ruby,TargetRailsVersion=rails,GemVersions={"railties":str(rails)})
+        for gems,target in (({},8.1), ({"railties":"5.2.8"},8.1), ({"railties":"8.1.3.1"},5.2)):
+            add(cop,f"x.map {{ |el| {pair} }}.to_h",GemVersions=gems,TargetRailsVersion=target)
+        for source in (f":: Hash[x.map {{ |el| {pair} }}]", f"Hash [x.map {{ |el| {pair} }}]", f"x.to_h {{ {pair} }}", f"x.map {{ [_1, _1.to_s] }}.to_h", f"x.each_with_object({{}}) {{ |el,h| h[el] = h }}", f"x.map {{ |el| [{('begin; break :halt; 1; end' if by else 'el')}, {('el' if by else 'begin; break :halt; 1; end')}] }}.to_h", f"x.map {{ |el| [{('begin; next; 1; end' if by else 'el')}, {('el' if by else 'begin; next; 1; end')}] }}.to_h"):
+            add(cop,source)
+        for source in (f"x.map {{ |el| {pair} }}.to_h = other", f"Hash[x.map {{ |el| {pair} }}] = other"):
+            add(cop,source)
+        pair_splat="[*other, el]" if by else "[el, *other]"
+        add(cop,f"x.map {{ |el| {pair_splat} }}.to_h")
+        add(cop,f"x.map {{ |el| {pair} }}.to_h",AutoCorrect="disabled")
     status_names = json.loads((Path(__file__).resolve().parents[2] / "tests/fixtures/framework-http-status-rack-2.2.24.json").read_text())
     for name, number in status_names.items():
         for style in ("symbolic", "numeric"):

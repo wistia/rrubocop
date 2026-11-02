@@ -1,5 +1,18 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ('Rails/IndexBy', "require 'active_support/all'\np [:a,:b].each_with_object({}) { |el,h| h[el.to_s] = el }\n"),
+    ('Rails/IndexBy', "require 'active_support/all'\np [:a,:b].map { |el| [el.to_s, el] }.to_h\n"),
+    ('Rails/IndexBy', "require 'active_support/all'\np Hash[[:a,:b].map { |el| [el.to_s, el] }]\n"),
+    ('Rails/IndexBy', "require 'active_support/all'\np [:a,:b].to_h { |el| [el.to_s, el] }\n"),
+    ('Rails/IndexBy', "require 'active_support/all'\nbegin\nresult=[:a,:b].map { |el| [begin; break :halt; 1; end,el] }.to_h\np [:result,result]\nrescue => error\np [:error,error.class.name]\nend\n"),
+    ('Rails/IndexBy', "require 'active_support/all'\nbegin\nresult=[:a,:b].map { |el| [begin; next; 1; end,el] }.to_h\np [:result,result]\nrescue => error\np [:error,error.class.name]\nend\n"),
+    ('Rails/IndexWith', "require 'active_support/all'\np [:a,:b].each_with_object({}) { |el,h| h[el] = el.to_s }\n", {"GemVersions": {"railties": "8.1.3.1"}}),
+    ('Rails/IndexWith', "require 'active_support/all'\np [:a,:b].map { |el| [el, el.to_s] }.to_h\n", {"GemVersions": {"railties": "8.1.3.1"}}),
+    ('Rails/IndexWith', "require 'active_support/all'\np Hash[[:a,:b].map { |el| [el, el.to_s] }]\n", {"GemVersions": {"railties": "8.1.3.1"}}),
+    ('Rails/IndexWith', "require 'active_support/all'\np [:a,:b].to_h { |el| [el, el.to_s] }\n", {"GemVersions": {"railties": "8.1.3.1"}}),
+    ('Rails/IndexWith', "require 'active_support/all'\nbegin\nresult=[:a,:b].map { |el| [el,begin; break :halt; 1; end] }.to_h\np [:result,result]\nrescue => error\np [:error,error.class.name]\nend\n", {"GemVersions": {"railties": "8.1.3.1"}}),
+    ('Rails/IndexWith', "require 'active_support/all'\nbegin\nresult=[:a,:b].map { |el| [el,begin; next; 1; end] }.to_h\np [:result,result]\nrescue => error\np [:error,error.class.name]\nend\n", {"GemVersions": {"railties": "8.1.3.1"}}),
+
     ("Rails/HttpStatus", "gem 'rack', '2.2.24'\ngem 'actionpack', '8.1.3.1'\nrequire 'action_dispatch'\ndef render(status:)\np ActionDispatch::Response.new(status).status\nend\nrender status: '550'\n"),
     ("Rails/HttpStatus", "gem 'rack', '2.2.24'\ngem 'actionpack', '8.1.3.1'\nrequire 'action_dispatch'\ndef render(status:)\np ActionDispatch::Response.new(status).status\nend\nrender status: '200'\n"),
     ("Rails/HttpStatus", "gem 'rack', '2.2.24'\ngem 'actionpack', '8.1.3.1'\nrequire 'action_dispatch'\ndef render(status:)\np ActionDispatch::Response.new(status).status\nend\nrender status: :ok\n", {"EnforcedStyle": "numeric"}),

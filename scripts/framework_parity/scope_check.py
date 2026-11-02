@@ -16,6 +16,8 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/IndexBy', 'x.map { |el| [el.to_sym, el] }.to_h', model, service),
+ ('Rails/IndexWith', 'x.map { |el| [el, el.to_sym] }.to_h', model, service),
  ('Rails/HttpStatus', 'render status: 200', 'app/controllers/framework_parity_probe.rb', model),
  ('Rails/PluralizationGrammar', '2.day', model, service),
  ('Rails/ReflectionClassName', 'has_many :accounts, class_name: Account', model, service),
