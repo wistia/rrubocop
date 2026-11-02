@@ -1,0 +1,5137 @@
+[
+  {
+    "cop": "AnyCable/InstanceVars",
+    "source": "class Channel; def subscribed; @post = find; @post; end; end\n",
+    "path": "app/channels/test_channel.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "1cafb6fe105ad990",
+    "expected": [
+      {
+        "line": 1,
+        "column": 31,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      },
+      {
+        "line": 1,
+        "column": 45,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 5,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin; work; rescue; cleanup; end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "e0bad9b600e71059",
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Custom/RequireRespondToAny",
+    "source": "respond_to do |format|\n format.html\n format.json\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "a7f3760649a8a13a",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Every `respond_to` block must include a `format.any`.",
+        "correctable": false,
+        "length": 22,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "attribute :name, key: :display_name do\n object.name\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "cc9ba70b1e064028",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false,
+        "length": 38,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a; end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "75567acf28693f0b",
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "length": 7,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash; a.hash ^ b.hash; end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "bf05bff6c6b4e6de",
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "[value].hash\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "786cbace22cd970f",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delegate hash directly without wrapping in an array when only using a single value.",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "[a.hash, b.hash].hash\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "8463c9b8193864a9",
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Calling .hash on elements of a hashed array is redundant.",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      },
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Calling .hash on elements of a hashed array is redundant.",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class MyWorker < BaseWorker\n  def perform(*args)\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "62c9f952657a7ba3",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 27,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class MyWorker\n  include Sidekiq::Worker\n\n  def perform(*args)\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "2031d1b126c6c236",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 14,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class MyWorker < SomeModule::BaseWorker\n  def perform(*args)\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "8d0dfce001bd129d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 39,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class MyWorker\n  include Logging, Sidekiq::Worker\n\n  def perform(*args)\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "b1bc4641f5e29c50",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 14,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class OuterWorker < BaseWorker\n  class InnerClass\n    sidekiq_options queue: \"inner\"\n  end\n\n  def perform(*args)\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "6a5906f1f177bcfd",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 30,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n  some_code\nrescue => e\n  Rails.logger.error(e)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "90e083483e56fcc0",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n  some_code\nrescue StandardError => e\n  puts \"Error occurred\"\n  Rails.logger.warn(e.message)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "2de5c5a76451ddbf",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 25,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n  some_code\nrescue => e\n  nil\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "7b3426b64000db43",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n  some_code\nrescue Exception => e\n  Rails.logger.error(e)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "f62bd1f440c53a98",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n  some_code\nrescue => e\n  Rails.logger.warn(e)\nrescue NetworkError => e\n  Sentry.capture_message(\"Network error\")\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "e0413ad1356af81f",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "def some_method\n  do_something\nrescue => e\n  return false\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "3126c9c2acda60d6",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"\"\"\n  a string\n\"\"\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "4d7ef5b38aa137da",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 3,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"\"\"\"\"\n  a string\n\"\"\"\"\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "5d5d81c63be1a378",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 5,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  1.hash ^ 2.hash ^ 3.hash\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "747add4c115acb1f",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  1 ^ 2 ^ 3\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "bec182169f8cd7b0",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 9,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def object.hash\n  1.hash ^ 2.hash ^ 3.hash\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "c5076aeb79157cb3",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "define_method(:hash) do\n  1.hash ^ 2.hash ^ 3.hash\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "57bf8a61f59d51e0",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "define_singleton_method(:hash) do\n  1.hash ^ 2.hash ^ 3.hash\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "a09b94f1ab86b674",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  [1].hash\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "cb74ab38a0a445b8",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Delegate hash directly without wrapping in an array when only using a single value.",
+        "correctable": false,
+        "length": 8,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "[1, 2.hash, 3].hash\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "f7c71e887ffa4b14",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Calling .hash on elements of a hashed array is redundant.",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  value = 1.hash ^ 2.hash ^ 3.hash\n  value\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "d3ea3fef61f852dd",
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  h = 0\n\n  things.each do |thing|\n    h ^= thing.hash\n  end\n\n  h\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "0f0f65f67324b3c6",
+    "expected": [
+      {
+        "line": 5,
+        "column": 4,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  h = 0\n\n  things.each do |thing|\n    h += thing.hash\n  end\n\n  h\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "4e90c2c73e5f9c11",
+    "expected": [
+      {
+        "line": 5,
+        "column": 4,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  h = 0\n\n  things.each do |thing|\n    h *= thing.hash\n  end\n\n  h\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ccf52a1b3001a3ce",
+    "expected": [
+      {
+        "line": 5,
+        "column": 4,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  foo.hash + bar.hash\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ab3de4a3bdd67ff8",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 19,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  to_s.hash * -1\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "3782bd4028f26be7",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 14,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  [red, blue, green, alpha].hash ^ self.class.hash\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "327c5511510c4606",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 48,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  foo.hash ^ super ^ bar.hash\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "bb1d452303739e99",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 27,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  foo.hash ^ bar.hash << 1 ^ biz.hash << 2 ^ bar.hash << 3\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "6e2c219b18ef3485",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 56,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  ([@addr, @mask_addr, @zone_id].hash << 1) | (ipv4? ? 0 : 1)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "67540a03c57b8141",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 59,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash\n  @hash ||= begin\n    hash_ = [@factory, geometry_type].hash\n    (0...num_geometries).inject(hash_) do |h_, i_|\n      (1664525 * h_ + geometry_n(i_).hash).hash\n    end\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "435c39e2cf2af400",
+    "expected": [
+      {
+        "line": 5,
+        "column": 7,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 34,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attribute :display_name, key: :name do\n    object.detail.display_name\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "c715add30cf55739",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false,
+        "length": 38,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class MaSerializer < ActiveModelSerializers\n  attribute :name do\n    \"name\"\n  end\n\n  def name\n    \"another name\"\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "99d59dfde4da5c48",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false,
+        "length": 18,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(filename) do |f|\n  f.read\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "e96e7326f3303daa",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.read`.",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "601a1a0626e95e61",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.filter_map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "1cf198c946f19a30",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `filter_map { ... }` with `select`.",
+        "correctable": true,
+        "length": 20,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.filter_map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "653ff388fa9e6f6d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `filter_map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 20,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo&.map do |item|\n  if item.bar?\n    item\n  else\n    next\n  end\nend&.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "cf4ad6021149c72e",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  if item.bar? &&\n    bar.baz\n    item\n  else\n    next\n  end\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "e0706d1e2cf3da32",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  if item.bar?\n    next item\n  else\n    nil\n  end\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "015613880b826f2e",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  if item.bar?\n    next\n  else\n    item\n  end\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ad5dbf61a76a6aab",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  if item.bar?\n    nil\n  else\n    next item\n  end\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "1dbeb96165028d61",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  item.bar? ? item : next\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "90b0ad7da5e149f8",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  item.bar? ? next : item\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "0b98401ab502363e",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  item if item.bar?\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "bd5ece7ac86dcac8",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  item unless item.bar?\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "36f6c209063f6d56",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  next if item.bar?\n\n  item\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ef6d5727910b8226",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  next unless item.bar?\n\n  item\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "cabb1c6964d5d38e",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  next item if item.bar?\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "4df3f62b9238fb75",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  next item unless item.bar?\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "4e8069ff4550a689",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  next item if item.bar?\n\n  nil\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "bfb547f6f15add54",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  next item unless item.bar?\n\n  nil\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ccd7072e91876668",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  next nil if item.bar?\n\n  item\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "25ba74ef311f645c",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  next nil unless item.bar?\n\n  item\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "85f33da8e1d58198",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  if item.bar?\n    item\n  end\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "b75254df6290a7c7",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "foo.map do |item|\n  unless item.bar?\n    item\n  end\nend.compact\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "c928cf3673410027",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Replace `map { ... }.compact` with `reject`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = if foo\n        foo\n      else\n        'default'\n      end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "b5629c60b81606ed",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "@foo = if @foo\n         @foo\n       else\n         'default'\n       end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "030ef8321ae4899d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 14,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "@@foo = if @@foo\n          @@foo\n        else\n          'default'\n        end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "e306b3ff911d65cf",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 16,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "$foo = if $foo\n         $foo\n       else\n         'default'\n       end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ac767a687d28570a",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 14,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = nil\nunless foo\n  foo = 'default'\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "3eca57d117a3bb2b",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 10,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "@foo = nil\nunless @foo\n  @foo = 'default'\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "e273becd1b4a6886",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "@@foo = nil\nunless @@foo\n  @@foo = 'default'\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "1acb77fa322af120",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "$foo = nil\nunless $foo\n  $foo = 'default'\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "25ec83e10b63099d",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = nil\nif foo\nelse\n  foo = 2\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "bf664aa58720532e",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if x == y\n  true\nelse\n  false\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "d73ac89d893ab81b",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `x == y`.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if x == y\n  false\nelse\n  true\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "19e5c2c33cd59915",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!(x == y)`.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "unless x == y\n  true\nelse\n  false\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "08f35acbee40bd07",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!(x == y)`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "unless x == y\n  false\nelse\n  true\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "27f42333494abbaa",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `x == y`.",
+        "correctable": true,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if cond\n  false\nelsif x == y\n  true\nelse\n  false\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "f43caffeb6c50810",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `\nelse\n  x == y`.",
+        "correctable": true,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if cond\n  false\nelsif x == y\n  false\nelse\n  true\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "310a9841399c9d98",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `\nelse\n  !(x == y)`.",
+        "correctable": true,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantRegexpEscape",
+    "source": "r = /[\\\u00a7]/\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "b2a6ef3fdf1ce1f1",
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Redundant escape inside regexp literal",
+        "correctable": true,
+        "length": 2,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "[1, 2, 3]\n  .sort_by { |x| x.length }\n  .first\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "f330f4aa37cd8949",
+    "expected": [
+      {
+        "line": 2,
+        "column": 3,
+        "message": "Use `min_by` instead of `sort_by...first`.",
+        "correctable": true,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "[1, 2, 3]\n  .sort_by { |x| x.length }\n  .first || []\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "42ff6c30653fbdfa",
+    "expected": [
+      {
+        "line": 2,
+        "column": 3,
+        "message": "Use `min_by` instead of `sort_by...first`.",
+        "correctable": true,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "[1, 2, 3]\n  .sort_by { |x| x.length }\n  .first && []\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "e702eda96c5e9bb3",
+    "expected": [
+      {
+        "line": 2,
+        "column": 3,
+        "message": "Use `min_by` instead of `sort_by...first`.",
+        "correctable": true,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "[1, 2, 3]\n  .sort_by { |x| x.length }\n  .first or []\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ca4fb7368dff86f9",
+    "expected": [
+      {
+        "line": 2,
+        "column": 3,
+        "message": "Use `min_by` instead of `sort_by...first`.",
+        "correctable": true,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "[1, 2, 3]\n  .sort_by { |x| x.length }\n  .first and []\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "5fccd226be585907",
+    "expected": [
+      {
+        "line": 2,
+        "column": 3,
+        "message": "Use `min_by` instead of `sort_by...first`.",
+        "correctable": true,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "define_method(:foo) do |x|\n  puts 1\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "f663b816c83d765f",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false,
+        "length": 26,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case foo\nwhen bar\n # nothing\nend\n",
+    "path": "test.rb",
+    "options": {
+      "AllowComments": false
+    },
+    "config": {
+      "AllowComments": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "c9295d158660df7d",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w') do |f|\n  f.write(<<~TEXT)\n    content\n  TEXT\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "43c8dfd19eb44c63",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(<<~PATH) do |f|\n  /tmp/example.txt\nPATH\n  f.read\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "098af281c7ad9bca",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.read`.",
+        "correctable": true,
+        "length": 25,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w') do |f|\n  f.write(<<-TEXT)\n  keep this indentation\n  TEXT\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "11b377b82de51421",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin; work; rescue ::StandardError; recover; end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "5e2389d7ac234148",
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 31,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def foo\n  1.times do\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "b39a7eddf91e197f",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def foo\n  1.times do\n    bar\n\n    baz\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "bba641cef15e3d50",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n  do_something(i)\n  do_something_else(i)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "7e442e6b6ee4a29d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n  do_something(i)\n  i += 1\n  do_something_else(i)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "749af75616cc2e04",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n  do_something(i)\n  i, j = i * 2, i * 3\n  do_something_else(i)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "9565cc259e79b6ed",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": false,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n  do_something(i)\n  j = 1\n  do_something_else(j)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "85b7f59eea3d6786",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def my_method\n  0.times do\n    do_something\n    do_something_else\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "bd5c91160f46b3c2",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def my_method\n  1.times do\n    do_something\n    do_something_else\n  end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "7cf1914f4fafb885",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(key, ttl, value) { callback }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "722a3681af89eb53",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true,
+        "length": 28,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_0 += 1\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "c84e1fd9a58688eb",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_10 ||= foo\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "766bc513fcd98c7d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_10` is similar to numbered parameter; consider another name.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+    "source": "class S\n attribute(\n # argument comment\n :name)\n def name\n object.name\n end\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "AutoCorrect": "disabled",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "d19b3b91274007b6",
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Prefer block attribute over method call.",
+        "correctable": false,
+        "length": 10,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class S\n include A,\n # argument comment\n B\n include C\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "eae535eeca78b4bf",
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true,
+        "length": 10,
+        "severity": "convention"
+      },
+      {
+        "line": 5,
+        "column": 1,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class S\n include A,\n # argument comment\n B\n include C\nend\n",
+    "path": "test.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ede9694fb8153b61",
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true,
+        "length": 10,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(\n # key comment\n key,\n # ttl comment\n ttl,\n # value comment\n value)\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "1d6b129ad2ce3e56",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times(\n # block arg comment\n &:work)\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "c8089175544f9660",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 8,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "record.update_column(\n # argument comment\n :protected, true)\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "6df541c8aa995c46",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "record.update_columns(\n # argument comment\n protected: true)\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "8ad27be8c0ce412f",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_columns`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false,
+        "length": 22,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n raise = false\n  puts raise\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "4cbfd337af024388",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n items.each { |raise| puts raise }\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "a82f4a5a7c3810e2",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Other::Rails.error().report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "73020d5e057efa16",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Rails&.error.report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "189667929e00afd1",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Sentry&.capture_exception(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "b1e0f09a895c0b23",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n Other::Sentry.capture_exception(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "56e689ce880ba232",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue\n error.report(error)\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "78513d7272a40ebd",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "raise = false\nbegin\n work\nrescue\n puts raise\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "95934c8bb2b0c1bd",
+    "expected": [
+      {
+        "line": 4,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue => raise\n puts raise\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ddf1de2896d63b92",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets) do |t|\n t.string :name\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "43eab79750d1b450",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true,
+        "length": 22,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, # widget comment\n)\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "9afe4a74b3c10bdc",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true,
+        "length": 39,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets) do |t|\n t.string :name\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "7a66bf93071e28e6",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true,
+        "length": 22,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, # widget comment\n)\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "be7819b291f0798d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true,
+        "length": 39,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "source": "$redis.set(\n # key\n 'key', {px: 60}, nx: true)\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "59b27da9e1602f22",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Nested\n  class BadBecauseClassNameDoesNotMatchFile\n  end\nend\n",
+    "path": "$PROJECT/app/models/nested/bad_nested_class.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "9b3153167e1e79cd",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 41,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Nested\n  module BadBecauseModuleNameDoesNotMatchFile\n  end\nend\n",
+    "path": "$PROJECT/app/models/nested/bad_nested_module.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "94fa7b6bd117152d",
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 43,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class BadNestedClassDueToLackOfNamespacing\nend\n",
+    "path": "$PROJECT/app/models/nested/bad_nested_class_due_to_lack_of_namespacing.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "8f95ee6edff0a2cc",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 42,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "# I added this one due to a bug I found where nesting was assumed based on a string match\nclass BadForReasonsBeingThatThisIsAnEdgeCaseWhereRubocopThoughtWasGoodDueToNesting\nend\n",
+    "path": "$PROJECT/app/models/bad_for_reasons.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "0d39015f58d59b7d",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 82,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class BadBecauseClassNameDoesNotMatchFile\nend\n",
+    "path": "$PROJECT/app/models/bad_not_nested_class.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "b659c2d63c275f47",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 41,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module BadBecauseModuleNameDoesNotMatchFile\nend\n",
+    "path": "$PROJECT/app/models/bad_not_nested_module.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "9a694fd287e064be",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 43,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class AutoloadOverlapProbe\nend\n\nclass UnrelatedSibling\nend\n",
+    "path": "$PROJECT/app/models/autoload_overlap_probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "010b1fadce607a6c",
+    "expected": [
+      {
+        "line": 4,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 22,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/MixedRegexpCaptureTypes",
+    "source": "/(?<name>a) # (ignored)\n(b)/x\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "0ea06a5d440cf119",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Do not mix named captures and numbered captures in a Regexp literal.",
+        "correctable": false,
+        "length": 23,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/MixedRegexpCaptureTypes",
+    "source": "/(?x:(?<name>a) # (ignored)\n)(b)/\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "8ac6a61346432fe5",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Do not mix named captures and numbered captures in a Regexp literal.",
+        "correctable": false,
+        "length": 27,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/MixedRegexpCaptureTypes",
+    "source": "/(?x)(?<name>a) # (ignored)\n(b)/\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "b1ab64d348a46bc7",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Do not mix named captures and numbered captures in a Regexp literal.",
+        "correctable": false,
+        "length": 27,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class Foo\nend\nclass Bar\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "4a6541a5ea36e09d",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 9,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Bar ||= 1\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "c0ea648ea6f0e655",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 3,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "ac1258662d9aa832",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 7,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include ::Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "123cbf178f7ea0a5",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 7,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include Sidekiq::\n Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "ffc71165719e8d40",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 7,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A\n include ::Sidekiq::\n Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "eba213cb1a46ff22",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 7,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_column(:\"prot\\\r\nected\", true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "ccdfb7655d927181",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false,
+        "length": 27,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "source": "media.update_all(:\"prot\\\r\nected\" => true)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "2cac92a4448eb0d9",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_all`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "0.times do\n work\nend; keep_me\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "2e7de8da3c739632",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n value = \"one\ntwo\"\n puts(value)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "67723c9888fff0a8",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n work\nrescue Error\n other\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "bc5eb22ba9c4c9b6",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n work\nensure\n other\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "f66b29bcb8ac772a",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times { # keep comment\n work\n}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "5b6a70cf99323771",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 24,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n items.each do\n  consume(\"one\ntwo\")\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "88512cdeb99bb2bc",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n include A,\n # keep argument comment\n B\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "separated"
+    },
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "3f59a3f749c7e874",
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true,
+        "length": 10,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "0c7fca09913fec0b",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 20,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < ::BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "eb21564599b7f8ef",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 22,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "169b4937f7fd0539",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 23,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::\n BaseWorker\n include Sidekiq::Worker\n def perform; work; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "6e9a46bd94acd664",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class A\n attribute :name do\n 1\n end\n def name;2;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "a44fa62f2a5df388",
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false,
+        "length": 18,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class A\n attribute :\"na\\x6de\" do\n 1\n end\n def name;2;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "beebc16c804362cc",
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false,
+        "length": 23,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::\n BaseWorker\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "b8c084f445122b97",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < ::\n BaseWorker\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "92e868df08f568c0",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin\n work\nrescue ::\n StandardError\n recover\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "1bfd71557bbf2459",
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 9,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/ExplicitSidekiqQueue",
+    "source": "class A < A::\n # type\n BaseWorker\n def perform;work;end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "80edd6deb65e3960",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Sidekiq workers must explicitly declare their queue. Use `sidekiq_options queue: \"queue_name\"` or `use_default_queue!` to opt into the default queue.",
+        "correctable": false,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/EnforceScopeInPolicies",
+    "source": "class APolicy\n disable_scoping!\n class Scope < ApplicationPolicy::\n Scope\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "16ce16c777b3db3c",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Policies must define a scope that inherits from `ApplicationPolicy::Scope` (or `JwtPolicy::Scope`)\nOR explicitly disable scoping with `disable_scoping!`\n",
+        "correctable": false,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "source": "class A\n attribute :name, :\"k\\x65y\" => :other do\n 1\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "cbbf21d4e689cea7",
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false,
+        "length": 39,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n def inner\n  i\n end\nend\nputs inner\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "9da37205f2b858d3",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n class C\n  def self.result; i; end\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "6cb09a012d66fcf5",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n case [42]\n in [i]\n  puts i\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "2e5e7b737b8b047c",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n [42] => [i]\n puts i\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "8fcd92616d3834ec",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n case {a: 42}\n in {a: i}\n  puts i\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "b3e120a763790e23",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n module Inner\n  def self.result; i; end\n end\nend\nputs Inner.result\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "e29a572cef1a2e86",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "def i; 42; end\n1.times do |i|\n class << self\n  def result; i; end\n end\nend\nputs result\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "b93dc0a57d6e7dcc",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n callback = -> { i }\n puts callback.call\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "a691eaf25c39ca55",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do |i|\n def unrelated; 42; end\n puts i\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "110c67dcdf927b41",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; \"\u00e9\" # coding: us-ascii\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "3e10ba95d31970c0",
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true,
+        "length": 3,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open(path, \"w\") { |f| f.write(\"data\") # keep comment\n}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "3e9f56228d269d11",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true,
+        "length": 57,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "File.open('x', 'w') do |f|\n f.write(<<~TEXT)\n content\nTEXT\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "e761f6c3193f182a",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.write`.",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if 1 == 1\n # keep this\n true\nelse\n false\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "a05ad82a5a51764a",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `1 == 1`.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if 1 == 1 # rubocop:disable Layout/LineLength\n true\nelse\n false\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "d7a624556cb0b8e8",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `1 == 1`.",
+        "correctable": true,
+        "length": 45,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = if x\n x\nelse\n # keep fallback explanation\n fallback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "0617190af35894d3",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 8,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject do |k,v|\n # keep this\n k == :a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "def82721d3b520f3",
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map do |x|\n # keep this\n x if test(x)\nend.compact\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "652fff23516991d5",
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 10,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "x = nil\nunless x\n x = 1\nend\np x\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "ad7f3c6ac9bf8292",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 8,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "def m(x)\n unless x\n  x = 1\n end\n x\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "da3525e24747118f",
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 8,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "unless @x\n @x = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "ac1d20d140c9dad9",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "source": "1.times do\n created = 42\nend\np defined?(created)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": false
+    },
+    "id": "6bca2bdb50f15a1e",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `1.times` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_async)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "cc9e87c55e165ebb",
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false,
+        "length": 8,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_in)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "095069456d26d2ae",
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false,
+        "length": 8,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSidekiqReceive",
+    "source": "RSpec.describe Worker do\n it do\n  expect(Worker).to receive(\n # expectation\n :perform_at)\n end\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "564f5a06f2da8aaf",
+    "expected": [
+      {
+        "line": 3,
+        "column": 20,
+        "message": "receive(:perform_async) called without safe ancestor method. This could have test mask passing incorrect arguments to a worker.",
+        "correctable": false,
+        "length": 8,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n def title; 'x'; end\n attribute(\n # name\n :title) { 'y' }\nend\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ba34d792ad4e4ed6",
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false,
+        "length": 10,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoRequireOnAutoLoadedPaths",
+    "source": "require(\n # autoload\n 'known')\n",
+    "path": "$PROJECT/spec/custom_call_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "d59aa71f1bf96ca8",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Calling `require` on an autoloaded path breaks autoloading",
+        "correctable": false,
+        "length": 8,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "class Foo::\n Wrong; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "234f0ac824bb1a26",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "module Wrong::\n Bar; end\n",
+    "path": "$PROJECT/app/models/foo/bar.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "93a13ba653e9d558",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 14,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"a\" \\\n\"#{__LINE__}\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "id": "4b2d8688351f5941",
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 7,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p '''a' \\\n'b'''\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "id": "d6f9673c635337a2",
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 7,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"\" \\\n\"\"\np __LINE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "id": "1e43e8781552d577",
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 6,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"#{__LINE__}\" \\\n\"#{__LINE__}\"\"\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "id": "45a8badae634a977",
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 17,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "p \"\"\"a\nb\"\"\"\np __LINE__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "id": "836b860a5174c853",
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 4,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {}) {}\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "65e2941b1ab323f6",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false,
+        "length": 30,
+        "severity": "convention"
+      },
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false,
+        "length": 27,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\n # topic\n 'topic',\n # lambda\n -> {})\n",
+    "path": "$PROJECT/spec/custom_runtime_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "5b7a44fb0541fd22",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::\n Migration[7.0]; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "c6b473d56a880f48",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration[7.0]\n def change(arg); end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "5138168ff036d852",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false,
+        "length": 38,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Rails/ReversibleMigrationMethodDefinition",
+    "source": "class X < ActiveRecord::Migration.[](\n # version\n 7.0\n); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "id": "ff51ac9b2fff59d6",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Migrations must contain either a `change` method, or both an `up` and a `down` method.",
+        "correctable": false,
+        "length": 37,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "AnyCable/InstanceVars",
+    "path": "app/channels/test_channel.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "# parity audit\nclass Channel; def subscribed; @post = find; @post; end; end\n",
+    "id": "4516ffeb13912f04",
+    "expected": [
+      {
+        "line": 2,
+        "column": 31,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      },
+      {
+        "line": 2,
+        "column": 45,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 5,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "AnyCable/InstanceVars",
+    "path": "app/channels/test_channel.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(\nclass Channel; def subscribed; @post = find; @post; end; end\n\n)\n",
+    "id": "261b846c426e3e02",
+    "expected": [
+      {
+        "line": 2,
+        "column": 31,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      },
+      {
+        "line": 2,
+        "column": 45,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 5,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "path": "app/channels/test_channel.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "stream_from(\n# parity audit\n\"all\") { process }\n",
+    "id": "56ce3b20f1921652",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "path": "app/channels/test_channel.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "stream_for(\n# parity audit\nroom) { process }\n",
+    "id": "1e2c3d25de0c5368",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "media.update_column(\n# parity audit\n:protected, true)\n",
+    "id": "6fc1a2668b744bf6",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_column`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false,
+        "length": 20,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCallbackSkippingProtectedWrites",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "media.update_columns(\n# parity audit\nprotected: true)\n",
+    "id": "bd6798e4a87c085a",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Don't write `protected` with `update_columns`; it skips the callback that syncs media files' S3 `private` tag. Use `update`/`save`.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoDirectLanternConfigBuilderMutators",
+    "path": "app/lib/video_remix_lantern_agent/tools/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "config_builder.append_element(\n# parity audit\nx)\n",
+    "id": "06facf19bf507985",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Direct ConfigBuilder mutator call. Route writes through `config_builder.apply_mutation(:append_element, **payload)` so the PreWriteValidators + PostWriteCleanup pipeline runs. See VideoRemixLanternAgent::Mutations for the dispatch.",
+        "correctable": false,
+        "length": 30,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoDirectLanternConfigBuilderMutators",
+    "path": "app/lib/video_remix_lantern_agent/tools/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "@builder.set_music(\n# parity audit\nx)\n",
+    "id": "3ec44db3c26977cb",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Direct ConfigBuilder mutator call. Route writes through `config_builder.apply_mutation(:set_music, **payload)` so the PreWriteValidators + PostWriteCleanup pipeline runs. See VideoRemixLanternAgent::Mutations for the dispatch.",
+        "correctable": false,
+        "length": 19,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "$redis.set(\n# parity audit\n\"k\", \"v\")\n",
+    "id": "14c986b2677dc61d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false,
+        "length": 11,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSetWithoutExpiration",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "redis.set(\n# parity audit\n\"k\", \"v\", nx: true)\n",
+    "id": "b818a21c02c92c7f",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`$redis.set` must be called with an expiration option set (ex, exat, px, or pxat).",
+        "correctable": false,
+        "length": 10,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSleep",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "Kernel.sleep(\n# parity audit\n1)\n",
+    "id": "01c95bc015403404",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid using sleep in production code. Prefer using async jobs instead. If already in an async job consider using Pollable concern.",
+        "correctable": false,
+        "length": 13,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "# parity audit\nbegin; work; rescue; cleanup; end\n",
+    "id": "26e0ba873151e45e",
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(\nbegin; work; rescue; cleanup; end\n\n)\n",
+    "id": "ca6fec554df37b49",
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Custom/RequireRespondToAny",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "# parity audit\nrespond_to do |format|\n format.html\n format.json\nend\n",
+    "id": "54bd508adbc7a031",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Every `respond_to` block must include a `format.any`.",
+        "correctable": false,
+        "length": 22,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Custom/RequireRespondToAny",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(\nrespond_to do |format|\n format.html\n format.json\nend\n\n)\n",
+    "id": "5674306cf14331a8",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Every `respond_to` block must include a `format.any`.",
+        "correctable": false,
+        "length": 22,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "# parity audit\nattribute :name, key: :display_name do\n object.name\nend\n",
+    "id": "ec5757ad201c670c",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false,
+        "length": 38,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(\nattribute :name, key: :display_name do\n object.name\nend\n\n)\n",
+    "id": "eb5234eb3486677b",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false,
+        "length": 38,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyExpression",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "x = (\n# parity audit\n)\n",
+    "id": "11dd58d8efad0c2d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "length": 1,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyExpression",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "if (\n# parity audit\n); run; end\n",
+    "id": "529c2a4c4670bf74",
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "length": 1,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "path": "test.rb",
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "# parity audit\ncase x; when :a; end\n",
+    "id": "4d076cc60a5c0db9",
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "length": 7,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "path": "test.rb",
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(\ncase x; when :a; end\n\n)\n",
+    "id": "2da56a2d8a62eba9",
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "length": 7,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/NestedPercentLiteral",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "%w(\n# parity audit\nfoo %w(bar))\n",
+    "id": "ac50d34982ba2059",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Within percent literals, nested percent literals do not function and may be unwanted in the result.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UriEscapeUnescape",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "URI.escape(\n# parity audit\n\"x\")\n",
+    "id": "a14381df53213f6e",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`URI.escape` method is obsolete and should not be used. Instead, use `CGI.escape`, `URI.encode_www_form` or `URI.encode_www_form_component` depending on your specific use case.",
+        "correctable": false,
+        "length": 11,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UriEscapeUnescape",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "::URI.unescape(\n# parity audit\n\"x\")\n",
+    "id": "16311bd2d20968bf",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`::URI.unescape` method is obsolete and should not be used. Instead, use `CGI.unescape`, `URI.decode_www_form` or `URI.decode_www_form_component` depending on your specific use case.",
+        "correctable": false,
+        "length": 15,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "# parity audit\ndef hash; a.hash ^ b.hash; end\n",
+    "id": "d82fc0f4e6aa94c0",
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(\ndef hash; a.hash ^ b.hash; end\n\n)\n",
+    "id": "60a87fe39bc75ae6",
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "# parity audit\n[value].hash\n",
+    "id": "35ab97631633ee5c",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Delegate hash directly without wrapping in an array when only using a single value.",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(\n[value].hash\n\n)\n",
+    "id": "578ba53912380e17",
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Delegate hash directly without wrapping in an array when only using a single value.",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items.map { |x| x if allowed?(\n# parity audit\nx) }.compact\n",
+    "id": "c03ee37edb97d2b9",
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true,
+        "length": 24,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items.filter_map { |x| x unless blocked?(\n# parity audit\nx) }\n",
+    "id": "d3f3036cfb411ace",
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `filter_map { ... }` with `reject`.",
+        "correctable": true,
+        "length": 35,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "define_method(\n# parity audit\n:run) { work }\n",
+    "id": "9dbb36c42f5e301a",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false,
+        "length": 14,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/UselessTimes",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "0.times { |i| something(\n# parity audit\ni) }\n",
+    "id": "c1f615a846dc540e",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Useless call to `0.times` detected.",
+        "correctable": true,
+        "length": 24,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "setex(\n# parity audit\n\"key\", 60, \"value\")\n",
+    "id": "e8d92544dad37475",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true,
+        "length": 6,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "path": "$PROJECT/app/models/nested/bad_nested_class.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "# parity audit\nmodule Nested\n  class BadBecauseClassNameDoesNotMatchFile\n  end\nend\n",
+    "id": "df1c86472f038eec",
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 41,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "path": "$PROJECT/app/models/nested/bad_nested_class.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(\nmodule Nested\n  class BadBecauseClassNameDoesNotMatchFile\n  end\nend\n\n)\n",
+    "id": "be86af262ed22979",
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false,
+        "length": 41,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "attribute %s|name|, key: :display_name do\n object.name\nend\n",
+    "id": "51f91d0715c92574",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false,
+        "length": 41,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "attribute :\"\\x6e\\x61\\x6d\\x65\", key: :display_name do\n object.name\nend\n",
+    "id": "246758e78e279c2d",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false,
+        "length": 52,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Serializers/AvoidKeyAndBlock",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "attribute :\"name'\", key: :display_name do\n object.name\nend\n",
+    "id": "8c53e9db00e119b1",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Combining key and block could indicate a code error. The attribute field is ignored in this case.",
+        "correctable": false,
+        "length": 41,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "path": "test.rb",
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "case x; when %s|a|; end\n",
+    "id": "63a643417bc74eb7",
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "path": "test.rb",
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "case x; when :\"\\x61\"; end\n",
+    "id": "fc73d0b46917e02f",
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "length": 12,
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "path": "test.rb",
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "case x; when :\"a'\"; end\n",
+    "id": "0c982bb8fb42cec6",
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "length": 10,
+        "severity": "warning"
+      }
+    ]
+  }
+]

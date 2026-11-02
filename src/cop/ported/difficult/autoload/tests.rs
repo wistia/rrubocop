@@ -111,7 +111,18 @@ fn old_findings(source: &SourceFile) -> Vec<(usize, usize, usize)> {
 }
 fn finding_position(source: &SourceFile, finding: Finding) -> (usize, usize, usize) {
     let (line, column) = source.offset_to_line_col(finding.start);
-    (line, column, finding.end - finding.start)
+    (line, column, display_width(source, &finding))
+}
+
+fn display_width(source: &SourceFile, finding: &Finding) -> usize {
+    std::str::from_utf8(&source.content[finding.start..finding.end])
+        .unwrap()
+        .lines()
+        .next()
+        .unwrap_or("")
+        .chars()
+        .count()
+        .max(1)
 }
 
 #[test]

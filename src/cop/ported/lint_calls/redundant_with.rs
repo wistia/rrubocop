@@ -40,7 +40,7 @@ fn eligible(c: &Context<'_>, n: Node<'_>, suffix: &str, with: &str) -> bool {
         return false;
     }
     if suffix == "object" {
-        return args(n).len() == 1;
+        return semantic_args(n).len() == 1;
     }
     !c.receiver(n).is_empty()
         && (c.method(n) != with || field(n, "receiver").is_some_and(|r| !c.receiver(r).is_empty()))

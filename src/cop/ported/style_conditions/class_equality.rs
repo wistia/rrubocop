@@ -18,6 +18,7 @@ pub(super) fn class_equality(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         n,
         class,
         class_argument(c, n, right, named),
+        !named || right.kind() != "string" || !c.text(right).contains('\\'),
     )]
 }
 fn comparison<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, Node<'n>)> {
@@ -43,6 +44,7 @@ fn class_finding(
     n: Node<'_>,
     class: Node<'_>,
     argument: Option<String>,
+    correctable: bool,
 ) -> Finding {
     let suffix = argument
         .as_ref()
@@ -54,7 +56,7 @@ fn class_finding(
         n.end_byte(),
         format!("Use `instance_of?{suffix}` instead of comparing classes."),
     );
-    if argument.is_some() {
+    if argument.is_some() && correctable {
         f.edit_with(c, start, n.end_byte(), || format!("instance_of?{suffix}"))
     } else {
         f

@@ -5,9 +5,8 @@ pub(in crate::cop::ported::retained) fn setex(c: &Context<'_>, n: Node<'_>) -> V
     if c.method(n) != "setex" {
         return vec![];
     }
-    let f = Finding::range(
-        n.start_byte(),
-        send_end(n),
+    let f = Finding::send(
+        n,
         "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
     );
     let Some((expiry, value)) = swappable(c, n) else {

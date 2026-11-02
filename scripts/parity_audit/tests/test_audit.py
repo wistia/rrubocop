@@ -129,3 +129,25 @@ class CoverageTest(unittest.TestCase):
                                      [{"id": "test", "kind": "original_invalid_ruby"}])
         self.assertEqual(result["compared_cases"], 0)
         self.assertEqual(result["uncompared_cops"], [case()["cop"]])
+
+
+class ManualReferenceGuardTest(unittest.TestCase):
+    def test_invalid_upstream_rewrite_allows_only_correctability_difference(self):
+        from parity_audit.outcomes import manual_reference_guard
+        expected = {"source": "broken", "compile": {"valid": False}}
+        self.assertTrue(manual_reference_guard(case(), {"source": "original"}, expected))
+        actual = {"diagnostics": [{"location": {"line": 1, "column": 0}, "message": "message",
+                                   "correctable": False, "highlight_length": 5, "severity": "Convention"}]}
+        ruby = {"diagnostics": [{**diagnostic(), "correctable": True}]}
+        rows = compare_diagnostics(case(), actual, ruby, guarded=True)
+        self.assertEqual([r["status"] for r in rows], ["exception"])
+        actual["diagnostics"][0]["highlight_length"] = 999
+        rows = compare_diagnostics(case(), actual, ruby, guarded=True)
+        self.assertIn("failure", [r["status"] for r in rows])
+
+    def test_upstream_guard_does_not_allow_native_error_or_missing_diagnostic(self):
+        from parity_audit.outcomes import manual_reference_guard
+        expected = {"source": "broken", "compile": {"valid": False}}
+        self.assertFalse(manual_reference_guard(case(), {"source": "original", "error": "panic"}, expected))
+        rows = compare_diagnostics(case(), {"diagnostics": []}, {"diagnostics": [diagnostic()]}, guarded=True)
+        self.assertEqual(rows[0]["status"], "failure")

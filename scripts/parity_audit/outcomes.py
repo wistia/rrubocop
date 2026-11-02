@@ -37,3 +37,10 @@ def permitted(case, mode, actual, expected):
 def native_syntax_regression(ruby, mode, actual):
     same_upstream = actual.get("source") == ruby[mode]["source"] and not ruby[mode]["compile"]["valid"]
     return not ruby["native_compile"][mode]["valid"] and ruby["original_compile"]["valid"] and not same_upstream
+
+
+def manual_reference_guard(case, actual, expected):
+    if actual.get("error") or actual.get("source") != case["source"]:
+        return False
+    no_progress = expected.get("error") == "correction cycle or no progress" and expected["source"] == case["source"]
+    return not expected["compile"]["valid"] or no_progress

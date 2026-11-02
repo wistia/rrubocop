@@ -22,7 +22,8 @@ pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 fn assignment(n: Node<'_>) -> Option<Node<'_>> {
     let p = n.parent()?;
     match p.kind() {
-        "assignment" | "operator_assignment" if field(p, "left") == Some(n) => Some(p),
+        "assignment" if field(p, "left") == Some(n) => Some(p),
+        "operator_assignment" if field(p, "left") == Some(n) => Some(n),
         "left_assignment_list"
         | "destructured_left_assignment"
         | "rest_assignment"

@@ -1,0 +1,276 @@
+[
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "def run; end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def run; end\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "(def run; end)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(def run; end)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "(def run; end; def other; end)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(def run; end; def other; end)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "((def run; end))\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "((def run; end))\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "work\n(def run; end)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "work\n(def run; end)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "begin\n def run; end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "begin\n def run; end\nend\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "(define_method(:run) { work })\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(define_method(:run) { work })\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "(define_method(:run) { work }; work)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(define_method(:run) { work }; work)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "class C\n (def run; end)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "class C\n (def run; end)\nend\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "(include Foo)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(include Foo)\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "((include Foo))\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "((include Foo))\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "work\n(include Foo)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "work\n(include Foo)\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "(include Foo; extend Bar)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 14,
+        "message": "`extend` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(include Foo; extend Bar)\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "class C\n (include Foo)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "class C\n (include Foo)\nend\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "proc { (include Foo) }\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "proc { (include Foo) }\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "def run\n (include Foo)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def run\n (include Foo)\nend\n"
+  }
+]

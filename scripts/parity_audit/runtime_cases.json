@@ -89,5 +89,16 @@
     "source": "$VERBOSE = nil\nSTDERR.puts('notice')\n",
     "path": "probe.rb",
     "runtime": {}
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "seen = []\nstr = \"ab\"\nvalue = str.split(\"\") { |character| seen << character }\np [seen, value]\n",
+    "path": "probe.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "runtime": {}
   }
 ]

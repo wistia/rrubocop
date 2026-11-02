@@ -34,7 +34,7 @@ fn equality_key<'a>(
     } else {
         return None;
     };
-    if method != "eql?" && !c.symbol(other) && other.kind() != "string" {
+    if method != "eql?" && !c.symbol(other) && !matches!(other.kind(), "string" | "character") {
         return None;
     }
     Some((other, method != "!="))

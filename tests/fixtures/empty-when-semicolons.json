@@ -1,0 +1,128 @@
+[
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false
+      }
+    ],
+    "corrected": "case x; when :a then; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then;; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false
+      }
+    ],
+    "corrected": "case x; when :a then;; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a; # why\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x; when :a; # why\nend\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a; # why\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": false
+    },
+    "config": {
+      "AllowComments": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false
+      }
+    ],
+    "corrected": "case x; when :a; # why\nend\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then nil; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x; when :a then nil; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then work; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x; when :a then work; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then begin; end; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x; when :a then begin; end; end\n"
+  }
+]

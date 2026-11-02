@@ -27,7 +27,7 @@ fn pairs(call: Node<'_>) -> Vec<(Node<'_>, Node<'_>)> {
 }
 
 fn references<'n>(call: Node<'n>, content: Option<Node<'n>>) -> Vec<Node<'n>> {
-    args(call)
+    semantic_args(call)
         .first()
         .copied()
         .into_iter()

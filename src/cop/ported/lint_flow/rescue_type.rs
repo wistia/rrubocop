@@ -16,7 +16,8 @@ pub(super) fn rescue_type(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     vec![rescue_finding(c, n, ex, &exceptions, &invalid)]
 }
 fn invalid_exception(n: Node<'_>) -> bool {
-    literal(n) && !matches!(n.kind(), "true" | "false" | "regex")
+    (literal(n) && !matches!(n.kind(), "true" | "false" | "regex"))
+        || matches!(n.kind(), "character" | "chained_string")
 }
 fn rescue_finding(
     c: &Context<'_>,

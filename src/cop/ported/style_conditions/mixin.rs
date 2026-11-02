@@ -26,7 +26,13 @@ fn top_scope(n: Node<'_>) -> bool {
     n.parent().is_none_or(|p| {
         matches!(
             p.kind(),
-            "program" | "begin" | "body_statement" | "then" | "else" | "method"
+            "program"
+                | "begin"
+                | "body_statement"
+                | "then"
+                | "else"
+                | "method"
+                | "parenthesized_statements"
         )
     }) && !ancestors(n).any(|p| matches!(p.kind(), "class" | "module" | "singleton_class"))
 }

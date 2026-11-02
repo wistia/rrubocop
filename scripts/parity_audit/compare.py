@@ -1,6 +1,6 @@
 from .common import finding, read_results
 from .diagnostics import compare_diagnostics
-from .outcomes import correction_result, syntax_results
+from .outcomes import correction_result, syntax_results, manual_reference_guard
 
 
 def validate_results(cases, native, ruby):
@@ -64,7 +64,11 @@ class Comparison:
         original = self.native[(self.case["id"], "off")]
         if original.get("error"):
             return []
-        return compare_diagnostics(self.case, original, self.ruby)
+        return compare_diagnostics(self.case, original, self.ruby, self.manual_guard())
+
+    def manual_guard(self):
+        actual = self.native[(self.case["id"], "all")]
+        return manual_reference_guard(self.case, actual, self.ruby["all"])
 
     def reference_error(self):
         error = self.ruby["error"]

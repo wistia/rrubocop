@@ -1,8 +1,7 @@
 use super::super::context::*;
 use tree_sitter::Node;
 pub(super) fn triple(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    let t = c.text(n);
-    if !t.starts_with("\"\"\"") && !t.starts_with("'''") {
+    if !triple_quoted(c, n) {
         return vec![];
     }
     vec![
@@ -13,9 +12,20 @@ pub(super) fn triple(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         .replace_with(c, n, || replacement(c, n)),
     ]
 }
+fn triple_quoted(c: &Context<'_>, n: Node<'_>) -> bool {
+    c.text(n)
+        .chars()
+        .take_while(|ch| matches!(ch, '\'' | '"'))
+        .count()
+        >= 3
+        && kids(n).into_iter().any(|string| empty(c, string))
+}
+fn empty(c: &Context<'_>, n: Node<'_>) -> bool {
+    c.ruby_static_string(n).as_deref() == Some("")
+}
 fn replacement(c: &Context<'_>, n: Node<'_>) -> String {
     let strings = kids(n);
-    let all_empty = strings.iter().all(|s| c.text(*s).len() == 2);
+    let all_empty = strings.iter().all(|s| empty(c, *s));
     let mut text = c.text(n).to_string();
     for (index, string) in strings.iter().enumerate().rev() {
         if redundant_empty(c, *string, all_empty, index) {
@@ -26,7 +36,7 @@ fn replacement(c: &Context<'_>, n: Node<'_>) -> String {
 }
 
 fn redundant_empty(c: &Context<'_>, n: Node<'_>, all_empty: bool, index: usize) -> bool {
-    c.text(n).len() == 2 && !(all_empty && index == 0)
+    empty(c, n) && !(all_empty && index == 0)
 }
 
 fn remove_string(text: &mut String, chain: Node<'_>, string: Node<'_>) {

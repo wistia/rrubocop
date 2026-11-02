@@ -1,0 +1,946 @@
+[
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(\n# parity audit\nstr, nil, \"-\", \"@buf\")\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 3,
+        "column": 5,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 10,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 15,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"@buf\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(\n# parity audit\nstr, trim_mode: \"-\", eoutvar: \"@buf\")\n",
+    "fixture": "tests/fixtures/cops/lint/erb_new_arguments/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(\n# parity audit\nstr, nil)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 3,
+        "column": 5,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(\n# parity audit\nstr)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object(\n# parity audit\n[]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n",
+    "fixture": "tests/fixtures/cops/lint/redundant_with_object/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object(\n# parity audit\n[]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "URI.regexp(\n# parity audit\n\"http\")\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "`URI.regexp(\n# parity audit\n\"http\")` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(\"http\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "URI::DEFAULT_PARSER.make_regexp(\"http\")\n",
+    "fixture": "tests/fixtures/cops/lint/uri_regexp/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(\n# parity audit\nFile.dirname(__FILE__))\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n",
+    "fixture": "tests/fixtures/cops/style/dir/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(\n# parity audit\nFile.realpath(__FILE__))\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(\n# parity audit\npath).read\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.read(path)\n",
+    "fixture": "tests/fixtures/cops/style/file_read/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(\n# parity audit\npath, \"rb\") { |f| f.read }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.binread`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.binread(path)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(\n# parity audit\n6) + 1\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(1..6)\n",
+    "fixture": "tests/fixtures/cops/style/random_with_offset/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "10 - rand(\n# parity audit\n1..3)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(7..9)\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\n# parity audit\n\"\")\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\n# parity audit\n\"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars\n",
+    "fixture": "tests/fixtures/cops/style/string_chars/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str&.split(\n# parity audit\n//)\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `chars` instead of `split(\n# parity audit\n//)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str&.chars\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\n# parity audit\n\"C*\").first\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\n# parity audit\n\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\n# parity audit\n\"C*\")\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\n# parity audit\n\"C*\")[0]\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\n# parity audit\n\"C*\")[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\n# parity audit\n\"C*\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"@buf\")\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"@buf\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"@buf\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "URI.regexp(\"http\")\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "`URI.regexp(\"http\")` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(\"http\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "URI::DEFAULT_PARSER.make_regexp(\"http\")\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "::URI.regexp\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "`::URI.regexp` is obsolete and should not be used. Instead, use `::URI::DEFAULT_PARSER.make_regexp`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "::URI::DEFAULT_PARSER.make_regexp\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__))\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(File.realpath(__FILE__))\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(path).read\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.read(path)\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(path, \"rb\") { |f| f.read }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.binread`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.binread(path)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(6) + 1\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(1..6)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "10 - rand(1..3)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(7..9)\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\"\")\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str&.split(//)\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `chars` instead of `split(//)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str&.chars\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\")[0]\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str,\n # safe level\n nil,\n # trim mode\n \"-\", \"@buf\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 1,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 6,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"@buf\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"@buf\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, trim_mode: \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "URI.regexp(\n # schemes\n [\"http\", \"https\"], # trailing\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "`URI.regexp(\n # schemes\n [\"http\", \"https\"], # trailing\n)` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp([\"http\", \"https\"])`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "URI::DEFAULT_PARSER.make_regexp([\"http\", \"https\"])\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object(\n # memo\n []) { |item, memo| memo << item }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object(\n # memo\n []) { |item, memo| memo << item }\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(\n # file\n __FILE__))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(path,\n # read mode\n \"r\") { |f| f.read(\n # no arguments\n) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.read(path)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(\n # count\n6).succ(\n # no offset argument\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(1..6)\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\n # empty delimiter\n \"\",)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\n # empty delimiter\n \"\",)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\n # pattern\n \"C*\", # trailing\n).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\n # pattern\n \"C*\", # trailing\n).first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\n # pattern\n \"C*\", # trailing\n)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(\n # options only\n str, trim_mode: \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(\n # options only\n str, trim_mode: \"-\")\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "Other.regexp(\n # schemes\n \"http\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Other.regexp(\n # schemes\n \"http\")\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(\n # file\n __FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.dirname(\n # file\n __FILE__)\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(\n # path\n path, \"r\") { |f| f.read(1) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.open(\n # path\n path, \"r\") { |f| f.read(1) }\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(\n # count\n 6)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "rand(\n # count\n 6)\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\n # delimiter\n \",\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.split(\n # delimiter\n \",\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\n # no pattern\n).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\n # no pattern\n).first\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\n # delimiter\n \"\") { |character| use(character) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\n # delimiter\n \"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars { |character| use(character) }\n",
+    "fixture": "tests/fixtures/cops/style/string_chars/argument_comment_block.rb"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\"\") { |character| use(character) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars { |character| use(character) }\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "seen = []\nstr = \"ab\"\nvalue = str.split(\"\") { |character| seen << character }\np [seen, value]\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {},
+    "runtime_stdout": "[[\"a\", \"b\"], \"ab\"]\n",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 12,
+        "message": "Use `chars` instead of `split(\"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nstr = \"ab\"\nvalue = str.chars { |character| seen << character }\np [seen, value]\n",
+    "fixture": "tests/fixtures/cops/style/string_chars/block_runtime_safety.rb"
+  }
+]

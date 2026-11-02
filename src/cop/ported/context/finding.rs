@@ -19,6 +19,16 @@ impl Finding {
             correctable: false,
         }
     }
+    pub fn send(node: Node<'_>, message: impl Into<String>) -> Self {
+        let end = if block(node).is_some() {
+            field(node, "arguments")
+                .map_or_else(|| method_node(node).end_byte(), |args| args.end_byte())
+        } else {
+            node.end_byte()
+        };
+        Self::range(node.start_byte(), end, message)
+    }
+
     pub fn range(start: usize, end: usize, message: impl Into<String>) -> Self {
         Self {
             start,

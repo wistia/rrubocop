@@ -10,7 +10,17 @@ pub(super) fn report_error(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !broad_rescue(c, n) || body(n).is_some_and(|b| reports_in(c, b)) {
         return vec![];
     }
-    vec![Finding::new(n, MESSAGE)]
+    vec![Finding::range(n.start_byte(), rescue_end(n), MESSAGE)]
+}
+
+fn rescue_end(n: Node<'_>) -> usize {
+    body(n)
+        .and_then(|body| {
+            statements(body)
+                .into_iter()
+                .rfind(|node| node.kind() != "empty_statement")
+        })
+        .map_or(n.end_byte(), |last| last.end_byte())
 }
 
 fn modifier(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {

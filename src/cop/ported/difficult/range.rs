@@ -37,7 +37,7 @@ impl Cop for OutOfRangeRegexpRef {
         for f in state.findings {
             let (line, col) = source.offset_to_line_col(f.start);
             let mut d = self.diagnostic(source, line, col, f.message);
-            d.highlight_length = f.end - f.start;
+            d.highlight_length = super::super::highlight_length(source, f.start, f.end);
             diagnostics.push(d);
         }
     }

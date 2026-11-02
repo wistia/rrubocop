@@ -12,7 +12,7 @@ pub(super) fn unpack(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     vec![unpack_finding(c, n, recv)]
 }
 fn unpack_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.method(n) == "unpack" && !args(n).is_empty() && !c.receiver(n).is_empty()
+    c.method(n) == "unpack" && !semantic_args(n).is_empty() && !c.receiver(n).is_empty()
 }
 fn unpack_finding(c: &Context<'_>, n: Node<'_>, recv: Node<'_>) -> Finding {
     let start = method_node(recv).start_byte();
@@ -22,7 +22,7 @@ fn unpack_finding(c: &Context<'_>, n: Node<'_>, recv: Node<'_>) -> Finding {
         n.end_byte(),
         format!(
             "Use `unpack1({})` instead of `{current}`.",
-            c.text(args(recv)[0])
+            c.text(semantic_args(recv)[0])
         ),
     )
     .edit_with(c, start, n.end_byte(), || {

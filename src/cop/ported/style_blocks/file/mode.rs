@@ -5,7 +5,7 @@ pub(super) fn file_mode<'a>(c: &Context<'a>, n: Node<'_>, writing: bool) -> Opti
     if !file_open(c, n) {
         return None;
     }
-    let a = args(n);
+    let a = semantic_args(n);
     if !argument_count(&a, writing) {
         return None;
     }

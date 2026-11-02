@@ -17,8 +17,16 @@ fn inspect(c: &Context<'_>, n: Node<'_>) -> Option<Finding> {
     let (expected, acronyms) = info.0.as_ref()?;
     let actual = names::defined(c, n, acronyms, expected.len().saturating_add(10))?;
     (!compatible(expected, actual.strip_prefix("Object::").unwrap_or(&actual)))
-        .then(|| Finding::new(n, MESSAGE))
+        .then(|| Finding::new(diagnostic_node(n), MESSAGE))
 }
+fn diagnostic_node(n: Node<'_>) -> Node<'_> {
+    if n.kind() == "operator_assignment" {
+        field(n, "left").unwrap_or(n)
+    } else {
+        n
+    }
+}
+
 struct AutoloadInfo(Option<(String, std::sync::Arc<inflections::Acronyms>)>);
 impl AutoloadInfo {
     fn new(source: &crate::parse::source::SourceFile) -> Self {

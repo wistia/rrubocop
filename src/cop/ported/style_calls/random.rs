@@ -8,7 +8,7 @@ pub(super) fn random(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !rand_candidate(c, rand) {
         return vec![];
     }
-    let a = args(rand);
+    let a = semantic_args(rand);
     if a.len() != 1 {
         return vec![];
     }
@@ -69,7 +69,7 @@ fn random_parts<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, BigInt, b
     if n.kind() == "binary" && ["+", "-"].contains(&operator(c, n)) {
         return binary_parts(c, n);
     }
-    if ["succ", "pred", "next"].contains(&c.method(n)) && args(n).is_empty() {
+    if ["succ", "pred", "next"].contains(&c.method(n)) && semantic_args(n).is_empty() {
         return Some((field(n, "receiver")?, BigInt::from(1u8), false));
     }
     None

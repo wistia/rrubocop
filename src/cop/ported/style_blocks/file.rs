@@ -49,7 +49,7 @@ fn file_finding(
             .unwrap_or_default();
         format!(
             "{method}({}{extra}){}",
-            c.text(args(n)[0]),
+            c.text(semantic_args(n)[0]),
             heredoc::suffix(c, n, target, content)
         )
     })
@@ -69,7 +69,7 @@ fn file_body<'a>(
     call_content(call, writing).map(|content| (target, content))
 }
 fn read_block_pass(c: &Context<'_>, n: Node<'_>) -> bool {
-    args(n).iter().any(|a| read_argument(c, *a))
+    semantic_args(n).iter().any(|a| read_argument(c, *a))
 }
 fn file_call<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
     if let Some(b) = block(n) {
@@ -87,7 +87,7 @@ fn block_call<'a>(c: &Context<'_>, n: Node<'a>, b: Node<'a>) -> Option<(Node<'a>
     (p.len() == 1 && s.len() == 1 && c.receiver(s[0]) == c.text(p[0])).then(|| (n, s[0]))
 }
 fn call_content(n: Node<'_>, writing: bool) -> Option<Option<Node<'_>>> {
-    let a = args(n);
+    let a = semantic_args(n);
     if writing {
         if a.len() != 1 || a[0].kind() == "splat_argument" {
             return None;

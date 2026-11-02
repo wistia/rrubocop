@@ -4,7 +4,7 @@ pub(super) fn uri_regexp(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "regexp" || !["URI", "::URI"].contains(&c.receiver(n)) {
         return vec![];
     }
-    let argument = args(n)
+    let argument = semantic_args(n)
         .first()
         .map(|a| format!("({})", c.text(*a)))
         .unwrap_or_default();

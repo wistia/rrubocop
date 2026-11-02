@@ -20,12 +20,12 @@ def comparable_metadata(case, rows):
     return values
 
 
-def compare_diagnostics(case, native, ruby):
+def compare_diagnostics(case, native, ruby, guarded=False):
     actual = native_diagnostics(native)
     expected = sorted(ruby["diagnostics"], key=order)
     results = []
     if metadata(actual) != metadata(expected):
-        allowed = allowed_metadata(case, actual, expected)
+        allowed = allowed_metadata(case, actual, expected, guarded)
         results.append(finding(case, "diagnostics", "exception" if allowed else "failure",
                                actual=actual, expected=expected))
     results.extend(compare_ranges(case, actual, expected))
@@ -49,7 +49,9 @@ def compare_ranges(case, actual, expected):
     return results
 
 
-def allowed_metadata(case, actual, expected):
+def allowed_metadata(case, actual, expected, guarded):
+    if guarded:
+        return guarded_flags(actual, expected)
     allowed = declared_diagnostics(case, actual)
     if case["cop"] in REPORT_ONLY:
         return allowed and comparable_metadata(case, actual) == comparable_metadata(case, expected)
@@ -59,3 +61,14 @@ def allowed_metadata(case, actual, expected):
 def range_finding(case, key, actual, expected):
     return finding(case, "range_or_severity", "failure", location=key,
                    actual=sorted(actual.elements()), expected=sorted(expected.elements()))
+
+
+def guarded_flags(actual, expected):
+    return all(not row["correctable"] for row in actual) and without_flags(actual) == without_flags(expected)
+
+
+def without_flags(rows):
+    values = metadata(rows)
+    for row in values:
+        row["correctable"] = False
+    return values

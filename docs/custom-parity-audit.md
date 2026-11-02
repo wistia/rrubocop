@@ -12,7 +12,7 @@ Requirements: Python 3, Cargo on PATH, and a working `bundle exec ruby` in the s
 
 The default run selects all 98 added cops, including the app-specific rules. It combines the central pinned references, additional independent regressions, directive controls, and explicit runtime scenarios. Duplicate examples are removed. The default mutation budget takes two eligible seed examples per cop and generates comment/parenthesis variants plus parser-based percent, encoded, character, and opposite-quote literal forms. Known per-example correction safeguards are not used as ordinary mutation seeds.
 
-The Ruby worker loads the selected project's actual configuration and custom cop definitions. Each cop is isolated and explicitly enabled with the example's recorded options. This avoids unrelated cops mutating the shared AST, and makes comparison differences reproducible. It is not a replacement for a configured full-project CLI scan or a cross-cop interaction suite.
+The Ruby worker loads the selected project's actual configuration and custom cop definitions. Each cop is isolated and explicitly enabled with the example's recorded options. Correction defaults to enabled in both engines when the example omits `AutoCorrect`; explicit disabled settings are preserved. This avoids unrelated cops mutating the shared AST, and makes comparison differences reproducible. It is not a replacement for a configured full-project CLI scan or a cross-cop interaction suite.
 
 ## Checks
 
@@ -20,6 +20,7 @@ The Ruby worker loads the selected project's actual configuration and custom cop
 - Safe and unsafe correction: final rewritten bytes, bounded correction replay, and RubyVM compilation. Native corrections are compiled by Ruby too, catching invalid regexps that the native parser may accept.
 - Runtime: the explicit scenarios in `scripts/parity_audit/runtime_cases.json` compare original, native-corrected, and Ruby-corrected behavior in both correction modes. They capture stdout/stderr at the descriptor level, exception class/message, explicit exit status, and watched file bytes.
 - Runtime examples get separate temporary directories. Only explicit trusted scenarios execute; reference and generated examples are parsed/compiled, never automatically executed. This is file/process isolation, not an OS security boundary for untrusted Ruby.
+- Invalid/looping reference corrections may retain native manual correctability when source is unchanged and all other metadata agrees; native errors and unrelated diagnostic differences still fail.
 - Existing fixture exceptions require the relevant explicit `rust_*` override and a reason. Report-only policies are checked separately. They cannot excuse unrelated ranges, severity, native crashes, or internal errors.
 
 The report separates fork differences, documented exceptions, upstream-identical hazards, invalid originals, and invalid generated syntax. Original programs that RubyVM cannot compile are recorded rather than claimed as valid correctness examples. Invalid mutations cannot hide native crashes.

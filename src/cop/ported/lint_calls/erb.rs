@@ -4,7 +4,7 @@ pub(super) fn erb(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !legacy_erb(c, n) {
         return vec![];
     }
-    let arguments = args(n);
+    let arguments = semantic_args(n);
     erb_findings(
         c,
         &arguments,
@@ -43,7 +43,7 @@ fn legacy_erb(c: &Context<'_>, n: Node<'_>) -> bool {
     {
         return false;
     }
-    let a = args(n);
+    let a = semantic_args(n);
     a.len() >= 2 && !(a.len() == 2 && is_options(a[1]))
 }
 fn is_options(n: Node<'_>) -> bool {

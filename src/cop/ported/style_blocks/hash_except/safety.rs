@@ -30,7 +30,7 @@ fn atom(c: &Context<'_>, key: Node<'_>) -> bool {
     match key.kind() {
         "integer" | "float" | "nil" | "true" | "false" => true,
         "simple_symbol" | "delimited_symbol" => c.static_symbol(key).is_some(),
-        "string" => c.static_string(key).is_some(),
+        "string" | "character" => c.ruby_static_string(key).is_some(),
         _ => false,
     }
 }

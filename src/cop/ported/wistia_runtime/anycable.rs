@@ -4,7 +4,9 @@ use tree_sitter::Node;
 pub(super) fn instance_vars(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if super::super::custom_index::in_class(c, n) {
         vec![Finding::new(
-            n,
+            n.parent()
+                .filter(|parent| parent.kind() == "assignment" && field(*parent, "left") == Some(n))
+                .unwrap_or(n),
             "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
         )]
     } else {
@@ -31,7 +33,10 @@ fn stream_findings(c: &Context<'_>, n: Node<'_>, values: Vec<Node<'_>>) -> Vec<F
         findings.push(callback_finding(n, n.end_byte()));
     }
     if callback(c, n, &values) {
-        findings.push(callback_finding(n, send_end(n)));
+        findings.push(Finding::send(
+            n,
+            "Custom stream callbacks are not supported in AnyCable",
+        ));
     } else if valid_stream_arguments(c, n, &values) {
         findings.extend(coder_findings(c, values));
     }

@@ -51,7 +51,8 @@ fn shadow_diagnostic(
         col,
         format!("Argument `{name}` was shadowed by a local variable before it was used."),
     );
-    diagnostic.highlight_length = n.end_byte() - n.start_byte();
+    diagnostic.highlight_length =
+        super::super::highlight_length(source, n.start_byte(), n.end_byte());
     diagnostic
 }
 fn shadow<'n>(

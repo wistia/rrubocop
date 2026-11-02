@@ -67,7 +67,7 @@ class AuditReference < PortedReference
 
   def configuration(test)
     name = test.fetch('cop')
-    options = @config.for_cop(name).merge(test.fetch('config', {})).merge(
+    options = @config.for_cop(name).merge('AutoCorrect' => true).merge(test.fetch('config', {})).merge(
       'Enabled' => true, 'Include' => ['**/*'], 'Exclude' => []
     )
     RuboCop::Config.new(@config.merge(name => options), @config.loaded_path)

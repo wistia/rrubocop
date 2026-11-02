@@ -19,7 +19,7 @@ fn dir_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
     if !file_receiver(c, n) {
         return false;
     }
-    let a = args(n);
+    let a = semantic_args(n);
     a.len() == 1 && dir_inner(c, n, a[0])
 }
 fn dir_inner(c: &Context<'_>, outer: Node<'_>, inner: Node<'_>) -> bool {
@@ -29,26 +29,30 @@ fn dir_inner(c: &Context<'_>, outer: Node<'_>, inner: Node<'_>) -> bool {
         && file_argument(c, inner)
 }
 fn file_argument(c: &Context<'_>, n: Node<'_>) -> bool {
-    let a = args(n);
+    let a = semantic_args(n);
     a.len() == 1 && c.text(a[0]) == "__FILE__"
 }
 pub(super) fn string_chars(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    if c.method(n) != "split"
-        || args(n).len() != 1
-        || !["//", "''", "\"\""].contains(&c.text(args(n)[0]))
-    {
+    if c.method(n) != "split" || !empty_split_argument(c, n) {
         return vec![];
     }
     let start = method_node(n).start_byte();
-    let current = String::from_utf8_lossy(&c.source.as_bytes()[start..n.end_byte()]);
+    let end = field(n, "arguments")
+        .unwrap_or_else(|| method_node(n))
+        .end_byte();
+    let current = String::from_utf8_lossy(&c.source.as_bytes()[start..end]);
     vec![
-        Finding::range(
+        Finding::range(start, end, format!("Use `chars` instead of `{current}`.")).edit_with(
+            c,
             start,
-            n.end_byte(),
-            format!("Use `chars` instead of `{current}`."),
-        )
-        .edit_with(c, start, n.end_byte(), || "chars"),
+            end,
+            || "chars",
+        ),
     ]
+}
+fn empty_split_argument(c: &Context<'_>, n: Node<'_>) -> bool {
+    let arguments = semantic_args(n);
+    arguments.len() == 1 && ["//", "''", "\"\""].contains(&c.text(arguments[0]))
 }
 pub(super) fn stderr(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) != "puts"

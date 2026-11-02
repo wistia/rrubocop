@@ -91,6 +91,12 @@ impl<'a> Context<'a> {
 pub(super) fn args(node: Node<'_>) -> Vec<Node<'_>> {
     shared::argument_nodes(node)
 }
+pub(super) fn semantic_args(node: Node<'_>) -> Vec<Node<'_>> {
+    args(node)
+        .into_iter()
+        .filter(|argument| argument.kind() != "comment")
+        .collect()
+}
 pub(super) fn kids(node: Node<'_>) -> Vec<Node<'_>> {
     shared::named_kids(node)
         .into_iter()

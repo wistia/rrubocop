@@ -47,7 +47,7 @@ impl Cop for Rule {
         }
     }
     fn default_severity(&self) -> crate::diagnostic::Severity {
-        if self.name.starts_with("Lint/") || self.name.starts_with("Security/") {
+        if self.name.starts_with("Lint/") {
             crate::diagnostic::Severity::Warning
         } else {
             crate::diagnostic::Severity::Convention
@@ -113,7 +113,7 @@ impl Cop for Rule {
                 finding.edit = None;
                 finding.additional.clear();
             }
-            emit(self, source, finding, diagnostics, &mut corrections);
+            emit(self, source, finding, config, diagnostics, &mut corrections);
         }
     }
 }
@@ -166,10 +166,11 @@ fn emit(
     rule: &Rule,
     source: &SourceFile,
     finding: Finding,
+    config: &CopConfig,
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<&mut Vec<Correction>>,
 ) {
-    let mut diagnostic = finding_diagnostic(rule, source, &finding);
+    let mut diagnostic = finding_diagnostic(rule, source, &finding, config);
     let before = corrections.as_ref().map_or(0, |edits| edits.len());
     if let Some((start, end, replacement)) = finding.edit {
         diagnostic.corrected =
@@ -183,12 +184,27 @@ fn emit(
     diagnostics.push(diagnostic);
 }
 
-fn finding_diagnostic(rule: &Rule, source: &SourceFile, finding: &Finding) -> Diagnostic {
+fn finding_diagnostic(
+    rule: &Rule,
+    source: &SourceFile,
+    finding: &Finding,
+    config: &CopConfig,
+) -> Diagnostic {
     let (line, col) = source.offset_to_line_col(finding.start);
     let mut diagnostic = rule.diagnostic(source, line, col, finding.message.clone());
-    diagnostic.highlight_length = finding.end.saturating_sub(finding.start).max(1);
+    diagnostic.highlight_length = highlight_length(source, finding.start, finding.end);
     diagnostic.correctable = finding.correctable;
+    diagnostic.severity = config.severity.unwrap_or(diagnostic.severity);
     diagnostic
+}
+
+fn highlight_length(source: &SourceFile, start: usize, end: usize) -> usize {
+    let span = source.as_bytes().get(start..end).unwrap_or_default();
+    let first_line = match span.iter().position(|byte| *byte == b'\n') {
+        Some(end) => span[..end].strip_suffix(b"\r").unwrap_or(&span[..end]),
+        None => span,
+    };
+    crate::parse::source::utf8_byte_index_to_column(first_line).max(1)
 }
 
 fn own_edits(corrections: &mut Option<&mut Vec<Correction>>, before: usize, owner: usize) {
@@ -224,3 +240,6 @@ pub(super) use rules;
 
 #[cfg(test)]
 mod tests;
+
+#[cfg(test)]
+mod diagnostic_tests;

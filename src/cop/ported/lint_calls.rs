@@ -23,3 +23,6 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Lint/TrailingCommaInAttributeDeclaration", &["call"], attr_comma, true, true, false)
     );
 }
+
+#[cfg(test)]
+mod comment_tests;

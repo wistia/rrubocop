@@ -9,7 +9,7 @@ pub(super) fn key_content(c: &Context<'_>, key: Node<'_>) -> String {
             .map(|a| c.text(*a))
             .collect::<Vec<_>>()
             .join(", "),
-        _ if literal(key) => c.text(key).into(),
+        _ if literal(key) || key.kind() == "character" => c.text(key).into(),
         _ => format!("*{}", c.text(key)),
     }
 }

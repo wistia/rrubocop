@@ -12802,7 +12802,9 @@
         "correctable": true
       }
     ],
-    "corrected": "if !/foo/ =~ $_\nend\n"
+    "corrected": "if !/foo/ =~ $_\nend\n",
+    "rust_corrected": "if !/foo/ =~ $_\nend\n",
+    "reason": "Pinned Ruby iteratively adds a second match operator and emits invalid Ruby; retain the existing single-pass native correction instead of reproducing that invalid follow-up."
   },
   {
     "cop": "Lint/RegexpAsCondition",
@@ -49616,5 +49618,2400 @@
       }
     ],
     "corrected": "p File.binwrite(\"sample.txt\", \"new\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(\n# parity audit\nstr, nil, \"-\", \"@buf\")\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 3,
+        "column": 5,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 10,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 15,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"@buf\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(\n# parity audit\nstr, trim_mode: \"-\", eoutvar: \"@buf\")\n",
+    "fixture": "tests/fixtures/cops/lint/erb_new_arguments/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(\n# parity audit\nstr, nil)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 3,
+        "column": 5,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(\n# parity audit\nstr)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object(\n# parity audit\n[]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n",
+    "fixture": "tests/fixtures/cops/lint/redundant_with_object/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object(\n# parity audit\n[]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "URI.regexp(\n# parity audit\n\"http\")\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "`URI.regexp(\n# parity audit\n\"http\")` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(\"http\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "URI::DEFAULT_PARSER.make_regexp(\"http\")\n",
+    "fixture": "tests/fixtures/cops/lint/uri_regexp/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(\n# parity audit\nFile.dirname(__FILE__))\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n",
+    "fixture": "tests/fixtures/cops/style/dir/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(\n# parity audit\nFile.realpath(__FILE__))\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(\n# parity audit\npath).read\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.read(path)\n",
+    "fixture": "tests/fixtures/cops/style/file_read/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(\n# parity audit\npath, \"rb\") { |f| f.read }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.binread`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.binread(path)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(\n# parity audit\n6) + 1\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(1..6)\n",
+    "fixture": "tests/fixtures/cops/style/random_with_offset/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "10 - rand(\n# parity audit\n1..3)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(7..9)\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\n# parity audit\n\"\")\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\n# parity audit\n\"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars\n",
+    "fixture": "tests/fixtures/cops/style/string_chars/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str&.split(\n# parity audit\n//)\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `chars` instead of `split(\n# parity audit\n//)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str&.chars\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\n# parity audit\n\"C*\").first\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\n# parity audit\n\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\n# parity audit\n\"C*\")\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/argument_comment_parity.rb"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\n# parity audit\n\"C*\")[0]\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\n# parity audit\n\"C*\")[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\n# parity audit\n\"C*\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"@buf\")\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"@buf\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"@buf\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "URI.regexp(\"http\")\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "`URI.regexp(\"http\")` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp(\"http\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "URI::DEFAULT_PARSER.make_regexp(\"http\")\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "::URI.regexp\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "`::URI.regexp` is obsolete and should not be used. Instead, use `::URI::DEFAULT_PARSER.make_regexp`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "::URI::DEFAULT_PARSER.make_regexp\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__))\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(File.realpath(__FILE__))\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(path).read\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.read(path)\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(path, \"rb\") { |f| f.read }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.binread`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.binread(path)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(6) + 1\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(1..6)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "10 - rand(1..3)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(7..9)\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\"\")\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str&.split(//)\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `chars` instead of `split(//)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str&.chars\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\")[0]\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str,\n # safe level\n nil,\n # trim mode\n \"-\", \"@buf\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 1,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 5,
+        "column": 6,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"@buf\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"@buf\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, trim_mode: \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "URI.regexp(\n # schemes\n [\"http\", \"https\"], # trailing\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "`URI.regexp(\n # schemes\n [\"http\", \"https\"], # trailing\n)` is obsolete and should not be used. Instead, use `URI::DEFAULT_PARSER.make_regexp([\"http\", \"https\"])`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "URI::DEFAULT_PARSER.make_regexp([\"http\", \"https\"])\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object(\n # memo\n []) { |item, memo| memo << item }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object(\n # memo\n []) { |item, memo| memo << item }\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(\n # file\n __FILE__))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(path,\n # read mode\n \"r\") { |f| f.read(\n # no arguments\n) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "File.read(path)\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(\n # count\n6).succ(\n # no offset argument\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(1..6)\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\n # empty delimiter\n \"\",)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\n # empty delimiter\n \"\",)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\n # pattern\n \"C*\", # trailing\n).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\n # pattern\n \"C*\", # trailing\n).first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\n # pattern\n \"C*\", # trailing\n)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(\n # options only\n str, trim_mode: \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(\n # options only\n str, trim_mode: \"-\")\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "Other.regexp(\n # schemes\n \"http\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Other.regexp(\n # schemes\n \"http\")\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(\n # file\n __FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.dirname(\n # file\n __FILE__)\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "File.open(\n # path\n path, \"r\") { |f| f.read(1) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.open(\n # path\n path, \"r\") { |f| f.read(1) }\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(\n # count\n 6)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "rand(\n # count\n 6)\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\n # delimiter\n \",\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.split(\n # delimiter\n \",\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\n # no pattern\n).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\n # no pattern\n).first\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\n # delimiter\n \"\") { |character| use(character) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\n # delimiter\n \"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars { |character| use(character) }\n",
+    "fixture": "tests/fixtures/cops/style/string_chars/argument_comment_block.rb"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "str.split(\"\") { |character| use(character) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `chars` instead of `split(\"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.chars { |character| use(character) }\n"
+  },
+  {
+    "cop": "Style/StringChars",
+    "source": "seen = []\nstr = \"ab\"\nvalue = str.split(\"\") { |character| seen << character }\np [seen, value]\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime_stdout": "[[\"a\", \"b\"], \"ab\"]\n",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 12,
+        "message": "Use `chars` instead of `split(\"\")`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nstr = \"ab\"\nvalue = str.chars { |character| seen << character }\np [seen, value]\n",
+    "fixture": "tests/fixtures/cops/style/string_chars/block_runtime_safety.rb"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "%s|true|\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "%s|true|\n",
+    "audit_id": "56cf85ceedbb1490",
+    "manual": true,
+    "rust_correctable": false,
+    "rust_corrected": "%s|true|\n",
+    "reason": "Percent symbols remain manual because pinned RuboCop leaves the source unchanged and enters an autocorrection cycle; this is an existing safeguard."
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "%s|false|\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Symbol with a boolean name - you probably meant to use `false`.",
+        "correctable": true,
+        "length": 9,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "%s|false|\n",
+    "audit_id": "43c941965ee8343d",
+    "manual": true,
+    "rust_correctable": false,
+    "rust_corrected": "%s|false|\n",
+    "reason": "Percent symbols remain manual because pinned RuboCop leaves the source unchanged and enters an autocorrection cycle; this is an existing safeguard."
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen %s|a|, :a; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case x\nwhen %s|a|, :a; run\nend\n",
+    "audit_id": "e11f2fd21df9d3df"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen :\"\\x61\", :a; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 14,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case x\nwhen :\"\\x61\", :a; run\nend\n",
+    "audit_id": "28fff46df1860091"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen :a, %s|a|; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 5,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case x\nwhen :a, %s|a|; run\nend\n",
+    "audit_id": "279493371a1036c6"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen :a, :\"\\x61\"; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 7,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case x\nwhen :a, :\"\\x61\"; run\nend\n",
+    "audit_id": "ed156a19a92c4897"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require %q|a|\nrequire \"a\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 11,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require %q|a|\n",
+    "audit_id": "166ff507e1ee68c4"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"\\x61\"\nrequire \"a\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 11,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require \"\\x61\"\n",
+    "audit_id": "c750035e6e4fbe09"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require ?a\nrequire \"a\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 11,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require ?a\n",
+    "audit_id": "b7bfac2cc860041b"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"a\"\nrequire %q|a|\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 13,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require \"a\"\n",
+    "audit_id": "5ab1cdf855368b6f"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"a\"\nrequire \"\\x61\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 14,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require \"a\"\n",
+    "audit_id": "351ff56e4f3bc36b"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"a\"\nrequire ?a\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require \"a\"\n",
+    "audit_id": "fd2c4485b4407c08"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require_relative %q|a|\nrequire_relative \"a\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require_relative` detected.",
+        "correctable": true,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require_relative %q|a|\n",
+    "audit_id": "5310cb89f7c91a18"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require_relative \"\\x61\"\nrequire_relative \"a\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require_relative` detected.",
+        "correctable": true,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require_relative \"\\x61\"\n",
+    "audit_id": "1150bd56550011dd"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require_relative ?a\nrequire_relative \"a\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require_relative` detected.",
+        "correctable": true,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require_relative ?a\n",
+    "audit_id": "caad6cb4f4bc5933"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require_relative \"a\"\nrequire_relative %q|a|\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require_relative` detected.",
+        "correctable": true,
+        "length": 22,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require_relative \"a\"\n",
+    "audit_id": "d59cebad9bb8119c"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require_relative \"a\"\nrequire_relative \"\\x61\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require_relative` detected.",
+        "correctable": true,
+        "length": 23,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require_relative \"a\"\n",
+    "audit_id": "aa9a99a4a94fb1bc"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require_relative \"a\"\nrequire_relative ?a\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require_relative` detected.",
+        "correctable": true,
+        "length": 19,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require_relative \"a\"\n",
+    "audit_id": "9c5938054128df67"
+  },
+  {
+    "cop": "Lint/RescueType",
+    "source": "begin; x; rescue 1, ?a, Error; recover; end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Rescuing from `1, ?a` will raise a `TypeError` instead of catching the actual exception.",
+        "correctable": true,
+        "length": 19,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "begin; x; rescue Error; recover; end\n",
+    "audit_id": "0bad23cc7d653260"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"'\"\"hello\"\"\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "\"'\"\"hello\"\n",
+    "audit_id": "cd6c6b25f33df08c"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"\"'hello'''\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 11,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "'hello'\n",
+    "audit_id": "00c975cbdbb0595d"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"'\"'hello'''\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "\"'\"'hello'\n",
+    "audit_id": "bbba1b4df6af9a5a"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "''\"\\x68\\x65\\x6c\\x6c\\x6f\"''\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 26,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "\"\\x68\\x65\\x6c\\x6c\\x6f\"\n",
+    "audit_id": "4e30438dfb8106d9"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "''\"hello'\"''\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "\"hello'\"\n",
+    "audit_id": "92ddb147dfb027e2"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.name == \"\\x53\\x74\\x72\\x69\\x6e\\x67\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `instance_of?(\\x53\\x74\\x72\\x69\\x6e\\x67)` instead of comparing classes.",
+        "correctable": true,
+        "length": 40,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "obj.instance_of?(\\x53\\x74\\x72\\x69\\x6e\\x67)\n",
+    "audit_id": "1a7b737ccd2d1517",
+    "manual": true,
+    "rust_correctable": false,
+    "rust_corrected": "obj.class.name == \"\\x53\\x74\\x72\\x69\\x6e\\x67\"\n",
+    "reason": "Encoded class-name strings remain manual because pinned quote removal leaves raw escape syntax in a constant expression and produces invalid Ruby."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select { |k, v| k != ?a }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(?a)` instead.",
+        "correctable": true,
+        "length": 25,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(?a)\n",
+    "audit_id": "38329afe468a20c7"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require \"\\x6a\\x73\\x6f\\x6e\\x2e\\x72\\x62\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 34,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true,
+        "length": 3,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "require \"\\x6a\\x73\\x6f\\x6e\\x2e\\x72\\\"\n",
+    "audit_id": "e97f3f2f24f486bd",
+    "manual": true,
+    "rust_correctable": false,
+    "rust_corrected": "require \"\\x6a\\x73\\x6f\\x6e\\x2e\\x72\\x62\"\n",
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence; this is an existing safeguard."
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require_relative \"\\x74\\x68\\x69\\x6e\\x67\\x2e\\x72\\x62\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 47,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true,
+        "length": 3,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "require_relative \"\\x74\\x68\\x69\\x6e\\x67\\x2e\\x72\\\"\n",
+    "audit_id": "db4dd7f84649e417",
+    "manual": true,
+    "rust_correctable": false,
+    "rust_corrected": "require_relative \"\\x74\\x68\\x69\\x6e\\x67\\x2e\\x72\\x62\"\n",
+    "reason": "Encoded suffixes remain manual because removing the last three raw source bytes can damage an escape sequence; this is an existing safeguard."
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"json\"\nrequire \"\\x6ason\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 17,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require \"json\"\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"json\"\nrequire %q(json')\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "require \"json\"\nrequire %q(json')\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require :json\nrequire \"json\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "require :json\nrequire \"json\"\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"json\"\nrequire_relative \"json\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "require \"json\"\nrequire_relative \"json\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"'\" \"hello\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "\"'\" \"hello\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "'' \"hello\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "'' \"hello\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"'\"\"hello\"\"\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "\"'\"\"hello\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"'\"\"\\\n\"\"hello\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 5,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "\"'\"\"hello\"\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "\"\"\"\\\n\"\"hello\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "\"hello\"\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen %q(a), \"a\"; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 12,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case x\nwhen %q(a), \"a\"; run\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen \"\\x61\", ?a; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case x\nwhen \"\\x61\", ?a; run\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen :a, \"a\"; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen :a, \"a\"; run\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen :a, :\"a'\"; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen :a, :\"a'\"; run\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case x\nwhen :\"\\u00e9\", :\u00e9; run\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 16,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case x\nwhen :\"\\u00e9\", :\u00e9; run\nend\n"
+  },
+  {
+    "cop": "Lint/RescueType",
+    "source": "begin; x; rescue ?a, Error; recover; end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Rescuing from `?a` will raise a `TypeError` instead of catching the actual exception.",
+        "correctable": true,
+        "length": 16,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "begin; x; rescue Error; recover; end\n"
+  },
+  {
+    "cop": "Lint/RescueType",
+    "source": "begin; x; rescue \"a\" \"b\", Error; recover; end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Rescuing from `\"a\" \"b\"` will raise a `TypeError` instead of catching the actual exception.",
+        "correctable": true,
+        "length": 21,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "begin; x; rescue Error; recover; end\n"
+  },
+  {
+    "cop": "Lint/RescueType",
+    "source": "begin; x; rescue Error; recover; end\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "begin; x; rescue Error; recover; end\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {\"a\" => 1, \"b\" => 2}\np hash.reject { |k, v| k == ?a }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Use `except(?a)` instead.",
+        "correctable": true,
+        "length": 25,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash = {\"a\" => 1, \"b\" => 2}\np hash.except(?a)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select { |k, v| k != ?\\x61 }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "Safe": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(?\\x61)` instead.",
+        "correctable": true,
+        "length": 28,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(?\\x61)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select { |k, v| k != 1 }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "Safe": false
+    },
+    "expected": [],
+    "corrected": "hash.select { |k, v| k != 1 }\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "p \"x\".class.name == \"Str\\u0069ng\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `instance_of?(Str\\u0069ng)` instead of comparing classes.",
+        "correctable": true,
+        "length": 27,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "p \"x\".instance_of?(Str\\u0069ng)\n",
+    "manual": true,
+    "rust_correctable": false,
+    "rust_corrected": "p \"x\".class.name == \"Str\\u0069ng\"\n",
+    "reason": "Encoded class-name strings remain manual because pinned quote removal leaves raw escape syntax in a constant expression and produces invalid Ruby."
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "p \"x\".class.name == \"String\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true,
+        "length": 22,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "p \"x\".instance_of?(String)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "def run; end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def run; end\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "(def run; end)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(def run; end)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "(def run; end; def other; end)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(def run; end; def other; end)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "((def run; end))\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "((def run; end))\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "work\n(def run; end)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "work\n(def run; end)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "begin\n def run; end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "begin\n def run; end\nend\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "(define_method(:run) { work })\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(define_method(:run) { work })\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "(define_method(:run) { work }; work)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Do not define methods at the top-level.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(define_method(:run) { work }; work)\n"
+  },
+  {
+    "cop": "Style/TopLevelMethodDefinition",
+    "source": "class C\n (def run; end)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "class C\n (def run; end)\nend\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "(include Foo)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(include Foo)\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "((include Foo))\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "((include Foo))\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "work\n(include Foo)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "work\n(include Foo)\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "(include Foo; extend Bar)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 14,
+        "message": "`extend` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(include Foo; extend Bar)\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "class C\n (include Foo)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "class C\n (include Foo)\nend\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "proc { (include Foo) }\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "proc { (include Foo) }\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "def run\n (include Foo)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def run\n (include Foo)\nend\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false
+      }
+    ],
+    "corrected": "case x; when :a then; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then;; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false
+      }
+    ],
+    "corrected": "case x; when :a then;; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a; # why\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x; when :a; # why\nend\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a; # why\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": false
+    },
+    "config": {
+      "AllowComments": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false
+      }
+    ],
+    "corrected": "case x; when :a; # why\nend\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then nil; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x; when :a then nil; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then work; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x; when :a then work; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x; when :a then begin; end; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowComments": true
+    },
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x; when :a then begin; end; end\n"
   }
 ]

@@ -1,3 +1,5 @@
+mod literal_key;
+use literal_key::literal_key;
 mod empty_when;
 use super::context::*;
 use crate::cop::CopRegistry;
@@ -17,7 +19,7 @@ fn duplicate(c: &Context<'_>, nodes: Vec<Node<'_>>, msg: &str) -> Vec<Finding> {
     let mut seen = HashSet::new();
     nodes
         .into_iter()
-        .filter(|n| !seen.insert(canonical(*n, c)))
+        .filter(|n| !seen.insert(literal_key(c, *n)))
         .map(|n| Finding::new(n, msg))
         .collect()
 }
@@ -113,7 +115,7 @@ fn requirement_key<'a>(
         parent.end_byte(),
         parent.kind(),
         c.method(node),
-        canonical(args(node)[0], c),
+        literal_key(c, args(node)[0]),
     )
 }
 fn ruby_parent(n: Node<'_>) -> Node<'_> {
@@ -163,3 +165,6 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+mod decode_tests;

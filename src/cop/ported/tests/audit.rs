@@ -51,6 +51,11 @@ fn configuration(case: &Case) -> ResolvedConfig {
         case.cop.clone(),
         CopConfig {
             enabled: EnabledState::True,
+            severity: case
+                .config
+                .get("Severity")
+                .and_then(|value| value.as_str())
+                .and_then(crate::diagnostic::Severity::from_str),
             include: vec!["**/*".into()],
             options: case.config.clone(),
             ..CopConfig::default()

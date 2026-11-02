@@ -1,0 +1,459 @@
+[
+  {
+    "cop": "AnyCable/InstanceVars",
+    "source": "class Channel; def f; @\u00e9 = value; @\u00e9 ||= value; @\u00e9; end; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 10,
+        "severity": "convention"
+      },
+      {
+        "line": 1,
+        "column": 34,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 2,
+        "severity": "convention"
+      },
+      {
+        "line": 1,
+        "column": 48,
+        "message": "Channel instance variables are not supported in AnyCable. Use `state_attr_accessor` instead",
+        "correctable": false,
+        "length": 2,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "class Channel; def f; @\u00e9 = value; @\u00e9 ||= value; @\u00e9; end; end\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin; work; rescue; cleanup; # tail\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "begin; work; rescue; cleanup; # tail\nend\n"
+  },
+  {
+    "cop": "Cops/RescueMustReportError",
+    "source": "begin; work; rescue => e; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Rescue blocks must report the error using `Sentry.capture_exception`, `Sentry.capture_message`, or `Rails.error.report`",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "begin; work; rescue => e; end\n"
+  },
+  {
+    "cop": "Lint/EmptyWhen",
+    "source": "case x\nwhen :\u00e9\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "AllowComments": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "length": 7,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case x\nwhen :\u00e9\nend\n"
+  },
+  {
+    "cop": "Style/RedundantRegexpEscape",
+    "source": "/[\\\u00a7]/\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Redundant escape inside regexp literal",
+        "correctable": true,
+        "length": 2,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "/[\u00a7]/\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; \"\u00e9\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true,
+        "length": 3,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "def f \n  \"\u00e9\"\nend\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(\"cl\u00e9\", 1, \"\u00e9\") { callback }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "redis.set(\"cl\u00e9\", \"\u00e9\", ex: 1) { callback }\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(\"cl\u00e9\", 1, \"\u00e9\") do\r\n callback\r\nend\r\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "redis.set(\"cl\u00e9\", \"\u00e9\", ex: 1) do\n callback\nend\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets) do |t|\n t.string :name\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true,
+        "length": 22,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "create_table(:widgets), charset: \"utf8mb4\" do |t|\n t.string :name\nend\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets do |t|\n t.string :name\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "create_table :widgets, collation: \"utf8mb4_unicode_ci\" do |t|\n t.string :name\nend\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_0 += 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "_0 += 1\n"
+  },
+  {
+    "cop": "Lint/NumberedParameterAssignment",
+    "source": "_0 = 1\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`_0` is similar to numbered parameter; consider another name.",
+        "correctable": false,
+        "length": 6,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "_0 = 1\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('topic', -> {}) {}\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false,
+        "length": 30,
+        "severity": "convention"
+      },
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false,
+        "length": 27,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "stream_from('topic', -> {}) {}\n"
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash; a.hash ^ b.hash; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false,
+        "length": 15,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "def hash; a.hash ^ b.hash; end\n"
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "[value].hash\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delegate hash directly without wrapping in an array when only using a single value.",
+        "correctable": false,
+        "length": 12,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "[value].hash\n"
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "[value].hash\n",
+    "path": "probe.rb",
+    "options": {
+      "Severity": "warning"
+    },
+    "config": {
+      "Safe": false,
+      "Severity": "warning",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delegate hash directly without wrapping in an array when only using a single value.",
+        "correctable": false,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "[value].hash\n"
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "[value].hash\n",
+    "path": "probe.rb",
+    "options": {
+      "Severity": "error"
+    },
+    "config": {
+      "Safe": false,
+      "Severity": "error",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Delegate hash directly without wrapping in an array when only using a single value.",
+        "correctable": false,
+        "length": 12,
+        "severity": "error"
+      }
+    ],
+    "corrected": "[value].hash\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def f(arg)\n arg = \"\u00e9\"\n arg\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Argument `arg` was shadowed by a local variable before it was used.",
+        "correctable": false,
+        "length": 9,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "def f(arg)\n arg = \"\u00e9\"\n arg\nend\n"
+  },
+  {
+    "cop": "Lint/ShadowedArgument",
+    "source": "def f(arg)\n arg = [\n  1\n ]\n arg\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "IgnoreImplicitReferences": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Argument `arg` was shadowed by a local variable before it was used.",
+        "correctable": false,
+        "length": 7,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "def f(arg)\n arg = [\n  1\n ]\n arg\nend\n"
+  },
+  {
+    "cop": "Style/TrailingBodyOnMethodDefinition",
+    "source": "def f; \"a\rb\"\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Place the first line of a multi-line method definition's body on its own line.",
+        "correctable": true,
+        "length": 5,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "def f \n  \"a\rb\"\nend\n"
+  }
+]
