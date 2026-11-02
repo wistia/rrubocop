@@ -101,23 +101,31 @@ fn word_symbol_name(name: &[u8]) -> bool {
     let Some(first) = chars.next() else {
         return false;
     };
-    if first != '_' && !first.is_ascii_alphabetic() {
+    if first != '_' && !first.is_ascii_alphabetic() && !matches!(first, 'K' | 'ſ') {
         return false;
     }
-    let rest: String = chars.collect();
-    if rest.is_empty() {
-        return true;
-    }
-    word_symbol_rest(&rest)
+    let rest = chars.as_str();
+    let body = rest
+        .strip_suffix('?')
+        .or_else(|| rest.strip_suffix('!'))
+        .unwrap_or(rest);
+    body.bytes().all(|byte| byte.is_ascii_alphanumeric() || byte == b'_')
 }
 
-fn word_symbol_rest(rest: &str) -> bool {
-    let (body, last) = rest.split_at(rest.len() - 1);
-    let last_ch = last.chars().next().unwrap();
-    if last_ch == '?' || last_ch == '!' {
-        return body.chars().all(|c| c.is_ascii_alphanumeric() || c == '_');
+#[cfg(test)]
+mod hash_symbol_tests {
+    use super::word_symbol_name;
+
+    #[test]
+    fn original_ruby_case_insensitive_word_pattern() {
+        for (symbol, expected) in [
+            ("aé", false), ("é", false), ("K", true), ("aK", false),
+            ("ſ", true), ("aſ", false), ("a_b", true), ("a!", true),
+            ("a?", true), ("a?!", false), ("", false), ("_", true),
+        ] {
+            assert_eq!(word_symbol_name(symbol.as_bytes()), expected, "{symbol}");
+        }
     }
-    rest.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
 }
 
 pub fn matches_symbol_array(_source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {

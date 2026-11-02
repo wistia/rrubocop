@@ -173,3 +173,12 @@ A file consisting only of `def method_missing; end` crashes the original
 rule while accessing a missing parent; Rust reports the offense safely. This
 reference crash is documented separately from the successful differential
 cases and is not counted as exact parity.
+
+## HashSyntax UTF-8 safety checkpoint
+
+The existing symbol-name helper split the final byte of UTF-8 strings and
+panicked on keys such as `:aé`. It now checks ASCII suffix bytes without
+slicing a multibyte character. Twelve direct original-Ruby regex probes cover
+non-ASCII tails, punctuation and the Kelvin-sign/long-S case folds accepted
+by `/\A[_a-z]\w*[?!]?\z/i`. This is a narrowly bounded safety fix;
+HashSyntax correction and broader configuration parity remain queued.
