@@ -121,3 +121,7 @@ fn after_line(c: &Context<'_>, start: usize) -> usize {
         .position(|byte| *byte == b'\n')
         .map_or(c.source.as_bytes().len(), |offset| start + offset + 1)
 }
+
+pub(super) fn end_offset(c: &Context<'_>, n: Node<'_>) -> Option<usize> {
+    content_span(c, n).map(|(_, end)| end)
+}

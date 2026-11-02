@@ -209,3 +209,7 @@ mod constants;
 
 #[cfg(test)]
 mod literal_tests;
+
+pub(super) fn heredoc_end(c: &Context<'_>, n: Node<'_>) -> Option<usize> {
+    symbols::heredoc_end(c, n)
+}

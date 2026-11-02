@@ -24,3 +24,7 @@ fn character(text: &str) -> Option<Cow<'_, str>> {
 
 #[cfg(test)]
 mod tests;
+
+pub(in crate::cop::ported::context) fn heredoc_end(c: &Context<'_>, n: Node<'_>) -> Option<usize> {
+    heredoc::end_offset(c, n)
+}

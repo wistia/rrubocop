@@ -113,3 +113,7 @@ mod tests {
         assert_eq!(decode(&text, true, b'"').as_deref(), Some("\x01"));
     }
 }
+
+pub(super) fn heredoc_end(c: &Context<'_>, n: Node<'_>) -> Option<usize> {
+    ruby::heredoc_end(c, n)
+}
