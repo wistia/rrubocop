@@ -423,3 +423,23 @@ is retained with the previous three invalid original yield specimens, outside
 the strict matrix. The pinned import now retains 916 specimens, with thirteen
 remaining host-generated templates explicit. These four rules do not correct
 source or execute fixture programs.
+
+## Batch 16: named subjects and iterated expectations
+
+Existing NamedSubject and IteratedExpectation implementations are repaired and
+reviewed against their original algorithms and upstream specs. The reviewed total
+is 64 original stubs plus fourteen existing rules, leaving sixteen original stubs
+and two existing implementations. All 48 RSpec/RSpecRails tests pass with 1,292
+strict original-Ruby comparisons across 78 rules. The separate fifteen safeguards,
+35 correction-disable controls and four invalid original specimens remain explicit.
+
+NamedSubject now uses the shared cached lexical binding model instead of a second
+scanner. Review covers both styles, shared-example exclusions, normal versus
+numbered blocks, first and inherited subject declarations, source-header reads,
+keyword shorthand, assignment ordering and nested callback deduplication.
+IteratedExpectation now matches the original each argument and expectation-shape
+branches, including numbered parameters, qualified/safe calls and wrapped or
+assigned expectation bodies. The original Ruby rule is report-only: its class has
+no AutoCorrector. Unsupported native each-to-all rewrites and correction metadata
+were removed; four existing correction scenarios remain report-only regressions.
+Neither rule now rewrites source or executes fixture programs.
