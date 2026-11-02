@@ -6,6 +6,14 @@ require "rubocop"
 require "rspec/core"
 require "rspec/expectations"
 require "rubocop/rspec/support"
+class String
+  unless method_defined?(:strip_margin)
+    def strip_margin(margin_characters)
+      margin = Regexp.quote(margin_characters)
+      gsub(/^\s+#{margin}/, "")
+    end
+  end
+end
 RSpec.configure { |config| config.include RuboCop::RSpec::ExpectOffense }
 spec_path, output_path = ARGV
 abort "Usage: bundle exec ruby capture_original_cop_spec.rb SPEC_PATH OUTPUT_JSON" unless spec_path && output_path
@@ -45,6 +53,13 @@ module CaptureOperatorSpec
       siblings = capture_non_nil_options(config)
     when "Style/ComparableClamp"
       config["IndentationWidth"] ||= configuration.for_cop("Layout/IndentationWidth")["Width"]
+    when "Layout/ArgumentAlignment"
+      config["IndentationWidth"] ||= configuration.for_cop("Layout/IndentationWidth")["Width"]
+      hash_alignment = configuration.for_cop("Layout/HashAlignment")
+      config["HashAlignmentEnabled"] = !!hash_alignment["Enabled"]
+      config["HashAlignmentEnforcedColonStyle"] = hash_alignment["EnforcedColonStyle"]
+      config["HashAlignmentEnforcedHashRocketStyle"] = hash_alignment["EnforcedHashRocketStyle"]
+      siblings = {"Layout/HashAlignment" => hash_alignment.slice("Enabled", "EnforcedColonStyle", "EnforcedHashRocketStyle")}
     when "Layout/ArrayAlignment", "Layout/ParameterAlignment"
       config["IndentationWidth"] ||= configuration.for_cop("Layout/IndentationWidth")["Width"]
     when "Layout/HashAlignment"

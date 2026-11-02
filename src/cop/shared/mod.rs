@@ -2,7 +2,8 @@
 
 mod bare_args;
 mod command_call;
-pub use command_call::{CommandUnaryPlus, command_unary_plus};
+pub mod ruby_arguments;
+pub use command_call::{CommandArgument, CommandUnaryPlus, UnaryCommandCall, command_unary_plus, command_unary_plus_call};
 mod integer;
 mod numbered_parameters;
 pub use numbered_parameters::numbered_parameter_arity;
