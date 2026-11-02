@@ -115,7 +115,7 @@ fn decoded_parts(content: &str, mode: Option<(bool, u8)>) -> Option<Vec<String>>
     Some(parts)
 }
 fn string_parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
-    if symbol_label(c, n) || descendants(n).any(|n| n.kind() == "interpolation") {
+    if descendants(n).any(|n| n.kind() == "interpolation") {
         return None;
     }
     let (content, double, delimiter) = contents(c.text(n))?;
@@ -157,4 +157,78 @@ mod tests {
 
 pub(in crate::cop::ported) fn decode_double_quoted_content(inner: &str) -> Option<String> {
     decode(inner, true, b'"')
+}
+
+pub(in crate::cop::ported) fn decode_regexp_content(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<u8>> {
+    let text = std::str::from_utf8(inner).ok()?;
+    let mut bytes = text.bytes().peekable();
+    let mut output = Vec::with_capacity(inner.len());
+    while let Some(byte) = bytes.next() {
+        if byte == b'\r' && bytes.peek() == Some(&b'\n') {
+            continue;
+        }
+        if byte != b'\\' {
+            output.push(byte);
+            continue;
+        }
+        let escaped = *bytes.peek()?;
+        if (escaped == opening || escaped == closing) && !b"\\$()*+.<>?[]^{|}".contains(&escaped) {
+            output.push(bytes.next()?);
+        } else if escaped == b'\n'
+            || escaped == b'\r' && bytes.clone().nth(1) == Some(b'\n')
+            || ruby_version >= 3.1 && matches!(escaped, b'c' | b'C' | b'm' | b'M')
+        {
+            escapes::append(&mut bytes, &mut output)?;
+        } else {
+            output.push(byte);
+            output.push(bytes.next()?);
+        }
+    }
+    Some(output)
+}
+
+pub(in crate::cop::ported) fn decode_regexp_parts(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<Vec<u8>>> {
+    let text = std::str::from_utf8(inner).ok()?;
+    if !text.contains('\n') {
+        let value = decode_regexp_content(inner, opening, closing, ruby_version)?;
+        return Some(if value.is_empty() {
+            Vec::new()
+        } else {
+            vec![value]
+        });
+    }
+    let text = if text.contains("\r\n") {
+        Cow::Owned(text.replace("\r\n", "\n"))
+    } else {
+        Cow::Borrowed(text)
+    };
+    let mut parts = Vec::new();
+    let mut group = String::new();
+    for line in text.split_inclusive('\n') {
+        group.push_str(line);
+        if !continued(line) {
+            let value = decode_regexp_content(group.as_bytes(), opening, closing, ruby_version)?;
+            if !value.is_empty() {
+                parts.push(value);
+            }
+            group.clear();
+        }
+    }
+    if !group.is_empty() {
+        let value = decode_regexp_content(group.as_bytes(), opening, closing, ruby_version)?;
+        if !value.is_empty() {
+            parts.push(value);
+        }
+    }
+    Some(parts)
 }

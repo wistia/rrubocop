@@ -86,7 +86,7 @@ impl Cop for ExactRegexpMatch {
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
@@ -118,8 +118,11 @@ impl Cop for ExactRegexpMatch {
         {
             return;
         }
-        let Some(pattern) = crate::cop::shared::ruby_expression::static_regex_value(source, regexp)
-        else {
+        let Some(pattern) = crate::cop::shared::ruby_expression::static_regex_value_for_ruby(
+            source,
+            regexp,
+            config.get_f64("TargetRubyVersion", 2.7),
+        ) else {
             return;
         };
         let Some((literal, entire)) = literal(&pattern) else {
@@ -128,7 +131,7 @@ impl Cop for ExactRegexpMatch {
         let new_method = if method == b"!~" { "!=" } else { "==" };
         let prefer = format!(
             "{} {new_method} '{literal}'",
-            String::from_utf8_lossy(node_bytes(source, receiver))
+            String::from_utf8_lossy(node_bytes(source, receiver)).replace("\r\n", "\n")
         );
         let (line, col) = source.offset_to_line_col(node.start_byte());
         let mut diagnostic = self.diagnostic(source, line, col, format!("Use `{prefer}`."));
@@ -140,6 +143,7 @@ impl Cop for ExactRegexpMatch {
         }
         diagnostic.highlight_length =
             String::from_utf8_lossy(&source.as_bytes()[node.start_byte()..end])
+                .replace("\r\n", "\n")
                 .chars()
                 .count();
         let safe_nav = node

@@ -217,3 +217,7 @@ mod constants;
 mod literal_tests;
 
 pub(super) use symbols::decode_double_quoted_content;
+
+pub(super) use symbols::decode_regexp_content;
+
+pub(super) use symbols::decode_regexp_parts;

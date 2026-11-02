@@ -1,6 +1,26 @@
 use super::{call_method_name, call_receiver, node_bytes};
 use crate::parse::source::SourceFile;
 use tree_sitter::Node;
+fn regexp_constant(source: &SourceFile, mut node: Node<'_>) -> bool {
+    while node.kind() == "parenthesized_statements" {
+        let parts: Vec<_> = super::named_kids(node)
+            .into_iter()
+            .filter(|n| n.kind() != "comment")
+            .collect();
+        if parts.len() != 1 {
+            return false;
+        }
+        node = parts[0];
+    }
+    if node.kind() == "scope_resolution" && node.child_by_field_name("scope").is_none() {
+        let Some(name) = node.child_by_field_name("name") else {
+            return false;
+        };
+        node = name;
+    }
+    node.kind() == "constant" && node_bytes(source, node) == b"Regexp"
+}
+
 pub fn captures_observed(source: &SourceFile, mut root: Node<'_>) -> bool {
     while let Some(parent) = root.parent() {
         root = parent;
@@ -30,7 +50,7 @@ pub fn captures_observed(source: &SourceFile, mut root: Node<'_>) -> bool {
         }
         if node.kind() == "call"
             && call_method_name(source, node) == Some(b"last_match")
-            && call_receiver(node).is_some_and(|n| node_bytes(source, n) == b"Regexp")
+            && call_receiver(node).is_some_and(|n| regexp_constant(source, n))
         {
             return true;
         }
@@ -62,6 +82,26 @@ pub fn decode_ruby_double_quoted_content(text: &str) -> Option<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn capture_observers_resolve_only_the_root_regexp_constant() {
+        for (receiver, expected) in [
+            ("Regexp", true),
+            ("::Regexp", true),
+            (":: Regexp", true),
+            ("(Regexp)", true),
+            ("((:: Regexp))", true),
+            ("Other::Regexp", false),
+            ("Regexp2", false),
+            ("regexp", false),
+        ] {
+            let code = format!("string.partition(/f/); {receiver}.last_match");
+            let source = SourceFile::from_bytes("capture.rb", code.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(!tree.root_node().has_error(), "{code}");
+            let call = tree.root_node().named_child(0).unwrap();
+            assert_eq!(captures_observed(&source, call), expected, "{receiver}");
+        }
+    }
     #[test]
     fn original_literal_regex_predicate() {
         let cases: Vec<(String, bool)> = serde_json::from_str(include_str!(concat!(

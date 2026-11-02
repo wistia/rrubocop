@@ -23,9 +23,13 @@ module CaptureOperatorSpec
       config:,
       sibling_cops: siblings,
       ruby_diagnostics: captured_diagnostics(result),
-      ruby_safe: @last_corrector.rewrite
+      ruby_safe: captured_correction(processed_source)
     }
     result
+  end
+
+  def captured_correction(processed_source)
+    @last_corrector.empty? ? processed_source.raw_source : @last_corrector.rewrite
   end
 
   def captured_configuration(name)

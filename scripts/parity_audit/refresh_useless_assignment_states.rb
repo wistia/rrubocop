@@ -20,7 +20,8 @@ cases.each do |entry|
   entry['ruby_diagnostics'] = report.offenses.reject(&:disabled?).sort.map do |offense|
     { line: offense.line, column: offense.column + 1, length: offense.location.length, message: offense.message }
   end
-  entry['ruby_corrected'] = (report.correctors.first || RuboCop::Cop::Corrector.new(processed)).rewrite
+  corrector = report.correctors.compact.find { |candidate| !candidate.empty? }
+  entry['ruby_corrected'] = corrector ? corrector.rewrite : processed.raw_source
   entry.delete('ruby_safe')
   entry['reference_investigation'] = 'fresh cop per independent source/config'
 end

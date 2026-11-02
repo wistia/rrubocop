@@ -1,0 +1,42 @@
+{
+  "status": "unresolved global syntax validation gap",
+  "reference": "Ruby RuboCop1.65.1 / parser3.3.5.0",
+  "source": "string.gsub(/\\M-a/, \"bar\")\n",
+  "config": {
+    "AllCops": {
+      "DisabledByDefault": true,
+      "NewCops": "disable",
+      "TargetRubyVersion": 3.4
+    },
+    "Style/RedundantRegexpArgument": {
+      "Enabled": true
+    }
+  },
+  "observations": {
+    "ruby": {
+      "exit": 1,
+      "offenses": [
+        {
+          "severity": "fatal",
+          "message": "invalid multibyte character: /\\xE1/\n(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)",
+          "cop_name": "Lint/Syntax",
+          "corrected": false,
+          "correctable": false,
+          "location": {
+            "start_line": 1,
+            "start_column": 13,
+            "last_line": 1,
+            "last_column": 18,
+            "length": 6,
+            "line": 1,
+            "column": 13
+          }
+        }
+      ]
+    },
+    "native": {
+      "exit": 0,
+      "offenses": []
+    }
+  }
+}

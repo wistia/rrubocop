@@ -304,3 +304,21 @@ pub(super) fn heredoc_span(source: &SourceFile, node: Node<'_>) -> Option<(usize
 pub(super) fn decode_ruby_double_quoted_content(inner: &str) -> Option<String> {
     context::decode_double_quoted_content(inner)
 }
+
+pub(super) fn decode_regexp_content(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<u8>> {
+    context::decode_regexp_content(inner, opening, closing, ruby_version)
+}
+
+pub(super) fn decode_regexp_parts(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<Vec<u8>>> {
+    context::decode_regexp_parts(inner, opening, closing, ruby_version)
+}
