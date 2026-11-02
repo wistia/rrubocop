@@ -5216,5 +5216,630 @@
       }
     },
     "safety_difference": "Preserve receiver evaluation/capture, constant replacement behavior, method identity, comments and operator precedence; reject invalid adjacent-block rewrites."
+  },
+  {
+    "id": "change_by_zero_spec:0",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0)\n  expect { foo }.to change(::Foo, :bar).by(0)\n  expect { foo }.to change { Foo.bar }.by(0)\n  expect { foo }.to change(Foo, :bar).by 0\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to change(Foo, :bar).by(0)\n  expect { foo }.to change(::Foo, :bar).by(0)\n  expect { foo }.to change { Foo.bar }.by(0)\n  expect { foo }.to change(Foo, :bar).by 0\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 20,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 20,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 20,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.not_to change(Foo, :bar)\n  expect { foo }.not_to change(::Foo, :bar)\n  expect { foo }.not_to change { Foo.bar }\n  expect { foo }.not_to change(Foo, :bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.not_to change(Foo, :bar)\n  expect { foo }.not_to change(::Foo, :bar)\n  expect { foo }.not_to change { Foo.bar }\n  expect { foo }.not_to change(Foo, :bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Original broad by(0) rewrite assumes numeric-delta zero equals unchanged value/hash. Pinned RSpec Integer 1 to Float 1.0 runtime disproves this for unknown getters; native retains detection and preserves source."
+  },
+  {
+    "id": "change_by_zero_spec:1",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to a_block_changing(Foo, :bar).by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to a_block_changing(Foo, :bar).by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer `not_to change` over `to a_block_changing.by(0)`.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.not_to change(Foo, :bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.not_to change(Foo, :bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Original broad by(0) rewrite assumes numeric-delta zero equals unchanged value/hash. Pinned RSpec Integer 1 to Float 1.0 runtime disproves this for unknown getters; native retains detection and preserves source."
+  },
+  {
+    "id": "change_by_zero_spec:2",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to changing(Foo, :bar).by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to changing(Foo, :bar).by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer `not_to change` over `to changing.by(0)`.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.not_to change(Foo, :bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.not_to change(Foo, :bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Original broad by(0) rewrite assumes numeric-delta zero equals unchanged value/hash. Pinned RSpec Integer 1 to Float 1.0 runtime disproves this for unknown getters; native retains detection and preserves source."
+  },
+  {
+    "id": "change_by_zero_spec:11",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0).and change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).and change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": "not_change",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to change(Foo, :bar).by(0).and change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).and change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 48,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 20,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 49,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.to not_change(Foo, :bar).and not_change(Foo, :baz)\n  expect { foo }.to not_change { Foo.bar }.and not_change { Foo.baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.to not_change(Foo, :bar).and not_change(Foo, :baz)\n  expect { foo }.to not_change { Foo.bar }.and not_change { Foo.baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown getter may change representation/hash despite zero delta; broad original correction changes RSpec expectation outcomes."
+  },
+  {
+    "id": "change_by_zero_spec:12",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .and change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .and change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": "not_change",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .and change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .and change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#12",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 8,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 9,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 8,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 9,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }\n    .to not_change(Foo, :bar)\n    .and not_change(Foo, :baz)\n  expect { foo }\n    .to not_change { Foo.bar }\n    .and not_change { Foo.baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  expect { foo }\n    .to not_change(Foo, :bar)\n    .and not_change(Foo, :baz)\n  expect { foo }\n    .to not_change { Foo.bar }\n    .and not_change { Foo.baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown getter may change representation/hash despite zero delta; broad original correction changes RSpec expectation outcomes."
+  },
+  {
+    "id": "change_by_zero_spec:13",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }\n    .to change(Foo, :bar)\n    .by(0)\n    .and change(Foo, :baz)\n    .by(0)\n  expect { foo }\n    .to change { Foo.bar }\n    .by(0)\n    .or change { Foo.baz }\n    .by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": "not_change",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }\n    .to change(Foo, :bar)\n    .by(0)\n    .and change(Foo, :baz)\n    .by(0)\n  expect { foo }\n    .to change { Foo.bar }\n    .by(0)\n    .or change { Foo.baz }\n    .by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 8,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 9,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 8,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 18,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 8,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 18,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }\n    .to not_change(Foo, :bar)\n    .and not_change(Foo, :baz)\n  expect { foo }\n    .to not_change { Foo.bar }\n    .or not_change { Foo.baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  expect { foo }\n    .to not_change(Foo, :bar)\n    .and not_change(Foo, :baz)\n  expect { foo }\n    .to not_change { Foo.bar }\n    .or not_change { Foo.baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown getter may change representation/hash despite zero delta; broad original correction changes RSpec expectation outcomes."
+  },
+  {
+    "id": "change_by_zero_spec:14",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }\n    .to change(Foo, :bar)\n    .by(0) &\n    change(Foo, :baz)\n    .by(0)\n  expect { foo }\n    .to change { Foo.bar }\n    .by(0) |\n    change { Foo.baz }\n    .by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": "not_change",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }\n    .to change(Foo, :bar)\n    .by(0) &\n    change(Foo, :baz)\n    .by(0)\n  expect { foo }\n    .to change { Foo.bar }\n    .by(0) |\n    change { Foo.baz }\n    .by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 8,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 4,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 8,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 18,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 4,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 18,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }\n    .to not_change(Foo, :bar) &\n    not_change(Foo, :baz)\n  expect { foo }\n    .to not_change { Foo.bar } |\n    not_change { Foo.baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  expect { foo }\n    .to not_change(Foo, :bar) &\n    not_change(Foo, :baz)\n  expect { foo }\n    .to not_change { Foo.bar } |\n    not_change { Foo.baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown getter may change representation/hash despite zero delta; broad original correction changes RSpec expectation outcomes."
+  },
+  {
+    "id": "batch25:unary",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { !value }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change { !value }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change { !value }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve unknown getter semantics, positive-runner requirement and comments; Integer-to-Float runtime proves delta zero is not unchanged hash/value."
+  },
+  {
+    "id": "batch25:element",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { value[] }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change { value[] }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change { value[] }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve unknown getter semantics, positive-runner requirement and comments; Integer-to-Float runtime proves delta zero is not unchanged hash/value."
+  },
+  {
+    "id": "batch25:already-negated",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.not_to change(\"a\", :size).by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 23,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change(\"a\", :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change(\"a\", :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve unknown getter semantics, positive-runner requirement and comments; Integer-to-Float runtime proves delta zero is not unchanged hash/value."
+  },
+  {
+    "id": "batch25:comment",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change(\"a\", :size).by(\n # keep\n 0\n)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change(\"a\", :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change(\"a\", :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve unknown getter semantics, positive-runner requirement and comments; Integer-to-Float runtime proves delta zero is not unchanged hash/value."
   }
 ]

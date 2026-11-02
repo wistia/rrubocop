@@ -83546,5 +83546,1821 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "change_by_zero_spec:3",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0).and change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).and change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to change(Foo, :bar).by(0).and change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).and change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 48,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 20,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 49,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0).and change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).and change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 48,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 49,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0).and change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).and change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 48,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 49,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "change_by_zero_spec:4",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0) & change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0) & change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to change(Foo, :bar).by(0) & change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0) & change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 46,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 20,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 47,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0) & change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0) & change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 46,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 47,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0) & change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0) & change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 46,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 47,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "change_by_zero_spec:5",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0).or change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).or change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to change(Foo, :bar).by(0).or change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).or change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 47,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 20,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 48,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0).or change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).or change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 47,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 48,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0).or change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0).or change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 47,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 48,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "change_by_zero_spec:6",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0) | change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0) | change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to change(Foo, :bar).by(0) | change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0) | change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 20,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 46,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 20,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 47,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0) | change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0) | change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 46,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 47,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(0) | change(Foo, :baz).by(0)\n  expect { foo }.to change { Foo.bar }.by(0) | change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 46,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 20,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 47,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "change_by_zero_spec:7",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .and change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .and change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .and change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .and change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 9,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 9,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .and change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .and change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 9,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 9,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .and change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .and change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 9,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 9,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "change_by_zero_spec:8",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0) &\n        change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0) &\n        change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0) &\n        change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0) &\n        change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0) &\n        change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0) &\n        change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0) &\n        change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0) &\n        change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "change_by_zero_spec:9",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .or change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .or change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .or change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .or change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .or change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .or change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0)\n    .or change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0)\n    .or change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "change_by_zero_spec:10",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0) |\n        change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0) |\n        change { Foo.baz }.by(0)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0) |\n        change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0) |\n        change { Foo.baz }.by(0)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 8,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0) |\n        change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0) |\n        change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "it do\n  expect { foo }\n    .to change(Foo, :bar).by(0) |\n        change(Foo, :baz).by(0)\n  expect { foo }\n    .to change { Foo.bar }.by(0) |\n        change { Foo.baz }.by(0)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 8,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "change_by_zero_spec:15",
+    "cop": "RSpec/ChangeByZero",
+    "source": "it do\n  expect { foo }.to change(Foo, :bar).by(1)\n  expect { foo }.to change { Foo.bar }.by(1)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  expect { foo }.to change(Foo, :bar).by(1)\n  expect { foo }.to change { Foo.bar }.by(1)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/change_by_zero_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(1)\n  expect { foo }.to change { Foo.bar }.by(1)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  expect { foo }.to change(Foo, :bar).by(1)\n  expect { foo }.to change { Foo.bar }.by(1)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:literal-length",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change(\"value\", :length).by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change(\"value\", :length)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change(\"value\", :length)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:literal-block",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { [1, 2].size }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change { [1, 2].size }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change { [1, 2].size }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:literal-numeric",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to changing(1, :itself).by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_to change` over `to changing.by(0)`.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change(1, :itself)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change(1, :itself)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:compound-literals",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change(\"a\", :size).by(0).and change([1], :size).by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 1,
+          "column": 48,
+          "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change(\"a\", :size).by(0).and change([1], :size).by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 1,
+            "column": 48,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect { work }.to change(\"a\", :size).by(0).and change([1], :size).by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 19,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 1,
+            "column": 48,
+            "message": "Prefer negated matchers with compound expectations over `change.by(0)`.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch25:compound-literals-custom",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change(\"a\", :size).by(0).and change([1], :size).by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": "not_change",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 1,
+          "column": 48,
+          "message": "Prefer `not_change` with compound expectations over `change.by(0)`.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to not_change(\"a\", :size).and not_change([1], :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to not_change(\"a\", :size).and not_change([1], :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-float",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change(Foo, :bar).by(0.0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change(Foo, :bar).by(0.0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change(Foo, :bar).by(0.0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-qualified",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to Custom.change(Foo, :bar).by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to Custom.change(Foo, :bar).by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to Custom.change(Foo, :bar).by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-safe",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change(Foo, :bar)&.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change(Foo, :bar)&.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change(Foo, :bar)&.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-args",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { Foo.bar(1) }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { Foo.bar(1) }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change { Foo.bar(1) }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-numbered",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { _1.value }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { _1.value }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change { _1.value }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-params",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { |value| value.size }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { |value| value.size }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change { |value| value.size }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-multi",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { Foo.bar; Foo.baz }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { Foo.bar; Foo.baz }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change { Foo.bar; Foo.baz }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-receiverless",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { value }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { value }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change { value }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-array-args",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { value[1] }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { value[1] }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change { value[1] }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:hex-zero",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change(\"a\", :size).by(0x0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change(\"a\", :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change(\"a\", :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-zero",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change(\"a\", :size).by(-0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 19,
+          "message": "Prefer `not_to change` over `to change.by(0)`.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.not_to change(\"a\", :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.not_to change(\"a\", :size)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch25:negative-float-body",
+    "cop": "RSpec/ChangeByZero",
+    "source": "expect { work }.to change { -1.0 }.by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { work }.to change { -1.0 }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { work }.to change { -1.0 }.by(0)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]

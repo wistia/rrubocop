@@ -99,5 +99,35 @@
     "rust_safe": "describe \"x\", **metadata, a: true do\nend\n",
     "rust_all": "describe \"x\", **metadata, a: true do\nend\n",
     "native_final_diagnostics": []
+  },
+  {
+    "id": "batch25:standalone",
+    "cop": "RSpec/ChangeByZero",
+    "source": "change(Foo, :bar).by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "NoMethodError",
+      "message": "undefined method 'method_name' for nil",
+      "source": "lib/rubocop/cop/rspec/change_by_zero.rb:121 compound_expectations?",
+      "native_behavior": "Report the matcher offense without crashing and preserve the standalone matcher."
+    },
+    "native_diagnostics": [
+      {
+        "line": 1,
+        "column": 0,
+        "length": 23,
+        "message": "Prefer `not_to change` over `to change.by(0)`.",
+        "correctable": true,
+        "severity": "convention"
+      }
+    ]
   }
 ]

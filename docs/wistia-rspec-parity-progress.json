@@ -75,8 +75,22 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/change_by_zero.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 26,
+    "deliberate_safeguards": [
+      "change_by_zero_spec:0",
+      "change_by_zero_spec:1",
+      "change_by_zero_spec:2",
+      "change_by_zero_spec:11",
+      "change_by_zero_spec:12",
+      "change_by_zero_spec:13",
+      "change_by_zero_spec:14",
+      "batch25:unary",
+      "batch25:element",
+      "batch25:already-negated",
+      "batch25:comment"
+    ],
+    "post_implementation_review": "Original change_by_zero.rb, all 16 upstream specimens and explicit NegatedMatcher variants reviewed separately. Covers aliases, argument/block matcher patterns, integer zero spelling, compound and/or/&/| reporting and conditional correction metadata, numbered/parameter/arity negatives, unary/index getters, comments and positive runner restrictions. Safe corrections require literal numeric getters; original RSpec ChangeRelatively#matches? versus ChangeDetails#changed? source and pinned runtime demonstrate Integer 1 to Float 1.0 zero-delta/hash hazard. Standalone original matcher NoMethodError retained separately."
   },
   {
     "name": "RSpec/ClassCheck",

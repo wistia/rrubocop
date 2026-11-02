@@ -675,3 +675,26 @@ mutable object identity and stub_const behavior in the broader Ruby rewrites.
 Signed numeric receiver precedence is explicitly guarded. These deliberate
 safeguards are excluded from strict correction equality claims. Combined-cop
 scheduling remains deferred as requested.
+
+## Batch 25: zero-delta change matchers
+
+ChangeByZero replaces another initial stub: 76 initial stubs and all sixteen
+existing rules are reviewed (92 of 96). The corpus contains 1,711 strict cases,
+120 separate safeguards and 49 correction-disable controls. Original-source
+review covers the three change aliases, argument and block patterns, integer-zero
+spellings, compound and/or/&/| forms, exact ranges, custom NegatedMatcher and
+conditional correctability. All sixteen upstream specimens are retained; four
+custom matcher contexts explicitly apply the original host configuration.
+
+Pinned RSpec expectations 3.13.2 source distinguishes actual_delta matching from
+ChangeDetails#changed?, which also compares hashes. A trusted runtime probe shows
+that Integer 1 becoming Float 1.0 passes by(0) and fails not_to change. The port
+therefore preserves unknown getter corrections, while pure literal numeric getter
+controls support both simple and custom compound correction. Comments, invalid
+negated matcher identifiers and nonpositive runners are preserved. These explicit
+safeguards are excluded from strict correction parity claims.
+
+The original raises NoMethodError at change_by_zero.rb:121 for a standalone
+change(Foo, :bar).by(0), because the matcher has no parent. This fifth original-rule
+error is retained separately; native reports the offense without crashing or
+changing the standalone matcher. Generic correction scheduling remains deferred.

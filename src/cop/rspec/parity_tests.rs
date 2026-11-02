@@ -201,7 +201,7 @@ fn explicit_autocorrection_disable_preserves_sources() {
             assert!(!diagnostics.is_empty());
         }
     }
-    assert_eq!(checked.len(), 48);
+    assert_eq!(checked.len(), 49);
 }
 
 #[test]
