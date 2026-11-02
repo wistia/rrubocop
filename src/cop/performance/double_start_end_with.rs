@@ -1,9 +1,9 @@
 //! Combine repeated string prefix or suffix predicates when later arguments are pure.
-use crate::cop::shared::integer_value as integer;
 use crate::cop::shared::ruby_expression::same_expression;
+use crate::cop::shared::ruby_semantics::pure;
 use crate::cop::shared::{
-    argument_nodes, call_method_name, call_receiver, collect_comments, named_kids, node_bytes,
-    node_text, push_replace,
+    argument_nodes, call_method_name, call_receiver, collect_comments, node_bytes, node_text,
+    push_replace,
 };
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -11,77 +11,6 @@ use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 use tree_sitter::Node;
 pub struct DoubleStartEndWith;
-fn pure(source: &SourceFile, node: Node<'_>) -> bool {
-    if integer(source, node).is_some() {
-        return true;
-    }
-    if node.kind() == "unary"
-        && node
-            .child_by_field_name("operator")
-            .is_some_and(|n| node_bytes(source, n) == b"defined?")
-    {
-        return true;
-    }
-    match node.kind() {
-        "integer" | "float" | "constant" | "scope_resolution" | "instance_variable"
-        | "class_variable" | "global_variable" | "true" | "false" | "nil" | "simple_symbol"
-        | "hash_key_symbol" | "bare_string" | "bare_symbol" => true,
-        "identifier" => {
-            matches!(node_bytes(source, node), b"__FILE__" | b"__LINE__")
-                || crate::cop::ported::local_identifier(source, node)
-        }
-        "string" | "delimited_symbol" | "regex" => named_kids(node).into_iter().all(|n| {
-            matches!(
-                n.kind(),
-                "string_content" | "escape_sequence" | "regex_options"
-            ) || pure(source, n)
-        }),
-        "binary"
-            if node.child_by_field_name("operator").is_some_and(|n| {
-                matches!(node_bytes(source, n), b"||" | b"or" | b"&&" | b"and")
-            }) =>
-        {
-            named_kids(node).into_iter().all(|n| pure(source, n))
-        }
-        "unary"
-            if node
-                .child_by_field_name("operator")
-                .is_some_and(|n| matches!(node_bytes(source, n), b"!" | b"not")) =>
-        {
-            node.child_by_field_name("operand")
-                .is_some_and(|n| pure(source, n))
-        }
-        "array"
-        | "hash"
-        | "pair"
-        | "range"
-        | "parenthesized_statements"
-        | "interpolation"
-        | "conditional"
-        | "if"
-        | "case"
-        | "when"
-        | "elsif"
-        | "if_modifier"
-        | "unless_modifier"
-        | "while_modifier"
-        | "until_modifier"
-        | "unless"
-        | "then"
-        | "else"
-        | "while"
-        | "until"
-        | "do"
-        | "body_statement"
-        | "begin"
-        | "string_array"
-        | "symbol_array"
-        | "ensure" => named_kids(node)
-            .into_iter()
-            .all(|n| n.kind() == "comment" || pure(source, n)),
-        _ => false,
-    }
-}
 
 impl Cop for DoubleStartEndWith {
     fn name(&self) -> &'static str {

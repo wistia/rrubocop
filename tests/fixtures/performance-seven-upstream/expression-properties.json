@@ -1,0 +1,507 @@
+[
+  {
+    "source": "probe(1)\n",
+    "pure": true,
+    "ast_type": "int"
+  },
+  {
+    "source": "probe(- 1)\n",
+    "pure": true,
+    "ast_type": "int"
+  },
+  {
+    "source": "probe(+1)\n",
+    "pure": true,
+    "ast_type": "int"
+  },
+  {
+    "source": "probe(+ 1)\n",
+    "pure": true,
+    "ast_type": "int"
+  },
+  {
+    "source": "probe(-1.0)\n",
+    "pure": true,
+    "ast_type": "float"
+  },
+  {
+    "source": "probe(- 1.0)\n",
+    "pure": true,
+    "ast_type": "float"
+  },
+  {
+    "source": "probe(1r)\n",
+    "pure": false,
+    "ast_type": "rational"
+  },
+  {
+    "source": "probe(1i)\n",
+    "pure": false,
+    "ast_type": "complex"
+  },
+  {
+    "source": "probe(nil)\n",
+    "pure": true,
+    "ast_type": "nil"
+  },
+  {
+    "source": "probe(true)\n",
+    "pure": true,
+    "ast_type": "true"
+  },
+  {
+    "source": "probe(false)\n",
+    "pure": true,
+    "ast_type": "false"
+  },
+  {
+    "source": "probe(self)\n",
+    "pure": false,
+    "ast_type": "self"
+  },
+  {
+    "source": "probe(CONST)\n",
+    "pure": true,
+    "ast_type": "const"
+  },
+  {
+    "source": "probe(provider::CONST)\n",
+    "pure": true,
+    "ast_type": "const"
+  },
+  {
+    "source": "probe(@value)\n",
+    "pure": true,
+    "ast_type": "ivar"
+  },
+  {
+    "source": "probe(@@value)\n",
+    "pure": true,
+    "ast_type": "cvar"
+  },
+  {
+    "source": "probe($value)\n",
+    "pure": true,
+    "ast_type": "gvar"
+  },
+  {
+    "source": "probe(__LINE__)\n",
+    "pure": true,
+    "ast_type": "int"
+  },
+  {
+    "source": "probe(__FILE__)\n",
+    "pure": true,
+    "ast_type": "str"
+  },
+  {
+    "source": "probe(__ENCODING__)\n",
+    "pure": true,
+    "ast_type": "const"
+  },
+  {
+    "source": "probe(value)\n",
+    "pure": false,
+    "ast_type": "send"
+  },
+  {
+    "source": "probe(!value)\n",
+    "pure": false,
+    "ast_type": "send"
+  },
+  {
+    "source": "probe((not value))\n",
+    "pure": false,
+    "ast_type": "begin"
+  },
+  {
+    "source": "probe(!1)\n",
+    "pure": false,
+    "ast_type": "send"
+  },
+  {
+    "source": "probe(defined?(value))\n",
+    "pure": true,
+    "ast_type": "defined?"
+  },
+  {
+    "source": "probe(1 + 2)\n",
+    "pure": false,
+    "ast_type": "send"
+  },
+  {
+    "source": "probe(1 < 2)\n",
+    "pure": false,
+    "ast_type": "send"
+  },
+  {
+    "source": "probe(true && 1)\n",
+    "pure": true,
+    "ast_type": "and"
+  },
+  {
+    "source": "probe(false || nil)\n",
+    "pure": true,
+    "ast_type": "or"
+  },
+  {
+    "source": "probe(false && work)\n",
+    "pure": false,
+    "ast_type": "and"
+  },
+  {
+    "source": "probe([])\n",
+    "pure": true,
+    "ast_type": "array"
+  },
+  {
+    "source": "probe({})\n",
+    "pure": true,
+    "ast_type": "hash"
+  },
+  {
+    "source": "probe([1, :a])\n",
+    "pure": true,
+    "ast_type": "array"
+  },
+  {
+    "source": "probe({a: 1})\n",
+    "pure": true,
+    "ast_type": "hash"
+  },
+  {
+    "source": "probe({value:})\n",
+    "pure": false,
+    "ast_type": "hash"
+  },
+  {
+    "source": "probe({User:})\n",
+    "pure": true,
+    "ast_type": "hash"
+  },
+  {
+    "source": "probe({__LINE__:})\n",
+    "pure": true,
+    "ast_type": "hash"
+  },
+  {
+    "source": "probe([*value])\n",
+    "pure": false,
+    "ast_type": "array"
+  },
+  {
+    "source": "probe({**value})\n",
+    "pure": false,
+    "ast_type": "hash"
+  },
+  {
+    "source": "probe((1..3))\n",
+    "pure": true,
+    "ast_type": "begin"
+  },
+  {
+    "source": "probe((1))\n",
+    "pure": true,
+    "ast_type": "begin"
+  },
+  {
+    "source": "probe(\"text\")\n",
+    "pure": true,
+    "ast_type": "str"
+  },
+  {
+    "source": "probe(:text)\n",
+    "pure": true,
+    "ast_type": "sym"
+  },
+  {
+    "source": "probe(:\"\")\n",
+    "pure": true,
+    "ast_type": "dsym"
+  },
+  {
+    "source": "probe(%s())\n",
+    "pure": true,
+    "ast_type": "dsym"
+  },
+  {
+    "source": "probe(\"#{value}\")\n",
+    "pure": false,
+    "ast_type": "dstr"
+  },
+  {
+    "source": "probe(\"#{work()}\")\n",
+    "pure": false,
+    "ast_type": "dstr"
+  },
+  {
+    "source": "probe(%w[a b])\n",
+    "pure": true,
+    "ast_type": "array"
+  },
+  {
+    "source": "probe(%i[a b])\n",
+    "pure": true,
+    "ast_type": "array"
+  },
+  {
+    "source": "probe(%W[a#{value} b])\n",
+    "pure": false,
+    "ast_type": "array"
+  },
+  {
+    "source": "probe(%I[a#{value} b])\n",
+    "pure": false,
+    "ast_type": "array"
+  },
+  {
+    "source": "probe(/#{value}/)\n",
+    "pure": false,
+    "ast_type": "regexp"
+  },
+  {
+    "source": "probe(if true; 1; else; 2; end)\n",
+    "pure": true,
+    "ast_type": "if"
+  },
+  {
+    "source": "probe(while false; nil; end)\n",
+    "pure": true,
+    "ast_type": "while"
+  },
+  {
+    "source": "probe(case 1; when 1; 2; else; 3; end)\n",
+    "pure": true,
+    "ast_type": "case"
+  },
+  {
+    "source": "value=1; probe(value)",
+    "pure": true,
+    "ast_type": "lvar"
+  },
+  {
+    "source": "value=1; probe(!value)",
+    "pure": false,
+    "ast_type": "send"
+  },
+  {
+    "source": "value=1; probe(\"#{value}\")",
+    "pure": true,
+    "ast_type": "dstr"
+  },
+  {
+    "source": "value=1; probe(%W[a#{value}])",
+    "pure": true,
+    "ast_type": "array"
+  },
+  {
+    "source": "value=1; probe(%I[a#{value}])",
+    "pure": true,
+    "ast_type": "array"
+  },
+  {
+    "source": "value=1; probe({value:})",
+    "pure": true,
+    "ast_type": "hash"
+  },
+  {
+    "source": "items.each { probe(_1) }",
+    "pure": true,
+    "ast_type": "lvar"
+  },
+  {
+    "source": "probe(_1)",
+    "pure": false,
+    "ast_type": "send"
+  },
+  {
+    "source": "probe(<<~TEXT)\nplain\nTEXT",
+    "pure": true,
+    "ast_type": "str"
+  },
+  {
+    "source": "probe(<<~TEXT)\n#{work}\nTEXT",
+    "pure": false,
+    "ast_type": "dstr"
+  },
+  {
+    "source": "value=1; probe(<<~TEXT)\n#{value}\nTEXT",
+    "pure": true,
+    "ast_type": "dstr"
+  },
+  {
+    "source": "probe(<<~`TEXT`)\nnever_executed\nTEXT",
+    "pure": false,
+    "ast_type": "xstr"
+  },
+  {
+    "source": "target()",
+    "value_used": false,
+    "parent": null
+  },
+  {
+    "source": "target(); later",
+    "value_used": false,
+    "parent": "begin"
+  },
+  {
+    "source": "earlier; target()",
+    "value_used": false,
+    "parent": "begin"
+  },
+  {
+    "source": "def m; target(); end",
+    "value_used": true,
+    "parent": "def"
+  },
+  {
+    "source": "def m; target(); later; end",
+    "value_used": false,
+    "parent": "begin"
+  },
+  {
+    "source": "items.each { target() }",
+    "value_used": true,
+    "parent": "block"
+  },
+  {
+    "source": "items.each { target(); later }",
+    "value_used": false,
+    "parent": "begin"
+  },
+  {
+    "source": "result = target()",
+    "value_used": true,
+    "parent": "lvasgn"
+  },
+  {
+    "source": "return target()",
+    "value_used": true,
+    "parent": "return"
+  },
+  {
+    "source": "consume(target())",
+    "value_used": true,
+    "parent": "send"
+  },
+  {
+    "source": "[target()]",
+    "value_used": false,
+    "parent": "array"
+  },
+  {
+    "source": "result = [target()]",
+    "value_used": true,
+    "parent": "array"
+  },
+  {
+    "source": "{target() => 1}",
+    "value_used": false,
+    "parent": "pair"
+  },
+  {
+    "source": "defined?(target())",
+    "value_used": false,
+    "parent": "defined?"
+  },
+  {
+    "source": "result=defined?(target())",
+    "value_used": true,
+    "parent": "defined?"
+  },
+  {
+    "source": "if target(); work; end",
+    "value_used": true,
+    "parent": "if"
+  },
+  {
+    "source": "if flag; target(); end",
+    "value_used": false,
+    "parent": "if"
+  },
+  {
+    "source": "value = if flag; target(); end",
+    "value_used": true,
+    "parent": "if"
+  },
+  {
+    "source": "while flag; target(); end",
+    "value_used": false,
+    "parent": "while"
+  },
+  {
+    "source": "while target(); work; end",
+    "value_used": true,
+    "parent": "while"
+  },
+  {
+    "source": "for value in values; target(); end",
+    "value_used": false,
+    "parent": "for"
+  },
+  {
+    "source": "value = for element in values; target(); end",
+    "value_used": true,
+    "parent": "for"
+  },
+  {
+    "source": "case value; when target(); work; end",
+    "value_used": false,
+    "parent": "when"
+  },
+  {
+    "source": "case target(); when value; work; end",
+    "value_used": true,
+    "parent": "case"
+  },
+  {
+    "source": "case value; when key; target(); end",
+    "value_used": false,
+    "parent": "when"
+  },
+  {
+    "source": "!target()",
+    "value_used": true,
+    "parent": "send"
+  },
+  {
+    "source": "target() && work",
+    "value_used": true,
+    "parent": "and"
+  },
+  {
+    "source": "(target())",
+    "value_used": false,
+    "parent": "begin"
+  },
+  {
+    "source": "begin; target(); end",
+    "value_used": false,
+    "parent": "kwbegin"
+  },
+  {
+    "source": "begin; target(); ensure; work; end",
+    "value_used": true,
+    "parent": "ensure"
+  },
+  {
+    "source": "(target()..3)",
+    "value_used": false,
+    "parent": "irange"
+  },
+  {
+    "source": "\"#{target()}\"",
+    "value_used": false,
+    "parent": "begin"
+  },
+  {
+    "source": "/#{target()}/",
+    "value_used": false,
+    "parent": "begin"
+  },
+  {
+    "source": "items.each_with_object({}) { |item,hash| target() }",
+    "value_used": true,
+    "parent": "block"
+  }
+]

@@ -18,6 +18,7 @@ mod ruby_word;
 pub use ruby_word::word_value;
 pub mod ruby_expression;
 pub(crate) mod ruby_literal;
+pub mod ruby_semantics;
 
 pub use bare_args::replace_arg;
 pub use block_pass::{EXCLUDED_BLOCK_PARENTS, METHOD_STOPS, NESTED_SCOPES, Passes, ScanOpts, scan};
