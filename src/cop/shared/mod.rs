@@ -3,6 +3,7 @@
 mod bare_args;
 mod block_pass;
 mod node_util;
+pub(crate) mod ruby_expression;
 
 pub use bare_args::replace_arg;
 pub use block_pass::{EXCLUDED_BLOCK_PARENTS, METHOD_STOPS, NESTED_SCOPES, Passes, ScanOpts, scan};

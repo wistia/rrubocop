@@ -1,4 +1,5 @@
 //! Limit stack collection when selecting a single caller frame.
+use crate::cop::shared::ruby_expression::integer;
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, collect_comments, named_kids, node_bytes,
     node_text, push_replace,
@@ -119,32 +120,6 @@ fn caller(source: &SourceFile, node: Node<'_>) -> Option<(String, BigInt)> {
         _ => return None,
     };
     Some((name, offset))
-}
-pub(super) fn integer(source: &SourceFile, node: Node<'_>) -> Option<BigInt> {
-    if node.kind() != "integer"
-        && !(node.kind() == "unary"
-            && node
-                .child_by_field_name("operator")
-                .is_some_and(|n| matches!(node_text(source, n).as_str(), "+" | "-"))
-            && node
-                .child_by_field_name("operand")
-                .is_some_and(|n| n.kind() == "integer"))
-    {
-        return None;
-    }
-    let value = node_text(source, node).replace('_', "");
-    let negative = value.starts_with('-');
-    let value = value.trim_start_matches(['+', '-']);
-    let (radix, digits) = match value.get(..2) {
-        Some("0x" | "0X") => (16, &value[2..]),
-        Some("0b" | "0B") => (2, &value[2..]),
-        Some("0o" | "0O") => (8, &value[2..]),
-        Some("0d" | "0D") => (10, &value[2..]),
-        _ if value.len() > 1 && value.starts_with('0') => (8, value),
-        _ => (10, value),
-    };
-    let integer = BigInt::parse_bytes(digits.as_bytes(), radix)?;
-    Some(if negative { -integer } else { integer })
 }
 
 #[cfg(test)]

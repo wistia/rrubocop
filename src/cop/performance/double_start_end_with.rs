@@ -1,4 +1,5 @@
 //! Combine repeated string prefix or suffix predicates when later arguments are pure.
+use crate::cop::shared::ruby_expression::{integer, signature};
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, collect_comments, named_kids, node_bytes,
     node_text, push_replace,
@@ -10,7 +11,7 @@ use crate::parse::source::SourceFile;
 use tree_sitter::Node;
 pub struct DoubleStartEndWith;
 fn pure(source: &SourceFile, node: Node<'_>) -> bool {
-    if super::caller::integer(source, node).is_some() {
+    if integer(source, node).is_some() {
         return true;
     }
     if node.kind() == "unary"
@@ -80,60 +81,7 @@ fn pure(source: &SourceFile, node: Node<'_>) -> bool {
         _ => false,
     }
 }
-fn signature(source: &SourceFile, node: Node<'_>) -> String {
-    if let Some(value) = super::caller::integer(source, node) {
-        return format!("integer:{value}");
-    }
-    if node.kind() == "float" {
-        if let Ok(value) = node_text(source, node).replace('_', "").parse::<f64>() {
-            return format!("float:{value:?}");
-        }
-    }
-    if node.kind() == "call"
-        || node.kind() == "identifier" && !crate::cop::ported::local_identifier(source, node)
-    {
-        let receiver = call_receiver(node).map(|n| signature(source, n));
-        let method = if node.kind() == "identifier" {
-            node_text(source, node)
-        } else {
-            call_method_name(source, node)
-                .map(|n| String::from_utf8_lossy(n).into_owned())
-                .unwrap_or_else(|| "call".into())
-        };
-        let safe = node
-            .child_by_field_name("operator")
-            .is_some_and(|n| node_bytes(source, n) == b"&.");
-        let args = argument_nodes(node)
-            .into_iter()
-            .map(|n| signature(source, n))
-            .collect::<Vec<_>>();
-        let block = node
-            .child_by_field_name("block")
-            .map(|n| signature(source, n));
-        return format!("call:{receiver:?}:{method:?}:{safe}:{args:?}:{block:?}");
-    }
-    if let Some(value) = crate::cop::ported::static_literal(source, node) {
-        return format!(
-            "{}:{value:?}",
-            if node.kind().contains("symbol") {
-                "symbol"
-            } else {
-                "string"
-            }
-        );
-    }
-    if node.named_child_count() == 0 {
-        return format!("{}:{}", node.kind(), node_text(source, node));
-    }
-    let mut cursor = node.walk();
-    let children = node
-        .children(&mut cursor)
-        .filter(|n| n.kind() != "comment")
-        .map(|n| signature(source, n))
-        .collect::<Vec<_>>()
-        .join("|");
-    format!("{}[{children}]", node.kind())
-}
+
 impl Cop for DoubleStartEndWith {
     fn name(&self) -> &'static str {
         "Performance/DoubleStartEndWith"
