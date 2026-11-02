@@ -3721,5 +3721,720 @@
     },
     "expected": [],
     "corrected": "class RuntimeValue\n def initialize(seen); @seen = seen; end\n def &(other); @seen << :and; self; end\n def |(other); @seen << :or; self; end\n def ^(other); @seen << :xor; self; end\n def >=(other); @seen << :ge; self; end\n def <(other); @seen << :lt; true; end\nend\nseen = []\nx = RuntimeValue.new(seen)\ny = RuntimeValue.new(seen)\nz = RuntimeValue.new(seen)\np(x >= (y).^(x) < z)\np seen\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "p :true\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p true\n"
+  },
+  {
+    "cop": "Lint/BooleanSymbol",
+    "source": "values = [:true, :false]\np values.map(&:to_s)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Symbol with a boolean name - you probably meant to use `true`.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 17,
+        "message": "Symbol with a boolean name - you probably meant to use `false`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [true, false]\np values.map(&:to_s)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "require \"erb\"\nmodule RuntimeErb\n RealTemplate = ::ERB\n module ERB\n  def self.new(source, safe_level = nil, legacy_trim = nil, legacy_out = nil, trim_mode: nil, eoutvar: \"_erbout\")\n   trim = legacy_trim || trim_mode\n   out = legacy_out || eoutvar\n   RuntimeErb::RealTemplate.new(source, trim_mode: trim, eoutvar: out)\n  end\n end\n value = \"ok\"\n template = \"before\\n<% if true -%>\\n<%= value %>\\n<% end -%>\\nafter\\n\"\n context = binding\n rendered = ERB.new(template, nil, \"-\", \"buffer\").result(context)\n p [rendered, context.local_variable_get(:buffer)]\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 14,
+        "column": 30,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 14,
+        "column": 35,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 14,
+        "column": 40,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require \"erb\"\nmodule RuntimeErb\n RealTemplate = ::ERB\n module ERB\n  def self.new(source, safe_level = nil, legacy_trim = nil, legacy_out = nil, trim_mode: nil, eoutvar: \"_erbout\")\n   trim = legacy_trim || trim_mode\n   out = legacy_out || eoutvar\n   RuntimeErb::RealTemplate.new(source, trim_mode: trim, eoutvar: out)\n  end\n end\n value = \"ok\"\n template = \"before\\n<% if true -%>\\n<%= value %>\\n<% end -%>\\nafter\\n\"\n context = binding\n rendered = ERB.new(template, trim_mode: \"-\", eoutvar: \"buffer\").result(context)\n p [rendered, context.local_variable_get(:buffer)]\nend\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "require \"erb\"\nmodule RuntimeErb\n RealTemplate = ::ERB\n module ERB\n  def self.new(source, safe_level = nil, legacy_trim = nil, legacy_out = nil, trim_mode: nil, eoutvar: \"_erbout\")\n   trim = legacy_trim || trim_mode\n   out = legacy_out || eoutvar\n   RuntimeErb::RealTemplate.new(source, trim_mode: trim, eoutvar: out)\n  end\n end\n seen = []\n value = \"ok\"\n mode = -> { seen << :mode; \"-\" }\n template = \"<%= value %>\\n\"\n p ERB.new(template, nil, mode.call).result(binding)\n p seen\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 15,
+        "column": 21,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 15,
+        "column": 26,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: mode.call)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require \"erb\"\nmodule RuntimeErb\n RealTemplate = ::ERB\n module ERB\n  def self.new(source, safe_level = nil, legacy_trim = nil, legacy_out = nil, trim_mode: nil, eoutvar: \"_erbout\")\n   trim = legacy_trim || trim_mode\n   out = legacy_out || eoutvar\n   RuntimeErb::RealTemplate.new(source, trim_mode: trim, eoutvar: out)\n  end\n end\n seen = []\n value = \"ok\"\n mode = -> { seen << :mode; \"-\" }\n template = \"<%= value %>\\n\"\n p ERB.new(template, trim_mode: mode.call).result(binding)\n p seen\nend\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "object = \"value\"\np [object.class == String, object.class == Array]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      },
+      {
+        "line": 2,
+        "column": 34,
+        "message": "Use `instance_of?(Array)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "object = \"value\"\np [object.instance_of?(String), object.instance_of?(Array)]\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "object = \"value\"\np object.class.name == \"String\"\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "object = \"value\"\np object.instance_of?(String)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "def read(seen)\n seen << :read\n \"value\"\nend\nseen = []\np read(seen).class.eql?(String)\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 13,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def read(seen)\n seen << :read\n \"value\"\nend\nseen = []\np read(seen).instance_of?(String)\np seen\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {a: 1, b: 2, c: 3}\np [hash.reject { |key, value| key == :a }.to_a, hash.to_a]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "hash = {a: 1, b: 2, c: 3}\np [hash.except(:a).to_a, hash.to_a]\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {\"a\" => 1, \"b\" => 2}\np [hash.select { |key, value| key != \"a\" }.to_a, hash.to_a]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "hash = {\"a\" => 1, \"b\" => 2}\np [hash.except(\"a\").to_a, hash.to_a]\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {a: 1, b: 2, c: 3}\np [hash.reject { |key, value| [:a, :c].include?(key) }.to_a, hash.to_a]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Use `except(:a, :c)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "hash = {a: 1, b: 2, c: 3}\np [hash.except(:a, :c).to_a, hash.to_a]\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "srand(1234)\np Array.new(8) { rand(6) + 1 }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 17,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "srand(1234)\np Array.new(8) { rand(1..6) }\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "srand(1234)\np Array.new(8) { Kernel.rand(2..6) + 2 }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 17,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "srand(1234)\np Array.new(8) { Kernel.rand(4..8) }\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "values = [1, 2, 3]\np values[0..-1]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Remove the useless `[0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [1, 2, 3]\np values\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "values = [1, 2, 3, 4]\nresult = values[1..-1]\nresult << 5\np [values, result]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 15,
+        "message": "Prefer `[1..]` over `[1..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [1, 2, 3, 4]\nresult = values[1..]\nresult << 5\np [values, result]\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "values = []\np values[0..-1]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Remove the useless `[0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = []\np values\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "p \"abc\".unpack(\"C*\").first\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"abc\".unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "p \"\".unpack(\"C*\").first\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p \"\".unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "value = \"\\xFF\\x00\".b\np value.unpack(\"C*\")[0]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = \"\\xFF\\x00\".b\np value.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "def data(seen)\n seen << :data\n \"ab\"\nend\ndef directive(seen)\n seen << :format\n \"C*\"\nend\nseen = []\np [data(seen).unpack(directive(seen)).first, seen]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 10,
+        "column": 14,
+        "message": "Use `unpack1(directive(seen))` instead of `unpack(directive(seen)).first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def data(seen)\n seen << :data\n \"ab\"\nend\ndef directive(seen)\n seen << :format\n \"C*\"\nend\nseen = []\np [data(seen).unpack1(directive(seen)), seen]\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationWithEmpty",
+    "source": "def items\n @items\nend\n@items = []\nresult = if items&.empty?\n :empty\nelse\n :other\nend\np [result, @items]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 12,
+        "message": "Avoid calling `empty?` with the safe navigation operator in conditionals.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def items\n @items\nend\n@items = []\nresult = if items && items.empty?\n :empty\nelse\n :other\nend\np [result, @items]\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationWithEmpty",
+    "source": "def items\n @items\nend\n@items = [1]\nresult = if items&.empty?\n :empty\nelse\n :other\nend\np [result, @items]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 12,
+        "message": "Avoid calling `empty?` with the safe navigation operator in conditionals.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def items\n @items\nend\n@items = [1]\nresult = if items && items.empty?\n :empty\nelse\n :other\nend\np [result, @items]\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationWithEmpty",
+    "source": "def items\n @items\nend\n@items = nil\nresult = if items&.empty?\n :empty\nelse\n :other\nend\np [result, @items]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 12,
+        "message": "Avoid calling `empty?` with the safe navigation operator in conditionals.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def items\n @items\nend\n@items = nil\nresult = if items && items.empty?\n :empty\nelse\n :other\nend\np [result, @items]\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "left = nil\nright = nil\np left&.object_id == right.object_id\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "left = nil\nright = nil\np left&.object_id == right.object_id\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "object = nil\np object&.class == NilClass\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "object = nil\np object&.class == NilClass\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {nil => 1, :a => 2}\np hash.reject { |key, value| key&.eql?(nil) }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash = {nil => 1, :a => 2}\np hash.reject { |key, value| key&.eql?(nil) }\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "class Value\n def <(other); self; end\nend\na = Value.new\nb = Value.new\nc = Value.new\np((a&.<(b) < c).class.name)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Value\n def <(other); self; end\nend\na = Value.new\nb = Value.new\nc = Value.new\np((a&.<(b) < c).class.name)\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
   }
 ]

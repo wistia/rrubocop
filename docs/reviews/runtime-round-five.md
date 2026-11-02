@@ -1,5 +1,7 @@
 # Runtime coverage: remaining source-rewriting rules
 
+Coverage clarification: the counts here establish scenario presence. A later [positive-runtime review](raw-bytes-positive-runtime-review.md) found that some scenarios did not actually rewrite, and added separate successful-rewrite metrics and positive programs.
+
 This batch adds 28 trusted runtime programs for InterpolationCheck, MultipleComparison, RescueType, TopLevelReturnWithArgument, TrailingCommaInAttributeDeclaration and UriRegexp, plus three static comparison regressions.
 
 ## Confirmed fixes

@@ -101,6 +101,9 @@ fn splat(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     }
 }
 fn zip(c: &Context<'_>, n: Node<'_>, a: Node<'_>) -> Finding {
+    if std::str::from_utf8(&c.source.as_bytes()[a.byte_range()]).is_err() {
+        return finding(c, n, TO_H);
+    }
     finding(c, n, TO_H).replace_with(c, a, || {
         let text = c.text(a);
         if text.ends_with(')') {

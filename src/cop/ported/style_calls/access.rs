@@ -21,25 +21,30 @@ fn unpack_finding(c: &Context<'_>, n: Node<'_>, recv: Node<'_>) -> Finding {
     let start = method_node(recv).start_byte();
     let end = accessor_end(c, n);
     let current = String::from_utf8_lossy(&c.source.as_bytes()[start..end]);
-    Finding::range(
+    let finding = Finding::range(
         start,
         end,
         format!(
             "Use `unpack1({})` instead of `{current}`.",
             c.text(semantic_args(recv)[0])
         ),
-    )
-    .edit_with(c, start, end, || {
+    );
+    let source_bytes = c.source.as_bytes();
+    if std::str::from_utf8(&source_bytes[start..end]).is_err() {
+        return finding;
+    }
+    finding.edit_with(c, start, end, || {
         String::from_utf8_lossy(&c.source.as_bytes()[start..recv.end_byte()])
             .replacen("unpack", "unpack1", 1)
     })
 }
 fn accessor_end(c: &Context<'_>, n: Node<'_>) -> usize {
-    let source = &c.text(n)[..send_end(n) - n.start_byte()];
+    let bytes = &c.source.as_bytes()[n.start_byte()..send_end(n)];
     n.start_byte()
-        + source
-            .trim_end_matches(|character: char| character.is_ascii_whitespace())
-            .len()
+        + bytes
+            .iter()
+            .rposition(|byte| !byte.is_ascii_whitespace())
+            .map_or(0, |index| index + 1)
 }
 pub(super) fn sort(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some((recv, max, access_start)) = access(c, n) else {
@@ -82,12 +87,16 @@ fn sort_edit(
     let end = accessor_end(c, n);
     let inside =
         String::from_utf8_lossy(&c.source.as_bytes()[selector.end_byte()..recv.end_byte()]);
-    Finding::range(
+    let finding = Finding::range(
         selector.start_byte(),
         end,
         sort_message(c, n, recv, start, suggestion),
-    )
-    .edit_with(c, selector.start_byte(), end, || {
+    );
+    let source_bytes = c.source.as_bytes();
+    if std::str::from_utf8(&source_bytes[selector.start_byte()..end]).is_err() {
+        return finding;
+    }
+    finding.edit_with(c, selector.start_byte(), end, || {
         format!(
             "{suggestion}{inside}{}{}",
             logical_suffix(c, n),

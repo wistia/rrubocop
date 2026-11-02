@@ -14,9 +14,12 @@ pub(super) fn identity(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     vec![correct_identity(c, finding, left, right)]
 }
 fn object_id(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.method(n) == "object_id" && block(n).is_none()
+    c.method(n) == "object_id" && block(n).is_none() && !safe(c, n)
 }
 fn comparison<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
+    if safe(c, n) {
+        return None;
+    }
     if n.kind() == "binary" && operator(c, n) == "==" {
         field(n, "left").zip(field(n, "right"))
     } else if c.method(n) == "==" {

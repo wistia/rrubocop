@@ -17,12 +17,12 @@ fn comparison_parts<'a, 'c>(
     if n.kind() == "binary" {
         Some((field(n, "left")?, field(n, "right")?, operator(c, n)))
     } else {
-        let args = semantic_args(n);
-        if args.len() != 1 || block(n).is_some() {
-            return None;
-        }
-        Some((field(n, "receiver")?, args[0], c.method(n)))
+        Some((field(n, "receiver")?, single_argument(c, n)?, c.method(n)))
     }
+}
+fn single_argument<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
+    let args = semantic_args(n);
+    (args.len() == 1 && block(n).is_none() && !safe(c, n)).then(|| args[0])
 }
 fn equality_key<'a>(
     c: &Context<'_>,

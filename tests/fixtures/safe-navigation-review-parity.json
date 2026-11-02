@@ -1,0 +1,244 @@
+[
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "left = nil\nright = nil\np left&.object_id == right.object_id\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "left = nil\nright = nil\np left&.object_id == right.object_id\n"
+  },
+  {
+    "cop": "Lint/UriRegexp",
+    "source": "module Probe\n URI = nil\n p URI&.regexp\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module Probe\n URI = nil\n p URI&.regexp\nend\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "object = nil\np object&.class == NilClass\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "object = nil\np object&.class == NilClass\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {nil => 1, :a => 2}\np hash.reject { |key, value| key&.eql?(nil) }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash = {nil => 1, :a => 2}\np hash.reject { |key, value| key&.eql?(nil) }\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "class Value\n def <(other); self; end\nend\na = Value.new\nb = Value.new\nc = Value.new\np((a&.<(b) < c).class.name)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Value\n def <(other); self; end\nend\na = Value.new\nb = Value.new\nc = Value.new\np((a&.<(b) < c).class.name)\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "left = nil\nright = nil\np left.object_id == right&.object_id\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "left = nil\nright = nil\np left.object_id == right&.object_id\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "left = Object.new\nright = left\np left&.object_id == right.object_id\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "left = Object.new\nright = left\np left&.object_id == right.object_id\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "left = Object.new\nright = left\np left.object_id&.==(right.object_id)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "left = Object.new\nright = left\np left.object_id&.==(right.object_id)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "object = nil\np object&.class&.name == \"String\"\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "object = nil\np object&.class&.name == \"String\"\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "object = \"value\"\np object&.class == String\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "object = \"value\"\np object&.class == String\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "object = nil\np object&.class&.equal?(NilClass)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "object = nil\np object&.class&.equal?(NilClass)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {nil => 1, :a => 2}\np hash.reject { |key,value| key&.eql?(nil) }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash = {nil => 1, :a => 2}\np hash.reject { |key,value| key&.eql?(nil) }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {nil => 1, :a => 2}\np hash.reject { |key,value| key&.==(:a) }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash = {nil => 1, :a => 2}\np hash.reject { |key,value| key&.==(:a) }\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash = {nil => 1, :a => 2}\np hash.reject { |key,value| key&.in?([:a]) }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "hash = {nil => 1, :a => 2}\np hash.reject { |key,value| key&.in?([:a]) }\n"
+  }
+]

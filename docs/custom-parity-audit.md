@@ -29,6 +29,12 @@ The report separates fork differences, documented exceptions, upstream-identical
 
 `report.md` gives per-cop example/runtime coverage and grouped findings. `results.json` contains the exact differences and example IDs. `cases.json` contains sources, paths, options, and provenance. `native.jsonl`, `reference.jsonl`, and `runtime.json` retain raw results. `run-meta.json` and `reference-meta.json` record Git state, bundle-lock hash, case-manifest hash, selection, Ruby version, and RuboCop version.
 
+The legacy `runtime_cases` and `runtime_cops` fields indicate scenario presence when runtime execution is requested, not positive autocorrection coverage. `summary.json` also contains `runtime_activity`, derived from the actual native source, Ruby compilation and recorded execution results. It separates positive rewrites in safe/all modes, unchanged negative controls, unchanged report-only cases, corrections not applied in a mode, blocked executions and observed behavior. The Markdown report includes the same per-cop activity table.
+
+A positive runtime rewrite requires changed source, valid original/native Ruby, completed normal original/native execution, no runner/native error, and no native-only behavior regression. A failed reference correction does not invalidate a successful native rewrite that preserves the original behavior. Shared reference behavior changes are counted separately. `skipped`, `unavailable` and `partial` artifact statuses prevent missing execution data from being treated as positive coverage. Complete artifacts do not by themselves mean all checks passed; inspect failures and blocked reasons.
+
+`runtime_activity.scenario_only_cops` identifies selected rules that have scenarios but no validated positive rewrite. `cops_without_positive_runtime_rewrites` also includes diagnostic-only rules, which do not need positive correction scenarios. These metrics measure observed correction activity, not proof of complete semantic equivalence. Raw non-UTF-8 source fixtures are checked separately; Unicode JSON scenario strings do not represent every raw-byte Ruby source.
+
 - **0:** no new candidate failures; documented exceptions and inherited hazards do not fail by default.
 - **1:** candidate discrepancies found. These are mismatch events, not a count of distinct confirmed bugs; the same example can produce more than one event.
 - **2:** incomplete audit, missing dependency, worker failure, or timeout. A partial audit must not be treated as passing.

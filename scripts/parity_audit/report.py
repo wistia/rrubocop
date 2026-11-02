@@ -2,6 +2,7 @@ from collections import Counter
 import json
 
 from .render import markdown
+from .runtime_coverage import runtime_activity
 
 
 def coverage_counts(cases):
@@ -32,6 +33,7 @@ def runtime_coverage(cases, names, args):
 
 def write_report(cases, names, results, output, args):
     result = summary(cases, names, results, args)
+    result["runtime_activity"] = runtime_activity(cases, names, args, output)
     write_json(output / "results.json", results)
     write_json(output / "summary.json", result)
     (output / "report.md").write_text(markdown(cases, names, results, result))

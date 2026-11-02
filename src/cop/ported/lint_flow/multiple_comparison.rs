@@ -16,6 +16,9 @@ pub(super) fn multiple_comparison(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> 
     })]
 }
 fn comparison(c: &Context<'_>, n: Node<'_>) -> bool {
+    if safe(c, n) {
+        return false;
+    }
     ["<", ">", "<=", ">="].contains(&if is_call(n) {
         c.method(n)
     } else {

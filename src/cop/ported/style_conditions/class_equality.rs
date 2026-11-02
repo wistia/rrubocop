@@ -47,7 +47,8 @@ fn class_finding(
         end,
         format!("Use `instance_of?{suffix}` instead of comparing classes."),
     );
-    if argument.is_some() && correctable {
+    let source_bytes = c.source.as_bytes();
+    if argument.is_some() && correctable && std::str::from_utf8(&source_bytes[start..end]).is_ok() {
         f.edit_with(c, start, end, || format!("instance_of?{suffix}"))
     } else {
         f
