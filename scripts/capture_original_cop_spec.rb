@@ -45,6 +45,8 @@ module CaptureOperatorSpec
       siblings = capture_non_nil_options(config)
     when "Style/ComparableClamp"
       config["IndentationWidth"] ||= configuration.for_cop("Layout/IndentationWidth")["Width"]
+    when "Layout/ArrayAlignment"
+      config["IndentationWidth"] ||= configuration.for_cop("Layout/IndentationWidth")["Width"]
     when "Layout/HashAlignment"
       argument_alignment = configuration.for_cop("Layout/ArgumentAlignment")
       config["ArgumentAlignmentEnabled"] = !!argument_alignment["Enabled"]

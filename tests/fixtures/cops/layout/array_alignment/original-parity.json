@@ -1,0 +1,598 @@
+[
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter registers an offense and corrects misaligned array elements",
+    "original": "array = [a,\n   b,\n  c,\n   d]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 4,
+        "length": 1,
+        "message": "Align the elements of an array literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 3,
+        "length": 1,
+        "message": "Align the elements of an array literal if they span more than one line."
+      },
+      {
+        "line": 4,
+        "column": 4,
+        "length": 1,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "array = [a,\n         b,\n         c,\n         d]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter registers an offense and corrects misaligned array elements",
+    "original": "array = [a,\n         b,\n         c,\n         d]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array = [a,\n         b,\n         c,\n         d]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter accepts single line array",
+    "original": "array = [ a, b ]",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array = [ a, b ]"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter accepts several elements per line",
+    "original": "array = [ a, b,\n          c, d ]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array = [ a, b,\n          c, d ]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter accepts aligned array with fullwidth characters",
+    "original": "puts 'Ｒｕｂｙ', [ a,\n                   b ]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "puts 'Ｒｕｂｙ', [ a,\n                   b ]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter autocorrects array within array with too much indentation",
+    "original": "[:l1,\n  [:l2,\n    [:l3,\n     [:l4]]]]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 28,
+        "message": "Align the elements of an array literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 5,
+        "length": 17,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "[:l1,\n [:l2,\n   [:l3,\n    [:l4]]]]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter autocorrects array within array with too little indentation",
+    "original": "[:l1,\n[:l2,\n  [:l3,\n   [:l4]]]]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 24,
+        "message": "Align the elements of an array literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 3,
+        "length": 15,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "[:l1,\n [:l2,\n   [:l3,\n    [:l4]]]]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter does not indent heredoc strings when autocorrecting",
+    "original": "var = [\n       { :type => 'something',\n         :sql => <<EOF\nSelect something\nfrom atable\nEOF\n       },\n      { :type => 'something',\n        :sql => <<EOF\nSelect something\nfrom atable\nEOF\n      }\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 8,
+        "column": 7,
+        "length": 86,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "var = [\n       { :type => 'something',\n         :sql => <<EOF\nSelect something\nfrom atable\nEOF\n       },\n       { :type => 'something',\n         :sql => <<EOF\nSelect something\nfrom atable\nEOF\n       }\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter does not indent heredoc strings when autocorrecting",
+    "original": "var = [\n       { :type => 'something',\n         :sql => <<EOF\nSelect something\nfrom atable\nEOF\n       },\n       { :type => 'something',\n         :sql => <<EOF\nSelect something\nfrom atable\nEOF\n       }\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "var = [\n       { :type => 'something',\n         :sql => <<EOF\nSelect something\nfrom atable\nEOF\n       },\n       { :type => 'something',\n         :sql => <<EOF\nSelect something\nfrom atable\nEOF\n       }\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter accepts the first element being on a new row",
+    "original": "array = [\n  a,\n  b,\n  c,\n  d\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array = [\n  a,\n  b,\n  c,\n  d\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter autocorrects misaligned array with the first element on a new row",
+    "original": "array = [\n  a,\n   b,\n  c,\n   d\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 4,
+        "length": 1,
+        "message": "Align the elements of an array literal if they span more than one line."
+      },
+      {
+        "line": 5,
+        "column": 4,
+        "length": 1,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "array = [\n  a,\n  b,\n  c,\n  d\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with first parameter does not register an offense or try to correct parallel assignment",
+    "original": "thing, foo =\n  1, 2\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "thing, foo =\n  1, 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation registers an offense and corrects misaligned array elements",
+    "original": "array = [a,\n   b,\n  c,\n   d]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 4,
+        "length": 1,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 4,
+        "length": 1,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_safe": "array = [a,\n  b,\n  c,\n  d]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation registers an offense and corrects misaligned array elements",
+    "original": "array = [a,\n  b,\n  c,\n  d]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array = [a,\n  b,\n  c,\n  d]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation accepts when assigning aligned bracketed array elements",
+    "original": "var = [\n  first,\n  second\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "var = [\n  first,\n  second\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation accepts when assigning aligned unbracketed array elements",
+    "original": "var =\n  first,\n  second\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "var =\n  first,\n  second\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation registers an offense when assigning not aligned unbracketed array elements",
+    "original": "var =\n     first,\n    second\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 6,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 3,
+        "column": 5,
+        "length": 6,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_safe": "var =\n  first,\n  second\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation accepts single line array",
+    "original": "array = [ a, b ]",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array = [ a, b ]"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation accepts several elements per line",
+    "original": "array = [ a, b,\n  c, d ]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array = [ a, b,\n  c, d ]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation accepts aligned array with fullwidth characters",
+    "original": "puts 'Ｒｕｂｙ', [ a,\n  b ]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "puts 'Ｒｕｂｙ', [ a,\n  b ]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation autocorrects array within array with too much indentation",
+    "original": "[:l1,\n   [:l2,\n      [:l3,\n        [:l4]]]]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 4,
+        "length": 33,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 3,
+        "column": 7,
+        "length": 20,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_safe": "[:l1,\n  [:l2,\n     [:l3,\n       [:l4]]]]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation autocorrects array within array with too little indentation",
+    "original": "[:l1,\n [:l2,\n  [:l3,\n    [:l4]]]]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 25,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 3,
+        "column": 3,
+        "length": 16,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_safe": "[:l1,\n  [:l2,\n   [:l3,\n     [:l4]]]]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation does not indent heredoc strings when autocorrecting",
+    "original": "var = [\n  { :type => 'something',\n    :sql => <<EOF\nSelect something\nfrom atable\nEOF\n  },\n { :type => 'something',\n   :sql => <<EOF\nSelect something\nfrom atable\nEOF\n }\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 8,
+        "column": 2,
+        "length": 76,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_safe": "var = [\n  { :type => 'something',\n    :sql => <<EOF\nSelect something\nfrom atable\nEOF\n  },\n  { :type => 'something',\n    :sql => <<EOF\nSelect something\nfrom atable\nEOF\n  }\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation does not indent heredoc strings when autocorrecting",
+    "original": "var = [\n  { :type => 'something',\n    :sql => <<EOF\nSelect something\nfrom atable\nEOF\n  },\n  { :type => 'something',\n    :sql => <<EOF\nSelect something\nfrom atable\nEOF\n  }\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "var = [\n  { :type => 'something',\n    :sql => <<EOF\nSelect something\nfrom atable\nEOF\n  },\n  { :type => 'something',\n    :sql => <<EOF\nSelect something\nfrom atable\nEOF\n  }\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation accepts the first element being on a new row",
+    "original": "array = [\n  a,\n  b,\n  c,\n  d\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array = [\n  a,\n  b,\n  c,\n  d\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation autocorrects misaligned array with the first element on a new row",
+    "original": "array = [\n  a,\n   b,\n  c,\n   d\n]\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 4,
+        "length": 1,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 5,
+        "column": 4,
+        "length": 1,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_safe": "array = [\n  a,\n  b,\n  c,\n  d\n]\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::ArrayAlignment when aligned with fixed indentation does not register an offense or try to correct parallel assignment",
+    "original": "thing, foo =\n  1, 2\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 2
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "thing, foo =\n  1, 2\n"
+  }
+]
