@@ -1,5 +1,5 @@
 //! Combine repeated string prefix or suffix predicates when later arguments are pure.
-use crate::cop::shared::ruby_expression::{integer, signature};
+use crate::cop::shared::ruby_expression::{integer, same_expression};
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, collect_comments, named_kids, node_bytes,
     node_text, push_replace,
@@ -135,7 +135,7 @@ impl Cop for DoubleStartEndWith {
         let (Some(receiver), Some(other)) = (call_receiver(left), call_receiver(right)) else {
             return;
         };
-        if signature(source, receiver) != signature(source, other) {
+        if !same_expression(source, receiver, other) {
             return;
         }
         let first = argument_nodes(left);

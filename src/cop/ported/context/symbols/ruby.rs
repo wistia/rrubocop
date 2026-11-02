@@ -1,5 +1,6 @@
 use super::*;
 mod heredoc;
+pub(in crate::cop::ported::context) use heredoc::content_span as heredoc_span;
 
 pub(in crate::cop::ported::context) fn string<'a>(
     c: &Context<'a>,
@@ -24,3 +25,12 @@ fn character(text: &str) -> Option<Cow<'_, str>> {
 
 #[cfg(test)]
 mod tests;
+
+pub(in crate::cop::ported::context) fn parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
+    match n.kind() {
+        "string" => super::string_parts(c, n),
+        "character" => character(c.text(n)).map(|value| vec![value.into_owned()]),
+        "heredoc_beginning" => heredoc::parts(c, n),
+        _ => None,
+    }
+}

@@ -1,5 +1,5 @@
 //! Report every repeated enum value after the first, grouped in original value order.
-use crate::cop::shared::ruby_expression::signature;
+use crate::cop::shared::ruby_expression::eql_expression;
 use crate::cop::shared::{argument_nodes, call_method_name, call_receiver, named_kids, node_text};
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
@@ -33,16 +33,18 @@ impl EnumUniqueness {
                 }
             })
             .collect();
-        let mut groups: Vec<(String, Vec<Node<'_>>)> = vec![];
+        let mut groups: Vec<Vec<Node<'_>>> = vec![];
         for item in elements {
-            let id = signature(source, item);
-            if let Some((_, items)) = groups.iter_mut().find(|(key, _)| *key == id) {
+            if let Some(items) = groups
+                .iter_mut()
+                .find(|items| eql_expression(source, items[0], item))
+            {
                 items.push(item);
             } else {
-                groups.push((id, vec![item]));
+                groups.push(vec![item]);
             }
         }
-        for (_, items) in groups {
+        for items in groups {
             for item in items.into_iter().skip(1) {
                 let (line, col) = source.offset_to_line_col(item.start_byte());
                 let mut d = self.diagnostic(

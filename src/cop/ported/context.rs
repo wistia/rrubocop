@@ -67,6 +67,12 @@ impl<'a> Context<'a> {
     pub fn ruby_static_string(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
         symbols::ruby_string(self, node)
     }
+    pub fn ruby_string_parts(&self, node: Node<'_>) -> Option<Vec<String>> {
+        symbols::ruby_parts(self, node)
+    }
+    pub fn ruby_heredoc_span(&self, node: Node<'_>) -> Option<(usize, usize)> {
+        symbols::heredoc_span(self, node)
+    }
     pub fn duplicate_literal_bytes(&self, node: Node<'_>) -> Option<(Vec<u8>, bool)> {
         symbols::duplicate_bytes(self, node)
     }

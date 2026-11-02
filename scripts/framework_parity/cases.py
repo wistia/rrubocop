@@ -161,4 +161,6 @@ def cases():
         add(cop, source)
     for source in ("raw(I18n&.t(:name))", "raw(I18n.t = input)", "raw(:: I18n.t(:name))"):
         add("Rails/OutputSafety", source)
+    from expression_cases import extend
+    extend(add)
     return rows

@@ -34,16 +34,7 @@ fn interpolated(root: Node<'_>, start: usize, end: usize) -> bool {
 }
 
 fn render(content: &str, quoted: bool, squiggly: bool) -> Option<Cow<'_, str>> {
-    let content = if squiggly {
-        Cow::Owned(indentation::strip(content))
-    } else {
-        Cow::Borrowed(content)
-    };
-    let content = if content.contains("\r\n") {
-        Cow::Owned(content.replace("\r\n", "\n"))
-    } else {
-        content
-    };
+    let content = normalize(content, squiggly);
     if !single_part(&content, quoted) {
         return None;
     }
@@ -52,6 +43,29 @@ fn render(content: &str, quoted: bool, squiggly: bool) -> Option<Cow<'_, str>> {
     } else {
         Some(content)
     }
+}
+
+fn normalize(content: &str, squiggly: bool) -> Cow<'_, str> {
+    let content = if squiggly {
+        Cow::Owned(indentation::strip(content))
+    } else {
+        Cow::Borrowed(content)
+    };
+    if content.contains("\r\n") {
+        Cow::Owned(content.replace("\r\n", "\n"))
+    } else {
+        content
+    }
+}
+
+pub(in crate::cop::ported::context) fn parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
+    let quoted = quoted(c.text(n))?;
+    let (start, end) = content_span(c, n)?;
+    if !quoted && interpolated(root(n), start, end) {
+        return None;
+    }
+    let content = normalize(content(c, start, end)?, c.text(n).starts_with("<<~"));
+    super::super::decoded_parts(&content, if quoted { None } else { Some((true, b'"')) })
 }
 
 fn single_part(content: &str, quoted: bool) -> bool {
@@ -64,12 +78,10 @@ fn single_part(content: &str, quoted: bool) -> bool {
     !content.is_empty()
 }
 
-fn continued(line: &str) -> bool {
-    line.strip_suffix('\n')
-        .is_some_and(|line| line.bytes().rev().take_while(|byte| *byte == b'\\').count() % 2 == 1)
-}
-
-fn content_span(c: &Context<'_>, n: Node<'_>) -> Option<(usize, usize)> {
+pub(in crate::cop::ported::context) fn content_span(
+    c: &Context<'_>,
+    n: Node<'_>,
+) -> Option<(usize, usize)> {
     let start = after_line(c, n.end_byte());
     let start = preceding(n).into_iter().try_fold(start, |start, opener| {
         span(c, opener, start).map(|(_, end)| after_line(c, end))

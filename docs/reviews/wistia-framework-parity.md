@@ -168,10 +168,10 @@ python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-Complete native suite: **907 passed, with 1 intentionally ignored audit probe**.
-The strict command exits 1 with **456 explicit difference events**: 454 documented
-safety/upstream-hazard events and two unresolved parser-related corrected-byte
-differences. `failures.json`, `summary.json` and `runtime.json` retain every event.
+Complete native suite: **908 passed, with 1 intentionally ignored audit probe**.
+The strict command exits 1 with **459 explicit difference events**: 454 documented
+safety/upstream-hazard events, two unresolved parser-related corrected-byte
+differences and three upstream stale-hash detection differences. `failures.json`, `summary.json` and `runtime.json` retain every event.
 Detection, message and range differences in the selected specimens are confined
 to the documented guards and original corrector crashes; EnumHash's emoji symbol
 spelling gap remains open.
@@ -414,3 +414,43 @@ runtime programs with its 456 retained safety/parser events; this runner-only
 change does not alter those internal linter cases. Two emoji corrected-byte
 events remain unresolved. Broader nested configs/exotic AST coverage and the
 40 baseline stubs are still outstanding.
+
+## Checkpoint: consolidated expression comparison
+
+Reused RSpec's committed comparator (4a9b2d1) and existing Context literal/span
+logic in shared/ruby_expression.rs. Public internal APIs distinguish same_expression
+(AST::Node#==, repeated NodePattern bindings) from eql_expression (strict
+AST::Node#eql?, before duplicate hash grouping), recursively through arguments,
+containers and blocks. Complex 1i/1.0i are == but not eql?; rational representations
+normalize exactly, with numeric subtype distinctions preserved for strict equality.
+
+Typed static string parts preserve the legacy str/dstr boundary for character,
+physical multiline, concatenated and delayed heredoc literals. The existing
+ruby_static_string single-part guard remains unchanged. Delayed body spans are
+resolved by the existing reader; different bodies cannot compare equal merely
+because their opener tokens match. Exact identical dynamic bodies additionally
+compare interpolation nodes; other dynamic-body formatting remains conservative.
+Regex comparison preserves escaped metacharacters according to pinned parser
+3.3.5.0 lexer-strings.rb REGEXP_META_CHARACTERS/extend_string_escaped, normalizes
+flags and equivalent delimiters, and compares interpolation expressions.
+Setter/index/operator send shapes, empty/omitted block components and keyword
+not parentheses have original controls.
+
+A committed independently generated fixture records 48 original AST pairs and
+both equality results (96 assertions), including large/subnormal complex numeric
+comparisons, UTF-8 string classes and delayed heredocs. The reference generator
+loads actual Wistia configuration before parsing; it never executes specimen code.
+Full native suite: 908 passed, 1 ignored probe. Isolated-rule matrix now covers
+680 originals / 1360 second-pass / 30 trusted runtime programs. All prior 638
+cases remain stable. There are 459 retained events: the earlier 456 plus three
+diagnostic events for the following explicitly unresolved upstream hash drift.
+
+The pinned AST::Node constructor precomputes @hash. Continued-heredoc processing
+can later mutate a StrNode child, leaving eql? true/current child hashes equal
+but precomputed node hashes different. Original EnumUniqueness group_by then
+misses a duplicate; native strict equality identifies it. Evidence retains both
+results, including the original grouped flag. This is not hidden by an exception,
+nor claimed as exact detection parity. Symbol multiline/byte-encoding and other
+unreviewed AST families remain open; this checkpoint is a reusable bounded
+comparison adapter, not a claim to model every Ruby construct. No new cop counts:
+30 reviewed, 27 baseline stubs replaced, 40 baseline stubs remaining.

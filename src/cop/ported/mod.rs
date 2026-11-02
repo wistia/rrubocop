@@ -275,3 +275,12 @@ pub(super) fn bare_call_identifier(source: &SourceFile, node: Node<'_>) -> bool 
                     && parent.child_by_field_name("name") == Some(node)
         })
 }
+
+pub(super) fn ruby_string_parts(source: &SourceFile, node: Node<'_>) -> Option<Vec<String>> {
+    let config = CopConfig::default();
+    Context::new(source, &config).ruby_string_parts(node)
+}
+pub(super) fn heredoc_span(source: &SourceFile, node: Node<'_>) -> Option<(usize, usize)> {
+    let config = CopConfig::default();
+    Context::new(source, &config).ruby_heredoc_span(node)
+}
