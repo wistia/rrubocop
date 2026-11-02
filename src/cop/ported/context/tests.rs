@@ -210,3 +210,54 @@ fn reflective_reads_do_not_turn_binding_method_names_into_local_tokens() {
         .collect();
     assert_eq!(actual, vec![true, true, false, false]);
 }
+
+#[test]
+fn cached_local_bindings_distinguish_shadowed_parameters() {
+    let (source, config) = fixture(
+        "def m(&callback); callback.call; [1].each { |callback| callback.call }; callback.call; end",
+    );
+    let tree = crate::parse::parse_ruby(&source).unwrap();
+    let c = Context::new(&source, &config);
+    let nodes = descendants(tree.root_node())
+        .filter(|node| node.kind() == "identifier" && c.text(*node) == "callback")
+        .collect::<Vec<_>>();
+    assert_eq!(nodes.len(), 5);
+    let reads = [nodes[1], nodes[3], nodes[4]].map(|node| local_binding(&c, node).unwrap());
+    assert_eq!(reads[0], reads[2]);
+    assert_ne!(reads[0], reads[1]);
+    assert_eq!(reads[1], nodes[2].start_byte());
+    let method_parameter = tree
+        .root_node()
+        .named_child(0)
+        .unwrap()
+        .child_by_field_name("parameters")
+        .unwrap()
+        .named_child(0)
+        .unwrap();
+    assert_eq!(reads[0], local_binding(&c, method_parameter).unwrap());
+}
+
+#[test]
+fn numbered_binding_metadata_reuses_scoped_local_identities() {
+    let (source, config) = fixture(
+        "with_options { _1.foo(_2) }; items.each { |x| x }; -> { _1 }; with_options { object._1 }",
+    );
+    let c = Context::new(&source, &config);
+    let tree = crate::parse::parse_ruby(&source).unwrap();
+    let blocks: Vec<_> = descendants(tree.root_node())
+        .filter(|n| matches!(n.kind(), "block" | "do_block"))
+        .collect();
+    assert_eq!(blocks.len(), 4);
+    let statuses: Vec<_> = blocks
+        .iter()
+        .map(|n| numbered_bindings(&c, *n).is_some())
+        .collect();
+    assert_eq!(statuses, vec![true, false, true, false]);
+    let ids = numbered_bindings(&c, blocks[0]).unwrap();
+    assert_eq!(ids.len(), 2);
+    for node in descendants(blocks[0])
+        .filter(|n| n.kind() == "identifier" && matches!(c.text(*n), "_1" | "_2"))
+    {
+        assert!(ids.contains(&local_binding(&c, node).unwrap()));
+    }
+}

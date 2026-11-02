@@ -20,3 +20,21 @@ pub(in crate::cop::ported) fn local_identifier(c: &Context<'_>, node: Node<'_>) 
 pub(in crate::cop::ported) fn local_binding(c: &Context<'_>, node: Node<'_>) -> Option<usize> {
     index(c).binding(node.start_byte())
 }
+
+pub(in crate::cop::ported) fn numbered_bindings(
+    c: &Context<'_>,
+    node: Node<'_>,
+) -> Option<Vec<usize>> {
+    if node.child_by_field_name("parameters").is_some() {
+        return None;
+    }
+    let block = if node.kind() == "lambda" {
+        node.child_by_field_name("body")?
+    } else {
+        node
+    };
+    if !matches!(block.kind(), "block" | "do_block") {
+        return None;
+    }
+    index(c).numbered_bindings(block.start_byte())
+}
