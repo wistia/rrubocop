@@ -1,0 +1,1939 @@
+[
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: 1); [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def self.f(a: 1, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.f(b:, a: 1); [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f a: 1, b:\n [a,b]\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f b:, a: 1\n [a,b]\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f a: 1, b:; [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f b:, a: 1\n; [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:, c: 2, d:); [a,b,c,d]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 16,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def f(b:, d:, a: 1, c: 2); [a,b,c,d]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a:, b: 1, c:); [a,b,c]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(a:, c:, b: 1); [a,b,c]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(x, a: 1, b:, **rest, &block); [x,a,b,rest]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(x, b:, a: 1, **rest, &block); [x,a,b,rest]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:, **); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: 1, **); [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "lambda { |a: 1, b:| [a,b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "lambda { |b:, a: 1| [a,b] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "proc { |a: 1, b:, **rest| [a,b,rest] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "proc { |b:, a: 1, **rest| [a,b,rest] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "->(a: 1, b:) { [a,b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "->(b:, a: 1) { [a,b] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "->(a: 1, b:, **rest) { [a,b,rest] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "->(b:, a: 1, **rest) { [a,b,rest] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "items.each { |(x,y), a: 1, b:| [x,y,a,b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |(x,y), b:, a: 1| [x,y,a,b] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "items.each { |a: 1, b:; local| [a,b,local] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 14,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |b:, a: 1; local| [a,b,local] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: -1, b:, c: +2.0); [a,b,c]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: -1, c: +2.0); [a,b,c]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: :ready, b:, c: \"ok\"); [a,b,c]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: :ready, c: \"ok\"); [a,b,c]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: [], b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: []); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: [], b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: {}, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: {}); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: {}, b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: b, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: b); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: b, b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: make, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: make); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: make, b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: (seen << :a; 1), b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: (seen << :a; 1)); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: (seen << :a; 1), b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: \"#{b}\", b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: \"#{b}\"); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: \"#{b}\", b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: --1, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: --1); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: --1, b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(\n a: 1, # optional\n b:\n); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(\n b:, a: 1, # optional); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(\n a: 1, # optional\n b:\n); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "lambda { |a: 1, # optional\n b:| [a,b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "lambda { |b:, a: 1, # optional| [a,b] }\n",
+    "rust_correctable": false,
+    "rust_corrected": "lambda { |a: 1, # optional\n b:| [a,b] }\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(b:, a: 1); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f(b:, a: 1); [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, **rest); [a,rest]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f(a: 1, **rest); [a,rest]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, &block); a; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f(a: 1, &block); a; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(...); g(...); end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f(...); g(...); end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "-> { _1 }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "-> { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |item, other| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { |item, other| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |*items| use(items) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { |*items| use(items) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |(item, other)| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { |(item, other)| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { || \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { || \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { _10 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { _10 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { [_1, _2] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { [_1, _2] }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { proc { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { proc { _1 } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { proc { |_1arg| _1arg } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { proc { |_1arg| _1arg } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |item; local| use(item, local) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { |item; local| use(item, local) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |item, other| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { |item, other| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |*items| use(items) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { |*items| use(items) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |(item, other)| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { |(item, other)| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { || \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { || \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { _10 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { _10 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { [_1, _2] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { [_1, _2] }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { proc { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { proc { _1 } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { proc { |_1arg| _1arg } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { proc { |_1arg| _1arg } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |item; local| use(item, local) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { |item; local| use(item, local) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index(10) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each(10) { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index(10) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index(\n# offset\n10) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index(&handler)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index(&handler)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each { |x| x }.with_index { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |x| x } { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each { |x| x }.with_index { |item| use(item) }\n",
+    "reason": "Keep report-only when removing with_index/with_object would leave two adjacent blocks and introduce invalid Ruby."
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "each.with_index { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "each.with_index { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |item, other| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { |item, other| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |*items| use(items) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { |*items| use(items) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |(item, other)| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { |(item, other)| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { || \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { || \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { _10 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { _10 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { [_1, _2] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { [_1, _2] }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { proc { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { proc { _1 } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { proc { |_1arg| _1arg } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { proc { |_1arg| _1arg } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |item; local| use(item, local) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { |item; local| use(item, local) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |item, other| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { |item, other| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |*items| use(items) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { |*items| use(items) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |(item, other)| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { |(item, other)| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { || \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { || \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { _10 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { _10 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { [_1, _2] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { [_1, _2] }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { proc { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { proc { _1 } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { proc { |_1arg| _1arg } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { proc { |_1arg| _1arg } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |item; local| use(item, local) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { |item; local| use(item, local) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object(make) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object(make) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object(\n# object\n[]) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([],&handler)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([],&handler)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each { |x| x }.with_object([]) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |x| x } { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each { |x| x }.with_object([]) { |item| use(item) }\n",
+    "reason": "Keep report-only when removing with_index/with_object would leave two adjacent blocks and introduce invalid Ruby."
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { obj._1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { obj._1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { _1; \"_2\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1; \"_2\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { _1; obj._2 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1; obj._2 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { /_1/ }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { /_1/ }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { {_1: 1} }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { {_1: 1} }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { \"#{_1}\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { \"#{_1}\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { obj._1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { obj._1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { _1; \"_2\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1; \"_2\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { _1; obj._2 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1; obj._2 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { /_1/ }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { /_1/ }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { {_1: 1} }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { {_1: 1} }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { \"#{_1}\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { \"#{_1}\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1].each_with_object(seen << :created) { \"_1\" }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\n[1].each_with_object(seen << :created) { \"_1\" }\np seen\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1].each_with_object(seen << :created) { proc { _1 } }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\n[1].each_with_object(seen << :created) { proc { _1 } }\np seen\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "class Items\n def each_with_index; yield :old; :old_return; end\n def each; yield :new; :new_return; end\nend\np Items.new.each_with_index { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Items\n def each_with_index; yield :old; :old_return; end\n def each; yield :new; :new_return; end\nend\np Items.new.each_with_index { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "seen = []\n[1,2].each_with_index { |item| seen << item }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\n[1,2].each { |item| seen << item }\np seen\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1,2].each_with_object([]) { |item| seen << item }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\n[1,2].each { |item| seen << item }\np seen\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def b; :method_value; end\ndef f(a: b, b:); [a,b]; end\np f(b: :argument_value)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def b; :method_value; end\ndef f(b:, a: b); [a,b]; end\np f(b: :argument_value)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def b; :method_value; end\ndef f(a: b, b:); [a,b]; end\np f(b: :argument_value)\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:); [a,b]; end\np f(b: 2)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: 1); [a,b]; end\np f(b: 2)\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "fn = ->(a: 1, b:, **rest) { [a,b,rest] }\np fn.call(b: 2, extra: 3)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "fn = ->(b:, a: 1, **rest) { [a,b,rest] }\np fn.call(b: 2, extra: 3)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { alias _1 puts }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { alias _1 puts }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { undef _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { undef _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { alias :\"#{_1}\" :puts }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { alias :\"#{_1}\" :puts }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { undef :\"#{_1}\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { undef :\"#{_1}\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { alias _1 puts }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { alias _1 puts }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { undef _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { undef _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { alias :\"#{_1}\" :puts }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { alias :\"#{_1}\" :puts }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { undef :\"#{_1}\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { undef :\"#{_1}\" }\n"
+  }
+]

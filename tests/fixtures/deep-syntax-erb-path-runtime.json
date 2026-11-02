@@ -1,0 +1,198 @@
+[
+  {
+    "cop": "Style/Dir",
+    "source": "module Probe\n module File\n  def self.dirname(path); yield; \"unchanged\"; end\n  def self.expand_path(path); path; end\n end\n seen = []\n value = File.expand_path(File.dirname(__FILE__) { seen << :called })\n p [value, seen]\nend\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module Probe\n module File\n  def self.dirname(path); yield; \"unchanged\"; end\n  def self.expand_path(path); path; end\n end\n seen = []\n value = File.expand_path(File.dirname(__FILE__) { seen << :called })\n p [value, seen]\nend\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "p File.expand_path(File.dirname(__FILE__)) == __dir__\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p __dir__ == __dir__\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class Probe\n def self::call(value); value + 1; end\nend\np Probe.call(2)\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n def self.call(value); value + 1; end\nend\np Probe.call(2)\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "p [1, 2].map { || :fixed }\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [1, 2].map { :fixed }\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "value = case 1\nwhen 1 then\n :matched\nelse\n :other\nend\np value\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = case 1\nwhen 1\n :matched\nelse\n :other\nend\np value\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n options = {eoutvar: \"buffer\"}\n p ERB.new(\"source\", nil, \"-\", **options)\nend\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 8,
+        "column": 21,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 8,
+        "column": 26,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n options = {eoutvar: \"buffer\"}\n p ERB.new(\"source\", trim_mode: \"-\")\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n options = {eoutvar: \"buffer\"}\n p ERB.new(\"source\", nil, \"-\", **options)\nend\n",
+    "reason": "Preserve legacy argument evaluation and callback forwarding when positional/keyword conversion is ambiguous or would create invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n block = proc { :callback }\n p ERB.new(\"source\", nil, \"-\", &block)\nend\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 8,
+        "column": 21,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 8,
+        "column": 26,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 8,
+        "column": 31,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: &block)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n block = proc { :callback }\n p ERB.new(\"source\", trim_mode: \"-\", eoutvar: &block)\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n block = proc { :callback }\n p ERB.new(\"source\", nil, \"-\", &block)\nend\n",
+    "reason": "Preserve legacy argument evaluation and callback forwarding when positional/keyword conversion is ambiguous or would create invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n p ERB.new(\"source\", nil, {trim_mode: \"-\", eoutvar: \"buffer\"})\nend\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 21,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n p ERB.new(\"source\", trim_mode: {trim_mode: \"-\", eoutvar: \"buffer\"}, eoutvar: \"buffer\")\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n p ERB.new(\"source\", nil, {trim_mode: \"-\", eoutvar: \"buffer\"})\nend\n",
+    "reason": "Preserve legacy argument evaluation and callback forwarding when positional/keyword conversion is ambiguous or would create invalid Ruby."
+  }
+]

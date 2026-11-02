@@ -56681,5 +56681,5199 @@
       }
     ],
     "corrected": "foo(\n# retained\n)&.one && foo&.two && foo&.three\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](pairs) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "pairs.to_h { work }\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[pairs] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "pairs.to_h { work }\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](:a, 1) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash.[](:a, 1) { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[:a, 1] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash[:a, 1] { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](a: 1) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{a: 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash.[](a: 1) { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[a: 1] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{a: 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash[a: 1] { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "consume Hash.[](:a, 1) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume {:a => 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "consume Hash.[](:a, 1) { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "consume Hash[:a, 1], 42 do work end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume({:a => 1}, 42) do work end\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](pairs, &callback)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{pairs => &callback}\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash.[](pairs, &callback)\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[:a, 1, &callback]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": false
+      }
+    ],
+    "corrected": "Hash[:a, 1, &callback]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items.zip { work }]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.zip { work }.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](items.zip { work })\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.zip { work }.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items.zip()]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "Hash[items.zip([])]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items.zip(&callback)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.zip(&callback).to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items&.zip]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items&.zip.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items&.zip()]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items&.zip().to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items&.zip(other)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items&.zip(other).to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items&.pairs]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items&.pairs.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[if test; a; else; b; end]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "if test; a; else; b; end.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[case value; when 1; a; else; b; end]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "case value; when 1; a; else; b; end.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[begin; a; end]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin; a; end.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[-> { [:a, 1] }]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "-> { [:a, 1] }.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[1..2]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "1..2.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[a ? b : c]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "a ? b : c.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[a + b]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "(a + b).to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[a..b]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "a..b.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[{a: 1}]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{{a: 1}}\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash[{a: 1}]\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[**options]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{**options}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](**options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{**options}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[:a, 1, **options]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": false
+      }
+    ],
+    "corrected": "Hash[:a, 1, **options]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[:a, 1, :a, 2]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1, :a => 2}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[*(pairs)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Hash[*(pairs)]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[\n # retained\n :a, 1]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[<<~PAIRS]\n pairs\nPAIRS\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "<<~PAIRS.to_h\n pairs\nPAIRS\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](\n :a, # retained\n 1) do work end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1} do work end\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash.[](\n :a, # retained\n 1) do work end\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Other::Hash[pairs]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Other::Hash[pairs]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "::Hash[pairs]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "pairs.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](:a, 1, :b)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": false
+      }
+    ],
+    "corrected": "Hash.[](:a, 1, :b)\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[ary.to_h]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "ary.to_h.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[(yield)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "(yield).to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](pairs) { |k,v| [k,v] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "pairs.to_h { |k,v| [k,v] }\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[pairs.zip] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "Hash[pairs.zip([])] { work }\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "consume Hash[a: 1] do work end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume({a: 1}) do work end\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[*pairs]\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowSplatArgument": false
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer array_of_pairs.to_h to Hash[*array].",
+        "correctable": false
+      }
+    ],
+    "corrected": "Hash[*pairs]\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"payload\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"payload\", ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis&.setex(:key, 60, \"payload\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "redis&.setex(:key, 60, \"payload\")\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"payload\") { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"payload\", ex: 60) { work }\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex :key, 60, \"payload\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set :key, \"payload\", ex: 60\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "def f(ttl, value); redis.setex(:key, ttl, value); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(ttl, value); redis.set(:key, value, ex: ttl); end\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "ttl = 60; value = \"payload\"; redis.setex(:key, ttl, value, &callback)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 29,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "ttl = 60; value = \"payload\"; redis.set(:key, value, ex: ttl, &callback)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, -1, +2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, +2, ex: -1)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, --1, 2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, 2, ex: --1)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, --1, 2)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, /pattern/, \"payload\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"payload\", ex: /pattern/)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, /pattern/, \"payload\")\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, :\"a\\x62\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, :\"a\\x62\", ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"#{work}\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"#{work}\", ex: 60)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, \"#{work}\")\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, {a: 1})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, {a: 1}, ex: 60)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, {a: 1})\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, value: 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, value: 1, ex: 60)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, value: 1)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, *args, \"value\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"value\", ex: *args)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, *args, \"value\")\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"value\", extra)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"value\", ex: 60, extra)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, \"value\", extra)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"value\", **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"value\", ex: 60, **options)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, \"value\", **options)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "def f(ttl, value); redis.setex(\n :key, # key\n ttl, # ttl\n value); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(ttl, value); redis.set(\n :key, # key\n value, # ttl\n ex: ttl); end\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, <<~VALUE)\n payload\nVALUE\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, <<~VALUE, ex: 60)\n payload\nVALUE\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, <<~VALUE)\n payload\nVALUE\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "begin; redis.setex(:key, ttl, value); rescue; end; ttl=60; value=\"payload\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin; redis.set(:key, value, ex: ttl); rescue; end; ttl=60; value=\"payload\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "begin; redis.setex(:key, ttl, value); rescue; end; ttl=60; value=\"payload\"\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "def ttl; puts :ttl; 60; end; def value; puts :value; \"payload\"; end; redis.setex(:key, ttl, value)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 69,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "def ttl; puts :ttl; 60; end; def value; puts :value; \"payload\"; end; redis.set(:key, value, ex: ttl)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def ttl; puts :ttl; 60; end; def value; puts :value; \"payload\"; end; redis.setex(:key, ttl, value)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: 1); [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def self.f(a: 1, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.f(b:, a: 1); [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f a: 1, b:\n [a,b]\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f b:, a: 1\n [a,b]\nend\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f a: 1, b:; [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f b:, a: 1\n; [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:, c: 2, d:); [a,b,c,d]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 16,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def f(b:, d:, a: 1, c: 2); [a,b,c,d]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a:, b: 1, c:); [a,b,c]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(a:, c:, b: 1); [a,b,c]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(x, a: 1, b:, **rest, &block); [x,a,b,rest]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(x, b:, a: 1, **rest, &block); [x,a,b,rest]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:, **); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: 1, **); [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "lambda { |a: 1, b:| [a,b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "lambda { |b:, a: 1| [a,b] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "proc { |a: 1, b:, **rest| [a,b,rest] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "proc { |b:, a: 1, **rest| [a,b,rest] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "->(a: 1, b:) { [a,b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "->(b:, a: 1) { [a,b] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "->(a: 1, b:, **rest) { [a,b,rest] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 3,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "->(b:, a: 1, **rest) { [a,b,rest] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "items.each { |(x,y), a: 1, b:| [x,y,a,b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |(x,y), b:, a: 1| [x,y,a,b] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "items.each { |a: 1, b:; local| [a,b,local] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 14,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |b:, a: 1; local| [a,b,local] }\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: -1, b:, c: +2.0); [a,b,c]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: -1, c: +2.0); [a,b,c]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: :ready, b:, c: \"ok\"); [a,b,c]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: :ready, c: \"ok\"); [a,b,c]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: [], b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: []); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: [], b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: {}, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: {}); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: {}, b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: b, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: b); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: b, b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: make, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: make); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: make, b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: (seen << :a; 1), b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: (seen << :a; 1)); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: (seen << :a; 1), b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: \"#{b}\", b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: \"#{b}\"); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: \"#{b}\", b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: --1, b:); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: --1); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(a: --1, b:); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(\n a: 1, # optional\n b:\n); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(\n b:, a: 1, # optional); [a,b]; end\n",
+    "rust_correctable": false,
+    "rust_corrected": "def f(\n a: 1, # optional\n b:\n); [a,b]; end\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "lambda { |a: 1, # optional\n b:| [a,b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "lambda { |b:, a: 1, # optional| [a,b] }\n",
+    "rust_correctable": false,
+    "rust_corrected": "lambda { |a: 1, # optional\n b:| [a,b] }\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(b:, a: 1); [a,b]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f(b:, a: 1); [a,b]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, **rest); [a,rest]; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f(a: 1, **rest); [a,rest]; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, &block); a; end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f(a: 1, &block); a; end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(...); g(...); end\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def f(...); g(...); end\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "-> { _1 }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "-> { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |item, other| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { |item, other| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |*items| use(items) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { |*items| use(items) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |(item, other)| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { |(item, other)| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { || \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { || \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { _10 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { _10 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { [_1, _2] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { [_1, _2] }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { proc { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { proc { _1 } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { proc { |_1arg| _1arg } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { proc { |_1arg| _1arg } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { |item; local| use(item, local) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { |item; local| use(item, local) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |item, other| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { |item, other| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |*items| use(items) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { |*items| use(items) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |(item, other)| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { |(item, other)| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { || \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { || \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { _10 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { _10 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { [_1, _2] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { [_1, _2] }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { proc { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { proc { _1 } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { proc { |_1arg| _1arg } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { proc { |_1arg| _1arg } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index { |item; local| use(item, local) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_index { |item; local| use(item, local) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index(10) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each(10) { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index(10) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each.with_index(\n# offset\n10) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index(&handler)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index(&handler)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each { |x| x }.with_index { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |x| x } { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each { |x| x }.with_index { |item| use(item) }\n",
+    "reason": "Keep report-only when removing with_index/with_object would leave two adjacent blocks and introduce invalid Ruby."
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "each.with_index { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "each.with_index { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |item, other| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { |item, other| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |*items| use(items) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { |*items| use(items) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |(item, other)| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { |(item, other)| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { || \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { || \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { _10 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { _10 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { [_1, _2] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { [_1, _2] }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { proc { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { proc { _1 } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { proc { |_1arg| _1arg } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { proc { |_1arg| _1arg } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { |item; local| use(item, local) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { |item; local| use(item, local) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |item, other| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { |item, other| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |*items| use(items) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { |*items| use(items) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |(item, other)| use(item, other) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { |(item, other)| use(item, other) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { || \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { || \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { _10 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { _10 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { [_1, _2] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { [_1, _2] }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { proc { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { proc { _1 } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { proc { |_1arg| _1arg } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { proc { |_1arg| _1arg } }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object([]) { |item; local| use(item, local) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each.with_object([]) { |item; local| use(item, local) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object(make) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object(make) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each.with_object(\n# object\n[]) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([],&handler)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([],&handler)\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each { |x| x }.with_object([]) { |item| use(item) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { |x| x } { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each { |x| x }.with_object([]) { |item| use(item) }\n",
+    "reason": "Keep report-only when removing with_index/with_object would leave two adjacent blocks and introduce invalid Ruby."
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { obj._1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { obj._1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { _1; \"_2\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1; \"_2\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { _1; obj._2 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1; obj._2 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { /_1/ }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { /_1/ }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { {_1: 1} }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { {_1: 1} }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { \"#{_1}\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { \"#{_1}\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { obj._1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { obj._1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { _1; \"_2\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1; \"_2\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { _1; obj._2 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { _1; obj._2 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { /_1/ }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { /_1/ }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { {_1: 1} }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { {_1: 1} }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { \"#{_1}\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { \"#{_1}\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1].each_with_object(seen << :created) { \"_1\" }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\n[1].each_with_object(seen << :created) { \"_1\" }\np seen\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1].each_with_object(seen << :created) { proc { _1 } }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\n[1].each_with_object(seen << :created) { proc { _1 } }\np seen\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "class Items\n def each_with_index; yield :old; :old_return; end\n def each; yield :new; :new_return; end\nend\np Items.new.each_with_index { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Items\n def each_with_index; yield :old; :old_return; end\n def each; yield :new; :new_return; end\nend\np Items.new.each_with_index { \"_1\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "seen = []\n[1,2].each_with_index { |item| seen << item }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\n[1,2].each { |item| seen << item }\np seen\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1,2].each_with_object([]) { |item| seen << item }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\n[1,2].each { |item| seen << item }\np seen\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def b; :method_value; end\ndef f(a: b, b:); [a,b]; end\np f(b: :argument_value)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def b; :method_value; end\ndef f(b:, a: b); [a,b]; end\np f(b: :argument_value)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def b; :method_value; end\ndef f(a: b, b:); [a,b]; end\np f(b: :argument_value)\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard."
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:); [a,b]; end\np f(b: 2)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: 1); [a,b]; end\np f(b: 2)\n"
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "fn = ->(a: 1, b:, **rest) { [a,b,rest] }\np fn.call(b: 2, extra: 3)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "fn = ->(b:, a: 1, **rest) { [a,b,rest] }\np fn.call(b: 2, extra: 3)\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "zip = [[:a, 1]]; p Hash[zip]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "zip = [[:a, 1]]; p zip.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[zip]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "Hash[zip([])]\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::foo; :ok; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.foo; :ok; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self.foo; :ok; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def self.foo; :ok; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def Foo::bar(a = 1, **kw, &block); a; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def Foo.bar(a = 1, **kw, &block); a; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def (foo)::bar; :ok; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def (foo).bar; :ok; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def (foo || bar)::baz; :ok; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 16,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def (foo || bar).baz; :ok; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::foo = :ok\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.foo = :ok\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::[](key); key; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.[](key); key; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::value=(value); value; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.value=(value); value; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::foo # keep\n :ok\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.foo # keep\n :ok\nend\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class << self; def foo; :ok; end; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class << self; def foo; :ok; end; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::foo; def self::bar; :ok; end; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.foo; def self.bar; :ok; end; end\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "::File.dirname(::File.realpath(__FILE__))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__)) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__ { work }\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__) { work })\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__) { work })\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(File.realpath(__FILE__)) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__ { work }\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(File.realpath(__FILE__) { work })\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.dirname(File.realpath(__FILE__) { work })\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__), base)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__), base)\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__, 2))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__, 2))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__), &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__), &block)\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__, &block))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__, &block))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname((__FILE__)))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname((__FILE__)))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path((File.dirname(__FILE__)))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path((File.dirname(__FILE__)))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path File.dirname(__FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(File.realpath(\"__FILE__\"))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.dirname(File.realpath(\"__FILE__\"))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__), **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__), **options)\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__), *others)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__), *others)\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__))&.size\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__&.size\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(\n # keep\n File.dirname(__FILE__)\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { || :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo do ||\n :ok\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo do\n :ok\nend\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { | | :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |\n| :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { # keep\n || :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { | # keep\n | :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |; local| local }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |; local| local }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |*| :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |*| :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |**| :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |**| :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |&| :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |&| :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |(a,b)| a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |(a,b)| a }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "lambda { || :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "lambda { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "proc { || :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "proc { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { || bar { || :ok } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { bar { :ok } }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { _1 }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { || bar { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { bar { _1 } }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |a; b| a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |a; b| a }\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen 1 then a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1,\n 2 then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen 1,\n 2 then\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen (1) then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen (1)\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then # keep\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1 # keep\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n # keep\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n # keep\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then;\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1;\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1\n then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n case y\n when 2 then\n b\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 8,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n case y\n when 2\n b\n end\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n a\nwhen 2 then\n b\nelse\n c\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n a\nwhen 2\n b\nelse\n c\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case\nwhen test then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case\nwhen test\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then; a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen 1 then; a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen foo(\n 1\n) then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen foo(\n 1\n) then\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n begin a; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n begin a; end\nend\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(str)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "::ERB.new(str, nil, \"-\", \"buffer\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 25,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "::ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, level(), mode(), output())\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: mode())` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 30,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: output())` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: mode(), eoutvar: output())\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, trim_mode: \"-\", eoutvar: \"buffer\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: trim_mode: \"-\", eoutvar: \"buffer\", eoutvar: \"buffer\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, trim_mode: \"-\", eoutvar: \"buffer\")\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", trim_mode: \"+\", eoutvar: \"buffer\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buffer\", trim_mode: \"+\", eoutvar: \"other\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buffer\", other())\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, {trim_mode: \"-\", eoutvar: \"buffer\"})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: {trim_mode: \"-\", eoutvar: \"buffer\"}, eoutvar: \"buffer\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, {trim_mode: \"-\", eoutvar: \"buffer\"})\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", {eoutvar: \"buffer\"})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, \"-\", **options)\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, *args)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, *args)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: *args)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: *args)\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, *args)\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: &block)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: &block)\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, \"-\", &block)\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str) { work }\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buffer\") { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\") { work }\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, trim_mode: mode(), unexpected: side_effect())\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: trim_mode: mode(), unexpected: side_effect())\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, trim_mode: mode(), unexpected: side_effect())\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, :\"trim_mode\" => \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: :\"trim_mode\" => \"-\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, :\"trim_mode\" => \"-\")\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", :\"eoutvar\" => \"buffer\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n",
+    "rust_corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n",
+    "reason": "Preserve the explicit eoutvar keyword value; pinned Ruby drops it when the final hash uses quoted keys or is followed by a block pass."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buffer\", trim_mode: \"-\", **more)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(\n str, # keep\n nil,\n \"-\"\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(\n str, trim_mode: \"-\"\n)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(str, **options)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", trim_mode: mode(), eoutvar: output(), &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n",
+    "rust_corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: output())\n",
+    "reason": "Preserve the explicit eoutvar keyword value; pinned Ruby drops it when the final hash uses quoted keys or is followed by a block pass."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, trim_mode: mode(), eoutvar: output(), &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 56,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: &block)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: trim_mode: mode(), eoutvar: output(), eoutvar: &block)\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, trim_mode: mode(), eoutvar: output(), &block)\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buf\", &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buf\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buf\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, *args, \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", {eoutvar: \"buf\"})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buf\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, {other: value})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: {other: value})\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, {other: value})\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", eoutvar: \"buf\", **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buf\")\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "module Probe\n module File\n  def self.dirname(path); yield; \"unchanged\"; end\n  def self.expand_path(path); path; end\n end\n seen = []\n value = File.expand_path(File.dirname(__FILE__) { seen << :called })\n p [value, seen]\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module Probe\n module File\n  def self.dirname(path); yield; \"unchanged\"; end\n  def self.expand_path(path); path; end\n end\n seen = []\n value = File.expand_path(File.dirname(__FILE__) { seen << :called })\n p [value, seen]\nend\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "p File.expand_path(File.dirname(__FILE__)) == __dir__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p __dir__ == __dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__)) do\n work\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__ do\n work\nend\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class Probe\n def self::call(value); value + 1; end\nend\np Probe.call(2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n def self.call(value); value + 1; end\nend\np Probe.call(2)\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "p [1, 2].map { || :fixed }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [1, 2].map { :fixed }\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "value = case 1\nwhen 1 then\n :matched\nelse\n :other\nend\np value\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = case 1\nwhen 1\n :matched\nelse\n :other\nend\np value\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { alias _1 puts }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { alias _1 puts }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { undef _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_index { undef _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { alias :\"#{_1}\" :puts }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { alias :\"#{_1}\" :puts }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each_with_index { undef :\"#{_1}\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { undef :\"#{_1}\" }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { alias _1 puts }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { alias _1 puts }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { undef _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.each_with_object([]) { undef _1 }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { alias :\"#{_1}\" :puts }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { alias :\"#{_1}\" :puts }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each_with_object([]) { undef :\"#{_1}\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.each { undef :\"#{_1}\" }\n"
   }
 ]

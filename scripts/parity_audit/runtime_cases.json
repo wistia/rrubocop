@@ -225,5 +225,594 @@
       "files": {},
       "watch": []
     }
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "seen = []\ndef entry(seen, key, value)\n seen << [key, value]\n [key, value]\nend\npairs = [entry(seen, :a, 1), entry(seen, :a, 2), entry(seen, :b, 3)]\np [Hash[pairs], seen]\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 3,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\ndef entry(seen, key, value)\n seen << [key, value]\n [key, value]\nend\npairs = [entry(seen, :a, 1), entry(seen, :a, 2), entry(seen, :b, 3)]\np [pairs.to_h, seen]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "seen = []\nitems = Object.new\ndef items.zip\n yield\n [[:a, 1]]\nend\np Hash[items.zip { seen << :zip }]\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 2,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nitems = Object.new\ndef items.zip\n yield\n [[:a, 1]]\nend\np items.zip { seen << :zip }.to_h\np seen\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "def consume(value, extra)\n p [value, extra, yield]\nend\nconsume Hash[:a, 1], 42 do\n :callback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 8,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "def consume(value, extra)\n p [value, extra, yield]\nend\nconsume({:a => 1}, 42) do\n :callback\nend\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "options = {a: 1, b: 2}\np Hash[**options]\np options\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "options = {a: 1, b: 2}\np({**options})\np options\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "seen = []\np Hash.[](:a, 1) { seen << :called }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\np {:a => 1} { seen << :called }\np seen\n",
+    "rust_correctable": false,
+    "rust_corrected": "seen = []\np Hash.[](:a, 1) { seen << :called }\np seen\n",
+    "reason": "Pinned Ruby attaches a block to a hash literal and generates invalid Ruby; keep the diagnostic without correction."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\nseen = []\nttl = 60\nvalue = \"payload\"\np redis.setex(:key, ttl, value) { seen << :callback }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 11,
+        "column": 2,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\nseen = []\nttl = 60\nvalue = \"payload\"\np redis.set(:key, value, ex: ttl) { seen << :callback }\np seen\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\ndef tick(seen, name, value)\n seen << name\n value\nend\nseen = []\np redis.setex(tick(seen, :key, :key), tick(seen, :ttl, 60), tick(seen, :value, \"payload\"))\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 13,
+        "column": 2,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\ndef tick(seen, name, value)\n seen << name\n value\nend\nseen = []\np redis.set(tick(seen, :key, :key), tick(seen, :value, \"payload\"), ex: tick(seen, :ttl, 60))\np seen\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\ndef tick(seen, name, value)\n seen << name\n value\nend\nseen = []\np redis.setex(tick(seen, :key, :key), tick(seen, :ttl, 60), tick(seen, :value, \"payload\"))\np seen\n",
+    "reason": "Preserve key/TTL/value evaluation order by keeping effectful argument swaps report-only."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis = nil\nseen = []\np redis&.setex(:key, 60, \"payload\") { seen << :called }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "redis = nil\nseen = []\np redis&.setex(:key, 60, \"payload\") { seen << :called }\np seen\n"
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1].each_with_object(seen << :created) { \"_1\" }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\n[1].each_with_object(seen << :created) { \"_1\" }\np seen\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1].each_with_object(seen << :created) { proc { _1 } }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\n[1].each_with_object(seen << :created) { proc { _1 } }\np seen\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "class Items\n def each_with_index; yield :old; :old_return; end\n def each; yield :new; :new_return; end\nend\np Items.new.each_with_index { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Items\n def each_with_index; yield :old; :old_return; end\n def each; yield :new; :new_return; end\nend\np Items.new.each_with_index { \"_1\" }\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "seen = []\n[1,2].each_with_index { |item| seen << item }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\n[1,2].each { |item| seen << item }\np seen\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1,2].each_with_object([]) { |item| seen << item }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\n[1,2].each { |item| seen << item }\np seen\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def b; :method_value; end\ndef f(a: b, b:); [a,b]; end\np f(b: :argument_value)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def b; :method_value; end\ndef f(b:, a: b); [a,b]; end\np f(b: :argument_value)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def b; :method_value; end\ndef f(a: b, b:); [a,b]; end\np f(b: :argument_value)\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard.",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:); [a,b]; end\np f(b: 2)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: 1); [a,b]; end\np f(b: 2)\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "fn = ->(a: 1, b:, **rest) { [a,b,rest] }\np fn.call(b: 2, extra: 3)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "fn = ->(b:, a: 1, **rest) { [a,b,rest] }\np fn.call(b: 2, extra: 3)\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "module Probe\n module File\n  def self.dirname(path); yield; \"unchanged\"; end\n  def self.expand_path(path); path; end\n end\n seen = []\n value = File.expand_path(File.dirname(__FILE__) { seen << :called })\n p [value, seen]\nend\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module Probe\n module File\n  def self.dirname(path); yield; \"unchanged\"; end\n  def self.expand_path(path); path; end\n end\n seen = []\n value = File.expand_path(File.dirname(__FILE__) { seen << :called })\n p [value, seen]\nend\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "p File.expand_path(File.dirname(__FILE__)) == __dir__\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p __dir__ == __dir__\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class Probe\n def self::call(value); value + 1; end\nend\np Probe.call(2)\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n def self.call(value); value + 1; end\nend\np Probe.call(2)\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "p [1, 2].map { || :fixed }\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [1, 2].map { :fixed }\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "value = case 1\nwhen 1 then\n :matched\nelse\n :other\nend\np value\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = case 1\nwhen 1\n :matched\nelse\n :other\nend\np value\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n options = {eoutvar: \"buffer\"}\n p ERB.new(\"source\", nil, \"-\", **options)\nend\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 8,
+        "column": 21,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 8,
+        "column": 26,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n options = {eoutvar: \"buffer\"}\n p ERB.new(\"source\", trim_mode: \"-\")\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n options = {eoutvar: \"buffer\"}\n p ERB.new(\"source\", nil, \"-\", **options)\nend\n",
+    "reason": "Preserve legacy argument evaluation and callback forwarding when positional/keyword conversion is ambiguous or would create invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n block = proc { :callback }\n p ERB.new(\"source\", nil, \"-\", &block)\nend\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 8,
+        "column": 21,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 8,
+        "column": 26,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 8,
+        "column": 31,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: &block)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n block = proc { :callback }\n p ERB.new(\"source\", trim_mode: \"-\", eoutvar: &block)\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n block = proc { :callback }\n p ERB.new(\"source\", nil, \"-\", &block)\nend\n",
+    "reason": "Preserve legacy argument evaluation and callback forwarding when positional/keyword conversion is ambiguous or would create invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n p ERB.new(\"source\", nil, {trim_mode: \"-\", eoutvar: \"buffer\"})\nend\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 21,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n p ERB.new(\"source\", trim_mode: {trim_mode: \"-\", eoutvar: \"buffer\"}, eoutvar: \"buffer\")\nend\n",
+    "rust_correctable": false,
+    "rust_corrected": "module Probe\n module ERB\n  def self.new(*args, **kwargs, &block)\n   [args, kwargs, block ? block.call : nil]\n  end\n end\n p ERB.new(\"source\", nil, {trim_mode: \"-\", eoutvar: \"buffer\"})\nend\n",
+    "reason": "Preserve legacy argument evaluation and callback forwarding when positional/keyword conversion is ambiguous or would create invalid Ruby."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "zip = [[:a, 1]]; p Hash[zip]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "zip = [[:a, 1]]; p zip.to_h\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
   }
 ]

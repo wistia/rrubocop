@@ -1,0 +1,195 @@
+[
+  {
+    "cop": "Style/HashConversion",
+    "source": "seen = []\ndef entry(seen, key, value)\n seen << [key, value]\n [key, value]\nend\npairs = [entry(seen, :a, 1), entry(seen, :a, 2), entry(seen, :b, 3)]\np [Hash[pairs], seen]\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 3,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\ndef entry(seen, key, value)\n seen << [key, value]\n [key, value]\nend\npairs = [entry(seen, :a, 1), entry(seen, :a, 2), entry(seen, :b, 3)]\np [pairs.to_h, seen]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "seen = []\nitems = Object.new\ndef items.zip\n yield\n [[:a, 1]]\nend\np Hash[items.zip { seen << :zip }]\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 2,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nitems = Object.new\ndef items.zip\n yield\n [[:a, 1]]\nend\np items.zip { seen << :zip }.to_h\np seen\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "def consume(value, extra)\n p [value, extra, yield]\nend\nconsume Hash[:a, 1], 42 do\n :callback\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 8,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "def consume(value, extra)\n p [value, extra, yield]\nend\nconsume({:a => 1}, 42) do\n :callback\nend\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "options = {a: 1, b: 2}\np Hash[**options]\np options\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "options = {a: 1, b: 2}\np({**options})\np options\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "seen = []\np Hash.[](:a, 1) { seen << :called }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\np {:a => 1} { seen << :called }\np seen\n",
+    "rust_correctable": false,
+    "rust_corrected": "seen = []\np Hash.[](:a, 1) { seen << :called }\np seen\n",
+    "reason": "Pinned Ruby attaches a block to a hash literal and generates invalid Ruby; keep the diagnostic without correction."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\nseen = []\nttl = 60\nvalue = \"payload\"\np redis.setex(:key, ttl, value) { seen << :callback }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 11,
+        "column": 2,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\nseen = []\nttl = 60\nvalue = \"payload\"\np redis.set(:key, value, ex: ttl) { seen << :callback }\np seen\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\ndef tick(seen, name, value)\n seen << name\n value\nend\nseen = []\np redis.setex(tick(seen, :key, :key), tick(seen, :ttl, 60), tick(seen, :value, \"payload\"))\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 13,
+        "column": 2,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\ndef tick(seen, name, value)\n seen << name\n value\nend\nseen = []\np redis.set(tick(seen, :key, :key), tick(seen, :value, \"payload\"), ex: tick(seen, :ttl, 60))\np seen\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis = Object.new\ndef redis.setex(key, ttl, value)\n [key, value, {ex: ttl}, block_given? ? yield : nil]\nend\ndef redis.set(key, value, ex:)\n [key, value, {ex: ex}, block_given? ? yield : nil]\nend\ndef tick(seen, name, value)\n seen << name\n value\nend\nseen = []\np redis.setex(tick(seen, :key, :key), tick(seen, :ttl, 60), tick(seen, :value, \"payload\"))\np seen\n",
+    "reason": "Preserve key/TTL/value evaluation order by keeping effectful argument swaps report-only."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis = nil\nseen = []\np redis&.setex(:key, 60, \"payload\") { seen << :called }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "redis = nil\nseen = []\np redis&.setex(:key, 60, \"payload\") { seen << :called }\np seen\n"
+  }
+]

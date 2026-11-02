@@ -1,0 +1,177 @@
+[
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1].each_with_object(seen << :created) { \"_1\" }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\n[1].each_with_object(seen << :created) { \"_1\" }\np seen\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1].each_with_object(seen << :created) { proc { _1 } }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\n[1].each_with_object(seen << :created) { proc { _1 } }\np seen\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "class Items\n def each_with_index; yield :old; :old_return; end\n def each; yield :new; :new_return; end\nend\np Items.new.each_with_index { \"_1\" }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class Items\n def each_with_index; yield :old; :old_return; end\n def each; yield :new; :new_return; end\nend\np Items.new.each_with_index { \"_1\" }\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "seen = []\n[1,2].each_with_index { |item| seen << item }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\n[1,2].each { |item| seen << item }\np seen\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "seen = []\n[1,2].each_with_object([]) { |item| seen << item }\np seen\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\n[1,2].each { |item| seen << item }\np seen\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def b; :method_value; end\ndef f(a: b, b:); [a,b]; end\np f(b: :argument_value)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def b; :method_value; end\ndef f(b:, a: b); [a,b]; end\np f(b: :argument_value)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def b; :method_value; end\ndef f(a: b, b:); [a,b]; end\np f(b: :argument_value)\n",
+    "reason": "Keep report-only when moving keyword parameters could alter default-expression binding/evaluation or discard comments; existing conservative default guard.",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "def f(a: 1, b:); [a,b]; end\np f(b: 2)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(b:, a: 1); [a,b]; end\np f(b: 2)\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  },
+  {
+    "cop": "Style/KeywordParametersOrder",
+    "source": "fn = ->(a: 1, b:, **rest) { [a,b,rest] }\np fn.call(b: 2, extra: 3)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Place optional keyword parameters at the end of the parameters list.",
+        "correctable": true
+      }
+    ],
+    "corrected": "fn = ->(b:, a: 1, **rest) { [a,b,rest] }\np fn.call(b: 2, extra: 3)\n",
+    "runtime": {
+      "files": {},
+      "watch": []
+    }
+  }
+]

@@ -9,16 +9,22 @@ pub(super) fn erb(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         c,
         &arguments,
         &c.render_edit(|| good_arguments(c, n, &arguments)),
+        correctable_arguments(&arguments),
     )
 }
-fn erb_findings(c: &Context<'_>, arguments: &[Node<'_>], good: &str) -> Vec<Finding> {
-    arguments
+fn erb_findings(
+    c: &Context<'_>,
+    arguments: &[Node<'_>],
+    good: &str,
+    correctable: bool,
+) -> Vec<Finding> {
+    diagnostic_arguments(arguments)
         .iter()
         .skip(1)
         .take(3)
         .enumerate()
         .filter(|(_, a)| !is_options(**a))
-        .map(|(i, arg)| erb_finding(c, arguments, *arg, i, good))
+        .map(|(i, arg)| erb_finding(c, arguments, *arg, i, good, correctable))
         .collect()
 }
 fn erb_finding(
@@ -27,8 +33,13 @@ fn erb_finding(
     arg: Node<'_>,
     index: usize,
     good: &str,
+    correctable: bool,
 ) -> Finding {
-    Finding::new(arg, message(index, c.text(arg))).edit_with(
+    let finding = Finding::new(arg, message(index, c.text(arg)));
+    if !correctable {
+        return finding;
+    }
+    finding.edit_with(
         c,
         arguments[0].start_byte(),
         arguments.last().unwrap().end_byte(),
@@ -47,7 +58,31 @@ fn legacy_erb(c: &Context<'_>, n: Node<'_>) -> bool {
     a.len() >= 2 && !(a.len() == 2 && is_options(a[1]))
 }
 fn is_options(n: Node<'_>) -> bool {
-    matches!(n.kind(), "hash" | "pair")
+    matches!(n.kind(), "hash" | "pair" | "hash_splat_argument")
+}
+
+fn diagnostic_arguments<'n>(arguments: &[Node<'n>]) -> Vec<Node<'n>> {
+    let mut keywords = false;
+    arguments
+        .iter()
+        .copied()
+        .filter(|argument| {
+            let current = matches!(argument.kind(), "pair" | "hash_splat_argument");
+            let include = !current || !keywords;
+            keywords = current;
+            include
+        })
+        .collect()
+}
+
+fn correctable_arguments(arguments: &[Node<'_>]) -> bool {
+    !arguments.get(2).is_some_and(|arg| is_options(*arg))
+        && !arguments.iter().take(4).skip(2).any(|arg| {
+            matches!(
+                arg.kind(),
+                "splat_argument" | "hash_splat_argument" | "block_argument"
+            )
+        })
 }
 fn good_arguments(c: &Context<'_>, n: Node<'_>, a: &[Node<'_>]) -> String {
     let mut good = vec![c.text(a[0]).to_string()];

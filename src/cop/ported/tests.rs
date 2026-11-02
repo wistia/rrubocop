@@ -71,5 +71,6 @@ mod pipeline;
 mod parity;
 
 mod audit;
+mod composition;
 
 mod top_level;

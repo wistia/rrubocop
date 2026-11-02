@@ -1,5 +1,6 @@
 use super::super::context::*;
 use tree_sitter::Node;
+mod numbered;
 fn single_block_arg(c: &Context<'_>, n: Node<'_>) -> bool {
     let Some(b) = block(n) else {
         return false;
@@ -8,8 +9,7 @@ fn single_block_arg(c: &Context<'_>, n: Node<'_>) -> bool {
         let p = kids(p);
         return p.len() == 1 && p[0].kind() == "identifier";
     }
-    let text = c.text(b);
-    text.contains("_1") && !(2..=9).any(|i| text.contains(&format!("_{i}")))
+    body(b).is_some_and(|body| numbered::count(c, body) == 1)
 }
 pub(super) fn with_index(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     redundant_with(c, n, "index")

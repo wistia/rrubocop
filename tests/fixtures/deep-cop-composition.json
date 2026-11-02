@@ -1,0 +1,96 @@
+[
+  {
+    "name": "hash keyword defaults",
+    "cops": [
+      "Style/HashConversion",
+      "Style/KeywordParametersOrder"
+    ],
+    "source": "def sample(z: Hash[:a, 1], a:)\n [z, a]\nend\np sample(a: 2)\n",
+    "expected": {
+      "off": "def sample(z: Hash[:a, 1], a:)\n [z, a]\nend\np sample(a: 2)\n",
+      "safe": "def sample(z: Hash[:a, 1], a:)\n [z, a]\nend\np sample(a: 2)\n",
+      "all": "def sample(z: {:a => 1}, a:)\n [z, a]\nend\np sample(a: 2)\n"
+    }
+  },
+  {
+    "name": "hash conversion with enumerator",
+    "cops": [
+      "Style/HashConversion",
+      "Lint/RedundantWithIndex",
+      "Style/EmptyBlockParameter"
+    ],
+    "source": "pairs = [[:a, 1], [:b, 2]]\nseen = []\np Hash[pairs.each.with_index { |pair| seen << pair }]\np seen\n",
+    "expected": {
+      "off": "pairs = [[:a, 1], [:b, 2]]\nseen = []\np Hash[pairs.each.with_index { |pair| seen << pair }]\np seen\n",
+      "safe": "pairs = [[:a, 1], [:b, 2]]\nseen = []\np Hash[pairs.each { |pair| seen << pair }]\np seen\n",
+      "all": "pairs = [[:a, 1], [:b, 2]]\nseen = []\np pairs.each { |pair| seen << pair }.to_h\np seen\n"
+    }
+  },
+  {
+    "name": "empty parameters and path",
+    "cops": [
+      "Style/Dir",
+      "Style/EmptyBlockParameter"
+    ],
+    "source": "p [1].map { || File.dirname(File.realpath(__FILE__)) }\n",
+    "expected": {
+      "off": "p [1].map { || File.dirname(File.realpath(__FILE__)) }\n",
+      "safe": "p [1].map { __dir__ }\n",
+      "all": "p [1].map { __dir__ }\n"
+    }
+  },
+  {
+    "name": "singleton keyword defaults",
+    "cops": [
+      "Style/ColonMethodDefinition",
+      "Style/KeywordParametersOrder",
+      "Style/HashConversion"
+    ],
+    "source": "module Demo\n def self::sample(z: 1, a:)\n  [Hash[:z, z], a]\n end\nend\np Demo.sample(a: 2)\n",
+    "expected": {
+      "off": "module Demo\n def self::sample(z: 1, a:)\n  [Hash[:z, z], a]\n end\nend\np Demo.sample(a: 2)\n",
+      "safe": "module Demo\n def self.sample(a:, z: 1)\n  [Hash[:z, z], a]\n end\nend\np Demo.sample(a: 2)\n",
+      "all": "module Demo\n def self.sample(a:, z: 1)\n  [{:z => z}, a]\n end\nend\np Demo.sample(a: 2)\n"
+    }
+  },
+  {
+    "name": "when path hash",
+    "cops": [
+      "Style/MultilineWhenThen",
+      "Style/Dir",
+      "Style/HashConversion"
+    ],
+    "source": "case 1\nwhen 1 then\n p Hash[:path, File.dirname(File.realpath(__FILE__))]\nend\n",
+    "expected": {
+      "off": "case 1\nwhen 1 then\n p Hash[:path, File.dirname(File.realpath(__FILE__))]\nend\n",
+      "safe": "case 1\nwhen 1\n p Hash[:path, __dir__]\nend\n",
+      "all": "case 1\nwhen 1\n p({:path => __dir__})\nend\n"
+    }
+  },
+  {
+    "name": "with object empty parameter nested",
+    "cops": [
+      "Lint/RedundantWithObject",
+      "Style/EmptyBlockParameter"
+    ],
+    "source": "seen = []\np [1,2].each.with_object([]) { |value| seen << [value, proc { || :ok }.call] }\np seen\n",
+    "expected": {
+      "off": "seen = []\np [1,2].each.with_object([]) { |value| seen << [value, proc { || :ok }.call] }\np seen\n",
+      "safe": "seen = []\np [1,2].each { |value| seen << [value, proc { :ok }.call] }\np seen\n",
+      "all": "seen = []\np [1,2].each { |value| seen << [value, proc { :ok }.call] }\np seen\n"
+    }
+  },
+  {
+    "name": "redis spy and hash conversion",
+    "cops": [
+      "Cops/NoSetex",
+      "Style/HashConversion"
+    ],
+    "source": "class Spy\n attr_reader :calls\n def initialize; @calls = []; end\n def setex(key, expiry, value); @calls << [key, expiry, value]; end\n def set(key, value, ex:); @calls << [key, ex, value]; end\nend\nspy = Spy.new\nvalue = Hash[:a, 1]\nspy.setex(\"key\", 3, value)\np spy.calls\n",
+    "expected": {
+      "off": "class Spy\n attr_reader :calls\n def initialize; @calls = []; end\n def setex(key, expiry, value); @calls << [key, expiry, value]; end\n def set(key, value, ex:); @calls << [key, ex, value]; end\nend\nspy = Spy.new\nvalue = Hash[:a, 1]\nspy.setex(\"key\", 3, value)\np spy.calls\n",
+      "safe": "class Spy\n attr_reader :calls\n def initialize; @calls = []; end\n def setex(key, expiry, value); @calls << [key, expiry, value]; end\n def set(key, value, ex:); @calls << [key, ex, value]; end\nend\nspy = Spy.new\nvalue = Hash[:a, 1]\nspy.set(\"key\", value, ex: 3)\np spy.calls\n",
+      "all": "class Spy\n attr_reader :calls\n def initialize; @calls = []; end\n def setex(key, expiry, value); @calls << [key, expiry, value]; end\n def set(key, value, ex:); @calls << [key, ex, value]; end\nend\nspy = Spy.new\nvalue = {:a => 1}\nspy.set(\"key\", value, ex: 3)\np spy.calls\n"
+    }
+  }
+]

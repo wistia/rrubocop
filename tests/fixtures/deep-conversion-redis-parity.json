@@ -1,0 +1,1407 @@
+[
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](pairs) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "pairs.to_h { work }\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[pairs] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "pairs.to_h { work }\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](:a, 1) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash.[](:a, 1) { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[:a, 1] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash[:a, 1] { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](a: 1) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{a: 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash.[](a: 1) { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[a: 1] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{a: 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash[a: 1] { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "consume Hash.[](:a, 1) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume {:a => 1} { work }\n",
+    "rust_correctable": false,
+    "rust_corrected": "consume Hash.[](:a, 1) { work }\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "consume Hash[:a, 1], 42 do work end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume({:a => 1}, 42) do work end\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](pairs, &callback)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{pairs => &callback}\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash.[](pairs, &callback)\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[:a, 1, &callback]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": false
+      }
+    ],
+    "corrected": "Hash[:a, 1, &callback]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items.zip { work }]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.zip { work }.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](items.zip { work })\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.zip { work }.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items.zip()]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "Hash[items.zip([])]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items.zip(&callback)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.zip(&callback).to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items&.zip]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items&.zip.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items&.zip()]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items&.zip().to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items&.zip(other)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items&.zip(other).to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[items&.pairs]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "items&.pairs.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[if test; a; else; b; end]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "if test; a; else; b; end.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[case value; when 1; a; else; b; end]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "case value; when 1; a; else; b; end.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[begin; a; end]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin; a; end.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[-> { [:a, 1] }]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "-> { [:a, 1] }.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[1..2]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "1..2.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[a ? b : c]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "a ? b : c.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[a + b]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "(a + b).to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[a..b]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "a..b.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[{a: 1}]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{{a: 1}}\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash[{a: 1}]\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[**options]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{**options}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](**options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{**options}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[:a, 1, **options]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": false
+      }
+    ],
+    "corrected": "Hash[:a, 1, **options]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[:a, 1, :a, 2]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1, :a => 2}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[*(pairs)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Hash[*(pairs)]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[\n # retained\n :a, 1]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[<<~PAIRS]\n pairs\nPAIRS\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "<<~PAIRS.to_h\n pairs\nPAIRS\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](\n :a, # retained\n 1) do work end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1} do work end\n",
+    "rust_correctable": false,
+    "rust_corrected": "Hash.[](\n :a, # retained\n 1) do work end\n",
+    "reason": "Keep the diagnostic without correction because pinned Ruby creates an invalid literal with an attached block, forwarded block argument or explicit nested hash braces."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Other::Hash[pairs]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Other::Hash[pairs]\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "::Hash[pairs]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "pairs.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](:a, 1, :b)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": false
+      }
+    ],
+    "corrected": "Hash.[](:a, 1, :b)\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[ary.to_h]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "ary.to_h.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[(yield)]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "(yield).to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](pairs) { |k,v| [k,v] }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "pairs.to_h { |k,v| [k,v] }\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[pairs.zip] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "Hash[pairs.zip([])] { work }\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "consume Hash[a: 1] do work end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Prefer literal hash to Hash[key: value, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "consume({a: 1}) do work end\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[*pairs]\n",
+    "path": "probe.rb",
+    "options": {
+      "AllowSplatArgument": false
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer array_of_pairs.to_h to Hash[*array].",
+        "correctable": false
+      }
+    ],
+    "corrected": "Hash[*pairs]\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"payload\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"payload\", ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis&.setex(:key, 60, \"payload\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "redis&.setex(:key, 60, \"payload\")\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"payload\") { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"payload\", ex: 60) { work }\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex :key, 60, \"payload\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set :key, \"payload\", ex: 60\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "def f(ttl, value); redis.setex(:key, ttl, value); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(ttl, value); redis.set(:key, value, ex: ttl); end\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "ttl = 60; value = \"payload\"; redis.setex(:key, ttl, value, &callback)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 29,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "ttl = 60; value = \"payload\"; redis.set(:key, value, ex: ttl, &callback)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, -1, +2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, +2, ex: -1)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, --1, 2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, 2, ex: --1)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, --1, 2)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, /pattern/, \"payload\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"payload\", ex: /pattern/)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, /pattern/, \"payload\")\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, :\"a\\x62\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, :\"a\\x62\", ex: 60)\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"#{work}\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"#{work}\", ex: 60)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, \"#{work}\")\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, {a: 1})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, {a: 1}, ex: 60)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, {a: 1})\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, value: 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, value: 1, ex: 60)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, value: 1)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, *args, \"value\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"value\", ex: *args)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, *args, \"value\")\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"value\", extra)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"value\", ex: 60, extra)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, \"value\", extra)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, \"value\", **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, \"value\", ex: 60, **options)\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, \"value\", **options)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "def f(ttl, value); redis.setex(\n :key, # key\n ttl, # ttl\n value); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "def f(ttl, value); redis.set(\n :key, # key\n value, # ttl\n ex: ttl); end\n"
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "redis.setex(:key, 60, <<~VALUE)\n payload\nVALUE\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "redis.set(:key, <<~VALUE, ex: 60)\n payload\nVALUE\n",
+    "rust_correctable": false,
+    "rust_corrected": "redis.setex(:key, 60, <<~VALUE)\n payload\nVALUE\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "begin; redis.setex(:key, ttl, value); rescue; end; ttl=60; value=\"payload\"\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin; redis.set(:key, value, ex: ttl); rescue; end; ttl=60; value=\"payload\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "begin; redis.setex(:key, ttl, value); rescue; end; ttl=60; value=\"payload\"\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Cops/NoSetex",
+    "source": "def ttl; puts :ttl; 60; end; def value; puts :value; \"payload\"; end; redis.setex(:key, ttl, value)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 69,
+        "message": "`setex(key, expires_in, value)` is deprecated, please use `set(key, value, ex: expires_in)` instead",
+        "correctable": true
+      }
+    ],
+    "corrected": "def ttl; puts :ttl; 60; end; def value; puts :value; \"payload\"; end; redis.set(:key, value, ex: ttl)\n",
+    "rust_correctable": false,
+    "rust_corrected": "def ttl; puts :ttl; 60; end; def value; puts :value; \"payload\"; end; redis.setex(:key, ttl, value)\n",
+    "reason": "TTL/value swapping remains manual unless both expressions are stable literals or proven lexical locals with exactly three positional arguments. Preserve evaluation order, keyword/hash shape, splats and external heredocs."
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "zip = [[:a, 1]]; p Hash[zip]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "zip = [[:a, 1]]; p zip.to_h\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash[zip]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ary.to_h to Hash[ary].",
+        "correctable": true
+      }
+    ],
+    "corrected": "Hash[zip([])]\n"
+  }
+]

@@ -4,13 +4,12 @@ pub(super) fn dir(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !dir_candidate(c, n) {
         return vec![];
     }
-    vec![
-        Finding::new(
-            n,
-            "Use `__dir__` to get an absolute path to the current file's directory.",
-        )
-        .replace_with(c, n, || "__dir__"),
-    ]
+    let finding = Finding::send(
+        n,
+        "Use `__dir__` to get an absolute path to the current file's directory.",
+    );
+    let end = finding.end;
+    vec![finding.edit_with(c, n.start_byte(), end, || "__dir__")]
 }
 fn file_receiver(c: &Context<'_>, n: Node<'_>) -> bool {
     ["File", "::File"].contains(&c.receiver(n))
@@ -24,6 +23,7 @@ fn dir_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 fn dir_inner(c: &Context<'_>, outer: Node<'_>, inner: Node<'_>) -> bool {
     file_receiver(c, inner)
+        && block(inner).is_none()
         && [("expand_path", "dirname"), ("dirname", "realpath")]
             .contains(&(c.method(outer), c.method(inner)))
         && file_argument(c, inner)

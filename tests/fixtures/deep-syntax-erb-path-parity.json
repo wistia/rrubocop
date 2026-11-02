@@ -1,0 +1,1866 @@
+[
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::foo; :ok; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.foo; :ok; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self.foo; :ok; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def self.foo; :ok; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def Foo::bar(a = 1, **kw, &block); a; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def Foo.bar(a = 1, **kw, &block); a; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def (foo)::bar; :ok; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def (foo).bar; :ok; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def (foo || bar)::baz; :ok; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 16,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def (foo || bar).baz; :ok; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::foo = :ok\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.foo = :ok\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::[](key); key; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.[](key); key; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::value=(value); value; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.value=(value); value; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::foo # keep\n :ok\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.foo # keep\n :ok\nend\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class << self; def foo; :ok; end; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class << self; def foo; :ok; end; end\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "def self::foo; def self::bar; :ok; end; end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def self.foo; def self.bar; :ok; end; end\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "::File.dirname(::File.realpath(__FILE__))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__)) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__ { work }\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__) { work })\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__) { work })\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(File.realpath(__FILE__)) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__ { work }\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(File.realpath(__FILE__) { work })\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.dirname(File.realpath(__FILE__) { work })\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__), base)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__), base)\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__, 2))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__, 2))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__), &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__), &block)\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__, &block))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__, &block))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname((__FILE__)))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname((__FILE__)))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path((File.dirname(__FILE__)))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path((File.dirname(__FILE__)))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path File.dirname(__FILE__)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.dirname(File.realpath(\"__FILE__\"))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.dirname(File.realpath(\"__FILE__\"))\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__), **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__), **options)\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__), *others)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "File.expand_path(File.dirname(__FILE__), *others)\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__))&.size\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__&.size\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(\n # keep\n File.dirname(__FILE__)\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { || :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo do ||\n :ok\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo do\n :ok\nend\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { | | :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |\n| :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { # keep\n || :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { | # keep\n | :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |; local| local }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |; local| local }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |*| :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |*| :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |**| :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |**| :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |&| :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |&| :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |(a,b)| a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |(a,b)| a }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "lambda { || :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "lambda { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "proc { || :ok }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "proc { :ok }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { || bar { || :ok } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { bar { :ok } }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { _1 }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { _1 }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { || bar { _1 } }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo { bar { _1 } }\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "foo { |a; b| a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "foo { |a; b| a }\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen 1 then a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1,\n 2 then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen 1,\n 2 then\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen (1) then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen (1)\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then # keep\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1 # keep\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n # keep\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n # keep\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then;\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1;\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1\n then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n case y\n when 2 then\n b\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 8,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n case y\n when 2\n b\n end\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n a\nwhen 2 then\n b\nelse\n c\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n a\nwhen 2\n b\nelse\n c\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case\nwhen test then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case\nwhen test\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then; a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen 1 then; a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen foo(\n 1\n) then\n a\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "case x\nwhen foo(\n 1\n) then\n a\nend\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "case x\nwhen 1 then\n begin a; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "case x\nwhen 1\n begin a; end\nend\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(str)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "::ERB.new(str, nil, \"-\", \"buffer\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 25,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "::ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, trim_mode: \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, level(), mode(), output())\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: mode())` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 30,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: output())` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: mode(), eoutvar: output())\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, trim_mode: \"-\", eoutvar: \"buffer\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: trim_mode: \"-\", eoutvar: \"buffer\", eoutvar: \"buffer\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, trim_mode: \"-\", eoutvar: \"buffer\")\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", trim_mode: \"+\", eoutvar: \"buffer\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buffer\", trim_mode: \"+\", eoutvar: \"other\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buffer\", other())\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, {trim_mode: \"-\", eoutvar: \"buffer\"})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: {trim_mode: \"-\", eoutvar: \"buffer\"}, eoutvar: \"buffer\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, {trim_mode: \"-\", eoutvar: \"buffer\"})\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", {eoutvar: \"buffer\"})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, \"-\", **options)\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, *args)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, *args)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: *args)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: *args)\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, *args)\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: &block)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: &block)\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, \"-\", &block)\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str) { work }\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buffer\") { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\") { work }\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, trim_mode: mode(), unexpected: side_effect())\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: trim_mode: mode(), unexpected: side_effect())\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, trim_mode: mode(), unexpected: side_effect())\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, :\"trim_mode\" => \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: :\"trim_mode\" => \"-\")\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, :\"trim_mode\" => \"-\")\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", :\"eoutvar\" => \"buffer\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n",
+    "rust_corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n",
+    "reason": "Preserve the explicit eoutvar keyword value; pinned Ruby drops it when the final hash uses quoted keys or is followed by a block pass."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buffer\", trim_mode: \"-\", **more)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buffer\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buffer\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(\n str, # keep\n nil,\n \"-\"\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 1,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(\n str, trim_mode: \"-\"\n)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "ERB.new(str, **options)\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", trim_mode: mode(), eoutvar: output(), &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n",
+    "rust_corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: output())\n",
+    "reason": "Preserve the explicit eoutvar keyword value; pinned Ruby drops it when the final hash uses quoted keys or is followed by a block pass."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, trim_mode: mode(), eoutvar: output(), &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 56,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: &block)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: trim_mode: mode(), eoutvar: output(), eoutvar: &block)\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, trim_mode: mode(), eoutvar: output(), &block)\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", \"buf\", &block)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Passing eoutvar with the 4th argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, eoutvar: \"buf\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buf\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, *args, \"-\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", {eoutvar: \"buf\"})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buf\")\n"
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, {other: value})\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: {other: value})\n",
+    "rust_correctable": false,
+    "rust_corrected": "ERB.new(str, nil, {other: value})\n",
+    "reason": "Keep ambiguous third/fourth legacy option bundles and forwarded arguments manual; converting their positional/keyword shape can discard evaluated values or produce invalid Ruby."
+  },
+  {
+    "cop": "Lint/ErbNewArguments",
+    "source": "ERB.new(str, nil, \"-\", eoutvar: \"buf\", **options)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 13,
+        "message": "Passing safe_level with the 2nd argument of `ERB.new` is deprecated. Do not use it, and specify other arguments as keyword arguments.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "message": "Passing trim_mode with the 3rd argument of `ERB.new` is deprecated. Use keyword argument like `ERB.new(str, trim_mode: \"-\")` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "ERB.new(str, trim_mode: \"-\", eoutvar: \"buf\")\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "module Probe\n module File\n  def self.dirname(path); yield; \"unchanged\"; end\n  def self.expand_path(path); path; end\n end\n seen = []\n value = File.expand_path(File.dirname(__FILE__) { seen << :called })\n p [value, seen]\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module Probe\n module File\n  def self.dirname(path); yield; \"unchanged\"; end\n  def self.expand_path(path); path; end\n end\n seen = []\n value = File.expand_path(File.dirname(__FILE__) { seen << :called })\n p [value, seen]\nend\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "p File.expand_path(File.dirname(__FILE__)) == __dir__\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p __dir__ == __dir__\n"
+  },
+  {
+    "cop": "Style/Dir",
+    "source": "File.expand_path(File.dirname(__FILE__)) do\n work\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `__dir__` to get an absolute path to the current file's directory.",
+        "correctable": true
+      }
+    ],
+    "corrected": "__dir__ do\n work\nend\n"
+  },
+  {
+    "cop": "Style/ColonMethodDefinition",
+    "source": "class Probe\n def self::call(value); value + 1; end\nend\np Probe.call(2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 9,
+        "message": "Do not use `::` for defining class methods.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class Probe\n def self.call(value); value + 1; end\nend\np Probe.call(2)\n"
+  },
+  {
+    "cop": "Style/EmptyBlockParameter",
+    "source": "p [1, 2].map { || :fixed }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 15,
+        "message": "Omit pipes for the empty block parameters.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [1, 2].map { :fixed }\n"
+  },
+  {
+    "cop": "Style/MultilineWhenThen",
+    "source": "value = case 1\nwhen 1 then\n :matched\nelse\n :other\nend\np value\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Do not use `then` for multiline `when` statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = case 1\nwhen 1\n :matched\nelse\n :other\nend\np value\n"
+  }
+]
