@@ -250,3 +250,8 @@ pub(super) fn static_literal(source: &SourceFile, node: Node<'_>) -> Option<Stri
         .static_value(node)
         .map(std::borrow::Cow::into_owned)
 }
+
+pub(super) fn local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
+    let config = CopConfig::default();
+    context::local_identifier(&Context::new(source, &config), node)
+}
