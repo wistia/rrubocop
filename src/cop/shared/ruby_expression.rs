@@ -155,6 +155,17 @@ fn string_shape(source: &SourceFile, node: Node<'_>) -> Option<StringAst> {
         ))
     }
 }
+fn symbol_shape(source: &SourceFile, node: Node<'_>) -> Option<StringAst> {
+    let value = crate::cop::ported::static_symbol(source, node)?;
+    let parts = crate::cop::ported::ruby_string_parts(source, node);
+    if let Some(parts) = parts.filter(|parts| parts.len() > 1) {
+        Some(StringAst::Dstr(
+            parts.into_iter().map(StringAst::Str).collect(),
+        ))
+    } else {
+        Some(StringAst::Str(value))
+    }
+}
 fn same_heredoc(source: &SourceFile, left: Node<'_>, right: Node<'_>, strict: bool) -> bool {
     let same_expression = |source: &SourceFile, left: Node<'_>, right: Node<'_>| {
         compare_expression(source, left, right, strict)
@@ -284,8 +295,8 @@ fn compare_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>, stri
     if let (Some(a), Some(b)) = (complex_value(source, left), complex_value(source, right)) {
         return complex_equal(&a, &b, strict);
     }
-    let symbol_a = crate::cop::ported::static_symbol(source, left);
-    let symbol_b = crate::cop::ported::static_symbol(source, right);
+    let symbol_a = symbol_shape(source, left);
+    let symbol_b = symbol_shape(source, right);
     if symbol_a.is_some() || symbol_b.is_some() {
         return symbol_a == symbol_b;
     }
