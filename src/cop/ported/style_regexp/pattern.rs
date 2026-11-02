@@ -6,6 +6,7 @@ use tree_sitter::Node;
 struct Analysis {
     tokens: OnceLock<Vec<scanner::Token>>,
     captures: OnceLock<(usize, usize)>,
+    named: OnceLock<Vec<(usize, usize)>>,
 }
 pub(super) struct Pattern<'a> {
     pub text: &'a str,
@@ -42,6 +43,11 @@ impl<'a> Pattern<'a> {
             interpolations: interpolations(n, offset),
             analysis: c.source.cached(n.start_byte(), Analysis::default),
         }
+    }
+    pub(super) fn named(&self) -> &[(usize, usize)] {
+        self.analysis
+            .named
+            .get_or_init(|| scanner::named(self.text, self.extended, &self.interpolations))
     }
     pub(super) fn captures(&self) -> Option<(usize, usize)> {
         self.interpolations.is_empty().then(|| {

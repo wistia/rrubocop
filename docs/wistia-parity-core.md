@@ -4,6 +4,17 @@ Reference implementation: Ruby RuboCop 1.65.1, as pinned by Wistia. The starting
 inventory and reproductions are the comprehensive audit of fork a8c56ec. No
 retirement of enforced rules or relaxed parity exceptions is authorized here.
 
+## Current scope
+
+Seventeen owned rules now have implemented behavior backed by original-Ruby
+comparisons, including seven of the original thirteen direct-file Style
+stubs, the additional delegated RedundantParentheses stub, and both absent
+version-gated cops. HashSyntax shorthand branches and additional
+UselessAssignment capture combinations remain under review. The exhaustive
+367-rule inventory retains 350 queued validation entries; some already had
+implementations. These bounded original-spec results do not establish
+universal parity for arbitrary Ruby source.
+
 ## Layout/SpaceAroundOperators
 
 The first batch ports the original operator and alignment branches instead of
@@ -368,3 +379,49 @@ tests with one unrelated existing ignored test; the only failing test is the
 new in-progress UselessAssignment reference matrix (two named-capture gaps
 and four explicit operator-declaration safety differences). This checkpoint
 does not claim completion of that cop.
+
+## UselessAssignment original-spec/dataflow checkpoint
+
+Ports the pinned Ruby 1.65.1 UselessAssignment algorithm and its VariableForce
+assignment/reference/branch behavior. Original sources inspected include
+`lint/useless_assignment.rb`, `variable_force.rb`, and
+`variable_force/{assignment,variable,reference,branch,branchable,scope}.rb`.
+Name suggestions follow Ruby 3.4.9's DidYouMean spell-checker/Jaro-Winkler and
+Levenshtein algorithm. Per-write liveness now handles overwritten writes,
+branch exclusivity, incomplete rescue/ensure paths, modifier declarations,
+loops/retry, block captures and method/scope boundaries. Corrections cover
+plain, chained, sequential, multiple/rest, for, rescue, operator and named
+regexp assignments, preserving the original unsafe autocorrection policy.
+
+All 118 active original examples pass in Ruby; one additional upstream
+example is already pending. Capturing those examples yields 176 states.
+The upstream RSpec helper reuses a cop while creating a new Team for each
+investigation, which retains ignored-node ranges across changed source in
+chained-assignment examples. The committed refresh helper re-investigates
+each state with a fresh original cop; native CLI investigation independently
+confirms the fresh-source behavior. No stateful negative is used as proof
+that a fresh source is accepted.
+
+Rust matches 172 fresh states exactly on messages, ranges and first-pass
+corrected bytes. Four explicit safeguard fixtures preserve the local
+declaration in a fresh operator assignment, while comparing the identical
+original diagnostic. An authored isolated runtime probe confirms the
+original `foo ||= 1` value is 1 and its `foo || 1` correction raises NameError.
+The rule's original documentation identifies this unsafe declaration change.
+These four original corrected byte sequences remain visible in the fixture
+and are not claimed as equal Rust corrections.
+
+The full current native suite passes 864 tests, with one existing ignored
+test. Across all 176 original sources in both real CLI modes, Ruby and Rust
+match corrected bytes and exit codes for 348/352 comparisons. The only four
+differences are the documented unsafe -A declaration removals; Ruby and Rust
+are each byte-idempotent on all 352 unconditional second-pass comparisons.
+There are no CLI errors. Two further real Ruby/Rust CLI comparisons preserve
+non-UTF-8 RHS bytes without lossy string copying. The raw comparison driver
+returns nonzero when any difference exists, including documented safeguards;
+it does not allowlist them away.
+
+The original-spec matrix is complete at this checkpoint. Additional
+multi-capture, encoded-name and binder/reflection combinations remain queued
+for separate original-source branch review before a broader parity claim.
+No rule is retired or weakened to obtain these counts.

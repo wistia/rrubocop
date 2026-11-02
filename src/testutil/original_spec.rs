@@ -29,14 +29,24 @@ pub fn assert_original_spec_parity(cop: &dyn Cop, fixture: &str) {
         let mut diagnostics = Vec::new();
         let mut corrections = Vec::new();
         cop.check_lines(&source, &config, &mut diagnostics, Some(&mut corrections));
-        cop.check_source(
-            &source,
-            &tree,
-            &map,
-            &config,
-            &mut diagnostics,
-            Some(&mut corrections),
-        );
+        if cop.needs_file_model() {
+            cop.check_file_model(
+                &source,
+                &crate::model::build(source.as_bytes(), tree.clone()),
+                &config,
+                &mut diagnostics,
+                Some(&mut corrections),
+            );
+        } else {
+            cop.check_source(
+                &source,
+                &tree,
+                &map,
+                &config,
+                &mut diagnostics,
+                Some(&mut corrections),
+            );
+        }
         BatchedWalker::new(vec![cop], vec![&config]).walk(
             &source,
             tree.root_node(),

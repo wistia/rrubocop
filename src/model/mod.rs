@@ -63,7 +63,7 @@ pub struct Read {
     pub under_defined: bool,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Entry {
     pub intro_byte: usize,
     pub intro_kind: IntroKind,
@@ -79,7 +79,7 @@ pub enum ScopeKind {
     Block,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ScopeData {
     pub parent: Option<ScopeId>,
     pub kind: ScopeKind,

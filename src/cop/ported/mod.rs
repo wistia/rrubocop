@@ -264,3 +264,7 @@ pub(super) fn redundant_regexp_literal(source: &SourceFile, node: Node<'_>) -> O
 pub(super) fn ruby_local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
     context::local_identifier(&Context::new(source, &CopConfig::default()), node)
 }
+
+pub(super) fn named_regexp_groups(source: &SourceFile, node: Node<'_>) -> Vec<(String, bool)> {
+    style_regexp::named_groups(&Context::new(source, &CopConfig::default()), node)
+}
