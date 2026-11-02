@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Twenty owned rules now have implemented behavior backed by original-Ruby
-comparisons, including ten of the original thirteen direct-file Style
+Twenty-one owned rules now have implemented behavior backed by original-Ruby
+comparisons, including eleven of the original thirteen direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. HashSyntax shorthand branches and additional
 UselessAssignment capture combinations remain under review. The exhaustive
-367-rule inventory retains 347 queued validation entries; some already had
+367-rule inventory retains 346 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -471,3 +471,13 @@ Imported the framework's pinned parser3.3.5.0 adapter (5186daa/696eb01) and adde
 ExactRegexpMatch adds36 source/version cases, bringing its diagnostic/range/message matrix to167 states (155 exact correction states and12 prior safeguards). The new72 real CLI modes all match bytes and remain stable on all144 second passes. Sixteen exit comparisons expose the confirmed existing native global syntax-validation gap: Ruby reports Lint/Syntax for invalid UTF8 meta-escape regexps while native accepts their grammar. This is not an intentional correction safeguard or an allowlisted exception. Reproduction and original/native offense evidence are committed in `docs/evidence/regexp-invalid-meta-escape.json`; the generic comparison driver continues to report failure for these cases.
 
 Ruby Parser::Source::Buffer normalizes CRLF in node source/ranges. Both regexp consumers now normalize diagnostic text and lengths accordingly. Empty Corrector.rewrite also normalizes source, but the original CLI leaves files unchanged when there are no edits; capture/refresh helpers therefore preserve raw source for empty correctors. All176 prior UselessAssignment reference states and14 original Exact capture states regenerate unchanged. All three edited Ruby helper files pass `bundle exec rubocop -A`. Cross-cop scheduling remains deferred.
+
+## Style/RedundantRegexpArgument
+
+Reviewed the complete pinned `rubocop-1.65.1/lib/rubocop/cop/style/redundant_regexp_argument.rb`, Util::LITERAL_REGEX, RegexpNode#content and the versioned parser lexer. All40 unchanged original examples pass, producing72 captured states. The expanded246-state original matrix covers all11 methods, regular/safe/implicit sends, first-argument/arity shapes, every printable ASCII literal/metacharacter class, percent delimiters, escapes/quotes/Unicode, empty and continued-empty regexps, physical/escaped LF/CRLF/CR, parser targets2.5/3.0/3.1/3.4, setter negatives and match-state reads.
+
+All246 diagnostic/range/message states match. Corrected bytes match in239 states; seven preserve the original offense while withholding edits that change single-quote escape semantics, introduce string interpolation, trigger split's special whitespace behavior or change observed match state. Preferred formatting follows this cop's own escape whitelist and quote selection. The safety check decodes literal characters with existing helpers and parses the proposed Ruby string without executing fixture programs. Empty/multiline RegexpNode content joins remain distinct from ExactRegexpMatch's one-str NodePattern requirement.
+
+Real original/native CLI checks cover492 modes:478 equal byte pairs,460 equal exit pairs,14 explicit safeguard byte differences, and18 additional exit-only differences from the separately recorded global invalid-regexp syntax gap. All984 second passes are stable; the comparison driver remains nonzero for differences. Four actual-production-config CLI modes under `app/models` produce expected bytes and clean final states. The integrated native suite passes877 tests, one pre-existing ignored. Trusted authored probes confirm partition capture-state and escaped-space split differences; a suspected byteindex offset difference was disproved (both reject the same middle-character offset), so no speculative guard was added.
+
+Remaining limits include encoded non-UTF8 source, additional uncommon control/quote combinations and reflective/aliased match-state access. General syntax validation and cross-cop scheduling are not established by these isolated-rule results; the latter remains explicitly deferred.
