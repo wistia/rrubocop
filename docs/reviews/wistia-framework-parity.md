@@ -168,7 +168,7 @@ python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-Complete native suite: **904 passed, with 1 intentionally ignored audit probe**.
+Complete native suite: **907 passed, with 1 intentionally ignored audit probe**.
 The strict command exits 1 with **456 explicit difference events**: 454 documented
 safety/upstream-hazard events and two unresolved parser-related corrected-byte
 differences. `failures.json`, `summary.json` and `runtime.json` retain every event.
@@ -393,3 +393,24 @@ correctly inspect that path. This is delegated to root/core; no cop exception
 was added. Scope script intentionally remains failing until the runner is fixed.
 The separate emoji corrected-byte gap remains open as previously recorded.
 Totals: 30 reviewed implementations, 27 baseline stubs replaced, 40 remaining.
+
+## Resolved: actual-config stdin exclusions
+
+Isolated runner fix 5d6de07 now honors AllCops exclusions for --stdin only when
+--force-exclusion is passed, matching original Ruby's explicit-path behavior.
+It distinguishes a skipped file from an inspected clean file, reporting zero
+inspected files on exclusion, and returns before correction/file writes. Three
+native tests verify an existing excluded file is untouched, a no-force explicit
+path is inspected and an allowed force-exclusion path is still inspected.
+
+The expanded actual production-config scope matrix now passes all 65 probes
+across all 30 reviewed rules, comparing common diagnostics and inspected-file
+counts. Schema/vendor global exclusions and no-force positive controls are
+included; every rule has a firing positive control. No files are created in
+Wistia by these stdin probes. The earlier global stdin gap is closed without
+adding a cop exception. Full native suite: 907 passed, 1 ignored audit probe.
+The isolated-rule matrix remains 638 originals / 1276 second-pass / 30 trusted
+runtime programs with its 456 retained safety/parser events; this runner-only
+change does not alter those internal linter cases. Two emoji corrected-byte
+events remain unresolved. Broader nested configs/exotic AST coverage and the
+40 baseline stubs are still outstanding.

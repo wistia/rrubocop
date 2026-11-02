@@ -51,12 +51,16 @@ cases = [dict(cop=cop, source=source+'\n', path=path, positive=index==0)
          for cop, source, *paths in rows for index, path in enumerate(paths)]
 cases += [dict(cop='Rails/CreateTableWithTimestamps', source='create_table :users\n', path=path, positive=False)
           for path in ('db/schema.rb', 'db/migrate/20990101000000_create_active_storage_tables.active_storage.rb')]
+cases += [dict(cop='Rails/CreateTableWithTimestamps', source='create_table :users\n', path='db/schema.rb', positive=True, force_exclusion=False),
+          dict(cop='Rails/Blank', source='items.nil? || items.empty?\n', path='vendor/framework_parity_probe.rb', positive=False),
+          dict(cop='Rails/Blank', source='items.nil? || items.empty?\n', path='vendor/framework_parity_probe.rb', positive=True, force_exclusion=False)]
 severity = dict(C='convention', W='warning', E='error', F='fatal', R='refactor', I='info')
 env = {**os.environ, 'ASDF_RUBY_VERSION':'3.4.9', 'RRUBOCOP_CACHE_DIR':str(a.output/'native-cache'), 'RUBOCOP_CACHE_ROOT':str(a.output/'ruby-cache')}
 a.output.mkdir(parents=True, exist_ok=True)
 
 def observe(command, case):
-    result = subprocess.run(command + ['--stdin', case['path'], '--only', case['cop'], '--format', 'json', '--cache', 'false', '--force-exclusion'], input=case['source'], capture_output=True, text=True, cwd=a.ruby_project, env=env, timeout=30)
+    flags = ['--force-exclusion'] if case.get('force_exclusion',True) else []
+    result = subprocess.run(command + ['--stdin', case['path'], '--only', case['cop'], '--format', 'json', '--cache', 'false'] + flags, input=case['source'], capture_output=True, text=True, cwd=a.ruby_project, env=env, timeout=30)
     if result.returncode not in (0, 1):
         return dict(error=result.stderr, code=result.returncode)
     output=json.loads(result.stdout)
@@ -71,17 +75,18 @@ def observe(command, case):
         line=location['start_line'] if location else o['line']
         column=location['start_column']-1 if location else o['column']
         found.append([line,column,o['message'].removeprefix(case['cop']+': '),severity.get(o['severity'],o['severity'])])
-    return found
+    inspected=output.get('metadata',{}).get('files_inspected',output.get('summary',{}).get('inspected_file_count'))
+    return dict(offenses=found,files_inspected=inspected)
 
 def check(case):
     ruby=observe(['bin/rubocop-ruby'],case)
     native=observe([str(a.native)],case)
-    return {**case, 'ruby':ruby,'native':native,'matches':isinstance(ruby,list) and isinstance(native,list) and ruby==native}
+    return {**case, 'ruby':ruby,'native':native,'matches':'offenses' in ruby and 'offenses' in native and ruby==native}
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
     results=list(pool.map(check,cases))
 failures=[row for row in results if not row['matches']]
-missing_positives=[row['cop'] for row in results if row['positive'] and (not isinstance(row['ruby'],list) or not row['ruby'])]
+missing_positives=[row['cop'] for row in results if row['positive'] and ('offenses' not in row['ruby'] or not row['ruby']['offenses'])]
 (a.output/'results.json').write_text(json.dumps(results,indent=2)+'\n')
 summary=dict(cases=len(results),rules=len(rows),differences=len(failures),missing_positive_controls=missing_positives)
 (a.output/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
