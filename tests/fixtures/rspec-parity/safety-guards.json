@@ -679,5 +679,441 @@
     "safety_difference": "Original Ruby concatenates a quoted symbol value into invalid Ruby. Rust uses a valid inspected symbol preserving its value.",
     "rust_safe": "receive(:\"hello world\").and_return(42)\n",
     "rust_all": "receive(:\"hello world\").and_return(42)\n"
+  },
+  {
+    "cop": "RSpec/MultipleSubjects",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch17:same-line-deletion",
+    "source": "describe Foo do; subject { a }; subject { b }; end\n",
+    "corrected": "describe Foo do; subject { a }; subject { b }; end\n",
+    "safety_difference": "Do not remove neighboring code or comments with whole-line deletion of an overwritten subject.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 17,
+          "message": "Do not set more than one subject per example group",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/MultipleSubjects",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch17:comment-deletion",
+    "source": "describe Foo do\n  subject { a } # preserve note\n  subject { b }\nend\n",
+    "corrected": "describe Foo do\n  subject { a } # preserve note\n  subject { b }\nend\n",
+    "safety_difference": "Do not remove neighboring code or comments with whole-line deletion of an overwritten subject.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Do not set more than one subject per example group",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  subject { b }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  subject { b }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "redundant_around_spec:6",
+    "cop": "RSpec/RedundantAround",
+    "source": "config.around do |example|\n  example.run\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "config.around do |example|\n  example.run\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/redundant_around_spec.rb#6",
+    "safety_difference": "Do not remove qualified registration calls whose receiver or method may have side effects.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Remove redundant `around` hook.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "redundant_around_spec:7",
+    "cop": "RSpec/RedundantAround",
+    "source": "config.around(:each) do |example|\n  example.run\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "config.around(:each) do |example|\n  example.run\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/redundant_around_spec.rb#7",
+    "safety_difference": "Do not remove qualified registration calls whose receiver or method may have side effects.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Remove redundant `around` hook.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/RedundantAround",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch17:around-other-receiver",
+    "source": "around { worker.run }\n",
+    "corrected": "around { worker.run }\n",
+    "safety_difference": "Preserve receiver, scope-argument, callback or comment behavior when the hook is not proven to only run its proxy.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Remove redundant `around` hook.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/RedundantAround",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch17:around-bare-run",
+    "source": "around { run }\n",
+    "corrected": "around { run }\n",
+    "safety_difference": "Preserve receiver, scope-argument, callback or comment behavior when the hook is not proven to only run its proxy.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Remove redundant `around` hook.",
+          "correctable": true,
+          "length": 14,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/RedundantAround",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch17:around-dynamic-scope",
+    "source": "around(scope) { |example| example.run }\n",
+    "corrected": "around(scope) { |example| example.run }\n",
+    "safety_difference": "Preserve receiver, scope-argument, callback or comment behavior when the hook is not proven to only run its proxy.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Remove redundant `around` hook.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/RedundantAround",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch17:around-nested-comment",
+    "source": "around do |example|\n # keep\n example.run\nend\n",
+    "corrected": "around do |example|\n # keep\n example.run\nend\n",
+    "safety_difference": "Preserve receiver, scope-argument, callback or comment behavior when the hook is not proven to only run its proxy.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Remove redundant `around` hook.",
+          "correctable": true,
+          "length": 19,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/RedundantAround",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch17:around-wrong-proxy",
+    "source": "around { |example| other.run }\n",
+    "corrected": "around { |example| other.run }\n",
+    "safety_difference": "Preserve receiver, scope-argument, callback or comment behavior when the hook is not proven to only run its proxy.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Remove redundant `around` hook.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/RedundantAround",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch17:around-extra-parameter",
+    "source": "around { |example, other| example.run }\n",
+    "corrected": "around { |example, other| example.run }\n",
+    "safety_difference": "Preserve receiver, scope-argument, callback or comment behavior when the hook is not proven to only run its proxy.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Remove redundant `around` hook.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]

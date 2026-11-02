@@ -535,8 +535,13 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/multiple_subjects.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 13,
+    "deliberate_safeguards": [
+      "batch17:same-line-deletion",
+      "batch17:comment-deletion"
+    ],
+    "post_implementation_review": "Pinned original source, ExampleGroup scope traversal and upstream specs reviewed separately: normal/numbered groups and declarations, nested conditionals, example/include/shared boundaries, subject! non-correctable metadata, named helper preservation and overwritten lazy subject removal. Whole-line deletion preserves adjacent statements/comments; four trusted runtime examples prove helper and hook behavior."
   },
   {
     "name": "RSpec/NamedSubject",
@@ -627,8 +632,19 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/redundant_around.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 13,
+    "deliberate_safeguards": [
+      "redundant_around_spec:6",
+      "redundant_around_spec:7",
+      "batch17:around-other-receiver",
+      "batch17:around-bare-run",
+      "batch17:around-dynamic-scope",
+      "batch17:around-nested-comment",
+      "batch17:around-wrong-proxy",
+      "batch17:around-extra-parameter"
+    ],
+    "post_implementation_review": "Pinned original source and upstream specs reviewed separately: normal/numbered/proxy blocks, block-pass, scopes, qualified/safe receivers, run arguments and nested statements. Original matcher removes arbitrary run receivers and qualified registrations; native reports but retains forms not proven to only run the proxy, dynamic scopes and comments. Trusted runtime proves proxy-only removal and demonstrates preserved registration/worker/scope effects."
   },
   {
     "name": "RSpec/RedundantPredicateMatcher",

@@ -443,3 +443,29 @@ assigned expectation bodies. The original Ruby rule is report-only: its class ha
 no AutoCorrector. Unsupported native each-to-all rewrites and correction metadata
 were removed; four existing correction scenarios remain report-only regressions.
 Neither rule now rewrites source or executes fixture programs.
+
+## Batch 17: overwritten subjects and redundant around hooks
+
+MultipleSubjects and RedundantAround replace two initial stubs. The total is now
+66 original stubs plus fourteen existing rules reviewed: eighty of 96 rules,
+with fourteen original stubs and two existing implementations remaining. All 48
+RSpec/RSpecRails tests pass with 1,318 strict original-Ruby comparisons, 37
+correction-disable controls and 25 separately recorded safeguards.
+
+Separate original-source review covers ExampleGroup traversal and its scope
+boundaries, normal/numbered blocks, eager versus lazy declarations, subject!
+correction metadata, named helper retention, callback proxies, block-pass hooks,
+scope arguments, qualified and safe calls, nested bodies and run arguments.
+The overwritten lazy subject is removed only when whole-line deletion preserves
+neighboring statements and comments. Named declarations become lets; eager
+subject declarations remain report-only, exactly as the original Ruby rule.
+
+RedundantAround's original matcher does not check that the run receiver is the
+hook proxy. It also removes qualified registration calls and dynamic scope
+arguments. Native detection matches these original offenses, but corrections
+retain the callback/registration when proxy-only behavior is not established.
+These eight new hook safeguards and two whole-line subject safeguards remain
+outside strict parity successes. The trusted subject-hook runtime script passes
+four real RSpec examples, compares original/corrected memoized helpers and
+proxy-hook execution, and demonstrates registration, worker and scope effects
+that Ruby's broader deletion could discard. Fixture programs are not executed.
