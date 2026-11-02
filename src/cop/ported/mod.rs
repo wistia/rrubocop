@@ -255,3 +255,21 @@ pub(super) fn local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
     let config = CopConfig::default();
     context::local_identifier(&Context::new(source, &config), node)
 }
+
+pub(super) fn static_symbol(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    Context::new(source, &config)
+        .static_symbol(node)
+        .map(std::borrow::Cow::into_owned)
+}
+
+pub(super) fn bare_call_identifier(source: &SourceFile, node: Node<'_>) -> bool {
+    node.kind() == "identifier"
+        && !local_identifier(source, node)
+        && !node.parent().is_some_and(|parent| {
+            parent.child_by_field_name("method") == Some(node)
+                || matches!(parent.kind(), "alias" | "undef")
+                || matches!(parent.kind(), "method" | "singleton_method")
+                    && parent.child_by_field_name("name") == Some(node)
+        })
+}
