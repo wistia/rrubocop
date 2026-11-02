@@ -18,6 +18,7 @@ if [[ -n $(git status --porcelain) ]]; then
   exit 1
 fi
 mkdir -p dist "$RRUBOCOP_BUILD_DIR/cargo"
+RRUBOCOP_BUILD_DIR=$(cd "$RRUBOCOP_BUILD_DIR" && pwd)
 stage=$(mktemp -d)
 trap 'rm -rf "$stage"' EXIT
 
