@@ -367,26 +367,57 @@ pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'
     if let (Some(a), Some(b)) = (integer_value(source, left), integer_value(source, right)) {
         return a == b;
     }
-    if left.kind() != right.kind() {
-        let literal_kind = |node: Node<'_>| match node.kind() {
-            "string" => Some("string"),
-            "simple_symbol" | "delimited_symbol" => Some("symbol"),
-            _ => None,
-        };
-        return literal_kind(left).is_some_and(|kind| Some(kind) == literal_kind(right))
-            && crate::cop::ported::static_literal(source, left).is_some_and(|value| {
-                Some(value) == crate::cop::ported::static_literal(source, right)
-            });
-    }
-    if left.kind() == "string" {
-        match (
-            crate::cop::ported::static_literal(source, left),
-            crate::cop::ported::static_literal(source, right),
-        ) {
-            (Some(a), Some(b)) => return a == b,
-            (Some(_), None) | (None, Some(_)) => return false,
-            _ => {}
+    let literal_kind = |node: Node<'_>| match node.kind() {
+        "string" | "chained_string" | "heredoc_beginning" => Some("string"),
+        "simple_symbol" | "delimited_symbol" | "hash_key_symbol" => Some("symbol"),
+        _ => None,
+    };
+    if let Some(kind) = literal_kind(left) {
+        if Some(kind) == literal_kind(right) {
+            if let (Some(a), Some(b)) = (
+                crate::cop::ported::static_literal(source, left),
+                crate::cop::ported::static_literal(source, right),
+            ) {
+                return a == b;
+            }
         }
+    }
+    let send = |node: Node<'_>| {
+        node.kind() == "call"
+            || node.kind() == "identifier"
+                && name(source, node).is_some()
+                && !crate::cop::ported::local_identifier(source, node)
+    };
+    if send(left) && send(right) {
+        let same_receiver = match (call_receiver(left), call_receiver(right)) {
+            (None, None) => true,
+            (Some(a), Some(b)) => same_expression(source, a, b),
+            _ => false,
+        };
+        let same_block = match (
+            crate::cop::rspec::helpers::call_block(left),
+            crate::cop::rspec::helpers::call_block(right),
+        ) {
+            (None, None) => true,
+            (Some(a), Some(b)) => same_expression(source, a, b),
+            _ => false,
+        };
+        return same_receiver
+            && name(source, left) == name(source, right)
+            && safe_send(source, left) == safe_send(source, right)
+            && same_arguments(source, &call_args(left), &call_args(right))
+            && same_block;
+    }
+    let body = |node: Node<'_>| matches!(node.kind(), "body_statement" | "block_body");
+    if body(left) && code_children(left).len() == 1 {
+        return same_expression(source, code_children(left)[0], right);
+    }
+    if body(right) && code_children(right).len() == 1 {
+        return same_expression(source, left, code_children(right)[0]);
+    }
+    let block = |node: Node<'_>| matches!(node.kind(), "block" | "do_block");
+    if left.kind() != right.kind() && !(body(left) && body(right) || block(left) && block(right)) {
+        return false;
     }
     if left.kind() == "regex" {
         return node_bytes(source, left) == node_bytes(source, right);
@@ -620,4 +651,30 @@ pub(super) fn pure_literal(source: &SourceFile, node: Node<'_>) -> bool {
         && code_children(node)
             .iter()
             .all(|child| pure_literal(source, *child))
+}
+
+pub(super) fn same_arguments(source: &SourceFile, left: &[Node<'_>], right: &[Node<'_>]) -> bool {
+    fn split<'a>(args: &[Node<'a>]) -> (Vec<Node<'a>>, Option<Vec<Node<'a>>>) {
+        if let Some(index) = args.iter().position(|arg| arg.kind() == "pair") {
+            return (args[..index].to_vec(), Some(args[index..].to_vec()));
+        }
+        if let Some(last) = args.last().filter(|last| last.kind() == "hash") {
+            return (args[..args.len() - 1].to_vec(), Some(code_children(*last)));
+        }
+        (args.to_vec(), None)
+    }
+    let (a, hash_a) = split(left);
+    let (b, hash_b) = split(right);
+    let same = |a: &[Node<'_>], b: &[Node<'_>]| {
+        a.len() == b.len()
+            && a.iter()
+                .zip(b)
+                .all(|(a, b)| same_expression(source, *a, *b))
+    };
+    same(&a, &b)
+        && match (hash_a, hash_b) {
+            (None, None) => true,
+            (Some(a), Some(b)) => same(&a, &b),
+            _ => false,
+        }
 }

@@ -38681,5 +38681,2766 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "repeated_description_spec:0",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  it \"does x\" do\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  it \"does x\" do\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  it \"does x\" do\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  it \"does x\" do\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:1",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  context 'during some use case' do\n    it \"does x\" do\n      # this should be fine\n    end\n  end\n\n  it \"does x\" do\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  context 'during some use case' do\n    it \"does x\" do\n      # this should be fine\n    end\n  end\n\n  it \"does x\" do\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 11,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  context 'during some use case' do\n    it \"does x\" do\n      # this should be fine\n    end\n  end\n\n  it \"does x\" do\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 11,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  context 'during some use case' do\n    it \"does x\" do\n      # this should be fine\n    end\n  end\n\n  it \"does x\" do\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 11,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:2",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  shared_context 'shared behavior' do\n    it \"does x\" do\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  shared_context 'shared behavior' do\n    it \"does x\" do\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  shared_context 'shared behavior' do\n    it \"does x\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  shared_context 'shared behavior' do\n    it \"does x\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:3",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  context 'in a certain use case' do\n    it \"does x\" do\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  context 'in a certain use case' do\n    it \"does x\" do\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  context 'in a certain use case' do\n    it \"does x\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it \"does x\" do\n  end\n\n  context 'in a certain use case' do\n    it \"does x\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:4",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it { foo }\n  it { bar }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it { foo }\n  it { bar }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it { foo }\n  it { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it { foo }\n  it { bar }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:5",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it 'do something' do\n    # ...\n  end\n\n  it 'do something', :flag do\n    # ...\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it 'do something' do\n    # ...\n  end\n\n  it 'do something', :flag do\n    # ...\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it 'do something' do\n    # ...\n  end\n\n  it 'do something', :flag do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it 'do something' do\n    # ...\n  end\n\n  it 'do something', :flag do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:6",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it 'do something', :flag do\n    # ...\n  end\n\n  it 'do another thing', :flag do\n    # ...\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it 'do something', :flag do\n    # ...\n  end\n\n  it 'do another thing', :flag do\n    # ...\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it 'do something', :flag do\n    # ...\n  end\n\n  it 'do another thing', :flag do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it 'do something', :flag do\n    # ...\n  end\n\n  it 'do another thing', :flag do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:7",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it 'do something', :flag do\n    # ...\n  end\n\n  it 'do something', :flag do\n    # ...\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it 'do something', :flag do\n    # ...\n  end\n\n  it 'do something', :flag do\n    # ...\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it 'do something', :flag do\n    # ...\n  end\n\n  it 'do something', :flag do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it 'do something', :flag do\n    # ...\n  end\n\n  it 'do something', :flag do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:8",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it \"does #{x}\" do\n  end\n\n  it \"does #{y}\" do\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it \"does #{x}\" do\n  end\n\n  it \"does #{y}\" do\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it \"does #{x}\" do\n  end\n\n  it \"does #{y}\" do\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it \"does #{x}\" do\n  end\n\n  it \"does #{y}\" do\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:9",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n\n    it \"does a thing #{type}\" do\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n\n    it \"does a thing #{type}\" do\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 4,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 25,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 4,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n\n    it \"does a thing #{type}\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 25,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 25,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n\n    it \"does a thing #{type}\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 25,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 25,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:10",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\n\n  %i[baz qux].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\n\n  %i[baz qux].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 4,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 25,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 4,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\n\n  %i[baz qux].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 25,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 25,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\n\n  %i[baz qux].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 25,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 25,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:11",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\n\n  %i[baz qux].each do |type|\n    it \"does another thing #{type}\" do\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\n\n  %i[baz qux].each do |type|\n    it \"does another thing #{type}\" do\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\n\n  %i[baz qux].each do |type|\n    it \"does another thing #{type}\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  %i[foo bar].each do |type|\n    it \"does a thing #{type}\" do\n    end\n  end\n\n  %i[baz qux].each do |type|\n    it \"does another thing #{type}\" do\n    end\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:12",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it(description) do\n    # ...\n  end\n\n  it(description) do\n    # ...\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it(description) do\n    # ...\n  end\n\n  it(description) do\n    # ...\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#12",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 15,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 15,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it(description) do\n    # ...\n  end\n\n  it(description) do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it(description) do\n    # ...\n  end\n\n  it(description) do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 15,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:13",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  it(description) do\n    # ...\n  end\n\n  it(title) do\n    # ...\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  it(description) do\n    # ...\n  end\n\n  it(title) do\n    # ...\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  it(description) do\n    # ...\n  end\n\n  it(title) do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  it(description) do\n    # ...\n  end\n\n  it(title) do\n    # ...\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:14",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:x) { is_expected.to be_present }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:x) { is_expected.to be_present }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 37,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 37,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:x) { is_expected.to be_present }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 37,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 37,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:x) { is_expected.to be_present }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 37,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 37,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:15",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:y) { is_expected.to be_present }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:y) { is_expected.to be_present }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:y) { is_expected.to be_present }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:y) { is_expected.to be_present }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_description_spec:16",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:x) { is_expected.to be_blank }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:x) { is_expected.to be_blank }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_description_spec.rb#16",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:x) { is_expected.to be_blank }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  its(:x) { is_expected.to be_present }\n  its(:x) { is_expected.to be_blank }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:0",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe 'doing x' do\n  # example group\nend\n\ndescribe 'doing x' do\n  # example group\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  # example group\nend\n\ndescribe 'doing x' do\n  # example group\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [5]",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [1]",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  # example group\nend\n\ndescribe 'doing x' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [5]",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [1]",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  # example group\nend\n\ndescribe 'doing x' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [5]",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [1]",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:1",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "context 'when awesome case' do\n  # example group\nend\n\ncontext 'when awesome case' do\n  # example group\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "context 'when awesome case' do\n  # example group\nend\n\ncontext 'when awesome case' do\n  # example group\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [5]",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [1]",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "context 'when awesome case' do\n  # example group\nend\n\ncontext 'when awesome case' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [5]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "context 'when awesome case' do\n  # example group\nend\n\ncontext 'when awesome case' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [5]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:2",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe 'super feature' do\n  context 'when some case' do\n    # ...\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'super feature' do\n  context 'when some case' do\n    # ...\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Repeated context block description on line(s) [10, 14]",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 2,
+          "message": "Repeated context block description on line(s) [6, 14]",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 14,
+          "column": 2,
+          "message": "Repeated context block description on line(s) [6, 10]",
+          "correctable": false,
+          "length": 30,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'super feature' do\n  context 'when some case' do\n    # ...\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Repeated context block description on line(s) [10, 14]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 2,
+            "message": "Repeated context block description on line(s) [6, 14]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 14,
+            "column": 2,
+            "message": "Repeated context block description on line(s) [6, 10]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'super feature' do\n  context 'when some case' do\n    # ...\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\n\n  context 'when awesome case' do\n    # example group\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Repeated context block description on line(s) [10, 14]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 2,
+            "message": "Repeated context block description on line(s) [6, 14]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 14,
+            "column": 2,
+            "message": "Repeated context block description on line(s) [6, 10]",
+            "correctable": false,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:3",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe 'doing x' do\n  # example group\nend\n\ndescribe 'doing y' do\n  # example group\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'doing x' do\n  # example group\nend\n\ndescribe 'doing y' do\n  # example group\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'doing x' do\n  # example group\nend\n\ndescribe 'doing y' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe 'doing x' do\n  # example group\nend\n\ndescribe 'doing y' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:4",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "RSpec.describe 'Animal', 'dog' do\n  # example group\nend\n\nRSpec.describe 'Animal', 'cat' do\n  # example group\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe 'Animal', 'dog' do\n  # example group\nend\n\nRSpec.describe 'Animal', 'cat' do\n  # example group\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe 'Animal', 'dog' do\n  # example group\nend\n\nRSpec.describe 'Animal', 'cat' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe 'Animal', 'dog' do\n  # example group\nend\n\nRSpec.describe 'Animal', 'cat' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:5",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "RSpec.describe 'Animal', 'dog', type: :request do\n  # example group\nend\n\nRSpec.describe 'Animal', 'cat', type: :request do\n  # example group\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe 'Animal', 'dog', type: :request do\n  # example group\nend\n\nRSpec.describe 'Animal', 'cat', type: :request do\n  # example group\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe 'Animal', 'dog', type: :request do\n  # example group\nend\n\nRSpec.describe 'Animal', 'cat', type: :request do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "RSpec.describe 'Animal', 'dog', type: :request do\n  # example group\nend\n\nRSpec.describe 'Animal', 'cat', type: :request do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:6",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe 'Animal' do\n  # example group\nend\n\ncontext 'Animal' do\n  # example group\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'Animal' do\n  # example group\nend\n\ncontext 'Animal' do\n  # example group\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [5]",
+          "correctable": false,
+          "length": 20,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [1]",
+          "correctable": false,
+          "length": 19,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'Animal' do\n  # example group\nend\n\ncontext 'Animal' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [5]",
+            "correctable": false,
+            "length": 20,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'Animal' do\n  # example group\nend\n\ncontext 'Animal' do\n  # example group\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [5]",
+            "correctable": false,
+            "length": 20,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:7",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "helpers.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\nRSpec.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\ncontext 'doing x' do\n  it { cool_predicate_method }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "helpers.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\nRSpec.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\ncontext 'doing x' do\n  it { cool_predicate_method }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [9]",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 9,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [5]",
+          "correctable": false,
+          "length": 20,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "helpers.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\nRSpec.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\ncontext 'doing x' do\n  it { cool_predicate_method }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [9]",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 9,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [5]",
+            "correctable": false,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "helpers.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\nRSpec.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\ncontext 'doing x' do\n  it { cool_predicate_method }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [9]",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 9,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [5]",
+            "correctable": false,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:8",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "RSpec.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\ncontext 'doing x' do\n  it { cool_predicate_method }\nend\n\nhelpers.describe 'doing x' do\n  it { cool_predicate_method }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\ncontext 'doing x' do\n  it { cool_predicate_method }\nend\n\nhelpers.describe 'doing x' do\n  it { cool_predicate_method }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [5]",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [1]",
+          "correctable": false,
+          "length": 20,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\ncontext 'doing x' do\n  it { cool_predicate_method }\nend\n\nhelpers.describe 'doing x' do\n  it { cool_predicate_method }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [5]",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe 'doing x' do\n  it { cool_predicate_method }\nend\n\ncontext 'doing x' do\n  it { cool_predicate_method }\nend\n\nhelpers.describe 'doing x' do\n  it { cool_predicate_method }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [5]",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:9",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "RSpec.describe 'A' do\n  stub_all_http_calls()\n  allowed_statuses = %i[open submitted approved].freeze\n  before { create(:admin) }\n\n  describe '#load' do\n    it { cool_predicate_method }\n  end\n\n  describe '#load' do\n    it { cool_predicate_method }\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe 'A' do\n  stub_all_http_calls()\n  allowed_statuses = %i[open submitted approved].freeze\n  before { create(:admin) }\n\n  describe '#load' do\n    it { cool_predicate_method }\n  end\n\n  describe '#load' do\n    it { cool_predicate_method }\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 6,
+          "column": 2,
+          "message": "Repeated describe block description on line(s) [10]",
+          "correctable": false,
+          "length": 19,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 2,
+          "message": "Repeated describe block description on line(s) [6]",
+          "correctable": false,
+          "length": 19,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "RSpec.describe 'A' do\n  stub_all_http_calls()\n  allowed_statuses = %i[open submitted approved].freeze\n  before { create(:admin) }\n\n  describe '#load' do\n    it { cool_predicate_method }\n  end\n\n  describe '#load' do\n    it { cool_predicate_method }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Repeated describe block description on line(s) [10]",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 2,
+            "message": "Repeated describe block description on line(s) [6]",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "RSpec.describe 'A' do\n  stub_all_http_calls()\n  allowed_statuses = %i[open submitted approved].freeze\n  before { create(:admin) }\n\n  describe '#load' do\n    it { cool_predicate_method }\n  end\n\n  describe '#load' do\n    it { cool_predicate_method }\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 6,
+            "column": 2,
+            "message": "Repeated describe block description on line(s) [10]",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 2,
+            "message": "Repeated describe block description on line(s) [6]",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:10",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "context \"when class is #{A::B}\" do\n  # ...\nend\n\ncontext \"when class is #{C::D}\" do\n  # ...\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "context \"when class is #{A::B}\" do\n  # ...\nend\n\ncontext \"when class is #{C::D}\" do\n  # ...\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "context \"when class is #{A::B}\" do\n  # ...\nend\n\ncontext \"when class is #{C::D}\" do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "context \"when class is #{A::B}\" do\n  # ...\nend\n\ncontext \"when class is #{C::D}\" do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:11",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "context \"when class is #{A::B}\" do\n  # ...\nend\n\ncontext \"when class is #{A::B}\" do\n  # ...\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "context \"when class is #{A::B}\" do\n  # ...\nend\n\ncontext \"when class is #{A::B}\" do\n  # ...\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [5]",
+          "correctable": false,
+          "length": 34,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [1]",
+          "correctable": false,
+          "length": 34,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "context \"when class is #{A::B}\" do\n  # ...\nend\n\ncontext \"when class is #{A::B}\" do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [5]",
+            "correctable": false,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 34,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "context \"when class is #{A::B}\" do\n  # ...\nend\n\ncontext \"when class is #{A::B}\" do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [5]",
+            "correctable": false,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 34,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:12",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "context A::B do\n  # ...\nend\n\ncontext C::D do\n  # ...\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "context A::B do\n  # ...\nend\n\ncontext C::D do\n  # ...\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#12",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "context A::B do\n  # ...\nend\n\ncontext C::D do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "context A::B do\n  # ...\nend\n\ncontext C::D do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:13",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "context(description) do\n  # ...\nend\n\ncontext(description) do\n  # ...\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "context(description) do\n  # ...\nend\n\ncontext(description) do\n  # ...\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [5]",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [1]",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "context(description) do\n  # ...\nend\n\ncontext(description) do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [5]",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "context(description) do\n  # ...\nend\n\ncontext(description) do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [5]",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 23,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:14",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe 'repeated' do\n  it { is_expected.to be_truthy }\nend\n\nbefore { do_something }\n\ndescribe 'repeated' do\n  it { is_expected.to be_truthy }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe 'repeated' do\n  it { is_expected.to be_truthy }\nend\n\nbefore { do_something }\n\ndescribe 'repeated' do\n  it { is_expected.to be_truthy }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [7]",
+          "correctable": false,
+          "length": 22,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [1]",
+          "correctable": false,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe 'repeated' do\n  it { is_expected.to be_truthy }\nend\n\nbefore { do_something }\n\ndescribe 'repeated' do\n  it { is_expected.to be_truthy }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [7]",
+            "correctable": false,
+            "length": 22,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [1]",
+            "correctable": false,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe 'repeated' do\n  it { is_expected.to be_truthy }\nend\n\nbefore { do_something }\n\ndescribe 'repeated' do\n  it { is_expected.to be_truthy }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [7]",
+            "correctable": false,
+            "length": 22,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [1]",
+            "correctable": false,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "repeated_example_group_description_spec:15",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "context do\n  # ...\nend\n\ncontext do\n  # ...\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "context do\n  # ...\nend\n\ncontext do\n  # ...\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/repeated_example_group_description_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "context do\n  # ...\nend\n\ncontext do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "context do\n  # ...\nend\n\ncontext do\n  # ...\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch9:normalized-metadata",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n  it \"same\", foo: 1 do; perform; end\n  it \"same\", {:foo => 0x1} do; different; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it \"same\", foo: 1 do; perform; end\n  it \"same\", {:foo => 0x1} do; different; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 17,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it \"same\", foo: 1 do; perform; end\n  it \"same\", {:foo => 0x1} do; different; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 17,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it \"same\", foo: 1 do; perform; end\n  it \"same\", {:foo => 0x1} do; different; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 17,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 24,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch9:call-description",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n  it description { perform }\n  it description() do; other; end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it description { perform }\n  it description() do; other; end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it description { perform }\n  it description() do; other; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it description { perform }\n  it description() do; other; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch9:its-block-syntax",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n  its(:value) { is_expected.to eq(1) }\n  its(:value) do\n    is_expected.to eq(0x1)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"x\" do\n  its(:value) { is_expected.to eq(1) }\n  its(:value) do\n    is_expected.to eq(0x1)\n  end\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 36,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 14,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  its(:value) { is_expected.to eq(1) }\n  its(:value) do\n    is_expected.to eq(0x1)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 36,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 14,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  its(:value) { is_expected.to eq(1) }\n  its(:value) do\n    is_expected.to eq(0x1)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 36,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 14,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch9:its-method-definitions",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n  its(:value) { def one; true; end }\n  its(:value) { def two; true; end }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"x\" do\n  its(:value) { def one; true; end }\n  its(:value) { def two; true; end }\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  its(:value) { def one; true; end }\n  its(:value) { def two; true; end }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n  its(:value) { def one; true; end }\n  its(:value) { def two; true; end }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch9:group-hash",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe \"same\", type: :model do; end\ncontext \"same\", {:type => :model} do; end\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"same\", type: :model do; end\ncontext \"same\", {:type => :model} do; end\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [2]",
+          "correctable": false,
+          "length": 37,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [1]",
+          "correctable": false,
+          "length": 41,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"same\", type: :model do; end\ncontext \"same\", {:type => :model} do; end\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [2]",
+            "correctable": false,
+            "length": 37,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 41,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"same\", type: :model do; end\ncontext \"same\", {:type => :model} do; end\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [2]",
+            "correctable": false,
+            "length": 37,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 41,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch9:group-pending",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe \"same\" do\n  pending \"reason\"\nend\ndescribe \"same\" do\n  pending \"reason\"\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"same\" do\n  pending \"reason\"\nend\ndescribe \"same\" do\n  pending \"reason\"\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"same\" do\n  pending \"reason\"\nend\ndescribe \"same\" do\n  pending \"reason\"\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"same\" do\n  pending \"reason\"\nend\ndescribe \"same\" do\n  pending \"reason\"\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "batch9:group-multi-pending",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe \"same\" do\n  pending \"reason\"\n  other\nend\ndescribe \"same\" do\n  pending \"reason\"\n  other\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"same\" do\n  pending \"reason\"\n  other\nend\ndescribe \"same\" do\n  pending \"reason\"\n  other\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [5]",
+          "correctable": false,
+          "length": 18,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [1]",
+          "correctable": false,
+          "length": 18,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"same\" do\n  pending \"reason\"\n  other\nend\ndescribe \"same\" do\n  pending \"reason\"\n  other\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [5]",
+            "correctable": false,
+            "length": 18,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [1]",
+            "correctable": false,
+            "length": 18,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"same\" do\n  pending \"reason\"\n  other\nend\ndescribe \"same\" do\n  pending \"reason\"\n  other\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [5]",
+            "correctable": false,
+            "length": 18,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [1]",
+            "correctable": false,
+            "length": 18,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch9:numbered-groups",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe(\"one\") { use(_1) }\ndescribe(\"two\") { use(_1) }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe(\"one\") { use(_1) }\ndescribe(\"two\") { use(_1) }\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [2]",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [1]",
+          "correctable": false,
+          "length": 27,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe(\"one\") { use(_1) }\ndescribe(\"two\") { use(_1) }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [2]",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [1]",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe(\"one\") { use(_1) }\ndescribe(\"two\") { use(_1) }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [2]",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [1]",
+            "correctable": false,
+            "length": 27,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch9:noarg-numbered-groups",
+    "cop": "RSpec/RepeatedExampleGroupDescription",
+    "source": "describe { use(_1) }\ncontext { use(_1) }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe { use(_1) }\ncontext { use(_1) }\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Repeated describe block description on line(s) [2]",
+          "correctable": false,
+          "length": 20,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Repeated context block description on line(s) [1]",
+          "correctable": false,
+          "length": 19,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe { use(_1) }\ncontext { use(_1) }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [2]",
+            "correctable": false,
+            "length": 20,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe { use(_1) }\ncontext { use(_1) }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Repeated describe block description on line(s) [2]",
+            "correctable": false,
+            "length": 20,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Repeated context block description on line(s) [1]",
+            "correctable": false,
+            "length": 19,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "batch9:nested-order",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n  it(\"outer\") { perform }\n  context \"inner\" do\n    it(\"inner\") { perform }\n    it(\"inner\") { other }\n  end\n  it(\"outer\") { other }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 4,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 4,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 2,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 11,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it(\"outer\") { perform }\n  context \"inner\" do\n    it(\"inner\") { perform }\n    it(\"inner\") { other }\n  end\n  it(\"outer\") { other }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it(\"outer\") { perform }\n  context \"inner\" do\n    it(\"inner\") { perform }\n    it(\"inner\") { other }\n  end\n  it(\"outer\") { other }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 4,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 2,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 11,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
   }
 ]

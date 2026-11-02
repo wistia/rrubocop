@@ -232,3 +232,27 @@ The trusted chain replay proves that single-message hash/array chains and their
 corrected receive/and_return forms produce identical repeated responses for nil,
 integer and string values. This proves those ordinary RSpec scenarios, while
 unsafe BeEq/BeEql corrections still require `-A` as in original Ruby.
+
+## Batch 9: repeated descriptions
+
+RepeatedDescription and RepeatedExampleGroupDescription replace two more initial
+stubs. The reviewed total is 53 original stubs and seven existing implementations;
+27 original stubs and nine existing implementations remain open. There are 879
+strict comparisons across 60 reviewed rules and the same 15 explicit safeguards.
+The pinned import retains 634 specimens; thirteen host-generated templates and
+three invalid original yield specimens remain outside the strict matrix.
+
+Separate original-source review included ExampleGroup's scope boundaries,
+Example/Concept equality and SkipOrPending's direct-body matching. Additional
+probes check implicit/explicit metadata hashes, hash labels versus symbol keys,
+hexadecimal versus decimal literals, equivalent its block syntax, distinct method
+names, nested ordering and direct versus multi-statement pending bodies. The
+original numbered-block matcher groups missing description captures together;
+that detection quirk is explicitly covered by two original-engine probes.
+
+Native diagnostic arrays are compared in the same source-location order used by
+the actual parallel CLI and the repository's existing assertion helper. Raw
+lint_bytes traversal order is not CLI output order. Counts, every message/range,
+correction capability, correction bytes, final offense state and idempotence
+remain exact comparisons. The normal correction-disable count remains 32 because
+neither of these two rules corrects source.

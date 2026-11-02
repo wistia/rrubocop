@@ -41,7 +41,9 @@ fn inspect(case: &Value, source: &str, mode: AutocorrectMode) -> (String, Vec<Di
 }
 
 fn normalized(diagnostics: &[Diagnostic]) -> Value {
-    Value::Array(diagnostics.iter().map(|diagnostic| serde_json::json!({
+    let mut diagnostics: Vec<_> = diagnostics.iter().collect();
+    diagnostics.sort_by(|a, b| a.sort_key().cmp(&b.sort_key()));
+    Value::Array(diagnostics.into_iter().map(|diagnostic| serde_json::json!({
         "line": diagnostic.location.line, "column": diagnostic.location.column,
         "message": diagnostic.message, "correctable": diagnostic.correctable,
         "length": diagnostic.highlight_length, "severity": match diagnostic.severity { crate::diagnostic::Severity::Convention => "convention", crate::diagnostic::Severity::Warning => "warning", crate::diagnostic::Severity::Error => "error", crate::diagnostic::Severity::Fatal => "fatal" }

@@ -32,6 +32,10 @@ class RSpecParityReference < AuditReference
 
   private
 
+  def diagnostics(report)
+    super.sort_by { |offense| [offense.fetch(:line), offense.fetch(:column)] }
+  end
+
   def native_compile(_test)
     {}
   end
