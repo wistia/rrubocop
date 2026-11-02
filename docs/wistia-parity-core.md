@@ -588,3 +588,10 @@ A separate trusted authored Ruby3.4 probe proves that an unbound underscore labe
 
 
 The subsequent model-only correction moves the existing underscore-label return before unresolved-call recording. Local membership and ignored usage counts stay unchanged, while all48 captured value sites now also agree with original CONST/LVAR/SEND call-site classification. Full native validation still passes901 tests, one pre-existing ignored. No fields, constructors or binding identities changed. ABC's current identifier-only dispatch means this metadata change is not presented as a demonstrated metric-score fix; other non-lowercase label classes and shorthand ABC scoring remain separate queue items.
+
+
+## Layout/HashAlignment source-review checkpoint (in progress)
+
+The pinned1.65.1 original cop, HashAlignmentStyles mixin and AST hash/pair geometry have been reviewed. All119 unchanged upstream examples pass in Ruby, producing167 source/configuration observations. The capture helper now preserves the actual ProcessedSource Ruby version and the sibling ArgumentAlignment configuration, and tolerates upstream examples with deliberately minimal configuration hashes. Its Wistia Ruby3.4 lint check passes.
+
+This checkpoint contains the original observations, not a completed native port. The pending implementation includes separate rocket/colon styles and style arrays, separator/table geometry, keyword splats, implicit hashes, last-argument and fixed-argument exclusions, full ranges and guarded multi-edit correction. Native detection/correction parity, original invalid-style behavior, real CLI final states and idempotence remain unvalidated for this rule.

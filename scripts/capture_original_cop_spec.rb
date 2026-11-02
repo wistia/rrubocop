@@ -17,6 +17,7 @@ module CaptureOperatorSpec
   def _investigate(cop, processed_source)
     result = super
     config, siblings = captured_configuration(cop.class.cop_name)
+    config["TargetRubyVersion"] = processed_source.ruby_version
     CaptureOperatorSpec.captured << {
       id: RSpec.current_example.full_description,
       original: processed_source.raw_source,
@@ -44,6 +45,11 @@ module CaptureOperatorSpec
       siblings = capture_non_nil_options(config)
     when "Style/ComparableClamp"
       config["IndentationWidth"] ||= configuration.for_cop("Layout/IndentationWidth")["Width"]
+    when "Layout/HashAlignment"
+      argument_alignment = configuration.for_cop("Layout/ArgumentAlignment")
+      config["ArgumentAlignmentEnabled"] = !!argument_alignment["Enabled"]
+      config["ArgumentAlignmentStyle"] = argument_alignment["EnforcedStyle"]
+      siblings = {"Layout/ArgumentAlignment" => argument_alignment.slice("Enabled", "EnforcedStyle")}
     end
     [config, siblings]
   end
@@ -56,9 +62,9 @@ module CaptureOperatorSpec
 
   def captured_base_options(name)
     config = configuration.for_cop(name).dup
-    config["EnforcedHashRocketStyle"] = configuration.for_cop("Layout/HashAlignment")["EnforcedHashRocketStyle"]
-    config["ForceEqualSignAlignment"] = configuration.for_cop("Layout/ExtraSpacing")["ForceEqualSignAlignment"]
-    config["TargetRubyVersion"] = configuration["AllCops"]["TargetRubyVersion"]
+    config["EnforcedHashRocketStyle"] = (configuration.for_cop("Layout/HashAlignment") || {})["EnforcedHashRocketStyle"]
+    config["ForceEqualSignAlignment"] = (configuration.for_cop("Layout/ExtraSpacing") || {})["ForceEqualSignAlignment"]
+    config["TargetRubyVersion"] = (configuration["AllCops"] || {})["TargetRubyVersion"]
     config
   end
 
