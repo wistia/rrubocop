@@ -130,8 +130,8 @@ pub fn argument_nodes<'a>(node: Node<'a>) -> Vec<Node<'a>> {
 }
 
 /// Walk all descendants, invoking `f` on each.
-pub fn for_each_descendant(node: Node<'_>, mut f: impl FnMut(Node<'_>)) {
-    fn walk(node: Node<'_>, f: &mut impl FnMut(Node<'_>)) {
+pub fn for_each_descendant<'a>(node: Node<'a>, mut f: impl FnMut(Node<'a>)) {
+    fn walk<'a>(node: Node<'a>, f: &mut impl FnMut(Node<'a>)) {
         f(node);
         let mut cur = node.walk();
         for child in node.children(&mut cur) {
