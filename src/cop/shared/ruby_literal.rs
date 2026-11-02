@@ -69,6 +69,13 @@ pub fn string_literal(value: &str) -> String {
 pub fn string_dump(value: &str) -> String {
     quote(value, QuoteStyle::Dump)
 }
+pub fn symbol_to_string_inspect(value: &str) -> String {
+    if value.is_ascii() {
+        quote(value, QuoteStyle::Dump)
+    } else {
+        quote(value, QuoteStyle::Inspect)
+    }
+}
 pub fn symbol_inspect(value: &str) -> String {
     let candidate = format!(":{value}");
     let source = SourceFile::from_bytes("symbol.rb", candidate.as_bytes().to_vec());
