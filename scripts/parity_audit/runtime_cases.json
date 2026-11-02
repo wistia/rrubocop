@@ -814,5 +814,693 @@
       "files": {},
       "watch": []
     }
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "left = Object.new\nright = left\np left.object_id == right.object_id\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "left = Object.new\nright = left\np left.equal?(right)\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "left = Object.new\nright = Object.new\np left.object_id == right.object_id\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "left = Object.new\nright = Object.new\np left.equal?(right)\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "def read(value, seen, label)\n seen << label\n value\nend\nseen = []\nobject = Object.new\np read(object, seen, :left).object_id == read(object, seen, :right).object_id\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 2,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def read(value, seen, label)\n seen << label\n value\nend\nseen = []\nobject = Object.new\np read(object, seen, :left).equal?(read(object, seen, :right))\np seen\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "object = Object.new\ndef object.object_id(value); value; end\nother = Object.new\np object.object_id(other.object_id) == other.object_id\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 2,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "object = Object.new\ndef object.object_id(value); value; end\nother = Object.new\np object.equal?(other)\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "object = Object.new\nseen = []\np object.object_id.==(object.object_id) { seen << :ignored }\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "object = Object.new\nseen = []\np object.equal?(object) { seen << :ignored }\np seen\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "item = nil\np(item&.to_s && item.upcase)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "item = nil\np(item&.to_s && item&.upcase)\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "item = \"value\"\np(item&.size && item.upcase)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "item = \"value\"\np(item&.size && item&.upcase)\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "def read(value, seen)\n seen << :read\n value\nend\nseen = []\nitem = \"value\"\np(read(item, seen)&.size && read(item, seen).upcase)\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 2,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "def read(value, seen)\n seen << :read\n value\nend\nseen = []\nitem = \"value\"\np(read(item, seen)&.size && read(item, seen)&.upcase)\np seen\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "left = \"a\"\nright = \"bb\"\np(left&.size && right&.size && left.upcase && right.upcase)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      },
+      {
+        "line": 3,
+        "column": 16,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "left = \"a\"\nright = \"bb\"\np(left&.size && right&.size && left&.upcase && right&.upcase)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "seen = []\nleft = -> { seen << :left; 1 }\nright = -> { seen << :right; 2 }\np(left.call < right.call ? true : false)\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 2,
+        "message": "This conditional expression can just be replaced by `left.call < right.call`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nleft = -> { seen << :left; 1 }\nright = -> { seen << :right; 2 }\np(left.call < right.call)\np seen\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(if 2 > 1; false; else; true; end)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "This conditional expression can just be replaced by `!(2 > 1)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p(!(2 > 1))\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "value = if false\n :other\nelsif 1 < 2\n false\nelse\n true\nend\np value\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `\nelse\n  !(1 < 2)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = if false\n :other\nelse\n  !(1 < 2)\nend\np value\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "p(1 < (\n# retained\n2) ? true : false)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "This conditional expression can just be replaced by `1 < (\n# retained\n2)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p(1 < (\n# retained\n2))\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "values = [3, 1, 2]\np [values.sort.first, values.sort.last, values]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Use `min` instead of `sort...first`.",
+        "correctable": true
+      },
+      {
+        "line": 2,
+        "column": 29,
+        "message": "Use `max` instead of `sort...last`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = [3, 1, 2]\np [values.min, values.max, values]\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "values = []\np [values.sort[0], values.sort[-1]]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 10,
+        "message": "Use `min` instead of `sort...[0]`.",
+        "correctable": true
+      },
+      {
+        "line": 2,
+        "column": 26,
+        "message": "Use `max` instead of `sort...[-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "values = []\np [values.min, values.max]\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "seen = []\nvalue = [3, 1, 2].sort_by { |number| seen << number; -number }.first\np [value, seen]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 18,
+        "message": "Use `min_by` instead of `sort_by...first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nvalue = [3, 1, 2].min_by { |number| seen << number; -number }\np [value, seen]\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "p [\"a\", \"bbb\", \"cc\"].sort_by(&:length).last\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 21,
+        "message": "Use `max_by` instead of `sort_by...last`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [\"a\", \"bbb\", \"cc\"].max_by(&:length)\n"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "begin\n raise Exception, \"message\"\nrescue Exception => error\n p error.message\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 7,
+        "message": "Use `StandardError` over `Exception`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin\n raise StandardError, \"message\"\nrescue Exception => error\n p error.message\nend\n"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "seen = []\ndef message(seen); seen << :message; \"error\"; end\nbegin\n raise ::Exception.new(message(seen))\nrescue Exception => error\n p [error.message, seen]\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 7,
+        "message": "Use `StandardError` over `Exception`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\ndef message(seen); seen << :message; \"error\"; end\nbegin\n raise ::StandardError.new(message(seen))\nrescue Exception => error\n p [error.message, seen]\nend\n"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "begin\n fail ::Exception, \"message\"\nrescue Exception => error\n p error.message\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 6,
+        "message": "Use `StandardError` over `Exception`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "begin\n fail ::StandardError, \"message\"\nrescue Exception => error\n p error.message\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require_relative \"loaded\"\nrequire_relative \"loaded\"\np $runtime_loads\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {
+        "loaded.rb": "$runtime_loads ||= 0\n$runtime_loads += 1\n"
+      },
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require_relative` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require_relative \"loaded\"\np $runtime_loads\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require_relative \"loaded\"\nrequire_relative \"loaded.rb\"\np $runtime_loads\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {
+        "loaded.rb": "$runtime_loads ||= 0\n$runtime_loads += 1\n"
+      },
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require_relative \"loaded\"\nrequire_relative \"loaded.rb\"\np $runtime_loads\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "2.times do\n require_relative \"loaded\"\n require_relative \"loaded\"\nend\np $runtime_loads\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {
+        "loaded.rb": "$runtime_loads ||= 0\n$runtime_loads += 1\n"
+      },
+      "watch": []
+    },
+    "config": {
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Duplicate `require_relative` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "2.times do\n require_relative \"loaded\"\nend\np $runtime_loads\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "object = Object.new\ndef object.equal?(other)\n yield\n true\nend\nseen = []\np object.object_id.==(object.object_id) { seen << :called }\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 7,
+        "column": 2,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "object = Object.new\ndef object.equal?(other)\n yield\n true\nend\nseen = []\np object.equal?(object) { seen << :called }\np seen\n"
   }
 ]

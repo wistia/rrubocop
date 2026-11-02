@@ -1,3 +1,5 @@
+mod removal;
+use removal::{removes_closing_delimiter, whole_lines};
 mod literal_key;
 use literal_key::{literal_key, require_key};
 pub(super) fn expression_key(c: &Context<'_>, n: Node<'_>) -> String {
@@ -69,14 +71,12 @@ fn require(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     }
     let (start, end) = whole_lines(c, n);
-    vec![
-        Finding::new(n, format!("Duplicate `{}` detected.", c.method(n))).edit_with(
-            c,
-            start,
-            end,
-            || "",
-        ),
-    ]
+    let finding = Finding::new(n, format!("Duplicate `{}` detected.", c.method(n)));
+    vec![if removes_closing_delimiter(n, start, end) {
+        finding
+    } else {
+        finding.edit_with(c, start, end, || "")
+    }]
 }
 fn require_call(c: &Context<'_>, n: Node<'_>) -> bool {
     ["require", "require_relative"].contains(&c.method(n))
@@ -130,16 +130,6 @@ fn ruby_parent(n: Node<'_>) -> Node<'_> {
     }
 }
 
-fn whole_lines(c: &Context<'_>, n: Node<'_>) -> (usize, usize) {
-    (
-        c.source
-            .line_start(n.start_position().row + 1)
-            .unwrap_or(n.start_byte()),
-        c.source
-            .line_start(n.end_position().row + 2)
-            .unwrap_or(c.source.as_bytes().len()),
-    )
-}
 fn kernel_receiver(c: &Context<'_>, n: Node<'_>) -> bool {
     field(n, "receiver").is_none_or(|r| {
         matches!(r.kind(), "constant" | "scope_resolution")

@@ -10,8 +10,8 @@ pub(super) fn identity(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if field(left, "receiver").is_none() || field(right, "receiver").is_none() {
         return vec![];
     }
-    let finding = Finding::new(n, "Use `equal?` instead `==` when comparing `object_id`.");
-    vec![correct_identity(c, finding, n, left, right)]
+    let finding = Finding::send(n, "Use `equal?` instead `==` when comparing `object_id`.");
+    vec![correct_identity(c, finding, left, right)]
 }
 fn object_id(c: &Context<'_>, n: Node<'_>) -> bool {
     c.method(n) == "object_id" && block(n).is_none()
@@ -25,16 +25,13 @@ fn comparison<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, Node<'a>)> 
         None
     }
 }
-fn correct_identity(
-    c: &Context<'_>,
-    finding: Finding,
-    n: Node<'_>,
-    left: Node<'_>,
-    right: Node<'_>,
-) -> Finding {
+fn correct_identity(c: &Context<'_>, finding: Finding, left: Node<'_>, right: Node<'_>) -> Finding {
     match field(left, "receiver").zip(field(right, "receiver")) {
         Some((l, r)) => {
-            finding.replace_with(c, n, || format!("{}.equal?({})", c.text(l), c.text(r)))
+            let (start, end) = (finding.start, finding.end);
+            finding.edit_with(c, start, end, || {
+                format!("{}.equal?({})", c.text(l), c.text(r))
+            })
         }
         None => finding,
     }
