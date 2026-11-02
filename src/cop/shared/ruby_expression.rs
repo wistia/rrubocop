@@ -129,6 +129,18 @@ pub fn regular_send_receiver<'n>(source: &SourceFile, node: Node<'n>) -> Option<
     (is_send(source, node) && !safe_send(source, node)).then(|| send_receiver(node))
 }
 
+pub fn regular_send_name<'s>(source: &'s SourceFile, node: Node<'_>) -> Option<Cow<'s, [u8]>> {
+    regular_send_receiver(source, node)?;
+    if shorthand_value(source, node) == Some(ShorthandValue::Send) {
+        return Some(Cow::Borrowed(node_bytes(source, node)));
+    }
+    name(source, node)
+}
+pub fn regular_send_arguments<'n>(source: &SourceFile, node: Node<'n>) -> Option<Vec<Node<'n>>> {
+    regular_send_receiver(source, node)?;
+    Some(call_args(node))
+}
+
 fn call_args(node: Node<'_>) -> Vec<Node<'_>> {
     let n = target(node);
     let mut args = match n.kind() {
@@ -783,6 +795,17 @@ mod tests {
                     ShorthandValue::Send => "send",
                 };
                 assert_eq!(kind, expected.node_type, "{}", case.id);
+                if role == ShorthandValue::Send {
+                    assert_eq!(
+                        regular_send_name(&source, key).unwrap().as_ref(),
+                        node_bytes(&source, key)
+                    );
+                    assert!(regular_send_arguments(&source, key).unwrap().is_empty());
+                } else {
+                    assert!(regular_send_name(&source, key).is_none());
+                    assert!(regular_send_arguments(&source, key).is_none());
+                }
+
                 assert_eq!(role == ShorthandValue::Local, expected.local, "{}", case.id);
                 assert_eq!(role != ShorthandValue::Send, expected.pure, "{}", case.id);
                 assert_eq!(
