@@ -11,7 +11,7 @@ Standard 1.40.0, rubocop-rails 2.26.0, and AnyCable Rails Core 1.6.2.
 
 ## Validation
 
-- 817 Rust tests, including 2,777 pinned Ruby reference examples across 98 added cops,
+- 820 Rust tests, including 2,888 pinned Ruby reference examples across 98 added cops,
   plus 11 interpolation reference cases.
   The [parity and optimization follow-up](reviews/port-fixes-and-optimizations.md) records
   the 30 newly added regressions and correction-mode coverage. The
@@ -357,3 +357,5 @@ The [literal and scope parity fixes](reviews/custom-parity-round-four.md) cover 
 The [single-command custom cop audit](custom-parity-audit.md) replays live Ruby comparisons, generated syntax/literal variants, compiler checks, and explicit runtime scenarios, with per-cop coverage and machine-readable findings.
 
 The [batch audit fixes](reviews/batch-parity-fixes.md) resolve the initial discrepancy set and record a clean live audit across all 98 added rules.
+
+The [independent audit follow-up](reviews/independent-parity-fixes.md) fixes block-sensitive unpack rewrites, semantic argument comments, and typed literal identity. Its broader generators expose 153 unresolved discrepancy records across 64 cases; the expanded audit is not yet clean.

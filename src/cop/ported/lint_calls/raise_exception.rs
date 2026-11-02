@@ -25,7 +25,7 @@ fn raised_exception<'a>(c: &Context<'_>, n: Node<'a>) -> Option<Node<'a>> {
     if !matches!(c.method(n), "raise" | "fail") || !c.receiver(n).is_empty() {
         return None;
     }
-    let exception = *args(n).first()?;
+    let exception = *semantic_args(n).first()?;
     if is_call(exception) && c.method(exception) == "new" {
         field(exception, "receiver")
     } else {

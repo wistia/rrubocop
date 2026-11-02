@@ -1,0 +1,911 @@
+[
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id.==(\n # right\n b.object_id)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a.equal?(b)\n",
+    "fixture": "tests/fixtures/cops/lint/identity_comparison/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "raise(\n # exception\n Exception)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Use `StandardError` over `Exception`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "raise(\n # exception\n StandardError)\n",
+    "fixture": "tests/fixtures/cops/lint/raise_exception/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.eql?(\n # type\n String)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "obj.instance_of?(String)\n",
+    "fixture": "tests/fixtures/cops/style/class_equality_comparison/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "value.eql?(\n # number\n 1.5)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid (in)equality comparisons of floats as they are unreliable.",
+        "correctable": false
+      }
+    ],
+    "corrected": "value.eql?(\n # number\n 1.5)\n",
+    "fixture": "tests/fixtures/cops/lint/float_comparison/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "1.5.eql?(\n # zero\n 0)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "1.5.eql?(\n # zero\n 0)\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\") { |number| seen << number }.first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\") { |number| seen << number }.first\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/block_receiver_no_offense.rb"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](\n # entries\n :a, 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1}\n",
+    "fixture": "tests/fixtures/cops/style/hash_conversion/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require 'set'\nrequire(\n # dependency\n 'set')\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require 'set'\n",
+    "fixture": "tests/fixtures/cops/lint/duplicate_require/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require(\n # dependency\n 'foo.rb')\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 5,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require(\n # dependency\n 'foo')\n",
+    "fixture": "tests/fixtures/cops/style/redundant_file_extension_in_require/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "include(\n # module\n Enumerable)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "include(\n # module\n Enumerable)\n",
+    "fixture": "tests/fixtures/cops/style/mixin_usage/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |key, value| [:a].include?(\n # key\n key) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n",
+    "rust_correctable": false,
+    "rust_corrected": "h.reject { |key, value| [:a].include?(\n # key\n key) }\n",
+    "reason": "Preserve the existing HashExcept comment safeguard: argument comments are matched but this rewrite remains manual.",
+    "fixture": "tests/fixtures/cops/style/hash_except/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort(\n # no arguments\n).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min(\n # no arguments\n)\n",
+    "fixture": "tests/fixtures/cops/style/redundant_sort/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first(\n # no arguments\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first(\n # no arguments\n)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |item| item if keep?(item) }.compact(\n # no arguments\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |item| keep?(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |item| item if keep?(item) }.compact(\n # no arguments\n)\n",
+    "reason": "MapCompactWithConditionalBlock remains diagnostic-only in every correction mode to preserve value and binding semantics.",
+    "fixture": "tests/fixtures/cops/style/map_compact_with_conditional_block/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id.==(\n # first\n # second\n b.object_id)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a.equal?(b)\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id.==(\n # number\n 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a.object_id.==(\n # number\n 1)\n"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "raise(\n # exception\n Exception.new(\"message\"))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Use `StandardError` over `Exception`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "raise(\n # exception\n StandardError.new(\"message\"))\n"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "raise(\n # exception\n StandardError)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "raise(\n # exception\n StandardError)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.name.eql?(\n # class name\n \"String\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "obj.instance_of?(String)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.size.eql?(\n # size\n 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj.size.eql?(\n # size\n 1)\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "number.round(\n # precision\n 2) == other\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "number.round(\n # precision\n 2) == other\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "1.5.round(\n # precision\n 2) == other\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid (in)equality comparisons of floats as they are unreliable.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.5.round(\n # precision\n 2) == other\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "1.5.round(\n # precision\n 0) == other\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "1.5.round(\n # precision\n 0) == other\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](\n # entries\n :a, # first\n 1, # second\n :b, 2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1, :b => 2}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](\n # splat\n *entries)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Hash.[](\n # splat\n *entries)\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require(\"set\")\nrequire(\n # duplicate\n \"set\",\n # trailing\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require(\"set\")\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require(\"set\")\nrequire(\n # different\n \"json\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\"set\")\nrequire(\n # different\n \"json\")\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require_relative(\n # dependency\n \"foo.rb\",\n # trailing\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 5,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require_relative(\n # dependency\n \"foo\",\n # trailing\n)\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require(\n # native extension\n \"foo.so\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\n # native extension\n \"foo.so\")\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "class C\n include(\n # module\n Enumerable)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class C\n include(\n # module\n Enumerable)\nend\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "prepend(\n # module\n Enumerable)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`prepend` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "prepend(\n # module\n Enumerable)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject(\n # no arguments\n) { |key, value| key == :a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n",
+    "rust_correctable": false,
+    "rust_corrected": "h.reject(\n # no arguments\n) { |key, value| key == :a }\n",
+    "reason": "Preserve the existing HashExcept comment safeguard: argument comments are matched but this rewrite remains manual."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |key, value| [:a].include?(\n # value is not key\n value) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "h.reject { |key, value| [:a].include?(\n # value is not key\n value) }\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort.first(\n # no arguments\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...first(\n # no arguments\n)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort.first(\n # array result\n 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.sort.first(\n # array result\n 1)\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").at(\n # index\n 0)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").at(\n # index\n 0)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first(\n # array result\n 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\").first(\n # array result\n 1)\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\", &callback).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\", &callback).first\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\", offset: 1).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\", offset: 1).first\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\") { seen << _1 }[0]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\") { seen << _1 }[0]\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\") do |number|\n seen << number\nend.first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\") do |number|\n seen << number\nend.first\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |item| item * 2 if keep?(item) }.compact(\n # no arguments\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.map { |item| item * 2 if keep?(item) }.compact(\n # no arguments\n)\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |item| item * 2 if keep?(item) }.compact(\n # no arguments\n)\n",
+    "reason": "MapCompactWithConditionalBlock remains diagnostic-only in every correction mode to preserve value and binding semantics."
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "seen = []\nvalue = begin\n \"ab\".unpack(\"C*\") { |number| seen << number }.first\nrescue NoMethodError\n :missing\nend\np [seen, value]\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime": {},
+    "runtime_stdout": "[[97, 98], :missing]\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\nvalue = begin\n \"ab\".unpack(\"C*\") { |number| seen << number }.first\nrescue NoMethodError\n :missing\nend\np [seen, value]\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/block_receiver_runtime_no_offense.rb"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\") { work }\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/outer_accessor_block.rb"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\")[0] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\") { work }\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").[](0) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").[](0)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\") { work }\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first(\n # no arguments\n) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first(\n # no arguments\n)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\") { work }\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort[0] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min { work }\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort.first { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min { work }\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort.first { work } && other\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min { work } && other\n"
+  }
+]

@@ -12,23 +12,34 @@ pub(super) fn unpack(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     vec![unpack_finding(c, n, recv)]
 }
 fn unpack_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.method(n) == "unpack" && !semantic_args(n).is_empty() && !c.receiver(n).is_empty()
+    c.method(n) == "unpack"
+        && semantic_args(n).len() == 1
+        && !c.receiver(n).is_empty()
+        && block(n).is_none()
 }
 fn unpack_finding(c: &Context<'_>, n: Node<'_>, recv: Node<'_>) -> Finding {
     let start = method_node(recv).start_byte();
-    let current = String::from_utf8_lossy(&c.source.as_bytes()[start..n.end_byte()]);
+    let end = accessor_end(c, n);
+    let current = String::from_utf8_lossy(&c.source.as_bytes()[start..end]);
     Finding::range(
         start,
-        n.end_byte(),
+        end,
         format!(
             "Use `unpack1({})` instead of `{current}`.",
             c.text(semantic_args(recv)[0])
         ),
     )
-    .edit_with(c, start, n.end_byte(), || {
+    .edit_with(c, start, end, || {
         String::from_utf8_lossy(&c.source.as_bytes()[start..recv.end_byte()])
             .replacen("unpack", "unpack1", 1)
     })
+}
+fn accessor_end(c: &Context<'_>, n: Node<'_>) -> usize {
+    let source = &c.text(n)[..send_end(n) - n.start_byte()];
+    n.start_byte()
+        + source
+            .trim_end_matches(|character: char| character.is_ascii_whitespace())
+            .len()
 }
 pub(super) fn sort(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some((recv, max, access_start)) = access(c, n) else {
@@ -41,8 +52,8 @@ pub(super) fn sort(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 fn sort_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
     match c.method(n) {
-        "sort" => args(n).is_empty(),
-        "sort_by" => args(n).len() == 1 || block(n).is_some(),
+        "sort" => semantic_args(n).is_empty(),
+        "sort_by" => semantic_args(n).len() == 1 || block(n).is_some(),
         _ => false,
     }
 }
@@ -68,14 +79,15 @@ fn sort_edit(
     suggestion: &str,
 ) -> Finding {
     let selector = method_node(recv);
+    let end = accessor_end(c, n);
     let inside =
         String::from_utf8_lossy(&c.source.as_bytes()[selector.end_byte()..recv.end_byte()]);
     Finding::range(
         selector.start_byte(),
-        n.end_byte(),
+        end,
         sort_message(c, n, recv, start, suggestion),
     )
-    .edit_with(c, selector.start_byte(), n.end_byte(), || {
+    .edit_with(c, selector.start_byte(), end, || {
         format!(
             "{suggestion}{inside}{}{}",
             logical_suffix(c, n),
@@ -97,6 +109,9 @@ fn sort_message(
     )
 }
 fn logical_operator<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
+    if block(n).is_some() {
+        return None;
+    }
     let parent = n
         .parent()
         .filter(|p| p.kind() == "binary" && ["&&", "||", "and", "or"].contains(&operator(c, *p)))?;
@@ -104,12 +119,11 @@ fn logical_operator<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
 }
 
 fn accessor_source<'c>(c: &'c Context<'_>, n: Node<'_>, start: usize) -> std::borrow::Cow<'c, str> {
-    String::from_utf8_lossy(&c.source.as_bytes()[start..n.end_byte()])
+    String::from_utf8_lossy(&c.source.as_bytes()[start..accessor_end(c, n)])
 }
 
 fn logical_suffix(c: &Context<'_>, n: Node<'_>) -> String {
-    n.parent()
-        .filter(|p| p.kind() == "binary" && ["&&", "||", "and", "or"].contains(&operator(c, *p)))
-        .map(|p| format!(" {}", operator(c, p)))
+    logical_operator(c, n)
+        .map(|operator| format!(" {}", c.text(operator)))
         .unwrap_or_default()
 }

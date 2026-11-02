@@ -19,7 +19,7 @@ fn standalone_filter(c: &Context<'_>, n: Node<'_>) -> bool {
     n.parent().is_none_or(|p| c.method(p) != "compact")
 }
 fn compact_candidate<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, String)> {
-    if c.method(n) != "compact" || !args(n).is_empty() {
+    if c.method(n) != "compact" || !semantic_args(n).is_empty() {
         return None;
     }
     let recv = field(n, "receiver").filter(|r| ["map", "filter_map"].contains(&c.method(*r)))?;

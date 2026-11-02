@@ -17,7 +17,7 @@ fn comparison<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, Node<'a>)> 
     if n.kind() == "binary" && operator(c, n) == "==" {
         field(n, "left").zip(field(n, "right"))
     } else if c.method(n) == "==" {
-        field(n, "receiver").zip(args(n).first().copied())
+        field(n, "receiver").zip(semantic_args(n).first().copied())
     } else {
         None
     }

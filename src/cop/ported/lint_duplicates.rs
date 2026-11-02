@@ -1,5 +1,5 @@
 mod literal_key;
-use literal_key::literal_key;
+use literal_key::{literal_key, require_key};
 mod empty_when;
 use super::context::*;
 use crate::cop::CopRegistry;
@@ -78,7 +78,7 @@ fn require(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 fn require_call(c: &Context<'_>, n: Node<'_>) -> bool {
     ["require", "require_relative"].contains(&c.method(n))
         && kernel_receiver(c, n)
-        && args(n).len() == 1
+        && semantic_args(n).len() == 1
 }
 struct RepeatedRequires(HashSet<usize>);
 fn repeated_require(c: &Context<'_>, n: Node<'_>) -> bool {
@@ -115,7 +115,7 @@ fn requirement_key<'a>(
         parent.end_byte(),
         parent.kind(),
         c.method(node),
-        literal_key(c, args(node)[0]),
+        require_key(c, semantic_args(node)[0]),
     )
 }
 fn ruby_parent(n: Node<'_>) -> Node<'_> {

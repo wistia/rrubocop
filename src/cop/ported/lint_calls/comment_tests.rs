@@ -6,11 +6,19 @@ use serde_json::Value;
 use std::path::Path;
 
 fn cases() -> Vec<Value> {
-    serde_json::from_str(include_str!(concat!(
+    let mut cases: Vec<Value> = serde_json::from_str(include_str!(concat!(
         env!("CARGO_MANIFEST_DIR"),
         "/tests/fixtures/comment-argument-parity.json"
     )))
-    .unwrap()
+    .unwrap();
+    cases.extend(
+        serde_json::from_str::<Vec<Value>>(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/semantic-argument-parity.json"
+        )))
+        .unwrap(),
+    );
+    cases
 }
 
 #[test]
@@ -95,39 +103,48 @@ fn diagnostic(diagnostic: Diagnostic) -> String {
 }
 
 fn expected(case: &Value) -> Vec<String> {
-    let mut expected = case["expected"]
+    let mut expected = case
+        .get("rust_expected")
+        .unwrap_or(&case["expected"])
         .as_array()
         .unwrap()
         .iter()
-        .map(|offense| {
-            format!(
-                "{}:{}:{}:{}",
-                offense["line"],
-                offense["column"],
-                offense["correctable"],
-                offense["message"].as_str().unwrap()
-            )
-        })
+        .map(|offense| expected_diagnostic(case, offense))
         .collect::<Vec<_>>();
     expected.sort();
     expected
 }
-
-fn expected_source<'a>(registry: &CopRegistry, case: &'a Value, mode: AutocorrectMode) -> &'a str {
+fn expected_diagnostic(case: &Value, offense: &Value) -> String {
+    format!(
+        "{}:{}:{}:{}",
+        offense["line"],
+        offense["column"],
+        case.get("rust_correctable")
+            .unwrap_or(&offense["correctable"]),
+        offense["message"].as_str().unwrap()
+    )
+}
+fn correction_allowed(registry: &CopRegistry, case: &Value, mode: AutocorrectMode) -> bool {
+    if mode == AutocorrectMode::Off {
+        return false;
+    }
     let name = case["cop"].as_str().unwrap();
-    let config = configuration(case);
-    let cop = &config.cop_configs[name];
+    let cop = &configuration(case).cop_configs[name];
     let safe = cop.get_bool("Safe", true)
         && cop.get_bool(
             "SafeAutoCorrect",
             registry.get(name).unwrap().safe_autocorrect(),
         );
-    let key = if mode == AutocorrectMode::Off || mode == AutocorrectMode::Safe && !safe {
-        "source"
-    } else {
-        "corrected"
-    };
-    case[key].as_str().unwrap()
+    mode == AutocorrectMode::All || safe
+}
+fn expected_source<'a>(registry: &CopRegistry, case: &'a Value, mode: AutocorrectMode) -> &'a str {
+    if !correction_allowed(registry, case, mode) {
+        return case["source"].as_str().unwrap();
+    }
+    case.get("rust_corrected")
+        .unwrap_or(&case["corrected"])
+        .as_str()
+        .unwrap()
 }
 
 #[test]

@@ -67,6 +67,9 @@ impl<'a> Context<'a> {
     pub fn ruby_static_string(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
         symbols::ruby_string(self, node)
     }
+    pub fn duplicate_literal_bytes(&self, node: Node<'_>) -> Option<(Vec<u8>, bool)> {
+        symbols::duplicate_bytes(self, node)
+    }
     pub fn static_value(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
         self.static_symbol(node)
             .or_else(|| self.static_string(node))

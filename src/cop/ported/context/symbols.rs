@@ -83,6 +83,8 @@ fn closing(open: u8) -> u8 {
 mod escapes;
 mod ruby;
 pub(super) use ruby::string as ruby_string;
+mod duplicate;
+pub(super) use duplicate::value as duplicate_bytes;
 
 fn single_escape(
     bytes: &mut std::iter::Peekable<std::str::Bytes<'_>>,

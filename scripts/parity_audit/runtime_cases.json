@@ -100,5 +100,17 @@
       "ActiveSupportExtensionsEnabled": true
     },
     "runtime": {}
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "seen = []\nvalue = begin\n \"ab\".unpack(\"C*\") { |number| seen << number }.first\nrescue NoMethodError\n :missing\nend\np [seen, value]\n",
+    "path": "probe.rb",
+    "runtime": {}
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\ncase value\nwhen \"\\xC3\\xA9\"\n puts \"binary\"\nwhen \"\\u00E9\"\n puts \"unicode\"\nend\n",
+    "path": "probe.rb",
+    "runtime": {}
   }
 ]

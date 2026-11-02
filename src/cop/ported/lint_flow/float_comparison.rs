@@ -20,7 +20,7 @@ fn comparison<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, Node<'a>)> 
     if n.kind() == "binary" && ["==", "!="].contains(&operator(c, n)) {
         field(n, "left").zip(field(n, "right"))
     } else if ["==", "!=", "eql?", "equal?"].contains(&c.method(n)) {
-        field(n, "receiver").zip(args(n).first().copied())
+        field(n, "receiver").zip(semantic_args(n).first().copied())
     } else {
         None
     }
@@ -54,7 +54,7 @@ fn float_call(c: &Context<'_>, n: Node<'_>) -> bool {
     }
 }
 fn positive_precision(c: &Context<'_>, n: Node<'_>) -> bool {
-    args(n)
+    semantic_args(n)
         .first()
         .is_some_and(|a| a.kind() == "integer" && c.text(*a).parse::<i64>().is_ok_and(|v| v > 0))
 }

@@ -28,7 +28,7 @@ fn hash_finding(c: &Context<'_>, n: Node<'_>, except: Node<'_>) -> Finding {
 
 fn except_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
     ["reject", "select", "filter"].contains(&c.method(n))
-        && args(n).is_empty()
+        && semantic_args(n).is_empty()
         && c.config.get_f64("TargetRubyVersion", 2.7) >= 3.0
 }
 fn block_key<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, bool)> {

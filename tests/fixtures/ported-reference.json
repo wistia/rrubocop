@@ -20218,7 +20218,7 @@
   },
   {
     "cop": "Style/RedundantRegexpEscape",
-    "source": "x = s[/[\u4e00\u4e8c\u4e09\u56db\\.]+/]\np x\n",
+    "source": "x = s[/[一二三四\\.]+/]\np x\n",
     "path": "test.rb",
     "positive": true,
     "options": {},
@@ -20235,11 +20235,11 @@
         "correctable": true
       }
     ],
-    "corrected": "x = s[/[\u4e00\u4e8c\u4e09\u56db.]+/]\np x\n"
+    "corrected": "x = s[/[一二三四.]+/]\np x\n"
   },
   {
     "cop": "Style/RedundantRegexpEscape",
-    "source": "r = /[\\\u00a7]/\n",
+    "source": "r = /[\\§]/\n",
     "path": "test.rb",
     "positive": true,
     "options": {},
@@ -20256,7 +20256,7 @@
         "correctable": true
       }
     ],
-    "corrected": "r = /[\u00a7]/\n"
+    "corrected": "r = /[§]/\n"
   },
   {
     "cop": "Style/RedundantSort",
@@ -39340,7 +39340,7 @@
   },
   {
     "cop": "Cops/NoCallbackSkippingProtectedWrites",
-    "source": "media.update_all(\"\u043f\u0440\u043e\u0442\u0435\u043a\u0442\u0435\u0434\": true)\n",
+    "source": "media.update_all(\"протектед\": true)\n",
     "path": "probe.rb",
     "options": {},
     "config": {
@@ -39348,7 +39348,7 @@
       "ActiveSupportExtensionsEnabled": false
     },
     "expected": [],
-    "corrected": "media.update_all(\"\u043f\u0440\u043e\u0442\u0435\u043a\u0442\u0435\u0434\": true)\n"
+    "corrected": "media.update_all(\"протектед\": true)\n"
   },
   {
     "cop": "Cops/NoCallbackSkippingProtectedWrites",
@@ -42662,7 +42662,7 @@
   },
   {
     "cop": "Style/TrailingBodyOnMethodDefinition",
-    "source": "def f; \"\u00e9\" # coding: us-ascii\nend\n",
+    "source": "def f; \"é\" # coding: us-ascii\nend\n",
     "path": "probe.rb",
     "options": {},
     "manual": true,
@@ -42678,9 +42678,9 @@
         "correctable": true
       }
     ],
-    "corrected": "# coding: us-ascii\ndef f \n  \"\u00e9\" \nend\n",
+    "corrected": "# coding: us-ascii\ndef f \n  \"é\" \nend\n",
     "rust_correctable": false,
-    "rust_corrected": "def f; \"\u00e9\" # coding: us-ascii\nend\n",
+    "rust_corrected": "def f; \"é\" # coding: us-ascii\nend\n",
     "reason": "Decline a correction that can change keyword binding, hoist comments, evaluate write content before open/truncation, or remove an assignment observable through a captured binding."
   },
   {
@@ -51436,7 +51436,7 @@
   },
   {
     "cop": "Lint/DuplicateCaseCondition",
-    "source": "case x\nwhen :\"\\u00e9\", :\u00e9; run\nend\n",
+    "source": "case x\nwhen :\"\\u00e9\", :é; run\nend\n",
     "path": "test.rb",
     "options": {},
     "config": {
@@ -51453,7 +51453,7 @@
         "severity": "warning"
       }
     ],
-    "corrected": "case x\nwhen :\"\\u00e9\", :\u00e9; run\nend\n"
+    "corrected": "case x\nwhen :\"\\u00e9\", :é; run\nend\n"
   },
   {
     "cop": "Lint/RescueType",
@@ -52013,5 +52013,1930 @@
     },
     "expected": [],
     "corrected": "case x; when :a then begin; end; end\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id.==(\n # right\n b.object_id)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a.equal?(b)\n",
+    "fixture": "tests/fixtures/cops/lint/identity_comparison/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "raise(\n # exception\n Exception)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Use `StandardError` over `Exception`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "raise(\n # exception\n StandardError)\n",
+    "fixture": "tests/fixtures/cops/lint/raise_exception/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.eql?(\n # type\n String)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "obj.instance_of?(String)\n",
+    "fixture": "tests/fixtures/cops/style/class_equality_comparison/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "value.eql?(\n # number\n 1.5)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid (in)equality comparisons of floats as they are unreliable.",
+        "correctable": false
+      }
+    ],
+    "corrected": "value.eql?(\n # number\n 1.5)\n",
+    "fixture": "tests/fixtures/cops/lint/float_comparison/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "1.5.eql?(\n # zero\n 0)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "1.5.eql?(\n # zero\n 0)\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\") { |number| seen << number }.first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\") { |number| seen << number }.first\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/block_receiver_no_offense.rb"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](\n # entries\n :a, 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1}\n",
+    "fixture": "tests/fixtures/cops/style/hash_conversion/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require 'set'\nrequire(\n # dependency\n 'set')\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require 'set'\n",
+    "fixture": "tests/fixtures/cops/lint/duplicate_require/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require(\n # dependency\n 'foo.rb')\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 5,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require(\n # dependency\n 'foo')\n",
+    "fixture": "tests/fixtures/cops/style/redundant_file_extension_in_require/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "include(\n # module\n Enumerable)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`include` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "include(\n # module\n Enumerable)\n",
+    "fixture": "tests/fixtures/cops/style/mixin_usage/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |key, value| [:a].include?(\n # key\n key) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n",
+    "rust_correctable": false,
+    "rust_corrected": "h.reject { |key, value| [:a].include?(\n # key\n key) }\n",
+    "reason": "Preserve the existing HashExcept comment safeguard: argument comments are matched but this rewrite remains manual.",
+    "fixture": "tests/fixtures/cops/style/hash_except/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort(\n # no arguments\n).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min(\n # no arguments\n)\n",
+    "fixture": "tests/fixtures/cops/style/redundant_sort/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first(\n # no arguments\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first(\n # no arguments\n)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |item| item if keep?(item) }.compact(\n # no arguments\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Replace `map { ... }.compact` with `select`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.select { |item| keep?(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |item| item if keep?(item) }.compact(\n # no arguments\n)\n",
+    "reason": "MapCompactWithConditionalBlock remains diagnostic-only in every correction mode to preserve value and binding semantics.",
+    "fixture": "tests/fixtures/cops/style/map_compact_with_conditional_block/semantic_argument_comments.rb"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id.==(\n # first\n # second\n b.object_id)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use `equal?` instead `==` when comparing `object_id`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a.equal?(b)\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id.==(\n # number\n 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a.object_id.==(\n # number\n 1)\n"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "raise(\n # exception\n Exception.new(\"message\"))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Use `StandardError` over `Exception`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "raise(\n # exception\n StandardError.new(\"message\"))\n"
+  },
+  {
+    "cop": "Lint/RaiseException",
+    "source": "raise(\n # exception\n StandardError)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "AllowedImplicitNamespaces": [
+        "Gem"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "raise(\n # exception\n StandardError)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.name.eql?(\n # class name\n \"String\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `instance_of?(String)` instead of comparing classes.",
+        "correctable": true
+      }
+    ],
+    "corrected": "obj.instance_of?(String)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.size.eql?(\n # size\n 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj.size.eql?(\n # size\n 1)\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "number.round(\n # precision\n 2) == other\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "number.round(\n # precision\n 2) == other\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "1.5.round(\n # precision\n 2) == other\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid (in)equality comparisons of floats as they are unreliable.",
+        "correctable": false
+      }
+    ],
+    "corrected": "1.5.round(\n # precision\n 2) == other\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "1.5.round(\n # precision\n 0) == other\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "1.5.round(\n # precision\n 0) == other\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](\n # entries\n :a, # first\n 1, # second\n :b, 2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer literal hash to Hash[arg1, arg2, ...].",
+        "correctable": true
+      }
+    ],
+    "corrected": "{:a => 1, :b => 2}\n"
+  },
+  {
+    "cop": "Style/HashConversion",
+    "source": "Hash.[](\n # splat\n *entries)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowSplatArgument": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Hash.[](\n # splat\n *entries)\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require(\"set\")\nrequire(\n # duplicate\n \"set\",\n # trailing\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require(\"set\")\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require(\"set\")\nrequire(\n # different\n \"json\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\"set\")\nrequire(\n # different\n \"json\")\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require_relative(\n # dependency\n \"foo.rb\",\n # trailing\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 5,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require_relative(\n # dependency\n \"foo\",\n # trailing\n)\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require(\n # native extension\n \"foo.so\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "require(\n # native extension\n \"foo.so\")\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "class C\n include(\n # module\n Enumerable)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class C\n include(\n # module\n Enumerable)\nend\n"
+  },
+  {
+    "cop": "Style/MixinUsage",
+    "source": "prepend(\n # module\n Enumerable)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "`prepend` is used at the top level. Use inside `class` or `module`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "prepend(\n # module\n Enumerable)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject(\n # no arguments\n) { |key, value| key == :a }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "h.except(:a)\n",
+    "rust_correctable": false,
+    "rust_corrected": "h.reject(\n # no arguments\n) { |key, value| key == :a }\n",
+    "reason": "Preserve the existing HashExcept comment safeguard: argument comments are matched but this rewrite remains manual."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "h.reject { |key, value| [:a].include?(\n # value is not key\n value) }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "h.reject { |key, value| [:a].include?(\n # value is not key\n value) }\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort.first(\n # no arguments\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...first(\n # no arguments\n)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort.first(\n # array result\n 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.sort.first(\n # array result\n 1)\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").at(\n # index\n 0)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").at(\n # index\n 0)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first(\n # array result\n 1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\").first(\n # array result\n 1)\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\", &callback).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\", &callback).first\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\", offset: 1).first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\", offset: 1).first\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\") { seen << _1 }[0]\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\") { seen << _1 }[0]\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\") do |number|\n seen << number\nend.first\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "str.unpack(\"C*\") do |number|\n seen << number\nend.first\n"
+  },
+  {
+    "cop": "Style/MapCompactWithConditionalBlock",
+    "source": "items.map { |item| item * 2 if keep?(item) }.compact(\n # no arguments\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items.map { |item| item * 2 if keep?(item) }.compact(\n # no arguments\n)\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.map { |item| item * 2 if keep?(item) }.compact(\n # no arguments\n)\n",
+    "reason": "MapCompactWithConditionalBlock remains diagnostic-only in every correction mode to preserve value and binding semantics."
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "seen = []\nvalue = begin\n \"ab\".unpack(\"C*\") { |number| seen << number }.first\nrescue NoMethodError\n :missing\nend\np [seen, value]\n",
+    "path": "probe.rb",
+    "options": {},
+    "runtime_stdout": "[[97, 98], :missing]\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\nvalue = begin\n \"ab\".unpack(\"C*\") { |number| seen << number }.first\nrescue NoMethodError\n :missing\nend\np [seen, value]\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/block_receiver_runtime_no_offense.rb"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\") { work }\n",
+    "fixture": "tests/fixtures/cops/style/unpack_first/outer_accessor_block.rb"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\")[0] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\") { work }\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").[](0) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").[](0)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\") { work }\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "source": "str.unpack(\"C*\").first(\n # no arguments\n) { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\").first(\n # no arguments\n)`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\") { work }\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort[0] { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...[0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min { work }\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort.first { work }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min { work }\n"
+  },
+  {
+    "cop": "Style/RedundantSort",
+    "source": "items.sort.first { work } && other\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Use `min` instead of `sort...first`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.min { work } && other\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen 0x1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1\n :first\nwhen 0x1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen 0b1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1\n :first\nwhen 0b1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen 01\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1\n :first\nwhen 01\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen +1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1\n :first\nwhen +1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen -1\n :first\nwhen -0x1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen -1\n :first\nwhen -0x1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen - 1\n :first\nwhen -1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen - 1\n :first\nwhen -1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 0\n :first\nwhen -0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 0\n :first\nwhen -0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 10\n :first\nwhen 1_0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 10\n :first\nwhen 1_0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 18446744073709551616\n :first\nwhen 0x1_0000_0000_0000_0000\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 23,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 18446744073709551616\n :first\nwhen 0x1_0000_0000_0000_0000\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1.0\n :first\nwhen 1e0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1.0\n :first\nwhen 1e0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen -0.0\n :first\nwhen 0.0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen -0.0\n :first\nwhen 0.0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen 1.0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen 1\n :first\nwhen 1.0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1r\n :first\nwhen 1.0r\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1r\n :first\nwhen 1.0r\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 0.1r\n :first\nwhen 0.10r\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 5,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 0.1r\n :first\nwhen 0.10r\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 2.50r\n :first\nwhen 2.5r\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 2.50r\n :first\nwhen 2.5r\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1r\n :first\nwhen 1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen 1r\n :first\nwhen 1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1i\n :first\nwhen 0x1i\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1i\n :first\nwhen 0x1i\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1i\n :first\nwhen 1.0i\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen 1i\n :first\nwhen 1.0i\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1ri\n :first\nwhen 1.0ri\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 5,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1ri\n :first\nwhen 1.0ri\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1+1\n :first\nwhen 2\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen 1+1\n :first\nwhen 2\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen --1\n :first\nwhen 1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen --1\n :first\nwhen 1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen [:ready]\n :first\nwhen [:\"\\x72eady\"]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 13,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen [:ready]\n :first\nwhen [:\"\\x72eady\"]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen [[1, :ready]]\n :first\nwhen [[0x1, :\"\\x72eady\"]]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen [[1, :ready]]\n :first\nwhen [[0x1, :\"\\x72eady\"]]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen [1]\n :first\nwhen [1.0]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen [1]\n :first\nwhen [1.0]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen %i[ready]\n :first\nwhen [:ready]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen %i[ready]\n :first\nwhen [:ready]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen %w[ready]\n :first\nwhen [\"ready\"]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 9,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen %w[ready]\n :first\nwhen [\"ready\"]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen {a: 1}\n :first\nwhen {:a => 0x1}\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 11,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen {a: 1}\n :first\nwhen {:a => 0x1}\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen {a: 1, b: 2}\n :first\nwhen {b: 2, a: 1}\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen {a: 1, b: 2}\n :first\nwhen {b: 2, a: 1}\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value == :ready\n :first\nelsif value == :\"\\x72eady\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 6,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if value == :ready\n :first\nelsif value == :\"\\x72eady\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value == 1\n :first\nelsif value == 0x1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 6,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if value == 1\n :first\nelsif value == 0x1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value == [1, :ready]\n :first\nelsif value == [0x1, :\"\\x72eady\"]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 6,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 27,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if value == [1, :ready]\n :first\nelsif value == [0x1, :\"\\x72eady\"]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value == 1\n :first\nelsif value == 1.0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "if value == 1\n :first\nelsif value == 1.0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value < 1\n :first\nelsif value <= 0x1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "if value < 1\n :first\nelsif value <= 0x1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen \"\\xFF\"\n :first\nwhen \"\\377\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 6,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen \"\\xFF\"\n :first\nwhen \"\\377\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# coding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# coding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# -*- coding: binary -*-\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# -*- coding: binary -*-\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "#!/usr/bin/env ruby\n# encoding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "#!/usr/bin/env ruby\n# encoding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# Encoding: ASCII-8BIT\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# Encoding: ASCII-8BIT\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# vim: set fileencoding=binary :\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# vim: set fileencoding=binary :\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# frozen_string_literal: true\n# encoding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# frozen_string_literal: true\n# encoding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: US-ASCII\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: US-ASCII\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ISO-8859-1\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ISO-8859-1\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xFF\"\n :first\nwhen \"\\377\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 6,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xFF\"\n :first\nwhen \"\\377\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\x61\"\n :first\nwhen \"\\u0061\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\x61\"\n :first\nwhen \"\\u0061\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen :\"\\xC3\\xA9\"\n :first\nwhen :\"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen :\"\\xC3\\xA9\"\n :first\nwhen :\"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen :\"\\xFF\"\n :first\nwhen :\"\\377\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 7,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen :\"\\xFF\"\n :first\nwhen :\"\\377\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen [\"\\xC3\\xA9\"]\n :first\nwhen [\"\\u00E9\"]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen [\"\\xC3\\xA9\"]\n :first\nwhen [\"\\u00E9\"]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require 1\nrequire 0x1\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 11,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require 1\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require -0.0\nrequire 0.0\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "require -0.0\nrequire 0.0\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require [-0.0]\nrequire [0.0]\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "require [-0.0]\nrequire [0.0]\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"set\"\nrequire \"\\x73et\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 16,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require \"set\"\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\ncase value\nwhen \"\\xC3\\xA9\"\n puts \"binary\"\nwhen \"\\u00E9\"\n puts \"unicode\"\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\ncase value\nwhen \"\\xC3\\xA9\"\n puts \"binary\"\nwhen \"\\u00E9\"\n puts \"unicode\"\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\nif value == \"\\xC3\\xA9\"\n puts \"binary\"\nelsif value == \"\\u00E9\"\n puts \"unicode\"\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\nif value == \"\\xC3\\xA9\"\n puts \"binary\"\nelsif value == \"\\u00E9\"\n puts \"unicode\"\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "value = \"two\\n\"\ncase value\nwhen <<~A\none\nA\n puts \"one\"\nwhen <<~A\ntwo\nA\n puts \"two\"\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "value = \"two\\n\"\ncase value\nwhen <<~A\none\nA\n puts \"one\"\nwhen <<~A\ntwo\nA\n puts \"two\"\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xFFa\"\n :first\nwhen \"\\xFF\\u0061\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xFFa\"\n :first\nwhen \"\\xFF\\u0061\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen \"\\xFFa\"\n :first\nwhen \"\\xFF\\u0061\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen \"\\xFFa\"\n :first\nwhen \"\\xFF\\u0061\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "# encoding: ASCII-8BIT\nrequire \"\\xFFa\"\nrequire \"\\xFF\\u0061\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\nrequire \"\\xFFa\"\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "# encoding: ASCII-8BIT\nrequire \"\\xC3\\xA9\"\nrequire \"\\u00E9\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\nrequire \"\\xC3\\xA9\"\nrequire \"\\u00E9\"\n"
   }
 ]

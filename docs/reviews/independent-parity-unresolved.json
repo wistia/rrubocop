@@ -1,0 +1,4768 @@
+{
+  "summary": {
+    "cases": 4573,
+    "covered_cops": 98,
+    "available_cops": 98,
+    "missing_cops": [],
+    "new_failures": 153,
+    "documented_exceptions": 894,
+    "upstream_hazards": 94,
+    "invalid_mutations": 34,
+    "invalid_originals": 5,
+    "compared_cases": 4534,
+    "compared_cops": 98,
+    "uncompared_cops": [],
+    "runtime_cases": 13,
+    "runtime_cops": [
+      "Lint/BooleanSymbol",
+      "Lint/DuplicateCaseCondition",
+      "Lint/SafeNavigationWithEmpty",
+      "Style/FileRead",
+      "Style/FileWrite",
+      "Style/OrAssignment",
+      "Style/RedundantAssignment",
+      "Style/RedundantRegexpEscape",
+      "Style/StderrPuts",
+      "Style/StringChars",
+      "Style/UnpackFirst"
+    ],
+    "missing_runtime_cops": [
+      "AnyCable/InstanceVars",
+      "AnyCable/PeriodicalTimers",
+      "AnyCable/StreamFrom",
+      "Cops/CreateTableMustIncludeCharset",
+      "Cops/CreateTableMustIncludeCollation",
+      "Cops/EnforceNoShowInPolicies",
+      "Cops/EnforceScopeInPolicies",
+      "Cops/ExplicitSidekiqQueue",
+      "Cops/NoCSVGenerate",
+      "Cops/NoCallbackSkippingProtectedWrites",
+      "Cops/NoConstantDefinitionsInSpecs",
+      "Cops/NoContentIndexCallsInBackfills",
+      "Cops/NoDirectLanternConfigBuilderMutators",
+      "Cops/NoForeignKeys",
+      "Cops/NoRequireOnAutoLoadedPaths",
+      "Cops/NoSetWithoutExpiration",
+      "Cops/NoSetex",
+      "Cops/NoSidekiqReceive",
+      "Cops/NoSleep",
+      "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+      "Cops/NoUndiscoverableAutoLoadedConstants",
+      "Cops/RescueMustReportError",
+      "Custom/RequireRespondToAny",
+      "Lint/AmbiguousAssignment",
+      "Lint/DeprecatedConstants",
+      "Lint/DuplicateElsifCondition",
+      "Lint/DuplicateRequire",
+      "Lint/DuplicateRescueException",
+      "Lint/EmptyExpression",
+      "Lint/EmptyWhen",
+      "Lint/ErbNewArguments",
+      "Lint/FloatComparison",
+      "Lint/IdentityComparison",
+      "Lint/InterpolationCheck",
+      "Lint/MixedRegexpCaptureTypes",
+      "Lint/MultipleComparison",
+      "Lint/NestedPercentLiteral",
+      "Lint/NumberedParameterAssignment",
+      "Lint/OrAssignmentToConstant",
+      "Lint/OutOfRangeRegexpRef",
+      "Lint/RaiseException",
+      "Lint/RedundantWithIndex",
+      "Lint/RedundantWithObject",
+      "Lint/RefinementImportMethods",
+      "Lint/RegexpAsCondition",
+      "Lint/RescueType",
+      "Lint/ReturnInVoidContext",
+      "Lint/SafeNavigationConsistency",
+      "Lint/SelfAssignment",
+      "Lint/ShadowedArgument",
+      "Lint/TopLevelReturnWithArgument",
+      "Lint/TrailingCommaInAttributeDeclaration",
+      "Lint/TripleQuotes",
+      "Lint/UriEscapeUnescape",
+      "Lint/UriRegexp",
+      "Lint/UselessTimes",
+      "Migration/DepartmentName",
+      "Rails/ReversibleMigrationMethodDefinition",
+      "Security/CompoundHash",
+      "Serializers/AvoidCapitalizedKeys",
+      "Serializers/AvoidKeyAndBlock",
+      "Serializers/AvoidMethodAndBlock",
+      "Serializers/PreferAttributeBlockOverAttributeAndMethod",
+      "Serializers/PreferAttributeBlockOverAttributesAndMethods",
+      "Style/ClassEqualityComparison",
+      "Style/ColonMethodDefinition",
+      "Style/Dir",
+      "Style/EmptyBlockParameter",
+      "Style/EvalWithLocation",
+      "Style/HashConversion",
+      "Style/HashExcept",
+      "Style/KeywordParametersOrder",
+      "Style/MapCompactWithConditionalBlock",
+      "Style/MixinGrouping",
+      "Style/MixinUsage",
+      "Style/MultilineWhenThen",
+      "Style/RandomWithOffset",
+      "Style/RedundantConditional",
+      "Style/RedundantFileExtensionInRequire",
+      "Style/RedundantRegexpCharacterClass",
+      "Style/RedundantSort",
+      "Style/SlicingWithRange",
+      "Style/TopLevelMethodDefinition",
+      "Style/TrailingBodyOnMethodDefinition",
+      "Style/TrailingCommaInBlockArgs",
+      "Style/TrailingMethodEndStatement",
+      "Style/UnlessLogicalOperators"
+    ],
+    "selection_applied": false
+  },
+  "cases": [
+    {
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table(\n# parity audit\n:widgets)\n",
+      "expected": [],
+      "corrected": "create_table(\n# parity audit\n:widgets)\n",
+      "origin": "ast-argument-comment:0:0",
+      "id": "f17daf403e58cbfe"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table(\n# parity audit\n:widgets, id: :bigint)\n",
+      "expected": [],
+      "corrected": "create_table(\n# parity audit\n:widgets, id: :bigint)\n",
+      "origin": "ast-argument-comment:0:0",
+      "id": "f59c71fea533163a"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table :widgets, %s|id| => :bigint\n",
+      "expected": [],
+      "corrected": "create_table :widgets, %s|id| => :bigint\n",
+      "origin": "percent-symbol",
+      "id": "498d4bdb536b81d8"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n",
+      "expected": [],
+      "corrected": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n",
+      "origin": "encoded-symbol",
+      "id": "db0966eb91e81b68"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table :widgets, :\"id'\" => :bigint\n",
+      "expected": [],
+      "corrected": "create_table :widgets, :\"id'\" => :bigint\n",
+      "origin": "opposite-quote-symbol",
+      "id": "86af5bce10d16324"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table(\n# parity audit\n:widgets)\n",
+      "expected": [],
+      "corrected": "create_table(\n# parity audit\n:widgets)\n",
+      "origin": "ast-argument-comment:0:0",
+      "id": "302ab04fe1a127c8"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table(\n# parity audit\n:widgets, id: :bigint)\n",
+      "expected": [],
+      "corrected": "create_table(\n# parity audit\n:widgets, id: :bigint)\n",
+      "origin": "ast-argument-comment:0:0",
+      "id": "6f4f8e751e577b9f"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table :widgets, %s|id| => :bigint\n",
+      "expected": [],
+      "corrected": "create_table :widgets, %s|id| => :bigint\n",
+      "origin": "percent-symbol",
+      "id": "a90a7d6c65704475"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n",
+      "expected": [],
+      "corrected": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n",
+      "origin": "encoded-symbol",
+      "id": "613d15d7f9e89624"
+    },
+    {
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "path": "db/migrate/test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "create_table :widgets, :\"id'\" => :bigint\n",
+      "expected": [],
+      "corrected": "create_table :widgets, :\"id'\" => :bigint\n",
+      "origin": "opposite-quote-symbol",
+      "id": "6feb3ba0867cb4a7"
+    },
+    {
+      "cop": "Lint/DuplicateElsifCondition",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "if x(\n# parity audit\n) == 1; a; elsif x == 1; b; end\n",
+      "expected": [],
+      "corrected": "if x(\n# parity audit\n) == 1; a; elsif x == 1; b; end\n",
+      "origin": "ast-empty-arguments:3",
+      "id": "62c507030b4f1a8d"
+    },
+    {
+      "cop": "Lint/DuplicateElsifCondition",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "if x == 1; a; elsif x(\n# parity audit\n) == 1; b; end\n",
+      "expected": [],
+      "corrected": "if x == 1; a; elsif x(\n# parity audit\n) == 1; b; end\n",
+      "origin": "ast-empty-arguments:20",
+      "id": "88bb4f7b0fd24a73"
+    },
+    {
+      "cop": "Lint/FloatComparison",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "x.to_f { |__parity_value| __parity_value } != y\n",
+      "expected": [],
+      "corrected": "x.to_f { |__parity_value| __parity_value } != y\n",
+      "origin": "attached-receiver-block:0",
+      "id": "89234bbe6f208947"
+    },
+    {
+      "cop": "Lint/IdentityComparison",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "a.object_id { |__parity_value| __parity_value } == b.object_id\n",
+      "expected": [],
+      "corrected": "a.object_id { |__parity_value| __parity_value } == b.object_id\n",
+      "origin": "attached-receiver-block:0",
+      "id": "ad3f91d7337fc433"
+    },
+    {
+      "cop": "Lint/MultipleComparison",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "(a).<(\n# parity audit\nb) < c\n",
+      "expected": [],
+      "corrected": "(a).<(\n# parity audit\nb) < c\n",
+      "origin": "operator-call-comment:0:<",
+      "id": "bfad2ba275438e3c"
+    },
+    {
+      "cop": "Lint/RedundantWithIndex",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items.each { |__parity_value| __parity_value }.with_index { |item| use(item) }\n",
+      "expected": [],
+      "corrected": "items.each { |__parity_value| __parity_value }.with_index { |item| use(item) }\n",
+      "origin": "attached-receiver-block:0",
+      "id": "68164c9f299bfdc7"
+    },
+    {
+      "cop": "Lint/RedundantWithObject",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items.each { |__parity_value| __parity_value }.with_object([]) { |item| use(item) }\n",
+      "expected": [],
+      "corrected": "items.each { |__parity_value| __parity_value }.with_object([]) { |item| use(item) }\n",
+      "origin": "attached-receiver-block:0",
+      "id": "7cd7a836abd12b4e"
+    },
+    {
+      "cop": "Lint/SafeNavigationConsistency",
+      "path": "test.rb",
+      "config": {
+        "AllowedMethods": [
+          "present?",
+          "blank?",
+          "presence",
+          "try",
+          "try!"
+        ],
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "foo(\n# parity audit\n)&.bar && foo.baz\n",
+      "expected": [],
+      "corrected": "foo(\n# parity audit\n)&.bar && foo.baz\n",
+      "origin": "ast-empty-arguments:0",
+      "id": "4b248834217ea302"
+    },
+    {
+      "cop": "Lint/SafeNavigationConsistency",
+      "path": "test.rb",
+      "config": {
+        "AllowedMethods": [
+          "present?",
+          "blank?",
+          "presence",
+          "try",
+          "try!"
+        ],
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "foo&.bar && foo(\n# parity audit\n).baz\n",
+      "expected": [],
+      "corrected": "foo&.bar && foo(\n# parity audit\n).baz\n",
+      "origin": "ast-empty-arguments:12",
+      "id": "e960592e74d21b8e"
+    },
+    {
+      "cop": "Lint/SafeNavigationConsistency",
+      "path": "test.rb",
+      "config": {
+        "AllowedMethods": [
+          "present?",
+          "blank?",
+          "presence",
+          "try",
+          "try!"
+        ],
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "foo(\n# parity audit\n).bar || foo&.baz\n",
+      "expected": [],
+      "corrected": "foo(\n# parity audit\n).bar || foo&.baz\n",
+      "origin": "ast-empty-arguments:0",
+      "id": "d4414d385e864213"
+    },
+    {
+      "cop": "Lint/SafeNavigationConsistency",
+      "path": "test.rb",
+      "config": {
+        "AllowedMethods": [
+          "present?",
+          "blank?",
+          "presence",
+          "try",
+          "try!"
+        ],
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "foo.bar || foo(\n# parity audit\n)&.baz\n",
+      "expected": [],
+      "corrected": "foo.bar || foo(\n# parity audit\n)&.baz\n",
+      "origin": "ast-empty-arguments:11",
+      "id": "1c9c83e86c7aacbb"
+    },
+    {
+      "cop": "Lint/SafeNavigationWithEmpty",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "return if foo { |__parity_value| __parity_value }&.empty?\n",
+      "expected": [],
+      "corrected": "return if foo { |__parity_value| __parity_value }&.empty?\n",
+      "origin": "attached-receiver-block:10",
+      "id": "28051e79141ca789"
+    },
+    {
+      "cop": "Lint/TrailingCommaInAttributeDeclaration",
+      "path": "test.rb",
+      "config": {
+        "AutoCorrect": "contextual",
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "class A\n attr_reader(\n# parity audit\n:foo,\n def bar; 1; end)\nend\n",
+      "expected": [],
+      "corrected": "class A\n attr_reader(\n# parity audit\n:foo,\n def bar; 1; end)\nend\n",
+      "origin": "ast-argument-comment:9:0",
+      "id": "f0045c0f8bc0e6d5"
+    },
+    {
+      "cop": "Lint/TrailingCommaInAttributeDeclaration",
+      "path": "test.rb",
+      "config": {
+        "AutoCorrect": "contextual",
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "class A\n attr_reader :foo,\n \n# parity audit\ndef bar; 1; end\nend\n",
+      "expected": [],
+      "corrected": "class A\n attr_reader :foo,\n \n# parity audit\ndef bar; 1; end\nend\n",
+      "origin": "ast-argument-comment:9:1",
+      "id": "6a9b061c256c1845"
+    },
+    {
+      "cop": "Security/CompoundHash",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "def hash; a.hash.^(\n# parity audit\nb.hash); end\n",
+      "expected": [],
+      "corrected": "def hash; a.hash.^(\n# parity audit\nb.hash); end\n",
+      "origin": "operator-call-comment:10:^",
+      "id": "e630b6c96edf2ce0"
+    },
+    {
+      "cop": "Style/ClassEqualityComparison",
+      "path": "test.rb",
+      "config": {
+        "SafeAutoCorrect": false,
+        "AllowedMethods": [
+          "==",
+          "equal?",
+          "eql?"
+        ],
+        "AllowedPatterns": [],
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "obj.class { |__parity_value| __parity_value } == String\n",
+      "expected": [],
+      "corrected": "obj.class { |__parity_value| __parity_value } == String\n",
+      "origin": "attached-receiver-block:0",
+      "id": "1de914da82a5d71b"
+    },
+    {
+      "cop": "Style/ClassEqualityComparison",
+      "path": "test.rb",
+      "config": {
+        "SafeAutoCorrect": false,
+        "AllowedMethods": [
+          "==",
+          "equal?",
+          "eql?"
+        ],
+        "AllowedPatterns": [],
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "obj.class.name { |__parity_value| __parity_value } == \"String\"\n",
+      "expected": [],
+      "corrected": "obj.class.name { |__parity_value| __parity_value } == \"String\"\n",
+      "origin": "attached-receiver-block:0",
+      "id": "00146b5d0ca7cc27"
+    },
+    {
+      "cop": "Style/ClassEqualityComparison",
+      "path": "test.rb",
+      "config": {
+        "SafeAutoCorrect": false,
+        "AllowedMethods": [
+          "==",
+          "equal?",
+          "eql?"
+        ],
+        "AllowedPatterns": [],
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "obj.class { |__parity_value| __parity_value }.name == \"String\"\n",
+      "expected": [],
+      "corrected": "obj.class { |__parity_value| __parity_value }.name == \"String\"\n",
+      "origin": "attached-receiver-block:0",
+      "id": "ccdbdf663ff80b53"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash.reject(\n# parity audit\n) { |k, v| k == :a }\n",
+      "expected": [],
+      "corrected": "hash.reject(\n# parity audit\n) { |k, v| k == :a }\n",
+      "origin": "ast-empty-arguments:0",
+      "id": "3ddf37563dfa5a1a"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash(\n# parity audit\n).reject { |k, v| k == :a }\n",
+      "expected": [],
+      "corrected": "hash(\n# parity audit\n).reject { |k, v| k == :a }\n",
+      "origin": "ast-empty-arguments:0",
+      "id": "1c3a34eb1c427183"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash.reject { |k, v| k == \n# parity audit\n:a }\n",
+      "expected": [],
+      "corrected": "hash.reject { |k, v| k == \n# parity audit\n:a }\n",
+      "origin": "ast-argument-comment:21:0",
+      "id": "76bf78884891afbe"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash.reject { |k, v| k.==(\n# parity audit\n:a) }\n",
+      "expected": [],
+      "corrected": "hash.reject { |k, v| k.==(\n# parity audit\n:a) }\n",
+      "origin": "operator-call-comment:21:==",
+      "id": "cf8f874bce55e039"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash.reject { |k, v| k.eql?(\n# parity audit\n:a) }\n",
+      "expected": [],
+      "corrected": "hash.reject { |k, v| k.eql?(\n# parity audit\n:a) }\n",
+      "origin": "operator-call-comment:21:eql?",
+      "id": "99ac04ad08de3ab4"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash.select(\n# parity audit\n) { |k, v| k != \"a\" }\n",
+      "expected": [],
+      "corrected": "hash.select(\n# parity audit\n) { |k, v| k != \"a\" }\n",
+      "origin": "ast-empty-arguments:0",
+      "id": "21a56bb41de60e53"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash(\n# parity audit\n).select { |k, v| k != \"a\" }\n",
+      "expected": [],
+      "corrected": "hash(\n# parity audit\n).select { |k, v| k != \"a\" }\n",
+      "origin": "ast-empty-arguments:0",
+      "id": "fc9b534e8a20c0c6"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash.select { |k, v| k != \n# parity audit\n\"a\" }\n",
+      "expected": [],
+      "corrected": "hash.select { |k, v| k != \n# parity audit\n\"a\" }\n",
+      "origin": "ast-argument-comment:21:0",
+      "id": "981f771cb82d2761"
+    },
+    {
+      "cop": "Style/HashExcept",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "hash.select { |k, v| k.!=(\n# parity audit\n\"a\") }\n",
+      "expected": [],
+      "corrected": "hash.select { |k, v| k.!=(\n# parity audit\n\"a\") }\n",
+      "origin": "operator-call-comment:21:!=",
+      "id": "4b1f5c68d79d789a"
+    },
+    {
+      "cop": "Style/OrAssignment",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "foo = foo ? foo : default(\n# parity audit\n)\n",
+      "expected": [],
+      "corrected": "foo = foo ? foo : default(\n# parity audit\n)\n",
+      "origin": "ast-empty-arguments:18",
+      "id": "0bd9a57687093e42"
+    },
+    {
+      "cop": "Style/OrAssignment",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "foo = default(\n# parity audit\n) unless foo\n",
+      "expected": [],
+      "corrected": "foo = default(\n# parity audit\n) unless foo\n",
+      "origin": "ast-empty-arguments:6",
+      "id": "d965f4daa44c06d6"
+    },
+    {
+      "cop": "Style/RandomWithOffset",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "rand(6) { |__parity_value| __parity_value } + 1\n",
+      "expected": [],
+      "corrected": "rand(6) { |__parity_value| __parity_value } + 1\n",
+      "origin": "attached-receiver-block:0",
+      "id": "409d48aa1c470fac"
+    },
+    {
+      "cop": "Style/RandomWithOffset",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "10.-(\n# parity audit\nrand(1..3))\n",
+      "expected": [],
+      "corrected": "10.-(\n# parity audit\nrand(1..3))\n",
+      "origin": "operator-call-comment:0:-",
+      "id": "57ee49ae3309f6ba"
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "a == \n# parity audit\nb ? true : false\n",
+      "expected": [],
+      "corrected": "a == \n# parity audit\nb ? true : false\n",
+      "origin": "ast-argument-comment:0:0",
+      "id": "9f3c2a991892b3d4"
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "a(\n# parity audit\n) == b ? true : false\n",
+      "expected": [],
+      "corrected": "a(\n# parity audit\n) == b ? true : false\n",
+      "origin": "ast-empty-arguments:0",
+      "id": "5e65229af93712d8"
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "a == b(\n# parity audit\n) ? true : false\n",
+      "expected": [],
+      "corrected": "a == b(\n# parity audit\n) ? true : false\n",
+      "origin": "ast-empty-arguments:5",
+      "id": "484959da7d28e2f4"
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "(a).==(\n# parity audit\nb) ? true : false\n",
+      "expected": [],
+      "corrected": "(a).==(\n# parity audit\nb) ? true : false\n",
+      "origin": "operator-call-comment:0:==",
+      "id": "10d4ad5388dcb8d4"
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "if a > \n# parity audit\nb; false; else; true; end\n",
+      "expected": [],
+      "corrected": "if a > \n# parity audit\nb; false; else; true; end\n",
+      "origin": "ast-argument-comment:3:0",
+      "id": "2597fdefa4efab07"
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "if a(\n# parity audit\n) > b; false; else; true; end\n",
+      "expected": [],
+      "corrected": "if a(\n# parity audit\n) > b; false; else; true; end\n",
+      "origin": "ast-empty-arguments:3",
+      "id": "2d0edea766fdc0e2"
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "if a > b(\n# parity audit\n); false; else; true; end\n",
+      "expected": [],
+      "corrected": "if a > b(\n# parity audit\n); false; else; true; end\n",
+      "origin": "ast-empty-arguments:7",
+      "id": "ae14bea5ea0b5131"
+    },
+    {
+      "cop": "Style/RedundantConditional",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "if (a).>(\n# parity audit\nb); false; else; true; end\n",
+      "expected": [],
+      "corrected": "if (a).>(\n# parity audit\nb); false; else; true; end\n",
+      "origin": "operator-call-comment:3:>",
+      "id": "76da8fa33d8162d6"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "(items).[](\n# parity audit\n0..-1)\n",
+      "expected": [],
+      "corrected": "(items).[](\n# parity audit\n0..-1)\n",
+      "origin": "operator-call-comment:0:[]",
+      "id": "f2e6eacb5d1ecfc6"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[0x0..-1]\n",
+      "expected": [],
+      "corrected": "items[0x0..-1]\n",
+      "origin": "integer-hex",
+      "id": "80faaddc7c4a79b5"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[0b0..-1]\n",
+      "expected": [],
+      "corrected": "items[0b0..-1]\n",
+      "origin": "integer-binary",
+      "id": "cfcebe0e7505a8be"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[0o0..-1]\n",
+      "expected": [],
+      "corrected": "items[0o0..-1]\n",
+      "origin": "integer-octal",
+      "id": "c71f7d62acf8dab7"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[0..-0x1]\n",
+      "expected": [],
+      "corrected": "items[0..-0x1]\n",
+      "origin": "integer-hex",
+      "id": "05cdf98c64e20ca4"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[0..-0b1]\n",
+      "expected": [],
+      "corrected": "items[0..-0b1]\n",
+      "origin": "integer-binary",
+      "id": "edd8d2c01c4134cc"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[0..-0o1]\n",
+      "expected": [],
+      "corrected": "items[0..-0o1]\n",
+      "origin": "integer-octal",
+      "id": "2255405dcd14b393"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "(items).[](\n# parity audit\n1..-1)\n",
+      "expected": [],
+      "corrected": "(items).[](\n# parity audit\n1..-1)\n",
+      "origin": "operator-call-comment:0:[]",
+      "id": "d68d0677f55bd1c9"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[1..-0x1]\n",
+      "expected": [],
+      "corrected": "items[1..-0x1]\n",
+      "origin": "integer-hex",
+      "id": "b93b3ff03a55ec66"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[1..-0b1]\n",
+      "expected": [],
+      "corrected": "items[1..-0b1]\n",
+      "origin": "integer-binary",
+      "id": "455201ca1fa0e15f"
+    },
+    {
+      "cop": "Style/SlicingWithRange",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items[1..-0o1]\n",
+      "expected": [],
+      "corrected": "items[1..-0o1]\n",
+      "origin": "integer-octal",
+      "id": "31cb0d16709200c1"
+    },
+    {
+      "cop": "Style/TrailingCommaInBlockArgs",
+      "path": "test.rb",
+      "config": {
+        "Safe": false,
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "items { |__parity_value| __parity_value }.each { |a, b,| work(a, b) }\n",
+      "expected": [],
+      "corrected": "items { |__parity_value| __parity_value }.each { |a, b,| work(a, b) }\n",
+      "origin": "attached-receiver-block:0",
+      "id": "8189622a6cbbc6a2"
+    },
+    {
+      "cop": "Style/UnpackFirst",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "str.unpack(\"C*\")[0x0]\n",
+      "expected": [],
+      "corrected": "str.unpack(\"C*\")[0x0]\n",
+      "origin": "integer-hex",
+      "id": "5a59bb771e86d565"
+    },
+    {
+      "cop": "Style/UnpackFirst",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "str.unpack(\"C*\")[0b0]\n",
+      "expected": [],
+      "corrected": "str.unpack(\"C*\")[0b0]\n",
+      "origin": "integer-binary",
+      "id": "2ccb52155cd74d7b"
+    },
+    {
+      "cop": "Style/UnpackFirst",
+      "path": "test.rb",
+      "config": {
+        "TargetRubyVersion": 3.4,
+        "ActiveSupportExtensionsEnabled": true
+      },
+      "source": "str.unpack(\"C*\")[0o0]\n",
+      "expected": [],
+      "corrected": "str.unpack(\"C*\")[0o0]\n",
+      "origin": "integer-octal",
+      "id": "a01a2137e214308f"
+    }
+  ],
+  "failures": [
+    {
+      "id": "f17daf403e58cbfe",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 13,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table("
+          }
+        ],
+        "source": "create_table(\n# parity audit\n:widgets, charset: \"utf8mb4\")\n"
+      },
+      "expected": {
+        "source": "create_table(\n# parity audit\n:widgets), charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | create_table(\n    | ^~~~~~~~~~~~~ unexpected write target\n    | ^~~~~~~~~~~~~ unexpected write target\n  2 | # parity audit\n> 3 | :widgets), charset: \"utf8mb4\"\n    |          ^ expected an expression after `,`\n    |            ^~~~~~~~ unexpected label, ignoring it\n    |            ^~~~~~~~ unexpected label, expecting end-of-input\n"
+        }
+      }
+    },
+    {
+      "id": "f17daf403e58cbfe",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 13,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table("
+          }
+        ],
+        "source": "create_table(\n# parity audit\n:widgets, charset: \"utf8mb4\")\n"
+      },
+      "expected": {
+        "source": "create_table(\n# parity audit\n:widgets), charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | create_table(\n    | ^~~~~~~~~~~~~ unexpected write target\n    | ^~~~~~~~~~~~~ unexpected write target\n  2 | # parity audit\n> 3 | :widgets), charset: \"utf8mb4\"\n    |          ^ expected an expression after `,`\n    |            ^~~~~~~~ unexpected label, ignoring it\n    |            ^~~~~~~~ unexpected label, expecting end-of-input\n"
+        }
+      }
+    },
+    {
+      "id": "f59c71fea533163a",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 13,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table("
+          }
+        ],
+        "source": "create_table(\n# parity audit\n:widgets, id: :bigint, charset: \"utf8mb4\")\n"
+      },
+      "expected": {
+        "source": "create_table(\n# parity audit\n:widgets, id: :bigint), charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | create_table(\n    | ^~~~~~~~~~~~~ unexpected write target\n    | ^~~~~~~~~~~~~ unexpected write target\n  2 | # parity audit\n> 3 | :widgets, id: :bigint), charset: \"utf8mb4\"\n    |                       ^ expected an expression after `,`\n    |                         ^~~~~~~~ unexpected label, ignoring it\n    |                         ^~~~~~~~ unexpected label, expecting end-of-input\n"
+        }
+      }
+    },
+    {
+      "id": "f59c71fea533163a",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 13,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table("
+          }
+        ],
+        "source": "create_table(\n# parity audit\n:widgets, id: :bigint, charset: \"utf8mb4\")\n"
+      },
+      "expected": {
+        "source": "create_table(\n# parity audit\n:widgets, id: :bigint), charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | create_table(\n    | ^~~~~~~~~~~~~ unexpected write target\n    | ^~~~~~~~~~~~~ unexpected write target\n  2 | # parity audit\n> 3 | :widgets, id: :bigint), charset: \"utf8mb4\"\n    |                       ^ expected an expression after `,`\n    |                         ^~~~~~~~ unexpected label, ignoring it\n    |                         ^~~~~~~~ unexpected label, expecting end-of-input\n"
+        }
+      }
+    },
+    {
+      "id": "498d4bdb536b81d8",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing charset option",
+          "correctable": false,
+          "length": 40,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing charset option",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "498d4bdb536b81d8",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 40,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, %s|id| => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, %s|id| => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, %s|id| => :bigint, charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "498d4bdb536b81d8",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 40,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, %s|id| => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, %s|id| => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, %s|id| => :bigint, charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "db0966eb91e81b68",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing charset option",
+          "correctable": false,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing charset option",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "db0966eb91e81b68",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 45,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, :\"\\x69\\x64\" => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint, charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "db0966eb91e81b68",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 45,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, :\"\\x69\\x64\" => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint, charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "86af5bce10d16324",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing charset option",
+          "correctable": false,
+          "length": 40,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing charset option",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "86af5bce10d16324",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 40,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, :\"id'\" => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, :\"id'\" => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, :\"id'\" => :bigint, charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "86af5bce10d16324",
+      "cop": "Cops/CreateTableMustIncludeCharset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCharset",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 40,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing charset option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, :\"id'\" => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, :\"id'\" => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, :\"id'\" => :bigint, charset: \"utf8mb4\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "302ab04fe1a127c8",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 13,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table("
+          }
+        ],
+        "source": "create_table(\n# parity audit\n:widgets, collation: \"utf8mb4_unicode_ci\")\n"
+      },
+      "expected": {
+        "source": "create_table(\n# parity audit\n:widgets), collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | create_table(\n    | ^~~~~~~~~~~~~ unexpected write target\n    | ^~~~~~~~~~~~~ unexpected write target\n  2 | # parity audit\n> 3 | :widgets), collation: \"utf8mb4_unicode_ci\"\n    |          ^ expected an expression after `,`\n    |            ^~~~~~~~~~ unexpected label, ignoring it\n    |            ^~~~~~~~~~ unexpected label, expecting end-of-input\n"
+        }
+      }
+    },
+    {
+      "id": "302ab04fe1a127c8",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 13,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table("
+          }
+        ],
+        "source": "create_table(\n# parity audit\n:widgets, collation: \"utf8mb4_unicode_ci\")\n"
+      },
+      "expected": {
+        "source": "create_table(\n# parity audit\n:widgets), collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | create_table(\n    | ^~~~~~~~~~~~~ unexpected write target\n    | ^~~~~~~~~~~~~ unexpected write target\n  2 | # parity audit\n> 3 | :widgets), collation: \"utf8mb4_unicode_ci\"\n    |          ^ expected an expression after `,`\n    |            ^~~~~~~~~~ unexpected label, ignoring it\n    |            ^~~~~~~~~~ unexpected label, expecting end-of-input\n"
+        }
+      }
+    },
+    {
+      "id": "6f4f8e751e577b9f",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 13,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table("
+          }
+        ],
+        "source": "create_table(\n# parity audit\n:widgets, id: :bigint, collation: \"utf8mb4_unicode_ci\")\n"
+      },
+      "expected": {
+        "source": "create_table(\n# parity audit\n:widgets, id: :bigint), collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | create_table(\n    | ^~~~~~~~~~~~~ unexpected write target\n    | ^~~~~~~~~~~~~ unexpected write target\n  2 | # parity audit\n> 3 | :widgets, id: :bigint), collation: \"utf8mb4_unicode_ci\"\n    |                       ^ expected an expression after `,`\n    |                         ^~~~~~~~~~ unexpected label, ignoring it\n    |                         ^~~~~~~~~~ unexpected label, expecting end-of-input\n"
+        }
+      }
+    },
+    {
+      "id": "6f4f8e751e577b9f",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 13,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table("
+          }
+        ],
+        "source": "create_table(\n# parity audit\n:widgets, id: :bigint, collation: \"utf8mb4_unicode_ci\")\n"
+      },
+      "expected": {
+        "source": "create_table(\n# parity audit\n:widgets, id: :bigint), collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | create_table(\n    | ^~~~~~~~~~~~~ unexpected write target\n    | ^~~~~~~~~~~~~ unexpected write target\n  2 | # parity audit\n> 3 | :widgets, id: :bigint), collation: \"utf8mb4_unicode_ci\"\n    |                       ^ expected an expression after `,`\n    |                         ^~~~~~~~~~ unexpected label, ignoring it\n    |                         ^~~~~~~~~~ unexpected label, expecting end-of-input\n"
+        }
+      }
+    },
+    {
+      "id": "a90a7d6c65704475",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing collation option",
+          "correctable": false,
+          "length": 40,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing collation option",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "a90a7d6c65704475",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 40,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, %s|id| => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, %s|id| => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, %s|id| => :bigint, collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "a90a7d6c65704475",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 40,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, %s|id| => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, %s|id| => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, %s|id| => :bigint, collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "613d15d7f9e89624",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing collation option",
+          "correctable": false,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing collation option",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "613d15d7f9e89624",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 45,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, :\"\\x69\\x64\" => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint, collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "613d15d7f9e89624",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 45,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, :\"\\x69\\x64\" => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint, collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "6feb3ba0867cb4a7",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing collation option",
+          "correctable": false,
+          "length": 40,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Missing collation option",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "6feb3ba0867cb4a7",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 40,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, :\"id'\" => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, :\"id'\" => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, :\"id'\" => :bigint, collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "6feb3ba0867cb4a7",
+      "cop": "Cops/CreateTableMustIncludeCollation",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Cops/CreateTableMustIncludeCollation",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 40,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Missing collation option",
+            "path": "db/migrate/test.rb",
+            "severity": "Convention",
+            "source_line": "create_table :widgets, :\"id'\" => :bigint"
+          }
+        ],
+        "source": "create_table :widgets, :\"id'\" => :bigint\n"
+      },
+      "expected": {
+        "source": "create_table :widgets, :\"id'\" => :bigint, collation: \"utf8mb4_unicode_ci\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "62c507030b4f1a8d",
+      "cop": "Lint/DuplicateElsifCondition",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 3,
+          "column": 17,
+          "message": "Duplicate `elsif` condition detected.",
+          "correctable": false,
+          "length": 6,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "88bb4f7b0fd24a73",
+      "cop": "Lint/DuplicateElsifCondition",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 20,
+          "message": "Duplicate `elsif` condition detected.",
+          "correctable": false,
+          "length": 2,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "89234bbe6f208947",
+      "cop": "Lint/FloatComparison",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Avoid (in)equality comparisons of floats as they are unreliable.",
+          "correctable": false,
+          "length": 47,
+          "severity": "warning"
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "ad3f91d7337fc433",
+      "cop": "Lint/IdentityComparison",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `equal?` instead `==` when comparing `object_id`.",
+          "correctable": true,
+          "length": 62,
+          "severity": "warning"
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "ad3f91d7337fc433",
+      "cop": "Lint/IdentityComparison",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Lint/IdentityComparison",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 62,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Use `equal?` instead `==` when comparing `object_id`.",
+            "path": "test.rb",
+            "severity": "Warning",
+            "source_line": "a.object_id { |__parity_value| __parity_value } == b.object_id"
+          }
+        ],
+        "source": "a.equal?(b)\n"
+      },
+      "expected": {
+        "source": "a.object_id { |__parity_value| __parity_value } == b.object_id\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "ad3f91d7337fc433",
+      "cop": "Lint/IdentityComparison",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Lint/IdentityComparison",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 62,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Use `equal?` instead `==` when comparing `object_id`.",
+            "path": "test.rb",
+            "severity": "Warning",
+            "source_line": "a.object_id { |__parity_value| __parity_value } == b.object_id"
+          }
+        ],
+        "source": "a.equal?(b)\n"
+      },
+      "expected": {
+        "source": "a.object_id { |__parity_value| __parity_value } == b.object_id\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "bfad2ba275438e3c",
+      "cop": "Lint/MultipleComparison",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use the `&&` operator to compare multiple values.",
+          "correctable": true,
+          "length": 6,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "bfad2ba275438e3c",
+      "cop": "Lint/MultipleComparison",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "(a).<(\n# parity audit\nb) < c\n"
+      },
+      "expected": {
+        "source": "(a).<(\n# parity audit\nb && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b) < c\n",
+        "compile": {
+          "valid": true
+        },
+        "error": "correction pass limit reached"
+      }
+    },
+    {
+      "id": "bfad2ba275438e3c",
+      "cop": "Lint/MultipleComparison",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "(a).<(\n# parity audit\nb) < c\n"
+      },
+      "expected": {
+        "source": "(a).<(\n# parity audit\nb && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b && b) < c\n",
+        "compile": {
+          "valid": true
+        },
+        "error": "correction pass limit reached"
+      }
+    },
+    {
+      "id": "68164c9f299bfdc7",
+      "cop": "Lint/RedundantWithIndex",
+      "kind": "native_error",
+      "status": "failure",
+      "mode": "safe",
+      "error": "Autocorrection would introduce invalid Ruby in test.rb: unexpected token\n(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+    },
+    {
+      "id": "68164c9f299bfdc7",
+      "cop": "Lint/RedundantWithIndex",
+      "kind": "native_error",
+      "status": "failure",
+      "mode": "all",
+      "error": "Autocorrection would introduce invalid Ruby in test.rb: unexpected token\n(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+    },
+    {
+      "id": "7cd7a836abd12b4e",
+      "cop": "Lint/RedundantWithObject",
+      "kind": "native_error",
+      "status": "failure",
+      "mode": "safe",
+      "error": "Autocorrection would introduce invalid Ruby in test.rb: unexpected token\n(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+    },
+    {
+      "id": "7cd7a836abd12b4e",
+      "cop": "Lint/RedundantWithObject",
+      "kind": "native_error",
+      "status": "failure",
+      "mode": "all",
+      "error": "Autocorrection would introduce invalid Ruby in test.rb: unexpected token\n(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+    },
+    {
+      "id": "4b248834217ea302",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "4b248834217ea302",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "foo(\n# parity audit\n)&.bar && foo.baz\n"
+      },
+      "expected": {
+        "source": "foo(\n# parity audit\n)&.bar && foo&.baz\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "4b248834217ea302",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "foo(\n# parity audit\n)&.bar && foo.baz\n"
+      },
+      "expected": {
+        "source": "foo(\n# parity audit\n)&.bar && foo&.baz\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "e960592e74d21b8e",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+          "correctable": true,
+          "length": 16,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "e960592e74d21b8e",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "foo&.bar && foo(\n# parity audit\n).baz\n"
+      },
+      "expected": {
+        "source": "foo&.bar && foo(\n# parity audit\n)&.baz\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "e960592e74d21b8e",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "foo&.bar && foo(\n# parity audit\n).baz\n"
+      },
+      "expected": {
+        "source": "foo&.bar && foo(\n# parity audit\n)&.baz\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "d4414d385e864213",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "d4414d385e864213",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "foo(\n# parity audit\n).bar || foo&.baz\n"
+      },
+      "expected": {
+        "source": "foo(\n# parity audit\n)&.bar || foo&.baz\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "d4414d385e864213",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "foo(\n# parity audit\n).bar || foo&.baz\n"
+      },
+      "expected": {
+        "source": "foo(\n# parity audit\n)&.bar || foo&.baz\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "1c9c83e86c7aacbb",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+          "correctable": true,
+          "length": 15,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "1c9c83e86c7aacbb",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "foo.bar || foo(\n# parity audit\n)&.baz\n"
+      },
+      "expected": {
+        "source": "foo&.bar || foo(\n# parity audit\n)&.baz\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "1c9c83e86c7aacbb",
+      "cop": "Lint/SafeNavigationConsistency",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "foo.bar || foo(\n# parity audit\n)&.baz\n"
+      },
+      "expected": {
+        "source": "foo&.bar || foo(\n# parity audit\n)&.baz\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "28051e79141ca789",
+      "cop": "Lint/SafeNavigationWithEmpty",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 10,
+          "message": "Avoid calling `empty?` with the safe navigation operator in conditionals.",
+          "correctable": true,
+          "length": 47,
+          "severity": "warning"
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "28051e79141ca789",
+      "cop": "Lint/SafeNavigationWithEmpty",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Lint/SafeNavigationWithEmpty",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 47,
+            "location": {
+              "column": 10,
+              "line": 1
+            },
+            "message": "Avoid calling `empty?` with the safe navigation operator in conditionals.",
+            "path": "test.rb",
+            "severity": "Warning",
+            "source_line": "return if foo { |__parity_value| __parity_value }&.empty?"
+          }
+        ],
+        "source": "return if foo { |__parity_value| __parity_value } && foo { |__parity_value| __parity_value }.empty?\n"
+      },
+      "expected": {
+        "source": "return if foo { |__parity_value| __parity_value }&.empty?\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "28051e79141ca789",
+      "cop": "Lint/SafeNavigationWithEmpty",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Lint/SafeNavigationWithEmpty",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 47,
+            "location": {
+              "column": 10,
+              "line": 1
+            },
+            "message": "Avoid calling `empty?` with the safe navigation operator in conditionals.",
+            "path": "test.rb",
+            "severity": "Warning",
+            "source_line": "return if foo { |__parity_value| __parity_value }&.empty?"
+          }
+        ],
+        "source": "return if foo { |__parity_value| __parity_value } && foo { |__parity_value| __parity_value }.empty?\n"
+      },
+      "expected": {
+        "source": "return if foo { |__parity_value| __parity_value }&.empty?\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "f0045c0f8bc0e6d5",
+      "cop": "Lint/TrailingCommaInAttributeDeclaration",
+      "kind": "native_error",
+      "status": "failure",
+      "mode": "safe",
+      "error": "Autocorrection would introduce invalid Ruby in test.rb: unexpected token\n(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+    },
+    {
+      "id": "f0045c0f8bc0e6d5",
+      "cop": "Lint/TrailingCommaInAttributeDeclaration",
+      "kind": "native_error",
+      "status": "failure",
+      "mode": "all",
+      "error": "Autocorrection would introduce invalid Ruby in test.rb: unexpected token\n(Using Ruby 3.4 parser; configure using `TargetRubyVersion` parameter, under `AllCops`)"
+    },
+    {
+      "id": "6a9b061c256c1845",
+      "cop": "Lint/TrailingCommaInAttributeDeclaration",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 2,
+          "column": 17,
+          "message": "Avoid leaving a trailing comma in attribute declarations.",
+          "correctable": true,
+          "length": 1,
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "6a9b061c256c1845",
+      "cop": "Lint/TrailingCommaInAttributeDeclaration",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "class A\n attr_reader :foo,\n \n# parity audit\ndef bar; 1; end\nend\n"
+      },
+      "expected": {
+        "source": "class A\n attr_reader :foo\n \n# parity audit\ndef bar; 1; end\nend\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "6a9b061c256c1845",
+      "cop": "Lint/TrailingCommaInAttributeDeclaration",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "class A\n attr_reader :foo,\n \n# parity audit\ndef bar; 1; end\nend\n"
+      },
+      "expected": {
+        "source": "class A\n attr_reader :foo\n \n# parity audit\ndef bar; 1; end\nend\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "e630b6c96edf2ce0",
+      "cop": "Security/CompoundHash",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 10,
+          "message": "Use `[...].hash` instead of combining hash values manually.",
+          "correctable": false,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "1de914da82a5d71b",
+      "cop": "Style/ClassEqualityComparison",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 4,
+          "message": "Use `instance_of?(String)` instead of comparing classes.",
+          "correctable": true,
+          "length": 51,
+          "severity": "convention"
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "1de914da82a5d71b",
+      "cop": "Style/ClassEqualityComparison",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/ClassEqualityComparison",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 51,
+            "location": {
+              "column": 4,
+              "line": 1
+            },
+            "message": "Use `instance_of?(String)` instead of comparing classes.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "obj.class { |__parity_value| __parity_value } == String"
+          }
+        ],
+        "source": "obj.instance_of?(String)\n"
+      },
+      "expected": {
+        "source": "obj.class { |__parity_value| __parity_value } == String\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "00146b5d0ca7cc27",
+      "cop": "Style/ClassEqualityComparison",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 4,
+          "message": "Use `instance_of?(String)` instead of comparing classes.",
+          "correctable": true,
+          "length": 58,
+          "severity": "convention"
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "00146b5d0ca7cc27",
+      "cop": "Style/ClassEqualityComparison",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/ClassEqualityComparison",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 58,
+            "location": {
+              "column": 4,
+              "line": 1
+            },
+            "message": "Use `instance_of?(String)` instead of comparing classes.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "obj.class.name { |__parity_value| __parity_value } == \"String\""
+          }
+        ],
+        "source": "obj.instance_of?(String)\n"
+      },
+      "expected": {
+        "source": "obj.class.name { |__parity_value| __parity_value } == \"String\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "ccdbdf663ff80b53",
+      "cop": "Style/ClassEqualityComparison",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 4,
+          "message": "Use `instance_of?(String)` instead of comparing classes.",
+          "correctable": true,
+          "length": 58,
+          "severity": "convention"
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "ccdbdf663ff80b53",
+      "cop": "Style/ClassEqualityComparison",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/ClassEqualityComparison",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 58,
+            "location": {
+              "column": 4,
+              "line": 1
+            },
+            "message": "Use `instance_of?(String)` instead of comparing classes.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "obj.class { |__parity_value| __parity_value }.name == \"String\""
+          }
+        ],
+        "source": "obj.instance_of?(String)\n"
+      },
+      "expected": {
+        "source": "obj.class { |__parity_value| __parity_value }.name == \"String\"\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "3ddf37563dfa5a1a",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(:a)` instead.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(:a)` instead.",
+          "correctable": true,
+          "length": 7,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "3ddf37563dfa5a1a",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 7,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Use `except(:a)` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "hash.reject("
+          }
+        ],
+        "source": "hash.reject(\n# parity audit\n) { |k, v| k == :a }\n"
+      },
+      "expected": {
+        "source": "hash.except(:a)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "1c3a34eb1c427183",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `except(:a)` instead.",
+          "correctable": false,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `except(:a)` instead.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "1c3a34eb1c427183",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 25,
+            "location": {
+              "column": 2,
+              "line": 3
+            },
+            "message": "Use `except(:a)` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": ").reject { |k, v| k == :a }"
+          }
+        ],
+        "source": "hash(\n# parity audit\n).reject { |k, v| k == :a }\n"
+      },
+      "expected": {
+        "source": "hash(\n# parity audit\n).except(:a)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "76bf78884891afbe",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(:a)` instead.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(:a)` instead.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "76bf78884891afbe",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 21,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Use `except(:a)` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "hash.reject { |k, v| k == "
+          }
+        ],
+        "source": "hash.reject { |k, v| k == \n# parity audit\n:a }\n"
+      },
+      "expected": {
+        "source": "hash.except(:a)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "cf8f874bce55e039",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(:a)` instead.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(:a)` instead.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "cf8f874bce55e039",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 21,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Use `except(:a)` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "hash.reject { |k, v| k.==("
+          }
+        ],
+        "source": "hash.reject { |k, v| k.==(\n# parity audit\n:a) }\n"
+      },
+      "expected": {
+        "source": "hash.except(:a)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "99ac04ad08de3ab4",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(:a)` instead.",
+          "correctable": false,
+          "length": 23,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(:a)` instead.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "99ac04ad08de3ab4",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 23,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Use `except(:a)` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "hash.reject { |k, v| k.eql?("
+          }
+        ],
+        "source": "hash.reject { |k, v| k.eql?(\n# parity audit\n:a) }\n"
+      },
+      "expected": {
+        "source": "hash.except(:a)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "21a56bb41de60e53",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(\"a\")` instead.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(\"a\")` instead.",
+          "correctable": true,
+          "length": 7,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "21a56bb41de60e53",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 7,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Use `except(\"a\")` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "hash.select("
+          }
+        ],
+        "source": "hash.select(\n# parity audit\n) { |k, v| k != \"a\" }\n"
+      },
+      "expected": {
+        "source": "hash.except(\"a\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "fc9b534e8a20c0c6",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `except(\"a\")` instead.",
+          "correctable": false,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Use `except(\"a\")` instead.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "fc9b534e8a20c0c6",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 26,
+            "location": {
+              "column": 2,
+              "line": 3
+            },
+            "message": "Use `except(\"a\")` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": ").select { |k, v| k != \"a\" }"
+          }
+        ],
+        "source": "hash(\n# parity audit\n).select { |k, v| k != \"a\" }\n"
+      },
+      "expected": {
+        "source": "hash(\n# parity audit\n).except(\"a\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "981f771cb82d2761",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(\"a\")` instead.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(\"a\")` instead.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "981f771cb82d2761",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 21,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Use `except(\"a\")` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "hash.select { |k, v| k != "
+          }
+        ],
+        "source": "hash.select { |k, v| k != \n# parity audit\n\"a\" }\n"
+      },
+      "expected": {
+        "source": "hash.except(\"a\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "4b1f5c68d79d789a",
+      "cop": "Style/HashExcept",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(\"a\")` instead.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Use `except(\"a\")` instead.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "4b1f5c68d79d789a",
+      "cop": "Style/HashExcept",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/HashExcept",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 21,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Use `except(\"a\")` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "hash.select { |k, v| k.!=("
+          }
+        ],
+        "source": "hash.select { |k, v| k.!=(\n# parity audit\n\"a\") }\n"
+      },
+      "expected": {
+        "source": "hash.except(\"a\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "0bd9a57687093e42",
+      "cop": "Style/OrAssignment",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use the double pipe equals operator `||=` instead.",
+          "correctable": false,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use the double pipe equals operator `||=` instead.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "0bd9a57687093e42",
+      "cop": "Style/OrAssignment",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/OrAssignment",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 26,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Use the double pipe equals operator `||=` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "foo = foo ? foo : default("
+          }
+        ],
+        "source": "foo = foo ? foo : default(\n# parity audit\n)\n"
+      },
+      "expected": {
+        "source": "foo ||= default(\n# parity audit\n)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "0bd9a57687093e42",
+      "cop": "Style/OrAssignment",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/OrAssignment",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 26,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Use the double pipe equals operator `||=` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "foo = foo ? foo : default("
+          }
+        ],
+        "source": "foo = foo ? foo : default(\n# parity audit\n)\n"
+      },
+      "expected": {
+        "source": "foo ||= default(\n# parity audit\n)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "d965f4daa44c06d6",
+      "cop": "Style/OrAssignment",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use the double pipe equals operator `||=` instead.",
+          "correctable": false,
+          "length": 14,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use the double pipe equals operator `||=` instead.",
+          "correctable": true,
+          "length": 14,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "d965f4daa44c06d6",
+      "cop": "Style/OrAssignment",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/OrAssignment",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 14,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Use the double pipe equals operator `||=` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "foo = default("
+          }
+        ],
+        "source": "foo = default(\n# parity audit\n) unless foo\n"
+      },
+      "expected": {
+        "source": "foo ||= default(\n# parity audit\n)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "d965f4daa44c06d6",
+      "cop": "Style/OrAssignment",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/OrAssignment",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 14,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Use the double pipe equals operator `||=` instead.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "foo = default("
+          }
+        ],
+        "source": "foo = default(\n# parity audit\n) unless foo\n"
+      },
+      "expected": {
+        "source": "foo ||= default(\n# parity audit\n)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "409d48aa1c470fac",
+      "cop": "Style/RandomWithOffset",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+          "correctable": true,
+          "length": 47,
+          "severity": "convention"
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "409d48aa1c470fac",
+      "cop": "Style/RandomWithOffset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RandomWithOffset",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 47,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "rand(6) { |__parity_value| __parity_value } + 1"
+          }
+        ],
+        "source": "rand(1..6)\n"
+      },
+      "expected": {
+        "source": "rand(6) { |__parity_value| __parity_value } + 1\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "409d48aa1c470fac",
+      "cop": "Style/RandomWithOffset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RandomWithOffset",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 47,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "rand(6) { |__parity_value| __parity_value } + 1"
+          }
+        ],
+        "source": "rand(1..6)\n"
+      },
+      "expected": {
+        "source": "rand(6) { |__parity_value| __parity_value } + 1\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "57ee49ae3309f6ba",
+      "cop": "Style/RandomWithOffset",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+          "correctable": true,
+          "length": 5,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "57ee49ae3309f6ba",
+      "cop": "Style/RandomWithOffset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "10.-(\n# parity audit\nrand(1..3))\n"
+      },
+      "expected": {
+        "source": "rand(7..9)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "57ee49ae3309f6ba",
+      "cop": "Style/RandomWithOffset",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "10.-(\n# parity audit\nrand(1..3))\n"
+      },
+      "expected": {
+        "source": "rand(7..9)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "9f3c2a991892b3d4",
+      "cop": "Style/RedundantConditional",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `a == \n# parity audit\nb`.",
+          "correctable": false,
+          "length": 5,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `a == \n# parity audit\nb`.",
+          "correctable": true,
+          "length": 5,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "9f3c2a991892b3d4",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 5,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `a == \n# parity audit\nb`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "a == "
+          }
+        ],
+        "source": "a == \n# parity audit\nb ? true : false\n"
+      },
+      "expected": {
+        "source": "a == \n# parity audit\nb\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "9f3c2a991892b3d4",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 5,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `a == \n# parity audit\nb`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "a == "
+          }
+        ],
+        "source": "a == \n# parity audit\nb ? true : false\n"
+      },
+      "expected": {
+        "source": "a == \n# parity audit\nb\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "5e65229af93712d8",
+      "cop": "Style/RedundantConditional",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `a(\n# parity audit\n) == b`.",
+          "correctable": false,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `a(\n# parity audit\n) == b`.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "5e65229af93712d8",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 2,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `a(\n# parity audit\n) == b`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "a("
+          }
+        ],
+        "source": "a(\n# parity audit\n) == b ? true : false\n"
+      },
+      "expected": {
+        "source": "a(\n# parity audit\n) == b\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "5e65229af93712d8",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 2,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `a(\n# parity audit\n) == b`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "a("
+          }
+        ],
+        "source": "a(\n# parity audit\n) == b ? true : false\n"
+      },
+      "expected": {
+        "source": "a(\n# parity audit\n) == b\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "484959da7d28e2f4",
+      "cop": "Style/RedundantConditional",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `a == b(\n# parity audit\n)`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `a == b(\n# parity audit\n)`.",
+          "correctable": true,
+          "length": 7,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "484959da7d28e2f4",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 7,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `a == b(\n# parity audit\n)`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "a == b("
+          }
+        ],
+        "source": "a == b(\n# parity audit\n) ? true : false\n"
+      },
+      "expected": {
+        "source": "a == b(\n# parity audit\n)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "484959da7d28e2f4",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 7,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `a == b(\n# parity audit\n)`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "a == b("
+          }
+        ],
+        "source": "a == b(\n# parity audit\n) ? true : false\n"
+      },
+      "expected": {
+        "source": "a == b(\n# parity audit\n)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "10d4ad5388dcb8d4",
+      "cop": "Style/RedundantConditional",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `(a).==(\n# parity audit\nb)`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `(a).==(\n# parity audit\nb)`.",
+          "correctable": true,
+          "length": 7,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "10d4ad5388dcb8d4",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 7,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `(a).==(\n# parity audit\nb)`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "(a).==("
+          }
+        ],
+        "source": "(a).==(\n# parity audit\nb) ? true : false\n"
+      },
+      "expected": {
+        "source": "(a).==(\n# parity audit\nb)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "10d4ad5388dcb8d4",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 7,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `(a).==(\n# parity audit\nb)`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "(a).==("
+          }
+        ],
+        "source": "(a).==(\n# parity audit\nb) ? true : false\n"
+      },
+      "expected": {
+        "source": "(a).==(\n# parity audit\nb)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "2597fdefa4efab07",
+      "cop": "Style/RedundantConditional",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `!(a > \n# parity audit\nb)`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `!(a > \n# parity audit\nb)`.",
+          "correctable": true,
+          "length": 7,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "2597fdefa4efab07",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 7,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `!(a > \n# parity audit\nb)`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "if a > "
+          }
+        ],
+        "source": "if a > \n# parity audit\nb; false; else; true; end\n"
+      },
+      "expected": {
+        "source": "!(a > \n# parity audit\nb)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "2597fdefa4efab07",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 7,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `!(a > \n# parity audit\nb)`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "if a > "
+          }
+        ],
+        "source": "if a > \n# parity audit\nb; false; else; true; end\n"
+      },
+      "expected": {
+        "source": "!(a > \n# parity audit\nb)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "2d0edea766fdc0e2",
+      "cop": "Style/RedundantConditional",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `!(a(\n# parity audit\n) > b)`.",
+          "correctable": false,
+          "length": 5,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `!(a(\n# parity audit\n) > b)`.",
+          "correctable": true,
+          "length": 5,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "2d0edea766fdc0e2",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 5,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `!(a(\n# parity audit\n) > b)`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "if a("
+          }
+        ],
+        "source": "if a(\n# parity audit\n) > b; false; else; true; end\n"
+      },
+      "expected": {
+        "source": "!(a(\n# parity audit\n) > b)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "2d0edea766fdc0e2",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 5,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `!(a(\n# parity audit\n) > b)`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "if a("
+          }
+        ],
+        "source": "if a(\n# parity audit\n) > b; false; else; true; end\n"
+      },
+      "expected": {
+        "source": "!(a(\n# parity audit\n) > b)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "ae14bea5ea0b5131",
+      "cop": "Style/RedundantConditional",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `!(a > b(\n# parity audit\n))`.",
+          "correctable": false,
+          "length": 9,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `!(a > b(\n# parity audit\n))`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "ae14bea5ea0b5131",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 9,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `!(a > b(\n# parity audit\n))`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "if a > b("
+          }
+        ],
+        "source": "if a > b(\n# parity audit\n); false; else; true; end\n"
+      },
+      "expected": {
+        "source": "!(a > b(\n# parity audit\n))\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "ae14bea5ea0b5131",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 9,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `!(a > b(\n# parity audit\n))`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "if a > b("
+          }
+        ],
+        "source": "if a > b(\n# parity audit\n); false; else; true; end\n"
+      },
+      "expected": {
+        "source": "!(a > b(\n# parity audit\n))\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "76da8fa33d8162d6",
+      "cop": "Style/RedundantConditional",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `!((a).>(\n# parity audit\nb))`.",
+          "correctable": false,
+          "length": 9,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "This conditional expression can just be replaced by `!((a).>(\n# parity audit\nb))`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "76da8fa33d8162d6",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 9,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `!((a).>(\n# parity audit\nb))`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "if (a).>("
+          }
+        ],
+        "source": "if (a).>(\n# parity audit\nb); false; else; true; end\n"
+      },
+      "expected": {
+        "source": "!((a).>(\n# parity audit\nb))\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "76da8fa33d8162d6",
+      "cop": "Style/RedundantConditional",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/RedundantConditional",
+            "correctable": false,
+            "corrected": false,
+            "highlight_length": 9,
+            "location": {
+              "column": 0,
+              "line": 1
+            },
+            "message": "This conditional expression can just be replaced by `!((a).>(\n# parity audit\nb))`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "if (a).>("
+          }
+        ],
+        "source": "if (a).>(\n# parity audit\nb); false; else; true; end\n"
+      },
+      "expected": {
+        "source": "!((a).>(\n# parity audit\nb))\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "f2e6eacb5d1ecfc6",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 8,
+          "message": "Remove the useless `[]`.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "f2e6eacb5d1ecfc6",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "(items).[](\n# parity audit\n0..-1)\n"
+      },
+      "expected": {
+        "source": "(items).(\n# parity audit\n0..-1)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "80faaddc7c4a79b5",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Prefer `[0x0..]` over `[0x0..-1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Remove the useless `[0x0..-1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "80faaddc7c4a79b5",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/SlicingWithRange",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 9,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Prefer `[0x0..]` over `[0x0..-1]`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "items[0x0..-1]"
+          }
+        ],
+        "source": "items[0x0..]\n"
+      },
+      "expected": {
+        "source": "items\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "cfcebe0e7505a8be",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Prefer `[0b0..]` over `[0b0..-1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Remove the useless `[0b0..-1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "cfcebe0e7505a8be",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/SlicingWithRange",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 9,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Prefer `[0b0..]` over `[0b0..-1]`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "items[0b0..-1]"
+          }
+        ],
+        "source": "items[0b0..]\n"
+      },
+      "expected": {
+        "source": "items\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "c71f7d62acf8dab7",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Prefer `[0o0..]` over `[0o0..-1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Remove the useless `[0o0..-1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "c71f7d62acf8dab7",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/SlicingWithRange",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 9,
+            "location": {
+              "column": 5,
+              "line": 1
+            },
+            "message": "Prefer `[0o0..]` over `[0o0..-1]`.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "items[0o0..-1]"
+          }
+        ],
+        "source": "items[0o0..]\n"
+      },
+      "expected": {
+        "source": "items\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "05cdf98c64e20ca4",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Remove the useless `[0..-0x1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "05cdf98c64e20ca4",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "items[0..-0x1]\n"
+      },
+      "expected": {
+        "source": "items\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "edd8d2c01c4134cc",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Remove the useless `[0..-0b1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "edd8d2c01c4134cc",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "items[0..-0b1]\n"
+      },
+      "expected": {
+        "source": "items\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "2255405dcd14b393",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Remove the useless `[0..-0o1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "2255405dcd14b393",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "items[0..-0o1]\n"
+      },
+      "expected": {
+        "source": "items\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "d68d0677f55bd1c9",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 8,
+          "message": "Prefer `[1..]` over `[]`.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "d68d0677f55bd1c9",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "(items).[](\n# parity audit\n1..-1)\n"
+      },
+      "expected": {
+        "source": "(items).[](\n# parity audit\n1..)\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "b93b3ff03a55ec66",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Prefer `[1..]` over `[1..-0x1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "b93b3ff03a55ec66",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "items[1..-0x1]\n"
+      },
+      "expected": {
+        "source": "items[1..]\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "455201ca1fa0e15f",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Prefer `[1..]` over `[1..-0b1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "455201ca1fa0e15f",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "items[1..-0b1]\n"
+      },
+      "expected": {
+        "source": "items[1..]\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "31cb0d16709200c1",
+      "cop": "Style/SlicingWithRange",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 5,
+          "message": "Prefer `[1..]` over `[1..-0o1]`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "31cb0d16709200c1",
+      "cop": "Style/SlicingWithRange",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "items[1..-0o1]\n"
+      },
+      "expected": {
+        "source": "items[1..]\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "8189622a6cbbc6a2",
+      "cop": "Style/TrailingCommaInBlockArgs",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [
+        {
+          "line": 1,
+          "column": 54,
+          "message": "Useless trailing comma present in block arguments.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "8189622a6cbbc6a2",
+      "cop": "Style/TrailingCommaInBlockArgs",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [
+          {
+            "cop_name": "Style/TrailingCommaInBlockArgs",
+            "correctable": true,
+            "corrected": true,
+            "highlight_length": 1,
+            "location": {
+              "column": 54,
+              "line": 1
+            },
+            "message": "Useless trailing comma present in block arguments.",
+            "path": "test.rb",
+            "severity": "Convention",
+            "source_line": "items { |__parity_value| __parity_value }.each { |a, b,| work(a, b) }"
+          }
+        ],
+        "source": "items { |__parity_value| __parity_value }.each { |a, b| work(a, b) }\n"
+      },
+      "expected": {
+        "source": "items { |__parity_value| __parity_value }.each { |a, b,| work(a, b) }\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "5a59bb771e86d565",
+      "cop": "Style/UnpackFirst",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 4,
+          "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0x0]`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "5a59bb771e86d565",
+      "cop": "Style/UnpackFirst",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "str.unpack(\"C*\")[0x0]\n"
+      },
+      "expected": {
+        "source": "str.unpack1(\"C*\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "5a59bb771e86d565",
+      "cop": "Style/UnpackFirst",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "str.unpack(\"C*\")[0x0]\n"
+      },
+      "expected": {
+        "source": "str.unpack1(\"C*\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "2ccb52155cd74d7b",
+      "cop": "Style/UnpackFirst",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 4,
+          "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0b0]`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "2ccb52155cd74d7b",
+      "cop": "Style/UnpackFirst",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "str.unpack(\"C*\")[0b0]\n"
+      },
+      "expected": {
+        "source": "str.unpack1(\"C*\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "2ccb52155cd74d7b",
+      "cop": "Style/UnpackFirst",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "str.unpack(\"C*\")[0b0]\n"
+      },
+      "expected": {
+        "source": "str.unpack1(\"C*\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "a01a2137e214308f",
+      "cop": "Style/UnpackFirst",
+      "kind": "diagnostics",
+      "status": "failure",
+      "actual": [],
+      "expected": [
+        {
+          "line": 1,
+          "column": 4,
+          "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0o0]`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ]
+    },
+    {
+      "id": "a01a2137e214308f",
+      "cop": "Style/UnpackFirst",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "safe",
+      "actual": {
+        "diagnostics": [],
+        "source": "str.unpack(\"C*\")[0o0]\n"
+      },
+      "expected": {
+        "source": "str.unpack1(\"C*\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    },
+    {
+      "id": "a01a2137e214308f",
+      "cop": "Style/UnpackFirst",
+      "kind": "correction",
+      "status": "failure",
+      "mode": "all",
+      "actual": {
+        "diagnostics": [],
+        "source": "str.unpack(\"C*\")[0o0]\n"
+      },
+      "expected": {
+        "source": "str.unpack1(\"C*\")\n",
+        "compile": {
+          "valid": true
+        }
+      }
+    }
+  ]
+}

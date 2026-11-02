@@ -16,7 +16,7 @@ fn mixin_call(c: &Context<'_>, n: Node<'_>) -> bool {
     if !["include", "extend", "prepend"].contains(&c.method(n)) || !c.receiver(n).is_empty() {
         return false;
     }
-    let a = args(n);
+    let a = semantic_args(n);
     a.len() == 1 && matches!(a[0].kind(), "constant" | "scope_resolution")
 }
 fn top_scope(n: Node<'_>) -> bool {

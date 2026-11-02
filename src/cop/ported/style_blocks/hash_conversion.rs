@@ -22,7 +22,7 @@ fn hash_arguments<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Vec<Node<'n>>> {
     if n.kind() == "element_reference" {
         return index_arguments(c, n);
     }
-    (c.method(n) == "[]" && ["Hash", "::Hash"].contains(&c.receiver(n))).then(|| args(n))
+    (c.method(n) == "[]" && ["Hash", "::Hash"].contains(&c.receiver(n))).then(|| semantic_args(n))
 }
 fn index_arguments<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Vec<Node<'n>>> {
     let obj = field(n, "object")?;
@@ -60,7 +60,7 @@ fn hash_single(c: &Context<'_>, n: Node<'_>, a: Node<'_>) -> Vec<Finding> {
             Finding::new(n, LITERAL_HASH).replace_with(c, n, || format!("{{{}}}", c.text(a))),
         ];
     }
-    if c.method(a) == "zip" && args(a).is_empty() {
+    if c.method(a) == "zip" && semantic_args(a).is_empty() {
         return vec![zip(c, n, a)];
     }
     vec![Finding::new(n, TO_H).replace_with(c, n, || format!("{}.to_h", to_h_receiver(c, a)))]
@@ -87,7 +87,7 @@ fn zip(c: &Context<'_>, n: Node<'_>, a: Node<'_>) -> Finding {
 }
 fn to_h_receiver(c: &Context<'_>, a: Node<'_>) -> String {
     let text = c.text(a);
-    if a.kind() == "binary" || is_call(a) && !args(a).is_empty() && !text.ends_with(')') {
+    if a.kind() == "binary" || is_call(a) && !semantic_args(a).is_empty() && !text.ends_with(')') {
         format!("({text})")
     } else {
         text.into()

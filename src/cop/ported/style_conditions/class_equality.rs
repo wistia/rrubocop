@@ -25,7 +25,7 @@ fn comparison<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, Node<'n>)> 
     if n.kind() == "binary" && operator(c, n) == "==" {
         field(n, "left").zip(field(n, "right"))
     } else if ["==", "eql?", "equal?"].contains(&c.method(n)) {
-        field(n, "receiver").zip(args(n).first().copied())
+        field(n, "receiver").zip(semantic_args(n).first().copied())
     } else {
         None
     }

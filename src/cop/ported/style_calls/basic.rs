@@ -97,7 +97,7 @@ fn require_argument<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
     if !["require", "require_relative"].contains(&c.method(n)) || !c.receiver(n).is_empty() {
         return None;
     }
-    let a = args(n);
+    let a = semantic_args(n);
     (a.len() == 1).then(|| a[0])
 }
 

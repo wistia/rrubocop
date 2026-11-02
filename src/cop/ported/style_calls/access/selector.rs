@@ -15,14 +15,16 @@ pub(super) fn access<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, bool
 }
 fn index_access<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, bool, usize)> {
     let recv = field(n, "object")?;
-    let a = kids(n)
+    let argument = index_argument(n, recv)?;
+    Some((recv, index_max(c.text(argument))?, recv.end_byte()))
+}
+fn index_argument<'n>(n: Node<'n>, recv: Node<'n>) -> Option<Node<'n>> {
+    let attached = block(n);
+    let mut arguments = kids(n)
         .into_iter()
-        .filter(|a| *a != recv)
-        .collect::<Vec<_>>();
-    if a.len() != 1 {
-        return None;
-    }
-    Some((recv, index_max(c.text(a[0]))?, recv.end_byte()))
+        .filter(|argument| *argument != recv && Some(*argument) != attached);
+    let argument = arguments.next()?;
+    arguments.next().is_none().then_some(argument)
 }
 fn index_max(text: &str) -> Option<bool> {
     match text {
@@ -32,7 +34,7 @@ fn index_max(text: &str) -> Option<bool> {
     }
 }
 fn method_access(c: &Context<'_>, n: Node<'_>) -> Option<bool> {
-    let a = args(n);
+    let a = semantic_args(n);
     match c.method(n) {
         "first" if a.is_empty() => Some(false),
         "last" if a.is_empty() => Some(true),

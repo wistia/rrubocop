@@ -1,0 +1,1019 @@
+[
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen 0x1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1\n :first\nwhen 0x1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen 0b1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1\n :first\nwhen 0b1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen 01\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1\n :first\nwhen 01\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen +1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1\n :first\nwhen +1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen -1\n :first\nwhen -0x1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen -1\n :first\nwhen -0x1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen - 1\n :first\nwhen -1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen - 1\n :first\nwhen -1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 0\n :first\nwhen -0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 0\n :first\nwhen -0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 10\n :first\nwhen 1_0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 10\n :first\nwhen 1_0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 18446744073709551616\n :first\nwhen 0x1_0000_0000_0000_0000\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 23,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 18446744073709551616\n :first\nwhen 0x1_0000_0000_0000_0000\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1.0\n :first\nwhen 1e0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1.0\n :first\nwhen 1e0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen -0.0\n :first\nwhen 0.0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 3,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen -0.0\n :first\nwhen 0.0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1\n :first\nwhen 1.0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen 1\n :first\nwhen 1.0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1r\n :first\nwhen 1.0r\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1r\n :first\nwhen 1.0r\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 0.1r\n :first\nwhen 0.10r\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 5,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 0.1r\n :first\nwhen 0.10r\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 2.50r\n :first\nwhen 2.5r\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 2.50r\n :first\nwhen 2.5r\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1r\n :first\nwhen 1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen 1r\n :first\nwhen 1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1i\n :first\nwhen 0x1i\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1i\n :first\nwhen 0x1i\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1i\n :first\nwhen 1.0i\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen 1i\n :first\nwhen 1.0i\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1ri\n :first\nwhen 1.0ri\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 5,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen 1ri\n :first\nwhen 1.0ri\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen 1+1\n :first\nwhen 2\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen 1+1\n :first\nwhen 2\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen --1\n :first\nwhen 1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen --1\n :first\nwhen 1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen [:ready]\n :first\nwhen [:\"\\x72eady\"]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 13,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen [:ready]\n :first\nwhen [:\"\\x72eady\"]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen [[1, :ready]]\n :first\nwhen [[0x1, :\"\\x72eady\"]]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen [[1, :ready]]\n :first\nwhen [[0x1, :\"\\x72eady\"]]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen [1]\n :first\nwhen [1.0]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen [1]\n :first\nwhen [1.0]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen %i[ready]\n :first\nwhen [:ready]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen %i[ready]\n :first\nwhen [:ready]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen %w[ready]\n :first\nwhen [\"ready\"]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 9,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen %w[ready]\n :first\nwhen [\"ready\"]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen {a: 1}\n :first\nwhen {:a => 0x1}\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 11,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen {a: 1}\n :first\nwhen {:a => 0x1}\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen {a: 1, b: 2}\n :first\nwhen {b: 2, a: 1}\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "case value\nwhen {a: 1, b: 2}\n :first\nwhen {b: 2, a: 1}\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value == :ready\n :first\nelsif value == :\"\\x72eady\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 6,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if value == :ready\n :first\nelsif value == :\"\\x72eady\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value == 1\n :first\nelsif value == 0x1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 6,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if value == 1\n :first\nelsif value == 0x1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value == [1, :ready]\n :first\nelsif value == [0x1, :\"\\x72eady\"]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 6,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 27,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if value == [1, :ready]\n :first\nelsif value == [0x1, :\"\\x72eady\"]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value == 1\n :first\nelsif value == 1.0\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "if value == 1\n :first\nelsif value == 1.0\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if value < 1\n :first\nelsif value <= 0x1\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "if value < 1\n :first\nelsif value <= 0x1\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen \"\\xFF\"\n :first\nwhen \"\\377\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 6,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen \"\\xFF\"\n :first\nwhen \"\\377\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# coding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# coding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# -*- coding: binary -*-\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# -*- coding: binary -*-\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "#!/usr/bin/env ruby\n# encoding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "#!/usr/bin/env ruby\n# encoding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# Encoding: ASCII-8BIT\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# Encoding: ASCII-8BIT\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# vim: set fileencoding=binary :\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# vim: set fileencoding=binary :\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# frozen_string_literal: true\n# encoding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 6,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# frozen_string_literal: true\n# encoding: binary\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: US-ASCII\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: US-ASCII\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ISO-8859-1\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ISO-8859-1\ncase value\nwhen \"\\xC3\\xA9\"\n :first\nwhen \"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xFF\"\n :first\nwhen \"\\377\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 6,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xFF\"\n :first\nwhen \"\\377\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\x61\"\n :first\nwhen \"\\u0061\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 8,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\x61\"\n :first\nwhen \"\\u0061\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen :\"\\xC3\\xA9\"\n :first\nwhen :\"\\u00E9\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen :\"\\xC3\\xA9\"\n :first\nwhen :\"\\u00E9\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen :\"\\xFF\"\n :first\nwhen :\"\\377\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 7,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen :\"\\xFF\"\n :first\nwhen :\"\\377\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen [\"\\xC3\\xA9\"]\n :first\nwhen [\"\\u00E9\"]\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen [\"\\xC3\\xA9\"]\n :first\nwhen [\"\\u00E9\"]\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require 1\nrequire 0x1\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 11,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require 1\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require -0.0\nrequire 0.0\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "require -0.0\nrequire 0.0\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require [-0.0]\nrequire [0.0]\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "require [-0.0]\nrequire [0.0]\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "require \"set\"\nrequire \"\\x73et\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 16,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "require \"set\"\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\ncase value\nwhen \"\\xC3\\xA9\"\n puts \"binary\"\nwhen \"\\u00E9\"\n puts \"unicode\"\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\ncase value\nwhen \"\\xC3\\xA9\"\n puts \"binary\"\nwhen \"\\u00E9\"\n puts \"unicode\"\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\nif value == \"\\xC3\\xA9\"\n puts \"binary\"\nelsif value == \"\\u00E9\"\n puts \"unicode\"\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\nif value == \"\\xC3\\xA9\"\n puts \"binary\"\nelsif value == \"\\u00E9\"\n puts \"unicode\"\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "value = \"two\\n\"\ncase value\nwhen <<~A\none\nA\n puts \"one\"\nwhen <<~A\ntwo\nA\n puts \"two\"\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "value = \"two\\n\"\ncase value\nwhen <<~A\none\nA\n puts \"one\"\nwhen <<~A\ntwo\nA\n puts \"two\"\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xFFa\"\n :first\nwhen \"\\xFF\\u0061\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 5,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\ncase value\nwhen \"\\xFFa\"\n :first\nwhen \"\\xFF\\u0061\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateCaseCondition",
+    "source": "case value\nwhen \"\\xFFa\"\n :first\nwhen \"\\xFF\\u0061\"\n :second\nend\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 5,
+        "message": "Duplicate `when` condition detected.",
+        "correctable": false,
+        "length": 12,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "case value\nwhen \"\\xFFa\"\n :first\nwhen \"\\xFF\\u0061\"\n :second\nend\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "# encoding: ASCII-8BIT\nrequire \"\\xFFa\"\nrequire \"\\xFF\\u0061\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 0,
+        "message": "Duplicate `require` detected.",
+        "correctable": true,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "# encoding: ASCII-8BIT\nrequire \"\\xFFa\"\n"
+  },
+  {
+    "cop": "Lint/DuplicateRequire",
+    "source": "# encoding: ASCII-8BIT\nrequire \"\\xC3\\xA9\"\nrequire \"\\u00E9\"\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "SafeAutoCorrect": false
+    },
+    "expected": [],
+    "corrected": "# encoding: ASCII-8BIT\nrequire \"\\xC3\\xA9\"\nrequire \"\\u00E9\"\n"
+  }
+]
