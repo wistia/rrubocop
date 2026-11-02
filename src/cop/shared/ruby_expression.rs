@@ -511,7 +511,11 @@ enum RegexPart<'a> {
     Text(Vec<u8>),
     Expression(Node<'a>),
 }
-fn regex_parts<'a>(source: &SourceFile, node: Node<'a>) -> Option<(Vec<RegexPart<'a>>, Vec<u8>)> {
+fn regex_parts<'a>(
+    source: &SourceFile,
+    node: Node<'a>,
+    ruby_version: f64,
+) -> Option<(Vec<RegexPart<'a>>, Vec<u8>)> {
     let mut parts = Vec::new();
     let mut content = Vec::new();
     let opening = node
@@ -527,25 +531,28 @@ fn regex_parts<'a>(source: &SourceFile, node: Node<'a>) -> Option<(Vec<RegexPart
     for child in code_children(node) {
         if child.kind() == "interpolation" {
             if !content.is_empty() {
-                parts.push(RegexPart::Text(std::mem::take(&mut content)));
+                let text = crate::cop::ported::decode_regexp_content(
+                    &content,
+                    opening,
+                    closing,
+                    ruby_version,
+                )?;
+                if !text.is_empty() {
+                    parts.push(RegexPart::Text(text));
+                }
+                content.clear();
             }
             parts.push(RegexPart::Expression(child));
         } else {
-            let bytes = node_bytes(source, child);
-            if child.kind() == "escape_sequence"
-                && bytes.len() == 2
-                && bytes[0] == b'\\'
-                && (bytes[1] == opening || bytes[1] == closing)
-                && !b"\\$()*+.<>?[]^{|}".contains(&bytes[1])
-            {
-                content.push(bytes[1]);
-            } else {
-                content.extend_from_slice(bytes);
-            }
+            content.extend_from_slice(node_bytes(source, child));
         }
     }
     if !content.is_empty() {
-        parts.push(RegexPart::Text(content));
+        let text =
+            crate::cop::ported::decode_regexp_content(&content, opening, closing, ruby_version)?;
+        if !text.is_empty() {
+            parts.push(RegexPart::Text(text));
+        }
     }
     let last = node.child(node.child_count().checked_sub(1)?.try_into().ok()?)?;
     let mut options = node_bytes(source, last).get(1..)?.to_vec();
@@ -554,13 +561,29 @@ fn regex_parts<'a>(source: &SourceFile, node: Node<'a>) -> Option<(Vec<RegexPart
     Some((parts, options))
 }
 
+pub(crate) fn static_regex_value_for_ruby(
+    source: &SourceFile,
+    node: Node<'_>,
+    ruby_version: f64,
+) -> Option<String> {
+    let (mut parts, options) = regex_parts(source, node, ruby_version)?;
+    if !options.is_empty() || parts.len() != 1 {
+        return None;
+    }
+    match parts.pop()? {
+        RegexPart::Text(bytes) => String::from_utf8(bytes).ok(),
+        RegexPart::Expression(_) => None,
+    }
+}
+
 fn same_regex(source: &SourceFile, left: Node<'_>, right: Node<'_>, strict: bool) -> bool {
     let same_expression = |source: &SourceFile, left: Node<'_>, right: Node<'_>| {
         compare_expression(source, left, right, strict)
     };
-    let (Some((a, flags_a)), Some((b, flags_b))) =
-        (regex_parts(source, left), regex_parts(source, right))
-    else {
+    let (Some((a, flags_a)), Some((b, flags_b))) = (
+        regex_parts(source, left, 3.4),
+        regex_parts(source, right, 3.4),
+    ) else {
         return node_bytes(source, left) == node_bytes(source, right);
     };
     flags_a == flags_b
@@ -581,6 +604,32 @@ mod tests {
         source: String,
         same: bool,
         eql: bool,
+    }
+    #[test]
+    fn regex_values_match_original_parser_versions() {
+        #[derive(serde::Deserialize)]
+        struct Case {
+            source: String,
+            ruby_version: f64,
+            value: Option<String>,
+        }
+        let cases: Vec<Case> = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/original-regexp-static-value.json"
+        )))
+        .unwrap();
+        for case in cases {
+            let source = SourceFile::from_bytes("regexp.rb", case.source.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            let node = tree.root_node().named_child(0).unwrap();
+            assert_eq!(
+                static_regex_value_for_ruby(&source, node, case.ruby_version),
+                case.value,
+                "Ruby {}: {}",
+                case.ruby_version,
+                case.source
+            );
+        }
     }
     #[test]
     fn comparisons_match_original_ruby_ast_equalities() {

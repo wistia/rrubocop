@@ -219,3 +219,5 @@ mod literal_tests;
 pub(super) fn heredoc_end(c: &Context<'_>, n: Node<'_>) -> Option<usize> {
     symbols::heredoc_end(c, n)
 }
+pub(super) use symbols::decode_double_quoted_content;
+pub(super) use symbols::decode_regexp_content;

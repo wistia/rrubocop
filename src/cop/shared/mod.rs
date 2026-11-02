@@ -177,3 +177,6 @@ pub use integer::integer_value;
 mod send_range;
 pub use send_range::{end as send_end, is_setter_call};
 pub mod ruby_expression;
+
+pub mod regexp;
+pub mod ruby_literal;
