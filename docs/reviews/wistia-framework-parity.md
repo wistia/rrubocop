@@ -516,3 +516,38 @@ receivers, has zero differences against original Ruby. Production CLI/config sco
 pass all 69 probes across 32 reviewed rules, including an UnknownEnv positive
 control. Native suite passes 911 tests, 1 ignored audit probe. Totals are now 32
 reviewed implementations, 29 baseline stubs replaced, 38 baseline stubs remaining.
+
+### Rails/EnvironmentComparison — original correction safeguards
+
+Ported and post-reviewed rubocop-rails 2.26.0
+`lib/rubocop/cop/rails/environment_comparison.rb` and every branch of its original
+`spec/rubocop/cop/rails/environment_comparison_spec.rb`. Reuses the UnknownEnv
+regular Rails.env receiver matcher; no duplicated constant/send decoder. Both
+string/symbol operands and equality directions, `==`/`!=`, explicit operator
+calls, root qualification, safe-navigation/namespace/args/block negatives, static
+versus dynamic literal shapes, disabled correction and source ranges are covered.
+Normal string corrections preserve the actual receiver spelling and original
+negation. Predicate spelling is validated as one parsed method call, preventing
+an environment name from injecting a different expression.
+
+Original Ruby calls all these corrections safe, but its symbol conversion
+changes `Rails.env == :production` from false to true in production. Original
+also turns `Rails.env == 'empty'` from true into String#empty? false. The port
+preserves detection/message/range and declines correction for symbols, existing
+predicate-method collisions, invalid predicate names, comment deletion and
+heredocs. Existing predicate collisions were reviewed against Ruby 3.4.9 and
+ActiveSupport 8.1.3.1 StringInquirer public methods; ordinary configured names
+are not special-cased. Rails 7.1+ EnvironmentInquirer#local? also returns true
+for development/test, while equality to 'local' returns false, so this correction
+is guarded only for those Rails versions. The guard list remains a bounded
+pinned-runtime inventory; arbitrary application monkey patches are not modeled.
+
+The focused original-Ruby gate has 88 cases, 176 second-pass states and four
+trusted ActiveSupport programs. Detection/message/range parity holds throughout;
+all four native runtime cases preserve original behavior in both modes. The
+strict driver retains 546 safeguard events: 180 correction-metadata differences,
+180 safe-mode byte differences, 180 all-mode byte differences and six runtime
+differences. No failures are suppressed, and native corrected outputs compile
+and are idempotent. Native suite passes 912 tests, 1 ignored audit probe. The
+production CLI scope matrix now has 71 probes across 33 reviewed rules. Totals:
+33 reviewed implementations, 30 baseline stubs replaced, 37 stubs remaining.

@@ -26,6 +26,17 @@ def cases():
         add("Rails/UnknownEnv",source)
     for source in ("Rails.env { value }.proudction?", "Rails.env.proudction? { value }", "Rails.env { value } == 'proudction'", "Rails.env.proudction?(&block)", "Rails.env(&block).proudction?"):
         add("Rails/UnknownEnv",source)
+    for env in ("'production'", ":production", "'not-an-env'", "'empty'", "'nil'", "'production?'", "''", "\"pro#{name}duction\"", "(\"pro\" \"duction\")", ":\"prod\nfoo\""):
+        for op in ("==", "!="):
+            add("Rails/EnvironmentComparison",f"Rails.env {op} {env}")
+            add("Rails/EnvironmentComparison",f"{env} {op} Rails.env")
+    for source in ("Rails.env === 'production'", "Rails.env.==('production')", "Rails.env&.==('production')", ":: Rails.env != 'production'", "Other::Rails.env == 'production'", "Rails.env(1) == 'production'", "Rails.env { value } == 'production'", "Rails.env == ?p", "Rails.env == <<~ENV\nproduction\nENV", "Rails.env == # keep\n 'production'", "Rails.env.==('production') { work }"):
+        add("Rails/EnvironmentComparison",source)
+    add("Rails/EnvironmentComparison","Rails.env == 'production'",AutoCorrect="disabled")
+    for version in (7.0,7.1):
+        add("Rails/EnvironmentComparison","Rails.env == 'local'",TargetRailsVersion=version)
+    for name in ("acts_like", "acts_like_string", "ascii_only", "between", "blank", "casecmp", "duplicable", "empty", "end_with", "ends_with", "eql", "equal", "exclude", "frozen", "html_safe", "in", "include", "instance_of", "instance_variable_defined", "is_a", "is_utf8", "kind_of", "match", "nil", "present", "respond_to", "start_with", "starts_with", "unicode_normalized", "valid_encoding"):
+        add("Rails/EnvironmentComparison",f"Rails.env == '{name}'")
     for selector in ("select", "filter", "find_all", "reject"):
         for counter in ("count", "length", "size"):
             add("Performance/Count", f"items.{selector} {{ |item| item.active? }}.{counter}")

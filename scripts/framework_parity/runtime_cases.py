@@ -1,5 +1,9 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Rails/EnvironmentComparison", "require 'active_support/all'\nrequire 'active_support/environment_inquirer'\nmodule Rails; def self.env; ActiveSupport::EnvironmentInquirer.new('development'); end; end\np(Rails.env == 'local')\n"),
+    ("Rails/EnvironmentComparison", "require 'active_support/all'\nmodule Rails; def self.env; ActiveSupport::StringInquirer.new('production'); end; end\np(Rails.env == 'production')\n"),
+    ("Rails/EnvironmentComparison", "require 'active_support/all'\nmodule Rails; def self.env; ActiveSupport::StringInquirer.new('production'); end; end\np(Rails.env == :production)\n"),
+    ("Rails/EnvironmentComparison", "require 'active_support/all'\nmodule Rails; def self.env; ActiveSupport::StringInquirer.new('empty'); end; end\np(Rails.env == 'empty')\n"),
     ("Rails/Date", "require 'active_support/all'\nTime.zone = 'UTC'\np Date.today.class.name\n"),
     ("Rails/Date", "require 'active_support/all'\nTime.zone = 'UTC'\np Date.current.class.name\n", {"EnforcedStyle":"strict"}),
     ("Rails/IgnoredSkipActionFilterOption", "$calls = 0\ndef condition; $calls += 1; -> { true }; end\ndef skip_before_action(*args, **options); p :callback; end\nskip_before_action :login, only: :show, if: condition\np $calls\n"),

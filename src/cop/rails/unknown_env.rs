@@ -6,13 +6,13 @@ use tree_sitter::Node;
 
 pub struct UnknownEnv;
 
-fn regular(node: Node<'_>, source: &SourceFile) -> bool {
+pub(super) fn regular(node: Node<'_>, source: &SourceFile) -> bool {
     node.kind() == "call"
         && node
             .child_by_field_name("operator")
             .is_none_or(|n| node_text(source, n) != "&.")
 }
-fn rails_env(source: &SourceFile, node: Node<'_>) -> bool {
+pub(super) fn rails_env(source: &SourceFile, node: Node<'_>) -> bool {
     regular(node, source)
         && node.child_by_field_name("block").is_none()
         && call_method_name(source, node) == Some(b"env")
