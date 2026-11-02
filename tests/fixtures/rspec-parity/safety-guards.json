@@ -1287,5 +1287,761 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "return_from_stub_spec:2",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) { [42, 43] }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) { [42, 43] }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#2",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "safety_difference": "Preserve mutable value allocation and constant lookup at original stub invocation/setup time.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 30,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return([42, 43])\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return([42, 43])\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:3",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) { {a: 42, b: 43} }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) { {a: 42, b: 43} }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#3",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "safety_difference": "Preserve mutable value allocation and constant lookup at original stub invocation/setup time.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 30,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return({a: 42, b: 43})\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return({a: 42, b: 43})\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:5",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) { Life::MEANING }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) { Life::MEANING }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#5",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "safety_difference": "Preserve mutable value allocation and constant lookup at original stub invocation/setup time.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 30,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(Life::MEANING)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(Life::MEANING)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:6",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) { {Life::MEANING => 42} }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) { {Life::MEANING => 42} }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#6",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "safety_difference": "Preserve mutable value allocation and constant lookup at original stub invocation/setup time.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 30,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return({Life::MEANING => 42})\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return({Life::MEANING => 42})\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:12",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) do\n    \"You called\"     \"me\"\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) do\n    \"You called\"     \"me\"\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#12",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "safety_difference": "Preserve mutable value allocation and constant lookup at original stub invocation/setup time.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 30,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(\"You called\"     \"me\")\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(\"You called\"     \"me\")\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:20",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "allow(Foo).to receive(:bar).and_return({ foo: 42 })\nallow(Foo).to receive(:bar).and_return(foo: 42)\nallow(Foo).to receive(:bar).and_return(\n  a: 42,\n  b: 43\n)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(Foo).to receive(:bar).and_return({ foo: 42 })\nallow(Foo).to receive(:bar).and_return(foo: 42)\nallow(Foo).to receive(:bar).and_return(\n  a: 42,\n  b: 43\n)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#20",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "safety_difference": "Preserve mutable value allocation and constant lookup at original stub invocation/setup time.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 28,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 28,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 28,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Foo).to receive(:bar) { { foo: 42 } }\nallow(Foo).to receive(:bar) { { foo: 42 } }\nallow(Foo).to receive(:bar) { { a: 42,\n  b: 43 } }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Foo).to receive(:bar) { { foo: 42 } }\nallow(Foo).to receive(:bar) { { foo: 42 } }\nallow(Foo).to receive(:bar) { { a: 42,\n  b: 43 } }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:22",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "allow(Foo).to receive(:bar).and_return('You called ' \\\n  'me')\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(Foo).to receive(:bar).and_return('You called ' \\\n  'me')\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#22",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "safety_difference": "Preserve mutable value allocation and constant lookup at original stub invocation/setup time.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 28,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Foo).to receive(:bar) { 'You called ' \\\n  'me' }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Foo).to receive(:bar) { 'You called ' \\\n  'me' }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-optional-argument",
+    "source": "receive(:bar) { |value=side_effect| 42 }\n",
+    "corrected": "receive(:bar) { |value=side_effect| 42 }\n",
+    "safety_difference": "Preserve allocation, lookup, argument-default evaluation and comments; do not reproduce invalid multi-statement argument rewrites.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return(42)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_return(42)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-multiple-body",
+    "source": "receive(:bar) { 41; 42 }\n",
+    "corrected": "receive(:bar) { 41; 42 }\n",
+    "safety_difference": "Preserve allocation, lookup, argument-default evaluation and comments; do not reproduce invalid multi-statement argument rewrites.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return(41; 42)\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | receive(:bar).and_return(41; 42)\n    |                            ^ unexpected ';'; expected a `)` to close the arguments\n    |                                ^ unexpected ')', ignoring it\n    |                                ^ unexpected ')', expecting end-of-input\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      },
+      "all": {
+        "source": "receive(:bar).and_return(41; 42)\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | receive(:bar).and_return(41; 42)\n    |                            ^ unexpected ';'; expected a `)` to close the arguments\n    |                                ^ unexpected ')', ignoring it\n    |                                ^ unexpected ')', expecting end-of-input\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-mutable-string",
+    "source": "receive(:bar) { \"fresh\" }\n",
+    "corrected": "receive(:bar) { \"fresh\" }\n",
+    "safety_difference": "Preserve allocation, lookup, argument-default evaluation and comments; do not reproduce invalid multi-statement argument rewrites.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return(\"fresh\")\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_return(\"fresh\")\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-regex",
+    "source": "receive(:bar) { /pattern/ }\n",
+    "corrected": "receive(:bar) { /pattern/ }\n",
+    "safety_difference": "Preserve allocation, lookup, argument-default evaluation and comments; do not reproduce invalid multi-statement argument rewrites.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return(/pattern/)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_return(/pattern/)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-constant-block",
+    "source": "receive(:bar).and_return(Current)\n",
+    "corrected": "receive(:bar).and_return(Current)\n",
+    "safety_difference": "Preserve allocation, lookup, argument-default evaluation and comments; do not reproduce invalid multi-statement argument rewrites.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { Current }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { Current }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-mutable-block",
+    "source": "receive(:bar).and_return([])\n",
+    "corrected": "receive(:bar).and_return([])\n",
+    "safety_difference": "Preserve allocation, lookup, argument-default evaluation and comments; do not reproduce invalid multi-statement argument rewrites.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { [] }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { [] }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-block-comment",
+    "source": "receive(:bar) do\n # keep\n 42\nend\n",
+    "corrected": "receive(:bar) do\n # keep\n 42\nend\n",
+    "safety_difference": "Preserve allocation, lookup, argument-default evaluation and comments; do not reproduce invalid multi-statement argument rewrites.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return(42)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_return(42)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-return-comment",
+    "source": "receive(:bar).and_return( # keep\n42)\n",
+    "corrected": "receive(:bar).and_return( # keep\n42)\n",
+    "safety_difference": "Preserve allocation, lookup, argument-default evaluation and comments; do not reproduce invalid multi-statement argument rewrites.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-attached-block",
+    "source": "receive(:bar).and_return(42) { work }\n",
+    "corrected": "receive(:bar).and_return(42) { work }\n",
+    "safety_difference": "Preserve attached callback rather than reproducing invalid adjacent-block correction.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { 42 } { work }\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | receive(:bar) { 42 } { work }\n    |                      ^ unexpected '{', expecting end-of-input\n    |                            ^ expected a `=>` between the hash key and value\n    |                             ^ unexpected '}'; expected a value in the hash literal\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      },
+      "all": {
+        "source": "receive(:bar) { 42 } { work }\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | receive(:bar) { 42 } { work }\n    |                      ^ unexpected '{', expecting end-of-input\n    |                            ^ expected a `=>` between the hash key and value\n    |                             ^ unexpected '}'; expected a value in the hash literal\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    }
   }
 ]

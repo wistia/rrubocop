@@ -70,7 +70,7 @@ impl Cop for RepeatedExampleGroupDescription {
                         ) {
                             (true, true) => true,
                             (false, false) => {
-                                same_arguments(source, &call_args(*group), &call_args(**other))
+                                eql_arguments(source, &call_args(*group), &call_args(**other))
                             }
                             _ => false,
                         }

@@ -42,9 +42,9 @@ impl Cop for RepeatedDescription {
                 other != example
                     && (name(source, *other) == Some(b"its")) == its
                     && if its {
-                        same_expression(source, *example, *other)
+                        eql_expression(source, *example, *other)
                     } else {
-                        same_arguments(source, &args, &call_args(*other))
+                        eql_arguments(source, &args, &call_args(*other))
                     }
             });
             if repeated {

@@ -1,4 +1,8 @@
 use crate::cop::Cop;
+pub(super) use crate::cop::shared::integer_value;
+pub(super) use crate::cop::shared::ruby_expression::{
+    eql_arguments, eql_expression, same_expression,
+};
 use crate::cop::shared::{call_method_name, call_receiver, method_node, node_bytes};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
@@ -332,136 +336,6 @@ pub(super) fn skipped_metadata(source: &SourceFile, node: Node<'_>) -> bool {
             && matches!(value.kind(), "true" | "string" | "chained_string")
     })
 }
-pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
-    if let (Some(a), Some(b)) = (rational_value(source, left), rational_value(source, right)) {
-        return a == b;
-    }
-    if let (Some(a), Some(b)) = (integer_value(source, left), integer_value(source, right)) {
-        return a == b;
-    }
-    let literal_kind = |node: Node<'_>| {
-        if symbol_node(node) {
-            Some("symbol")
-        } else if matches!(
-            node.kind(),
-            "string" | "chained_string" | "heredoc_beginning"
-        ) {
-            Some("string")
-        } else {
-            None
-        }
-    };
-    if let Some(kind) = literal_kind(left) {
-        if Some(kind) == literal_kind(right) {
-            if let (Some(a), Some(b)) = (
-                crate::cop::ported::static_literal(source, left),
-                crate::cop::ported::static_literal(source, right),
-            ) {
-                return a == b;
-            }
-        }
-    }
-    let send = |node: Node<'_>| {
-        node.kind() == "call"
-            || node.kind() == "identifier"
-                && name(source, node).is_some()
-                && !crate::cop::ported::local_identifier(source, node)
-    };
-    if send(left) && send(right) {
-        let same_receiver = match (call_receiver(left), call_receiver(right)) {
-            (None, None) => true,
-            (Some(a), Some(b)) => same_expression(source, a, b),
-            _ => false,
-        };
-        let same_block = match (
-            crate::cop::rspec::helpers::call_block(left),
-            crate::cop::rspec::helpers::call_block(right),
-        ) {
-            (None, None) => true,
-            (Some(a), Some(b)) => same_expression(source, a, b),
-            _ => false,
-        };
-        return same_receiver
-            && name(source, left) == name(source, right)
-            && safe_send(source, left) == safe_send(source, right)
-            && same_arguments(source, &call_args(left), &call_args(right))
-            && same_block;
-    }
-    let body = |node: Node<'_>| matches!(node.kind(), "body_statement" | "block_body");
-    if body(left) && code_children(left).len() == 1 {
-        return same_expression(source, code_children(left)[0], right);
-    }
-    if body(right) && code_children(right).len() == 1 {
-        return same_expression(source, left, code_children(right)[0]);
-    }
-    let block = |node: Node<'_>| matches!(node.kind(), "block" | "do_block");
-    if left.kind() != right.kind() && !(body(left) && body(right) || block(left) && block(right)) {
-        return false;
-    }
-    if left.kind() == "regex" {
-        return same_regex(source, left, right);
-    }
-    if left.kind() == "float" {
-        return String::from_utf8_lossy(node_bytes(source, left))
-            .replace('_', "")
-            .parse::<f64>()
-            .ok()
-            == String::from_utf8_lossy(node_bytes(source, right))
-                .replace('_', "")
-                .parse::<f64>()
-                .ok();
-    }
-    let a = code_children(left);
-    let b = code_children(right);
-    if a.is_empty() || b.is_empty() {
-        return node_bytes(source, left) == node_bytes(source, right);
-    }
-    if let (Some(a), Some(b)) = (
-        left.child_by_field_name("operator"),
-        right.child_by_field_name("operator"),
-    ) {
-        if node_bytes(source, a) != node_bytes(source, b) {
-            return false;
-        }
-    }
-    a.len() == b.len()
-        && a.iter()
-            .zip(&b)
-            .all(|(a, b)| same_expression(source, *a, *b))
-}
-
-pub(super) fn integer_value(source: &SourceFile, node: Node<'_>) -> Option<num_bigint::BigInt> {
-    if node.kind() == "unary" {
-        let operator = node.child_by_field_name("operator")?;
-        let operand = node.child_by_field_name("operand")?;
-        let value = integer_value(source, operand)?;
-        return match node_bytes(source, operator) {
-            b"-" => Some(-value),
-            b"+" => Some(value),
-            _ => None,
-        };
-    }
-    if node.kind() != "integer" {
-        return None;
-    }
-    let text = String::from_utf8_lossy(node_bytes(source, node)).replace('_', "");
-    let (radix, digits) =
-        if let Some(value) = text.strip_prefix("0x").or_else(|| text.strip_prefix("0X")) {
-            (16, value)
-        } else if let Some(value) = text.strip_prefix("0b").or_else(|| text.strip_prefix("0B")) {
-            (2, value)
-        } else if let Some(value) = text.strip_prefix("0o").or_else(|| text.strip_prefix("0O")) {
-            (8, value)
-        } else if let Some(value) = text.strip_prefix("0d").or_else(|| text.strip_prefix("0D")) {
-            (10, value)
-        } else if text.starts_with('0') && text.len() > 1 {
-            (8, &text[1..])
-        } else {
-            (10, text.as_str())
-        };
-    num_bigint::BigInt::parse_bytes(digits.as_bytes(), radix)
-}
-
 pub(super) fn symbol_node(node: Node<'_>) -> bool {
     matches!(
         node.kind(),
@@ -641,32 +515,6 @@ pub(super) fn pure_literal(source: &SourceFile, node: Node<'_>) -> bool {
             .all(|child| pure_literal(source, *child))
 }
 
-pub(super) fn same_arguments(source: &SourceFile, left: &[Node<'_>], right: &[Node<'_>]) -> bool {
-    fn split<'a>(args: &[Node<'a>]) -> (Vec<Node<'a>>, Option<Vec<Node<'a>>>) {
-        if let Some(index) = args.iter().position(|arg| arg.kind() == "pair") {
-            return (args[..index].to_vec(), Some(args[index..].to_vec()));
-        }
-        if let Some(last) = args.last().filter(|last| last.kind() == "hash") {
-            return (args[..args.len() - 1].to_vec(), Some(code_children(*last)));
-        }
-        (args.to_vec(), None)
-    }
-    let (a, hash_a) = split(left);
-    let (b, hash_b) = split(right);
-    let same = |a: &[Node<'_>], b: &[Node<'_>]| {
-        a.len() == b.len()
-            && a.iter()
-                .zip(b)
-                .all(|(a, b)| same_expression(source, *a, *b))
-    };
-    same(&a, &b)
-        && match (hash_a, hash_b) {
-            (None, None) => true,
-            (Some(a), Some(b)) => same(&a, &b),
-            _ => false,
-        }
-}
-
 pub(super) fn scoped_examples<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node<'a>> {
     use crate::cop::rspec::helpers::{bare_rspec_call, call_block, is_example, is_group};
     use crate::cop::rspec::separation::numbered_block;
@@ -707,6 +555,9 @@ pub(super) fn scoped_examples<'a>(source: &SourceFile, node: Node<'a>) -> Vec<No
 }
 
 pub(super) fn literal_or_const(source: &SourceFile, node: Node<'_>) -> bool {
+    if node.kind() == "heredoc_beginning" {
+        return crate::cop::ported::ruby_string_parts(source, node).is_some();
+    }
     if crate::cop::ported::static_literal(source, node).is_some()
         || matches!(
             node.kind(),
@@ -756,105 +607,14 @@ pub(super) fn literal_or_const(source: &SourceFile, node: Node<'_>) -> bool {
     false
 }
 
-fn rational_value(
-    source: &SourceFile,
-    node: Node<'_>,
-) -> Option<(num_bigint::BigInt, num_bigint::BigInt)> {
-    use num_bigint::BigInt;
-    if node.kind() == "unary" {
-        let (value, denominator) = rational_value(source, node.child_by_field_name("operand")?)?;
-        return match node_bytes(source, node.child_by_field_name("operator")?) {
-            b"-" => Some((-value, denominator)),
-            b"+" => Some((value, denominator)),
-            _ => None,
-        };
-    }
-    if node.kind() != "rational" {
-        return None;
-    }
-    let number = code_children(node).first().copied()?;
-    if let Some(integer) = integer_value(source, number) {
-        return Some((integer, BigInt::from(1u8)));
-    }
-    let text = String::from_utf8_lossy(node_bytes(source, number)).replace('_', "");
-    let (whole, fraction) = text.split_once('.')?;
-    let numerator = BigInt::parse_bytes(format!("{whole}{fraction}").as_bytes(), 10)?;
-    let denominator = BigInt::from(10u8).pow(fraction.len().try_into().ok()?);
-    let mut a = numerator.clone();
-    let mut b = denominator.clone();
-    let zero = BigInt::from(0u8);
-    while b != zero {
-        let remainder = a % &b;
-        a = b;
-        b = remainder;
-    }
-    if a < zero {
-        a = -a;
-    }
-    Some((numerator / &a, denominator / a))
-}
-
-enum RegexPart<'a> {
-    Text(Vec<u8>),
-    Expression(Node<'a>),
-}
-fn regex_parts<'a>(source: &SourceFile, node: Node<'a>) -> Option<(Vec<RegexPart<'a>>, Vec<u8>)> {
-    let mut parts = Vec::new();
-    let mut content = Vec::new();
-    let opening = node
-        .child(0)
-        .and_then(|opener| node_bytes(source, opener).last().copied())?;
-    let closing = match opening {
-        b'(' => b')',
-        b'[' => b']',
-        b'{' => b'}',
-        b'<' => b'>',
-        other => other,
-    };
-    for child in code_children(node) {
-        if child.kind() == "interpolation" {
-            if !content.is_empty() {
-                parts.push(RegexPart::Text(std::mem::take(&mut content)));
-            }
-            parts.push(RegexPart::Expression(child));
-        } else {
-            let bytes = node_bytes(source, child);
-            if child.kind() == "escape_sequence"
-                && bytes.len() == 2
-                && bytes[0] == b'\\'
-                && (bytes[1] == opening || bytes[1] == closing)
-            {
-                content.push(bytes[1]);
-            } else {
-                content.extend_from_slice(bytes);
-            }
-        }
-    }
-    if !content.is_empty() {
-        parts.push(RegexPart::Text(content));
-    }
-    let last = node.child(node.child_count().checked_sub(1)?.try_into().ok()?)?;
-    let mut options = node_bytes(source, last).get(1..)?.to_vec();
-    options.sort_unstable();
-    options.dedup();
-    Some((parts, options))
-}
-fn same_regex(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
-    let (Some((a, flags_a)), Some((b, flags_b))) =
-        (regex_parts(source, left), regex_parts(source, right))
-    else {
-        return node_bytes(source, left) == node_bytes(source, right);
-    };
-    flags_a == flags_b
-        && a.len() == b.len()
-        && a.iter().zip(&b).all(|(a, b)| match (a, b) {
-            (RegexPart::Text(a), RegexPart::Text(b)) => a == b,
-            (RegexPart::Expression(a), RegexPart::Expression(b)) => same_expression(source, *a, *b),
-            _ => false,
-        })
-}
-
 pub(super) fn stable_immutable_value(source: &SourceFile, node: Node<'_>) -> bool {
+    if node.kind() == "parenthesized_statements" {
+        let children = code_children(node);
+        return children.len() <= 1
+            && children
+                .iter()
+                .all(|child| stable_immutable_value(source, *child));
+    }
     matches!(
         node.kind(),
         "integer" | "float" | "rational" | "complex" | "nil" | "true" | "false"

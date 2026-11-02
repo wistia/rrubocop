@@ -15,7 +15,7 @@ fn same_group(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
     let a = call_args(left);
     let b = call_args(right);
     if a.is_empty() != b.is_empty()
-        || !same_arguments(
+        || !eql_arguments(
             source,
             a.get(1..).unwrap_or_default(),
             b.get(1..).unwrap_or_default(),
@@ -25,7 +25,7 @@ fn same_group(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
     }
     if !match (constant(&a), constant(&b)) {
         (None, None) => true,
-        (Some(a), Some(b)) => same_expression(source, a, b),
+        (Some(a), Some(b)) => eql_expression(source, a, b),
         _ => false,
     } {
         return false;
@@ -35,7 +35,7 @@ fn same_group(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
             .and_then(|block| block.child_by_field_name("body"))
             .unwrap()
     };
-    same_expression(source, body(left), body(right))
+    eql_expression(source, body(left), body(right))
 }
 
 pub struct RepeatedExampleGroupBody;

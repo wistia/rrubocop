@@ -492,3 +492,34 @@ NoMethodError at yield.rb:54 because it calls begin_type? on a nil body. Its sou
 pinned version and error are retained in original-rule-errors.json, separate from
 strict parity successes and invalid original syntax. Native preserves this source
 without crashing in detection, safe correction or all-correction modes.
+
+## Batch 19: static stub responses and shared expression comparison
+
+ReturnFromStub replaces another initial stub. The reviewed total is 68 original
+stubs plus fourteen existing rules (82 of 96), leaving twelve original stubs and
+two existing implementations. All 49 RSpec/RSpecRails tests pass with 1,378 strict
+original-Ruby cases, 39 correction-disable controls and 45 explicit safeguards.
+
+Separate review covered both original styles, the RSpec recursive-literal helper,
+static/dynamic values, chained and qualified calls, exact receive arity, numbered
+and optional parameters, parenthesized bodies, comments, and single/multiline
+heredocs including their report-only correction metadata. Native corrections
+preserve immutable returns. Mutable responses, constant lookup and optional
+parameter defaults retain their original timing and object sharing. Trusted real
+RSpec mocks demonstrate all three hazards and verify immutable return parity.
+Original invalid multi-statement and adjacent-block rewrites remain explicit
+safeguards, outside strict comparison successes.
+
+Shared helper import 78a3d03 reuses framework/core integer, send-range and typed
+legacy AST comparison implementations. RSpec duplicate grouping now delegates to
+strict eql_expression/eql_arguments; repeated-binding equality uses same_expression.
+This removes the duplicate generic comparator and numeric/regex decoders. Eight
+additional rule-level original probes cover regexp metacharacter escapes,
+concatenated versus static strings, physical versus escaped newlines, and strict
+versus ordinary rational/complex equality. The shared suite separately passes
+48 original expression pairs (96 equality-mode assertions).
+
+The comparator intentionally does not reproduce the upstream parser's stale
+precomputed Node hashes after lexer mutation of continued heredoc strings. Exact
+expression equality remains bounded to the documented tested AST families; this
+known upstream hash artifact is separate from correction safeguards.

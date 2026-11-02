@@ -12,7 +12,7 @@ fn same_body(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
         call_block(right).and_then(|block| block.child_by_field_name("body")),
     ) {
         (None, None) => true,
-        (Some(a), Some(b)) => same_expression(source, a, b),
+        (Some(a), Some(b)) => eql_expression(source, a, b),
         _ => false,
     }
 }
@@ -52,9 +52,9 @@ impl Cop for RepeatedExample {
                     && (name(source, *other) == Some(b"its")) == its
                     && args.is_empty() == other_args.is_empty()
                     && if its {
-                        same_arguments(source, &args, &other_args)
+                        eql_arguments(source, &args, &other_args)
                     } else {
-                        same_arguments(
+                        eql_arguments(
                             source,
                             args.get(1..).unwrap_or_default(),
                             other_args.get(1..).unwrap_or_default(),

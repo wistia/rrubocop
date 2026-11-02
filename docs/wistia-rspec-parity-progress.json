@@ -358,7 +358,7 @@
     "original_source": "lib/rubocop/cop/rspec/identical_equality_assertion.rb",
     "baseline_status": "unimplemented_noop_stub",
     "current_status": "implemented_and_differentially_tested",
-    "cases": 15,
+    "cases": 17,
     "deliberate_safeguards": []
   },
   {
@@ -671,9 +671,10 @@
     "original_source": "lib/rubocop/cop/rspec/repeated_description.rb",
     "baseline_status": "unimplemented_noop_stub",
     "current_status": "implemented_and_differentially_tested",
-    "cases": 23,
+    "cases": 29,
     "deliberate_safeguards": [],
-    "post_implementation_review": "Pinned original algorithms plus ExampleGroup/Example/Concept/SkipOrPending source reviewed independently. Upstream examples and extra hash spelling, numeric equivalence, its block syntax, method-definition negatives, skip-body, numbered-group and nested diagnostic ordering probes included."
+    "post_implementation_review": "Pinned original algorithms plus ExampleGroup/Example/Concept/SkipOrPending source reviewed independently. Upstream examples and extra hash spelling, numeric equivalence, its block syntax, method-definition negatives, skip-body, numbered-group and nested diagnostic ordering probes included.",
+    "shared_comparison_review": "Uses shared eql_expression/eql_arguments for original strict Node#eql? grouping, including typed multiline/chained strings, regexp metacharacter escapes and rational/complex numeric distinctions. Does not reproduce upstream stale precomputed AST hashes from subsequently mutated heredoc strings; shared equality evidence remains bounded to its documented tested families."
   },
   {
     "name": "RSpec/RepeatedExample",
@@ -683,7 +684,8 @@
     "current_status": "implemented_and_differentially_tested",
     "cases": 13,
     "deliberate_safeguards": [],
-    "post_implementation_review": "Pinned original cop and ExampleGroup/Example/Concept/SkipOrPending/Node#recursive_literal_or_const? sources reviewed separately. All upstream importable cases and closed three-method shared-example template variants ported; extra scope, metadata, body, const, numeric/rational/complex, regex-delimiter/flag and literal-negation branches compared. Follow-up original-engine regex probes cover interpolated delimiter equivalence, escaped closing delimiters and distinct option flags."
+    "post_implementation_review": "Pinned original cop and ExampleGroup/Example/Concept/SkipOrPending/Node#recursive_literal_or_const? sources reviewed separately. All upstream importable cases and closed three-method shared-example template variants ported; extra scope, metadata, body, const, numeric/rational/complex, regex-delimiter/flag and literal-negation branches compared. Follow-up original-engine regex probes cover interpolated delimiter equivalence, escaped closing delimiters and distinct option flags.",
+    "shared_comparison_review": "Uses shared eql_expression/eql_arguments for original strict Node#eql? grouping, including typed multiline/chained strings, regexp metacharacter escapes and rational/complex numeric distinctions. Does not reproduce upstream stale precomputed AST hashes from subsequently mutated heredoc strings; shared equality evidence remains bounded to its documented tested families."
   },
   {
     "name": "RSpec/RepeatedExampleGroupBody",
@@ -693,7 +695,8 @@
     "current_status": "implemented_and_differentially_tested",
     "cases": 24,
     "deliberate_safeguards": [],
-    "post_implementation_review": "Pinned original cop and ExampleGroup/Example/Concept/SkipOrPending/Node#recursive_literal_or_const? sources reviewed separately. All upstream importable cases and closed three-method shared-example template variants ported; extra scope, metadata, body, const, numeric/rational/complex, regex-delimiter/flag and literal-negation branches compared."
+    "post_implementation_review": "Pinned original cop and ExampleGroup/Example/Concept/SkipOrPending/Node#recursive_literal_or_const? sources reviewed separately. All upstream importable cases and closed three-method shared-example template variants ported; extra scope, metadata, body, const, numeric/rational/complex, regex-delimiter/flag and literal-negation branches compared.",
+    "shared_comparison_review": "Uses shared eql_expression/eql_arguments for original strict Node#eql? grouping, including typed multiline/chained strings, regexp metacharacter escapes and rational/complex numeric distinctions. Does not reproduce upstream stale precomputed AST hashes from subsequently mutated heredoc strings; shared equality evidence remains bounded to its documented tested families."
   },
   {
     "name": "RSpec/RepeatedExampleGroupDescription",
@@ -703,7 +706,8 @@
     "current_status": "implemented_and_differentially_tested",
     "cases": 21,
     "deliberate_safeguards": [],
-    "post_implementation_review": "Pinned original algorithms plus ExampleGroup/Example/Concept/SkipOrPending source reviewed independently. Upstream examples and extra hash spelling, numeric equivalence, its block syntax, method-definition negatives, skip-body, numbered-group and nested diagnostic ordering probes included."
+    "post_implementation_review": "Pinned original algorithms plus ExampleGroup/Example/Concept/SkipOrPending source reviewed independently. Upstream examples and extra hash spelling, numeric equivalence, its block syntax, method-definition negatives, skip-body, numbered-group and nested diagnostic ordering probes included.",
+    "shared_comparison_review": "Uses shared eql_expression/eql_arguments for original strict Node#eql? grouping, including typed multiline/chained strings, regexp metacharacter escapes and rational/complex numeric distinctions. Does not reproduce upstream stale precomputed AST hashes from subsequently mutated heredoc strings; shared equality evidence remains bounded to its documented tested families."
   },
   {
     "name": "RSpec/RepeatedIncludeExample",
@@ -713,7 +717,8 @@
     "current_status": "implemented_and_differentially_tested",
     "cases": 52,
     "deliberate_safeguards": [],
-    "post_implementation_review": "Pinned original cop and ExampleGroup/Example/Concept/SkipOrPending/Node#recursive_literal_or_const? sources reviewed separately. All upstream importable cases and closed three-method shared-example template variants ported; extra scope, metadata, body, const, numeric/rational/complex, regex-delimiter/flag and literal-negation branches compared."
+    "post_implementation_review": "Pinned original cop and ExampleGroup/Example/Concept/SkipOrPending/Node#recursive_literal_or_const? sources reviewed separately. All upstream importable cases and closed three-method shared-example template variants ported; extra scope, metadata, body, const, numeric/rational/complex, regex-delimiter/flag and literal-negation branches compared.",
+    "shared_comparison_review": "Uses shared eql_expression/eql_arguments for original strict Node#eql? grouping, including typed multiline/chained strings, regexp metacharacter escapes and rational/complex numeric distinctions. Does not reproduce upstream stale precomputed AST hashes from subsequently mutated heredoc strings; shared equality evidence remains bounded to its documented tested families."
   },
   {
     "name": "RSpec/RepeatedSubjectCall",
@@ -730,8 +735,27 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/return_from_stub.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 30,
+    "deliberate_safeguards": [
+      "return_from_stub_spec:2",
+      "return_from_stub_spec:3",
+      "return_from_stub_spec:5",
+      "return_from_stub_spec:6",
+      "return_from_stub_spec:12",
+      "return_from_stub_spec:20",
+      "return_from_stub_spec:22",
+      "batch19:return-optional-argument",
+      "batch19:return-multiple-body",
+      "batch19:return-mutable-string",
+      "batch19:return-regex",
+      "batch19:return-constant-block",
+      "batch19:return-mutable-block",
+      "batch19:return-block-comment",
+      "batch19:return-return-comment",
+      "batch19:return-attached-block"
+    ],
+    "post_implementation_review": "Pinned original source, RSpec recursive_literal_or_const? extension, both style algorithms and upstream specs reviewed separately. Covered nil/static/dynamic/compound values, exact receive arity, safe/qualified calls, chained stubs, numbered/optional parameters, comments, parenthesized bodies and delayed single/multiline heredocs including correction metadata. Corrections preserve immutable values; mutable allocations, constant lookup, optional-parameter evaluation and invalid multi-statement/adjacent-block rewrites remain explicit safeguards. Trusted real mocks prove immutable parity and allocation/lookup/default-argument hazards."
   },
   {
     "name": "RSpec/ScatteredLet",

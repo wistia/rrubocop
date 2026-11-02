@@ -68068,5 +68068,1662 @@
         "diagnostics": []
       }
     }
+  },
+  {
+    "id": "return_from_stub_spec:0",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) { 42 }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) { 42 }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#0",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 30,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(42)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(42)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:1",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) {}\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) {}\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#1",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 30,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(nil)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(nil)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:4",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Question).to receive(:meaning).with(:universe) { 42 }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Question).to receive(:meaning).with(:universe) { 42 }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#4",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 55,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Question).to receive(:meaning).with(:universe).and_return(42)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Question).to receive(:meaning).with(:universe).and_return(42)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:7",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) { baz }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) { baz }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#7",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar) { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar) { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:8",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  $bar = 42\n  baz = 123\n  allow(Foo).to receive(:bar) { $bar }\n  allow(Foo).to receive(:baz) { baz }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  $bar = 42\n  baz = 123\n  allow(Foo).to receive(:bar) { $bar }\n  allow(Foo).to receive(:baz) { baz }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#8",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  $bar = 42\n  baz = 123\n  allow(Foo).to receive(:bar) { $bar }\n  allow(Foo).to receive(:baz) { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  $bar = 42\n  baz = 123\n  allow(Foo).to receive(:bar) { $bar }\n  allow(Foo).to receive(:baz) { baz }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:9",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) { [42, baz] }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) { [42, baz] }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#9",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar) { [42, baz] }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar) { [42, baz] }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:10",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar) { {a: 42, b: baz} }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar) { {a: 42, b: baz} }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#10",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar) { {a: 42, b: baz} }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar) { {a: 42, b: baz} }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:11",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  bar = 42\n  allow(Foo).to receive(:bar) { \"You called #{bar}\" }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  bar = 42\n  allow(Foo).to receive(:bar) { \"You called #{bar}\" }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#11",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  bar = 42\n  allow(Foo).to receive(:bar) { \"You called #{bar}\" }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  bar = 42\n  allow(Foo).to receive(:bar) { \"You called #{bar}\" }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:13",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#13",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:14",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "def stub_foo\n  allow(Foo).to receive(:bar)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "def stub_foo\n  allow(Foo).to receive(:bar)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#14",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "def stub_foo\n  allow(Foo).to receive(:bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "def stub_foo\n  allow(Foo).to receive(:bar)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:15",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar).and_return(42)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar).and_return(42)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#15",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 30,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar) { 42 }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar) { 42 }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:16",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar).with(1).and_return(42)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar).with(1).and_return(42)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#16",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 38,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).with(1) { 42 }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).with(1) { 42 }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:17",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar).and_return(baz)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar).and_return(baz)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#17",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(baz)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(baz)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:18",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  bar = 42\n  allow(Foo).to receive(:bar).and_return(\"You called #{bar}\")\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  bar = 42\n  allow(Foo).to receive(:bar).and_return(\"You called #{bar}\")\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#18",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  bar = 42\n  allow(Foo).to receive(:bar).and_return(\"You called #{bar}\")\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  bar = 42\n  allow(Foo).to receive(:bar).and_return(\"You called #{bar}\")\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:19",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "it do\n  allow(Foo).to receive(:bar).and_return(42, 43, 44)\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "it do\n  allow(Foo).to receive(:bar).and_return(42, 43, 44)\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#19",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(42, 43, 44)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "it do\n  allow(Foo).to receive(:bar).and_return(42, 43, 44)\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "return_from_stub_spec:21",
+    "cop": "RSpec/ReturnFromStub",
+    "source": "allow(Foo).to receive(:bar).and_return(nil)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "allow(Foo).to receive(:bar).and_return(nil)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/return_from_stub_spec.rb#21",
+    "upstream_configuration": "Restored enclosing original EnforcedStyle context.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 28,
+          "message": "Use block for static values.",
+          "correctable": true,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "allow(Foo).to receive(:bar) { nil }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "allow(Foo).to receive(:bar) { nil }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-numeric-symbol",
+    "source": "receive(:bar) { :ready }\n",
+    "corrected": "receive(:bar) { :ready }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return(:ready)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_return(:ready)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-numbered-static",
+    "source": "receive(:bar) { [42, _1] }\n",
+    "corrected": "receive(:bar) { [42, _1] }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { [42, _1] }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { [42, _1] }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-dynamic-regex",
+    "source": "receive(:bar) { /#{pattern}/ }\n",
+    "corrected": "receive(:bar) { /#{pattern}/ }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) { /#{pattern}/ }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) { /#{pattern}/ }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-no-stub",
+    "source": "other { 42 }\n",
+    "corrected": "other { 42 }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "other { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "other { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-qualified-stub",
+    "source": "object.receive(:bar) { 42 }\n",
+    "corrected": "object.receive(:bar) { 42 }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "object.receive(:bar) { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "object.receive(:bar) { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-zero-arg-stub",
+    "source": "receive { 42 }\n",
+    "corrected": "receive { 42 }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-two-arg-stub",
+    "source": "receive(:bar, :baz) { 42 }\n",
+    "corrected": "receive(:bar, :baz) { 42 }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar, :baz) { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar, :baz) { 42 }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-no-arg-return",
+    "source": "receive(:bar).and_return\n",
+    "corrected": "receive(:bar).and_return\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_return\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-safe-return",
+    "source": "receive(:bar)&.and_return(42)\n",
+    "corrected": "receive(:bar)&.and_return(42)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar)&.and_return(42)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar)&.and_return(42)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:heredoc-single",
+    "source": "receive(:bar) do\n <<~TEXT\n alpha\n TEXT\nend\n",
+    "corrected": "receive(:bar) do\n <<~TEXT\n alpha\n TEXT\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": false,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) do\n <<~TEXT\n alpha\n TEXT\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 14,
+            "message": "Use `and_return` for static values.",
+            "correctable": false,
+            "length": 2,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "receive(:bar) do\n <<~TEXT\n alpha\n TEXT\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 14,
+            "message": "Use `and_return` for static values.",
+            "correctable": false,
+            "length": 2,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:heredoc-multiline",
+    "source": "receive(:bar) do\n <<~TEXT\n alpha\n beta\n TEXT\nend\n",
+    "corrected": "receive(:bar) do\n <<~TEXT\n alpha\n beta\n TEXT\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": false,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) do\n <<~TEXT\n alpha\n beta\n TEXT\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 14,
+            "message": "Use `and_return` for static values.",
+            "correctable": false,
+            "length": 2,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "receive(:bar) do\n <<~TEXT\n alpha\n beta\n TEXT\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 14,
+            "message": "Use `and_return` for static values.",
+            "correctable": false,
+            "length": 2,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:heredoc-dynamic",
+    "source": "receive(:bar) do\n <<~TEXT\n #{value}\n TEXT\nend\n",
+    "corrected": "receive(:bar) do\n <<~TEXT\n #{value}\n TEXT\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar) do\n <<~TEXT\n #{value}\n TEXT\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar) do\n <<~TEXT\n #{value}\n TEXT\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "block",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-heredoc",
+    "source": "receive(:bar).and_return(<<~TEXT)\n alpha\n beta\nTEXT\n",
+    "corrected": "receive(:bar).and_return(<<~TEXT)\n alpha\n beta\nTEXT\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use block for static values.",
+          "correctable": false,
+          "length": 10,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return(<<~TEXT)\n alpha\n beta\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 14,
+            "message": "Use block for static values.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "receive(:bar).and_return(<<~TEXT)\n alpha\n beta\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 14,
+            "message": "Use block for static values.",
+            "correctable": false,
+            "length": 10,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ReturnFromStub",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "EnforcedStyle": "and_return",
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch19:return-parenthesized",
+    "source": "receive(:bar) { (42) }\n",
+    "corrected": "receive(:bar) { (42) }\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use `and_return` for static values.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:bar).and_return((42))\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:bar).and_return((42))\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "shared-review:regex-escaped-meta",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n it %r(\\() do; work; end\n it /\\(/ do; other_work; end\nend\n",
+    "corrected": "describe \"x\" do\n it %r(\\() do; work; end\n it /\\(/ do; other_work; end\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 9,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n it %r(\\() do; work; end\n it /\\(/ do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 9,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n it %r(\\() do; work; end\n it /\\(/ do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 9,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "shared-review:regex-class",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n it %r([\\(]) do; work; end\n it /[(]/ do; other_work; end\nend\n",
+    "corrected": "describe \"x\" do\n it %r([\\(]) do; work; end\n it /[(]/ do; other_work; end\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n it %r([\\(]) do; work; end\n it /[(]/ do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n it %r([\\(]) do; work; end\n it /[(]/ do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "shared-review:chained-string",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n it 'a' 'b' do; work; end\n it 'ab' do; other_work; end\nend\n",
+    "corrected": "describe \"x\" do\n it 'a' 'b' do; work; end\n it 'ab' do; other_work; end\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n it 'a' 'b' do; work; end\n it 'ab' do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n it 'a' 'b' do; work; end\n it 'ab' do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "shared-review:multiline-string",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n it \"a\nb\" do; work; end\n it \"a\\nb\" do; other_work; end\nend\n",
+    "corrected": "describe \"x\" do\n it \"a\nb\" do; work; end\n it \"a\\nb\" do; other_work; end\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n it \"a\nb\" do; work; end\n it \"a\\nb\" do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n it \"a\nb\" do; work; end\n it \"a\\nb\" do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "shared-review:complex-strict",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n it 1i do; work; end\n it 1.0i do; other_work; end\nend\n",
+    "corrected": "describe \"x\" do\n it 1i do; work; end\n it 1.0i do; other_work; end\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n it 1i do; work; end\n it 1.0i do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n it 1i do; work; end\n it 1.0i do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "shared-review:rational-strict",
+    "cop": "RSpec/RepeatedDescription",
+    "source": "describe \"x\" do\n it 1r do; work; end\n it 1.0r do; other_work; end\nend\n",
+    "corrected": "describe \"x\" do\n it 1r do; work; end\n it 1.0r do; other_work; end\nend\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 5,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 1,
+          "message": "Don't repeat descriptions within an example group.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n it 1r do; work; end\n it 1.0r do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 5,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n it 1r do; work; end\n it 1.0r do; other_work; end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 1,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 5,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 1,
+            "message": "Don't repeat descriptions within an example group.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "shared-review:complex-equality",
+    "cop": "RSpec/IdenticalEqualityAssertion",
+    "source": "expect(1i).to eq(1.0i)\n",
+    "corrected": "expect(1i).to eq(1.0i)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Identical expressions on both sides of the equality may indicate a flawed test.",
+          "correctable": false,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(1i).to eq(1.0i)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Identical expressions on both sides of the equality may indicate a flawed test.",
+            "correctable": false,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(1i).to eq(1.0i)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Identical expressions on both sides of the equality may indicate a flawed test.",
+            "correctable": false,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "shared-review:rational-complex",
+    "cop": "RSpec/IdenticalEqualityAssertion",
+    "source": "expect(1ri).to eq(1i)\n",
+    "corrected": "expect(1ri).to eq(1i)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Identical expressions on both sides of the equality may indicate a flawed test.",
+          "correctable": false,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(1ri).to eq(1i)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Identical expressions on both sides of the equality may indicate a flawed test.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(1ri).to eq(1i)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Identical expressions on both sides of the equality may indicate a flawed test.",
+            "correctable": false,
+            "length": 21,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
   }
 ]

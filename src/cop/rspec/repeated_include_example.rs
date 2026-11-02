@@ -56,9 +56,7 @@ impl Cop for RepeatedIncludeExample {
             };
             let repeats: Vec<_> = items
                 .iter()
-                .filter(|other| {
-                    other != &item && same_arguments(source, &args, &call_args(**other))
-                })
+                .filter(|other| other != &item && eql_arguments(source, &args, &call_args(**other)))
                 .map(|other| other.start_position().row + 1)
                 .collect();
             if !repeats.is_empty() {
