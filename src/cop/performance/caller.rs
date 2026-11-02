@@ -1,5 +1,5 @@
 //! Limit stack collection when selecting a single caller frame.
-use crate::cop::shared::ruby_expression::integer;
+use crate::cop::shared::integer_value as integer;
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, collect_comments, named_kids, node_bytes,
     node_text, push_replace,

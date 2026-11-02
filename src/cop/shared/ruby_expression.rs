@@ -1,5 +1,4 @@
 //! Ruby expression comparison adapted to the pinned legacy AST's literal and send shapes.
-pub(crate) use super::integer_value as integer;
 use super::{
     argument_nodes, call_method_name, call_receiver, integer_value, named_kids, node_bytes,
     node_text,
@@ -259,11 +258,11 @@ fn complex_value(source: &SourceFile, node: Node<'_>) -> Option<ComplexPart> {
 }
 
 /// Equality used by repeated legacy AST bindings.
-pub(crate) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
+pub fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
     compare_expression(source, left, right, false)
 }
 /// Strict equality used before hash-based duplicate grouping.
-pub(crate) fn eql_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
+pub fn eql_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
     compare_expression(source, left, right, true)
 }
 fn compare_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>, strict: bool) -> bool {
@@ -367,10 +366,10 @@ fn compare_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>, stri
             .all(|(a, b)| same_expression(source, *a, *b))
 }
 
-pub(crate) fn same_arguments(source: &SourceFile, left: &[Node<'_>], right: &[Node<'_>]) -> bool {
+pub fn same_arguments(source: &SourceFile, left: &[Node<'_>], right: &[Node<'_>]) -> bool {
     compare_arguments(source, left, right, false)
 }
-pub(crate) fn eql_arguments(source: &SourceFile, left: &[Node<'_>], right: &[Node<'_>]) -> bool {
+pub fn eql_arguments(source: &SourceFile, left: &[Node<'_>], right: &[Node<'_>]) -> bool {
     compare_arguments(source, left, right, true)
 }
 fn compare_arguments(

@@ -1,5 +1,6 @@
 //! Combine repeated string prefix or suffix predicates when later arguments are pure.
-use crate::cop::shared::ruby_expression::{integer, same_expression};
+use crate::cop::shared::integer_value as integer;
+use crate::cop::shared::ruby_expression::same_expression;
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, collect_comments, named_kids, node_bytes,
     node_text, push_replace,
