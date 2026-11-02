@@ -257,6 +257,17 @@ mod tests {
     }
 
     #[test]
+    fn original_final_offense_states() {
+        crate::testutil::assert_original_spec_parity(
+            &HashAlignment,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/layout/hash_alignment/final-parity.json"
+            )),
+        );
+    }
+
+    #[test]
     fn original_source_loss_is_not_reproduced() {
         let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),

@@ -612,3 +612,12 @@ Seven configuration states using a comment followed by a newline before => are i
 ## Additional queued original correction-safety evidence
 
 The Performance agent observed original Lint/InterpolationCheck activating interpolation in an intentional literal template while linting scripts/framework_parity/refresh_expression_properties.rb (baseline92b860a, corrected55c78f1); PercentLiteralDelimiters and MethodCallWithoutArgsParentheses then changed the newly active expression. Its trusted generator now uses String#dump and round-trip checks. This is queued InterpolationCheck safety-review evidence, not a proven StringLiterals defect or a completed cop port.
+
+
+### HashAlignment final bounded gate
+
+The pinned real CLI matrix completed920 safe/aggressive modes:912 corrected-byte matches,920 matching exits and inspected-file counts,1,840 stable second passes and zero cop errors. The eight byte differences are exactly the four already documented source-loss safeguards in both modes. Both engines end with866 clean modes and54 modes retaining offenses; these totals are not presented as an all-clean result.
+
+A separate fresh-original replay validates370 unique final source/configuration states: all diagnostics/messages/full ranges and bytes match, all parse successfully in the original, and none emits another edit. Seventeen unique states retain original offenses with an empty corrector. The safeguard specimens deliberately retain their original native offenses and source instead of the original malformed output. Eight actual Wistia-config modes remain clean and stable. The native full-suite checkpoint is904 passing tests/one ignored; the additional final-state replay passes independently.
+
+The separately reviewed bounded HashAlignment port is now complete in the ledger, bringing owned bounded ports to28;13/13 direct Style stubs remain implemented.339 owned rules still await their full original-source/parity gate, including ArrayAlignment now in progress. This count does not claim exhaustive cop, wire-format, future-version, cross-file cached-style, encoding, directives or combined-cop parity. The documented invalid grammar and generic scheduling work remain deferred.
