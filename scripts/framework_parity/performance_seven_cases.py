@@ -61,3 +61,15 @@ def extend(record, rows):
     for source in ('x.match(y)', 'x.match(/a/,1)', 'x&.match(/a/)', 'p x.match(/a/)', 'case x.match(/a/); when 0; :zero; end', 'x.match(/a/) { |m| work }', '"a".match("a")', '/a/.match("a")', '"a".match(/a/)', 'x.match(/a/) # keep', 'x.match( # keep\n/a/)', 'x.match(/a/) && work', 'def example; x.match(/a/); end', 'def example; x.match(/a/); nil; end'):
         add('Performance/RedundantMatch', source)
     add('Performance/RedundantMatch', '/a/.match("a")', AutoCorrect='disabled')
+
+    for source in ('/a/.match(&block)', 'x.match(/a/, &block)', '/a/.match("alpha") do |m| work end', '/a/.match(<<~TEXT)\nalpha\nTEXT', 'x.match(/a/) if ready', 'while /a/.match("alpha"); break; end', 'begin; work; end while /a/.match("alpha")'):
+        add('Performance/RedundantMatch', source)
+    add('Performance/RedundantMatch', 'puts :yes if /a/.match("alpha")', TargetRubyVersion=2.7)
+
+    for method, replacement in (('sort','sort_by'), ('sort!','sort_by!'), ('max','max_by'), ('min','min_by'), ('minmax','minmax_by')):
+        for left,right in (('a.foo','b.foo'),('a[:foo]','b[:foo]'),("a['foo']","b['foo']"),('a[1]','b[1]'),('b','a')):
+            add('Performance/CompareWithBlock', f'array.{method} {{ |a,b| {left} <=> {right} }}')
+        add('Performance/CompareWithBlock', f'array.{replacement} {{ |a| a.baz }}')
+    for source in ('array.sort { |a,b| a.foo <=> b.bar }', 'array.sort { |a,b| a.foo(1) <=> b.foo(1) }', 'array.sort { |a,b| a[:x] <=> b[:y] }', 'array.sort { |a,b| a[1,2] <=> b[1,2] }', 'array.sort { |a,b| a[value] <=> b[value] }', 'array.sort { |a,b| a&.foo <=> b&.foo }', 'array&.sort { |a,b| a.foo <=> b.foo }', 'array.sort(1) { |a,b| a.foo <=> b.foo }', 'array.sort { |a,b,c| a.foo <=> b.foo }', 'array.sort { |a,b| marker; a.foo <=> b.foo }', 'array.sort do |left,right|\n left.foo <=> right.foo\nend', 'array.sort { |a,b| a.[](0x1) <=> b[1] }', '[[2],[1]].sort { |a,b| a[0] <=> b[0] }', 'array.sort { |a,b| a[1i] <=> b[1i] }'):
+        add('Performance/CompareWithBlock', source)
+    add('Performance/CompareWithBlock', '[[2],[1]].sort { |a,b| a[0] <=> b[0] }', AutoCorrect='disabled')

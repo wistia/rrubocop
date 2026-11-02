@@ -72,3 +72,17 @@ helper gate passes after importing the canonical shorthand adapter. Production
 CLI/config scope passes 93 controls across 42 rules. The static upstream importer
 now records unresolved host templates for the five pending rules explicitly;
 those are unfinished evidence, not clean scans or implemented registrations.
+
+## RedundantMatch
+
+All fifteen directly extractable original source specimens plus manually ported
+shared-example precedence branches, negative arity/block/safe-call controls,
+versions, heredocs and disabled correction are tested. Fifty-three originals and
+106 second-pass states match diagnostics/metadata exactly. The strict gate exposes
+42 safe and 42 all-correction byte differences and four runtime differences;
+there are no diagnostic, compilation or idempotence discrepancies. Trusted case
+matching shows MatchData versus Integer changing branch selection; a custom
+receiver shows match versus =~ calling different behavior. Native retains those
+sources. A literal regexp control preserves global match captures. Comments and
+invalid generated syntax also retain source. Unknown receiver corrections remain
+conservative; this is documented safety divergence, not exact correction parity.

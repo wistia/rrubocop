@@ -340,8 +340,411 @@
     },
     {
       "cop": "Performance/RedundantMatch",
-      "status": "pending",
-      "baseline": "unimplemented_noop_stub"
+      "status": "implemented_source_reviewed_with_safeguards",
+      "baseline": "unimplemented_noop_stub",
+      "original_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/redundant_match.rb",
+      "original_spec": "tests/fixtures/performance-seven-upstream/redundant_match_spec.rb",
+      "original_cases": 159,
+      "second_pass_cases": 318,
+      "exact_original_cases": 117,
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "strict_driver_exit": 1,
+      "strict_driver_failures": {
+        "safe": 42,
+        "all": 42,
+        "runtime": 4
+      },
+      "trusted_runtime_programs": 3,
+      "safeguards": [
+        {
+          "id": "Performance/RedundantMatch:performance-seven:1",
+          "source": "something if str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:2",
+          "source": "something unless str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:3",
+          "source": "while str.match(/regex/)\n  do_something\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:4",
+          "source": "until str.match(/regex/)\n  do_something\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:5",
+          "source": "def method(str)\n  str.match(/regex/)\n  true\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:12",
+          "source": "something if str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:32",
+          "source": "case x.match(/a/); when 0; :zero; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:37",
+          "source": "x.match(/a/) # keep\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:38",
+          "source": "x.match( # keep\n/a/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:41",
+          "source": "def example; x.match(/a/); nil; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:43",
+          "source": "/a/.match(&block)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:47",
+          "source": "x.match(/a/) if ready\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:trusted-performance-seven:8",
+          "source": "case \"alpha\".match(/a/); when MatchData; puts :match_data; when Integer; puts :integer; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:trusted-performance-seven:9",
+          "source": "class Receiver; def match(pattern); puts :match; true; end; def =~(pattern); puts :operator; false; end; end; receiver=Receiver.new; puts :yes if receiver.match(/a/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "runtime",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:1:safe:second-pass",
+          "source": "something if str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:1:all:second-pass",
+          "source": "something if str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:2:safe:second-pass",
+          "source": "something unless str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:2:all:second-pass",
+          "source": "something unless str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:3:safe:second-pass",
+          "source": "while str.match(/regex/)\n  do_something\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:3:all:second-pass",
+          "source": "while str.match(/regex/)\n  do_something\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:4:safe:second-pass",
+          "source": "until str.match(/regex/)\n  do_something\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:4:all:second-pass",
+          "source": "until str.match(/regex/)\n  do_something\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:5:safe:second-pass",
+          "source": "def method(str)\n  str.match(/regex/)\n  true\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:5:all:second-pass",
+          "source": "def method(str)\n  str.match(/regex/)\n  true\nend\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:12:safe:second-pass",
+          "source": "something if str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:12:all:second-pass",
+          "source": "something if str.match(/regex/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:32:safe:second-pass",
+          "source": "case x.match(/a/); when 0; :zero; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:32:all:second-pass",
+          "source": "case x.match(/a/); when 0; :zero; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:37:safe:second-pass",
+          "source": "x.match(/a/) # keep\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:37:all:second-pass",
+          "source": "x.match(/a/) # keep\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:38:safe:second-pass",
+          "source": "x.match( # keep\n/a/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:38:all:second-pass",
+          "source": "x.match( # keep\n/a/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:41:safe:second-pass",
+          "source": "def example; x.match(/a/); nil; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:41:all:second-pass",
+          "source": "def example; x.match(/a/); nil; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:43:safe:second-pass",
+          "source": "/a/.match(&block)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:43:all:second-pass",
+          "source": "/a/.match(&block)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:47:safe:second-pass",
+          "source": "x.match(/a/) if ready\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:performance-seven:47:all:second-pass",
+          "source": "x.match(/a/) if ready\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:trusted-performance-seven:8:safe:second-pass",
+          "source": "case \"alpha\".match(/a/); when MatchData; puts :match_data; when Integer; puts :integer; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:trusted-performance-seven:8:all:second-pass",
+          "source": "case \"alpha\".match(/a/); when MatchData; puts :match_data; when Integer; puts :integer; end\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:trusted-performance-seven:9:safe:second-pass",
+          "source": "class Receiver; def match(pattern); puts :match; true; end; def =~(pattern); puts :operator; false; end; end; receiver=Receiver.new; puts :yes if receiver.match(/a/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        },
+        {
+          "id": "Performance/RedundantMatch:trusted-performance-seven:9:all:second-pass",
+          "source": "class Receiver; def match(pattern); puts :match; true; end; def =~(pattern); puts :operator; false; end; end; receiver=Receiver.new; puts :yes if receiver.match(/a/)\n",
+          "config": {},
+          "failure_kinds": [
+            "all",
+            "safe"
+          ]
+        }
+      ],
+      "safety_review": [
+        "MatchData versus Integer affects case dispatch; original trusted output changes.",
+        "Unknown receiver may override match and =~ differently; original trusted output changes.",
+        "Literal receiver corrections retain regexp global-match state in trusted control.",
+        "Comments and syntax-invalid generated rewrites preserve source; diagnostics retain original correction eligibility."
+      ]
     },
     {
       "cop": "Performance/RedundantMerge",

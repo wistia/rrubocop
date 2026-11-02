@@ -11,6 +11,8 @@ PROGRAMS = [
  ('Performance/RedundantMatch', 'case "alpha".match(/a/); when MatchData; puts :match_data; when Integer; puts :integer; end\n'),
  ('Performance/RedundantMatch', 'class Receiver; def match(pattern); puts :match; true; end; def =~(pattern); puts :operator; false; end; end; receiver=Receiver.new; puts :yes if receiver.match(/a/)\n'),
  ('Performance/RedundantMatch', 'puts :yes if /a/.match("alpha"); p [$~[0],$&]\n'),
+ ('Performance/CompareWithBlock', 'class Item; attr_reader :value; def initialize(value); @value=value; end; def key; $calls+=1; value; end; end; $calls=0; values=[3,1,4,2].map { |v| Item.new(v) }; p values.sort { |a,b| a.key <=> b.key }.map(&:value); p $calls\n'),
+ ('Performance/CompareWithBlock', 'p [[2],[1]].sort { |a,b| a[0] <=> b[0] }\n'),
 ]
 
 def extend(rows):
