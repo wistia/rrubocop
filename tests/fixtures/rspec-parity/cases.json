@@ -69725,5 +69725,1037 @@
         ]
       }
     }
+  },
+  {
+    "id": "expect_actual_spec:4",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect correctly' do\n    expect(foo).to eq(bar)\n    expect(\"foo#{baz}\").to eq(bar)\n    expect(:\"foo#{baz}\").to  eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect correctly' do\n    expect(foo).to eq(bar)\n    expect(\"foo#{baz}\").to eq(bar)\n    expect(:\"foo#{baz}\").to  eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect correctly' do\n    expect(foo).to eq(bar)\n    expect(\"foo#{baz}\").to eq(bar)\n    expect(:\"foo#{baz}\").to  eq(bar)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect correctly' do\n    expect(foo).to eq(bar)\n    expect(\"foo#{baz}\").to eq(bar)\n    expect(:\"foo#{baz}\").to  eq(bar)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "expect_actual_spec:10",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect.to eq(bar)\n    expect([foo]).to eq(bar)\n    expect([[foo]]).to eq(bar)\n    expect(foo: 1, bar: foo).to eq(bar)\n    expect(1..foo).to eq(bar)\n    expect(1...foo).to eq(bar)\n    expect(/foo|#{bar}/).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect.to eq(bar)\n    expect([foo]).to eq(bar)\n    expect([[foo]]).to eq(bar)\n    expect(foo: 1, bar: foo).to eq(bar)\n    expect(1..foo).to eq(bar)\n    expect(1...foo).to eq(bar)\n    expect(/foo|#{bar}/).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect.to eq(bar)\n    expect([foo]).to eq(bar)\n    expect([[foo]]).to eq(bar)\n    expect(foo: 1, bar: foo).to eq(bar)\n    expect(1..foo).to eq(bar)\n    expect(1...foo).to eq(bar)\n    expect(/foo|#{bar}/).to eq(bar)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect.to eq(bar)\n    expect([foo]).to eq(bar)\n    expect([[foo]]).to eq(bar)\n    expect(foo: 1, bar: foo).to eq(bar)\n    expect(1..foo).to eq(bar)\n    expect(1...foo).to eq(bar)\n    expect(/foo|#{bar}/).to eq(bar)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "expect_actual_spec:11",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect legitimately' do\n    expect(1).to be\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect legitimately' do\n    expect(1).to be\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect legitimately' do\n    expect(1).to be\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect legitimately' do\n    expect(1).to be\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "expect_actual_spec:16",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([1,2,3]).to include(a)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([1,2,3]).to include(a)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#16",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([1,2,3]).to include(a)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 11,
+            "message": "Provide the actual value you are testing to `expect(...)`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([1,2,3]).to include(a)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 11,
+            "message": "Provide the actual value you are testing to `expect(...)`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "expect_actual_spec:17",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([1,2,3]).to eq([1, 2, 3])\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([1,2,3]).to eq([1, 2, 3])\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#17",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": false,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([1,2,3]).to eq([1, 2, 3])\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 11,
+            "message": "Provide the actual value you are testing to `expect(...)`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([1,2,3]).to eq([1, 2, 3])\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 3,
+            "column": 11,
+            "message": "Provide the actual value you are testing to `expect(...)`.",
+            "correctable": false,
+            "length": 7,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "expect_actual_spec:18",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'routes correctly' do\n    expect({:get => \"foo\"}).to be_routable\n    expect({:get => \"foo\"}).to route_to(\"bar#baz\")\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'routes correctly' do\n    expect({:get => \"foo\"}).to be_routable\n    expect({:get => \"foo\"}).to route_to(\"bar#baz\")\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#18",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'routes correctly' do\n    expect({:get => \"foo\"}).to be_routable\n    expect({:get => \"foo\"}).to route_to(\"bar#baz\")\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'routes correctly' do\n    expect({:get => \"foo\"}).to be_routable\n    expect({:get => \"foo\"}).to route_to(\"bar#baz\")\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "expect_actual_spec:19",
+    "cop": "RSpec/ExpectActual",
+    "source": "expect(get: \"/foo\").to be_routable",
+    "path": "/tmp/spec/routing/foo_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(get: \"/foo\").to be_routable",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#19",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(get: \"/foo\").to be_routable",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(get: \"/foo\").to be_routable",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:qualified-expect",
+    "source": "object.expect(1).to eq(price)\n",
+    "corrected": "object.expect(1).to eq(price)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "object.expect(1).to eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "object.expect(1).to eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:two-actuals",
+    "source": "expect(1, 2).to eq(price)\n",
+    "corrected": "expect(1, 2).to eq(price)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(1, 2).to eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(1, 2).to eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:safe-expect",
+    "source": "object&.expect(1).to eq(price)\n",
+    "corrected": "object&.expect(1).to eq(price)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "object&.expect(1).to eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "object&.expect(1).to eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:safe-runner",
+    "source": "expect(1)&.to eq(price)\n",
+    "corrected": "expect(1)&.to eq(price)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(1)&.to eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(1)&.to eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:no-argument-matcher",
+    "source": "expect(1).to custom_matcher\n",
+    "corrected": "expect(1).to custom_matcher\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(1).to custom_matcher\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(1).to custom_matcher\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:qualified-matcher",
+    "source": "expect(1).to object.eq(price)\n",
+    "corrected": "expect(1).to object.eq(price)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(1).to object.eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(1).to object.eq(price)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:scalar-parenthesized",
+    "source": "expect(1).to eq((2))\n",
+    "corrected": "expect(1).to eq((2))\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect((2)).to eq(1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect((2)).to eq(1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:scalar-be-parenthesized",
+    "source": "expect(true).not_to be((false))\n",
+    "corrected": "expect(true).not_to be((false))\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect((false)).not_to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect((false)).not_to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:scalar-be-operator",
+    "source": "expect(1).to be == (2)\n",
+    "corrected": "expect(1).to be == (2)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect((2)).to be == 1\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect((2)).to be == 1\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:literal-expected",
+    "source": "expect(1).to eq(2)\n",
+    "corrected": "expect(1).to eq(2)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": false,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(1).to eq(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 7,
+            "message": "Provide the actual value you are testing to `expect(...)`.",
+            "correctable": false,
+            "length": 1,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(1).to eq(2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 7,
+            "message": "Provide the actual value you are testing to `expect(...)`.",
+            "correctable": false,
+            "length": 1,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:static-regex",
+    "source": "expect(/a/i).to match(pattern)\n",
+    "corrected": "expect(/a/i).to match(pattern)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": false,
+          "length": 4,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(/a/i).to match(pattern)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 7,
+            "message": "Provide the actual value you are testing to `expect(...)`.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(/a/i).to match(pattern)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 7,
+            "message": "Provide the actual value you are testing to `expect(...)`.",
+            "correctable": false,
+            "length": 4,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:dynamic-regex",
+    "source": "expect(/#{42}/).to eq(pattern)\n",
+    "corrected": "expect(/#{42}/).to eq(pattern)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(/#{42}/).to eq(pattern)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(/#{42}/).to eq(pattern)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:multiline-string",
+    "source": "expect(\"a\nb\").to eq(value)\n",
+    "corrected": "expect(\"a\nb\").to eq(value)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(\"a\nb\").to eq(value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(\"a\nb\").to eq(value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:concatenated-string",
+    "source": "expect('a' 'b').to eq(value)\n",
+    "corrected": "expect('a' 'b').to eq(value)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect('a' 'b').to eq(value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect('a' 'b').to eq(value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:signed-integer",
+    "source": "expect(-2).to eq((3))\n",
+    "corrected": "expect(-2).to eq((3))\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect((3)).to eq(-2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect((3)).to eq(-2)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:heredoc-multiline",
+    "source": "expect(<<~TEXT).to eq(value)\na\nb\nTEXT\n",
+    "corrected": "expect(<<~TEXT).to eq(value)\na\nb\nTEXT\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(<<~TEXT).to eq(value)\na\nb\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(<<~TEXT).to eq(value)\na\nb\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:multiline-symbol",
+    "source": "expect(:\"a\nb\").to eq(value)\n",
+    "corrected": "expect(:\"a\nb\").to eq(value)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(:\"a\nb\").to eq(value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(:\"a\nb\").to eq(value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:quoted-multiline-label",
+    "source": "expect(\"a\nb\": 1).to eq(value)\n",
+    "corrected": "expect(\"a\nb\": 1).to eq(value)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(\"a\nb\": 1).to eq(value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(\"a\nb\": 1).to eq(value)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:literal-symbol-expected",
+    "source": "expect(:a).to eq((:b))\n",
+    "corrected": "expect(:a).to eq((:b))\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect((:b)).to eq(:a)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect((:b)).to eq(:a)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]

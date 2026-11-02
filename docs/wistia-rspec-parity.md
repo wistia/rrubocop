@@ -523,3 +523,30 @@ The comparator intentionally does not reproduce the upstream parser's stale
 precomputed Node hashes after lexer mutation of continued heredoc strings. Exact
 expression equality remains bounded to the documented tested AST families; this
 known upstream hash artifact is separate from correction safeguards.
+
+## Batch 20: actual expectation values and quoted symbol shapes
+
+Existing ExpectActual is repaired and reviewed, bringing the total to 68 original
+stubs plus fifteen existing rules (83 of 96). Twelve original stubs and one existing
+implementation remain. All 49 RSpec/RSpecRails tests pass with 1,404 strict Ruby
+comparisons, forty correction-disable controls and 61 separate safeguards.
+
+Distinct original-source review covers exact actual/runner/matcher receiver and
+arity patterns, routing exclusions, simple and complex literal classifications,
+implicit keyword hashes, typed strings/symbols, both be forms and correction
+metadata. Detection now covers complex/rational values, regular expressions,
+hashes and original-source ranges while avoiding qualified and dynamic forms.
+Scalar-parenthesized corrections match original bytes and final offense state.
+
+The original dynamic-object swap reverses the receiver of ==, eql? or equal?.
+Trusted RSpec matcher probes demonstrate eq/eql/equal/be changing from false to
+true for asymmetric objects after the Ruby correction. Native retains those
+comparisons and reports the original offense rather than silently changing a
+test result. Sixteen new explicit safeguards, including upstream correction
+specimens, remain outside strict successes. The scalar probe preserves its result.
+
+Isolated helper commit 95fc00e extends the existing typed decoder to quoted symbols
+and labels. Physical multiline symbols with multiple str parts remain dsym;
+trailing-newline one-part symbols and escaped continuations retain sym semantics.
+Six additional original pairs cover these branches and quoted-label versus hash
+rocket equality: the shared suite now has 54 pairs and 108 mode assertions.

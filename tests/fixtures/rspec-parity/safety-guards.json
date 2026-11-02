@@ -2043,5 +2043,804 @@
         "hazard": "Original Ruby correction produces invalid syntax"
       }
     }
+  },
+  {
+    "id": "expect_actual_spec:0",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(123).to eq(bar)\n    expect(12.3).to eq(bar)\n    expect(1i).to eq(bar)\n    expect(1r).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(123).to eq(bar)\n    expect(12.3).to eq(bar)\n    expect(1i).to eq(bar)\n    expect(1r).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 3,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(123)\n    expect(bar).to eq(12.3)\n    expect(bar).to eq(1i)\n    expect(bar).to eq(1r)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(123)\n    expect(bar).to eq(12.3)\n    expect(bar).to eq(1i)\n    expect(bar).to eq(1r)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:1",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(true).to eq(bar)\n    expect(false).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(true).to eq(bar)\n    expect(false).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 5,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(true)\n    expect(bar).to eq(false)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(true)\n    expect(bar).to eq(false)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:2",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(\"foo\").to eq(bar)\n    expect(:foo).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(\"foo\").to eq(bar)\n    expect(:foo).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 5,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(\"foo\")\n    expect(bar).to eq(:foo)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(\"foo\")\n    expect(bar).to eq(:foo)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:3",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(nil).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(nil).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 3,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(nil)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(nil)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:5",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([123]).to eq(bar)\n    expect([[123]]).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect([123]).to eq(bar)\n    expect([[123]]).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#5",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 5,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq([123])\n    expect(bar).to eq([[123]])\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq([123])\n    expect(bar).to eq([[123]])\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:6",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(foo: 1, bar: 2).to eq(bar)\n    expect(foo: 1, bar: [{}]).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(foo: 1, bar: 2).to eq(bar)\n    expect(foo: 1, bar: [{}]).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#6",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 14,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 17,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(foo: 1, bar: 2)\n    expect(bar).to eq(foo: 1, bar: [{}])\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(foo: 1, bar: 2)\n    expect(bar).to eq(foo: 1, bar: [{}])\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:7",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(foo: 1, bar: 2).to eq bar\n    expect({ foo: 1, bar: 2 }).to eq bar\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(foo: 1, bar: 2).to eq bar\n    expect({ foo: 1, bar: 2 }).to eq bar\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 14,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 18,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(foo: 1, bar: 2)\n    expect(bar).to eq({ foo: 1, bar: 2 })\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(foo: 1, bar: 2)\n    expect(bar).to eq({ foo: 1, bar: 2 })\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:8",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(1..2).to eq(bar)\n    expect(1...2).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(1..2).to eq(bar)\n    expect(1...2).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 5,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(1..2)\n    expect(bar).to eq(1...2)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(1..2)\n    expect(bar).to eq(1...2)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:9",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(/foo|bar/).to eq(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(/foo|bar/).to eq(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 9,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(/foo|bar/)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eq(/foo|bar/)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:12",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(true).to be(a)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(true).to be(a)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#12",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(a).to be(true)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(a).to be(true)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:13",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(1).to be == a\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(1).to be == a\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(a).to be == 1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(a).to be == 1\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:14",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(1).to eql(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(1).to eql(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#14",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eql(1)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to eql(1)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "id": "expect_actual_spec:15",
+    "cop": "RSpec/ExpectActual",
+    "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(1).to equal(bar)\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(1).to equal(bar)\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/expect_actual_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 3,
+          "column": 11,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 1,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to equal(1)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe Foo do\n  it 'uses expect incorrectly' do\n    expect(bar).to equal(1)\n  end\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expressions; swapping unknown objects can reverse asymmetric ==/eql?/equal? results."
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:symbol-newline-at-end",
+    "source": "expect(:\"a\n\").to eq(value)\n",
+    "corrected": "expect(:\"a\n\").to eq(value)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 3,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(value).to eq(:\"a\n\")\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(value).to eq(:\"a\n\")\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expression; reversing asymmetric custom equality can change the test outcome."
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:symbol-continuation",
+    "source": "expect(:\"a\\\nb\").to eq(value)\n",
+    "corrected": "expect(:\"a\\\nb\").to eq(value)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 4,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(value).to eq(:\"a\\\nb\")\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(value).to eq(:\"a\\\nb\")\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expression; reversing asymmetric custom equality can change the test outcome."
+  },
+  {
+    "cop": "RSpec/ExpectActual",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch20:quoted-label",
+    "source": "expect(\"a\": 1).to eq(value)\n",
+    "corrected": "expect(\"a\": 1).to eq(value)\n",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 7,
+          "message": "Provide the actual value you are testing to `expect(...)`.",
+          "correctable": true,
+          "length": 6,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(value).to eq(\"a\": 1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(value).to eq(\"a\": 1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve equality receiver and dynamic expected expression; reversing asymmetric custom equality can change the test outcome."
   }
 ]

@@ -285,8 +285,27 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/expect_actual.rb",
     "baseline_status": "candidate_fixture_difference",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 26,
+    "deliberate_safeguards": [
+      "expect_actual_spec:0",
+      "expect_actual_spec:1",
+      "expect_actual_spec:2",
+      "expect_actual_spec:3",
+      "expect_actual_spec:5",
+      "expect_actual_spec:6",
+      "expect_actual_spec:7",
+      "expect_actual_spec:8",
+      "expect_actual_spec:9",
+      "expect_actual_spec:12",
+      "expect_actual_spec:13",
+      "expect_actual_spec:14",
+      "expect_actual_spec:15",
+      "batch20:symbol-newline-at-end",
+      "batch20:symbol-continuation",
+      "batch20:quoted-label"
+    ],
+    "post_implementation_review": "Pinned original matcher, literal classifications and upstream specs reviewed separately. Covered actual/runner/matcher receiver and arity, routing exclusions, simple/complex literals, implicit keyword hashes, dynamic and typed multiline/chained strings/symbols, both be forms, noncorrectable literal/custom matcher controls and safe scalar-parenthesized corrections. Dynamic-object operand swaps remain explicit guards: real matcher probes prove eq/eql/equal/be can flip false to true under asymmetric comparison. Native scalar swaps preserve results. Shared54pair/108assertion suite adds quoted multiline symbol AST shapes."
   },
   {
     "name": "RSpec/ExpectChange",
