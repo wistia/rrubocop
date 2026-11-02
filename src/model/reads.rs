@@ -44,9 +44,8 @@ impl Builder<'_> {
         }
     }
 
-    /// Record the shorthand key as a read of the identically named
-    /// local (or a vcall when no such local exists -- Ruby would call
-    /// the method).
+    /// Track shorthand references; pinned Parser represents underscore labels
+    /// as constants rather than locals or calls.
     fn walk_shorthand_pair(&mut self, n: Node, scope: ScopeId, under_defined: bool) {
         let Some(key) = n.child_by_field_name("key") else {
             return;
@@ -55,15 +54,15 @@ impl Builder<'_> {
             return;
         }
         let name = key.utf8_text(self.src).unwrap_or("").to_string();
+        if name.starts_with('_') {
+            return;
+        }
         // Two read positions across the key: UsedOnce demands exactly one
         // read, and a shorthand read can never be inlined away (`42:` is
         // not valid Ruby), so it must never qualify as the single use.
         let bytes = [key.start_byte(), key.end_byte()];
         if self.lookup(scope, bytes[0], &name).is_none() {
             self.vcall_sites.push(bytes[0]);
-            return;
-        }
-        if name.starts_with('_') {
             return;
         }
         for byte in bytes {
