@@ -124,3 +124,33 @@ fn seed_scopes(source: &SourceFile) -> std::sync::Arc<crate::model::LocalIdentif
     assert!(scopes.shares(&model.scopes));
     scopes
 }
+
+#[test]
+fn numbered_parameters_are_local_only_inside_their_implicit_block() {
+    let (source, config) = fixture(
+        "items.each { _1; _2 }; _1; -> { _1 }; items.each { obj._1; _1() }; items.each { items.each { _1 }; outside }",
+    );
+    let context = Context::new(&source, &config);
+    let tree = crate::parse::parse_ruby(&source).unwrap();
+    let actual: Vec<_> = descendants(tree.root_node())
+        .filter(|node| node.kind() == "identifier" && context.text(*node).starts_with('_'))
+        .map(|node| {
+            (
+                context.text(node).to_string(),
+                local_identifier(&context, node),
+            )
+        })
+        .collect();
+    assert_eq!(
+        actual,
+        vec![
+            ("_1".into(), true),
+            ("_2".into(), true),
+            ("_1".into(), false),
+            ("_1".into(), true),
+            ("_1".into(), false),
+            ("_1".into(), false),
+            ("_1".into(), true)
+        ]
+    );
+}

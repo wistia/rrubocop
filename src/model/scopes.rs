@@ -58,7 +58,44 @@ impl Builder<'_> {
             self.declare_params(p, s); // block params always shadow
         }
         if let Some(body) = body_of(n) {
+            if n.child_by_field_name("parameters").is_none() {
+                self.declare_numbered_params(body, s);
+            }
             self.walk(body, s, false);
+        }
+    }
+
+    fn declare_numbered_params(&mut self, node: Node<'_>, scope: ScopeId) {
+        if matches!(
+            node.kind(),
+            "block"
+                | "do_block"
+                | "lambda"
+                | "method"
+                | "singleton_method"
+                | "class"
+                | "module"
+                | "singleton_class"
+        ) {
+            return;
+        }
+        if node.kind() == "identifier" {
+            let text = &self.src[node.start_byte()..node.end_byte()];
+            let method_name = node.parent().is_some_and(|parent| {
+                parent.child_by_field_name("method") == Some(node)
+                    || matches!(parent.kind(), "alias" | "undef")
+            });
+            if matches!(text, [b'_', b'1'..=b'9']) && !method_name {
+                self.bind_param(
+                    scope,
+                    String::from_utf8_lossy(text).into_owned(),
+                    node.start_byte(),
+                );
+            }
+        }
+        let mut cursor = node.walk();
+        for child in node.named_children(&mut cursor) {
+            self.declare_numbered_params(child, scope);
         }
     }
 
