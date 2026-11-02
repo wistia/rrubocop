@@ -108,7 +108,7 @@ pub fn argument_nodes<'a>(node: Node<'a>) -> Vec<Node<'a>> {
         let mut cur = args.walk();
         return args
             .named_children(&mut cur)
-            .filter(|n| n.kind() != ",")
+            .filter(|n| !matches!(n.kind(), "," | "comment"))
             .collect();
     }
     Vec::new()
@@ -170,4 +170,31 @@ pub fn has_hspace(bytes: &[u8], start: usize, end: usize) -> bool {
     bytes[start..end.min(bytes.len())]
         .iter()
         .any(|&b| b == b' ' || b == b'\t')
+}
+
+#[cfg(test)]
+mod argument_tests {
+    use super::*;
+
+    fn arguments(bytes: &[u8]) -> Vec<String> {
+        let source = SourceFile::from_bytes("test.rb", bytes.to_vec());
+        let tree = crate::parse::parse_ruby(&source).unwrap();
+        argument_nodes(tree.root_node().named_child(0).unwrap())
+            .into_iter()
+            .map(|node| node_text(&source, node))
+            .collect()
+    }
+
+    #[test]
+    fn syntax_comments_are_not_semantic_arguments() {
+        assert_eq!(
+            arguments(b"foo( # first\n1, # between\n2 # last\n)\n"),
+            vec!["1", "2"]
+        );
+    }
+
+    #[test]
+    fn comment_only_parentheses_have_no_arguments() {
+        assert!(arguments(b"foo( # comment\n)\n").is_empty());
+    }
 }
