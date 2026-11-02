@@ -154,3 +154,33 @@ fn numbered_parameters_are_local_only_inside_their_implicit_block() {
         ]
     );
 }
+
+#[test]
+fn implicit_numbered_parameters_include_outer_evaluated_definition_headers() {
+    for definition in ["def _2.foo; end", "class C < _2; end", "class << _2; end"] {
+        let (source, config) = fixture(&format!("items.inject({{}}) {{ {definition}; _1 }}"));
+        let context = Context::new(&source, &config);
+        let tree = crate::parse::parse_ruby(&source).unwrap();
+        let numbers: Vec<_> = descendants(tree.root_node())
+            .filter(|n| n.kind() == "identifier" && matches!(context.text(*n), "_1" | "_2"))
+            .collect();
+        assert_eq!(numbers.len(), 2, "{definition}");
+        assert!(
+            numbers.into_iter().all(|n| local_identifier(&context, n)),
+            "{definition}"
+        );
+    }
+}
+
+#[test]
+fn reflective_reads_do_not_turn_binding_method_names_into_local_tokens() {
+    let (source, config) =
+        fixture("def m(arg, binding); binding; binding(); arg; end; def n(arg); binding; end");
+    let context = Context::new(&source, &config);
+    let tree = crate::parse::parse_ruby(&source).unwrap();
+    let actual: Vec<_> = descendants(tree.root_node())
+        .filter(|n| n.kind() == "identifier" && context.text(*n) == "binding")
+        .map(|n| local_identifier(&context, n))
+        .collect();
+    assert_eq!(actual, vec![true, true, false, false]);
+}

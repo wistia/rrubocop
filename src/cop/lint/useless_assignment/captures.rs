@@ -148,6 +148,7 @@ pub(super) fn augment<'s>(
                         .push(Read {
                             byte: node.start_byte(),
                             under_defined: false,
+                            synthetic: true,
                         });
                 }
             }
@@ -184,6 +185,7 @@ pub(super) fn augment<'s>(
                 entry.reads.push(Read {
                     byte,
                     under_defined: false,
+                    synthetic: false,
                 });
             }
             converted.insert(byte);

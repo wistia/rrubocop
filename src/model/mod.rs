@@ -61,6 +61,8 @@ pub enum WriteKind {
 pub struct Read {
     pub byte: usize,
     pub under_defined: bool,
+    /// Reflective/implicit use without a local-variable token at this position.
+    pub synthetic: bool,
 }
 
 #[derive(Debug, Clone)]

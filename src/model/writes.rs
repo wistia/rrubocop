@@ -108,6 +108,7 @@ impl Builder<'_> {
                     crate::model::Read {
                         byte: l.start_byte(),
                         under_defined: false,
+                        synthetic: false,
                     },
                 );
                 let w = Write {

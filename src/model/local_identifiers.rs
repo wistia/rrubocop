@@ -44,7 +44,13 @@ impl LocalIdentifiers {
             for entry in scope.entries.values() {
                 bytes.insert(entry.intro_byte);
                 bytes.extend(entry.writes.iter().map(|write| write.byte));
-                bytes.extend(entry.reads.iter().map(|read| read.byte));
+                bytes.extend(
+                    entry
+                        .reads
+                        .iter()
+                        .filter(|read| !read.synthetic)
+                        .map(|read| read.byte),
+                );
             }
         }
         Self(bytes)

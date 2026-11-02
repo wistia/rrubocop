@@ -66,17 +66,25 @@ impl Builder<'_> {
     }
 
     fn declare_numbered_params(&mut self, node: Node<'_>, scope: ScopeId) {
-        if matches!(
-            node.kind(),
-            "block"
-                | "do_block"
-                | "lambda"
-                | "method"
-                | "singleton_method"
-                | "class"
-                | "module"
-                | "singleton_class"
-        ) {
+        let headers: Option<Vec<Node<'_>>> = match node.kind() {
+            "block" | "do_block" | "lambda" | "method" => Some(Vec::new()),
+            "singleton_method" => Some(node.child_by_field_name("object").into_iter().collect()),
+            "singleton_class" => Some(node.child_by_field_name("value").into_iter().collect()),
+            "class" | "module" => Some(
+                [
+                    node.child_by_field_name("name"),
+                    node.child_by_field_name("superclass"),
+                ]
+                .into_iter()
+                .flatten()
+                .collect(),
+            ),
+            _ => None,
+        };
+        if let Some(headers) = headers {
+            for header in headers {
+                self.declare_numbered_params(header, scope);
+            }
             return;
         }
         if node.kind() == "identifier" {
