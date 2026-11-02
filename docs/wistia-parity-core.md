@@ -500,6 +500,12 @@ Real original/native CLI validation covers230 modes:196 equal bytes,198 equal ex
 
 The original EachWithObject one-parameter failure was also replayed through both real CLI modes: bytes and exits match, but Ruby emits an internal cop error while native emits an uncorrectable offense. The comparison harness now retains stderr and detects that original cop-error path even when exit1 is otherwise valid; both modes correctly remain reported as differences.
 
-## Open Layout signed-command follow-up
+## Layout signed-command follow-up
 
-A separate14-mode original/native CLI probe confirmed a source-semantics gap beyond the bounded SpaceAroundOperators corpus: Ruby keeps `puts +1` as a command unary argument, but native currently inserts a space and changes parsing to addition. Nested `foo +1 +2` and receiver calls are also affected; declared-local and explicit-parentheses controls distinguish real addition. The framework agent owns the shared semantic-command adapter and core owns Layout integration. This remains a confirmed open gap, not covered by the earlier131 original-spec comparisons.
+A separate14-mode original/native CLI probe confirmed a source-semantics gap beyond the bounded SpaceAroundOperators corpus: Ruby keeps `puts +1` as a command unary argument, but native currently inserts a space and changes parsing to addition. Nested `foo +1 +2` and receiver calls are also affected; declared-local and explicit-parentheses controls distinguish real addition. The framework agent owns the shared semantic-command adapter and core owns Layout integration. This was confirmed beyond the earlier131 original-spec comparisons and is addressed by the operator-role follow-up below.
+
+## Layout signed-command operator-role fix
+
+Imported framework1ad6ac3's verified `shared::command_unary_plus` role adapter and made SpaceAroundOperators skip those unary signs while retaining genuine binary operators. The adapter is deliberately an operator-role projection, not a full command-argument AST. All318 original lexer-role observations regenerate unchanged across target Ruby2.5/3.0/3.4; focused native checks and Ruby helper lint pass. The Layout corpus now replays138 exact diagnostic/message/range/correction states.
+
+The previously failing14 real CLI modes now match original bytes and exits completely, and all28 original/native second passes remain stable. The regression includes prints, nested command operators, explicit parentheses, receiver calls and declared-local controls. Eight actual-production-config modes under app/models and eight final-state checks also pass. The integrated native suite passes883 tests, one pre-existing ignored. Full command-call argument grouping remains a separate framework adapter task; cross-cop scheduling is still deferred.

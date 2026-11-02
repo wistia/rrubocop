@@ -133,7 +133,7 @@
   },
   {
     "id": "operator_unicode",
-    "original": "é+1\n",
+    "original": "\u00e9+1\n",
     "ruby_diagnostics": [
       {
         "cop": "Layout/SpaceAroundOperators",
@@ -144,7 +144,7 @@
         "length": 1
       }
     ],
-    "ruby_safe": "é + 1\n"
+    "ruby_safe": "\u00e9 + 1\n"
   },
   {
     "id": "RuboCop::Cop::Layout::SpaceAroundOperators accepts operator surrounded by tabs",
@@ -2787,5 +2787,103 @@
     },
     "ruby_diagnostics": [],
     "ruby_safe": "FIRST  = {\n  x: y\n}.freeze\nSECOND = true\n"
+  },
+  {
+    "id": "puts +1.5",
+    "original": "puts +1.5\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "puts +1.5\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "puts -1.5",
+    "original": "puts -1.5\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "puts -1.5\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "puts +1",
+    "original": "puts +1\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "puts +1\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "foo +1 +2",
+    "original": "foo +1 +2\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 1,
+        "message": "Surrounding space missing for operator `+`."
+      }
+    ],
+    "ruby_corrected": "foo +1 + 2\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "foo = 1\nfoo +1.5",
+    "original": "foo = 1\nfoo +1.5\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 1,
+        "message": "Surrounding space missing for operator `+`."
+      }
+    ],
+    "ruby_corrected": "foo = 1\nfoo + 1.5\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "obj.foo +1.5",
+    "original": "obj.foo +1.5\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "obj.foo +1.5\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "foo() +1.5",
+    "original": "foo() +1.5\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 1,
+        "message": "Surrounding space missing for operator `+`."
+      }
+    ],
+    "ruby_corrected": "foo() + 1.5\n",
+    "reference_investigation": "fresh cop per independent source/config"
   }
 ]

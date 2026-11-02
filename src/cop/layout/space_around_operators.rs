@@ -360,6 +360,9 @@ impl Cop for SpaceAroundOperators {
     ) {
         let alignment = Alignment::new(source, tree.root_node());
         shared::for_each_descendant(tree.root_node(), |node| {
+            if shared::command_unary_plus(source, node).is_some() {
+                return;
+            }
             if node.kind() == "binary"
                 && node.child_by_field_name("left").is_some_and(|left| {
                     matches!(
