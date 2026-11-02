@@ -27,7 +27,7 @@ const SINGULAR: &[&str] = &[
     "exabyte",
     "zettabyte",
 ];
-fn float_text(value: f64) -> String {
+pub(super) fn float_text(value: f64) -> String {
     if value.is_infinite() {
         return if value.is_sign_negative() {
             "-Infinity"

@@ -16,6 +16,26 @@ def cases():
     for ruby in (2.5,2.7,3.4):
         for source in ("with_options dependent: :destroy do; _1.has_many :children; end", "with_options dependent: :destroy do; has_many :children do; _1; end; end"):
             add("Rails/HasManyOrHasOneDependent",source,TargetRubyVersion=ruby)
+    for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-string-values.json").read_text())["cases"]:
+        if "<<" not in row["source"]:
+            value=row["source"][6:-2]
+            key=json.dumps(row["value"]+"_id",ensure_ascii=False).replace("#{",chr(92)+"#{").replace("#@",chr(92)+"#@").replace("#$",chr(92)+"#$")
+            add("Rails/RedundantForeignKey",f"class Post; has_many :comments, as: {value}, foreign_key: {key}; end")
+    for value,key in (("1r","1/1_id"),("1.5r","3/2_id"),("-1r","-1/1_id"),("0.0r","0/1_id"),("1i","0+1i_id"),("/a/","(?-mix:a)_id")):
+        add("Rails/RedundantForeignKey",f"class Post; has_many :comments, as: {value}, foreign_key: {json.dumps(key)}; end")
+    for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-foreign-key-original-spec.json").read_text())["cases"]:
+        add("Rails/RedundantForeignKey",row["source"].rstrip("\n"),**row["config"])
+    for wrapper in ("{}", "class Post; {}; end", "class Admin::Post; {}; end", "module Admin; class HTTPServer; {}; end; end", "module Admin; {}; end", "class Post; ordinary {{ {} }}; end", "class Post; items.each {{ _1; {} }}; end", "Post.class_eval {{ {} }}", "class Post; class_eval {{ {} }}; end", "object.class_eval {{ {} }}", "Post = Class.new {{ {} }}", "Post = Class.new(Base) {{ {} }}", "Post = Module.new {{ {} }}", "Post = Other::Class.new {{ {} }}", "Other::Post = Class.new {{ {} }}", "class << Post; {}; end", "class Post; class << self; {}; end; end", "class Admin::Post; class << self; {}; end; end", "class << object; {}; end", "class factory::Post; {}; end", "Post = Struct.new {{ {} }}"):
+        for key in ("post_id", "http_server_id", "admin_id", "object_id", "#<class:post>_id", "post>_id"):
+            for macro in ("has_many", "belongs_to"):
+                add("Rails/RedundantForeignKey",wrapper.format(f"{macro} :post, foreign_key: {json.dumps(key)}"))
+    for macro in ("belongs_to", "has_many", "has_one", "has_and_belongs_to_many"):
+        for source in (f"class Post; {macro} :post, foreign_key: 'post_id'; end", f"class Post; self.{macro} :post, foreign_key: 'post_id'; end", f"class Post; object&.{macro} :post, foreign_key: 'post_id'; end", f"class Post; {macro} :post, -> {{ work }}, foreign_key: 'post_id'; end", f"class Post; {macro} :post, {{foreign_key: :post_id}}; end", f"class Post; {macro} :post, foreign_key: :post_id, dependent: :destroy; end", f"class Post; {macro} :post, dependent: :destroy, foreign_key: :post_id; end", f"class Post; {macro} :post, foreign_key: 'post_id', foreign_key: 'other_id'; end", f"class Post; {macro} :post, **{{foreign_key: 'other_id'}}, foreign_key: 'post_id'; end", f"class Post; {macro} :post, foreign_key: # keep\n'post_id'; end", f"class Post; {macro} :post, foreign_key: 'post_id' do; work; end; end"):
+            add("Rails/RedundantForeignKey",source)
+    for value in ("nil", "false", "true", ":owner", "'owner'", "''", "1", "-1", "1.0", "1e-20", "value", "CONST", "[]", "{}"):
+        for key in ("post_id", "owner_id", "_id", "true_id", "1_id", "-1_id", "1.0_id", "1.0e-20_id"):
+            add("Rails/RedundantForeignKey",f"class Post; has_many :comments, as: {value}, foreign_key: {json.dumps(key)}; end")
+    add("Rails/RedundantForeignKey","class Post; belongs_to :post, foreign_key: 'post_id'; end",AutoCorrect="disabled")
     for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-dependent-original-spec.json").read_text())["cases"]:
         add("Rails/HasManyOrHasOneDependent",row["source"].rstrip("\n"),**row["config"])
     for macro in ("has_many", "has_one"):

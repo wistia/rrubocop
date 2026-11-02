@@ -1,0 +1,165 @@
+{
+  "source": "rubocop-rails v2.26.0/spec/rubocop/cop/rails/redundant_foreign_key_spec.rb",
+  "cases": [
+    {
+      "source": "class Comment\n  belongs_to :post, foreign_key: 'post_id'\nend\n",
+      "config": {},
+      "original_spec_line": 6
+    },
+    {
+      "source": "class Comment\n  belongs_to :author, foreign_key: 'user_id'\nend\n",
+      "config": {},
+      "original_spec_line": 21
+    },
+    {
+      "source": "class Comment\n  belongs_to :author\nend\n",
+      "config": {},
+      "original_spec_line": 29
+    },
+    {
+      "source": "class Comment\n  belongs_to :post, class_name: 'SpecialPost', foreign_key: 'post_id', dependent: :destroy\nend\n",
+      "config": {},
+      "original_spec_line": 37
+    },
+    {
+      "source": "class_methods do\n  belongs_to :post, foreign_key: 'post_id'\nend\n",
+      "config": {},
+      "original_spec_line": 52
+    },
+    {
+      "source": "class Book\n  has_one :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 70
+    },
+    {
+      "source": "class Book\n  has_many :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 70
+    },
+    {
+      "source": "class Book\n  has_and_belongs_to_many :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 70
+    },
+    {
+      "source": "class Book\n  has_one :chapter, foreign_key: 'publication_id'\nend\n",
+      "config": {},
+      "original_spec_line": 85
+    },
+    {
+      "source": "class Book\n  has_many :chapter, foreign_key: 'publication_id'\nend\n",
+      "config": {},
+      "original_spec_line": 85
+    },
+    {
+      "source": "class Book\n  has_and_belongs_to_many :chapter, foreign_key: 'publication_id'\nend\n",
+      "config": {},
+      "original_spec_line": 85
+    },
+    {
+      "source": "class Book\n  has_one :chapter\nend\n",
+      "config": {},
+      "original_spec_line": 93
+    },
+    {
+      "source": "class Book\n  has_many :chapter\nend\n",
+      "config": {},
+      "original_spec_line": 93
+    },
+    {
+      "source": "class Book\n  has_and_belongs_to_many :chapter\nend\n",
+      "config": {},
+      "original_spec_line": 93
+    },
+    {
+      "source": "class Book\n  has_one :chapter, class_name: 'SpecialChapter', foreign_key: 'book_id', dependent: :destroy\nend\n",
+      "config": {},
+      "original_spec_line": 101
+    },
+    {
+      "source": "class Book\n  has_many :chapter, class_name: 'SpecialChapter', foreign_key: 'book_id', dependent: :destroy\nend\n",
+      "config": {},
+      "original_spec_line": 101
+    },
+    {
+      "source": "class Book\n  has_and_belongs_to_many :chapter, class_name: 'SpecialChapter', foreign_key: 'book_id', dependent: :destroy\nend\n",
+      "config": {},
+      "original_spec_line": 101
+    },
+    {
+      "source": "class Book\n  belongs_to :series\n\n  has_one :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 116
+    },
+    {
+      "source": "class Book\n  belongs_to :series\n\n  has_many :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 116
+    },
+    {
+      "source": "class Book\n  belongs_to :series\n\n  has_and_belongs_to_many :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 116
+    },
+    {
+      "source": "class_methods do\n  has_one :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 135
+    },
+    {
+      "source": "class_methods do\n  has_many :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 135
+    },
+    {
+      "source": "class_methods do\n  has_and_belongs_to_many :chapter, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 135
+    },
+    {
+      "source": "class Book\n  has_one :chapter, as: :publishable, foreign_key: 'publishable_id'\nend\n",
+      "config": {},
+      "original_spec_line": 143
+    },
+    {
+      "source": "class Book\n  has_many :chapter, as: :publishable, foreign_key: 'publishable_id'\nend\n",
+      "config": {},
+      "original_spec_line": 143
+    },
+    {
+      "source": "class Book\n  has_and_belongs_to_many :chapter, as: :publishable, foreign_key: 'publishable_id'\nend\n",
+      "config": {},
+      "original_spec_line": 143
+    },
+    {
+      "source": "class Book\n  has_one :chapter, as: :publishable, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 158
+    },
+    {
+      "source": "class Book\n  has_many :chapter, as: :publishable, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 158
+    },
+    {
+      "source": "class Book\n  has_and_belongs_to_many :chapter, as: :publishable, foreign_key: 'book_id'\nend\n",
+      "config": {},
+      "original_spec_line": 158
+    },
+    {
+      "source": "has_one :chapter, foreign_key: 'book_id'\n",
+      "config": {},
+      "original_spec_line": 166
+    },
+    {
+      "source": "has_many :chapter, foreign_key: 'book_id'\n",
+      "config": {},
+      "original_spec_line": 166
+    },
+    {
+      "source": "has_and_belongs_to_many :chapter, foreign_key: 'book_id'\n",
+      "config": {},
+      "original_spec_line": 166
+    }
+  ]
+}
