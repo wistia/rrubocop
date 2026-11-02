@@ -1,0 +1,51 @@
+[
+  {
+    "id": "RuboCop::Cop::Style::HashSyntax ruby19_no_mixed_keys edge 4",
+    "original": "return :a => 1, :b => 2\n",
+    "config": {
+      "Description": "Prefer Ruby 1.9 hash syntax { a: 1, b: 2 } over 1.8 syntax { :a => 1, :b => 2 }.",
+      "StyleGuide": "#hash-literals",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "1.24",
+      "EnforcedStyle": "ruby19_no_mixed_keys",
+      "SupportedStyles": [
+        "ruby19",
+        "hash_rockets",
+        "no_mixed_keys",
+        "ruby19_no_mixed_keys"
+      ],
+      "EnforcedShorthandSyntax": "either",
+      "SupportedShorthandSyntax": [
+        "always",
+        "never",
+        "either",
+        "consistent",
+        "either_consistent"
+      ],
+      "UseHashRocketsWithSymbolValues": false,
+      "PreferHashRocketsForNonAlnumEndingSymbols": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 5,
+        "message": "Use the new Ruby 1.9 hash syntax."
+      },
+      {
+        "line": 1,
+        "column": 17,
+        "length": 5,
+        "message": "Use the new Ruby 1.9 hash syntax."
+      }
+    ],
+    "ruby_corrected": "return {{a: 1, b: 2}}\n",
+    "rust_corrected": "return {a: 1, b: 2}\n",
+    "reason": "Original correction creates a syntax error by wrapping once per pair."
+  }
+]

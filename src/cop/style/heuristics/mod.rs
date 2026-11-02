@@ -5,9 +5,9 @@ pub use calls::matches_class_and_module_children;
 
 mod collections;
 pub use collections::matches_empty_heredoc;
-pub use collections::matches_hash_syntax;
 pub use collections::matches_symbol_array;
 pub use collections::matches_word_array;
+pub(crate) use collections::word_symbol_name;
 
 mod control;
 pub use control::matches_if_with_semicolon;

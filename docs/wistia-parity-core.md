@@ -182,3 +182,39 @@ slicing a multibyte character. Twelve direct original-Ruby regex probes cover
 non-ASCII tails, punctuation and the Kelvin-sign/long-S case folds accepted
 by `/\A[_a-z]\w*[?!]?\z/i`. This is a narrowly bounded safety fix;
 HashSyntax correction and broader configuration parity remain queued.
+
+## HashSyntax delimiter port (shorthand branches remain queued)
+
+Ports the delimiter algorithm and corrections from pinned Ruby 1.65.1
+`lib/rubocop/cop/style/hash_syntax.rb`: all four delimiter policies,
+`UseHashRocketsWithSymbolValues`, `PreferHashRocketsForNonAlnumEndingSymbols`,
+quoted/interpolated keys, Ruby 2.1 versus 2.2+ gating, command spacing,
+returned hashes and omitted values. Shared heuristic placeholders were removed.
+Whitespace trimming follows the original RangeHelp sequence, preserving
+indentation after a removed newline and retaining comments.
+
+All 171 unchanged upstream specs pass in the original Ruby runner; this batch
+ports the delimiter subset, represented by 147 original source/config states.
+Another 142 states replay the delimiter sources with production Ruby 3.4 and
+shorthand `either`. Independent edge probes add 23 exact cases (312 total),
+including newlines/comments, UTF-8 symbols, omitted values and command syntax.
+The Rust replay compares exact messages, positions, highlights and first-pass
+corrected bytes. Ruby's Kelvin-sign case folding also exercises recovery of a
+symbol tree-sitter otherwise misclassifies as an identifier.
+
+A separate explicit safeguard fixture preserves the original diagnostics for
+`return :a => 1, :b => 2` while producing one brace pair. The original rule
+wraps once per flagged pair and produces `return {{a: 1, b: 2}}`, which Ruby's
+compiler rejects. This reference syntax corruption is not copied. The fixture
+retains both the original invalid bytes and the expected Rust correction.
+
+This checkpoint does not implement the separate HashShorthandSyntax mixin's
+`always`, `never`, `consistent`, or `either_consistent` branches for Ruby 3.1+.
+Production Wistia uses `either`; broader shorthand parity remains explicit work
+in the inventory, not a completion claim for the entire cop.
+
+Validation for this checkpoint: all 131 Style tests pass; actual CLI safe/all
+modes pass 624 exact correction-byte checks and 624 idempotence checks. The
+returned-hash safety fixture additionally passes both CLI modes and their
+second passes (two checks each), without claiming equality to invalid Ruby
+output.
