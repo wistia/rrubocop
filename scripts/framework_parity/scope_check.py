@@ -16,6 +16,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/LexicallyScopedActionFilter', 'class C; before_action :authorize, only: :missing; end', 'app/controllers/framework_parity_probe.rb', model),
  ('Rails/IndexBy', 'x.map { |el| [el.to_sym, el] }.to_h', model, service),
  ('Rails/IndexWith', 'x.map { |el| [el, el.to_sym] }.to_h', model, service),
  ('Rails/HttpStatus', 'render status: 200', 'app/controllers/framework_parity_probe.rb', model),
@@ -71,6 +72,8 @@ cases += [dict(cop='Lint/RedundantCopDisableDirective', extra_cops=['Rails/Valid
                source='# rubocop:disable Rails/Validation\n'+body+'\n# rubocop:enable Rails/Validation\n',
                path=str(a.ruby_project/model), positive=positive)
           for body,positive in [('validates_presence_of attrs',False),('validates_presence_of :name',False),('validates_presence_of',True),('puts :hello',True)]]
+cases += [dict(cop='Rails/LexicallyScopedActionFilter', source='class C; before_action :authorize, only: :missing; end\n', path='app/mailers/framework_parity_probe.rb', positive=True),
+          dict(cop='Rails/LexicallyScopedActionFilter', source='class C; before_action :authorize, only: :missing; end # rubocop:disable Rails/LexicallyScopedActionFilter\n', path='app/controllers/framework_parity_probe.rb', positive=False)]
 severity = dict(C='convention', W='warning', E='error', F='fatal', R='refactor', I='info')
 env = {**os.environ, 'ASDF_RUBY_VERSION':'3.4.9', 'RRUBOCOP_CACHE_DIR':str(a.output/'native-cache'), 'RUBOCOP_CACHE_ROOT':str(a.output/'ruby-cache')}
 a.output.mkdir(parents=True, exist_ok=True)

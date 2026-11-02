@@ -2,8 +2,8 @@
 
 The initial inventory covers 90 enabled Rails, Migration, Performance and FactoryBot cops.
 Seven remaining Performance stubs are now delegated to `feat/wistia-parity-performance`; this branch retains the other 83 rules.
-The baseline inventory contained 67 no-op stubs. The current branch replaces 40 stubs and reviews three existing implementations.
-Twenty-seven baseline stubs (20 retained here, seven delegated) and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
+The baseline inventory contained 67 no-op stubs. The current branch replaces 41 stubs and reviews three existing implementations.
+Twenty-six baseline stubs (19 retained here, seven delegated) and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
 
@@ -795,3 +795,11 @@ Final bounded gate: **254 original cases, 508 second passes, 12 trusted ActiveSu
 - Produce the valid equivalent for explicit `Hash.[](map...)`; original fixed-prefix deletion emits invalid `[](x.index_by ...` / `[](x.index_with ...`. This intentionally differs in corrected bytes.
 
 Post-port review added dependency-context fixtures, selector/setter exclusions, structural root-qualified Hash recognition and comment-range preservation. Actual CLI/config gate: **95 probes pass** (91 unchanged production scopes across 43 rules plus four auxiliary policy probes). Full native suite: **921 pass, one ignored**. Full previous-rule regression: 3,308 originals, 6,616 second passes and 75 trusted programs retain exactly expected events; final expanded Index cases were checked separately. Totals: 40 original stubs replaced, three existing rules reviewed, 27 original stubs remain (20 retained Rails, seven delegated Performance).
+
+### LexicallyScopedActionFilter original source/spec review
+
+Reviewed pinned `rubocop-rails-2.26.0/lib/rubocop/cop/rails/lexically_scoped_action_filter.rb` and the separate upstream v2.26.0 spec file after implementation. All 13 filter sends, both option keys, strict single-option/one-callback shape, nearest class/module ancestry, direct instance-method definitions, scalar/array string/symbol names, percent arrays, single-step aliases and ordering are covered. Post-port cases include proc callbacks/concerns, conditional calls, nested classes, visibility wrappers, singleton definitions, alias overwrite/chaining, Symbol-versus-String alias identity, duplicate action names, dynamic/static string AST shapes, receiver/safe-send/setter exclusions and disabled policy. The original first direct `begin` selection (including parenthesized superclass expressions) is preserved; this detection-only cop does not change code.
+
+Final gate: **183 original cases, 366 second passes**. Every non-error source matches detection/count/range/message/metadata and unchanged safe/all bytes/final state/idempotence. **Six explicit upstream-error events** remain: missing/dynamic `alias_method` arguments make Ruby call `.value` on nil/a send node. Native skips those unusable alias entries and continues reporting the filter, rather than reproducing the crash. Existing EnumHash percent-word decoding was moved unchanged to `shared::word_value`, with interpolation rejection centralized. Both Enum rules were independently rechecked (147 originals, 294 second passes, two trusted programs); their 23 prior events are unchanged. Combined gate: 330 originals/660 second passes, 29 visible events.
+
+Actual CLI scope/policy gate: **99 probes pass** (95 production scopes across 44 rules plus four auxiliary policy probes), including controller/mailer inclusion, model exclusion and the inline disable directive. Native suite: **921 pass, one ignored**. Totals: 41 baseline stubs replaced, three existing rules reviewed, 26 original stubs remain globally (19 retained Rails, seven delegated Performance).

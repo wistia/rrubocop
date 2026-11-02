@@ -2,7 +2,7 @@
 use crate::cop::shared::ruby_literal::{string_dump, symbol_inspect};
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, collect_comments, named_kids, node_bytes,
-    node_text, push_replace,
+    node_text, push_replace, word_value,
 };
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -13,46 +13,9 @@ pub struct EnumHash;
 fn array(node: Node<'_>) -> bool {
     matches!(node.kind(), "array" | "string_array" | "symbol_array")
 }
-fn word_value(source: &SourceFile, node: Node<'_>, array: Node<'_>) -> Option<String> {
-    let text = std::str::from_utf8(node_bytes(source, node)).ok()?;
-    if !text.contains('\\') {
-        return Some(text.into());
-    }
-    let syntax = node_bytes(source, array);
-    let open = *syntax.get(2)?;
-    let close = match open {
-        b'[' => b']',
-        b'(' => b')',
-        b'{' => b'}',
-        b'<' => b'>',
-        other => other,
-    };
-    if matches!(syntax.get(1), Some(b'w' | b'i')) {
-        let mut out = Vec::new();
-        let mut bytes = text.bytes();
-        while let Some(c) = bytes.next() {
-            if c == b'\\' {
-                let next = bytes.next()?;
-                if !next.is_ascii_whitespace() && ![open, close, b'\\'].contains(&next) {
-                    out.push(c);
-                }
-                out.push(next);
-            } else {
-                out.push(c);
-            }
-        }
-        return String::from_utf8(out).ok();
-    }
-    let text = format!("%Q{}{text}{}", open as char, close as char);
-    let parsed = SourceFile::from_bytes("word.rb", text.into_bytes());
-    let tree = crate::parse::parse_ruby(&parsed).ok()?;
-    crate::cop::ported::static_literal(&parsed, tree.root_node().named_child(0)?)
-}
+
 fn element(source: &SourceFile, node: Node<'_>, array: Node<'_>) -> Option<String> {
     if matches!(node.kind(), "bare_string" | "bare_symbol") {
-        if named_kids(node).iter().any(|n| n.kind() == "interpolation") {
-            return None;
-        }
         let value = word_value(source, node, array)?;
         return Some(if array.kind() == "symbol_array" {
             symbol_inspect(&value)
