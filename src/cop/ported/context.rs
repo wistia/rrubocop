@@ -67,6 +67,9 @@ impl<'a> Context<'a> {
     pub fn ruby_static_string(&self, node: Node<'_>) -> Option<std::borrow::Cow<'a, str>> {
         symbols::ruby_string(self, node)
     }
+    pub fn original_string_value(&self, node: Node<'_>) -> Option<String> {
+        symbols::original_string_value(self, node)
+    }
     pub fn ruby_string_parts(&self, node: Node<'_>) -> Option<Vec<String>> {
         symbols::ruby_parts(self, node)
     }

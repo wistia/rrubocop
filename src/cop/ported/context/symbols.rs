@@ -232,3 +232,84 @@ pub(in crate::cop::ported) fn decode_regexp_parts(
     }
     Some(parts)
 }
+
+pub(super) fn original_string_value(c: &Context<'_>, node: Node<'_>) -> Option<String> {
+    if node.kind() == "chained_string" {
+        let mut cursor = node.walk();
+        return node
+            .named_children(&mut cursor)
+            .filter(|n| n.kind() != "comment")
+            .map(|n| original_string_value(c, n))
+            .collect::<Option<Vec<_>>>()
+            .map(|parts| parts.concat());
+    }
+    if let Some(parts) =
+        ruby_parts(c, node).filter(|_| !symbol_label(c, node) && node.kind() != "delimited_symbol")
+    {
+        return Some(parts.concat());
+    }
+    if node.kind() != "string" || symbol_label(c, node) {
+        return None;
+    }
+    let (inner, double, delimiter) = contents(c.text(node))?;
+    let end = node.end_byte() - 1;
+    let mut start = end - inner.len();
+    let mut output = String::new();
+    let mut cursor = node.walk();
+    for child in node
+        .named_children(&mut cursor)
+        .filter(|n| n.kind() == "interpolation")
+    {
+        let text = std::str::from_utf8(c.source.as_bytes().get(start..child.start_byte())?)
+            .ok()?
+            .replace("\r\n", "\n");
+        output.push_str(&decode(&text, double, delimiter)?);
+        let interpolation = c.text(child).replace("\r\n", "\n");
+        output.push_str(if interpolation.starts_with("#{") {
+            &interpolation
+        } else {
+            interpolation.strip_prefix('#').unwrap_or(&interpolation)
+        });
+        start = child.end_byte();
+    }
+    let text = std::str::from_utf8(c.source.as_bytes().get(start..end)?)
+        .ok()?
+        .replace("\r\n", "\n");
+    output.push_str(&decode(&text, double, delimiter)?);
+    Some(output)
+}
+
+#[cfg(test)]
+mod original_string_value_tests {
+    use super::*;
+    #[test]
+    fn string_values_match_original_ast() {
+        let fixture: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/framework-string-values.json"
+        )))
+        .unwrap();
+        for row in fixture["cases"].as_array().unwrap() {
+            let source = SourceFile::from_bytes(
+                "probe.rb",
+                row["source"].as_str().unwrap().as_bytes().to_vec(),
+            );
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(!tree.root_node().has_error(), "{}", row["source"]);
+            let config = CopConfig::default();
+            let context = Context::new(&source, &config);
+            let mut target = None;
+            crate::cop::shared::for_each_descendant(tree.root_node(), |n| {
+                if crate::cop::shared::call_method_name(&source, n) == Some(b"probe") {
+                    target = crate::cop::shared::argument_nodes(n).first().copied();
+                }
+            });
+            assert_eq!(
+                original_string_value(&context, target.unwrap()).as_deref(),
+                row["value"].as_str(),
+                "{}",
+                row["source"]
+            );
+        }
+    }
+}

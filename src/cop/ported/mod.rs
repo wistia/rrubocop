@@ -304,3 +304,8 @@ pub(super) fn local_binding(source: &SourceFile, node: Node<'_>) -> Option<usize
 pub(super) fn numbered_bindings(source: &SourceFile, node: Node<'_>) -> Option<Vec<usize>> {
     context::numbered_bindings(&Context::new(source, &CopConfig::default()), node)
 }
+
+pub(super) fn original_string_value(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    Context::new(source, &config).original_string_value(node)
+}

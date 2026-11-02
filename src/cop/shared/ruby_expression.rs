@@ -546,7 +546,7 @@ fn rational_float(n: &num_bigint::BigInt, d: &num_bigint::BigInt) -> Option<f64>
     Some(n.to_string().parse::<f64>().ok()? / d.to_string().parse::<f64>().ok()?)
 }
 
-fn rational_value(
+pub(crate) fn rational_value(
     source: &SourceFile,
     node: Node<'_>,
 ) -> Option<(num_bigint::BigInt, num_bigint::BigInt)> {
