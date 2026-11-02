@@ -10,6 +10,21 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    for body in ("m.foo", "m.foo(1)", "m.foo(m.bar)", "m.foo; m.bar", "m.foo +1", "m.foo + 1", "m.foo && m.bar", "m.foo or m.bar", "m.foo(@value)", "m.foo(self)", "m.foo(m)", "m&.foo; m.bar", "m[0]", "m + 1", "!m", "-1; m.foo", "-1.5; m.foo", "__FILE__; m.foo", "__LINE__; m.foo", "__ENCODING__; m.foo", "m.foo = 1", "m.foo ||= 1", "m.foo(m:)", "m.foo { m.bar }", "m.map { _1 }", "m.map { m.foo(_1) }", "def nested(m); m.foo; end", "m.foo; class C; end", "m.foo; @state=1", "client.foo(m.bar)", "foo(m.bar)", "m.foo(value)"):
+        add("Rails/RedundantReceiverInWithOptions",f"with_options(flag: true) {{ |m| {body} }}")
+    for body in ("m.foo(other:)", "other=1; m.foo(other:)", "m.foo(User:)", "m.foo(_other:)", "_other=1; m.foo(_other:)", "m.foo(__LINE__:)", "m.foo(étiquette:)", "étiquette=1; m.foo(étiquette:)"):
+        add("Rails/RedundantReceiverInWithOptions",f"with_options(flag: true) {{ |m| {body} }}")
+    add("Rails/RedundantReceiverInWithOptions", "with_options(flag: true) { |_m| _m.foo(_m:) }")
+    for selector in ("puts", "p", "__method__", "binding", "method_missing", "respond_to_missing?", "initialize"):
+        add("Rails/RedundantReceiverInWithOptions",f"with_options(flag: true) {{ |m| m.{selector}(1) }}")
+    for params in ("m", "m, other", "m = nil", "*m", "m; local", "(m,other)", "&m"):
+        add("Rails/RedundantReceiverInWithOptions",f"with_options(flag: true) do |{params}|\n m.foo(1)\nend")
+    for source in ("with_options(flag: true) do; end", "with_options(flag: true) { other.foo }", "with_options(flag: true) { 1 }", "with_options(flag: true) { |m| 1 }", "object.with_options(flag: true) { |m| m.foo }", "with_options(flag: true) do |m|\n m.foo\n m.bar\nend", "foo = :local; with_options(flag: true) { |m| m.foo }", "foo = :local; with_options(flag: true) { |m| m.foo() }", "with_options(flag: true) { |m| m.super }", "with_options(flag: true) { |m| m.nil }", "with_options(flag: true) { |m| m.__FILE__ }", "with_options(flag: true) { |m| m.foo # keep\n}", "with_options(flag: true) do |m|\n m.foo # rubocop:disable Rails/RedundantReceiverInWithOptions\n m.bar\nend"):
+        add("Rails/RedundantReceiverInWithOptions",source)
+    for ruby in (2.5,2.7,3.4):
+        for body in ("_1.foo", "_1.foo(_1)", "_1.foo(_2)", "_1.foo; _1.bar", "_1.foo(@value)", "_1.foo(self)"):
+            add("Rails/RedundantReceiverInWithOptions",f"with_options(flag: true) {{ {body} }}",TargetRubyVersion=ruby)
+    add("Rails/RedundantReceiverInWithOptions", "with_options(flag: true) { |m| m.foo }", AutoCorrect="disabled")
     for method in ("after_action", "append_after_action", "append_around_action", "append_before_action", "around_action", "before_action", "prepend_after_action", "prepend_around_action", "prepend_before_action", "skip_after_action", "skip_around_action", "skip_before_action", "skip_action_callback"):
         for option in ("only", "except"):
             for value in (":missing", "'index'", "%i[index show missing]", "%I[index show]", "[:index, 'missing', value, nil]"):

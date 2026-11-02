@@ -2,8 +2,8 @@
 
 The initial inventory covers 90 enabled Rails, Migration, Performance and FactoryBot cops.
 Seven remaining Performance stubs are now delegated to `feat/wistia-parity-performance`; this branch retains the other 83 rules.
-The baseline inventory contained 67 no-op stubs. The current branch replaces 41 stubs and reviews three existing implementations.
-Twenty-six baseline stubs (19 retained here, seven delegated) and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
+The baseline inventory contained 67 no-op stubs. The current branch replaces 42 stubs and reviews three existing implementations.
+Twenty-five baseline stubs (18 retained here, seven delegated) and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
 
@@ -803,3 +803,15 @@ Reviewed pinned `rubocop-rails-2.26.0/lib/rubocop/cop/rails/lexically_scoped_act
 Final gate: **183 original cases, 366 second passes**. Every non-error source matches detection/count/range/message/metadata and unchanged safe/all bytes/final state/idempotence. **Six explicit upstream-error events** remain: missing/dynamic `alias_method` arguments make Ruby call `.value` on nil/a send node. Native skips those unusable alias entries and continues reporting the filter, rather than reproducing the crash. Existing EnumHash percent-word decoding was moved unchanged to `shared::word_value`, with interpolation rejection centralized. Both Enum rules were independently rechecked (147 originals, 294 second passes, two trusted programs); their 23 prior events are unchanged. Combined gate: 330 originals/660 second passes, 29 visible events.
 
 Actual CLI scope/policy gate: **99 probes pass** (95 production scopes across 44 rules plus four auxiliary policy probes), including controller/mailer inclusion, model exclusion and the inline disable directive. Native suite: **921 pass, one ignored**. Totals: 41 baseline stubs replaced, three existing rules reviewed, 26 original stubs remain globally (19 retained Rails, seven delegated Performance).
+
+### RedundantReceiverInWithOptions bounded source review
+
+Read pinned `rubocop-rails-2.26.0/lib/rubocop/cop/rails/redundant_receiver_in_with_options.rb` and its separate upstream v2.26.0 spec file. Ported explicit and Ruby2.7+ numbered blocks, all-send receiver matching, normal nested-block exclusion, nested numbered blocks, multiple receivers on a line, receiver/dot deletion and exact parameter-space removal. Source review added operators/dotless sends, pseudo literals, setters, native unary-command projection, other receivers, local-name collisions, typed shorthand labels, extra/default/rest/block/destructured parameters, disabled partial corrections and proposed-source call validation. Cached scoped identities and numbered metadata are shared; no `_1` lexical classifier is used.
+
+Final gate: **102 original cases, 204 second passes, 15 trusted ActiveSupport programs**. Offense counts/messages/ranges match every non-crashing original. **All 15 native programs preserve original output/errors**. **515 visible events** remain: 138 correction-metadata events, 165 safe-byte events, 165 all-byte events, 26 runtime differences and 21 upstream errors. Nothing is allowlisted.
+
+Confirmed unsafe original transforms remain warnings without native correction: changing block invocation to `instance_eval` changes self/instance-variable reads or writes; remaining parameter reads and partially disabled receiver deletions break bindings; setters or collisions can reparse as local assignments/reads; original AST Const shorthand values can hide actual VM local/method reads. Dotless sends and subsequent numbered-block correction passes can crash upstream. Proposed-source validation also requires every removed receiver to remain a receiverless method send, preserving method/keyword distinctions.
+
+Original explicit/private-call dispatch can differ from receiverless dispatch on OptionMerger. The 73 private method names in `src/resources/option_merger_private_methods_ruby_3_4.txt` were captured directly from Ruby3.4.9 / ActiveSupport8.1.3.1 with `ActiveSupport::OptionMerger.private_instance_methods.map(&:to_s).sort`. Actual `puts` and `__method__` programs prove the guard; this is visibility metadata, not offense suppression. Unknown/default/rest/block/shadow parameter semantics remain conservatively uncorrected; broader visibility versions, monkeypatches, parser-error recovery and additional frame cases stay explicitly open.
+
+Validation: **929 native tests pass, one ignored**. **All 102 actual CLI/config probes pass** (98 production scopes across 45 rules plus four auxiliary policy probes), including partial inline-disable detection. Shared shorthand roles additionally match 45 original cases/48 roles; binding identities cover shadowing/numbered/lambda/field distinctions. Totals: 42 baseline stubs replaced, three existing rules reviewed; 25 original stubs remain globally (18 retained Rails, seven delegated Performance).
