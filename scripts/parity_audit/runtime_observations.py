@@ -95,4 +95,3 @@ def behavior(record):
     if native != original:
         return "shared_upstream_change" if native == ruby else "native_failure"
     return "preserved_despite_reference_change" if ruby != original else "preserved"
-
