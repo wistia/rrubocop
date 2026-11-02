@@ -1,0 +1,916 @@
+[
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad does not register an offense for YAML.dump",
+    "original": "YAML.dump(\"foo\")\n::YAML.dump(\"foo\")\nModule::YAML.dump(\"foo\")\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.dump(\"foo\")\n::YAML.dump(\"foo\")\nModule::YAML.dump(\"foo\")\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad does not register an offense for YAML.load under a different namespace",
+    "original": "Module::YAML.load(\"foo\")",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Module::YAML.load(\"foo\")"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad Ruby <= 3.0 registers an offense and corrects load with a literal string",
+    "original": "YAML.load(\"--- !ruby/object:Foo {}\")\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load(\"--- !ruby/object:Foo {}\")\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad Ruby <= 3.0 registers an offense and corrects load with a literal string",
+    "original": "YAML.safe_load(\"--- !ruby/object:Foo {}\")\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.safe_load(\"--- !ruby/object:Foo {}\")\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad Ruby <= 3.0 registers an offense and corrects a fully qualified ::YAML.load",
+    "original": "::YAML.load(\"--- foo\")\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "::YAML.safe_load(\"--- foo\")\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad Ruby <= 3.0 registers an offense and corrects a fully qualified ::YAML.load",
+    "original": "::YAML.safe_load(\"--- foo\")\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::YAML.safe_load(\"--- foo\")\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad Ruby >= 3.1 does not register an offense load with a literal string",
+    "original": "YAML.load(\"--- !ruby/object:Foo {}\", permitted_classes: [Foo])\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load(\"--- !ruby/object:Foo {}\", permitted_classes: [Foo])\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad Ruby >= 3.1 does not register an offense a fully qualified `::YAML.load`",
+    "original": "::YAML.load(\"--- !ruby/object:Foo {}\", permitted_classes: [Foo])\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::YAML.load(\"--- !ruby/object:Foo {}\", permitted_classes: [Foo])\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 0",
+    "original": "YAML.load\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 1",
+    "original": "::YAML.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "::YAML.safe_load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 2",
+    "original": "Module::YAML.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Module::YAML.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 3",
+    "original": "YAML&.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML&.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 4",
+    "original": "yaml.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "yaml.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 5",
+    "original": "YAML.load(data) { |x| x }\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load(data) { |x| x }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 6",
+    "original": "YAML.load( # retain\n data\n)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load( # retain\n data\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 7",
+    "original": "YAML.safe_load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.safe_load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 8",
+    "original": "YAML::load data\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML::safe_load data\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 2.7 edge 9",
+    "original": "YAML.load(data, aliases: true)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load(data, aliases: true)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 0",
+    "original": "YAML.load\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 1",
+    "original": "::YAML.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "::YAML.safe_load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 2",
+    "original": "Module::YAML.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Module::YAML.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 3",
+    "original": "YAML&.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML&.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 4",
+    "original": "yaml.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "yaml.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 5",
+    "original": "YAML.load(data) { |x| x }\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load(data) { |x| x }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 6",
+    "original": "YAML.load( # retain\n data\n)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load( # retain\n data\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 7",
+    "original": "YAML.safe_load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.safe_load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 8",
+    "original": "YAML::load data\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML::safe_load data\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.0 edge 9",
+    "original": "YAML.load(data, aliases: true)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer using `YAML.safe_load` over `YAML.load`."
+      }
+    ],
+    "ruby_corrected": "YAML.safe_load(data, aliases: true)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 0",
+    "original": "YAML.load\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 1",
+    "original": "::YAML.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::YAML.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 2",
+    "original": "Module::YAML.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Module::YAML.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 3",
+    "original": "YAML&.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML&.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 4",
+    "original": "yaml.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "yaml.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 5",
+    "original": "YAML.load(data) { |x| x }\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load(data) { |x| x }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 6",
+    "original": "YAML.load( # retain\n data\n)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load( # retain\n data\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 7",
+    "original": "YAML.safe_load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.safe_load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 8",
+    "original": "YAML::load data\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML::load data\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.1 edge 9",
+    "original": "YAML.load(data, aliases: true)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load(data, aliases: true)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 0",
+    "original": "YAML.load\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 1",
+    "original": "::YAML.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::YAML.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 2",
+    "original": "Module::YAML.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Module::YAML.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 3",
+    "original": "YAML&.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML&.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 4",
+    "original": "yaml.load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "yaml.load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 5",
+    "original": "YAML.load(data) { |x| x }\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load(data) { |x| x }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 6",
+    "original": "YAML.load( # retain\n data\n)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load( # retain\n data\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 7",
+    "original": "YAML.safe_load(data)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.safe_load(data)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 8",
+    "original": "YAML::load data\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML::load data\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::YAMLLoad 3.4 edge 9",
+    "original": "YAML.load(data, aliases: true)\n",
+    "config": {
+      "Description": "Prefer usage of `YAML.safe_load` over `YAML.load` due to potential security issues. See reference for more information.",
+      "Reference": "https://ruby-doc.org/stdlib-2.7.0/libdoc/yaml/rdoc/YAML.html#module-YAML-label-Security",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "SafeAutoCorrect": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "YAML.load(data, aliases: true)\n"
+  }
+]

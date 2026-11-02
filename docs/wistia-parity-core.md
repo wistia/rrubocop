@@ -218,3 +218,20 @@ modes pass 624 exact correction-byte checks and 624 idempotence checks. The
 returned-hash safety fixture additionally passes both CLI modes and their
 second passes (two checks each), without claiming equality to invalid Ruby
 output.
+
+## YAMLLoad explicit version gate
+
+Registers the previously absent Security/YAMLLoad implementation and ports
+the complete pinned Ruby 1.65.1 `lib/rubocop/cop/security/yaml_load.rb`
+algorithm. It explicitly returns for Ruby 3.1+, including Wistia's Ruby 3.4,
+and checks root YAML/::YAML ordinary load calls on older targets. Namespaced
+constants, safe navigation and other methods remain accepted. Only the
+selector is replaced; unsafe autocorrection is retained as original metadata.
+
+All six unchanged original Ruby specs pass (eight captured states). Forty
+additional original-Ruby probes cover Ruby 2.7/3.0/3.1/3.4, omitted arguments,
+qualified/namespaced receivers, safe navigation, explicit blocks, comments,
+keyword options and colon dispatch. All 48 exact detection/correction replays
+pass. Actual CLI safe/all modes pass 96 correction comparisons and 96
+idempotence checks; safe mode leaves pre-3.1 calls unchanged. This gate is
+represented in executable behavior rather than silently omitting the rule.
