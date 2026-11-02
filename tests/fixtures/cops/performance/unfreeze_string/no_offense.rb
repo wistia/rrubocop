@@ -1,4 +1,3 @@
-csv = 'a,b'
-String.new(csv)
-::String.new.respond_to?(:append_as_bytes)
-+''
+String.new(value)
+::String.new
+''.dup

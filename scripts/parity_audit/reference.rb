@@ -54,15 +54,22 @@ class AuditReference < PortedReference
   end
 
   def investigation(test, parsed, safe)
-    name = test.fetch('cop')
     config = configuration(test)
     parsed.config = config
-    cop = cop_class(name).new(config, autocorrect: true, safe_autocorrect: safe)
-    report = RuboCop::Cop::Commissioner.new([cop], RuboCop::Cop::Team.forces_for([cop]),
+    cop = cop_class(test.fetch('cop')).new(config, autocorrect: true, safe_autocorrect: safe)
+    cops = supported_cops(cop)
+    report = RuboCop::Cop::Commissioner.new(cops, RuboCop::Cop::Team.forces_for(cops),
                                             raise_error: true).investigate(parsed)
     raise report.errors.inspect unless report.errors.empty?
 
     report
+  end
+
+  def supported_cops(cop)
+    return [] if cop.class.respond_to?(:support_target_ruby_version?) &&
+                 !cop.class.support_target_ruby_version?(cop.target_ruby_version)
+
+    [cop]
   end
 
   def configuration(test)
@@ -70,7 +77,8 @@ class AuditReference < PortedReference
     options = @config.for_cop(name).merge('AutoCorrect' => true).merge(test.fetch('config', {})).merge(
       'Enabled' => true, 'Include' => ['**/*'], 'Exclude' => []
     )
-    RuboCop::Config.new(@config.merge(name => options), @config.loaded_path)
+    all_cops = @config.for_all_cops.merge(test.fetch('config', {}).slice('TargetRubyVersion'))
+    RuboCop::Config.new(@config.merge(name => options, 'AllCops' => all_cops), @config.loaded_path)
   end
 
   def correction(test, index, mode)
@@ -84,7 +92,7 @@ class AuditReference < PortedReference
 
   def correction_step(test, index, mode, state)
     report = investigation(test, source(test.merge('source' => state.fetch(:source)), index), mode == 'safe')
-    corrector = report.cop_reports.first.corrector
+    corrector = report.cop_reports.first&.corrector
     return corrected(state.fetch(:source)) unless corrector && !corrector.empty?
 
     advance(corrector.rewrite, state)

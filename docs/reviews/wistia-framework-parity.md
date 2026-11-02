@@ -169,8 +169,8 @@ python3 scripts/framework_parity/check.py \
 ```
 
 Targeted suites pass: **883 complete native library tests passed, with 1 intentionally ignored audit probe**. The
-strict command currently exits 1 with **121 transparent safety/upstream-hazard
-events** across eight cops. `failures.json`, `summary.json` and `runtime.json` contain evidence;
+strict command currently exits 1 with **127 transparent safety/upstream-hazard
+events** across nine cops. `failures.json`, `summary.json` and `runtime.json` contain evidence;
 there are no unexpected detection, message, range, byte or idempotence differences
 in the selected specimens.
 
@@ -196,3 +196,27 @@ safety/upstream-hazard events, with no new differences. The Rails native suite
 passes all 53 tests. AssertNot declines unsupported comment/newline/not
 spellings rather than entering an original no-progress autocorrection loop;
 these guarded syntax variants still require expanded differential evidence.
+
+## Sixth batch: binding calls and mutable strings
+
+Repaired two existing incomplete detectors, Performance/BindCall and
+UnfreezeString. Post-implementation review compared their complete original
+1.21.1 sources, including implicit `.()` calls, receiver/argument forms,
+selector-to-call ranges, literal/interpolated strings, rooted constants,
+parent-expression parentheses, unsafe metadata and version branches.
+The reference driver now mirrors original RuboCop Team's minimum Ruby version
+filter and places specimen version overrides under AllCops; direct Commissioner
+invocation alone does not apply that filter. Seven version specimens run at
+2.2, 2.3, 2.6, 2.7, 3.2, 3.3 and 3.4.
+
+The expanded strict matrix covers 404 original cases, 808 second-pass cases and
+23 trusted runtime programs. Performance native tests pass 34/34. There are
+127 explicit discrepancy events, with six newly recorded events confined to
+UnfreezeString with an attached block: original Ruby produces invalid
+`+'' { work }`; Rust diagnoses but declines the correction. Encoding changes
+from argumentless String.new remain explicitly unsafe, matching original
+metadata; a trusted program records encoding before/after. No unexpected
+differences remain in these selected specimens. Raw-byte/comment/heredoc
+rewrites that cannot preserve source are conservatively declined; broader
+coverage of those uncommon forms remains pending. Totals are 24 reviewed rules,
+21 baseline stubs replaced and 46 baseline stubs remaining.

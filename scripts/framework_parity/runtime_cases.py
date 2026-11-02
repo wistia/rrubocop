@@ -1,5 +1,8 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Performance/BindCall", "class Greeter; def greet(name); name.upcase; end; end\nmethod = Greeter.instance_method(:greet)\np method.bind(Greeter.new).call('Ada')\n"),
+    ("Performance/UnfreezeString", "value = String.new('text')\np [value, value.frozen?, value.encoding.name]\n"),
+    ("Performance/UnfreezeString", "value = String.new\np [value, value.frozen?, value.encoding.name]\n"),
     ("Performance/Count", "items = [1, 2, 3]\np items.select { |item| item.odd? }.count\n"),
     ("Performance/Count", "items = [1, 2, 3]\np items.reject { |item| item.odd? }.count\n"),
     ("Performance/Count", "items = [1, 2, 3]\npredicate = ->(item) { item.odd? }\np items.reject(&predicate).count\n"),

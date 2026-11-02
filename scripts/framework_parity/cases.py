@@ -99,4 +99,14 @@ def cases():
         add("Rails/ActiveRecordOverride",source)
     for source in ("has_and_belongs_to_many :roles", "has_and_belongs_to_many(:roles)", "self.has_and_belongs_to_many :roles", "model.has_and_belongs_to_many :roles", "has_and_belongs_to_many", "has_and_belongs_to_many = value\nhas_and_belongs_to_many"):
         add("Rails/HasAndBelongsToMany",source)
+    for source in ("method.bind(object).call", "method.bind(object).call()", "method.bind(object).call(foo,bar)", "method.bind(object).(foo)", "bind(object).call(foo)", "method.bind(object).call { work }", "method.bind(object).call(&:name)", "method.bind(object,other).call", "method.bind.call", "method&.bind(object).call", "method.bind(object)&.call", "method.bind(object) { work }.call", "method.bind(object).call(foo: 1)", "method.bind(object).call(*args)"):
+        add("Performance/BindCall", source)
+    add("Performance/BindCall", "method.bind(object).call(foo)", AutoCorrect="disabled")
+    for source in ("String.new", "String.new()", "String.new('text')", 'String.new("#{value}")', "::String.new", "Other::String.new", "String.new(value)", "String.new('text', encoding: 'UTF-8')", "String.new { work }", "String&.new", "String.to_s", "''.clone", "'text'.dup", "String.new.upcase", "String.new[0]", "String.new == value", "!String.new", "consume(String.new)", "[String.new]", "{value: String.new}", "String.new + other", "String.new('a').dup"):
+        add("Performance/UnfreezeString", source)
+    add("Performance/UnfreezeString", "String.new", AutoCorrect="disabled")
+    for version in (2.2, 2.3, 2.6, 2.7, 3.2, 3.3, 3.4):
+        add("Performance/BindCall", "method.bind(object).call(foo)", TargetRubyVersion=version)
+        add("Performance/UnfreezeString", "'text'.dup", TargetRubyVersion=version)
+        add("Performance/UnfreezeString", "String.new('text')", TargetRubyVersion=version)
     return rows
