@@ -17,6 +17,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/DynamicFindBy', 'User.find_by_name(name)', model, service),
  ('Rails/RedundantAllowNil', 'validates :name, allow_nil: true, allow_blank: true', model, service),
  ('Rails/RedundantReceiverInWithOptions', 'with_options(flag: true) { |m| m.foo }', model, service),
  ('Rails/LexicallyScopedActionFilter', 'class C; before_action :authorize, only: :missing; end', 'app/controllers/framework_parity_probe.rb', model),

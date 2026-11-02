@@ -10,6 +10,21 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-dynamic-find-original-spec.json").read_text())["cases"]:
+        add("Rails/DynamicFindBy",row["source"].rstrip("\n"),**row["config"])
+    for receiver in ("User.", "user.", "User&.", "", "page.", "Gem::Specification.", "::Gem::Specification."):
+        for method in ("find_by_name", "find_by_name!", "find_by_name_and_email", "find_by_sql", "find_by_token_for", "find_by_", "find_by__and_name", "find_by_name_and_", "find_by_name_and_and_email"):
+            for args in ("(name)", "(name, email)", "({name: name})", "(*names)", "(name: name)", "(name, &block)"):
+                add("Rails/DynamicFindBy", receiver+method+args)
+    for parent in ("ApplicationRecord", "::ApplicationRecord", "ActiveRecord::Base", "::ActiveRecord::Base", "Other::ApplicationRecord", "Other::ActiveRecord::Base", "ActiveModel::Base", "(ApplicationRecord)", "factory(ApplicationRecord)"):
+        for body in ("find_by_name(name)", "def call; find_by_name(name); end", "class Inner; find_by_name(name); end", "find_by_name(name) { work }"):
+            add("Rails/DynamicFindBy",f"class User < {parent}; {body}; end")
+    for option in ("AllowedMethods", "AllowedReceivers", "Whitelist"):
+        for values in ([], ["find_by_name"], ["User"], None):
+            add("Rails/DynamicFindBy", "User.find_by_name(name)", **{option: values})
+    for source in ("class User < ApplicationRecord; find_by__and_; end", "User.find_by__and_", "User.find_by_name_and_name(first, second)", "User.find_by_name name", "User.find_by_name(name) { work }", "User.find_by_name(name) do |x| work; end", "User.find_by_name_and_email(name, # keep\nemail)", "User.find_by_name_and_email(name, **options)", "User.find_by_name(name, &block)", "User.find_by_name(&block)", "User.find_by_name(name) = value", "User.find_by_name_and_email((name), (email))", "User.find_by_é(value)", "User.find_by_Foo(value)"):
+        add("Rails/DynamicFindBy",source)
+    add("Rails/DynamicFindBy","User.find_by_name(name)", AutoCorrect="disabled")
     for left in ("true", "false", "nil", "1", "2.0", "'value'", ":value", "first", "first()", "self.first", "@first", "CONST", "(condition ? true : false)", "!first", "first&.flag"):
         for right in ("true", "false", "nil", "2", "3.0", "'other'", ":other", "second", "self.second", "@second"):
             add("Rails/RedundantAllowNil",f"validates :title, allow_nil: {left}, allow_blank: {right}")
