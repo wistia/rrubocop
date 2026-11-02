@@ -83,8 +83,49 @@ fn closing(open: u8) -> u8 {
 mod escapes;
 mod ruby;
 pub(super) use ruby::string as ruby_string;
+pub(super) use ruby::{heredoc_span, parts as ruby_parts};
 mod duplicate;
 pub(super) use duplicate::value as duplicate_bytes;
+
+fn continued(line: &str) -> bool {
+    line.strip_suffix('\n')
+        .is_some_and(|line| line.bytes().rev().take_while(|byte| *byte == b'\\').count() % 2 == 1)
+}
+fn decoded_parts(content: &str, mode: Option<(bool, u8)>) -> Option<Vec<String>> {
+    let mut parts = Vec::new();
+    let mut group = String::new();
+    for line in content.split_inclusive('\n') {
+        group.push_str(line);
+        if !mode.is_some_and(|(double, _)| double) || !continued(line) {
+            parts.push(match mode {
+                Some((double, delimiter)) if group.contains('\\') => {
+                    decode(&group, double, delimiter)?
+                }
+                _ => std::mem::take(&mut group),
+            });
+            group.clear();
+        }
+    }
+    if !group.is_empty() {
+        parts.push(match mode {
+            Some((double, delimiter)) if group.contains('\\') => decode(&group, double, delimiter)?,
+            _ => group,
+        });
+    }
+    Some(parts)
+}
+fn string_parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
+    if symbol_label(c, n) || descendants(n).any(|n| n.kind() == "interpolation") {
+        return None;
+    }
+    let (content, double, delimiter) = contents(c.text(n))?;
+    let content = content.replace("\r\n", "\n");
+    let mut parts = decoded_parts(&content, Some((double, delimiter)))?;
+    if parts.is_empty() {
+        parts.push(String::new());
+    }
+    Some(parts)
+}
 
 fn single_escape(
     bytes: &mut std::iter::Peekable<std::str::Bytes<'_>>,

@@ -171,3 +171,9 @@ pub fn has_hspace(bytes: &[u8], start: usize, end: usize) -> bool {
         .iter()
         .any(|&b| b == b' ' || b == b'\t')
 }
+
+mod integer;
+pub use integer::integer_value;
+mod send_range;
+pub use send_range::{end as send_end, is_setter_call};
+pub mod ruby_expression;
