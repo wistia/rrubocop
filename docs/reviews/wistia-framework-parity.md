@@ -1,8 +1,9 @@
 # Framework cop parity implementation
 
-This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The current branch replaces 37 stubs and reviews three existing implementations.
-Thirty baseline stubs and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
+The initial inventory covers 90 enabled Rails, Migration, Performance and FactoryBot cops.
+Seven remaining Performance stubs are now delegated to `feat/wistia-parity-performance`; this branch retains the other 83 rules.
+The baseline inventory contained 67 no-op stubs. The current branch replaces 38 stubs and reviews three existing implementations.
+Twenty-nine baseline stubs (22 retained here, seven delegated) and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
 
@@ -769,3 +770,15 @@ The separate post-port source review added safe sends, setters, arguments/blocks
 Final gate: **355 original cases, 710 second passes, three trusted ActiveSupport numeric/time/byte programs; zero differences** in detection, ranges/messages/metadata, `-a`/`-A` bytes, final states, runtime behavior or idempotence. Upstream randomized numeric specs were replaced with deterministic negative/zero/fractional/integer cases across every method pair. No deliberate correction divergence was needed in this bounded review. Totals: 37 original stubs replaced, three existing rules reviewed, 30 original stubs remaining.
 
 Pluralization checkpoint validation: full native suite 921 pass, one ignored; all 89 CLI probes pass (85 unchanged production-config scopes across 40 rules, four auxiliary disabled-policy probes).
+
+### HttpStatus pinned dependency/source review
+
+Reviewed `rubocop-rails-2.26.0/lib/rubocop/cop/rails/http_status.rb` and upstream `v2.26.0/spec/rubocop/cop/rails/http_status_spec.rb`, including both checker classes and NodePattern alternatives. Pinned Wistia Rack is **2.2.24**; its full symbol/code dictionary was captured via `bundle exec ruby -rrack/utils` in `tests/fixtures/framework-http-status-rack-2.2.24.json`. Newer installed Rack defaults differ for 306, 413, 422, 509 and 510, so this port explicitly uses the pinned dictionary. Broader Rack-version dictionary selection remains outside this bounded Wistia review.
+
+Coverage includes every dictionary entry in both styles, integer/string/symbol values, all five send names, permitted assertion aliases, custom codes, optional arguments, explicit/implicit hashes, first-versus-second hash precedence, nested non-status hashes, receivers, setters, numeric string prefix/underscore rules, primitive AST shape, source radix and `__LINE__`, comments, scope and disabled autocorrection. The distinct post-port review repaired hash-selection precedence before the final gate.
+
+Final gate: **601 original cases, 1,202 second passes, three trusted programs**. Mapped-code detection/count/range/message/metadata/correction and idempotence match. **83 retained events** are deliberate: 27 correctability differences, 27 safe-byte differences, 27 all-byte differences and two runtime differences. Original `SymbolicStyleChecker#custom_http_status_code?` exempts unknown integer codes but rewrites unknown *string* codes to `nil`; native retains the warning and declines that correction. A trusted program explicitly pins Rack 2.2.24 and ActionPack 8.1.3.1: `ActionDispatch::Response.new('550').status` returns 550; the Ruby-corrected `nil` returns 0. Native retains 550 in both modes. The other two programs verify ordinary symbolic/numeric conversions. No allowlist suppresses these events.
+
+Checkpoint totals: 38 baseline stubs replaced, three existing rules reviewed; 29 original stubs remain globally in this inventory, including seven transferred Performance stubs and 22 retained Rails stubs. Full native suite: 921 pass, one ignored.
+
+HttpStatus production scope gate: all 91 probes pass (87 unchanged production-config scopes across 41 rules plus four auxiliary policy probes).

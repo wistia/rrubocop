@@ -1,4 +1,6 @@
 """Pinned original-cop branch specimens for the framework parity queue."""
+import json
+from pathlib import Path
 
 def cases():
     rows = []
@@ -6,6 +8,21 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    status_names = json.loads((Path(__file__).resolve().parents[2] / "tests/fixtures/framework-http-status-rack-2.2.24.json").read_text())
+    for name, number in status_names.items():
+        for style in ("symbolic", "numeric"):
+            for value in (str(number), repr(str(number)), ":"+name if name != "(unused)" else ':"(unused)"'):
+                add("Rails/HttpStatus", f"render :foo, status: {value}", EnforcedStyle=style)
+    for method in ("render", "redirect_to", "head", "assert_response", "assert_redirected_to"):
+        for value in ("200", ":ok", "'200'", "550", "'550'", "'oops'", "'200foo'", "'  +2_00rest'", ":error", ":success", ":missing", ":redirect", ":ng", ':""', '"a\nb"', "1.0", "nil", "value", "__LINE__"):
+            source=f"{method} {value}" if method in ("head", "assert_response") else f"{method} status: {value}"
+            for style in ("symbolic", "numeric"):
+                add("Rails/HttpStatus", source, EnforcedStyle=style)
+    for source in ("render json: {status: 200}", "render :foo, {status: 200}", "render :foo, status: 200, other: true", "render :foo, {status: 200}, extra", "assert_redirected_to '/some/path', {status: 301}, 'message'", "head '200'", "head(200, location: 'accounts')", "other.render status: 200", "render :foo, status: 200, status: 404", "render :foo, 'status' => 200", "render :foo, status: (200)", "render :foo, status: -200", "render :foo, status: +200", "render :foo, status: 0xC8", "render :foo, status: '2__00'", "render :foo, status: '200\\n'", "render :foo, status: ?2", "render :foo, status: '2' '00'", "render :foo, status: <<~CODE\n200\nCODE", "render :foo, status: 200 # keep", "render :foo, **opts, status: 200"):
+        add("Rails/HttpStatus", source)
+    for source in ("render({status: 200}, {status: 404})", "render({status: 200}, :extra)", "assert_redirected_to({status: 200}, {status: 404})", "assert_redirected_to({status: 200}, :extra)", "render 200", "render '200'", "render :foo, 200", "redirect_to({status: 200}, 'extra')"):
+        add("Rails/HttpStatus", source)
+    add("Rails/HttpStatus", "render status: 200", AutoCorrect="disabled")
     for method in ("second", "minute", "hour", "day", "week", "fortnight", "month", "year", "byte", "kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte", "exabyte", "zettabyte"):
         for number in ("-1", "-1.0", "1", "1.0", "-23", "-0.5", "0", "0.125", "42"):
             for suffix in ("", "s"):

@@ -1,5 +1,9 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Rails/HttpStatus", "gem 'rack', '2.2.24'\ngem 'actionpack', '8.1.3.1'\nrequire 'action_dispatch'\ndef render(status:)\np ActionDispatch::Response.new(status).status\nend\nrender status: '550'\n"),
+    ("Rails/HttpStatus", "gem 'rack', '2.2.24'\ngem 'actionpack', '8.1.3.1'\nrequire 'action_dispatch'\ndef render(status:)\np ActionDispatch::Response.new(status).status\nend\nrender status: '200'\n"),
+    ("Rails/HttpStatus", "gem 'rack', '2.2.24'\ngem 'actionpack', '8.1.3.1'\nrequire 'action_dispatch'\ndef render(status:)\np ActionDispatch::Response.new(status).status\nend\nrender status: :ok\n", {"EnforcedStyle": "numeric"}),
+
     ("Rails/PluralizationGrammar", "require 'active_support/all'\np [1.days.to_i, 2.day.to_i, -1.months.to_i, 0.year.to_i]\n"),
     ("Rails/PluralizationGrammar", "require 'active_support/all'\np [1.0.hours.to_i, 0.5.hour.to_i, -1.0.hours.to_i, 2.5.hour.to_i]\n"),
     ("Rails/PluralizationGrammar", "require 'active_support/all'\np [1.megabytes, 2.megabyte, -1.kilobytes, 0.byte]\n"),
