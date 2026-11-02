@@ -8,7 +8,7 @@ use super::resolved_inject::{
     inject_first_argument, inject_first_hash_indent, inject_globals, inject_hash_alignment,
     inject_indentation_width, inject_line_length, inject_missing_else, inject_operator_spacing,
     inject_quoted_symbols, inject_rack_version, inject_redundant_line_break,
-    inject_rescue_ensure_alignment, inject_space_after_comma,
+    inject_redundant_parentheses, inject_rescue_ensure_alignment, inject_space_after_comma,
 };
 
 impl ResolvedConfig {
@@ -31,6 +31,7 @@ impl ResolvedConfig {
         inject_active_support(self, name, config);
         inject_hash_alignment(self, name, config);
         inject_operator_spacing(self, name, config);
+        inject_redundant_parentheses(self, name, config);
         inject_first_argument(self, name, config);
         inject_first_hash_indent(self, name, config);
         inject_end_alignment(self, name, config);

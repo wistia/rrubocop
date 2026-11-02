@@ -87,14 +87,6 @@ pub fn matches_redundant_line_continuation(
     false
 }
 
-pub fn matches_redundant_parentheses(
-    _source: &SourceFile,
-    _node: Node<'_>,
-    _config: &CopConfig,
-) -> bool {
-    false
-}
-
 pub fn matches_redundant_string_escape(
     _source: &SourceFile,
     _node: Node<'_>,

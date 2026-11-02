@@ -53,7 +53,6 @@ pub use stubs::matches_multiline_memoization;
 pub use stubs::matches_nested_parenthesized_calls;
 pub use stubs::matches_optional_arguments;
 pub use stubs::matches_redundant_line_continuation;
-pub use stubs::matches_redundant_parentheses;
 pub use stubs::matches_redundant_string_escape;
 pub use stubs::matches_return_nil_in_predicate_method_definition;
 pub use stubs::matches_symbol_proc;

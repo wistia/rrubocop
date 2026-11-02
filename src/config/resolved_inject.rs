@@ -380,3 +380,36 @@ pub(crate) fn inject_operator_spacing(cfg: &ResolvedConfig, name: &str, config: 
         force_alignment,
     );
 }
+
+pub(crate) fn inject_redundant_parentheses(
+    cfg: &ResolvedConfig,
+    name: &str,
+    config: &mut CopConfig,
+) {
+    if name != "Style/RedundantParentheses" {
+        return;
+    }
+    inject_bool(
+        &mut config.options,
+        "TernaryParenthesesEnabled",
+        sibling_enabled(&cfg.cop_configs, "Style/TernaryParentheses"),
+    );
+    inject_sibling_str(
+        &mut config.options,
+        &cfg.cop_configs,
+        "Style/TernaryParentheses",
+        "EnforcedStyle",
+        "TernaryParenthesesEnforcedStyle",
+        "require_no_parentheses",
+    );
+    inject_bool(
+        &mut config.options,
+        "ParenthesesAroundConditionEnabled",
+        sibling_enabled(&cfg.cop_configs, "Style/ParenthesesAroundCondition"),
+    );
+    let allow = cfg
+        .cop_configs
+        .get("Style/ParenthesesAroundCondition")
+        .is_some_and(|condition| condition.get_bool("AllowInMultilineConditions", false));
+    inject_bool(&mut config.options, "AllowInMultilineConditions", allow);
+}

@@ -260,3 +260,7 @@ pub(super) fn redundant_regexp_literal(source: &SourceFile, node: Node<'_>) -> O
     std::str::from_utf8(&source.as_bytes()[node.start_byte()..node.end_byte()]).ok()?;
     style_regexp::constructor_literal(&Context::new(source, &CopConfig::default()), node)
 }
+
+pub(super) fn ruby_local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
+    context::local_identifier(&Context::new(source, &CopConfig::default()), node)
+}

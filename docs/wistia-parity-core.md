@@ -313,3 +313,44 @@ actual CLI safeguard checks preserve source bytes and retain diagnostics.
 Six original Style stubs remain: ComparableClamp, EachWithObject,
 ExactRegexpMatch, RedundantRegexpArgument, NonNilCheck and TrivialAccessors.
 The next priority is the broader RedundantParentheses correction/detection gap.
+
+## RedundantParentheses
+
+Ports pinned Ruby 1.65.1 `lib/rubocop/cop/style/redundant_parentheses.rb`,
+its Parentheses mixin, and ParenthesesCorrector. The prior delegated helper
+always returned false: this was an additional inert rule beyond the 13
+direct-file Style stubs. All 203 unchanged original specs pass using the
+original support/misc_helper.rb (`trailing_whitespace`); all 324 captured
+states match exact messages, ranges and first-pass corrected bytes.
+
+Covered branches include literals/numerics, variables and local scope,
+constants, keyword arguments, unary/logical/comparison/method expressions,
+interpolation, hash arguments, multiple expressions, ranges, post loops,
+method-chain precedence, pin expressions, multiline control flow, orphaned
+commas and heredoc comma relocation. Tree-sitter wrappers are adapted to
+original Ruby parent/argument semantics. Pin-local resolution uses existing
+model bindings when tree-sitter's expression-reference shape lacks an indexed
+read. Sibling TernaryParentheses and ParenthesesAroundCondition settings are
+passed through actual resolved configuration and exercised in eight native
+production-version CLI checks.
+
+All 139 Style tests pass. Native safe/all modes pass 648 exact correction
+comparisons and 648 second-pass idempotence checks. Two additional actual
+Wistia configuration/scope comparisons against bin/rubocop-ruby each verify
+two positive offenses, exact messages/positions and corrected bytes.
+
+One independently confirmed upstream safety issue is explicitly separate:
+`[(1 # retain\n), 2]` is rewritten by Ruby into a comma joined onto the line
+comment, and Ruby's compiler rejects that output. Rust preserves the original
+diagnostic and withholds correction. An explicit reference fixture compares
+its exact diagnostic while retaining both original invalid correction and
+Rust unchanged bytes. Four native source-preservation/non-UTF-8 cases and
+their second passes pass; ordinary raw-byte literals retain their bytes when
+only parentheses are removed.
+
+The capture helper now records the sibling settings and stores mutable
+results on its module rather than in an autofrozen array constant. After
+Ruby formatting/storage changes, re-running all 203 original specs produced
+the identical 324 captured states. Running Wistia's full Ruby lint config on
+this external standalone helper still reports its existing documentation,
+metrics and Wistia-specific script/spec scope assumptions; none were disabled.
