@@ -588,3 +588,36 @@ at lib/rubocop/cop/rspec/let_before_examples.rb:65; the native generic scheduler
 no equivalent metadata API. This batch makes individual-rule claims only and does
 not claim combined-cop correction parity. The canonical integration follow-up is
 maintained by the parent agent separately.
+
+## Batch 22: description wording, spacing and decoder reuse
+
+ExampleWording and ExcessiveDocstringSpacing replace two original stubs. The
+reviewed total is 73 original stubs plus all sixteen existing implementations
+(89 of 96); seven original stubs remain. All fifty RSpec/RSpecRails tests pass
+with 1,614 strict original cases, 46 correction-disable controls and 88 separate
+safeguards. The original Wording helper's 34 unit specimens also pass directly.
+
+Distinct original-source review covers prefix/negation/case handling, pluralization,
+custom transforms, ignored words, insufficient descriptions, Unicode blank and
+space classes, direct/qualified/numbered/no-block scope, concatenation,
+interpolation and heredocs. All 97 original cop specimens and the 34 helper-derived
+rule controls are retained with their actual options; the four Workz contexts
+restore their original DisallowedExamples setting explicitly.
+
+Dynamic description text reuses the existing literal decoder through placeholder
+parses, without executing interpolation or arbitrary fixtures. Corrections require
+literal round-trip validity, equivalent interpolation ASTs and stable relative
+__LINE__ positions. Seven additional safeguards retain source when Ruby changes
+an interpolated string value, moves __LINE__, or creates invalid decoded-quote or
+percent-literal syntax. Trusted runtime probes show preserved native interpolation
+effects and the broader Ruby rewrite's changed values/line payloads; harmless
+expression whitespace retains its value.
+
+Shared checkpoints c9b46f9 and b10c9f3 import version-aware regexp decoding and
+canonical dump/inspect/symbol formatting. The shared suite passes five tests,
+including 56 original AST pairs and 68 regexp target-version observations.
+RSpec formatters now delegate instead of duplicating quoting logic. Exact control
+name probes also exposed Symbol#to_s encoding: ASCII-only symbols produce US-ASCII
+inspection (x00/x01/x7F), while ordinary UTF-8 strings use u0000/u0001/u007F.
+VariableDefinition now selects the original symbol-string inspection semantics;
+the previous control-name regression remains unchanged and passing.

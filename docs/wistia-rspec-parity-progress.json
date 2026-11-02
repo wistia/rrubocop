@@ -269,16 +269,29 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/example_wording.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 74,
+    "deliberate_safeguards": [
+      "batch22:ExampleWording:expression-value",
+      "batch22:ExampleWording:percent-literal",
+      "batch22:ExampleWording:line-constant",
+      "batch22:ExampleWording:escaped-quote"
+    ],
+    "post_implementation_review": "Pinned cop algorithms, Wording rewrite helper and original specs reviewed separately. Covered prefix/negation/case/pluralization, custom transforms/ignored words/disallowed descriptions, Unicode blank/space classes, concatenated and interpolated text, direct/qualified/numbered/no-block scope and heredocs. Existing decoders reused through non-executing placeholder parses. Literal round-trip, interpolation AST equality and __LINE__ relative positions guard corrections. All34original Wording unit rewrites plus rule-level equivalents pass; trusted runtime shows interpolation-value and line-location hazards. Invalid decoded-quote/percent transformations remain explicit safeguards."
   },
   {
     "name": "RSpec/ExcessiveDocstringSpacing",
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/excessive_docstring_spacing.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 69,
+    "deliberate_safeguards": [
+      "batch22:ExcessiveDocstringSpacing:expression-value",
+      "batch22:ExcessiveDocstringSpacing:percent-literal",
+      "batch22:ExcessiveDocstringSpacing:line-constant"
+    ],
+    "post_implementation_review": "Pinned cop algorithms, Wording rewrite helper and original specs reviewed separately. Covered prefix/negation/case/pluralization, custom transforms/ignored words/disallowed descriptions, Unicode blank/space classes, concatenated and interpolated text, direct/qualified/numbered/no-block scope and heredocs. Existing decoders reused through non-executing placeholder parses. Literal round-trip, interpolation AST equality and __LINE__ relative positions guard corrections. All34original Wording unit rewrites plus rule-level equivalents pass; trusted runtime shows interpolation-value and line-location hazards. Invalid decoded-quote/percent transformations remain explicit safeguards."
   },
   {
     "name": "RSpec/ExpectActual",
@@ -953,8 +966,9 @@
     "original_source": "lib/rubocop/cop/rspec/variable_definition.rb",
     "baseline_status": "unimplemented_noop_stub",
     "current_status": "implemented_and_differentially_tested",
-    "cases": 19,
-    "deliberate_safeguards": []
+    "cases": 25,
+    "deliberate_safeguards": [],
+    "formatter_encoding_review": "Exact original control-name probes distinguish UTF-8 String#inspect from ASCII-only Symbol#to_s US-ASCII inspection. Shared symbol_to_string_inspect preserves original x00/x01/x7F spelling; non-ASCII symbol names retain UTF-8 inspect semantics."
   },
   {
     "name": "RSpec/VariableName",

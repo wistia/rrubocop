@@ -223,3 +223,5 @@ mod parity_tests;
 mod subject_scopes;
 
 mod ordering;
+
+mod description;

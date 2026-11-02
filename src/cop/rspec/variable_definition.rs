@@ -63,7 +63,7 @@ impl Cop for VariableDefinition {
                 let Some(value) = value else {
                     return;
                 };
-                ruby_string(&value)
+                crate::cop::shared::ruby_literal::symbol_to_string_inspect(&value)
             }
         } else {
             return;

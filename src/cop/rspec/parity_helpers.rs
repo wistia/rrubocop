@@ -380,54 +380,10 @@ pub(super) fn inside_root_spec_group(source: &SourceFile, node: Node<'_>) -> boo
     false
 }
 pub(super) fn ruby_string(value: &str) -> String {
-    let mut output = String::from("\"");
-    let mut chars = value.chars().peekable();
-    while let Some(character) = chars.next() {
-        match character {
-            '"' => output.push_str("\\\""),
-            '\\' => output.push_str("\\\\"),
-            '\x07' => output.push_str("\\a"),
-            '\x08' => output.push_str("\\b"),
-            '\t' => output.push_str("\\t"),
-            '\n' => output.push_str("\\n"),
-            '\x0b' => output.push_str("\\v"),
-            '\x0c' => output.push_str("\\f"),
-            '\r' => output.push_str("\\r"),
-            '\x1b' => output.push_str("\\e"),
-            '#' if chars
-                .peek()
-                .is_some_and(|next| ['{', '@', '$'].contains(next)) =>
-            {
-                output.push_str("\\#")
-            }
-            control if control.is_ascii_control() => {
-                output.push_str(&format!("\\x{:02X}", control as u32))
-            }
-            control if control.is_control() => {
-                output.push_str(&format!("\\u{:04X}", control as u32))
-            }
-            other => output.push(other),
-        }
-    }
-    output.push('"');
-    output
+    crate::cop::shared::ruby_literal::string_inspect(value)
 }
 pub(super) fn ruby_symbol(value: &str) -> String {
-    let candidate = format!(":{value}");
-    let source = SourceFile::from_bytes("symbol.rb", candidate.as_bytes().to_vec());
-    if !matches!(value, "!@" | "~@")
-        && crate::parse::parse_ruby(&source).ok().is_some_and(|tree| {
-            !tree.root_node().has_error()
-                && tree.root_node().named_child_count() == 1
-                && tree.root_node().named_child(0).is_some_and(|node| {
-                    node.kind() == "simple_symbol" && node.end_byte() == candidate.len()
-                })
-        })
-    {
-        candidate
-    } else {
-        format!(":{}", ruby_string(value))
-    }
+    crate::cop::shared::ruby_literal::symbol_inspect(value)
 }
 pub(super) fn string_options(config: &crate::cop::CopConfig, key: &str) -> Vec<String> {
     match config.options.get(key) {
