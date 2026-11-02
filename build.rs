@@ -5,6 +5,9 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 fn main() {
+    println!("cargo:rerun-if-env-changed=RRUBOCOP_BUILD_SHA");
+    let revision = env::var("RRUBOCOP_BUILD_SHA").unwrap_or_else(|_| "unknown".into());
+    println!("cargo:rustc-env=RRUBOCOP_BUILD_SHA={revision}");
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let configs = manifest_dir.join("src/resources/gem_configs");
     let manifest = manifest_dir.join("src/resources/gem_configs_manifest.json");
