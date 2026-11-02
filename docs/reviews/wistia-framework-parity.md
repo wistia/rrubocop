@@ -168,7 +168,7 @@ python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-Targeted suites pass: **883 complete native library tests passed, with 1 intentionally ignored audit probe**. The
+Targeted suites pass: **896 complete native library tests passed, with 1 intentionally ignored audit probe**. The
 strict command currently exits 1 with **387 transparent safety/upstream-hazard
 events** across ten cops. `failures.json`, `summary.json` and `runtime.json` contain evidence;
 there are no unexpected detection, message, range, byte or idempotence differences
@@ -248,3 +248,24 @@ argument lists crash when first/last.source_range is read; Rust skips them.
 Comment/raw-byte deletions remain guarded. Exotic purity constructs, arbitrary
 AST equality and all runtime contexts still require broader evidence. Totals:
 25 reviewed rules, 22 baseline stubs replaced, 45 baseline stubs remaining.
+
+## Eighth batch: enum duplicate values
+
+Rails/EnumUniqueness implements modern/old keyword and explicit hash syntax,
+array/hash value collection, duplicate grouping order and exact diagnostic
+locations/messages/severity. Reviewed complete original 2.26.0 source, core
+Duplication#consecutive_duplicates/grouped_duplicates and rubocop-ast Hash#values
+after implementation. Hash splats are ignored by the original value collector.
+The pre-existing stub's warning severity was corrected to original convention.
+Shared Ruby expression normalization now supports this cop as well as Caller
+and DoubleStartEndWith. The helper relocation is isolated in d07e3c0.
+
+All 26 newly authored enum cases match exactly, including numeric spellings,
+Unicode, escaped/quoted symbols and strings, nested collections, calls with
+optional parentheses, percent arrays and multiline comments. Latest strict
+matrix: 486 original cases, 972 second-pass cases, 25 trusted runtime programs;
+exactly the earlier 387 deliberate safety/upstream-hazard events, no new
+discrepancies. Complete native suite: 896 passed, 1 intentionally ignored probe.
+EnumUniqueness is diagnostic only and never corrects source. Broader exotic AST
+equality and actual production path-scope coverage remain outstanding.
+Totals: 26 reviewed rules, 23 baseline stubs replaced, 44 remaining.

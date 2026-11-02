@@ -123,4 +123,8 @@ def cases():
     for selector in ("start_with?", "end_with?"):
         for arg in ("'b'", "@value", "CONST", "defined?(value)", "(true ? 'a' : 'b')", "%w[a b]", "-1"):
             add("Performance/DoubleStartEndWith", f"text = 'beta'; text.{selector}('a') || text.{selector}({arg})")
+    for source in ("enum :status, { active: 0, archived: 0 }", "enum :status, [:active, :archived, :active]", "enum status: { active: 0, archived: 0 }", "enum status: [:active, :archived, :active]", "enum :status, [0, 1, 0, 1, 0]", "enum :status, [1, 0x1, 01, 1_0, 10]", "enum :status, ['a', \"a\", 'b']", "enum :status, [1.0, 1e0]", "enum :status, [value, value(), other]", "enum :status, [foo(1), foo(0x1)]", "enum :status, %i[active archived active]", "enum :status, %w[active archived active]", "enum :status, {active: 0, **other, archived: 0}", "enum status: [0, 0], other: [1, 1]", "enum :status, [0, 1]", "model.enum :status, [0, 0]", "enum :status, VALUES", "enum :status, [0, 0], prefix: true"):
+        add("Rails/EnumUniqueness", source)
+    for source in ("enum :status, [nil, nil, true, true, false, false]", "enum 'état', ['été', 'été']", "enum :status, [:active, :\"active\"]", "enum :status, [-1, -0x1, +1, 1]", "enum :status, [[1], [0x1], {key: 1}, {key: 1}]", "enum :status, [0, # keep\n 0]", "enum({status: [0, 0]})", "enum status: {active: value, archived: value()}"):
+        add("Rails/EnumUniqueness", source)
     return rows
