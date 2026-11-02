@@ -1,8 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The first three batches replace
-15 stubs with implementations; 52 stubs and the remaining implemented-cop gaps
+The baseline inventory contained 67 no-op stubs. The first four batches replace
+17 stubs and repair an existing ReverseEach detector/corrector; 50 stubs and the remaining implemented-cop gaps
 still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
@@ -49,10 +49,10 @@ final-state specimens; and second-pass idempotence. Original cop options come
 from Wistia's effective Ruby configuration. Fixture scopes are normalized;
 end-to-end checks of actual configured file scopes remain pending.
 
-The current matrix has **248 original specimens**, **496 second-pass specimens**
-and **15 explicitly authored trusted runtime programs**. Ordinary fixture code
+The current matrix has **295 original specimens**, **590 second-pass specimens**
+and **20 explicitly authored trusted runtime programs**. Ordinary fixture code
 is parsed/compiled, never executed. Ten implemented cops have no observed
-upstream differences in this bounded matrix. Five safety policies/upstream hazards intentionally
+upstream differences in this bounded matrix. Eight safety policies/upstream hazards intentionally
 differ and remain visible in every strict run; the command exits nonzero for
 all differences and has no allowlist.
 
@@ -120,6 +120,36 @@ cached local-binding classification replaces the temporary factory lexical scan.
   `User.pluck(:name).first()`. Native diagnoses but declines the correction;
   this contributes **6 events**.
 
+### Fourth batch and shared syntax fixes
+
+Caller now implements receiver/arity checks, cached local-binding disambiguation,
+arbitrary-size integer offsets, numeric bases, first/index forms and token ranges.
+InefficientHashSearch implements key/value searches, correct unsafe metadata,
+safe navigation and original argument formatting. ReverseEach's pre-existing
+implementation now has the original return-use exclusions, selector range,
+argument checks, safe-navigation behavior and actual correction support.
+
+Trusted programs expose two additional original safe-correction hazards:
+
+- Caller negative indexing selects the last frame, while rewriting it as a
+  bounded nonnegative-offset lookup selects a different frame. Rust diagnoses
+  but declines that correction: **11 events**, including two runtime comparisons.
+- ReverseEach used as a method's implicit return changes a reversed array into
+  the original array. Rust preserves the implicit return: **11 events**, including
+  two runtime comparisons.
+- URI parser construction with comment-only parentheses is reported but not
+  rewritten, because replacing the constructor removes its comments. The strict
+  matrix explicitly records **9 events** for that source-preservation difference.
+
+The shared argument helper now excludes syntax comments, matching Ruby AST
+semantics; two parser regression tests cover comment-bearing and comment-only
+argument lists. The complete native suite passes after this shared change.
+A small send-range helper excludes attached blocks/trivia instead of guessing at
+whitespace, retaining block comments. OutputSafety now distinguishes bare I18n
+calls from shadowed locals and ignores an attached block when searching the
+original send expression. Factory option keys use the existing Ruby literal
+decoder, including quoted-symbol labels and escaped keys.
+
 ### Source-preservation guards
 
 Corrections that would discard inter-call/inter-predicate comments are declined.
@@ -138,9 +168,9 @@ python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-Targeted suites pass: **45 Rails, 24 Performance and 11 FactoryBot tests**. The
-strict command currently exits 1 with **90 transparent safety/upstream-hazard
-events** across five cops. `failures.json`, `summary.json` and `runtime.json` contain evidence;
+Targeted suites pass: **883 complete native library tests passed, with 1 intentionally ignored audit probe**. The
+strict command currently exits 1 with **121 transparent safety/upstream-hazard
+events** across eight cops. `failures.json`, `summary.json` and `runtime.json` contain evidence;
 there are no unexpected detection, message, range, byte or idempotence differences
 in the selected specimens.
 

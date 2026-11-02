@@ -69,4 +69,23 @@ def cases():
             add(cop, source)
     for source in ("items.map { |n| [n] }.flatten(0x1)", "items.map { |n| [n] }.flatten(+1)"):
         add("Performance/FlatMap",source)
+    for source in ("caller.first", "caller_locations.first", "caller[0]", "caller(2)[3]", "caller_locations(2).first", "Kernel.caller.first", "caller(1, 2).first", "caller.first(2)", "caller = frames\ncaller.first", "caller.[](2)", "caller&.first", "caller(0x2)[0x3]"):
+        add("Performance/Caller",source)
+    for source in ("options.keys.include?(:name)", "options.values.include?('x')", "options&.keys&.include?(:name)", "options.keys&.include?(:name)", "keys.include?(:name)", "options.keys.include?(:a, :b)", "options.keys().include?(:name)", "options.values(1).include?(:name)"):
+        add("Performance/InefficientHashSearch",source)
+    for source in ("items.reverse.each { |item| p item }", "items.reverse.each", "result = items.reverse.each", "p(items.reverse.each)", "items.reverse.each(2)", "items&.reverse&.each { |item| p item }", "def run; items.reverse.each; :done; end", "items.reverse().each()"):
+        add("Performance/ReverseEach",source)
+    add("Performance/Caller", "caller(9223372036854775808).first")
+    add("Performance/Caller", "caller(010)[02]")
+    for cop, source in (("Performance/Caller", "caller.first"), ("Performance/InefficientHashSearch", "options.keys.include?(:name)"), ("Performance/ReverseEach", "items.reverse.each")):
+        add(cop, source, AutoCorrect="disabled")
+    add("Rails/OutputSafety", "t.html_safe")
+    add("Rails/OutputSafety", "t = value\nt.html_safe")
+    add("Rails/OutputSafety", "raw(input) { I18n.t(:name) }")
+    add("FactoryBot/FactoryClassName", "factory :foo, { :\"cl\\x61ss\" => Foo }")
+    add("FactoryBot/FactoryClassName", "factory :foo, { 'class': Foo }")
+    add("FactoryBot/AttributeDefinedStatically", "factory :user do\n account 'factory': :account\nend")
+    add("Performance/UriDefaultParser", "URI::Parser.new( # keep this\n)")
+    add("Performance/UriDefaultParser", "URI::Parser.new { # keep this\n foo }")
+    add("Performance/Caller", "caller.first { # keep this\n foo }")
     return rows

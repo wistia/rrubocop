@@ -67,7 +67,25 @@ fn has_interpolation(node: Node<'_>) -> bool {
 }
 fn has_translation(source: &SourceFile, node: Node<'_>) -> bool {
     let mut found = false;
+    let attached_block = node.child_by_field_name("block");
     for_each_descendant(node, |n| {
+        if attached_block.is_some_and(|block| {
+            block.start_byte() <= n.start_byte() && n.end_byte() <= block.end_byte()
+        }) {
+            return;
+        }
+        if n.kind() == "identifier"
+            && !n
+                .parent()
+                .is_some_and(|parent| parent.child_by_field_name("method") == Some(n))
+            && matches!(
+                node_text(source, n).as_str(),
+                "t" | "translate" | "l" | "localize"
+            )
+            && !crate::cop::ported::local_identifier(source, n)
+        {
+            found = true;
+        }
         if matches!(
             call_method_name(source, n),
             Some(b"t" | b"translate" | b"l" | b"localize")

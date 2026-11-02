@@ -1,7 +1,7 @@
 //! Delay factory attributes by declaring their values inside a block.
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, method_node, named_kids, node_bytes,
-    node_text, push_replace,
+    push_replace,
 };
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -153,13 +153,11 @@ fn association(source: &SourceFile, values: &[Node<'_>]) -> bool {
     };
     pairs.iter().filter(|n| n.kind() == "pair").any(|pair| {
         pair.child_by_field_name("key").is_some_and(|key| {
-            matches!(
+            (matches!(
                 key.kind(),
                 "hash_key_symbol" | "simple_symbol" | "delimited_symbol"
-            ) && node_text(source, key)
-                .trim_start_matches(':')
-                .trim_matches(['\'', '"'])
-                == "factory"
+            ) || key.kind() == "string" && source.as_bytes().get(key.end_byte()) == Some(&b':'))
+                && crate::cop::ported::static_literal(source, key).as_deref() == Some("factory")
         })
     })
 }

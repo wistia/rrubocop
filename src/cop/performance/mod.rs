@@ -17,6 +17,7 @@ mod redundant_match;
 mod redundant_merge;
 mod regexp_match;
 mod reverse_each;
+mod send_range;
 mod size;
 mod start_with;
 mod string_replacement;

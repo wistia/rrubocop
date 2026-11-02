@@ -15,4 +15,9 @@ PROGRAMS = [
     ("Performance/FlatMap", "p [1, 2].map { |item| [item] }.flatten(1)\n"),
     ("Performance/FlatMap", "p [1, 2].map { |item| item }.flatten!(1)\n"),
     ("Performance/FlatMap", "p [1].map { |item| break [[7]] }.flatten(1)\n"),
+    ("Performance/Caller", "def outer; middle; end\ndef middle; inner; end\ndef inner; p caller.first; end\nouter\n"),
+    ("Performance/Caller", "def outer; middle; end\ndef middle; inner; end\ndef inner; p caller[-1]; end\nouter\n"),
+    ("Performance/InefficientHashSearch", "options = { name: 'Ada' }\np options.keys.include?(:name)\n"),
+    ("Performance/ReverseEach", "seen = []\n[1, 2, 3].reverse.each { |item| seen << item }\np seen\n"),
+    ("Performance/ReverseEach", "def order; [1, 2, 3].reverse.each {}; end\np order\n"),
 ]

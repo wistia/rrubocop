@@ -48,13 +48,12 @@ impl Cop for FactoryClassName {
             let Some(key) = pair.child_by_field_name("key") else {
                 continue;
             };
-            if !matches!(
+            if !(matches!(
                 key.kind(),
                 "hash_key_symbol" | "simple_symbol" | "delimited_symbol"
-            ) || node_text(source, key)
-                .trim_start_matches(':')
-                .trim_matches(['\'', '"'])
-                != "class"
+            ) || key.kind() == "string"
+                && source.as_bytes().get(key.end_byte()) == Some(&b':'))
+                || crate::cop::ported::static_literal(source, key).as_deref() != Some("class")
             {
                 continue;
             }
