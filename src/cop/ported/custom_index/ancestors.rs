@@ -98,7 +98,10 @@ fn spec_group(c: &Context<'_>, n: Node<'_>) -> bool {
     block(n).is_some()
         && ["", "RSpec", "::RSpec"].contains(&c.receiver(n))
         && crate::cop::rspec::helpers::is_group(c.method(n).as_bytes())
+        && block(n).is_none_or(|block| !numbered::block(c, block))
 }
+
+mod numbered;
 
 #[cfg(test)]
 mod tests;

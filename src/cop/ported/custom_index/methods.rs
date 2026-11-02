@@ -20,7 +20,7 @@ impl Methods {
             next: 0,
             parents: HashSet::new(),
         };
-        builder.walk(root, None, None);
+        builder.walk(root, None);
         builder.result
     }
     pub(super) fn contains(&self, n: Node<'_>, name: &str, strict: bool) -> bool {
@@ -51,10 +51,10 @@ struct Builder<'a, 's> {
     next: usize,
 }
 impl Builder<'_, '_> {
-    fn walk(&mut self, n: Node<'_>, parent: Option<Key>, owner: Option<Key>) {
+    fn walk(&mut self, n: Node<'_>, owner: Option<Key>) {
         let start = self.next;
         self.next += 1;
-        self.record(n, parent, owner, start);
+        self.record(n, owner, start);
         let nested = if matches!(n.kind(), "class" | "module" | "singleton_class") {
             Some(key(n))
         } else {
@@ -62,17 +62,18 @@ impl Builder<'_, '_> {
         };
         let mut cursor = n.walk();
         for child in n.named_children(&mut cursor) {
-            self.walk(child, Some(key(n)), nested);
+            self.walk(child, nested);
         }
         if self.parents.contains(&key(n)) {
-            self.result.ranges.insert(key(n), (start, self.next));
+            self.result.ranges.insert(key(n), (start + 1, self.next));
         }
     }
-    fn record(&mut self, n: Node<'_>, parent: Option<Key>, owner: Option<Key>, ordinal: usize) {
+    fn record(&mut self, n: Node<'_>, owner: Option<Key>, ordinal: usize) {
         if n.kind() == "method" {
             self.method(n, owner, ordinal);
         }
         if is_call(n) && matches!(self.c.method(n), "attribute" | "attributes") {
+            let parent = query_parent(n).map(key);
             self.result.queries.insert(key(n), Query { parent, owner });
             if let Some(parent) = parent {
                 self.parents.insert(parent);
@@ -93,4 +94,19 @@ impl Builder<'_, '_> {
                 .insert(self.c.method(n).into());
         }
     }
+}
+
+fn query_parent(n: Node<'_>) -> Option<Node<'_>> {
+    let parent = n.parent()?;
+    let parent =
+        if matches!(parent.kind(), "body_statement" | "block_body") && kids(parent).len() == 1 {
+            parent.parent().unwrap_or(parent)
+        } else {
+            parent
+        };
+    Some(if matches!(parent.kind(), "block" | "do_block") {
+        parent.parent().unwrap_or(parent)
+    } else {
+        parent
+    })
 }

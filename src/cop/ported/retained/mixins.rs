@@ -6,7 +6,7 @@ pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(body) = field(n, "body") else {
         return vec![];
     };
-    let calls = kids(body)
+    let calls = body_statements(body)
         .into_iter()
         .filter(|ch| mixin_call(c, *ch))
         .collect::<Vec<_>>();
@@ -53,4 +53,12 @@ fn method_calls<'n>(c: &Context<'_>, calls: &[Node<'n>], method: &str) -> Vec<No
         .copied()
         .filter(|n| c.method(*n) == method)
         .collect()
+}
+
+fn body_statements(body: Node<'_>) -> Vec<Node<'_>> {
+    let nodes = statements(body);
+    match nodes.as_slice() {
+        [only] if only.kind() == "parenthesized_statements" => kids(*only),
+        _ => nodes,
+    }
 }

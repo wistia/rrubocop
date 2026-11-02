@@ -22,3 +22,6 @@ pub(super) fn register(r: &mut CopRegistry) {
 
 #[cfg(test)]
 mod parity_tests;
+
+#[cfg(test)]
+mod shape_tests;

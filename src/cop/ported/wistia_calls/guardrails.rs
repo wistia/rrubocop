@@ -2,8 +2,11 @@ use super::super::context::*;
 use tree_sitter::Node;
 pub(super) fn csv(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if c.method(n) == "generate" && c.receiver(n) == "CSV" {
-        vec![Finding::new(
-            n,
+        vec![Finding::range(
+            n.start_byte(),
+            field(n, "arguments")
+                .unwrap_or_else(|| method_node(n))
+                .end_byte(),
             "Avoid using `CSV.generate`. Please use `CSV.safe_generate` instead to avoid excel macro attacks.",
         )]
     } else {

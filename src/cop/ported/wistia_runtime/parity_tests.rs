@@ -17,6 +17,13 @@ fn cases() -> Vec<Value> {
         )))
         .unwrap(),
     );
+    cases.extend(
+        serde_json::from_str::<Vec<Value>>(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/custom-call-literal-parent-parity.json"
+        )))
+        .unwrap(),
+    );
     cases
 }
 
@@ -53,10 +60,9 @@ fn configuration(case: &Value) -> ResolvedConfig {
 fn inspect(registry: &CopRegistry, case: &Value, mode: AutocorrectMode) {
     let source = case["source"].as_str().unwrap();
     let mut bytes = source.as_bytes().to_vec();
-    let actual = run(registry, case, mode, &mut bytes)
-        .into_iter()
-        .map(diagnostic)
-        .collect::<Vec<_>>();
+    let diagnostics = run(registry, case, mode, &mut bytes);
+    check_ranges(&diagnostics, case);
+    let actual = diagnostics.into_iter().map(diagnostic).collect::<Vec<_>>();
     assert_eq!(actual, expected(case), "{} {mode:?}: {source}", case["cop"]);
     assert_eq!(bytes, source.as_bytes());
 }
@@ -154,4 +160,24 @@ fn rescue_modifier_directives_follow_the_keyword_not_string_contents() {
                 .into();
         inspect(&registry, &string_disabled, mode);
     }
+}
+
+fn check_ranges(diagnostics: &[crate::diagnostic::Diagnostic], case: &Value) {
+    let Some(ranges) = case["expected_ranges"].as_array() else {
+        return;
+    };
+    let actual = diagnostics
+        .iter()
+        .map(|diagnostic| {
+            format!(
+                "{}:{}:{}",
+                diagnostic.location.line, diagnostic.location.column, diagnostic.highlight_length
+            )
+        })
+        .collect::<Vec<_>>();
+    let expected = ranges
+        .iter()
+        .map(|range| format!("{}:{}:{}", range["line"], range["column"], range["length"]))
+        .collect::<Vec<_>>();
+    assert_eq!(actual, expected, "{}: {}", case["cop"], case["source"]);
 }

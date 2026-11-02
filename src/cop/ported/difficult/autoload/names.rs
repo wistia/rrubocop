@@ -107,7 +107,9 @@ fn class_eval_namespace(c: &Context<'_>, call: Node<'_>, parts: &mut Vec<String>
     Some(())
 }
 fn new_class_block(c: &Context<'_>, call: Node<'_>) -> bool {
-    new_class_call(c, call) && call.parent().is_some_and(|p| p.kind() == "assignment")
+    new_class_call(c, call)
+        && field(call, "arguments").is_none_or(|arguments| kids(arguments).is_empty())
+        && call.parent().is_some_and(|p| p.kind() == "assignment")
 }
 fn new_class_call(c: &Context<'_>, call: Node<'_>) -> bool {
     c.method(call) == "new"

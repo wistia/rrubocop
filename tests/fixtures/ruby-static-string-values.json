@@ -1,0 +1,117 @@
+[
+  {
+    "source": "value(\"abc\", '#{id}', \"#{id}\", ?A, ?\\x72, ?\\u0041)\n",
+    "expected": [
+      "abc",
+      "#{id}",
+      null,
+      "A",
+      "r",
+      "A"
+    ]
+  },
+  {
+    "source": "value(\"a\" \"b\")\n",
+    "expected": [
+      null
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n  Uppercase\nTXT\n",
+    "expected": [
+      "Uppercase\n"
+    ]
+  },
+  {
+    "source": "value(<<-TXT)\n  Uppercase\nTXT\n",
+    "expected": [
+      "  Uppercase\n"
+    ]
+  },
+  {
+    "source": "value(<<~'TXT')\n  #{id}\\n\nTXT\n",
+    "expected": [
+      "#{id}\\n\n"
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n  #{id}\nTXT\n",
+    "expected": [
+      null
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n  \\x41\nTXT\n",
+    "expected": [
+      "A\n"
+    ]
+  },
+  {
+    "source": "value(<<`TXT`)\n  echo hi\nTXT\n",
+    "expected": [
+      null
+    ]
+  },
+  {
+    "source": "value(<<~A, <<~B)\n  first\nA\n  second\nB\n",
+    "expected": [
+      "first\n",
+      "second\n"
+    ]
+  },
+  {
+    "source": "value(<<~A, <<~A)\n  first\nA\n  second\nA\n",
+    "expected": [
+      "first\n",
+      "second\n"
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n\tword\n  next\nTXT\n",
+    "expected": [
+      null
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n\tword\n\t next\nTXT\n",
+    "expected": [
+      null
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n   \n  next\nTXT\n",
+    "expected": [
+      null
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\r\n  Uppercase\r\nTXT\r\n",
+    "expected": [
+      "Uppercase\n"
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n  room_\\#{id}\nTXT\n",
+    "expected": [
+      "room_#{id}\n"
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n  room_#@id\nTXT\n",
+    "expected": [
+      null
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n  room_#$id\nTXT\n",
+    "expected": [
+      null
+    ]
+  },
+  {
+    "source": "value(<<~TXT)\n  a\\\n  b\nTXT\n",
+    "expected": [
+      "ab\n"
+    ]
+  }
+]

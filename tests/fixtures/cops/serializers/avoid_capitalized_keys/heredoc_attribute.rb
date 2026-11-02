@@ -1,0 +1,4 @@
+attribute <<~NAME
+ Uppercase
+NAME
+# rrubocop-expect: 1:10 Serializers/AvoidCapitalizedKeys: Prefer keys that are lowercase or snake_case.

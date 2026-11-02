@@ -56,7 +56,9 @@ fn coder_findings(c: &Context<'_>, values: Vec<Node<'_>>) -> Vec<Finding> {
 }
 
 fn callback(c: &Context<'_>, n: Node<'_>, values: &[Node<'_>]) -> bool {
-    if c.method(n) == "stream_from" && (values.len() != 2 || values[0].kind() != "string") {
+    if c.method(n) == "stream_from"
+        && (values.len() != 2 || c.ruby_static_string(values[0]).is_none())
+    {
         return false;
     }
     values.last().is_some_and(|value| lambda(c, *value))
@@ -85,9 +87,8 @@ fn coder_key(c: &Context<'_>, n: Node<'_>) -> bool {
 fn valid_stream_arguments(c: &Context<'_>, n: Node<'_>, values: &[Node<'_>]) -> bool {
     c.method(n) != "stream_from"
         || values
-            .iter()
-            .find(|a| a.kind() != "comment")
-            .is_some_and(|a| a.kind() == "string")
+            .first()
+            .is_some_and(|topic| c.ruby_static_string(*topic).is_some())
 }
 
 fn active_support_json(c: &Context<'_>, n: Node<'_>) -> bool {

@@ -1,0 +1,1070 @@
+[
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = Class.new(Object) do\n class Wrong; end\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo = Class.new(Object) do\n class Wrong; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = Class.new(*[]) do\n class Wrong; end\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo = Class.new(*[]) do\n class Wrong; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = Module.new(:x) do\n class Wrong; end\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo = Module.new(:x) do\n class Wrong; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = Class.new do\n class Wrong; end\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo = Class.new do\n class Wrong; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = Class.new() do\n class Wrong; end\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo = Class.new() do\n class Wrong; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = Class.new(\n # empty arguments\n) do\n class Wrong; end\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo = Class.new(\n # empty arguments\n) do\n class Wrong; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = Class.new(Object) do\n class Foo; end\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "Foo = Class.new(Object) do\n class Foo; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = ::Class.new(Object) do\n class Wrong; end\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo = ::Class.new(Object) do\n class Wrong; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(Foo.run)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(Foo.run)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(Foo.run; Bar.run)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(Foo.run; Bar.run)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "((Foo.run; Bar.run))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "((Foo.run; Bar.run))\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "((Foo.run))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "((Foo.run))\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(A=1; Foo.run)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(A=1; Foo.run)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(A=1; B=2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "(A=1; B=2)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(Foo.run); Bar.run\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 11,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(Foo.run); Bar.run\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "Foo.run; (A=1)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 9,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "Foo.run; (A=1)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(A=1); (B=2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      },
+      {
+        "line": 1,
+        "column": 7,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(A=1); (B=2)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "if flag; (A=1; B=2); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "if flag; (A=1; B=2); end\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "if flag; ((A=1)); end\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "if flag; ((A=1)); end\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? ((A=1)) : (B=2)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "flag ? ((A=1)) : (B=2)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "flag ? (Foo.run; Bar.run) : require(\"x\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "flag ? (Foo.run; Bar.run) : require(\"x\")\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(\n Foo.run\n Bar.run\n)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(\n Foo.run\n Bar.run\n)\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(Foo.run);\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": false
+      }
+    ],
+    "corrected": "(Foo.run);\n"
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "()\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "()\n"
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n (include A, B)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n (include B\n  include A)\nend\n",
+    "rust_corrected": "class X\n (include A, B)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n (include A, B; work)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n (include B\n  include A; work)\nend\n",
+    "rust_corrected": "class X\n (include A, B; work)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n work\n (include A,B)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X\n work\n (include A,B)\nend\n",
+    "rust_corrected": "class X\n work\n (include A,B)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n ((include A,B))\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X\n ((include A,B))\nend\n",
+    "rust_corrected": "class X\n ((include A,B))\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n begin\n  include A, B\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X\n begin\n  include A, B\n end\nend\n",
+    "rust_corrected": "class X\n begin\n  include A, B\n end\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n (include A)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X\n (include A)\nend\n",
+    "rust_corrected": "class X\n (include A)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "module X\n (extend A, B)\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `extend` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module X\n (extend B\n  extend A)\nend\n",
+    "rust_corrected": "module X\n (extend A, B)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n (include A; include B)\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Put `include` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n (include B, A; )\nend\n",
+    "rust_corrected": "class X\n (include A; include B)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n (include A)\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X\n (include A)\nend\n",
+    "rust_corrected": "class X\n (include A)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n work\n (include A; include B)\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X\n work\n (include A; include B)\nend\n",
+    "rust_corrected": "class X\n work\n (include A; include B)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n ((include A; include B))\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class X\n ((include A; include B))\nend\n",
+    "rust_corrected": "class X\n ((include A; include B))\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "module X\n (prepend A; prepend B)\nend\n",
+    "path": "probe.rb",
+    "options": {
+      "EnforcedStyle": "grouped"
+    },
+    "config": {
+      "EnforcedStyle": "grouped",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      },
+      {
+        "line": 2,
+        "column": 13,
+        "message": "Put `prepend` mixins in a single statement.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module X\n (prepend B, A; )\nend\n",
+    "rust_corrected": "module X\n (prepend A; prepend B)\nend\n",
+    "rust_correctable": false,
+    "reason": "MixinGrouping remains diagnostic-only: grouping or separating inclusions can change hook behavior, constant lookup, and observable evaluation. Preserve source in every correction mode."
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _1\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n _1\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "RSpec.describe X do\n _1\n class Foo; end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub class constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "RSpec.describe X do\n _1\n class Foo; end\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _9\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n _9\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _10\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n _10\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _0\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n _0\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _1()\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n _1()\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n obj._1\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n obj._1\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n \"_1\"\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n \"_1\"\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n # _1\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n # _1\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n [1].each { _1 }\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n [1].each { _1 }\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n def read; _1; end\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n def read; _1; end\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _1\n context \"ordinary inner\" do\n  A = 1\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n _1\n context \"ordinary inner\" do\n  A = 1\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _1\n [1].each do |value|\n  A = 1\n end\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 2,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n _1\n [1].each do |value|\n  A = 1\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _1\n A, B = values\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 4,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n _1\n A, B = values\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "describe X do\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n class Foo < _1; end\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Stub class constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n class Foo < _1; end\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n class << _1; end\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n class << _1; end\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n def _1.foo; end\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n def _1.foo; end\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n class _1::Foo; end\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Stub class constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n class _1::Foo; end\n A = 1\nend\n"
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n module _1::Foo; end\n A = 1\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Stub module constant instead of declaring explicitly.",
+        "correctable": false
+      },
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": false
+      }
+    ],
+    "corrected": "describe X do\n module _1::Foo; end\n A = 1\nend\n"
+  }
+]

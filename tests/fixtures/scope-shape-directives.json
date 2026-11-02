@@ -1,0 +1,99 @@
+[
+  {
+    "cop": "Cops/NoUndiscoverableAutoLoadedConstants",
+    "source": "Foo = Class.new(Object) do\n # rubocop:disable Cops/NoUndiscoverableAutoLoadedConstants\n class Wrong; end\n # rubocop:enable Cops/NoUndiscoverableAutoLoadedConstants\nend\n",
+    "path": "$PROJECT/app/models/foo.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "This constant is undiscoverable by the auto loader due to where it is nested.",
+        "correctable": true
+      }
+    ],
+    "corrected": "Foo = Class.new(Object) do\n # rubocop:disable Cops/NoUndiscoverableAutoLoadedConstants\n class Wrong; end\n # rubocop:enable Cops/NoUndiscoverableAutoLoadedConstants\nend\n",
+    "rust_expected": [],
+    "reason": "Directive engine control: the raw RuboCop Commissioner retains suppressed offenses; the CLI and native linter must suppress these disabled diagnostics."
+  },
+  {
+    "cop": "Cops/NoTopLevelSideEffectsInAutoloadedFiles",
+    "source": "(Foo.run; Bar.run) # rubocop:disable Cops/NoTopLevelSideEffectsInAutoloadedFiles\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 1,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Top-level code in an autoloaded file runs at boot when eager loaded. Only define constants here; expose a `self.run` and invoke it via `bin/rails runner 'Klass.run'`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(Foo.run; Bar.run) # rubocop:disable Cops/NoTopLevelSideEffectsInAutoloadedFiles\n",
+    "rust_expected": [],
+    "reason": "Directive engine control: the raw RuboCop Commissioner retains suppressed offenses; the CLI and native linter must suppress these disabled diagnostics."
+  },
+  {
+    "cop": "Style/MixinGrouping",
+    "source": "class X\n (include A, B) # rubocop:disable Style/MixinGrouping\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "EnforcedStyle": "separated",
+      "SupportedStyles": [
+        "separated",
+        "grouped"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Put `include` mixins in separate statements.",
+        "correctable": true
+      }
+    ],
+    "corrected": "class X\n (include A, B) # rubocop:disable Style/MixinGrouping\nend\n",
+    "rust_corrected": "class X\n (include A, B) # rubocop:disable Style/MixinGrouping\nend\n",
+    "rust_correctable": false,
+    "reason": "Directive engine control: the raw RuboCop Commissioner retains suppressed offenses; the CLI and native linter must suppress these disabled diagnostics.",
+    "rust_expected": []
+  },
+  {
+    "cop": "Cops/NoConstantDefinitionsInSpecs",
+    "source": "describe X do\n _1\n A = 1 # rubocop:disable Cops/NoConstantDefinitionsInSpecs\nend\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 1,
+        "message": "Stub constant instead of declaring explicitly.",
+        "correctable": true
+      }
+    ],
+    "corrected": "describe X do\n _1\n A = 1 # rubocop:disable Cops/NoConstantDefinitionsInSpecs\nend\n",
+    "rust_expected": [],
+    "reason": "Directive engine control: the raw RuboCop Commissioner retains suppressed offenses; the CLI and native linter must suppress these disabled diagnostics."
+  }
+]

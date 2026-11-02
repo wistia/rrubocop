@@ -1,0 +1,491 @@
+[
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"r'\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"r'\") { |f| f.read }\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"rb'\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"rb'\") { |f| f.read }\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open('sample.txt', 'r\"') { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open('sample.txt', 'r\"') { |f| f.read }\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", %q(r)) { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.read(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", %Q[rb]) { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.binread`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.binread(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"\\x72\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.read(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"\\u0072b\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.binread`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.binread(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", ?r) { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.read(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", %q(r), &:read)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.read(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", %q(r), &:\"read\")\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.read(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", %q(r), &%s(read))\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.read(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", ?r).read\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.read(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"r\", \"r\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"r\", \"r\") { |f| f.read }\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"r\", \"r\", &:read)\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"r\", \"r\", &:read)\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"r\", &:foo).read\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"r\", &:foo).read\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"#{'r'}\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"#{'r'}\") { |f| f.read }\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", :r) { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", :r) { |f| f.read }\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.read`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.read(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", \"rb\") { |f| f.read }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.binread`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.binread(\"sample.txt\")\n"
+  },
+  {
+    "cop": "Style/FileRead",
+    "source": "p File.open(\"sample.txt\", <<~MODE) { |f| f.read }\nr\nMODE\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", <<~MODE) { |f| f.read }\nr\nMODE\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", \"w'\") { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"w'\") { |f| f.write(\"new\") }\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", \"wb'\") { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"wb'\") { |f| f.write(\"new\") }\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open('sample.txt', 'w\"') { |f| f.write('new') }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open('sample.txt', 'w\"') { |f| f.write('new') }\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", %q(w)) { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.write(\"sample.txt\", \"new\")\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", %Q[wb]) { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.binwrite`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.binwrite(\"sample.txt\", \"new\")\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", \"\\x77\") { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.write(\"sample.txt\", \"new\")\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", \"\\u0077b\") { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.binwrite`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.binwrite(\"sample.txt\", \"new\")\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", ?w) { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.write(\"sample.txt\", \"new\")\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", \"w+\") { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.write`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.write(\"sample.txt\", \"new\")\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", \"w\", \"w\") { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"w\", \"w\") { |f| f.write(\"new\") }\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", \"#{'w'}\") { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", \"#{'w'}\") { |f| f.write(\"new\") }\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", :w) { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "p File.open(\"sample.txt\", :w) { |f| f.write(\"new\") }\n"
+  },
+  {
+    "cop": "Style/FileWrite",
+    "source": "p File.open(\"sample.txt\", \"wb\") { |f| f.write(\"new\") }\n",
+    "path": "probe.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 2,
+        "message": "Use `File.binwrite`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p File.binwrite(\"sample.txt\", \"new\")\n"
+  }
+]

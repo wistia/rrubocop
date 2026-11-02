@@ -100,3 +100,31 @@ fn assert_outside(c: &Context<'_>, root: Node<'_>) {
         assert!(!in_spec(c, n));
     }
 }
+
+#[test]
+fn numbered_and_ordinary_groups_keep_their_flags_after_adaptive_indexing() {
+    let constants = (0..80).map(|i| format!("A{i} = 1\n")).collect::<String>();
+    assert_indexed_spec(&format!("describe X do\n_1\n{constants}end\n"), false);
+    assert_indexed_spec(
+        &format!("describe X do\n[1].each do\n_1\n{constants}end\nend\n"),
+        true,
+    );
+}
+
+fn assert_indexed_spec(text: &str, expected: bool) {
+    let source = SourceFile::from_bytes("probe.rb", text.as_bytes().to_vec());
+    let tree = parse_ruby(&source).unwrap();
+    let config = CopConfig::default();
+    let c = Context::new(&source, &config);
+    for n in descendants(tree.root_node()).filter(|n| n.kind() == "assignment") {
+        assert_eq!(in_spec(&c, n), expected);
+    }
+    assert!(
+        source
+            .cached(0, Contexts::default)
+            .0
+            .lock()
+            .unwrap()
+            .indexed
+    );
+}

@@ -1,0 +1,746 @@
+[
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\"room_#{id}\", coder: JSON)\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(\"room_#{id}\", coder: JSON)\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/interpolated_topic_no_offense.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\"room_#{id}\", -> {})\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(\"room_#{id}\", -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\"room\", coder: JSON)\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(\"room\", coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\"room\", -> {})\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(\"room\", -> {})\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(<<~TOPIC, coder: JSON)\n room\nTOPIC\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(<<~TOPIC, coder: JSON)\n room\nTOPIC\n",
+    "fixture": "tests/fixtures/cops/anycable/stream_from/heredoc_topic.rb"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(<<~TOPIC, -> {})\n room\nTOPIC\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Custom stream callbacks are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(<<~TOPIC, -> {})\n room\nTOPIC\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(<<~TOPIC, coder: JSON)\n room_#{id}\nTOPIC\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(<<~TOPIC, coder: JSON)\n room_#{id}\nTOPIC\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(<<'TOPIC', coder: JSON)\n room_#{id}\nTOPIC\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 23,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(<<'TOPIC', coder: JSON)\n room_#{id}\nTOPIC\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(%Q[room_#{id}], coder: JSON)\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(%Q[room_#{id}], coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(%q[room], coder: JSON)\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(%q[room], coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(\"room_\\#{id}\", coder: JSON)\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 27,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(\"room_\\#{id}\", coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(?x, coder: JSON)\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 16,
+        "message": "Custom coders are not supported in AnyCable",
+        "correctable": false
+      }
+    ],
+    "corrected": "stream_from(?x, coder: JSON)\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from('r' 'oom', coder: JSON)\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from('r' 'oom', coder: JSON)\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute ?A\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute ?A\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_capitalized_keys/character_attribute.rb"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute ?a\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute ?a\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :name, key: ?A\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute :name, key: ?A\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute <<~NAME\n Uppercase\nNAME\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute <<~NAME\n Uppercase\nNAME\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_capitalized_keys/heredoc_attribute.rb"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute <<~NAME\n lowercase\nNAME\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute <<~NAME\n lowercase\nNAME\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute(:name, key: <<~KEY)\n DisplayName\nKEY\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute(:name, key: <<~KEY)\n DisplayName\nKEY\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute <<~NAME\n Uppercase_#{id}\nNAME\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute <<~NAME\n Uppercase_#{id}\nNAME\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute ?\\u0041\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute ?\\u0041\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute ?\\n\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute ?\\n\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute <<'NAME'\n #{Uppercase}\nNAME\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute <<'NAME'\n #{Uppercase}\nNAME\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :name, key: :camelCase, &renderer\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :name, key: :camelCase, &renderer\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_capitalized_keys/forwarded_renderer_no_offense.rb"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :CamelCase, key: :camel_case, &renderer\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute :CamelCase, key: :camel_case, &renderer\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_capitalized_keys/forwarded_renderer_offense.rb"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :name, {key: :camelCase}, &renderer\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :name, {key: :camelCase}, &renderer\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :name, key: :camelCase\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Prefer keys that are lowercase or snake_case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "attribute :name, key: :camelCase\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :CamelCase, key: :camel_case\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :CamelCase, key: :camel_case\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute :name, key: :lowercase, key: :CamelCase\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute :name, key: :lowercase, key: :CamelCase\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "key = :lowercase\nattribute :CamelCase, key:\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "key = :lowercase\nattribute :CamelCase, key:\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n def title = attribute(:title) { 'value' }\nend\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n def title = attribute(:title) { 'value' }\nend\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_method_and_block/endless_parent_no_offense.rb"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n def title\n  attribute(:title) { 'value' }\n end\nend\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n def title\n  attribute(:title) { 'value' }\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n attribute(:title) { 'value' }\n def title = 'x'\nend\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class S\n attribute(:title) { 'value' }\n def title = 'x'\nend\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S < Class.new { def title; 'x'; end }\n attribute(:title) { 'value' }\nend\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 1,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class S < Class.new { def title; 'x'; end }\n attribute(:title) { 'value' }\nend\n",
+    "fixture": "tests/fixtures/cops/serializers/avoid_method_and_block/superclass_parent.rb"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S < Class.new { def title; 'x'; end }\n attribute(:title) { 'value' }\n other\nend\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S < Class.new { def title; 'x'; end }\n attribute(:title) { 'value' }\n other\nend\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n with(Class.new { def title; 'x'; end }) do\n  attribute(:title) { 'value' }\n end\nend\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Combining method and block could indicate a code error. The method is ignored in this case.",
+        "correctable": false
+      }
+    ],
+    "corrected": "class S\n with(Class.new { def title; 'x'; end }) do\n  attribute(:title) { 'value' }\n end\nend\n"
+  },
+  {
+    "cop": "Serializers/AvoidMethodAndBlock",
+    "source": "class S\n with(Class.new { def title; 'x'; end }) do\n  attribute(:title) { 'value' }\n  other\n end\nend\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "class S\n with(Class.new { def title; 'x'; end }) do\n  attribute(:title) { 'value' }\n  other\n end\nend\n"
+  },
+  {
+    "cop": "Cops/NoCSVGenerate",
+    "source": "CSV.generate { |csv| csv << row }\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "check_range": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid using `CSV.generate`. Please use `CSV.safe_generate` instead to avoid excel macro attacks.",
+        "correctable": false
+      }
+    ],
+    "corrected": "CSV.generate { |csv| csv << row }\n",
+    "expected_ranges": [
+      {
+        "line": 1,
+        "column": 0,
+        "length": 12
+      }
+    ],
+    "fixture": "tests/fixtures/cops/cops/no_csvgenerate/block_range.rb"
+  },
+  {
+    "cop": "Cops/NoCSVGenerate",
+    "source": "CSV.generate() { |csv| csv << row }\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "check_range": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid using `CSV.generate`. Please use `CSV.safe_generate` instead to avoid excel macro attacks.",
+        "correctable": false
+      }
+    ],
+    "corrected": "CSV.generate() { |csv| csv << row }\n",
+    "expected_ranges": [
+      {
+        "line": 1,
+        "column": 0,
+        "length": 14
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCSVGenerate",
+    "source": "CSV.generate(col_sep: \",\") do |csv|\n csv << row\nend\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "check_range": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid using `CSV.generate`. Please use `CSV.safe_generate` instead to avoid excel macro attacks.",
+        "correctable": false
+      }
+    ],
+    "corrected": "CSV.generate(col_sep: \",\") do |csv|\n csv << row\nend\n",
+    "expected_ranges": [
+      {
+        "line": 1,
+        "column": 0,
+        "length": 26
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCSVGenerate",
+    "source": "CSV.generate(col_sep: \",\")\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "check_range": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid using `CSV.generate`. Please use `CSV.safe_generate` instead to avoid excel macro attacks.",
+        "correctable": false
+      }
+    ],
+    "corrected": "CSV.generate(col_sep: \",\")\n",
+    "expected_ranges": [
+      {
+        "line": 1,
+        "column": 0,
+        "length": 26
+      }
+    ]
+  },
+  {
+    "cop": "Cops/NoCSVGenerate",
+    "source": "CSV.safe_generate { |csv| csv << row }\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "check_range": true,
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "CSV.safe_generate { |csv| csv << row }\n",
+    "expected_ranges": []
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(<<~TOPIC, coder: JSON)\n room\n other\nTOPIC\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(<<~TOPIC, coder: JSON)\n room\n other\nTOPIC\n"
+  },
+  {
+    "cop": "Serializers/AvoidCapitalizedKeys",
+    "source": "attribute <<~NAME\n Uppercase\n Other\nNAME\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "attribute <<~NAME\n Uppercase\n Other\nNAME\n"
+  },
+  {
+    "cop": "AnyCable/StreamFrom",
+    "source": "stream_from(<<~TOPIC, coder: JSON)\nTOPIC\n",
+    "path": "$PROJECT/spec/call_literals_spec.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "stream_from(<<~TOPIC, coder: JSON)\nTOPIC\n"
+  }
+]

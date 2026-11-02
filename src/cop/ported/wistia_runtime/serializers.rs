@@ -23,16 +23,15 @@ pub(super) fn capitalized(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 
 fn capitalized_literal(c: &Context<'_>, n: Node<'_>) -> bool {
-    if n.kind() == "chained_string" {
-        return false;
-    }
-    c.static_value(n).is_some_and(|value| {
-        if value.is_ascii() {
-            value.bytes().any(|b| b.is_ascii_uppercase())
-        } else {
-            value.to_lowercase() != value
-        }
-    })
+    c.static_symbol(n)
+        .or_else(|| c.ruby_static_string(n))
+        .is_some_and(|value| {
+            if value.is_ascii() {
+                value.bytes().any(|b| b.is_ascii_uppercase())
+            } else {
+                value.to_lowercase() != value
+            }
+        })
 }
 
 pub(super) fn key_block(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -76,7 +75,28 @@ fn attribute_block(c: &Context<'_>, n: Node<'_>) -> bool {
 }
 
 fn attribute_key<'n>(c: &Context<'_>, n: Node<'n>) -> Option<Node<'n>> {
-    option_pairs(n).find(|pair| {
-        field(*pair, "key").is_some_and(|key| c.static_symbol(key).as_deref() == Some("key"))
-    })
+    let arguments = args(n)
+        .into_iter()
+        .filter(|argument| argument.kind() != "comment")
+        .collect::<Vec<_>>();
+    let last = *arguments.last()?;
+    if last.kind() == "hash" {
+        return option_pairs(last).find(|pair| key_pair(c, *pair));
+    }
+    implicit_key(c, &arguments)
+}
+fn implicit_key<'n>(c: &Context<'_>, arguments: &[Node<'n>]) -> Option<Node<'n>> {
+    arguments
+        .iter()
+        .rev()
+        .copied()
+        .take_while(|argument| implicit_option(*argument))
+        .filter(|pair| key_pair(c, *pair))
+        .last()
+}
+fn implicit_option(n: Node<'_>) -> bool {
+    matches!(n.kind(), "pair" | "hash_splat_argument")
+}
+fn key_pair(c: &Context<'_>, n: Node<'_>) -> bool {
+    field(n, "key").is_some_and(|key| c.static_symbol(key).as_deref() == Some("key"))
 }

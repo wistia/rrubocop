@@ -1,3 +1,5 @@
+mod mode;
+use mode::{file_mode, read_argument};
 mod heredoc;
 mod safety;
 use super::super::context::*;
@@ -20,35 +22,8 @@ fn file_access(c: &Context<'_>, n: Node<'_>, writing: bool) -> Vec<Finding> {
         n,
         target,
         content,
-        &access_method(mode, writing),
+        &access_method(&mode, writing),
     )]
-}
-fn file_mode<'c>(c: &'c Context<'_>, n: Node<'_>, writing: bool) -> Option<&'c str> {
-    if !file_open(c, n) {
-        return None;
-    }
-    let a = args(n);
-    if !argument_count(&a, writing) {
-        return None;
-    }
-    let mode = a
-        .get(1)
-        .filter(|a| a.kind() == "string")
-        .map(|a| c.value(*a))
-        .unwrap_or("r");
-    (valid_mode(mode, writing) && valid_options(&a)).then_some(mode)
-}
-fn valid_mode(mode: &str, writing: bool) -> bool {
-    if writing {
-        ["w", "wt", "wb", "w+", "w+t", "w+b"].contains(&mode)
-    } else {
-        ["r", "rt", "rb", "r+", "r+t", "r+b"].contains(&mode)
-    }
-}
-fn valid_options(a: &[Node<'_>]) -> bool {
-    a.iter()
-        .skip(1)
-        .all(|a| matches!(a.kind(), "string" | "block_argument"))
 }
 fn access_method(mode: &str, writing: bool) -> String {
     format!(
@@ -94,9 +69,7 @@ fn file_body<'a>(
     call_content(call, writing).map(|content| (target, content))
 }
 fn read_block_pass(c: &Context<'_>, n: Node<'_>) -> bool {
-    args(n)
-        .iter()
-        .any(|a| a.kind() == "block_argument" && c.text(*a) == "&:read")
+    args(n).iter().any(|a| read_argument(c, *a))
 }
 fn file_call<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
     if let Some(b) = block(n) {
@@ -127,14 +100,5 @@ fn call_content(n: Node<'_>, writing: bool) -> Option<Option<Node<'_>>> {
     }
 }
 
-fn file_open(c: &Context<'_>, n: Node<'_>) -> bool {
-    c.method(n) == "open" && ["File", "::File"].contains(&c.receiver(n))
-}
-
-fn argument_count(arguments: &[Node<'_>], writing: bool) -> bool {
-    if writing {
-        arguments.len() == 2
-    } else {
-        !arguments.is_empty()
-    }
-}
+#[cfg(test)]
+mod mode_tests;
