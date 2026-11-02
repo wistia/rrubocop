@@ -236,25 +236,12 @@ impl<'a, 'b> Investigation<'a, 'b> {
     }
     pub(super) fn finish(self) {
         if let Some(corrections) = self.corrections {
-            if corrections.len() > self.initial {
-                let owner = corrections[self.initial].owner;
-                let ranges: Vec<_> = corrections[self.initial..]
-                    .iter()
-                    .map(|c| (c.start, c.end))
-                    .collect();
-                for (start, bytes) in self.source.as_bytes().windows(2).enumerate() {
-                    if bytes == b"\r\n" && !ranges.iter().any(|(a, b)| start >= *a && start < *b) {
-                        corrections.push(Correction {
-                            start,
-                            end: start + 1,
-                            replacement: String::new(),
-                            cop_name: self.cop.name(),
-                            cop_index: 0,
-                            owner,
-                        });
-                    }
-                }
-            }
+            crate::cop::shared::normalize_corrected_crlf(
+                self.source,
+                self.cop.name(),
+                corrections,
+                self.initial,
+            );
         }
     }
 }

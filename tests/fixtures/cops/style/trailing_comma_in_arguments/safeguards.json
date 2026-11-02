@@ -1,0 +1,406 @@
+[
+  {
+    "id": "forwarding-comma-lf",
+    "original": "def foo(...);bar(\n one,\n ...\n);end\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 2,
+        "length": 3,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "def foo(...);bar(\n one,\n ...,\n);end\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(...);bar(\n one,\n ...\n);end\n"
+  },
+  {
+    "id": "forwarding-consistent_comma-lf",
+    "original": "def foo(...);bar(\n one,\n ...\n);end\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 2,
+        "length": 3,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "def foo(...);bar(\n one,\n ...,\n);end\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(...);bar(\n one,\n ...\n);end\n"
+  },
+  {
+    "id": "command-owned-comma-lf",
+    "original": "outer(foo +1,\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n other\n)\n"
+  },
+  {
+    "id": "command-owned-consistent_comma-lf",
+    "original": "outer(foo +1,\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n other\n)\n"
+  },
+  {
+    "id": "command-owned-hash-comma-lf",
+    "original": "outer(foo +{a: 1,\n b: 2},\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +{a: 1,\n b: 2},\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +{a: 1,\n b: 2},\n other\n)\n"
+  },
+  {
+    "id": "command-owned-hash-consistent_comma-lf",
+    "original": "outer(foo +{a: 1,\n b: 2},\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +{a: 1,\n b: 2},\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +{a: 1,\n b: 2},\n other\n)\n"
+  },
+  {
+    "id": "logical-unary-comma-lf",
+    "original": "outer(foo -1,\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo -1,\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo -1,\n other\n)\n"
+  },
+  {
+    "id": "logical-unary-consistent_comma-lf",
+    "original": "outer(foo -1,\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo -1,\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo -1,\n other\n)\n"
+  },
+  {
+    "id": "command-edge-0-comma",
+    "original": "outer(foo +1,\n &block\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 6,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n &block,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n &block\n)\n"
+  },
+  {
+    "id": "command-edge-0-consistent_comma",
+    "original": "outer(foo +1,\n &block\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 6,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n &block,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n &block\n)\n"
+  },
+  {
+    "id": "command-edge-1-comma",
+    "original": "outer(foo +1,\n **options\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 9,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n **options,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n **options\n)\n"
+  },
+  {
+    "id": "command-edge-1-consistent_comma",
+    "original": "outer(foo +1,\n **options\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 9,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n **options,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n **options\n)\n"
+  },
+  {
+    "id": "command-edge-2-comma",
+    "original": "outer(foo +1,\n a: 1,\n b: 2\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 2,
+        "length": 4,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n a: 1,\n b: 2,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n a: 1,\n b: 2\n)\n"
+  },
+  {
+    "id": "command-edge-2-consistent_comma",
+    "original": "outer(foo +1,\n a: 1,\n b: 2\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 2,
+        "length": 4,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n a: 1,\n b: 2,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n a: 1,\n b: 2\n)\n"
+  },
+  {
+    "id": "command-edge-5-comma",
+    "original": "outer(foo +1,\n *items\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 6,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n *items,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n *items\n)\n"
+  },
+  {
+    "id": "command-edge-5-consistent_comma",
+    "original": "outer(foo +1,\n *items\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 1
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 6,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo +1,\n *items,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo +1,\n *items\n)\n"
+  }
+]

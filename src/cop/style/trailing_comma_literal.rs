@@ -1,7 +1,9 @@
 //! Shared implementation of Ruby's TrailingComma literal mixin.
 
 use crate::cop::shared::{node_bytes, push_replace};
-use crate::cop::style::trailing_comma_args::{begins_its_line, each_elem_own_line};
+use crate::cop::style::trailing_comma_args::{
+    begins_its_line, each_elem_own_line, last_item_line_start,
+};
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -64,20 +66,6 @@ fn should_have_comma(
     }
 }
 
-fn last_line(source: &SourceFile, start: usize, end: usize) -> usize {
-    let bytes = &source.as_bytes()[start..end];
-    let last = bytes
-        .iter()
-        .rposition(|byte| *byte == b'\n')
-        .map_or(0, |position| position + 1);
-    start
-        + last
-        + bytes[last..]
-            .iter()
-            .position(|byte| !byte.is_ascii_whitespace())
-            .unwrap_or(0)
-}
-
 pub(super) fn check_literal(
     cop: &dyn Cop,
     source: &SourceFile,
@@ -119,7 +107,7 @@ pub(super) fn check_literal(
             )
         }
         (None, true) => (
-            last_line(source, last_start, last_end),
+            last_item_line_start(source, last_start, last_end),
             last_end,
             format!("Put a comma after the last item of a multiline {unit}."),
             last_end,
