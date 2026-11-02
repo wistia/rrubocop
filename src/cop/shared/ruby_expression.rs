@@ -90,6 +90,45 @@ fn send_receiver(node: Node<'_>) -> Option<Node<'_>> {
         _ => call_receiver(n),
     }
 }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ShorthandValue {
+    Constant,
+    Local,
+    Send,
+}
+pub fn shorthand_value(source: &SourceFile, key: Node<'_>) -> Option<ShorthandValue> {
+    let pair = key.parent()?;
+    if key.kind() != "hash_key_symbol"
+        || pair.kind() != "pair"
+        || pair.child_by_field_name("key") != Some(key)
+        || pair.child_by_field_name("value").is_some()
+    {
+        return None;
+    }
+    if !node_text(source, key).chars().next()?.is_lowercase() {
+        Some(ShorthandValue::Constant)
+    } else if crate::cop::ported::local_identifier(source, key) {
+        Some(ShorthandValue::Local)
+    } else {
+        Some(ShorthandValue::Send)
+    }
+}
+
+pub fn regular_send_receiver<'n>(source: &SourceFile, node: Node<'n>) -> Option<Option<Node<'n>>> {
+    if let Some(role) = shorthand_value(source, node) {
+        return (role == ShorthandValue::Send).then_some(None);
+    }
+    if node.kind() == "identifier"
+        && matches!(
+            node_bytes(source, node),
+            b"__FILE__" | b"__LINE__" | b"__ENCODING__"
+        )
+    {
+        return None;
+    }
+    (is_send(source, node) && !safe_send(source, node)).then(|| send_receiver(node))
+}
+
 fn call_args(node: Node<'_>) -> Vec<Node<'_>> {
     let n = target(node);
     let mut args = match n.kind() {
@@ -693,6 +732,66 @@ mod tests {
                 "Node#eql?: {}",
                 case.source
             );
+        }
+    }
+    #[test]
+    fn shorthand_value_roles_match_original_parser_builder() {
+        #[derive(serde::Deserialize)]
+        struct Role {
+            byte: usize,
+            name: String,
+            node_type: String,
+            local: bool,
+            pure: bool,
+        }
+        #[derive(serde::Deserialize)]
+        struct Case {
+            id: String,
+            original: String,
+            reference_version: String,
+            target_ruby_version: f64,
+            parser_errors: Vec<String>,
+            ruby_roles: Vec<Role>,
+        }
+        let cases: Vec<Case> = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/model/underscore-shorthand-roles.json"
+        )))
+        .unwrap();
+        for case in cases {
+            assert_eq!(case.reference_version, "1.65.1");
+            assert_eq!(case.target_ruby_version, 3.4);
+            assert!(case.parser_errors.is_empty(), "{}", case.id);
+            let source = SourceFile::from_bytes("shorthand.rb", case.original.into_bytes());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(!tree.root_node().has_error(), "{}", case.id);
+            let mut keys = Vec::new();
+            crate::cop::shared::for_each_descendant(tree.root_node(), |n| {
+                if shorthand_value(&source, n).is_some() {
+                    keys.push(n)
+                }
+            });
+            keys.sort_by_key(|n| n.start_byte());
+            assert_eq!(keys.len(), case.ruby_roles.len(), "{}", case.id);
+            for (key, expected) in keys.into_iter().zip(case.ruby_roles) {
+                let role = shorthand_value(&source, key).unwrap();
+                assert_eq!(key.start_byte(), expected.byte, "{}", case.id);
+                assert_eq!(node_text(&source, key), expected.name, "{}", case.id);
+                let kind = match role {
+                    ShorthandValue::Constant => "const",
+                    ShorthandValue::Local => "lvar",
+                    ShorthandValue::Send => "send",
+                };
+                assert_eq!(kind, expected.node_type, "{}", case.id);
+                assert_eq!(role == ShorthandValue::Local, expected.local, "{}", case.id);
+                assert_eq!(role != ShorthandValue::Send, expected.pure, "{}", case.id);
+                assert_eq!(
+                    regular_send_receiver(&source, key).is_some(),
+                    role == ShorthandValue::Send,
+                    "{}",
+                    case.id
+                );
+            }
         }
     }
     #[test]
