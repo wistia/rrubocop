@@ -371,3 +371,30 @@ The framework agent's isolated static_symbol/bare_call_identifier helper is reus
 Additional original-engine probes cover aliases, undef, method definition names,
 block parameters, local variables named let, and defined expectation helpers.
 Quoted labels are classified as symbols while string-arrow keys remain strings.
+
+## Batch 14: subject scopes and overwritten setup
+
+SubjectStub, RepeatedSubjectCall, and OverwritingSetup replace three initial
+stubs. The reviewed total is 62 original stubs plus ten existing rules; 18
+original stubs and six existing implementations remain open. The matrix has
+1,158 strict comparisons across 72 rules, with the same 15 safeguards and 35
+correction-disable controls. All 48 RSpec/RSpecRails tests pass. The pinned import
+retains 849 specimens, with thirteen earlier host templates and three invalid
+original yield specimens still explicit.
+
+Separate original-source review covered top-level and nested groups, inherited
+subject names, ordinary-let overrides, the original restricted Ruby AST traversal,
+example-local memoization tracking and setup-name conversion. All thirteen
+original SubjectStub top-level method variants are expanded through closed Prism
+substitution. Additional probes cover conditionals versus assignments versus
+methods, index arguments, eager-let behavior, string subject names, chained first
+calls, aliases versus the implicit subject, conditional expectations and duplicate
+calls within one expectation block.
+
+Legacy Ruby AST classification matters: concatenated strings and multi-line
+heredocs are dstr negatives for OverwritingSetup, while character literals and
+single-line heredocs are str positives. The isolated helper change 27cc5ad reuses
+the existing ruby_static_string decoder as a fallback; no second decoder is
+introduced and its single-part guard is retained. Exact original diagnostic
+messages, including a newline in a heredoc-defined name, are covered. These three
+rules perform no source correction or fixture execution.

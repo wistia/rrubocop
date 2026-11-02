@@ -12,10 +12,10 @@ module RSpecUpstreamSources
       node.parts.map { |part| literal_parts(part) }.join
     when Prism::EmbeddedStatementsNode
       expression = node.statements&.body&.first
-      parameter = expression.is_a?(Prism::LocalVariableReadNode) && expression.name == :include_method
-      bare_call = expression.is_a?(Prism::CallNode) && expression.receiver.nil? && expression.name == :include_method && expression.arguments.nil?
+      parameter = expression.is_a?(Prism::LocalVariableReadNode) && %i[include_method method].include?(expression.name)
+      bare_call = expression.is_a?(Prism::CallNode) && expression.receiver.nil? && %i[include_method method].include?(expression.name) && expression.arguments.nil?
       if node.statements&.body&.one? && (parameter || bare_call)
-        "%{include_method}"
+        "%{#{expression.name}}"
       else
         "HOST_INTERPOLATION_MARKER"
       end
@@ -92,6 +92,8 @@ Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
     source = RSpecUpstreamSources.literal_parts(argument).lines.reject { |line| line.match?(/\A\s*[\^~]+/) }.join
     variants = if File.basename(path) == "repeated_include_example_spec.rb" && source.include?("%{include_method}")
       %w[include_examples it_behaves_like it_should_behave_like].map { |method| ["#{id}:#{method}", source.gsub("%{include_method}", method)] }
+    elsif File.basename(path) == "subject_stub_spec.rb" && source.include?("%{method}")
+      %w[describe xdescribe fdescribe context xcontext fcontext feature xfeature ffeature example_group shared_examples shared_examples_for shared_context].map { |method| ["#{id}:#{method}", source.gsub("%{method}", method)] }
     else
       [[id, source]]
     end

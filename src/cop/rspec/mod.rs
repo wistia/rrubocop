@@ -219,3 +219,5 @@ pub fn register_all(registry: &mut CopRegistry) {
 
 #[cfg(test)]
 mod parity_tests;
+
+mod subject_scopes;
