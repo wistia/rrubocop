@@ -21,6 +21,7 @@ def arguments():
     parser.add_argument("--gemfile", type=pathlib.Path)
     parser.add_argument("--output", type=pathlib.Path, required=True)
     parser.add_argument("--jobs", type=int, default=4)
+    parser.add_argument("--rubocop-version", default="1.65.1")
     return parser.parse_args()
 
 
@@ -81,8 +82,9 @@ def compare(index_case, settings, environment):
         config.write_text(json.dumps(document))
         for mode in ("-a", "-A"):
             cli_options = ["--config", str(config), "--only", settings.cop, "--cache", "false", "--format", "json", mode]
+            version = case.get("reference_version", settings.rubocop_version)
             observations = {
-                name: observe(executable, cli_options, path, case["original"], settings.ruby.parent.parent, environment)
+                name: observe(executable, cli_options + (["--rubocop-version", version] if name == "rust" else []), path, case["original"], settings.ruby.parent.parent, environment)
                 for name, executable in (("ruby", settings.ruby), ("rust", settings.rust))
             }
             rows.append({
@@ -90,6 +92,7 @@ def compare(index_case, settings, environment):
                 "id": case["id"],
                 "original": case["original"],
                 "mode": mode,
+                "reference_version": version,
                 "equal_scope": all(
                     observations["ruby"][key] is not None
                     and observations["ruby"][key] == observations["rust"][key]

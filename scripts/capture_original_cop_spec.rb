@@ -21,6 +21,7 @@ module CaptureOperatorSpec
       id: RSpec.current_example.full_description,
       original: processed_source.raw_source,
       path: processed_source.file_path,
+      reference_version: RuboCop::Version::STRING,
       config:,
       sibling_cops: siblings,
       ruby_diagnostics: captured_diagnostics(result),
@@ -80,6 +81,6 @@ end
 CopHelper.prepend(CaptureOperatorSpec)
 status = RSpec::Core::Runner.run([spec_path, "--options", "/dev/null", "--format", "progress"])
 File.write(output_path, JSON.pretty_generate(CaptureOperatorSpec.captured.uniq { |entry|
-  [entry[:original], entry[:config], entry[:path]]
+  [entry[:original], entry[:config], entry[:path], entry[:reference_version]]
 }) + "\n")
 exit status

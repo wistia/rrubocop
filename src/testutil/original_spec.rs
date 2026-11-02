@@ -19,7 +19,7 @@ pub fn assert_original_spec_parity(cop: &dyn Cop, fixture: &str) {
         );
         let tree = crate::parse::parse_ruby(&source).unwrap();
         let map = CodeMap::from_tree(tree.root_node(), source.as_bytes());
-        let config = CopConfig {
+        let mut config = CopConfig {
             options: case["config"]
                 .as_object()
                 .map(|object| {
@@ -31,6 +31,17 @@ pub fn assert_original_spec_parity(cop: &dyn Cop, fixture: &str) {
                 .unwrap_or_default(),
             ..CopConfig::default()
         };
+        config
+            .options
+            .entry("__RubocopVersion".into())
+            .or_insert_with(|| {
+                serde_yml::Value::String(
+                    case.get("reference_version")
+                        .and_then(serde_json::Value::as_str)
+                        .unwrap_or("1.65.1")
+                        .into(),
+                )
+            });
         let mut diagnostics = Vec::new();
         let mut corrections = Vec::new();
         cop.check_lines(&source, &config, &mut diagnostics, Some(&mut corrections));
