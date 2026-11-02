@@ -49,7 +49,13 @@ impl LocalIdentifiers {
                         .iter()
                         .map(|write| (write.byte, entry.intro_byte)),
                 );
-                bytes.extend(entry.reads.iter().map(|read| (read.byte, entry.intro_byte)));
+                bytes.extend(
+                    entry
+                        .reads
+                        .iter()
+                        .filter(|read| !read.synthetic)
+                        .map(|read| (read.byte, entry.intro_byte)),
+                );
             }
         }
         Self(bytes)
