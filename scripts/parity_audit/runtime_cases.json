@@ -2263,5 +2263,783 @@
     "rust_correctable": false,
     "rust_corrected": "$_ = \"pear\"\np(if !!/app/; :yes; else; :no; end)\n",
     "reason": "Keep high-precedence ! regexp conditions report-only: inserting =~ changes operator binding and Ruby repeats the correction into invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table :widgets, id: false, metadata: {tag: :kept}\np $tables\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 13,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table :widgets, id: false, metadata: {tag: :kept}, charset: \"utf8mb4\"\np $tables\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\nseen = []\ncreate_table :widgets, id: false do |table|\n seen << table\nend\np [$tables, seen]\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "rust_corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\nseen = []\ncreate_table :widgets, id: false, charset: \"utf8mb4\" do |table|\n seen << table\nend\np [$tables, seen]\n",
+    "reason": "Insert the migration option in the argument list while preserving its callback; Ruby appends outside the block and generates invalid Ruby.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 14,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\nseen = []\ncreate_table :widgets, id: false, charset: \"utf8mb4\" do |table|\n seen << table\nend\np [$tables, seen]\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table(:widgets, id: false)\np $tables\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "rust_corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table(:widgets, id: false, charset: \"utf8mb4\")\np $tables\n",
+    "reason": "Keep migration option insertion inside parentheses; pinned Ruby appends outside the call and generates invalid Ruby.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 13,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table(:widgets, id: false), charset: \"utf8mb4\"\np $tables\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = {id: false}\ncreate_table :widgets, **options\np $tables\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "rust_correctable": false,
+    "rust_corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = {id: false}\ncreate_table :widgets, **options\np $tables\n",
+    "reason": "Existing dynamic keyword-bundle safeguard keeps the migration change report-only.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 14,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = {id: false}\ncreate_table :widgets, **options, charset: \"utf8mb4\"\np $tables\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = create_table(:widgets, charset: \"latin1\")\np [options[:charset], $tables]\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = create_table(:widgets, charset: \"latin1\")\np [options[:charset], $tables]\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table :widgets, id: false, metadata: {tag: :kept}\np $tables\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 13,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table :widgets, id: false, metadata: {tag: :kept}, collation: \"utf8mb4_unicode_ci\"\np $tables\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\nseen = []\ncreate_table :widgets, id: false do |table|\n seen << table\nend\np [$tables, seen]\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "rust_corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\nseen = []\ncreate_table :widgets, id: false, collation: \"utf8mb4_unicode_ci\" do |table|\n seen << table\nend\np [$tables, seen]\n",
+    "reason": "Insert the migration option in the argument list while preserving its callback; Ruby appends outside the block and generates invalid Ruby.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 14,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\nseen = []\ncreate_table :widgets, id: false, collation: \"utf8mb4_unicode_ci\" do |table|\n seen << table\nend\np [$tables, seen]\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table(:widgets, id: false)\np $tables\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "rust_corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table(:widgets, id: false, collation: \"utf8mb4_unicode_ci\")\np $tables\n",
+    "reason": "Keep migration option insertion inside parentheses; pinned Ruby appends outside the call and generates invalid Ruby.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 13,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\ncreate_table(:widgets, id: false), collation: \"utf8mb4_unicode_ci\"\np $tables\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = {id: false}\ncreate_table :widgets, **options\np $tables\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "rust_correctable": false,
+    "rust_corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = {id: false}\ncreate_table :widgets, **options\np $tables\n",
+    "reason": "Existing dynamic keyword-bundle safeguard keeps the migration change report-only.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 14,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = {id: false}\ncreate_table :widgets, **options, collation: \"utf8mb4_unicode_ci\"\np $tables\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = create_table(:widgets, collation: \"latin1_bin\")\np [options[:collation], $tables]\n",
+    "path": "db/migrate/probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "$tables = []\ndef create_table(name, **options)\n if options.key?(:charset)\n  raise \"bad charset\" unless [\"utf8mb4\", \"latin1\"].include?(options[:charset])\n end\n if options.key?(:collation)\n  raise \"bad collation\" unless [\"utf8mb4_unicode_ci\", \"latin1_bin\"].include?(options[:collation])\n end\n yield(name) if block_given?\n $tables << [name, options[:id], options[:metadata]]\n options\nend\noptions = create_table(:widgets, collation: \"latin1_bin\")\np [options[:collation], $tables]\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require_relative \"loaded.rb\"\np $load_count\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {
+        "loaded.rb": "$load_count ||= 0\n$load_count += 1\n"
+      },
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 24,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require_relative \"loaded\"\np $load_count\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "p [require_relative(\"loaded.rb\"), require_relative(\"loaded.rb\")]\np $load_count\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {
+        "loaded.rb": "$load_count ||= 0\n$load_count += 1\n"
+      },
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 27,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      },
+      {
+        "line": 1,
+        "column": 58,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [require_relative(\"loaded\"), require_relative(\"loaded\")]\np $load_count\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "require_relative \"loaded\\x2Erb\"\np $load_count\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {
+        "loaded.rb": "$load_count ||= 0\n$load_count += 1\n"
+      },
+      "watch": []
+    },
+    "rust_correctable": false,
+    "rust_corrected": "require_relative \"loaded\\x2Erb\"\np $load_count\n",
+    "reason": "Existing encoded-extension safeguard preserves the escaped filename instead of deleting raw bytes from an escape.",
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 27,
+        "message": "Redundant `.rb` file extension detected.",
+        "correctable": true
+      }
+    ],
+    "corrected": "require_relative \"loaded\\x2\"\np $load_count\n"
+  },
+  {
+    "cop": "Style/RedundantFileExtensionInRequire",
+    "source": "name = \"loaded.rb\"\nrequire_relative name\np $load_count\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {
+        "loaded.rb": "$load_count ||= 0\n$load_count += 1\n"
+      },
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "name = \"loaded.rb\"\nrequire_relative name\np $load_count\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "value = \"\"\"value\"\"\"\np [value, value.bytes]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = \"value\"\np [value, value.bytes]\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "value = '''value'''\np [value, value.bytes]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = 'value'\np [value, value.bytes]\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "seen = []\nvalue = \"\"\"#{seen << :called; \"value\"}\"\"\"\np [value, seen]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "seen = []\nvalue = \"#{seen << :called; \"value\"}\"\np [value, seen]\n"
+  },
+  {
+    "cop": "Lint/TripleQuotes",
+    "source": "value = \"\"\"café\"\"\"\np [value, value.encoding.name, value.bytes]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Delimiting a string with multiple quotes has no effect, use a single quote instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "value = \"café\"\np [value, value.encoding.name, value.bytes]\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "p [1, 2].map { |a, b,| [a, b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [1, 2].map { |a, b| [a, b] }\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "p [[1, 2], [3, 4]].map { |a, b,| [a, b] }\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 30,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "p [[1, 2], [3, 4]].map { |a, b| [a, b] }\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "fn = lambda { |a, b,| [a, b] }\np fn.call(1, 2)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 19,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true
+      }
+    ],
+    "corrected": "fn = lambda { |a, b| [a, b] }\np fn.call(1, 2)\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "seen = []\nvalues = [1, 2]\np values.each { |value| seen << value }.map { |a, b,| [a, b] }\np seen\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "seen = []\nvalues = [1, 2]\np values.each { |value| seen << value }.map { |a, b,| [a, b] }\np seen\n"
+  },
+  {
+    "cop": "Lint/DeprecatedConstants",
+    "source": "Object.const_set(:NIL, nil)\nObject.const_set(:TRUE, true)\nObject.const_set(:FALSE, false)\np [NIL, TRUE, FALSE]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "DeprecatedConstants": {
+        "NIL": {
+          "Alternative": "nil",
+          "DeprecatedVersion": "2.4"
+        },
+        "TRUE": {
+          "Alternative": "true",
+          "DeprecatedVersion": "2.4"
+        },
+        "FALSE": {
+          "Alternative": "false",
+          "DeprecatedVersion": "2.4"
+        },
+        "Net::HTTPServerException": {
+          "Alternative": "Net::HTTPClientException",
+          "DeprecatedVersion": "2.6"
+        },
+        "Random::DEFAULT": {
+          "Alternative": "Random.new",
+          "DeprecatedVersion": "3.0"
+        },
+        "Struct::Group": {
+          "Alternative": "Etc::Group",
+          "DeprecatedVersion": "3.0"
+        },
+        "Struct::Passwd": {
+          "Alternative": "Etc::Passwd",
+          "DeprecatedVersion": "3.0"
+        }
+      },
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 3,
+        "message": "Use `nil` instead of `NIL`, deprecated since Ruby 2.4.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 8,
+        "message": "Use `true` instead of `TRUE`, deprecated since Ruby 2.4.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 14,
+        "message": "Use `false` instead of `FALSE`, deprecated since Ruby 2.4.",
+        "correctable": true
+      }
+    ],
+    "corrected": "Object.const_set(:NIL, nil)\nObject.const_set(:TRUE, true)\nObject.const_set(:FALSE, false)\np [nil, true, false]\n"
+  },
+  {
+    "cop": "Lint/DeprecatedConstants",
+    "source": "Object.const_set(:NIL, nil)\np ::NIL\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "DeprecatedConstants": {
+        "NIL": {
+          "Alternative": "nil",
+          "DeprecatedVersion": "2.4"
+        },
+        "TRUE": {
+          "Alternative": "true",
+          "DeprecatedVersion": "2.4"
+        },
+        "FALSE": {
+          "Alternative": "false",
+          "DeprecatedVersion": "2.4"
+        },
+        "Net::HTTPServerException": {
+          "Alternative": "Net::HTTPClientException",
+          "DeprecatedVersion": "2.6"
+        },
+        "Random::DEFAULT": {
+          "Alternative": "Random.new",
+          "DeprecatedVersion": "3.0"
+        },
+        "Struct::Group": {
+          "Alternative": "Etc::Group",
+          "DeprecatedVersion": "3.0"
+        },
+        "Struct::Passwd": {
+          "Alternative": "Etc::Passwd",
+          "DeprecatedVersion": "3.0"
+        }
+      },
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 2,
+        "message": "Use `nil` instead of `::NIL`, deprecated since Ruby 2.4.",
+        "correctable": true
+      }
+    ],
+    "corrected": "Object.const_set(:NIL, nil)\np nil\n"
+  },
+  {
+    "cop": "Lint/DeprecatedConstants",
+    "source": "module RuntimeAlias; end\nRuntimeAlias.const_set(:Old, String)\nRuntimeAlias.const_set(:Current, String)\np [\"value\".is_a?(RuntimeAlias::Old), RuntimeAlias::Old == RuntimeAlias::Current]\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true,
+      "DeprecatedConstants": {
+        "RuntimeAlias::Old": {
+          "Alternative": "RuntimeAlias::Current",
+          "DeprecatedVersion": "3.0"
+        }
+      }
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "DeprecatedConstants": {
+        "RuntimeAlias::Old": {
+          "Alternative": "RuntimeAlias::Current",
+          "DeprecatedVersion": "3.0"
+        }
+      },
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 17,
+        "message": "Use `RuntimeAlias::Current` instead of `RuntimeAlias::Old`, deprecated since Ruby 3.0.",
+        "correctable": true
+      },
+      {
+        "line": 4,
+        "column": 37,
+        "message": "Use `RuntimeAlias::Current` instead of `RuntimeAlias::Old`, deprecated since Ruby 3.0.",
+        "correctable": true
+      }
+    ],
+    "corrected": "module RuntimeAlias; end\nRuntimeAlias.const_set(:Old, String)\nRuntimeAlias.const_set(:Current, String)\np [\"value\".is_a?(RuntimeAlias::Current), RuntimeAlias::Current == RuntimeAlias::Current]\n"
+  },
+  {
+    "cop": "Lint/DeprecatedConstants",
+    "source": "module RuntimeAlias; end\nRuntimeAlias.const_set(:Other, String)\np \"value\".is_a?(RuntimeAlias::Other)\n",
+    "path": "probe.rb",
+    "options": {
+      "AutoCorrect": true,
+      "DeprecatedConstants": {
+        "RuntimeAlias::Old": {
+          "Alternative": "RuntimeAlias::Current",
+          "DeprecatedVersion": "3.0"
+        }
+      }
+    },
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "DeprecatedConstants": {
+        "RuntimeAlias::Old": {
+          "Alternative": "RuntimeAlias::Current",
+          "DeprecatedVersion": "3.0"
+        }
+      },
+      "AutoCorrect": true,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "module RuntimeAlias; end\nRuntimeAlias.const_set(:Other, String)\np \"value\".is_a?(RuntimeAlias::Other)\n"
   }
 ]
