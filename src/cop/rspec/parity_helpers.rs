@@ -89,6 +89,7 @@ fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
         b"double",
         b"spy",
         b"is_expected",
+        b"subject",
         b"expect",
         b"receive_message_chain",
         b"stub_chain",

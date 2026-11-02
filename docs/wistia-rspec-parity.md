@@ -160,3 +160,29 @@ original-Ruby cases across 47 reviewed rules, plus 12 safety differences. The
 upstream import contains 489 specimens; thirteen host-generated templates and
 two invalid original yield specimens remain documented limitations. Disabled
 correction controls now cover 23 added or repaired correction capabilities.
+
+## Batch 6: shared context, implicit subject, and instance spies
+
+SharedContext, ImplicitSubject, and InstanceSpy replace three more original stubs.
+The reviewed total is now 49 original stubs plus the repaired EmptyLineAfterHook,
+with 31 original stubs and 15 existing implementations still open. The strict
+matrix contains 735 cases across 50 reviewed rules; the same 12 explicit safety
+differences remain separate. Correction-disable controls cover 26 capabilities.
+
+The separate post-implementation source review covered both shared-context
+replacement directions, recursive setup/example searches, all four implicit
+subject styles and `its` exceptions, and assignment/matcher linkage for instance
+spies. The original upstream ImplicitSubject context configurations are restored
+explicitly in imported cases; Ruby `let` blocks are never evaluated by the
+fixture importer. Additional probes cover helper-method use outside examples,
+local variables named subject, numbered blocks, safe navigation, unrelated spy
+variables and comments between a double and `.as_null_object`. The latter are
+retained byte-for-byte while replacing only the intended method spans.
+
+`scripts/rspec_parity_subject_spy_semantics.rb` runs trusted RSpec scenarios. Both
+original null-object doubles and corrected spies return themselves for an unstubbed
+known method and record exactly one received call. Two real examples prove that
+implicit and explicit subject forms each construct the subject once. Results are
+stored in `subject-spy-runtime.json`. This finite proof is supplemental to the
+original-engine diagnostic/range/correction/idempotence comparisons, not a claim
+that every arbitrary Ruby program has been exhaustively explored.
