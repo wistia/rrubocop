@@ -40,6 +40,9 @@ fn floating(c: &Context<'_>, n: Node<'_>) -> bool {
     }
 }
 fn float_call(c: &Context<'_>, n: Node<'_>) -> bool {
+    if block(n).is_some() {
+        return false;
+    }
     if ["to_f", "Float", "fdiv"].contains(&c.method(n)) {
         return true;
     }

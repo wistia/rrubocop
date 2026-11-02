@@ -7,23 +7,35 @@ pub(super) fn multiple_comparison(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> 
     let Some(center) = comparison_center(c, n) else {
         return vec![];
     };
-    vec![
-        Finding::new(n, "Use the `&&` operator to compare multiple values.").replace_with(
-            c,
-            center,
-            || format!("{} && {}", c.text(center), c.text(center)),
-        ),
-    ]
+    let finding = Finding::new(n, "Use the `&&` operator to compare multiple values.");
+    if field(n, "left").is_some_and(is_call) {
+        return vec![finding];
+    }
+    vec![finding.replace_with(c, center, || {
+        format!("{} && {}", c.text(center), c.text(center))
+    })]
 }
 fn comparison(c: &Context<'_>, n: Node<'_>) -> bool {
-    ["<", ">", "<=", ">="].contains(&operator(c, n))
+    ["<", ">", "<=", ">="].contains(&if is_call(n) {
+        c.method(n)
+    } else {
+        operator(c, n)
+    })
 }
 fn comparison_center<'a>(c: &Context<'_>, n: Node<'a>) -> Option<Node<'a>> {
-    let left = field(n, "left").filter(|l| l.kind() == "binary" && comparison(c, *l))?;
-    let center = field(left, "right")?;
+    let left = field(n, "left").filter(|l| comparison(c, *l))?;
+    let center = center_argument(left)?;
     if center.kind() == "binary" && ["&", "|", "^"].contains(&operator(c, center)) {
         None
     } else {
         Some(center)
     }
+}
+
+fn center_argument(left: Node<'_>) -> Option<Node<'_>> {
+    if !is_call(left) {
+        return field(left, "right");
+    }
+    let args = semantic_args(left);
+    (args.len() == 1 && block(left).is_none()).then(|| args[0])
 }

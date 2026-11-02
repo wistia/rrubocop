@@ -14,7 +14,7 @@ pub(super) fn redundant_conditional(c: &Context<'_>, n: Node<'_>) -> Vec<Finding
         n,
         format!("This conditional expression can just be replaced by `{msg}`."),
     );
-    vec![if descendants(n).any(|node| node.kind() == "comment") {
+    vec![if discarded_comment(n) {
         finding
     } else {
         finding.replace_with(c, n, || replacement)
@@ -49,5 +49,14 @@ fn comparison(c: &Context<'_>, n: Node<'_>) -> bool {
         operator(c, n)
     } else {
         c.method(n)
+    })
+}
+
+fn discarded_comment(n: Node<'_>) -> bool {
+    let condition = field(n, "condition").unwrap();
+    descendants(n).any(|node| {
+        node.kind() == "comment"
+            && !(condition.start_byte() <= node.start_byte()
+                && node.end_byte() <= condition.end_byte())
     })
 }

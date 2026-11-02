@@ -4,7 +4,7 @@ pub(super) fn identity(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some((left, right)) = comparison(c, n) else {
         return vec![];
     };
-    if c.method(left) != "object_id" || c.method(right) != "object_id" {
+    if !object_id(c, left) || !object_id(c, right) {
         return vec![];
     }
     if field(left, "receiver").is_none() || field(right, "receiver").is_none() {
@@ -12,6 +12,9 @@ pub(super) fn identity(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     }
     let finding = Finding::new(n, "Use `equal?` instead `==` when comparing `object_id`.");
     vec![correct_identity(c, finding, n, left, right)]
+}
+fn object_id(c: &Context<'_>, n: Node<'_>) -> bool {
+    c.method(n) == "object_id" && block(n).is_none()
 }
 fn comparison<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
     if n.kind() == "binary" && operator(c, n) == "==" {

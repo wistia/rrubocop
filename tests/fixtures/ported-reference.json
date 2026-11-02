@@ -2550,7 +2550,6 @@
     "cop": "Lint/FloatComparison",
     "source": "x.to_f != y\n",
     "path": "test.rb",
-    "positive": true,
     "options": {},
     "config": {
       "TargetRubyVersion": 3.4,
@@ -2561,7 +2560,9 @@
         "line": 1,
         "column": 0,
         "message": "Avoid (in)equality comparisons of floats as they are unreliable.",
-        "correctable": false
+        "correctable": false,
+        "length": 11,
+        "severity": "warning"
       }
     ],
     "corrected": "x.to_f != y\n"
@@ -2629,7 +2630,6 @@
     "cop": "Lint/IdentityComparison",
     "source": "a.object_id == b.object_id\n",
     "path": "test.rb",
-    "positive": true,
     "options": {},
     "config": {
       "TargetRubyVersion": 3.4,
@@ -2640,7 +2640,9 @@
         "line": 1,
         "column": 0,
         "message": "Use `equal?` instead `==` when comparing `object_id`.",
-        "correctable": true
+        "correctable": true,
+        "length": 26,
+        "severity": "warning"
       }
     ],
     "corrected": "a.equal?(b)\n"
@@ -2954,7 +2956,6 @@
     "cop": "Lint/RedundantWithIndex",
     "source": "items.each_with_index { |item| use(item) }\n",
     "path": "test.rb",
-    "positive": true,
     "options": {},
     "config": {
       "TargetRubyVersion": 3.4,
@@ -2965,7 +2966,9 @@
         "line": 1,
         "column": 6,
         "message": "Use `each` instead of `each_with_index`.",
-        "correctable": true
+        "correctable": true,
+        "length": 15,
+        "severity": "warning"
       }
     ],
     "corrected": "items.each { |item| use(item) }\n"
@@ -2974,7 +2977,6 @@
     "cop": "Lint/RedundantWithIndex",
     "source": "items.each.with_index { |item| use(item) }\n",
     "path": "test.rb",
-    "positive": true,
     "options": {},
     "config": {
       "TargetRubyVersion": 3.4,
@@ -2985,7 +2987,9 @@
         "line": 1,
         "column": 11,
         "message": "Remove redundant `with_index`.",
-        "correctable": true
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
       }
     ],
     "corrected": "items.each { |item| use(item) }\n"
@@ -3312,7 +3316,6 @@
     "cop": "Lint/SafeNavigationWithEmpty",
     "source": "return if foo&.empty?\n",
     "path": "test.rb",
-    "positive": true,
     "options": {},
     "config": {
       "TargetRubyVersion": 3.4,
@@ -3323,7 +3326,9 @@
         "line": 1,
         "column": 10,
         "message": "Avoid calling `empty?` with the safe navigation operator in conditionals.",
-        "correctable": true
+        "correctable": true,
+        "length": 11,
+        "severity": "warning"
       }
     ],
     "corrected": "return if foo && foo.empty?\n"
@@ -3906,7 +3911,6 @@
     "cop": "Style/ClassEqualityComparison",
     "source": "obj.class == String\n",
     "path": "test.rb",
-    "positive": true,
     "options": {},
     "config": {
       "SafeAutoCorrect": false,
@@ -3924,7 +3928,9 @@
         "line": 1,
         "column": 4,
         "message": "Use `instance_of?(String)` instead of comparing classes.",
-        "correctable": true
+        "correctable": true,
+        "length": 15,
+        "severity": "convention"
       }
     ],
     "corrected": "obj.instance_of?(String)\n"
@@ -3933,7 +3939,6 @@
     "cop": "Style/ClassEqualityComparison",
     "source": "obj.class.name == \"String\"\n",
     "path": "test.rb",
-    "positive": true,
     "options": {},
     "config": {
       "SafeAutoCorrect": false,
@@ -3951,7 +3956,9 @@
         "line": 1,
         "column": 4,
         "message": "Use `instance_of?(String)` instead of comparing classes.",
-        "correctable": true
+        "correctable": true,
+        "length": 22,
+        "severity": "convention"
       }
     ],
     "corrected": "obj.instance_of?(String)\n"
@@ -31840,17 +31847,6 @@
     "path": "test.rb",
     "options": {},
     "origin": "custom correction review escaped-symbol safety guard",
-    "rust_expected": [
-      {
-        "line": 1,
-        "column": 0,
-        "message": "Missing charset option",
-        "correctable": false
-      }
-    ],
-    "rust_corrected": "create_table :widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\"\n",
-    "rust_correctable": false,
-    "reason": "Escaped symbol keys are not decoded canonically; retain a manual diagnostic rather than override a possibly existing schema option. The Ruby baseline recognizes the decoded symbol and reports no offense.",
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": true
@@ -31864,17 +31860,6 @@
     "path": "test.rb",
     "options": {},
     "origin": "custom correction review escaped-symbol safety guard",
-    "rust_expected": [
-      {
-        "line": 1,
-        "column": 0,
-        "message": "Missing collation option",
-        "correctable": false
-      }
-    ],
-    "rust_corrected": "create_table :widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\"\n",
-    "rust_correctable": false,
-    "reason": "Escaped symbol keys are not decoded canonically; retain a manual diagnostic rather than override a possibly existing schema option. The Ruby baseline recognizes the decoded symbol and reports no offense.",
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": true
@@ -49980,17 +49965,19 @@
     "cop": "Lint/RedundantWithObject",
     "source": "items.each_with_object([]) { |item| use(item) }\n",
     "path": "test.rb",
+    "options": {},
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": true
     },
-    "options": {},
     "expected": [
       {
         "line": 1,
         "column": 6,
         "message": "Use `each` instead of `each_with_object`.",
-        "correctable": true
+        "correctable": true,
+        "length": 20,
+        "severity": "warning"
       }
     ],
     "corrected": "items.each { |item| use(item) }\n"
@@ -49999,17 +49986,19 @@
     "cop": "Lint/RedundantWithObject",
     "source": "items.each.with_object([]) { |item| use(item) }\n",
     "path": "test.rb",
+    "options": {},
     "config": {
       "TargetRubyVersion": 3.4,
       "ActiveSupportExtensionsEnabled": true
     },
-    "options": {},
     "expected": [
       {
         "line": 1,
         "column": 11,
         "message": "Remove redundant `with_object`.",
-        "correctable": true
+        "correctable": true,
+        "length": 15,
+        "severity": "warning"
       }
     ],
     "corrected": "items.each { |item| use(item) }\n"
@@ -53938,5 +53927,2106 @@
     },
     "expected": [],
     "corrected": "# encoding: ASCII-8BIT\nrequire \"\\xC3\\xA9\"\nrequire \"\\u00E9\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(\n# parity audit\n:widgets)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(\n# parity audit\n:widgets), charset: \"utf8mb4\"\n",
+    "rust_corrected": "create_table(\n# parity audit\n:widgets, charset: \"utf8mb4\")\n",
+    "reason": "Insert the option inside the real argument list; pinned Ruby appends outside parentheses and produces invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(\n# parity audit\n:widgets, id: :bigint)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(\n# parity audit\n:widgets, id: :bigint), charset: \"utf8mb4\"\n",
+    "rust_corrected": "create_table(\n# parity audit\n:widgets, id: :bigint, charset: \"utf8mb4\")\n",
+    "reason": "Insert the option inside the real argument list; pinned Ruby appends outside parentheses and produces invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, %s|id| => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, %s|id| => :bigint, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, :\"\\x69\\x64\" => :bigint, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, :\"id'\" => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, :\"id'\" => :bigint, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(\n# parity audit\n:widgets)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(\n# parity audit\n:widgets), collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_corrected": "create_table(\n# parity audit\n:widgets, collation: \"utf8mb4_unicode_ci\")\n",
+    "reason": "Insert the option inside the real argument list; pinned Ruby appends outside parentheses and produces invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(\n# parity audit\n:widgets, id: :bigint)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(\n# parity audit\n:widgets, id: :bigint), collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_corrected": "create_table(\n# parity audit\n:widgets, id: :bigint, collation: \"utf8mb4_unicode_ci\")\n",
+    "reason": "Insert the option inside the real argument list; pinned Ruby appends outside parentheses and produces invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, %s|id| => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, %s|id| => :bigint, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, :\"\\x69\\x64\" => :bigint, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, :\"id'\" => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, :\"id'\" => :bigint, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\")\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "create_table(:widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\")\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, %s|charset| => \"ascii\", %s|collation| => \"ascii_bin\"\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "create_table :widgets, %s|charset| => \"ascii\", %s|collation| => \"ascii_bin\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, :\"#{key}\" => false)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, :\"#{key}\" => false), charset: \"utf8mb4\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "create_table(:widgets, :\"#{key}\" => false)\n",
+    "reason": "Dynamic or string-keyed option bundles remain manual to avoid introducing conflicting option semantics."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, \"id\" => false)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, \"id\" => false), charset: \"utf8mb4\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "create_table(:widgets, \"id\" => false)\n",
+    "reason": "Dynamic or string-keyed option bundles remain manual to avoid introducing conflicting option semantics."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\")\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "create_table(:widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\")\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, %s|charset| => \"ascii\", %s|collation| => \"ascii_bin\"\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "create_table :widgets, %s|charset| => \"ascii\", %s|collation| => \"ascii_bin\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, :\"#{key}\" => false)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, :\"#{key}\" => false), collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "create_table(:widgets, :\"#{key}\" => false)\n",
+    "reason": "Dynamic or string-keyed option bundles remain manual to avoid introducing conflicting option semantics."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, \"id\" => false)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, \"id\" => false), collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "create_table(:widgets, \"id\" => false)\n",
+    "reason": "Dynamic or string-keyed option bundles remain manual to avoid introducing conflicting option semantics."
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if x(\n# parity audit\n) == 1; a; elsif x == 1; b; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 17,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 6,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if x(\n# parity audit\n) == 1; a; elsif x == 1; b; end\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if x == 1; a; elsif x(\n# parity audit\n) == 1; b; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if x == 1; a; elsif x(\n# parity audit\n) == 1; b; end\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo(\n# parity audit\n)&.bar && foo.baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "foo(\n# parity audit\n)&.bar && foo&.baz\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo&.bar && foo(\n# parity audit\n).baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true,
+        "length": 16,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "foo&.bar && foo(\n# parity audit\n)&.baz\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo(\n# parity audit\n).bar || foo&.baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "foo(\n# parity audit\n)&.bar || foo&.baz\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo.bar || foo(\n# parity audit\n)&.baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true,
+        "length": 15,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "foo&.bar || foo(\n# parity audit\n)&.baz\n"
+  },
+  {
+    "cop": "Lint/TrailingCommaInAttributeDeclaration",
+    "source": "class A\n attr_reader(\n# parity audit\n:foo,\n def bar; 1; end)\nend\n",
+    "path": "test.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": true,
+        "length": 1,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "class A\n attr_reader(\n# parity audit\n:foo\n def bar; 1; end)\nend\n",
+    "rust_expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": false,
+        "length": 1,
+        "severity": "warning"
+      }
+    ],
+    "rust_corrected": "class A\n attr_reader(\n# parity audit\n:foo,\n def bar; 1; end)\nend\n",
+    "reason": "Removing only the comma inside parenthesized attribute arguments produces invalid Ruby; retain a report-only offense."
+  },
+  {
+    "cop": "Lint/TrailingCommaInAttributeDeclaration",
+    "source": "class A\n attr_reader :foo,\n \n# parity audit\ndef bar; 1; end\nend\n",
+    "path": "test.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 17,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": true,
+        "length": 1,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "class A\n attr_reader :foo\n \n# parity audit\ndef bar; 1; end\nend\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject(\n# parity audit\n) { |k, v| k == :a }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": false,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.reject(\n# parity audit\n) { |k, v| k == :a }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash(\n# parity audit\n).reject { |k, v| k == :a }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 25,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash(\n# parity audit\n).except(:a)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k, v| k == \n# parity audit\n:a }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.reject { |k, v| k == \n# parity audit\n:a }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k, v| k.==(\n# parity audit\n:a) }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.reject { |k, v| k.==(\n# parity audit\n:a) }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k, v| k.eql?(\n# parity audit\n:a) }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 23,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": false,
+        "length": 23,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.reject { |k, v| k.eql?(\n# parity audit\n:a) }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select(\n# parity audit\n) { |k, v| k != \"a\" }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(\"a\")\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": false,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.select(\n# parity audit\n) { |k, v| k != \"a\" }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash(\n# parity audit\n).select { |k, v| k != \"a\" }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash(\n# parity audit\n).except(\"a\")\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select { |k, v| k != \n# parity audit\n\"a\" }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(\"a\")\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.select { |k, v| k != \n# parity audit\n\"a\" }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select { |k, v| k.!=(\n# parity audit\n\"a\") }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(\"a\")\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.select { |k, v| k.!=(\n# parity audit\n\"a\") }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = foo ? foo : default(\n# parity audit\n)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "foo ||= default(\n# parity audit\n)\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = default(\n# parity audit\n) unless foo\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 14,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "foo ||= default(\n# parity audit\n)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "a == \n# parity audit\nb ? true : false\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a == \n# parity audit\nb`.",
+        "correctable": true,
+        "length": 5,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "a == \n# parity audit\nb\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "a(\n# parity audit\n) == b ? true : false\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a(\n# parity audit\n) == b`.",
+        "correctable": true,
+        "length": 2,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "a(\n# parity audit\n) == b\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "a == b(\n# parity audit\n) ? true : false\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a == b(\n# parity audit\n)`.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "a == b(\n# parity audit\n)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "(a).==(\n# parity audit\nb) ? true : false\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `(a).==(\n# parity audit\nb)`.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "(a).==(\n# parity audit\nb)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if a > \n# parity audit\nb; false; else; true; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!(a > \n# parity audit\nb)`.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "!(a > \n# parity audit\nb)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if a(\n# parity audit\n) > b; false; else; true; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!(a(\n# parity audit\n) > b)`.",
+        "correctable": true,
+        "length": 5,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "!(a(\n# parity audit\n) > b)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if a > b(\n# parity audit\n); false; else; true; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!(a > b(\n# parity audit\n))`.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "!(a > b(\n# parity audit\n))\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if (a).>(\n# parity audit\nb); false; else; true; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!((a).>(\n# parity audit\nb))`.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "!((a).>(\n# parity audit\nb))\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "x = 1\nif x == 1; a; elsif x() == 1; b; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "x = 1\nif x == 1; a; elsif x() == 1; b; end\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if x() == 1; a; elsif x == 1; b; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "if x() == 1; a; elsif x == 1; b; end\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo = value\nfoo&.bar && foo().baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "foo = value\nfoo&.bar && foo().baz\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo()&.bar && foo.baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo()&.bar && foo&.baz\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = foo ? foo : default # retain\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo ||= default # retain\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if a == b # retain\n true\nelse\n false\nend\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a == b`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a == b\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a == b`.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "if a == b # retain\n true\nelse\n false\nend\n",
+    "reason": "Retain comments outside the surviving condition; pinned Ruby deletes this comment during replacement."
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(a).<(\n# parity audit\nb) < c\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(a).<(\n# parity audit\nb && b) < c\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "(a).<(\n# parity audit\nb) < c\n",
+    "reason": "Pinned Ruby rewrites the argument inside an explicit comparison call instead of splitting the comparison chain, repeatedly growing the expression. Report only to avoid changing its semantics or looping autocorrection."
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "def hash; a.hash.^(\n# parity audit\nb.hash); end\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def hash; a.hash.^(\n# parity audit\nb.hash); end\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "10.-(\n# parity audit\nrand(1..3))\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(7..9)\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(items).[](\n# parity audit\n0..-1)\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Remove the useless `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(items).(\n# parity audit\n0..-1)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Remove the useless `[]`.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "(items).[](\n# parity audit\n0..-1)\n",
+    "reason": "Pinned Ruby removes only the explicit [] method token, changing slicing into a .call invocation. Report only instead of introducing a different method call."
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0x0..-1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0x0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0b0..-1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0b0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0o0..-1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0o0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0..-0x1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0..-0x1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0..-0b1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0..-0b1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0..-0o1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0..-0o1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(items).[](\n# parity audit\n1..-1)\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Prefer `[1..]` over `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(items).[](\n# parity audit\n1..)\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[1..-0x1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Prefer `[1..]` over `[1..-0x1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items[1..]\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[1..-0b1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Prefer `[1..]` over `[1..-0b1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items[1..]\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[1..-0o1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Prefer `[1..]` over `[1..-0o1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items[1..]\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "str.unpack(\"C*\")[0x0]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0x0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "str.unpack(\"C*\")[0b0]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0b0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "str.unpack(\"C*\")[0o0]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0o0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items.[](0..-1)\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Remove the useless `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.(0..-1)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Remove the useless `[]`.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "items.[](0..-1)\n",
+    "reason": "Pinned Ruby removes only the explicit [] method token, changing slicing into a .call invocation. Report only instead of introducing a different method call."
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items.[](1..-1)\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Prefer `[1..]` over `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.[](1..)\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "a.<(b) < c\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a.<(b && b) < c\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "a.<(b) < c\n",
+    "reason": "Pinned Ruby rewrites the argument inside an explicit comparison call instead of splitting the comparison chain, repeatedly growing the expression. Report only to avoid changing its semantics or looping autocorrection."
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash; a.hash.^(b.hash); end\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def hash; a.hash.^(b.hash); end\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "x.to_f { |__parity_value| __parity_value } != y\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "x.to_f { |__parity_value| __parity_value } != y\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id { |__parity_value| __parity_value } == b.object_id\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a.object_id { |__parity_value| __parity_value } == b.object_id\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each { |__parity_value| __parity_value }.with_index { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 47,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "items.each { |__parity_value| __parity_value } { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each { |__parity_value| __parity_value }.with_index { |item| use(item) }\n",
+    "reason": "Pinned Ruby removes the enumerator call and leaves two adjacent blocks, producing invalid syntax. Keep the diagnostic report-only when its receiver already owns a block."
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each { |__parity_value| __parity_value }.with_object([]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 47,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true,
+        "length": 15,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "items.each { |__parity_value| __parity_value } { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each { |__parity_value| __parity_value }.with_object([]) { |item| use(item) }\n",
+    "reason": "Pinned Ruby removes the enumerator call and leaves two adjacent blocks, producing invalid syntax. Keep the diagnostic report-only when its receiver already owns a block."
+  },
+  {
+    "cop": "Lint/SafeNavigationWithEmpty",
+    "source": "return if foo { |__parity_value| __parity_value }&.empty?\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "return if foo { |__parity_value| __parity_value }&.empty?\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class { |__parity_value| __parity_value } == String\n",
+    "path": "test.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj.class { |__parity_value| __parity_value } == String\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class.name { |__parity_value| __parity_value } == \"String\"\n",
+    "path": "test.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj.class.name { |__parity_value| __parity_value } == \"String\"\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class { |__parity_value| __parity_value }.name == \"String\"\n",
+    "path": "test.rb",
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "obj.class { |__parity_value| __parity_value }.name == \"String\"\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "source": "rand(6) { |__parity_value| __parity_value } + 1\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "rand(6) { |__parity_value| __parity_value } + 1\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "items { |__parity_value| __parity_value }.each { |a, b,| work(a, b) }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items { |__parity_value| __parity_value }.each { |a, b,| work(a, b) }\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "x.to_f { side_effect } == y.to_f\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid (in)equality comparisons of floats as they are unreliable.",
+        "correctable": false,
+        "length": 32,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "x.to_f { side_effect } == y.to_f\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "x.to_f != y.to_f { side_effect }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Avoid (in)equality comparisons of floats as they are unreliable.",
+        "correctable": false,
+        "length": 32,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "x.to_f != y.to_f { side_effect }\n"
+  },
+  {
+    "cop": "Lint/FloatComparison",
+    "source": "x.fdiv(2) { side_effect } == y\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "x.fdiv(2) { side_effect } == y\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id == b.object_id { side_effect }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a.object_id == b.object_id { side_effect }\n"
+  },
+  {
+    "cop": "Lint/IdentityComparison",
+    "source": "a.object_id { side_effect }.==(b.object_id)\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "a.object_id { side_effect }.==(b.object_id)\n"
+  },
+  {
+    "cop": "Style/ClassEqualityComparison",
+    "source": "obj.class == String.name { side_effect }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "SafeAutoCorrect": false,
+      "AllowedMethods": [
+        "==",
+        "equal?",
+        "eql?"
+      ],
+      "AllowedPatterns": [],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `instance_of?(String.name { side_effect })` instead of comparing classes.",
+        "correctable": true,
+        "length": 36,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "obj.instance_of?(String.name { side_effect })\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationWithEmpty",
+    "source": "return if foo { side_effect }&.empty?\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "return if foo { side_effect }&.empty?\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each { side_effect }.with_index { |item| use(item) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 27,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "items.each { side_effect } { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each { side_effect }.with_index { |item| use(item) }\n",
+    "reason": "Pinned Ruby removes the enumerator call and leaves two adjacent blocks, producing invalid syntax. Keep the diagnostic report-only when its receiver already owns a block."
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items.each { side_effect }.with_object([]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 27,
+        "message": "Remove redundant `with_object`.",
+        "correctable": true,
+        "length": 15,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "items.each { side_effect } { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each { side_effect }.with_object([]) { |item| use(item) }\n",
+    "reason": "Pinned Ruby removes the enumerator call and leaves two adjacent blocks, producing invalid syntax. Keep the diagnostic report-only when its receiver already owns a block."
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "items.each { |a,b,| work(a,b) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 17,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true,
+        "length": 1,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "items.each { |a,b| work(a,b) }\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "items { |a,b| work(a,b) }.each { |c,d,| work(c,d) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "items { |a,b| work(a,b) }.each { |c,d,| work(c,d) }\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "items { |a,b,| work(a,b) }.each { |c,d| work(c,d) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true,
+        "length": 1,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "items { |a,b| work(a,b) }.each { |c,d| work(c,d) }\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "items { |a,b,| work(a,b) }.each { |c,d,| work(c,d) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 12,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true,
+        "length": 1,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "items { |a,b| work(a,b) }.each { |c,d,| work(c,d) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items { side_effect }.each_with_index { |item| use(item) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Use `each` instead of `each_with_index`.",
+        "correctable": true,
+        "length": 15,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "items { side_effect }.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Lint/RedundantWithIndex",
+    "source": "items.each do |x| use(x) end.with_index { |item| use(item) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 29,
+        "message": "Remove redundant `with_index`.",
+        "correctable": true,
+        "length": 10,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "items.each do |x| use(x) end { |item| use(item) }\n",
+    "rust_correctable": false,
+    "rust_corrected": "items.each do |x| use(x) end.with_index { |item| use(item) }\n",
+    "reason": "Pinned Ruby removes the enumerator call and leaves two adjacent blocks, producing invalid syntax. Keep the diagnostic report-only when its receiver already owns a block."
+  },
+  {
+    "cop": "Lint/RedundantWithObject",
+    "source": "items { side_effect }.each_with_object([]) { |item| use(item) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Use `each` instead of `each_with_object`.",
+        "correctable": true,
+        "length": 20,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "items { side_effect }.each { |item| use(item) }\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "items { |a,| work(a) }.each { |c,d| work(c,d) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true,
+        "length": 1,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "items { |a| work(a) }.each { |c,d| work(c,d) }\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "items { |a,| work(a) }.each { |c,d,| work(c,d) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true,
+        "length": 1,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "items { |a| work(a) }.each { |c,d,| work(c,d) }\n"
+  },
+  {
+    "cop": "Style/TrailingCommaInBlockArgs",
+    "source": "items { work }.each { |c,d,| work(c,d) }\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 26,
+        "message": "Useless trailing comma present in block arguments.",
+        "correctable": true,
+        "length": 1,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "items { work }.each { |c,d| work(c,d) }\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationWithEmpty",
+    "source": "return if foo do side_effect end&.empty?\n",
+    "path": "test.rb",
+    "options": {},
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "return if foo do side_effect end&.empty?\n"
   }
 ]

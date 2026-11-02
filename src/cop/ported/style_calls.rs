@@ -7,7 +7,7 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Style/RedundantFileExtensionInRequire", &["call"], require_extension, true, true, false),
         ("Style/UnpackFirst", &["call","element_reference"], unpack, true, true, false),
         ("Style/RedundantSort", &["call","element_reference"], sort, true, true, false),
-        ("Style/SlicingWithRange", &["element_reference"], slicing, true, true, false),
+        ("Style/SlicingWithRange", &["element_reference","call"], slicing, true, true, false),
         ("Style/RandomWithOffset", &["binary","call"], random, true, true, false)
     );
 }
@@ -23,3 +23,5 @@ use slicing::slicing;
 
 mod random;
 use random::random;
+
+mod integer;

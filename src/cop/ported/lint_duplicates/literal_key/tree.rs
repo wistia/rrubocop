@@ -2,6 +2,8 @@ use super::*;
 
 pub(super) fn key(c: &Context<'_>, n: Node<'_>, equality: Equality) -> String {
     match n.kind() {
+        "identifier" if !local_identifier(c, n) => bare_call(c, n),
+        "call" if empty_bare_call(n) => bare_call(c, method_node(n)),
         "array" => array(c, n, equality),
         "symbol_array" | "string_array" => percent_array(c, n),
         "pair" => pair(c, n, equality).unwrap_or_else(|| structural(c, n, equality)),
@@ -57,4 +59,11 @@ fn frame(kind: &str, children: impl IntoIterator<Item = String>) -> String {
 }
 fn raw(c: &Context<'_>, n: Node<'_>) -> String {
     format!("{}:{:?}", n.kind(), &c.source.as_bytes()[n.byte_range()])
+}
+
+fn empty_bare_call(n: Node<'_>) -> bool {
+    field(n, "receiver").is_none() && block(n).is_none() && semantic_args(n).is_empty()
+}
+fn bare_call(c: &Context<'_>, n: Node<'_>) -> String {
+    format!("bare_call:{}", c.text(n))
 }

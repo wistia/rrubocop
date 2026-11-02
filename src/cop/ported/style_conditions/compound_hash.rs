@@ -15,6 +15,11 @@ pub(super) fn compound_hash(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         .unwrap_or_default()
 }
 fn combinator(c: &Context<'_>, n: Node<'_>) -> bool {
+    if is_call(n) {
+        return ["^", "+", "*", "|"].contains(&c.method(n))
+            && semantic_args(n).len() == 1
+            && block(n).is_none();
+    }
     matches!(n.kind(), "binary" | "operator_assignment")
         && ["^", "+", "*", "|", "^=", "+=", "*=", "|="].contains(&operator(c, n))
 }

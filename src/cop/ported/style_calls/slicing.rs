@@ -1,16 +1,20 @@
 use super::super::context::*;
 use tree_sitter::Node;
 pub(super) fn slicing(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
-    let Some((obj, range)) = slice_range(n) else {
+    let Some((obj, range)) = slice_range(c, n) else {
         return vec![];
     };
-    let selector = String::from_utf8_lossy(&c.source.as_bytes()[obj.end_byte()..n.end_byte()]);
+    let span = selector_span(n, obj);
+    let selector = String::from_utf8_lossy(&c.source.as_bytes()[span.0..span.1]);
     if range_zero(c, range) && range_tail(c, range) {
         return vec![useless(c, n, obj, &selector)];
     }
     preferred(c, n, obj, range, &selector).into_iter().collect()
 }
-fn slice_range(n: Node<'_>) -> Option<(Node<'_>, Node<'_>)> {
+fn slice_range<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, Node<'n>)> {
+    if is_call(n) {
+        return call_range(c, n);
+    }
     let obj = field(n, "object")?;
     let a = kids(n)
         .into_iter()
@@ -19,19 +23,22 @@ fn slice_range(n: Node<'_>) -> Option<(Node<'_>, Node<'_>)> {
     (a.len() == 1 && a[0].kind() == "range").then(|| (obj, a[0]))
 }
 fn range_zero(c: &Context<'_>, n: Node<'_>) -> bool {
-    field(n, "begin").is_some_and(|b| c.text(b) == "0")
+    field(n, "begin").is_some_and(|b| super::integer::value(c, b) == Some(0.into()))
 }
 fn range_tail(c: &Context<'_>, n: Node<'_>) -> bool {
-    field(n, "end")
-        .is_some_and(|e| e.kind() == "nil" || operator(c, n) == ".." && c.text(e) == "-1")
+    field(n, "end").is_some_and(|e| {
+        e.kind() == "nil"
+            || operator(c, n) == ".." && super::integer::value(c, e) == Some((-1).into())
+    })
 }
 fn useless(c: &Context<'_>, n: Node<'_>, obj: Node<'_>, selector: &str) -> Finding {
-    Finding::range(
-        obj.end_byte(),
-        n.end_byte(),
-        format!("Remove the useless `{selector}`."),
-    )
-    .edit_with(c, obj.end_byte(), n.end_byte(), || "")
+    let (start, end) = selector_span(n, obj);
+    let finding = Finding::range(start, end, format!("Remove the useless `{selector}`."));
+    if is_call(n) {
+        finding
+    } else {
+        finding.edit_with(c, start, end, || "")
+    }
 }
 fn preferred(
     c: &Context<'_>,
@@ -43,8 +50,8 @@ fn preferred(
     let (replacement, edit) = preferred_edit(c, range)?;
     Some(
         Finding::range(
-            obj.end_byte(),
-            n.end_byte(),
+            selector_span(n, obj).0,
+            selector_span(n, obj).1,
             format!("Prefer `{replacement}` over `{selector}`."),
         )
         .replace_with(c, edit, || ""),
@@ -63,5 +70,26 @@ fn preferred_edit<'n>(c: &Context<'_>, range: Node<'n>) -> Option<(String, Node<
             Some((format!("[{}{}]", c.text(begin), operator(c, range)), end))
         }
         _ => None,
+    }
+}
+
+fn selector_span(n: Node<'_>, obj: Node<'_>) -> (usize, usize) {
+    if is_call(n) {
+        let method = method_node(n);
+        (method.start_byte(), method.end_byte())
+    } else {
+        (obj.end_byte(), n.end_byte())
+    }
+}
+
+fn call_range<'n>(c: &Context<'_>, n: Node<'n>) -> Option<(Node<'n>, Node<'n>)> {
+    if c.method(n) != "[]" {
+        return None;
+    }
+    let args = semantic_args(n);
+    if args.len() == 1 && args[0].kind() == "range" {
+        Some((field(n, "receiver")?, args[0]))
+    } else {
+        None
     }
 }

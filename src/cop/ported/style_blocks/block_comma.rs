@@ -10,7 +10,11 @@ pub(super) fn block_comma(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if argument_count(p) < 2 {
         return vec![];
     }
-    let Some(offset) = comma_offset(c, p) else {
+    let first = first_parameters(n, p);
+    if first != p && argument_count(first) > 1 {
+        return vec![];
+    }
+    let Some(offset) = comma_offset(c, first) else {
         return vec![];
     };
     vec![
@@ -37,4 +41,12 @@ fn argument_count(n: Node<'_>) -> usize {
 fn comma_offset(c: &Context<'_>, p: Node<'_>) -> Option<usize> {
     let text = c.text(p).trim_end_matches('|').trim_end();
     text.ends_with(',').then(|| p.start_byte() + text.len() - 1)
+}
+
+fn first_parameters<'n>(n: Node<'n>, parameters: Node<'n>) -> Node<'n> {
+    n.parent()
+        .into_iter()
+        .flat_map(descendants)
+        .find(|child| child.kind() == parameters.kind())
+        .unwrap_or(parameters)
 }

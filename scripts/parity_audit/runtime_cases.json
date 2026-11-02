@@ -112,5 +112,46 @@
     "source": "# encoding: ASCII-8BIT\nvalue = \"\\u00E9\"\ncase value\nwhen \"\\xC3\\xA9\"\n puts \"binary\"\nwhen \"\\u00E9\"\n puts \"unicode\"\nend\n",
     "path": "probe.rb",
     "runtime": {}
+  },
+  {
+    "cop": "Lint/SafeNavigationWithEmpty",
+    "source": "def foo\n yield\n []\nend\ndef probe\n seen = []\n return if foo { seen << :called }&.empty?\nensure\n p seen\nend\nprobe\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [],
+    "corrected": "def foo\n yield\n []\nend\ndef probe\n seen = []\n return if foo { seen << :called }&.empty?\nensure\n p seen\nend\nprobe\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items = [1, 2]\np items.[](0..-1)\n",
+    "path": "probe.rb",
+    "runtime": {
+      "files": {},
+      "watch": []
+    },
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 8,
+        "message": "Remove the useless `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items = [1, 2]\np items.(0..-1)\n",
+    "rust_correctable": false,
+    "rust_corrected": "items = [1, 2]\np items.[](0..-1)\n",
+    "reason": "Explicit useless .[] stays report-only because Ruby removes only the method token, converting indexing into .call and changing behavior."
   }
 ]

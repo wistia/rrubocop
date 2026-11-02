@@ -1,0 +1,326 @@
+[
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(\n# parity audit\n:widgets)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(\n# parity audit\n:widgets), charset: \"utf8mb4\"\n",
+    "rust_corrected": "create_table(\n# parity audit\n:widgets, charset: \"utf8mb4\")\n",
+    "reason": "Insert the option inside the real argument list; pinned Ruby appends outside parentheses and produces invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(\n# parity audit\n:widgets, id: :bigint)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(\n# parity audit\n:widgets, id: :bigint), charset: \"utf8mb4\"\n",
+    "rust_corrected": "create_table(\n# parity audit\n:widgets, id: :bigint, charset: \"utf8mb4\")\n",
+    "reason": "Insert the option inside the real argument list; pinned Ruby appends outside parentheses and produces invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, %s|id| => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, %s|id| => :bigint, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, :\"\\x69\\x64\" => :bigint, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, :\"id'\" => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, :\"id'\" => :bigint, charset: \"utf8mb4\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(\n# parity audit\n:widgets)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(\n# parity audit\n:widgets), collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_corrected": "create_table(\n# parity audit\n:widgets, collation: \"utf8mb4_unicode_ci\")\n",
+    "reason": "Insert the option inside the real argument list; pinned Ruby appends outside parentheses and produces invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(\n# parity audit\n:widgets, id: :bigint)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(\n# parity audit\n:widgets, id: :bigint), collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_corrected": "create_table(\n# parity audit\n:widgets, id: :bigint, collation: \"utf8mb4_unicode_ci\")\n",
+    "reason": "Insert the option inside the real argument list; pinned Ruby appends outside parentheses and produces invalid Ruby."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, %s|id| => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, %s|id| => :bigint, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, :\"\\x69\\x64\" => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, :\"\\x69\\x64\" => :bigint, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, :\"id'\" => :bigint\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table :widgets, :\"id'\" => :bigint, collation: \"utf8mb4_unicode_ci\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\")\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "create_table(:widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\")\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table :widgets, %s|charset| => \"ascii\", %s|collation| => \"ascii_bin\"\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "create_table :widgets, %s|charset| => \"ascii\", %s|collation| => \"ascii_bin\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, :\"#{key}\" => false)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, :\"#{key}\" => false), charset: \"utf8mb4\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "create_table(:widgets, :\"#{key}\" => false)\n",
+    "reason": "Dynamic or string-keyed option bundles remain manual to avoid introducing conflicting option semantics."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCharset",
+    "source": "create_table(:widgets, \"id\" => false)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing charset option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, \"id\" => false), charset: \"utf8mb4\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "create_table(:widgets, \"id\" => false)\n",
+    "reason": "Dynamic or string-keyed option bundles remain manual to avoid introducing conflicting option semantics."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\")\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "create_table(:widgets, :\"char\\x73et\" => \"ascii\", :\"colla\\x74ion\" => \"ascii_bin\")\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table :widgets, %s|charset| => \"ascii\", %s|collation| => \"ascii_bin\"\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "create_table :widgets, %s|charset| => \"ascii\", %s|collation| => \"ascii_bin\"\n"
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, :\"#{key}\" => false)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, :\"#{key}\" => false), collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "create_table(:widgets, :\"#{key}\" => false)\n",
+    "reason": "Dynamic or string-keyed option bundles remain manual to avoid introducing conflicting option semantics."
+  },
+  {
+    "cop": "Cops/CreateTableMustIncludeCollation",
+    "source": "create_table(:widgets, \"id\" => false)\n",
+    "path": "db/migrate/test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Missing collation option",
+        "correctable": true
+      }
+    ],
+    "corrected": "create_table(:widgets, \"id\" => false), collation: \"utf8mb4_unicode_ci\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "create_table(:widgets, \"id\" => false)\n",
+    "reason": "Dynamic or string-keyed option bundles remain manual to avoid introducing conflicting option semantics."
+  }
+]

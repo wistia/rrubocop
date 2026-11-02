@@ -50,7 +50,7 @@ const CALL_NAMES: &[(&str, &[&[u8]])] = &[
     ),
     ("Lint/UriRegexp", &[b"regexp"]),
     ("Lint/UselessTimes", &[b"times"]),
-    ("Security/CompoundHash", &[b"hash"]),
+    ("Security/CompoundHash", &[b"hash", b"^", b"+", b"*", b"|"]),
     ("Serializers/AvoidCapitalizedKeys", &[b"attribute"]),
     ("Serializers/AvoidKeyAndBlock", &[b"attribute"]),
     ("Serializers/AvoidMethodAndBlock", &[b"attribute"]),
@@ -80,7 +80,11 @@ const CALL_NAMES: &[(&str, &[&[u8]])] = &[
         &[b"compact", b"filter_map"],
     ),
     ("Style/MixinUsage", &[b"include", b"extend", b"prepend"]),
-    ("Style/RandomWithOffset", &[b"succ", b"pred", b"next"]),
+    ("Style/SlicingWithRange", &[b"[]"]),
+    (
+        "Style/RandomWithOffset",
+        &[b"succ", b"pred", b"next", b"+", b"-"],
+    ),
     (
         "Style/RedundantFileExtensionInRequire",
         &[b"require", b"require_relative"],

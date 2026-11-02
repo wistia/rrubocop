@@ -1,5 +1,8 @@
 mod literal_key;
 use literal_key::{literal_key, require_key};
+pub(super) fn expression_key(c: &Context<'_>, n: Node<'_>) -> String {
+    literal_key(c, n)
+}
 mod empty_when;
 use super::context::*;
 use crate::cop::CopRegistry;

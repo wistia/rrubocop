@@ -16,7 +16,7 @@ pub(super) fn access<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, bool
 fn index_access<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, bool, usize)> {
     let recv = field(n, "object")?;
     let argument = index_argument(n, recv)?;
-    Some((recv, index_max(c.text(argument))?, recv.end_byte()))
+    Some((recv, index_max(c, argument)?, recv.end_byte()))
 }
 fn index_argument<'n>(n: Node<'n>, recv: Node<'n>) -> Option<Node<'n>> {
     let attached = block(n);
@@ -26,11 +26,14 @@ fn index_argument<'n>(n: Node<'n>, recv: Node<'n>) -> Option<Node<'n>> {
     let argument = arguments.next()?;
     arguments.next().is_none().then_some(argument)
 }
-fn index_max(text: &str) -> Option<bool> {
-    match text {
-        "0" => Some(false),
-        "-1" => Some(true),
-        _ => None,
+fn index_max(c: &Context<'_>, n: Node<'_>) -> Option<bool> {
+    let value = super::super::integer::value(c, n)?;
+    if value == 0.into() {
+        Some(false)
+    } else if value == (-1).into() {
+        Some(true)
+    } else {
+        None
     }
 }
 fn method_access(c: &Context<'_>, n: Node<'_>) -> Option<bool> {
@@ -38,7 +41,7 @@ fn method_access(c: &Context<'_>, n: Node<'_>) -> Option<bool> {
     match c.method(n) {
         "first" if a.is_empty() => Some(false),
         "last" if a.is_empty() => Some(true),
-        "at" | "slice" | "[]" if a.len() == 1 => index_max(c.text(a[0])),
+        "at" | "slice" | "[]" if a.len() == 1 => index_max(c, a[0]),
         _ => None,
     }
 }

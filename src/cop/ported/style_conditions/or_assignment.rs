@@ -11,7 +11,10 @@ pub(super) fn or_assignment(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
         return vec![];
     };
     let finding = Finding::new(n, "Use the double pipe equals operator `||=` instead.");
-    vec![if descendants(n).any(|node| node.kind() == "comment") {
+    vec![if descendants(n).any(|node| {
+        node.kind() == "comment"
+            && !(value.start_byte() <= node.start_byte() && node.end_byte() <= value.end_byte())
+    }) {
         finding
     } else {
         finding.replace_with(c, n, || format!("{} ||= {}", c.text(var), c.text(value)))

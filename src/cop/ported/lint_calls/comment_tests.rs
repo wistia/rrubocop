@@ -18,6 +18,13 @@ fn cases() -> Vec<Value> {
         )))
         .unwrap(),
     );
+    cases.extend(
+        serde_json::from_str::<Vec<Value>>(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/block-receiver-parity.json"
+        )))
+        .unwrap(),
+    );
     cases
 }
 

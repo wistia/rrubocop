@@ -15,7 +15,7 @@ fn table_option(c: &Context<'_>, n: Node<'_>, key: &str, value: &str) -> Vec<Fin
         return vec![];
     }
     let f = Finding::send(n, format!("Missing {key} option"));
-    vec![if let Some((position, comma)) = insertion::position(n) {
+    vec![if let Some((position, comma)) = insertion::position(c, n) {
         f.edit_with(c, position, position, || {
             format!("{comma}{key}: \"{value}\"")
         })
@@ -27,7 +27,7 @@ fn table_option(c: &Context<'_>, n: Node<'_>, key: &str, value: &str) -> Vec<Fin
 fn has_option(c: &Context<'_>, n: Node<'_>, name: &str) -> bool {
     option_pairs(n)
         .filter_map(|pair| field(pair, "key"))
-        .any(|key| c.symbol(key) && c.value(key) == name)
+        .any(|key| c.static_symbol(key).is_some_and(|value| value == name))
 }
 
 #[cfg(test)]

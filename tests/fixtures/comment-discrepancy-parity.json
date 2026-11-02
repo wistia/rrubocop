@@ -1,0 +1,801 @@
+[
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if x(\n# parity audit\n) == 1; a; elsif x == 1; b; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 17,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 6,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if x(\n# parity audit\n) == 1; a; elsif x == 1; b; end\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if x == 1; a; elsif x(\n# parity audit\n) == 1; b; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 20,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false,
+        "length": 2,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "if x == 1; a; elsif x(\n# parity audit\n) == 1; b; end\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo(\n# parity audit\n)&.bar && foo.baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "foo(\n# parity audit\n)&.bar && foo&.baz\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo&.bar && foo(\n# parity audit\n).baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true,
+        "length": 16,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "foo&.bar && foo(\n# parity audit\n)&.baz\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo(\n# parity audit\n).bar || foo&.baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true,
+        "length": 4,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "foo(\n# parity audit\n)&.bar || foo&.baz\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo.bar || foo(\n# parity audit\n)&.baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true,
+        "length": 15,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "foo&.bar || foo(\n# parity audit\n)&.baz\n"
+  },
+  {
+    "cop": "Lint/TrailingCommaInAttributeDeclaration",
+    "source": "class A\n attr_reader(\n# parity audit\n:foo,\n def bar; 1; end)\nend\n",
+    "path": "test.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": true,
+        "length": 1,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "class A\n attr_reader(\n# parity audit\n:foo\n def bar; 1; end)\nend\n",
+    "rust_expected": [
+      {
+        "line": 4,
+        "column": 4,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": false,
+        "length": 1,
+        "severity": "warning"
+      }
+    ],
+    "rust_corrected": "class A\n attr_reader(\n# parity audit\n:foo,\n def bar; 1; end)\nend\n",
+    "reason": "Removing only the comma inside parenthesized attribute arguments produces invalid Ruby; retain a report-only offense."
+  },
+  {
+    "cop": "Lint/TrailingCommaInAttributeDeclaration",
+    "source": "class A\n attr_reader :foo,\n \n# parity audit\ndef bar; 1; end\nend\n",
+    "path": "test.rb",
+    "config": {
+      "AutoCorrect": "contextual",
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 2,
+        "column": 17,
+        "message": "Avoid leaving a trailing comma in attribute declarations.",
+        "correctable": true,
+        "length": 1,
+        "severity": "warning"
+      }
+    ],
+    "corrected": "class A\n attr_reader :foo\n \n# parity audit\ndef bar; 1; end\nend\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject(\n# parity audit\n) { |k, v| k == :a }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": false,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.reject(\n# parity audit\n) { |k, v| k == :a }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash(\n# parity audit\n).reject { |k, v| k == :a }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 25,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash(\n# parity audit\n).except(:a)\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k, v| k == \n# parity audit\n:a }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.reject { |k, v| k == \n# parity audit\n:a }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k, v| k.==(\n# parity audit\n:a) }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.reject { |k, v| k.==(\n# parity audit\n:a) }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.reject { |k, v| k.eql?(\n# parity audit\n:a) }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": true,
+        "length": 23,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(:a)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(:a)` instead.",
+        "correctable": false,
+        "length": 23,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.reject { |k, v| k.eql?(\n# parity audit\n:a) }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select(\n# parity audit\n) { |k, v| k != \"a\" }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(\"a\")\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": false,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.select(\n# parity audit\n) { |k, v| k != \"a\" }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash(\n# parity audit\n).select { |k, v| k != \"a\" }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 3,
+        "column": 2,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash(\n# parity audit\n).except(\"a\")\n"
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select { |k, v| k != \n# parity audit\n\"a\" }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(\"a\")\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.select { |k, v| k != \n# parity audit\n\"a\" }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/HashExcept",
+    "source": "hash.select { |k, v| k.!=(\n# parity audit\n\"a\") }\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": true,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "hash.except(\"a\")\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Use `except(\"a\")` instead.",
+        "correctable": false,
+        "length": 21,
+        "severity": "convention"
+      }
+    ],
+    "rust_corrected": "hash.select { |k, v| k.!=(\n# parity audit\n\"a\") }\n",
+    "reason": "Preserve comments inside the replaced reject/select range; pinned Ruby removes them."
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = foo ? foo : default(\n# parity audit\n)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 26,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "foo ||= default(\n# parity audit\n)\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = default(\n# parity audit\n) unless foo\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true,
+        "length": 14,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "foo ||= default(\n# parity audit\n)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "a == \n# parity audit\nb ? true : false\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a == \n# parity audit\nb`.",
+        "correctable": true,
+        "length": 5,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "a == \n# parity audit\nb\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "a(\n# parity audit\n) == b ? true : false\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a(\n# parity audit\n) == b`.",
+        "correctable": true,
+        "length": 2,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "a(\n# parity audit\n) == b\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "a == b(\n# parity audit\n) ? true : false\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a == b(\n# parity audit\n)`.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "a == b(\n# parity audit\n)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "(a).==(\n# parity audit\nb) ? true : false\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `(a).==(\n# parity audit\nb)`.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "(a).==(\n# parity audit\nb)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if a > \n# parity audit\nb; false; else; true; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!(a > \n# parity audit\nb)`.",
+        "correctable": true,
+        "length": 7,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "!(a > \n# parity audit\nb)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if a(\n# parity audit\n) > b; false; else; true; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!(a(\n# parity audit\n) > b)`.",
+        "correctable": true,
+        "length": 5,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "!(a(\n# parity audit\n) > b)\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if a > b(\n# parity audit\n); false; else; true; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!(a > b(\n# parity audit\n))`.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "!(a > b(\n# parity audit\n))\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if (a).>(\n# parity audit\nb); false; else; true; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `!((a).>(\n# parity audit\nb))`.",
+        "correctable": true,
+        "length": 9,
+        "severity": "convention"
+      }
+    ],
+    "corrected": "!((a).>(\n# parity audit\nb))\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "x = 1\nif x == 1; a; elsif x() == 1; b; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "x = 1\nif x == 1; a; elsif x() == 1; b; end\n"
+  },
+  {
+    "cop": "Lint/DuplicateElsifCondition",
+    "source": "if x() == 1; a; elsif x == 1; b; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 22,
+        "message": "Duplicate `elsif` condition detected.",
+        "correctable": false
+      }
+    ],
+    "corrected": "if x() == 1; a; elsif x == 1; b; end\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo = value\nfoo&.bar && foo().baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [],
+    "corrected": "foo = value\nfoo&.bar && foo().baz\n"
+  },
+  {
+    "cop": "Lint/SafeNavigationConsistency",
+    "source": "foo()&.bar && foo.baz\n",
+    "path": "test.rb",
+    "config": {
+      "AllowedMethods": [
+        "present?",
+        "blank?",
+        "presence",
+        "try",
+        "try!"
+      ],
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Ensure that safe navigation is used consistently inside of `&&` and `||`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo()&.bar && foo&.baz\n"
+  },
+  {
+    "cop": "Style/OrAssignment",
+    "source": "foo = foo ? foo : default # retain\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the double pipe equals operator `||=` instead.",
+        "correctable": true
+      }
+    ],
+    "corrected": "foo ||= default # retain\n"
+  },
+  {
+    "cop": "Style/RedundantConditional",
+    "source": "if a == b # retain\n true\nelse\n false\nend\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "options": {},
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a == b`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a == b\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "This conditional expression can just be replaced by `a == b`.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "if a == b # retain\n true\nelse\n false\nend\n",
+    "reason": "Retain comments outside the surviving condition; pinned Ruby deletes this comment during replacement."
+  }
+]

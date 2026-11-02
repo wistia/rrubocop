@@ -37,14 +37,15 @@ fn call_expression(n: Node<'_>) -> Option<Node<'_>> {
         _ => None,
     }
 }
-fn receiver<'a>(c: &'a Context<'_>, n: Node<'_>) -> Option<&'a str> {
+fn receiver(c: &Context<'_>, n: Node<'_>) -> Option<String> {
     let call = call_expression(n)?;
     let field_name = match call.kind() {
         "binary" => "left",
         "element_reference" => "object",
         _ => "receiver",
     };
-    field(call, field_name).map(|receiver| c.text(receiver))
+    field(call, field_name)
+        .map(|receiver| super::super::lint_duplicates::expression_key(c, receiver))
 }
 fn expression_method<'a>(c: &'a Context<'_>, n: Node<'_>) -> &'a str {
     let Some(call) = call_expression(n) else {

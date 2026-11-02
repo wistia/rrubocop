@@ -67,6 +67,10 @@ fn correct(
     each: &str,
     end: usize,
 ) -> Finding {
+    if c.method(n) != each && field(n, "receiver").is_some_and(|receiver| block(receiver).is_some())
+    {
+        return finding;
+    }
     let selector = method_node(n);
     if c.method(n) == each {
         let end = if suffix == "index" {

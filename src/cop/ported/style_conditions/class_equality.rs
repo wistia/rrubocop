@@ -37,7 +37,11 @@ fn name_method(c: &Context<'_>, n: Node<'_>) -> bool {
     ["name", "to_s", "inspect"].contains(&c.method(n))
 }
 fn class_call<'n>(c: &Context<'_>, n: Node<'n>, named: bool) -> Option<Node<'n>> {
-    (if named { field(n, "receiver") } else { Some(n) }).filter(|cl| c.method(*cl) == "class")
+    if block(n).is_some() {
+        return None;
+    }
+    (if named { field(n, "receiver") } else { Some(n) })
+        .filter(|cl| c.method(*cl) == "class" && block(*cl).is_none())
 }
 fn class_finding(
     c: &Context<'_>,

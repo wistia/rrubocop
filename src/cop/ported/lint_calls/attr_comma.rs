@@ -4,16 +4,20 @@ pub(super) fn attr_comma(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     if !["attr", "attr_reader", "attr_writer", "attr_accessor"].contains(&c.method(n)) {
         return vec![];
     }
-    let Some(offset) = trailing_comma(c, &args(n)) else {
+    let Some(offset) = trailing_comma(c, &semantic_args(n)) else {
         return vec![];
     };
+    let finding = Finding::range(
+        offset,
+        offset + 1,
+        "Avoid leaving a trailing comma in attribute declarations.",
+    );
     vec![
-        Finding::range(
-            offset,
-            offset + 1,
-            "Avoid leaving a trailing comma in attribute declarations.",
-        )
-        .edit_with(c, offset, offset + 1, || ""),
+        if field(n, "arguments").is_some_and(|a| c.text(a).starts_with('(')) {
+            finding
+        } else {
+            finding.edit_with(c, offset, offset + 1, || "")
+        },
     ]
 }
 fn trailing_comma(c: &Context<'_>, a: &[Node<'_>]) -> Option<usize> {

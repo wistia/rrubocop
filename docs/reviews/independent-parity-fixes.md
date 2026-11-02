@@ -1,5 +1,7 @@
 # Independent parity audit follow-up
 
+The follow-up findings recorded here were addressed in [the discrepancy resolution](discrepancy-resolution.md). The unresolved artifact below is the historical input to that work.
+
 This follow-up addresses the gaps found by the independent reviewer after the previous batch run was clean. It expands the regression corpus and generators so the clean result is tested against more syntax and encoding shapes.
 
 ## Corrections and argument shapes

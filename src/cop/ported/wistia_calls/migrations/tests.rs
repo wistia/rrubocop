@@ -113,7 +113,7 @@ fn nested_options_do_not_count_as_table_options() {
 }
 
 #[test]
-fn escaped_symbol_keys_cannot_be_overridden_by_default_corrections() {
+fn escaped_symbol_options_are_recognized_without_overriding_them() {
     for (key, source) in [
         (
             "charset",
@@ -123,11 +123,33 @@ fn escaped_symbol_keys_cannot_be_overridden_by_default_corrections() {
             "collation",
             r#"create_table :widgets, :"colla\x74ion" => "ascii_bin""#,
         ),
-        ("charset", r#"create_table :widgets, :"id" => false"#),
     ] {
-        let f = inspect(source, key);
-        assert!(f.edit.is_none() && f.additional.is_empty(), "{source}");
+        assert!(findings(source, key).is_empty(), "{source}");
     }
+}
+
+#[test]
+fn static_symbol_option_keys_allow_safe_insertion() {
+    for source in [
+        r#"create_table :widgets, %s|id| => :bigint"#,
+        r#"create_table :widgets, :"\x69\x64" => :bigint"#,
+        r#"create_table :widgets, :"id'" => :bigint"#,
+        r#"create_table :widgets, :"id" => false"#,
+    ] {
+        assert_eq!(
+            corrected(source, "charset"),
+            format!("{source}, charset: \"test_value\"")
+        );
+    }
+}
+
+#[test]
+fn multiline_comments_keep_options_inside_the_call() {
+    let source = "create_table(\n# parity audit\n:widgets)\n";
+    assert_eq!(
+        corrected(source, "charset"),
+        "create_table(\n# parity audit\n:widgets, charset: \"test_value\")\n"
+    );
 }
 
 #[test]

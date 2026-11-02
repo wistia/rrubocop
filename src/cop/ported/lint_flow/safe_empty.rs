@@ -25,6 +25,7 @@ fn unsafe_empty_check(c: &Context<'_>, n: Node<'_>) -> bool {
 
 fn unsafe_receiver(c: &Context<'_>, n: Node<'_>) -> bool {
     (is_call(n) || n.kind() == "identifier")
+        && block(n).is_none()
         && !safe(c, n)
         && !(n.kind() == "identifier" && local_identifier(c, n))
 }

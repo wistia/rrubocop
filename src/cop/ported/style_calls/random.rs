@@ -1,4 +1,5 @@
 use super::super::context::*;
+use super::integer::value as integer;
 use num_bigint::BigInt;
 use tree_sitter::Node;
 pub(super) fn random(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
@@ -24,6 +25,7 @@ pub(super) fn random(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
 }
 fn rand_candidate(c: &Context<'_>, n: Node<'_>) -> bool {
     c.method(n) == "rand"
+        && block(n).is_none()
         && ["", "Random", "::Random", "Kernel", "::Kernel"].contains(&c.receiver(n))
 }
 fn shifted(
@@ -66,7 +68,7 @@ fn random_finding(
     })
 }
 fn random_parts<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, BigInt, bool)> {
-    if n.kind() == "binary" && ["+", "-"].contains(&operator(c, n)) {
+    if ["+", "-"].contains(&arithmetic_operator(c, n)) {
         return binary_parts(c, n);
     }
     if ["succ", "pred", "next"].contains(&c.method(n)) && semantic_args(n).is_empty() {
@@ -75,8 +77,7 @@ fn random_parts<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, BigInt, b
     None
 }
 fn binary_parts<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, BigInt, bool)> {
-    let l = field(n, "left")?;
-    let r = field(n, "right")?;
+    let (l, r) = operands(n)?;
     if let Some(i) = integer(c, r) {
         return Some((l, i, false));
     }
@@ -84,26 +85,6 @@ fn binary_parts<'a>(c: &Context<'_>, n: Node<'a>) -> Option<(Node<'a>, BigInt, b
         return Some((r, i, true));
     }
     None
-}
-fn integer(c: &Context<'_>, n: Node<'_>) -> Option<BigInt> {
-    let text = c.text(n).replace('_', "");
-    let (radix, digits) = digits(text.trim_start_matches(['-', '+']));
-    let number = BigInt::parse_bytes(digits.as_bytes(), radix)?;
-    Some(if text.starts_with('-') {
-        -number
-    } else {
-        number
-    })
-}
-fn digits(text: &str) -> (u32, &str) {
-    match text.get(..2).unwrap_or("") {
-        "0x" | "0X" => (16, &text[2..]),
-        "0o" | "0O" => (8, &text[2..]),
-        "0b" | "0B" => (2, &text[2..]),
-        "0d" | "0D" => (10, &text[2..]),
-        _ if text.len() > 1 && text.starts_with('0') => (8, text),
-        _ => (10, text),
-    }
 }
 
 fn boundaries(c: &Context<'_>, n: Node<'_>) -> Option<(BigInt, BigInt)> {
@@ -117,4 +98,21 @@ fn range_bounds(c: &Context<'_>, n: Node<'_>) -> Option<(BigInt, BigInt)> {
         integer(c, field(n, "begin")?)?,
         integer(c, field(n, "end")?)? - u8::from(operator(c, n) == "..."),
     ))
+}
+
+fn arithmetic_operator<'a>(c: &'a Context<'_>, n: Node<'_>) -> &'a str {
+    if n.kind() == "binary" {
+        operator(c, n)
+    } else {
+        c.method(n)
+    }
+}
+fn operands(n: Node<'_>) -> Option<(Node<'_>, Node<'_>)> {
+    if n.kind() == "binary" {
+        return Some((field(n, "left")?, field(n, "right")?));
+    }
+    let args = semantic_args(n);
+    (args.len() == 1 && block(n).is_none())
+        .then(|| (field(n, "receiver"), args[0]))
+        .and_then(|(receiver, argument)| Some((receiver?, argument)))
 }

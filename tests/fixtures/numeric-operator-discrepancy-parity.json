@@ -1,0 +1,435 @@
+[
+  {
+    "cop": "Lint/MultipleComparison",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(a).<(\n# parity audit\nb) < c\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(a).<(\n# parity audit\nb && b) < c\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "(a).<(\n# parity audit\nb) < c\n",
+    "reason": "Pinned Ruby rewrites the argument inside an explicit comparison call instead of splitting the comparison chain, repeatedly growing the expression. Report only to avoid changing its semantics or looping autocorrection."
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "def hash; a.hash.^(\n# parity audit\nb.hash); end\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def hash; a.hash.^(\n# parity audit\nb.hash); end\n"
+  },
+  {
+    "cop": "Style/RandomWithOffset",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "10.-(\n# parity audit\nrand(1..3))\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Prefer ranges when generating random numbers instead of integers with offsets.",
+        "correctable": true
+      }
+    ],
+    "corrected": "rand(7..9)\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(items).[](\n# parity audit\n0..-1)\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Remove the useless `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(items).(\n# parity audit\n0..-1)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Remove the useless `[]`.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "(items).[](\n# parity audit\n0..-1)\n",
+    "reason": "Pinned Ruby removes only the explicit [] method token, changing slicing into a .call invocation. Report only instead of introducing a different method call."
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0x0..-1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0x0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0b0..-1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0b0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0o0..-1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0o0..-1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0..-0x1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0..-0x1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0..-0b1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0..-0b1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[0..-0o1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Remove the useless `[0..-0o1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "(items).[](\n# parity audit\n1..-1)\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 8,
+        "message": "Prefer `[1..]` over `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "(items).[](\n# parity audit\n1..)\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[1..-0x1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Prefer `[1..]` over `[1..-0x1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items[1..]\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[1..-0b1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Prefer `[1..]` over `[1..-0b1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items[1..]\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "items[1..-0o1]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 5,
+        "message": "Prefer `[1..]` over `[1..-0o1]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items[1..]\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "str.unpack(\"C*\")[0x0]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0x0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "str.unpack(\"C*\")[0b0]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0b0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/UnpackFirst",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "source": "str.unpack(\"C*\")[0o0]\n",
+    "expected": [
+      {
+        "line": 1,
+        "column": 4,
+        "message": "Use `unpack1(\"C*\")` instead of `unpack(\"C*\")[0o0]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "str.unpack1(\"C*\")\n"
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items.[](0..-1)\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Remove the useless `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.(0..-1)\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Remove the useless `[]`.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "items.[](0..-1)\n",
+    "reason": "Pinned Ruby removes only the explicit [] method token, changing slicing into a .call invocation. Report only instead of introducing a different method call."
+  },
+  {
+    "cop": "Style/SlicingWithRange",
+    "source": "items.[](1..-1)\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 6,
+        "message": "Prefer `[1..]` over `[]`.",
+        "correctable": true
+      }
+    ],
+    "corrected": "items.[](1..)\n"
+  },
+  {
+    "cop": "Lint/MultipleComparison",
+    "source": "a.<(b) < c\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": true
+      }
+    ],
+    "corrected": "a.<(b && b) < c\n",
+    "rust_expected": [
+      {
+        "line": 1,
+        "column": 0,
+        "message": "Use the `&&` operator to compare multiple values.",
+        "correctable": false
+      }
+    ],
+    "rust_corrected": "a.<(b) < c\n",
+    "reason": "Pinned Ruby rewrites the argument inside an explicit comparison call instead of splitting the comparison chain, repeatedly growing the expression. Report only to avoid changing its semantics or looping autocorrection."
+  },
+  {
+    "cop": "Security/CompoundHash",
+    "source": "def hash; a.hash.^(b.hash); end\n",
+    "path": "test.rb",
+    "config": {
+      "Safe": false,
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "expected": [
+      {
+        "line": 1,
+        "column": 10,
+        "message": "Use `[...].hash` instead of combining hash values manually.",
+        "correctable": false
+      }
+    ],
+    "corrected": "def hash; a.hash.^(b.hash); end\n"
+  }
+]
