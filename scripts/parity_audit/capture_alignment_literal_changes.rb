@@ -4,7 +4,8 @@ require "bundler/setup"
 require "rubocop"
 require "json"
 cases = JSON.parse(File.read(ARGV.fetch(0)))
-results = cases.select { |entry| entry["id"].match?(/multiline-regexp|multiline-symbol|(?:continued-)?percent-word/) }.map do |entry|
+selected = (ARGV[2] == "--all") ? cases : cases.select { |entry| entry["id"].match?(/multiline-regexp|multiline-symbol|(?:continued-)?percent-word/) }
+results = selected.map do |entry|
   observations = {}
   stages = {"before" => entry["original"], "original_corrected" => entry["ruby_corrected"]}
   stages["native_expected"] = entry["rust_corrected"] if entry["rust_corrected"]

@@ -143,6 +143,29 @@ pub(crate) fn inject_active_support(cfg: &ResolvedConfig, name: &str, config: &m
 }
 
 pub(crate) fn inject_hash_alignment(cfg: &ResolvedConfig, name: &str, config: &mut CopConfig) {
+    if name == "Layout/ArgumentAlignment" {
+        inject_bool(
+            &mut config.options,
+            "HashAlignmentEnabled",
+            sibling_enabled(&cfg.cop_configs, "Layout/HashAlignment"),
+        );
+        for (source, destination) in [
+            ("EnforcedColonStyle", "HashAlignmentEnforcedColonStyle"),
+            (
+                "EnforcedHashRocketStyle",
+                "HashAlignmentEnforcedHashRocketStyle",
+            ),
+        ] {
+            let value = cfg
+                .cop_configs
+                .get("Layout/HashAlignment")
+                .and_then(|sibling| sibling.options.get(source))
+                .cloned()
+                .unwrap_or_else(|| Value::String("key".into()));
+            config.options.entry(destination.into()).or_insert(value);
+        }
+        return;
+    }
     if name != "Layout/HashAlignment" {
         return;
     }

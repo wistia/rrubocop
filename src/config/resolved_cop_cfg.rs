@@ -52,6 +52,7 @@ impl ResolvedConfig {
                 | "Style/ComparableClamp"
                 | "Layout/ArrayAlignment"
                 | "Layout/ParameterAlignment"
+                | "Layout/ArgumentAlignment"
         ) {
             return;
         }
@@ -87,7 +88,11 @@ mod alignment_width_tests {
     use super::*;
     #[test]
     fn cop_numeric_width_precedes_global_and_nil_falls_back() {
-        for name in ["Layout/ArrayAlignment", "Layout/ParameterAlignment"] {
+        for name in [
+            "Layout/ArrayAlignment",
+            "Layout/ParameterAlignment",
+            "Layout/ArgumentAlignment",
+        ] {
             for (own, global, expected) in [
                 (None, Some(4), 4),
                 (Some(serde_yml::Value::Null), Some(4), 4),
@@ -120,5 +125,34 @@ mod alignment_width_tests {
                 );
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod argument_hash_style_tests {
+    use super::*;
+    #[test]
+    fn compatibility_options_preserve_style_arrays_and_disabled_state() {
+        let mut config = ResolvedConfig::empty();
+        let styles = serde_yml::Value::Sequence(vec!["key".into(), "separator".into()]);
+        config.cop_configs.insert(
+            "Layout/HashAlignment".into(),
+            CopConfig {
+                enabled: crate::cop::EnabledState::False,
+                options: [
+                    ("EnforcedColonStyle".into(), styles.clone()),
+                    ("EnforcedHashRocketStyle".into(), "separator".into()),
+                ]
+                .into(),
+                ..CopConfig::default()
+            },
+        );
+        let resolved = config.cop_config("Layout/ArgumentAlignment");
+        assert!(!resolved.get_bool("HashAlignmentEnabled", true));
+        assert_eq!(resolved.options["HashAlignmentEnforcedColonStyle"], styles);
+        assert_eq!(
+            resolved.get_str("HashAlignmentEnforcedHashRocketStyle", "key"),
+            "separator"
+        );
     }
 }

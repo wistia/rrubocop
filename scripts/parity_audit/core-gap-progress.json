@@ -41,8 +41,12 @@
       "initial_status": "candidate_fixture_difference",
       "ruby_autocorrect": true,
       "rust_autocorrect": true,
-      "work_status": "original_source_and_call_ownership_review_in_progress",
-      "evidence": "50 unchanged original examples/62 captured states;imported original-verified command bounds and raw keyword-grouping helpers;native cop implementation/ownership/CLI gates pending"
+      "work_status": "original_spec_port_first_pass_validated_cli_pending_native_parser_deferred",
+      "evidence": "50 unchanged original examples/62 states;402 supported exact diagnostic states,386 exact first corrections plus16 proven literal-value safeguards;104 original call-role states match,14 native-error role states/28 cop states explicitly deferred;922 full native tests plus independent replay;CLI/metadata/production/CRLF/final gates pending",
+      "remaining_limits": [
+        "Native-error command and regexp/heredoc shapes explicitly deferred with original observations preserved",
+        "Existing redundant_disable_audit false remains baseline behavior; directive parity not validated"
+      ]
     },
     {
       "name": "Layout/ArrayAlignment",
@@ -2606,6 +2610,18 @@
       "status": "confirmed_deferred",
       "evidence": "docs/evidence/parameter-alignment-invalid-singleton-literal.json",
       "scope": "Four config states share one method definition rejected by original parser singleton_literal diagnostics; valid receiver-call controls replace it in cop fixtures. Generic syntax expansion remains deferred."
+    },
+    {
+      "id": "signed-command-comma-native-error",
+      "status": "confirmed_deferred",
+      "evidence": "tests/fixtures/cops/layout/argument_alignment/deferred-native-parser.json",
+      "scope": "Original-valid signed commands with comma tails produce native ERROR trees; no private lossy recovery is used."
+    },
+    {
+      "id": "heredoc-inside-regexp-interpolation-native-error",
+      "status": "confirmed_deferred",
+      "evidence": "docs/evidence/argument-alignment-call-role-coverage.json",
+      "scope": "Three original-valid heredoc-in-regexp shapes across four Ruby targets remain native-error role states; generic syntax expansion is deferred."
     }
   ]
 }

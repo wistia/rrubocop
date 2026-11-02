@@ -1,5 +1,4 @@
 mod access_modifier_indentation;
-mod align_items;
 mod original_alignment;
 mod argument_alignment;
 mod array_alignment;
