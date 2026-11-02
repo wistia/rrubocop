@@ -33,4 +33,3 @@ def mutated(case, mutation, source):
     variant = {k: copy.deepcopy(case[k]) for k in ("cop", "path", "config")}
     variant.update(source=source, expected=[], corrected=source, origin=mutation)
     return variant
-
