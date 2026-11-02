@@ -3,7 +3,29 @@
 def cases():
     rows = []
     def add(cop, source, **config):
+        if cop == "Rails/UnknownEnv":
+            config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    for source in ("Rails.env.proudction?", "::Rails.env.developmen?", "Rails.env.local?", "Rails.env.production?", "Rails.env.unknown?", "Rails.env == 'proudction'", "'proudction' === Rails.env", "Rails.env.==('proudction')", "Rails.env != 'proudction'", "Rails.env == :proudction", "Rails.env&.proudction?", "Other::Rails.env.proudction?", "Rails.env(:x).proudction?", "Rails.env.proudction?(1)", "Rails.env.production", "Rails.env == \"production?\""):
+        add("Rails/UnknownEnv",source)
+    for version in (7.0,7.1):
+        for source in ("Rails.env.local?", "Rails.env.lcoal?", "Rails.env == 'development'", "Rails.env.stagging?"):
+            add("Rails/UnknownEnv",source,TargetRailsVersion=version)
+            add("Rails/UnknownEnv",source,TargetRailsVersion=version,Environments=["local","staging","stage","staged"])
+    for name in ("prodction","DEVELOPMENT","@@production","stagin","zzz","a","production?"):
+        add("Rails/UnknownEnv",f"Rails.env == '{name}'",Environments=["development","production","staging","staging","stage","TEST"])
+    for source in ("Rails.env == \"proudction?\"", "Rails.env == 'produc'", "Rails.env == \"proudction\\nfoo\"", "Rails.env == (\"proud\" \"ction\")", "Rails.env == :\"proudction\"", "Rails.env&.==('proudction')"):
+        add("Rails/UnknownEnv",source)
+    for dictionary in (None,[],["test","TEST","tEst","test"],["développement","dévelopement","development"]):
+        for name in ("tset","developement","dévelopement", "LOCAL"):
+            add("Rails/UnknownEnv",f"Rails.env == '{name}'",Environments=dictionary)
+    for source in ("Rails.env.developpment?", "Rails.env.something?", "'developpment' == Rails.env", "'something' === Rails.env", "'local' === Rails.env", "Rails.env.local?", "Rails.env == 'local'", "Rails.env.production?", "Rails.env == 'production'"):
+        add("Rails/UnknownEnv",source,TargetRailsVersion=7.0,Environments=["development","production","test"])
+        add("Rails/UnknownEnv",source,TargetRailsVersion=7.1,Environments=None)
+    for source in (":: Rails.env.proudction?", "Rails.env().proudction?()", "Rails.env == ?p", "Rails.env == <<~ENV\nproudction\nENV", "Rails.env == \"proudction\nfoo\"", "Rails.env == \"proudction\\\n\"", "Rails.env == \"pro#{name}duction\""):
+        add("Rails/UnknownEnv",source)
+    for source in ("Rails.env { value }.proudction?", "Rails.env.proudction? { value }", "Rails.env { value } == 'proudction'", "Rails.env.proudction?(&block)", "Rails.env(&block).proudction?"):
+        add("Rails/UnknownEnv",source)
     for selector in ("select", "filter", "find_all", "reject"):
         for counter in ("count", "length", "size"):
             add("Performance/Count", f"items.{selector} {{ |item| item.active? }}.{counter}")

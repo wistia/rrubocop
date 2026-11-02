@@ -487,3 +487,32 @@ cases. Full native suite passes 910 tests, 1 ignored probe. Actual production
 CLI scope/metadata matrix passes all 67 probes across 31 reviewed rules with
 every positive control firing. Totals: 31 reviewed implementations, 28 baseline
 stubs replaced, 39 baseline stubs remaining.
+
+### Rails/UnknownEnv — pinned-source review
+
+Ported rubocop-rails 2.26.0 `lib/rubocop/cop/rails/unknown_env.rb`, then
+reviewed the original `spec/rubocop/cop/rails/unknown_env_spec.rb` against the
+implementation. The implementation follows Ruby 3.4.9 DidYouMean
+`spell_checker.rb`, `jaro_winkler.rb`, and `levenshtein.rb`: codepoint matching,
+length-dependent thresholds, normalized candidate selection, original-spelling
+sort scores, duplicate dictionary entries, reverse ranking, edit-distance
+selection and the one-result fallback. The pinned runtime has DidYouMean; an
+artificial Ruby runtime without that library is not emulated.
+
+Coverage includes every original predicate/equality spec shape, both equality
+orders, explicit operator sends, root-qualified/whitespace-qualified Rails,
+unsupported namespace/safe-navigation/argument/block receivers, symbol and
+interpolated/concatenated/multiline string negatives, character/heredoc strings,
+case/Unicode/@ normalization, duplicate/custom/empty/null dictionaries, Rails
+7.0 versus 7.1 `local`, and no mutation of the configured dictionary. Fixtures
+explicitly supply Wistia's production dictionary where appropriate: the original
+reference inherits it, while the isolated native probe supplies per-case options.
+This prevents a test-only default-config mismatch from being mistaken for a
+spelling algorithm difference. This diagnostic-only rule never corrects source.
+
+The full 877-case original matrix has no new UnknownEnv discrepancy and retains
+exactly the prior 472 documented events. The final focused 91-case/182-second-pass UnknownEnv gate, including block
+receivers, has zero differences against original Ruby. Production CLI/config scope tests
+pass all 69 probes across 32 reviewed rules, including an UnknownEnv positive
+control. Native suite passes 911 tests, 1 ignored audit probe. Totals are now 32
+reviewed implementations, 29 baseline stubs replaced, 38 baseline stubs remaining.
