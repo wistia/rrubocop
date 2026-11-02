@@ -246,8 +246,10 @@ mod diagnostic_tests;
 
 pub(super) fn static_literal(source: &SourceFile, node: Node<'_>) -> Option<String> {
     let config = CopConfig::default();
-    Context::new(source, &config)
+    let context = Context::new(source, &config);
+    context
         .static_value(node)
+        .or_else(|| context.ruby_static_string(node))
         .map(std::borrow::Cow::into_owned)
 }
 
