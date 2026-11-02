@@ -81,30 +81,6 @@ fn collect_argument_items<'a>(source: &SourceFile, node: Node<'a>, style: &str) 
     }
 }
 
-/// Trailing keyword `pair`s in a call (implicit last-arg hash / kwargs).
-fn trailing_keyword_pairs<'a>(node: Node<'a>) -> Vec<Node<'a>> {
-    // Misparsed pattern-matching (`=>`) can yield errorful `argument_list`s of
-    // pairs; RuboCop only inspects real hash nodes, so skip those.
-    if node.has_error() {
-        return Vec::new();
-    }
-    let raw = collect_items(node);
-    let mut start = raw.len();
-    while start > 0 && raw[start - 1].kind() == "pair" {
-        start -= 1;
-    }
-    raw[start..].to_vec()
-}
-
-/// Items to align for `Layout/HashAlignment` (`hash` or kwargs in `argument_list`).
-pub(crate) fn hash_alignment_items<'a>(node: Node<'a>) -> Vec<Node<'a>> {
-    match node.kind() {
-        "argument_list" | "command_argument_list" => trailing_keyword_pairs(node),
-        "hash" => hash_pairs(node),
-        _ => Vec::new(),
-    }
-}
-
 pub(super) fn alignment_items<'a>(
     source: &SourceFile,
     node: Node<'a>,

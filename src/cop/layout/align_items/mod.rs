@@ -2,8 +2,6 @@
 
 mod items;
 
-pub(super) use items::hash_alignment_items as hash_pairs_for_alignment;
-
 use tree_sitter::Node;
 
 use crate::cop::Cop;
@@ -170,30 +168,6 @@ pub fn check_align(
         source,
         node,
         &items::alignment_items(source, node, style),
-        style,
-        width,
-        message,
-        diagnostics,
-        corrections,
-    );
-}
-
-/// Align `Layout/HashAlignment` entries (`hash` braces or trailing kwargs).
-pub fn check_hash_align(
-    cop: &dyn Cop,
-    source: &SourceFile,
-    node: Node<'_>,
-    style: &str,
-    width: usize,
-    message: &str,
-    diagnostics: &mut Vec<Diagnostic>,
-    corrections: &mut Option<&mut Vec<Correction>>,
-) {
-    check_align_items(
-        cop,
-        source,
-        node,
-        &items::hash_alignment_items(node),
         style,
         width,
         message,
