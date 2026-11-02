@@ -1,8 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The first five batches replace
-21 stubs and repair an existing ReverseEach detector/corrector; 46 stubs and the remaining implemented-cop gaps
+The baseline inventory contained 67 no-op stubs. The first seven batches replace
+22 stubs and repair an existing ReverseEach detector/corrector; 45 stubs and the remaining implemented-cop gaps
 still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
@@ -169,8 +169,8 @@ python3 scripts/framework_parity/check.py \
 ```
 
 Targeted suites pass: **883 complete native library tests passed, with 1 intentionally ignored audit probe**. The
-strict command currently exits 1 with **127 transparent safety/upstream-hazard
-events** across nine cops. `failures.json`, `summary.json` and `runtime.json` contain evidence;
+strict command currently exits 1 with **387 transparent safety/upstream-hazard
+events** across ten cops. `failures.json`, `summary.json` and `runtime.json` contain evidence;
 there are no unexpected detection, message, range, byte or idempotence differences
 in the selected specimens.
 
@@ -220,3 +220,31 @@ differences remain in these selected specimens. Raw-byte/comment/heredoc
 rewrites that cannot preserve source are conservatively declined; broader
 coverage of those uncommon forms remains pending. Totals are 24 reviewed rules,
 21 baseline stubs replaced and 46 baseline stubs remaining.
+
+## Seventh batch: combined prefix/suffix checks
+
+Performance/DoubleStartEndWith now implements matching send receivers/selectors,
+second-argument purity, ActiveSupport aliases, original messages/ranges and
+combined argument edits. Reviewed its complete original 1.21.1 algorithm and
+rubocop-ast 1.32.3 Node#pure? branches after implementation. Structural comparisons
+cover decoded string/symbol values, numeric bases, argument parentheses and
+method calls. The existing Caller integer decoder is reused. RSpec has a similar
+private structural helper; integration may consolidate these after both settle.
+
+The matrix now includes 460 original cases, 920 second-pass cases and 25 trusted
+runtime programs. Performance tests pass 36/36. There are 387 explicitly retained
+difference events: the previous 127 plus 260 DoubleStartEndWith events. All 260
+were independently checked to be receiver-preservation guards (only correctability
+and corrected bytes differ), two original no-argument corrector crashes across
+three passes, or the demonstrated runtime behavior difference. No new unexpected
+detection, message, range or final-state differences remain in the authored cases.
+
+Original on_or checks purity only for second-call arguments, then autocorrect
+removes a second receiver evaluation. With a receiver method returning different
+strings, original safe correction changes true/two calls into false/one call.
+Rust reports the offense but declines to combine an impure receiver; ordinary
+local and literal receivers still receive the correction. Original empty
+argument lists crash when first/last.source_range is read; Rust skips them.
+Comment/raw-byte deletions remain guarded. Exotic purity constructs, arbitrary
+AST equality and all runtime contexts still require broader evidence. Totals:
+25 reviewed rules, 22 baseline stubs replaced, 45 baseline stubs remaining.

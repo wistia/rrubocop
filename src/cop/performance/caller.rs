@@ -120,7 +120,7 @@ fn caller(source: &SourceFile, node: Node<'_>) -> Option<(String, BigInt)> {
     };
     Some((name, offset))
 }
-fn integer(source: &SourceFile, node: Node<'_>) -> Option<BigInt> {
+pub(super) fn integer(source: &SourceFile, node: Node<'_>) -> Option<BigInt> {
     if node.kind() != "integer"
         && !(node.kind() == "unary"
             && node

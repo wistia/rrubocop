@@ -109,4 +109,18 @@ def cases():
         add("Performance/BindCall", "method.bind(object).call(foo)", TargetRubyVersion=version)
         add("Performance/UnfreezeString", "'text'.dup", TargetRubyVersion=version)
         add("Performance/UnfreezeString", "String.new('text')", TargetRubyVersion=version)
+    for source in ("text.start_with?('a') || text.start_with?('b')", "text.start_with?('a', 'b') || text.start_with?('c')", "text.end_with?('a') || text.end_with?(CONST)", "text.start_with?('a') || other.start_with?('b')", "text.start_with?('a') || text.end_with?('b')", "text&.start_with?('a') || text&.start_with?('b')", "start_with?('a') || start_with?('b')", "text.start_with?('a') || text.start_with?(value)", "value = 'b'; text.start_with?('a') || text.start_with?(value)", "text.start_with?('a') || text.start_with?(@value)", "text.start_with?('a') || text.start_with?(false)", "text.start_with?('a') || text.start_with?(['b'])", "text.start_with?('a') || text.start_with?(%Q(#{value}))", "text.start_with?('a') || text.start_with?(%Q(#{@value}))", "text.start_with?('a') or text.start_with?('b')", "text.starts_with?('a') || text.starts_with?('b')", "text.start_with?('a') || text.start_with?('b') || text.start_with?('c')", "text.start_with?('a') || text.start_with?", "text.start_with? || text.start_with?('a')"):
+        add("Performance/DoubleStartEndWith", source)
+    add("Performance/DoubleStartEndWith", "text.starts_with?('a') || text.starts_with?('b')", IncludeActiveSupportAliases=True)
+    add("Performance/DoubleStartEndWith", "text.ends_with?('a') || text.ends_with?('b')", IncludeActiveSupportAliases=True)
+    add("Performance/DoubleStartEndWith", "text.start_with?('a') || text.start_with?('b')", AutoCorrect="disabled")
+    for arg in ("-1", "+1", "1.5", ":value", "::Namespace::VALUE", "%w[a b]", "defined?(value)", "(true ? 'a' : 'b')", "(/prefix/)", "[value]", "{key: @value}"):
+        add("Performance/DoubleStartEndWith", f"text.start_with?('a') || text.start_with?({arg})")
+    for left, right in (("'text'", '\"text\"'), ("object(1)", "object(0x1)"), ("object('a')", 'object(\"a\")'), ("object(1)", "object(2)")):
+        add("Performance/DoubleStartEndWith", f"{left}.start_with?('a') || {right}.start_with?('b')")
+    for left, right in (("object", "object()"), ("object 1", "object(1)"), ("object(1.0)", "object(1e0)")):
+        add("Performance/DoubleStartEndWith", f"({left}).start_with?('a') || ({right}).start_with?('b')")
+    for selector in ("start_with?", "end_with?"):
+        for arg in ("'b'", "@value", "CONST", "defined?(value)", "(true ? 'a' : 'b')", "%w[a b]", "-1"):
+            add("Performance/DoubleStartEndWith", f"text = 'beta'; text.{selector}('a') || text.{selector}({arg})")
     return rows
