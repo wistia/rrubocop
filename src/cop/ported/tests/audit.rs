@@ -67,6 +67,28 @@ fn configuration(case: &Case) -> ResolvedConfig {
                     .ok()
             });
     }
+    if let Some(globals) = case
+        .config
+        .get("GlobalConfig")
+        .and_then(serde_yml::Value::as_mapping)
+    {
+        for (name, options) in globals {
+            if let (Some(name), Some(options)) = (name.as_str(), options.as_mapping()) {
+                config.cop_configs.insert(
+                    name.into(),
+                    CopConfig {
+                        options: options
+                            .iter()
+                            .filter_map(|(key, value)| {
+                                key.as_str().map(|key| (key.into(), value.clone()))
+                            })
+                            .collect(),
+                        ..CopConfig::default()
+                    },
+                );
+            }
+        }
+    }
     config.cop_configs.insert(
         case.cop.clone(),
         CopConfig {

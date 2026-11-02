@@ -80,7 +80,8 @@ class AuditReference < PortedReference
       'Enabled' => true, 'Include' => ['**/*'], 'Exclude' => []
     )
     all_cops = @config.for_all_cops.merge(test.fetch('config', {}).slice('TargetRubyVersion', 'TargetRailsVersion'))
-    config = RuboCop::Config.new(@config.merge(name => options, 'AllCops' => all_cops), @config.loaded_path)
+    base = @config.merge(test.fetch('config', {})['GlobalConfig'] || {})
+    config = RuboCop::Config.new(base.merge(name => options, 'AllCops' => all_cops), @config.loaded_path)
     with_fixture_gem_versions(config, test.fetch('config', {})['GemVersions'])
   end
 

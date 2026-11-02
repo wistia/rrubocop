@@ -24,6 +24,21 @@ impl ResolvedConfig {
 
     fn inject_cop_options(&self, name: &str, config: &mut CopConfig) {
         inject_globals(self, config);
+        if name == "Performance/Detect" {
+            if let Some(methods) = self
+                .cop_configs
+                .get("Style/CollectionMethods")
+                .and_then(|sibling| sibling.options.get("PreferredMethods"))
+            {
+                config.options.insert(
+                    "PreferredDetectMethod".into(),
+                    methods
+                        .get("detect")
+                        .cloned()
+                        .unwrap_or(serde_yml::Value::Null),
+                );
+            }
+        }
         self.inject_method_body_width(name, config);
         inject_rack_version(self, name, config);
         inject_line_length(self, name, config);
