@@ -69,3 +69,9 @@ source/config specimens without executing them. Runtime execution is limited to
 explicitly authored programs in performance_seven_runtime.py.
 
 No release, S3 publication, rollout branch or Wistia PR was modified.
+
+The property generator uses explicitly escaped interpolation templates. The
+required original Ruby -A pass initially activated literal interpolation via
+Lint/InterpolationCheck; post-lint round-trip validation caught it. Safe escaped
+forms now survive autocorrection and regenerate all 101 observations exactly;
+the 4,720 imported source/config specimens also round-trip unchanged.

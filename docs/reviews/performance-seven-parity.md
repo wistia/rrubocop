@@ -196,3 +196,9 @@ new importer/property scripts are clean. One pre-existing application-specific
 RescueMustReportError finding remains in the standalone reference harness, which
 captures exceptions into its JSON evidence. No telemetry calls or lint exceptions
 were added to conceal that context mismatch.
+
+Post-lint fixture round trips regenerate exactly 101 property observations and
+4,720 upstream source/config records. Literal source templates now escape their
+interpolation markers explicitly: original Ruby -A's unsafe InterpolationCheck
+would otherwise activate intentionally literal template contents. The escaped
+forms survive the required autocorrect pass with no offenses and identical data.
