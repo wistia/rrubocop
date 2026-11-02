@@ -314,3 +314,26 @@ be_include/include both match the same collection. RSpec core defines the two
 inclusion methods through the same nested-shared-group builder, with intentionally
 different report labels; the style correction preserves that original behavior.
 The runtime script passes original Ruby lint without changing the original forms.
+
+## Batch 12: file suffixes and constant declarations
+
+SpecFilePathSuffix replaces another initial stub; LeakyConstantDeclaration's
+existing implementation is repaired and reviewed. The total is 58 original
+stubs plus ten existing implementations reviewed, leaving 22 original stubs and
+six existing rules open. The strict matrix contains 1,029 comparisons across 68
+rules, with 15 explicit safeguards and 35 correction-disable controls unchanged.
+The pinned import retains 751 specimens, thirteen earlier templates and three
+invalid original yield specimens remain explicit limitations.
+
+Original-source review covered global offense placement, top-level group and
+namespace wrappers, shared-example exclusions, ordinary versus numbered-block
+ancestry, class/module ranges and direct/scoped/multiple/operator constant
+assignments. A dedicated original-engine probe verifies a constant assignment in
+a group's call arguments, which Ruby still considers beneath the group's block.
+The shared ancestry helper was reused rather than leaving an unused duplicate.
+
+The Prism importer now reads upstream global-offense filenames literally. Their
+suffixes and relative components are preserved beneath /tmp/spec so production
+Include scoping is exercised; the importer does not evaluate filename-producing
+Ruby. No source correction or runtime fixture execution is introduced by either
+of these detection-only rules.

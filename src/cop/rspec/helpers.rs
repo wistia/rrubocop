@@ -147,18 +147,15 @@ fn is_spec_group_call(source: &SourceFile, node: Node<'_>) -> bool {
     bare_rspec_call(source, node).is_some_and(is_group) && call_block(node).is_some()
 }
 
-/// True when `node` sits inside an RSpec example-group `do`/`{ }` block.
+/// RSpec group ancestry through an ordinary block, including its send arguments.
 pub fn inside_spec_group(source: &SourceFile, node: Node<'_>) -> bool {
-    let mut p = node.parent();
-    while let Some(cur) = p {
-        if matches!(cur.kind(), "do_block" | "block")
-            && cur
-                .parent()
-                .is_some_and(|call| is_spec_group_call(source, call))
+    let mut ancestor = node.parent();
+    while let Some(parent) = ancestor {
+        if is_spec_group_call(source, parent) && !super::separation::numbered_block(source, parent)
         {
             return true;
         }
-        p = cur.parent();
+        ancestor = parent.parent();
     }
     false
 }

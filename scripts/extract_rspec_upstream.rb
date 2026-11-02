@@ -35,7 +35,7 @@ Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
   calls = []
   until pending.empty?
     node = pending.pop
-    calls << node if node.is_a?(Prism::CallNode) && %i[expect_offense expect_no_offenses].include?(node.name)
+    calls << node if node.is_a?(Prism::CallNode) && %i[expect_offense expect_no_offenses expect_global_offense expect_no_global_offenses].include?(node.name)
     pending.concat(node.compact_child_nodes)
   end
   calls.sort_by { |call| call.location.start_offset }.each_with_index do |call, index|
@@ -44,6 +44,15 @@ Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
     unless argument.is_a?(Prism::StringNode) || argument.is_a?(Prism::InterpolatedStringNode)
       not_imported << {id:, reason: "Fixture template requires host interpolation"}
       next
+    end
+    fixture_path = "/tmp/spec/parity_spec.rb"
+    if %i[expect_global_offense expect_no_global_offenses].include?(call.name)
+      filename = call.arguments&.arguments&.[](1)
+      unless filename.is_a?(Prism::StringNode)
+        not_imported << {id:, reason: "Global offense filename requires host interpolation"}
+        next
+      end
+      fixture_path = filename.unescaped.start_with?("spec/") ? "/tmp/#{filename.unescaped}" : "/tmp/spec/#{filename.unescaped}"
     end
     source = RSpecUpstreamSources.literal_parts(argument).lines.reject { |line| line.match?(/\A\s*[\^~]+/) }.join
     variants = if File.basename(path) == "repeated_include_example_spec.rb" && source.include?("%{include_method}")
@@ -59,7 +68,7 @@ Dir[File.join(upstream, "*_spec.rb")].sort.each do |path|
       name = File.basename(path, "_spec.rb").split("_").map(&:capitalize).join
       cop = "RSpec/#{name}"
       options = inventory.fetch(cop).fetch("scopes").fetch("Gemfile").merge("__RubocopVersion" => "1.65.1", "TargetRubyVersion" => 3.4)
-      cases << {id: variant_id, cop:, source: variant_source, path: "/tmp/spec/parity_spec.rb", config: options, expected: [], corrected: variant_source, origin: "reference", upstream: "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/#{File.basename(path)}##{index}"}
+      cases << {id: variant_id, cop:, source: variant_source, path: fixture_path, config: options, expected: [], corrected: variant_source, origin: "reference", upstream: "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/#{File.basename(path)}##{index}"}
     end
   end
 end
