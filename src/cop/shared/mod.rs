@@ -17,6 +17,7 @@ pub use send_range::{end as send_end, is_setter_call};
 pub mod ruby_arguments;
 pub mod ruby_expression;
 pub(crate) mod ruby_literal;
+pub mod ruby_semantics;
 
 pub use bare_args::replace_arg;
 pub use block_pass::{EXCLUDED_BLOCK_PARENTS, METHOD_STOPS, NESTED_SCOPES, Passes, ScanOpts, scan};
