@@ -127,4 +127,14 @@ def cases():
         add("Rails/EnumUniqueness", source)
     for source in ("enum :status, [nil, nil, true, true, false, false]", "enum 'état', ['été', 'été']", "enum :status, [:active, :\"active\"]", "enum :status, [-1, -0x1, +1, 1]", "enum :status, [[1], [0x1], {key: 1}, {key: 1}]", "enum :status, [0, # keep\n 0]", "enum({status: [0, 0]})", "enum status: {active: value, archived: value()}"):
         add("Rails/EnumUniqueness", source)
+    for source in ("enum :status, [:active, :archived]", "enum status: [:active, :archived]", "enum({status: [:active, :archived]})", "enum :status, []", "enum :status, [0, 1]", "enum :status, ['a', 'b']", "enum :status, ['été', '😀']", "enum :status, [:été, :'foo bar']", "enum :status, %i[active archived]", "enum :status, %w[active archived]", "enum :status, %w[a\\ b c\\nd]", "enum :status, %W[a\\nb c]", "enum :status, [value, call()]", "enum :status, [\"#{value}\"]", "enum :status, %W[a#{value}]", "enum :status, [:a, # keep\n :b]", "enum :status, [:active], prefix: true", "enum :status, {active: 0}", "model.enum :status, [:active]", "enum status: [:active], other: [:done]"):
+        add("Rails/EnumHash", source)
+    for version in (6.1, 7.0, 7.2, 8.1):
+        add("Rails/EnumHash", "enum :status, [:active]", TargetRailsVersion=version)
+        add("Rails/EnumHash", "enum status: [:active]", TargetRailsVersion=version)
+    add("Rails/EnumHash", "enum :status, [:active]", AutoCorrect="disabled")
+    for source in ("enum :status, [?a, ?b]", "enum :status, [\"\\0\\a\\b\\e\\f\\r\\t\\v\"]", "enum :status, ['#{value}', '#@value', '#$value']", "enum :status, [:'a-b', :'été 😀']", "enum :status, %i[a\\ b c\\nd]", "enum :status, %I[a\\nb c]"):
+        add("Rails/EnumHash", source)
+    for source in ("enum :status, [:'😀', :'!@', :'~@', :'+@', :'-@', :'[]']", "enum :status, [?\\n, ?\\t, ?\\\\, ?\\\"]", "enum :status, %W[a\\ b c\\]d]", "enum :status, %i[a\\]b c]"):
+        add("Rails/EnumHash", source)
     return rows

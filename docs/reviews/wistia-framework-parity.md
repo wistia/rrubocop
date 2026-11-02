@@ -1,8 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The first seven batches replace
-22 stubs and repair an existing ReverseEach detector/corrector; 45 stubs and the remaining implemented-cop gaps
+The baseline inventory contained 67 no-op stubs. The first nine batches replace
+24 stubs and repair an existing ReverseEach detector/corrector; 43 stubs and the remaining implemented-cop gaps
 still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
@@ -168,11 +168,13 @@ python3 scripts/framework_parity/check.py \
   --ruby-project /path/to/wistia --output /tmp/framework-parity
 ```
 
-Targeted suites pass: **896 complete native library tests passed, with 1 intentionally ignored audit probe**. The
-strict command currently exits 1 with **387 transparent safety/upstream-hazard
-events** across ten cops. `failures.json`, `summary.json` and `runtime.json` contain evidence;
-there are no unexpected detection, message, range, byte or idempotence differences
-in the selected specimens.
+Complete native suite: **898 passed, with 1 intentionally ignored audit probe**.
+The strict command exits 1 with **407 explicit difference events**: 405 documented
+safety/upstream-hazard events and two unresolved parser-related corrected-byte
+differences. `failures.json`, `summary.json` and `runtime.json` retain every event.
+Detection, message and range differences in the selected specimens are confined
+to the documented guards and original corrector crashes; EnumHash's emoji symbol
+spelling gap remains open.
 
 This is finite evidence, not a proof over every Ruby program. Remaining branch
 coverage includes unusual bindings, arbitrary AST/source equivalence,
@@ -269,3 +271,30 @@ discrepancies. Complete native suite: 896 passed, 1 intentionally ignored probe.
 EnumUniqueness is diagnostic only and never corrects source. Broader exotic AST
 equality and actual production path-scope coverage remain outstanding.
 Totals: 26 reviewed rules, 23 baseline stubs replaced, 44 remaining.
+
+## Ninth batch: explicit enum hashes and Ruby literal formatting
+
+Rails/EnumHash implements old/new declaration syntax, Rails >=7 positional
+syntax gating, empty/percent arrays, canonical string dump/symbol inspect
+formatting, interpolation, controls and character literals. Post-port review
+compared the complete original 2.26.0 source and actual Ruby 3.4 dump/inspect
+behavior. Dedicated shared/ruby_literal.rs distinguishes Unicode escaping in
+String#dump from Symbol#inspect, escapes interpolations/control bytes and
+quotes !@/~@ to prevent Ruby operator normalization from changing symbol values.
+Lowercase/uppercase percent-array escaping and delimiters have authored cases.
+The reference driver now applies TargetRailsVersion under AllCops; four versions
+(6.1, 7.0, 7.2, 8.1) exercise the positional gate and old syntax.
+
+Latest matrix: 527 original cases, 1054 second-pass cases, 27 trusted runtime
+programs. Native full suite: 898 passed, 1 ignored probe. Two trusted enum programs
+preserve the resulting mappings, including Unicode. Eighteen additional
+documented safeguard events cover original comment deletion and an invalid
+correction for `%W[a#{value}]` into `{a#{value} => 0}`.
+
+One exact corrected-byte gap remains unresolved (two mode events): Ruby emits
+`:😀` from Symbol#inspect; tree-sitter-ruby parses it as `(program (ERROR)
+(identifier))`. Native keeps equivalent `:"😀"`, preserving the symbol value and
+valid native syntax. This is recorded as a parser limitation, not claimed as
+completed exact parity. Broader literal encodings/exotic ASTs and actual
+production path scopes still need evidence. Totals: 27 reviewed implementations,
+24 baseline stubs replaced, 43 baseline stubs remaining.

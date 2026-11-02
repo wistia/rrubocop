@@ -77,7 +77,7 @@ class AuditReference < PortedReference
     options = @config.for_cop(name).merge('AutoCorrect' => true).merge(test.fetch('config', {})).merge(
       'Enabled' => true, 'Include' => ['**/*'], 'Exclude' => []
     )
-    all_cops = @config.for_all_cops.merge(test.fetch('config', {}).slice('TargetRubyVersion'))
+    all_cops = @config.for_all_cops.merge(test.fetch('config', {}).slice('TargetRubyVersion', 'TargetRailsVersion'))
     RuboCop::Config.new(@config.merge(name => options, 'AllCops' => all_cops), @config.loaded_path)
   end
 

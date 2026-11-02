@@ -1,5 +1,7 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Rails/EnumHash", "def enum(name, values); p(values.is_a?(Array) ? values.each_with_index.to_h : values); end\nenum :status, [:active, :archived]\n"),
+    ("Rails/EnumHash", "def enum(name, values); p(values.is_a?(Array) ? values.each_with_index.to_h : values); end\nenum :status, ['été', '😀']\n"),
     ("Performance/DoubleStartEndWith", "text = 'beta'\np(text.start_with?('a') || text.start_with?('b'))\n"),
     ("Performance/DoubleStartEndWith", "$calls = 0\ndef text; $calls += 1; $calls == 1 ? 'x' : 'b'; end\np(text.start_with?('a') || text.start_with?('b'))\np $calls\n"),
     ("Performance/BindCall", "class Greeter; def greet(name); name.upcase; end; end\nmethod = Greeter.instance_method(:greet)\np method.bind(Greeter.new).call('Ada')\n"),
