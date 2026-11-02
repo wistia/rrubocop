@@ -137,4 +137,9 @@ def cases():
         add("Rails/EnumHash", source)
     for source in ("enum :status, [:'😀', :'!@', :'~@', :'+@', :'-@', :'[]']", "enum :status, [?\\n, ?\\t, ?\\\\, ?\\\"]", "enum :status, %W[a\\ b c\\]d]", "enum :status, %i[a\\]b c]"):
         add("Rails/EnumHash", source)
+    for source in ("enum :status, [{a: 1}, {:a => 1}]", "enum :status, [{\"a\": 1}, {:a => 1}]", "enum :status, [{a: 1}, {'a' => 1}]", "enum :status, [foo(a: 1), foo({a: 1})]", "enum :status, [[1], [1,]]", "enum :status, [foo(proc { work }), foo(proc do work end)]", "enum :status, [foo(proc {}), foo(proc do end)]", "enum :status, [/a/, /a/i]", "enum :status, [1..2, 1...2]"):
+        add("Rails/EnumUniqueness", source)
+    for source in ("enum :status, [- 1, -1, + 1, 1]", "enum :status, [- -1, 1]", "enum :status, [~1, -2]"):
+        add("Rails/EnumUniqueness", source)
+    add("Performance/Caller", "caller(+ 1).first")
     return rows

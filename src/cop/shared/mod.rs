@@ -2,7 +2,9 @@
 
 mod bare_args;
 mod block_pass;
+mod integer;
 mod node_util;
+pub use integer::integer_value;
 pub(crate) mod ruby_expression;
 pub(crate) mod ruby_literal;
 

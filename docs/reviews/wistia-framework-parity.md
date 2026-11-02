@@ -169,7 +169,7 @@ python3 scripts/framework_parity/check.py \
 ```
 
 Complete native suite: **898 passed, with 1 intentionally ignored audit probe**.
-The strict command exits 1 with **407 explicit difference events**: 405 documented
+The strict command exits 1 with **418 explicit difference events**: 416 documented
 safety/upstream-hazard events and two unresolved parser-related corrected-byte
 differences. `failures.json`, `summary.json` and `runtime.json` retain every event.
 Detection, message and range differences in the selected specimens are confined
@@ -298,3 +298,28 @@ valid native syntax. This is recorded as a parser limitation, not claimed as
 completed exact parity. Broader literal encodings/exotic ASTs and actual
 production path scopes still need evidence. Totals: 27 reviewed implementations,
 24 baseline stubs replaced, 43 baseline stubs remaining.
+
+## Shared equality and integer follow-up
+
+Added nine original-rule enum specimens for label/rocket and quoted-symbol
+keys, implicit/explicit keyword hashes, trailing commas, brace/do blocks and
+negative controls for regex flags/range exclusivity. All match original Ruby.
+The shared signature now normalizes these specific forms while retaining
+semantic operators; regex equality remains conservative raw-source comparison.
+It is still a bounded key, not a complete Ruby AST adapter (for example,
+operator-method and binary-expression spellings need broader normalization).
+
+Imported core agent's shared integer decoder and replaced the duplicate decoder
+with an alias. A scoped fix reads a signed literal's operand/operator directly,
+supporting spaced signs without folding arbitrary unary expressions or nested
+negations. Three enum negatives and a positive signed Caller offset match
+original rules. A trusted negative-offset Caller program confirms why the
+existing guard is needed: original caller(-1).first raises ArgumentError, but
+Ruby's corrected caller(-1..-1).first returns a frame, changing behavior. Rust
+preserves the original exception. These add 11 explicit safeguard events.
+
+Latest matrix: 541 originals, 1082 second-pass cases and 28 trusted runtime
+programs, with 418 retained events (416 guards/upstream hazards, two existing
+emoji spelling gaps). Full native suite: 898 passed, 1 ignored probe. No new
+rule implementations in this follow-up; inventory remains 27 reviewed,
+24 baseline stubs replaced, 43 remaining.

@@ -1,5 +1,6 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Performance/Caller", "def probe; caller(- 1).first; end\nbegin; p probe; rescue ArgumentError => error; p [error.class.name, error.message]; end\n"),
     ("Rails/EnumHash", "def enum(name, values); p(values.is_a?(Array) ? values.each_with_index.to_h : values); end\nenum :status, [:active, :archived]\n"),
     ("Rails/EnumHash", "def enum(name, values); p(values.is_a?(Array) ? values.each_with_index.to_h : values); end\nenum :status, ['été', '😀']\n"),
     ("Performance/DoubleStartEndWith", "text = 'beta'\np(text.start_with?('a') || text.start_with?('b'))\n"),
