@@ -7,15 +7,19 @@ use super::node_bytes;
 use crate::parse::source::SourceFile;
 
 pub fn integer_value(source: &SourceFile, node: Node<'_>) -> Option<BigInt> {
-    if node.kind() != "integer"
-        && !(node.kind() == "unary"
-            && node
-                .child_by_field_name("operand")
-                .is_some_and(|operand| operand.kind() == "integer"))
-    {
+    let (literal, negative) = if node.kind() == "unary" {
+        let operator = node.child_by_field_name("operator")?;
+        let operand = node.child_by_field_name("operand")?;
+        if operand.kind() != "integer" || !matches!(node_bytes(source, operator), b"+" | b"-") {
+            return None;
+        }
+        (operand, node_bytes(source, operator) == b"-")
+    } else if node.kind() == "integer" {
+        (node, false)
+    } else {
         return None;
-    }
-    let text = std::str::from_utf8(node_bytes(source, node))
+    };
+    let text = std::str::from_utf8(node_bytes(source, literal))
         .ok()?
         .replace('_', "");
     let unsigned = text.strip_prefix(['-', '+']).unwrap_or(&text);
@@ -28,5 +32,9 @@ pub fn integer_value(source: &SourceFile, node: Node<'_>) -> Option<BigInt> {
         _ => (10, unsigned),
     };
     let value = BigInt::parse_bytes(digits.as_bytes(), radix)?;
-    Some(if text.starts_with('-') { -value } else { value })
+    Some(if negative || text.starts_with('-') {
+        -value
+    } else {
+        value
+    })
 }

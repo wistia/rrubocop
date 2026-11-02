@@ -2,7 +2,10 @@
 
 mod bare_args;
 mod integer;
+pub mod ruby_expression;
+mod send_range;
 pub use integer::integer_value;
+pub use send_range::{end as send_end, is_setter_call};
 mod block_pass;
 mod node_util;
 

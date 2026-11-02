@@ -262,9 +262,41 @@ pub(super) fn redundant_regexp_literal(source: &SourceFile, node: Node<'_>) -> O
 }
 
 pub(super) fn ruby_local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
-    context::local_identifier(&Context::new(source, &CopConfig::default()), node)
+    local_identifier(source, node)
 }
 
 pub(super) fn named_regexp_groups(source: &SourceFile, node: Node<'_>) -> Vec<(String, bool)> {
     style_regexp::named_groups(&Context::new(source, &CopConfig::default()), node)
+}
+
+pub(super) fn local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
+    let config = CopConfig::default();
+    context::local_identifier(&Context::new(source, &config), node)
+}
+
+pub(super) fn static_symbol(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    Context::new(source, &config)
+        .static_symbol(node)
+        .map(std::borrow::Cow::into_owned)
+}
+
+pub(super) fn bare_call_identifier(source: &SourceFile, node: Node<'_>) -> bool {
+    node.kind() == "identifier"
+        && !local_identifier(source, node)
+        && !node.parent().is_some_and(|parent| {
+            parent.child_by_field_name("method") == Some(node)
+                || matches!(parent.kind(), "alias" | "undef")
+                || matches!(parent.kind(), "method" | "singleton_method")
+                    && parent.child_by_field_name("name") == Some(node)
+        })
+}
+
+pub(super) fn ruby_string_parts(source: &SourceFile, node: Node<'_>) -> Option<Vec<String>> {
+    let config = CopConfig::default();
+    Context::new(source, &config).ruby_string_parts(node)
+}
+pub(super) fn heredoc_span(source: &SourceFile, node: Node<'_>) -> Option<(usize, usize)> {
+    let config = CopConfig::default();
+    Context::new(source, &config).ruby_heredoc_span(node)
 }

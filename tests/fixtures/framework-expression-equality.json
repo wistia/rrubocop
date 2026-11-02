@@ -1,0 +1,290 @@
+[
+  {
+    "source": "[(/a/im), (/a/mi)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(/a/i), (/a/m)]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(/a/), (%r(a))]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(/a\\/b/), (%r(a/b))]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(%r(\\()), (/\\(/)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(%r([\\(])), (/[(]/)]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(%r([\\(])), (/[\\(]/)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(/#{pattern}/), (%r(#{pattern}))]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(/#{pattern}/), (/#{other}/)]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(1r), (1.0r)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(0r), (0.0r)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(- -1r), (1r)]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(1i), (1.0i)]\n",
+    "same": true,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(-1i), (-0x1i)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(1ri), (1i)]\n",
+    "same": true,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(+1.0), (1.0)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(-0.0), (0.0)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(1+2), (1.+(2))]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(!value), (value.!)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(not(value)), (!value)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(value && other), (value and other)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(object.foo = 1), (object.foo=(1))]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(object[0] = 1), (object.[]=(0, 1))]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(object[0]), (object.[](0))]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[([]), ([ ])]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(proc {}), (proc do end)]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(proc { work }), (proc { || work })]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[('a' 'b'), ('ab')]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[('a' 'b'), (\"a\" \"b\")]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[(\"a\nb\"), (\"a\\nb\")]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(\"a\nb\"), (%q(a\nb))]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[('a\nb' 'c'), ('a' 'b\nc')]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(?a), ('a')]\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[<<~TEXT, <<~TEXT]\nalpha\nbeta\nTEXT\nalpha\nbeta\nTEXT\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[<<~TEXT, <<~TEXT]\nalpha\nbeta\nTEXT\ngamma\ndelta\nTEXT\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[<<~TEXT, <<~TEXT]\n#{value}\nnext\nTEXT\n#{value}\nnext\nTEXT\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[<<~TEXT, <<~TEXT]\n#{value}\nnext\nTEXT\n#{other}\nnext\nTEXT\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[<<~TEXT, <<~TEXT]\nTEXT\nTEXT\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[<<~TEXT, <<~TEXT]\nalpha\\\nbeta\nTEXT\nalphabeta\nTEXT\n",
+    "same": true,
+    "eql": true,
+    "grouped": false
+  },
+  {
+    "source": "[<<~TEXT, \"alpha\\n\"]\nalpha\nTEXT\n",
+    "same": true,
+    "eql": true,
+    "grouped": true
+  },
+  {
+    "source": "[<<~TEXT, \"alpha\\nbeta\\n\"]\nalpha\nbeta\nTEXT\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[<<~TEXT, \"\"]\nTEXT\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(1i), (1.0i)]\n",
+    "same": true,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(1ri), (1i)]\n",
+    "same": true,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(0.1ri), (0.1i)]\n",
+    "same": true,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ri), (1e500i)]\n",
+    "same": true,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(1.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001ri), (1.0i)]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  },
+  {
+    "source": "[(0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005ri), (5e-324i)]\n",
+    "same": false,
+    "eql": false,
+    "grouped": false
+  }
+]
