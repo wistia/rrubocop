@@ -561,7 +561,7 @@ fn regex_parts<'a>(
     Some((parts, options))
 }
 
-pub(crate) fn static_regex_value_for_ruby(
+pub fn static_regex_value_for_ruby(
     source: &SourceFile,
     node: Node<'_>,
     ruby_version: f64,
