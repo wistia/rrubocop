@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Twenty-three owned rules now have implemented behavior backed by original-Ruby
+Twenty-four owned rules now have implemented behavior backed by original-Ruby
 comparisons, including all thirteen original direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. Additional UselessAssignment capture combinations
 remain under review. The exhaustive
-367-rule inventory retains 344 queued validation entries; some already had
+367-rule inventory retains 343 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -528,3 +528,12 @@ The shorthand follow-up ports the complete pinned `rubocop-1.65.1/lib/rubocop/co
 Independent coverage includes local/send values, constants, pseudo literals, Unicode and quoted keys, explicit receiver/argument calls, keyword splats, implicit-array hashes, brackets, return/break/super/yield, blocks and block passes, nested commands, multiple assignments and already-corrected controls. Four safeguards prevent an original unmatched opening parenthesis when the final hash pair has no offense; static parsing of the original correction confirms invalid Ruby. Two safeguards preserve comments deleted by original whole-pair replacement. The same cop still handles delimiters; no enforcement option was relaxed. Source/config replays and the implementation's branch review were performed separately.
 
 Real original/native CLI validation covers906 safe/aggressive modes:894 equal corrected-byte pairs,902 equal exits and exactly12 byte differences for the six recorded safeguards. No internal cop errors occurred; all1812 second passes are stable. This includes846 main modes and60 supplemental implicit-array/splat/sibling-comment modes after their scope follow-up. Eight actual Wistia-config modes confirm that the active either setting preserves explicit values while hash rockets still convert; all final states are clean. The expanded native suite passes889 tests, one pre-existing ignored. Additional encoded-source, uncommon grammar and combined-cop interactions remain unproven; correction scheduling remains deferred.
+
+
+## Layout/LeadingEmptyLines
+
+Reviewed the pinned original cop and parser3.3.5.0's lexer/literal.rb monolithic-string, newline-flush and block-comment token emission branches. All10 unchanged upstream examples pass. The implementation now locates the first visible token and reports its exact message/location/length, leaves empty or whitespace-only sources unchanged, removes indentation before the first token on later lines, and ignores data-only __END__ input.
+
+The60-state original replay covers comments/shebangs/block comments, trailing EOF comment ranges, ordinary/interpolated/percent/command strings, physical versus escaped LF/CRLF, numeric/rational/imaginary tokens, symbols, heredocs, Unicode/BOM, continuations and semicolons. All detection and corrected-byte states match with no declared safeguards. CRLF normalization occurs only when a correction is made, matching the original source buffer; empty/no-offense source remains byte-identical. Separate final algorithm review and original-Ruby replay passed.
+
+Real CLI validation covers120 safe/aggressive modes, all matching original bytes and exits; all240 second passes are stable. Four production-config app/models modes and final clean states pass. Full native validation passes890 tests, one pre-existing ignored. Encoded source, additional parser token families and code-plus-DATA CRLF behavior are not established by this bounded corpus; generic correction scheduling remains deferred.
