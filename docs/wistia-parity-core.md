@@ -157,3 +157,19 @@ A reverse-range concern was separately tested and disproven: Ruby's
 `(5..1).each {}` and its `-3.times {}` correction both execute zero iterations.
 This correction is retained and covered by the reference replay rather than
 being incorrectly treated as an upstream hazard.
+
+## MissingRespondToMissing
+
+The sixth batch implements the former stub from RuboCop 1.65.1
+`lib/rubocop/cop/style/missing_respond_to_missing.rb`. All eight unchanged
+upstream specs and nine additional scope probes pass in the original Ruby
+runner and the Rust replay (17 exact message/range cases). The native CLI
+passes 34 safe/all-mode unchanged-byte checks and 34 idempotence checks.
+The rule has no autocorrection.
+
+The port preserves the original same-method-kind search, parent/grandparent
+scope behavior, inline visibility modifiers and singleton receiver handling.
+A file consisting only of `def method_missing; end` crashes the original
+rule while accessing a missing parent; Rust reports the offense safely. This
+reference crash is documented separately from the successful differential
+cases and is not counted as exact parity.
