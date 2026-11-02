@@ -1,0 +1,297 @@
+[
+  {
+    "id": "comment-preservation:BeEmpty",
+    "cop": "RSpec/BeEmpty",
+    "source": "expect(array).to match_array([\n  # important note\n])\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "expect(array).to match_array([\n  # important note\n])\n",
+    "origin": "reference",
+    "safety_difference": "Preserve inline comments rather than copying a source-deleting or invalid Ruby rewrite.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 17,
+          "message": "Use `be_empty` matchers for checking an empty array.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(array).to be_empty\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(array).to be_empty\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "comment-preservation:ContainExactly",
+    "cop": "RSpec/ContainExactly",
+    "source": "expect(array).to contain_exactly(*first, # important note\n *second)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "expect(array).to contain_exactly(*first, # important note\n *second)\n",
+    "origin": "reference",
+    "safety_difference": "Preserve inline comments rather than copying a source-deleting or invalid Ruby rewrite.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 17,
+          "message": "Prefer `match_array` when matching array values.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(array).to match_array(first + second)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(array).to match_array(first + second)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "comment-preservation:MatchArray",
+    "cop": "RSpec/MatchArray",
+    "source": "expect(array).to match_array([first, # important note\n second])\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "expect(array).to match_array([first, # important note\n second])\n",
+    "origin": "reference",
+    "safety_difference": "Preserve inline comments rather than copying a source-deleting or invalid Ruby rewrite.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 17,
+          "message": "Prefer `contain_exactly` when matching an array literal.",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(array).to contain_exactly(first, second)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect(array).to contain_exactly(first, second)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "comment-preservation:HookArgument",
+    "cop": "RSpec/HookArgument",
+    "source": "before( # important note\n :each) { setup }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "before( # important note\n :each) { setup }\n",
+    "origin": "reference",
+    "safety_difference": "Preserve inline comments rather than copying a source-deleting or invalid Ruby rewrite.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Omit the default `:each` argument for RSpec hooks.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "before { setup }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "before { setup }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  },
+  {
+    "id": "comment-preservation:EmptyMetadata",
+    "cop": "RSpec/EmptyMetadata",
+    "source": "describe \"example\", # important note\n {} do\n  it(\"works\") { run }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"example\", # important note\n {} do\n  it(\"works\") { run }\nend\n",
+    "origin": "reference",
+    "safety_difference": "Preserve inline comments rather than copying a source-deleting or invalid Ruby rewrite.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Avoid empty metadata hash.",
+          "correctable": true,
+          "length": 2,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"example\", # important note do\n  it(\"works\") { run }\nend\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:3: syntax error found\n  1 | describe \"example\", # important note do\n  2 |   it(\"works\") { run }\n> 3 | end\n    | ^~~ unexpected 'end', ignoring it\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      },
+      "all": {
+        "source": "describe \"example\", # important note do\n  it(\"works\") { run }\nend\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:3: syntax error found\n  1 | describe \"example\", # important note do\n  2 |   it(\"works\") { run }\n> 3 | end\n    | ^~~ unexpected 'end', ignoring it\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    }
+  },
+  {
+    "id": "comment-preservation:DuplicatedMetadata",
+    "cop": "RSpec/DuplicatedMetadata",
+    "source": "describe \"example\", :tag, # important note\n :tag do\n  it(\"works\") { run }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"example\", :tag, # important note\n :tag do\n  it(\"works\") { run }\nend\n",
+    "origin": "reference",
+    "safety_difference": "Preserve inline comments rather than copying a source-deleting or invalid Ruby rewrite.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 1,
+          "message": "Avoid duplicated metadata.",
+          "correctable": true,
+          "length": 4,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"example\", :tag, # important note do\n  it(\"works\") { run }\nend\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:3: syntax error found\n  1 | describe \"example\", :tag, # important note do\n  2 |   it(\"works\") { run }\n> 3 | end\n    | ^~~ unexpected 'end', ignoring it\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      },
+      "all": {
+        "source": "describe \"example\", :tag, # important note do\n  it(\"works\") { run }\nend\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:3: syntax error found\n  1 | describe \"example\", :tag, # important note do\n  2 |   it(\"works\") { run }\n> 3 | end\n    | ^~~ unexpected 'end', ignoring it\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    }
+  },
+  {
+    "id": "comment-preservation:EmptyOutput",
+    "cop": "RSpec/EmptyOutput",
+    "source": "expect { run }.to output( # important note\n \"\").to_stdout\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "expect { run }.to output( # important note\n \"\").to_stdout\n",
+    "origin": "reference",
+    "safety_difference": "Preserve inline comments rather than copying a source-deleting or invalid Ruby rewrite.",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 18,
+          "message": "Use `not_to` instead of matching on an empty output.",
+          "correctable": true,
+          "length": 24,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect { run }.not_to output.to_stdout\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "expect { run }.not_to output.to_stdout\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
+  }
+]

@@ -1,35 +1,67 @@
-//! RSpec/ContainExactly — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::node_text;
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct ContainExactly;
-
 impl Cop for ContainExactly {
     fn name(&self) -> &'static str {
         "RSpec/ContainExactly"
     }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
-    }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        // Breadth-first stub: not implemented — avoid method-name false positives.
-        let _ = (source, node, diagnostics);
+        if !bare(source, node, b"contain_exactly") {
+            return;
+        }
+        let args = call_args(node);
+        if args.is_empty() || args.iter().any(|arg| arg.kind() != "splat_argument") {
+            return;
+        }
+        let values: Vec<_> = args
+            .iter()
+            .filter_map(|arg| arg.named_child(0))
+            .map(|arg| node_text(source, arg))
+            .collect();
+        if values.len() != args.len() {
+            return;
+        }
+        let index = report(
+            self,
+            source,
+            node.start_byte(),
+            header_end(node),
+            "Prefer `match_array` when matching array values.".into(),
+            diagnostics,
+        );
+        if preserving_replace(
+            source,
+            node,
+            &mut corrections,
+            node.start_byte(),
+            header_end(node),
+            format!("match_array({})", values.join(" + ")),
+            self.name(),
+        ) {
+            diagnostics[index].corrected = true;
+        }
     }
 }

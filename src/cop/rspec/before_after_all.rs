@@ -1,6 +1,5 @@
 use crate::cop::rspec::helpers::RSPEC_INCLUDE;
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::argument_nodes;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -32,7 +31,7 @@ impl Cop for BeforeAfterAll {
         if ![b"before".as_slice(), b"after"].contains(&method) {
             return;
         }
-        let args = argument_nodes(node);
+        let args = call_args(node);
         if args.len() != 1 || !matches!(symbol(source, args[0]), Some(b"all" | b"context")) {
             return;
         }

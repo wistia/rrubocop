@@ -1,6 +1,5 @@
 use crate::cop::rspec::helpers::RSPEC_INCLUDE;
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::argument_nodes;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -29,9 +28,12 @@ impl Cop for RemoveConst {
         if !matches!(name(source, node), Some(b"send" | b"__send__")) {
             return;
         }
-        let args = argument_nodes(node);
+        let args = call_args(node);
         if args.len() != 2
-            || !matches!(args[0].kind(), "symbol" | "simple_symbol")
+            || !matches!(
+                args[0].kind(),
+                "symbol" | "simple_symbol" | "delimited_symbol"
+            )
             || symbol(source, args[0]) != Some(b"remove_const")
         {
             return;

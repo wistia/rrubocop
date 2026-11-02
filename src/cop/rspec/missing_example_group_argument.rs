@@ -1,6 +1,5 @@
 use crate::cop::rspec::helpers::{RSPEC_INCLUDE, bare_rspec_call, call_block};
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::argument_nodes;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -41,7 +40,7 @@ impl Cop for MissingExampleGroupArgument {
         ]
         .contains(&method)
             || call_block(node).is_none()
-            || !argument_nodes(node).is_empty()
+            || !call_args(node).is_empty()
         {
             return;
         }

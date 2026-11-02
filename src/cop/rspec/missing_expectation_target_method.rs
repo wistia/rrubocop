@@ -1,6 +1,6 @@
 use crate::cop::rspec::helpers::RSPEC_INCLUDE;
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::{argument_nodes, call_receiver};
+use crate::cop::shared::call_receiver;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -37,7 +37,7 @@ impl Cop for MissingExpectationTargetMethod {
             return;
         };
         if !bare(source, receiver, b"expect")
-            && !(bare(source, receiver, b"is_expected") && argument_nodes(receiver).is_empty())
+            && !(bare(source, receiver, b"is_expected") && call_args(receiver).is_empty())
         {
             return;
         }

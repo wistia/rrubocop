@@ -1,6 +1,6 @@
 use crate::cop::rspec::helpers::RSPEC_INCLUDE;
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::{argument_nodes, call_receiver, push_replace};
+use crate::cop::shared::call_receiver;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -35,20 +35,20 @@ impl Cop for BeEmpty {
         let Some(receiver) = call_receiver(node) else {
             return;
         };
-        if !bare(source, receiver, b"expect") || argument_nodes(receiver).len() != 1 {
+        if !bare(source, receiver, b"expect") || call_args(receiver).len() != 1 {
             return;
         }
-        let args = argument_nodes(node);
+        let args = call_args(node);
         if args.is_empty() || args.len() > 2 {
             return;
         }
         let matcher = args[0];
-        let values = argument_nodes(matcher);
+        let values = call_args(matcher);
         let empty = bare(source, matcher, b"contain_exactly") && values.is_empty()
             || bare(source, matcher, b"match_array")
                 && values.len() == 1
                 && values[0].kind() == "array"
-                && values[0].named_child_count() == 0;
+                && code_children(values[0]).is_empty();
         if !empty {
             return;
         }
@@ -60,7 +60,9 @@ impl Cop for BeEmpty {
             "Use `be_empty` matchers for checking an empty array.".into(),
             diagnostics,
         );
-        if push_replace(
+        if preserving_replace(
+            source,
+            node,
             &mut corrections,
             matcher.start_byte(),
             header_end(matcher),

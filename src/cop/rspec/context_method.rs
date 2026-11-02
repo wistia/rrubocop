@@ -1,6 +1,6 @@
 use crate::cop::rspec::helpers::{RSPEC_INCLUDE, bare_rspec_call, call_block};
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::{argument_nodes, node_bytes, push_replace};
+use crate::cop::shared::node_bytes;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -32,7 +32,7 @@ impl Cop for ContextMethod {
         if bare_rspec_call(source, node) != Some(b"context") || call_block(node).is_none() {
             return;
         }
-        let Some(arg) = argument_nodes(node).first().copied() else {
+        let Some(arg) = call_args(node).first().copied() else {
             return;
         };
         if !matches!(arg.kind(), "string" | "chained_string") {
@@ -51,7 +51,9 @@ impl Cop for ContextMethod {
             diagnostics,
         );
         let target = selector(node);
-        if push_replace(
+        if preserving_replace(
+            source,
+            node,
             &mut corrections,
             target.start_byte(),
             target.end_byte(),

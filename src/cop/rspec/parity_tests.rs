@@ -13,7 +13,7 @@ fn configuration(case: &Value) -> ResolvedConfig {
         case["cop"].as_str().unwrap().into(),
         CopConfig {
             enabled: EnabledState::True,
-            include: vec!["**/*".into()],
+            include: vec![],
             options: serde_json::from_value(case["config"].clone()).unwrap(),
             ..CopConfig::default()
         },
@@ -98,4 +98,76 @@ fn pinned_rspec_original_ruby_detection_and_correction_parity() {
         failures.len(),
         failures.join("\n")
     );
+}
+
+#[test]
+fn source_comments_are_preserved_instead_of_copying_unsafe_reference_rewrites() {
+    let cases: Vec<Value> = serde_json::from_str(include_str!(
+        "../../../tests/fixtures/rspec-parity/safety-guards.json"
+    ))
+    .unwrap();
+    for case in cases {
+        let original = case["source"].as_str().unwrap();
+        let (_, detected) = inspect(&case, original, AutocorrectMode::Off);
+        assert!(
+            !detected.is_empty(),
+            "{} must still report the unsafe-to-correct offense",
+            case["id"]
+        );
+        for mode in [AutocorrectMode::Safe, AutocorrectMode::All] {
+            let (after, _) = inspect(&case, original, mode);
+            assert_eq!(
+                after, original,
+                "{} must preserve the comment and behavior",
+                case["id"]
+            );
+        }
+    }
+}
+
+#[test]
+fn new_rspec_rules_do_not_lint_unrelated_application_files() {
+    let cases: Vec<Value> = serde_json::from_str(include_str!(
+        "../../../tests/fixtures/rspec-parity/cases.json"
+    ))
+    .unwrap();
+    for mut case in cases {
+        case["path"] = "/tmp/app/services/example.rb".into();
+        let source = case["source"].as_str().unwrap();
+        let (after, diagnostics) = inspect(&case, source, AutocorrectMode::All);
+        assert!(
+            diagnostics.is_empty(),
+            "{} must honor spec-file scope",
+            case["id"]
+        );
+        assert_eq!(after, source);
+    }
+}
+
+#[test]
+fn explicit_autocorrection_disable_preserves_sources() {
+    let cases: Vec<Value> = serde_json::from_str(include_str!(
+        "../../../tests/fixtures/rspec-parity/cases.json"
+    ))
+    .unwrap();
+    let mut checked = std::collections::HashSet::new();
+    for mut case in cases {
+        let original = case["source"].as_str().unwrap().to_string();
+        if case["reference"]["all"]["source"].as_str() == Some(&original)
+            || !checked.insert(case["cop"].as_str().unwrap().to_string())
+        {
+            continue;
+        }
+        case["config"]["AutoCorrect"] = "disabled".into();
+        for mode in [AutocorrectMode::Safe, AutocorrectMode::All] {
+            let (after, diagnostics) = inspect(&case, &original, mode);
+            assert_eq!(
+                after, original,
+                "{} must honor AutoCorrect: disabled",
+                case["id"]
+            );
+            assert!(!diagnostics.is_empty());
+        }
+    }
+    assert_eq!(checked.len(), 11);
 }

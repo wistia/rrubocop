@@ -9,10 +9,17 @@ class RSpecParityReference < AuditReference
       %w[safe all].each do |mode|
         next unless result[mode]
 
+        unless result[mode].fetch(:compile).fetch(:valid)
+          result[mode][:diagnostics] = []
+          result[mode][:hazard] = "Original Ruby correction produces invalid syntax"
+          next
+        end
+
         after = test.merge("source" => result[mode].fetch(:source))
         result[mode][:diagnostics] = diagnostics(investigation(after, source(after, index), false))
       end
-      test.merge("reference" => result)
+      options = test.fetch("config").reject { |key| METADATA.include?(key) || key.start_with?("Supported") }
+      test.merge("config" => options, "reference" => result)
     end
     File.write(output, JSON.pretty_generate(rows) + "\n")
   end

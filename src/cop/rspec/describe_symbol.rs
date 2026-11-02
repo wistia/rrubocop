@@ -1,6 +1,5 @@
 use crate::cop::rspec::helpers::{RSPEC_INCLUDE, bare_rspec_call};
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::argument_nodes;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -29,10 +28,10 @@ impl Cop for DescribeSymbol {
         if bare_rspec_call(source, node) != Some(b"describe") {
             return;
         }
-        let Some(arg) = argument_nodes(node).first().copied() else {
+        let Some(arg) = call_args(node).first().copied() else {
             return;
         };
-        if !matches!(arg.kind(), "simple_symbol" | "symbol") {
+        if !matches!(arg.kind(), "simple_symbol" | "symbol" | "delimited_symbol") {
             return;
         }
         report(

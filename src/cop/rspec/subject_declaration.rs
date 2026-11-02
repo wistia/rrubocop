@@ -1,6 +1,6 @@
 use crate::cop::rspec::helpers::RSPEC_INCLUDE;
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::{argument_nodes, call_receiver};
+use crate::cop::shared::call_receiver;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -34,7 +34,7 @@ impl Cop for SubjectDeclaration {
         {
             return;
         }
-        let Some(first) = argument_nodes(node).first().copied() else {
+        let Some(first) = call_args(node).first().copied() else {
             return;
         };
         if !matches!(symbol(source, first), Some(b"subject" | b"subject!")) {

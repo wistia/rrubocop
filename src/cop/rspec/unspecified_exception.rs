@@ -1,6 +1,6 @@
 use crate::cop::rspec::helpers::{RSPEC_INCLUDE, call_block};
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::{argument_nodes, call_receiver};
+use crate::cop::shared::call_receiver;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -29,7 +29,7 @@ impl Cop for UnspecifiedException {
         if !matches!(
             name(source, node),
             Some(b"raise_error" | b"raise_exception")
-        ) || !argument_nodes(node).is_empty()
+        ) || !call_args(node).is_empty()
             || call_block(node).is_some()
         {
             return;

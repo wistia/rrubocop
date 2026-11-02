@@ -1,6 +1,5 @@
 use crate::cop::rspec::helpers::RSPEC_INCLUDE;
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::argument_nodes;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -29,11 +28,11 @@ impl Cop for Be {
         if !runner(source, node) {
             return;
         }
-        let args = argument_nodes(node);
+        let args = call_args(node);
         let Some(matcher) = args.first().copied() else {
             return;
         };
-        if args.len() != 1 || !bare(source, matcher, b"be") || !argument_nodes(matcher).is_empty() {
+        if args.len() != 1 || !bare(source, matcher, b"be") || !call_args(matcher).is_empty() {
             return;
         }
         let target = selector(matcher);

@@ -1,6 +1,6 @@
 use crate::cop::rspec::helpers::RSPEC_INCLUDE;
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::{argument_nodes, call_receiver};
+use crate::cop::shared::call_receiver;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -30,13 +30,13 @@ impl Cop for VerifiedDoubles {
         {
             return;
         }
-        let args = argument_nodes(node);
+        let args = call_args(node);
         if args.is_empty() && config.get_bool("IgnoreNameless", true) {
             return;
         }
         if args
             .first()
-            .is_some_and(|a| matches!(a.kind(), "symbol" | "simple_symbol"))
+            .is_some_and(|a| matches!(a.kind(), "symbol" | "simple_symbol" | "delimited_symbol"))
             && config.get_bool("IgnoreSymbolicNames", false)
         {
             return;

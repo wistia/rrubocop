@@ -34,3 +34,32 @@ The evidence is finite. It does not prove arbitrary custom RSpec language aliase
 or all source encodings/combined-cop interactions. Remaining rules and missing
 autocorrections must not be described as implemented until their ledger entries
 are backed by corresponding original-Ruby differential checks.
+
+## Second batch
+
+Eleven more no-op rules now have implementations: ContainExactly, MatchArray,
+HookArgument, EmptyMetadata, DuplicatedMetadata, ImplicitExpect, Eq, EmptyOutput,
+VerifiedDoubleReference, ExpectInHook, and ExpectInLet. This brings this branch to
+23 implemented former stubs; 57 original stubs and 16 previously implemented
+RSpec rules still need their own original-source parity review.
+
+The strict original-Ruby matrix now has 244 cases across those 23 rules,
+including 146 extracted upstream cases plus configured style/ignore branches,
+quoted symbols, local-variable negative controls, receiver restrictions, and
+block forms. All cases compare detection and correction as above. Separate
+checks verify actual spec-file scope and explicit `AutoCorrect: disabled` for all
+11 newly supported correction capabilities.
+
+Seven comment-bearing correction cases are deliberately not declared exact
+parity: Ruby deletes their comments, and its EmptyMetadata/DuplicatedMetadata
+rewrites produce invalid syntax. Both Rust correction modes preserve those
+sources and keep reporting the original offense. The original Ruby outputs,
+including syntax-invalid outcomes, are retained in `safety-guards.json` and are
+covered by a separate source-preservation test. They remain visible safety
+differences, not exceptions counted as parity successes.
+
+The original Ruby ImplicitExpect implementation prefers `is_expected.to_not`
+when replacing `should_not`, owing to its inverted alternatives table. This
+implementation matches that intermediate result; RSpec/NotToNot may normalize it
+in a combined-cop run. The current per-rule matrix does not claim combined-rule
+semantic equivalence.

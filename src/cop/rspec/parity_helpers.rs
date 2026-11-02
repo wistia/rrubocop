@@ -30,6 +30,13 @@ pub(super) fn runner(source: &SourceFile, node: Node<'_>) -> bool {
 pub(super) fn symbol<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<&'a [u8]> {
     match node.kind() {
         "simple_symbol" | "symbol" => node_bytes(source, node).strip_prefix(b":"),
+        "delimited_symbol" => {
+            let quoted = node_bytes(source, node).strip_prefix(b":")?;
+            if quoted.len() < 2 || quoted.windows(2).any(|bytes| bytes == b"#{") {
+                return None;
+            }
+            Some(&quoted[1..quoted.len() - 1])
+        }
         "string" if !node_bytes(source, node).windows(2).any(|b| b == b"#{") => {
             let bytes = node_bytes(source, node);
             (bytes.len() >= 2).then(|| &bytes[1..bytes.len() - 1])
@@ -109,6 +116,9 @@ fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
         b"stub_chain",
         b"raise_error",
         b"raise_exception",
+        b"contain_exactly",
+        b"should",
+        b"should_not",
     ]
     .contains(&binding)
     {
@@ -141,4 +151,104 @@ fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
         current = scope.parent();
     }
     false
+}
+
+pub(super) fn hooks() -> &'static [&'static [u8]] {
+    &[
+        b"before",
+        b"after",
+        b"around",
+        b"prepend_before",
+        b"append_before",
+        b"prepend_after",
+        b"append_after",
+    ]
+}
+pub(super) fn expectations() -> &'static [&'static [u8]] {
+    &[b"expect", b"expect_any_instance_of", b"is_expected"]
+}
+pub(super) fn metadata_call(source: &SourceFile, node: Node<'_>) -> bool {
+    use crate::cop::rspec::helpers::{bare_rspec_call, call_block, is_example, is_group};
+    let Some(method) = name(source, node) else {
+        return false;
+    };
+    if !(is_example(method) || is_group(method) || hooks().contains(&method)) {
+        return false;
+    }
+    if bare_rspec_call(source, node).is_some() && call_block(node).is_some() {
+        return true;
+    }
+    if !hooks().contains(&method) {
+        return false;
+    }
+    let Some(receiver) = call_receiver(node) else {
+        return false;
+    };
+    let mut ancestor = node.parent();
+    while let Some(parent) = ancestor {
+        if bare_rspec_call(source, parent) == Some(b"configure") {
+            if let Some(parameters) =
+                call_block(parent).and_then(|b| b.child_by_field_name("parameters"))
+            {
+                let mut cursor = parameters.walk();
+                return parameters.named_children(&mut cursor).any(|parameter| {
+                    node_bytes(source, parameter) == node_bytes(source, receiver)
+                });
+            }
+        }
+        ancestor = parent.parent();
+    }
+    false
+}
+
+pub(super) fn call_args(node: Node<'_>) -> Vec<Node<'_>> {
+    crate::cop::shared::argument_nodes(node)
+        .into_iter()
+        .filter(|child| child.kind() != "comment")
+        .collect()
+}
+pub(super) fn code_children(node: Node<'_>) -> Vec<Node<'_>> {
+    let mut cursor = node.walk();
+    node.named_children(&mut cursor)
+        .filter(|child| child.kind() != "comment")
+        .collect()
+}
+pub(super) fn preserves_comments(
+    source: &SourceFile,
+    node: Node<'_>,
+    start: usize,
+    end: usize,
+    replacement: &str,
+) -> bool {
+    let mut pending = vec![node];
+    while let Some(current) = pending.pop() {
+        if current.kind() == "comment"
+            && current.start_byte() >= start
+            && current.end_byte() <= end
+            && !replacement
+                .as_bytes()
+                .windows(current.end_byte() - current.start_byte())
+                .any(|part| part == node_bytes(source, current))
+        {
+            return false;
+        }
+        let mut cursor = current.walk();
+        pending.extend(current.named_children(&mut cursor));
+    }
+    true
+}
+pub(super) fn preserving_replace(
+    source: &SourceFile,
+    node: Node<'_>,
+    corrections: &mut Option<&mut Vec<crate::correction::Correction>>,
+    start: usize,
+    end: usize,
+    replacement: impl Into<String>,
+    cop: &'static str,
+) -> bool {
+    let replacement = replacement.into();
+    if !preserves_comments(source, node, start, end, &replacement) {
+        return false;
+    }
+    crate::cop::shared::push_replace(corrections, start, end, replacement, cop)
 }

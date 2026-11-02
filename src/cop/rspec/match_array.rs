@@ -1,35 +1,72 @@
-//! RSpec/MatchArray — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::{call_receiver, node_text};
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct MatchArray;
-
 impl Cop for MatchArray {
     fn name(&self) -> &'static str {
         "RSpec/MatchArray"
     }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
-    }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        // Breadth-first stub: not implemented — avoid method-name false positives.
-        let _ = (source, node, diagnostics);
+        if name(source, node) != Some(b"match_array") {
+            return;
+        }
+        let args = call_args(node);
+        let Some(array) = args.first().copied().filter(|arg| arg.kind() == "array") else {
+            return;
+        };
+        if call_receiver(node).is_none() && code_children(array).is_empty() && args.len() == 1 {
+            return;
+        }
+        let mut values = Vec::new();
+        for arg in args {
+            values.extend(
+                code_children(arg)
+                    .into_iter()
+                    .map(|child| node_text(source, child)),
+            );
+        }
+        let index = report(
+            self,
+            source,
+            node.start_byte(),
+            header_end(node),
+            "Prefer `contain_exactly` when matching an array literal.".into(),
+            diagnostics,
+        );
+        if call_receiver(node).is_none()
+            && preserving_replace(
+                source,
+                node,
+                &mut corrections,
+                node.start_byte(),
+                header_end(node),
+                format!("contain_exactly({})", values.join(", ")),
+                self.name(),
+            )
+        {
+            diagnostics[index].corrected = true;
+        }
     }
 }
