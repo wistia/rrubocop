@@ -721,3 +721,25 @@ has no custom Language aliases; that context's default-configuration specimen
 must not be read as coverage for the host mutation. Generic custom global Language
 alias propagation remains an explicit integration gap. Combined-cop scheduling
 remains deferred as requested.
+
+## Batch 27: predicate matcher styles
+
+PredicateMatcher replaces another initial stub: 78 initial stubs plus all sixteen
+existing rules are reviewed (94 of 96). The corpus contains 1,868 strict cases,
+173 separate safeguards and 51 correction-disable controls. All 24 original
+upstream source specimens are exercised under both configured styles and both
+Strict values, alongside 67 targeted branch controls. Review includes the original
+InflectedHelper/ExplicitHelper naming algorithms, aliases, built-in/custom matcher
+allowlists, boolean polarity, block forms, include arity, numbered negatives,
+heredoc correction metadata and exact send/block ranges. Unsafe correction metadata
+is retained; safe mode preserves source.
+
+A distinct pinned RSpec runtime validates stable builtin predicate controls and
+exposes five concrete transformation differences: stricter boolean checks becoming
+truthy checks; original eql/equal boolean polarity; predicate invocation moving
+after a failure-message argument; Hash#include? checking keys while the RSpec
+matcher checks pairs; and Array#include? exact equality versus RSpec class/fuzzy
+matching. Corrections require supported pure builtin literal predicates and retain
+unknown receiver, composite inclusion, block and precedence cases as safeguards.
+These differences are excluded from strict correction equality claims. Generic
+combined-cop scheduling and custom global Language aliases remain documented gaps.

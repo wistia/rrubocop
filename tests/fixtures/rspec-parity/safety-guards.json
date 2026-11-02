@@ -6609,5 +6609,4077 @@
       }
     },
     "safety_difference": "Preserve registration effects, dynamic description evaluation, unknown iterator/control flow, comments and neighboring statements when removing an empty example group."
+  },
+  {
+    "id": "predicate_matcher_spec:0:inflected:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.empty?).to be_truthy\nexpect(foo.empty?).to be_truthy, 'fail'\nexpect(foo.empty?).not_to be_truthy\nexpect(foo.empty?).to_not be_truthy\nexpect(foo.empty?).to be_falsey\nexpect(foo.empty?).not_to be_falsey\nexpect(foo.empty?).not_to a_truthy_value\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.empty?).to be_truthy\nexpect(foo.empty?).to be_truthy, 'fail'\nexpect(foo.empty?).not_to be_truthy\nexpect(foo.empty?).to_not be_truthy\nexpect(foo.empty?).to be_falsey\nexpect(foo.empty?).not_to be_falsey\nexpect(foo.empty?).not_to a_truthy_value\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.empty?).to be_truthy\nexpect(foo.empty?).to be_truthy, 'fail'\nexpect(foo.empty?).not_to be_truthy\nexpect(foo.empty?).to_not be_truthy\nexpect(foo.empty?).to be_falsey\nexpect(foo.empty?).not_to be_falsey\nexpect(foo.empty?).not_to a_truthy_value\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).not_to be_empty\nexpect(foo).not_to be_empty\nexpect(foo).to be_empty\nexpect(foo).not_to be_empty\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:0:inflected:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.empty?).to be_truthy\nexpect(foo.empty?).to be_truthy, 'fail'\nexpect(foo.empty?).not_to be_truthy\nexpect(foo.empty?).to_not be_truthy\nexpect(foo.empty?).to be_falsey\nexpect(foo.empty?).not_to be_falsey\nexpect(foo.empty?).not_to a_truthy_value\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.empty?).to be_truthy\nexpect(foo.empty?).to be_truthy, 'fail'\nexpect(foo.empty?).not_to be_truthy\nexpect(foo.empty?).to_not be_truthy\nexpect(foo.empty?).to be_falsey\nexpect(foo.empty?).not_to be_falsey\nexpect(foo.empty?).not_to a_truthy_value\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#0",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.empty?).to be_truthy\nexpect(foo.empty?).to be_truthy, 'fail'\nexpect(foo.empty?).not_to be_truthy\nexpect(foo.empty?).to_not be_truthy\nexpect(foo.empty?).to be_falsey\nexpect(foo.empty?).not_to be_falsey\nexpect(foo.empty?).not_to a_truthy_value\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).not_to be_empty\nexpect(foo).not_to be_empty\nexpect(foo).to be_empty\nexpect(foo).not_to be_empty\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:1:inflected:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.exist?).to be_truthy\nexpect(foo.exist?).to be_truthy, 'fail'\nexpect(foo.exists?).to be_truthy\nexpect(foo.has_something?).to be_truthy\nexpect(foo.has_something?).not_to be_truthy\nexpect(foo.include?(something)).to be_truthy\nexpect(foo.respond_to?(:bar)).to be_truthy\nexpect(foo.something?()).to be_truthy\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.exist?).to be_truthy\nexpect(foo.exist?).to be_truthy, 'fail'\nexpect(foo.exists?).to be_truthy\nexpect(foo.has_something?).to be_truthy\nexpect(foo.has_something?).not_to be_truthy\nexpect(foo.include?(something)).to be_truthy\nexpect(foo.respond_to?(:bar)).to be_truthy\nexpect(foo.something?()).to be_truthy\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `exist` matcher over `exist?`.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `exist` matcher over `exist?`.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `exist` matcher over `exists?`.",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `have_something` matcher over `has_something?`.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `have_something` matcher over `has_something?`.",
+          "correctable": true,
+          "length": 43,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `include` matcher over `include?`.",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `respond_to` matcher over `respond_to?`.",
+          "correctable": true,
+          "length": 42,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 37,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.exist?).to be_truthy\nexpect(foo.exist?).to be_truthy, 'fail'\nexpect(foo.exists?).to be_truthy\nexpect(foo.has_something?).to be_truthy\nexpect(foo.has_something?).not_to be_truthy\nexpect(foo.include?(something)).to be_truthy\nexpect(foo.respond_to?(:bar)).to be_truthy\nexpect(foo.something?()).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `exist` matcher over `exist?`.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `exist` matcher over `exist?`.",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `exist` matcher over `exists?`.",
+            "correctable": true,
+            "length": 32,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `have_something` matcher over `has_something?`.",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `have_something` matcher over `has_something?`.",
+            "correctable": true,
+            "length": 43,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `include` matcher over `include?`.",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `respond_to` matcher over `respond_to?`.",
+            "correctable": true,
+            "length": 42,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 37,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to exist\nexpect(foo).to exist, 'fail'\nexpect(foo).to exist\nexpect(foo).to have_something\nexpect(foo).not_to have_something\nexpect(foo).to include(something)\nexpect(foo).to respond_to(:bar)\nexpect(foo).to be_something()\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:1:inflected:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.exist?).to be_truthy\nexpect(foo.exist?).to be_truthy, 'fail'\nexpect(foo.exists?).to be_truthy\nexpect(foo.has_something?).to be_truthy\nexpect(foo.has_something?).not_to be_truthy\nexpect(foo.include?(something)).to be_truthy\nexpect(foo.respond_to?(:bar)).to be_truthy\nexpect(foo.something?()).to be_truthy\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.exist?).to be_truthy\nexpect(foo.exist?).to be_truthy, 'fail'\nexpect(foo.exists?).to be_truthy\nexpect(foo.has_something?).to be_truthy\nexpect(foo.has_something?).not_to be_truthy\nexpect(foo.include?(something)).to be_truthy\nexpect(foo.respond_to?(:bar)).to be_truthy\nexpect(foo.something?()).to be_truthy\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#1",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `exist` matcher over `exist?`.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `exist` matcher over `exist?`.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `exist` matcher over `exists?`.",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `have_something` matcher over `has_something?`.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `have_something` matcher over `has_something?`.",
+          "correctable": true,
+          "length": 43,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `include` matcher over `include?`.",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `respond_to` matcher over `respond_to?`.",
+          "correctable": true,
+          "length": 42,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 37,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.exist?).to be_truthy\nexpect(foo.exist?).to be_truthy, 'fail'\nexpect(foo.exists?).to be_truthy\nexpect(foo.has_something?).to be_truthy\nexpect(foo.has_something?).not_to be_truthy\nexpect(foo.include?(something)).to be_truthy\nexpect(foo.respond_to?(:bar)).to be_truthy\nexpect(foo.something?()).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `exist` matcher over `exist?`.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `exist` matcher over `exist?`.",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `exist` matcher over `exists?`.",
+            "correctable": true,
+            "length": 32,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `have_something` matcher over `has_something?`.",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `have_something` matcher over `has_something?`.",
+            "correctable": true,
+            "length": 43,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `include` matcher over `include?`.",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `respond_to` matcher over `respond_to?`.",
+            "correctable": true,
+            "length": 42,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 37,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to exist\nexpect(foo).to exist, 'fail'\nexpect(foo).to exist\nexpect(foo).to have_something\nexpect(foo).not_to have_something\nexpect(foo).to include(something)\nexpect(foo).to respond_to(:bar)\nexpect(foo).to be_something()\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:2:inflected:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.something?('foo')).to be_truthy\nexpect(foo.something?('foo')).to be_truthy, 'fail'\nexpect(foo.something?('foo', 'bar')).to be_truthy\nexpect(foo.something? 1, 2).to be_truthy\nexpect(foo.has_key?('foo')).to be_truthy\nexpect(foo.is_a?(Array)).to be_truthy\nexpect(foo.instance_of?(Array)).to be_truthy\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.something?('foo')).to be_truthy\nexpect(foo.something?('foo')).to be_truthy, 'fail'\nexpect(foo.something?('foo', 'bar')).to be_truthy\nexpect(foo.something? 1, 2).to be_truthy\nexpect(foo.has_key?('foo')).to be_truthy\nexpect(foo.is_a?(Array)).to be_truthy\nexpect(foo.instance_of?(Array)).to be_truthy\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 42,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 50,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `have_key` matcher over `has_key?`.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `be_a` matcher over `is_a?`.",
+          "correctable": true,
+          "length": 37,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `be_an_instance_of` matcher over `instance_of?`.",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.something?('foo')).to be_truthy\nexpect(foo.something?('foo')).to be_truthy, 'fail'\nexpect(foo.something?('foo', 'bar')).to be_truthy\nexpect(foo.something? 1, 2).to be_truthy\nexpect(foo.has_key?('foo')).to be_truthy\nexpect(foo.is_a?(Array)).to be_truthy\nexpect(foo.instance_of?(Array)).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 42,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 50,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `have_key` matcher over `has_key?`.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `be_a` matcher over `is_a?`.",
+            "correctable": true,
+            "length": 37,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `be_an_instance_of` matcher over `instance_of?`.",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_something('foo')\nexpect(foo).to be_something('foo'), 'fail'\nexpect(foo).to be_something('foo', 'bar')\nexpect(foo).to be_something 1, 2\nexpect(foo).to have_key('foo')\nexpect(foo).to be_a(Array)\nexpect(foo).to be_an_instance_of(Array)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:2:inflected:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.something?('foo')).to be_truthy\nexpect(foo.something?('foo')).to be_truthy, 'fail'\nexpect(foo.something?('foo', 'bar')).to be_truthy\nexpect(foo.something? 1, 2).to be_truthy\nexpect(foo.has_key?('foo')).to be_truthy\nexpect(foo.is_a?(Array)).to be_truthy\nexpect(foo.instance_of?(Array)).to be_truthy\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.something?('foo')).to be_truthy\nexpect(foo.something?('foo')).to be_truthy, 'fail'\nexpect(foo.something?('foo', 'bar')).to be_truthy\nexpect(foo.something? 1, 2).to be_truthy\nexpect(foo.has_key?('foo')).to be_truthy\nexpect(foo.is_a?(Array)).to be_truthy\nexpect(foo.instance_of?(Array)).to be_truthy\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#2",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 42,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 50,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `have_key` matcher over `has_key?`.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `be_a` matcher over `is_a?`.",
+          "correctable": true,
+          "length": 37,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `be_an_instance_of` matcher over `instance_of?`.",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.something?('foo')).to be_truthy\nexpect(foo.something?('foo')).to be_truthy, 'fail'\nexpect(foo.something?('foo', 'bar')).to be_truthy\nexpect(foo.something? 1, 2).to be_truthy\nexpect(foo.has_key?('foo')).to be_truthy\nexpect(foo.is_a?(Array)).to be_truthy\nexpect(foo.instance_of?(Array)).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 42,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 50,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `have_key` matcher over `has_key?`.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `be_a` matcher over `is_a?`.",
+            "correctable": true,
+            "length": 37,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `be_an_instance_of` matcher over `instance_of?`.",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_something('foo')\nexpect(foo).to be_something('foo'), 'fail'\nexpect(foo).to be_something('foo', 'bar')\nexpect(foo).to be_something 1, 2\nexpect(foo).to have_key('foo')\nexpect(foo).to be_a(Array)\nexpect(foo).to be_an_instance_of(Array)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:3:inflected:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.something?(<<~TEXT)).to be_truthy\n  bar\nTEXT\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.something?(<<~TEXT)).to be_truthy\n  bar\nTEXT\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.something?(<<~TEXT)).to be_truthy\n  bar\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_something(<<~TEXT)\n  bar\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:3:inflected:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.something?(<<~TEXT)).to be_truthy\n  bar\nTEXT\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.something?(<<~TEXT)).to be_truthy\n  bar\nTEXT\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#3",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 44,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.something?(<<~TEXT)).to be_truthy\n  bar\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 44,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_something(<<~TEXT)\n  bar\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:4:inflected:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.all?(&:present?)).to be_truthy\nexpect(foo.all?(&:present?)).to be_truthy, 'fail'\nexpect(foo.all? { |x| x.present? }).to be_truthy\nexpect(foo.all?(n) { |x| x.present? }).to be_truthy\nexpect(foo.all? { present }).to be_truthy\nexpect(foo.something?(x) { |y| y.present? }).to be_truthy\nexpect(foo.all? { }).to be_truthy\nexpect(foo.all? do; end).to be_truthy\n\nexpect(foo.all? do |x|\n  x + 1\n  x >= 2\nend).to be_truthy\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.all?(&:present?)).to be_truthy\nexpect(foo.all?(&:present?)).to be_truthy, 'fail'\nexpect(foo.all? { |x| x.present? }).to be_truthy\nexpect(foo.all?(n) { |x| x.present? }).to be_truthy\nexpect(foo.all? { present }).to be_truthy\nexpect(foo.something?(x) { |y| y.present? }).to be_truthy\nexpect(foo.all? { }).to be_truthy\nexpect(foo.all? do; end).to be_truthy\n\nexpect(foo.all? do |x|\n  x + 1\n  x >= 2\nend).to be_truthy\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 41,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 48,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 51,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 41,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 57,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 37,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.all?(&:present?)).to be_truthy\nexpect(foo.all?(&:present?)).to be_truthy, 'fail'\nexpect(foo.all? { |x| x.present? }).to be_truthy\nexpect(foo.all?(n) { |x| x.present? }).to be_truthy\nexpect(foo.all? { present }).to be_truthy\nexpect(foo.something?(x) { |y| y.present? }).to be_truthy\nexpect(foo.all? { }).to be_truthy\nexpect(foo.all? do; end).to be_truthy\n\nexpect(foo.all? do |x|\n  x + 1\n  x >= 2\nend).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 41,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 48,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 51,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 41,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 57,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 37,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_all(&:present?)\nexpect(foo).to be_all(&:present?), 'fail'\nexpect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all(n) { |x| x.present? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_something(x) { |y| y.present? }\nexpect(foo).to be_all { }\nexpect(foo).to be_all do; end\n\nexpect(foo).to be_all do |x|\n  x + 1\n  x >= 2\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:4:inflected:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.all?(&:present?)).to be_truthy\nexpect(foo.all?(&:present?)).to be_truthy, 'fail'\nexpect(foo.all? { |x| x.present? }).to be_truthy\nexpect(foo.all?(n) { |x| x.present? }).to be_truthy\nexpect(foo.all? { present }).to be_truthy\nexpect(foo.something?(x) { |y| y.present? }).to be_truthy\nexpect(foo.all? { }).to be_truthy\nexpect(foo.all? do; end).to be_truthy\n\nexpect(foo.all? do |x|\n  x + 1\n  x >= 2\nend).to be_truthy\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.all?(&:present?)).to be_truthy\nexpect(foo.all?(&:present?)).to be_truthy, 'fail'\nexpect(foo.all? { |x| x.present? }).to be_truthy\nexpect(foo.all?(n) { |x| x.present? }).to be_truthy\nexpect(foo.all? { present }).to be_truthy\nexpect(foo.something?(x) { |y| y.present? }).to be_truthy\nexpect(foo.all? { }).to be_truthy\nexpect(foo.all? do; end).to be_truthy\n\nexpect(foo.all? do |x|\n  x + 1\n  x >= 2\nend).to be_truthy\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#4",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 41,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 48,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 51,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 41,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `be_something` matcher over `something?`.",
+          "correctable": true,
+          "length": 57,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 37,
+          "severity": "convention"
+        },
+        {
+          "line": 10,
+          "column": 0,
+          "message": "Prefer using `be_all` matcher over `all?`.",
+          "correctable": true,
+          "length": 22,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.all?(&:present?)).to be_truthy\nexpect(foo.all?(&:present?)).to be_truthy, 'fail'\nexpect(foo.all? { |x| x.present? }).to be_truthy\nexpect(foo.all?(n) { |x| x.present? }).to be_truthy\nexpect(foo.all? { present }).to be_truthy\nexpect(foo.something?(x) { |y| y.present? }).to be_truthy\nexpect(foo.all? { }).to be_truthy\nexpect(foo.all? do; end).to be_truthy\n\nexpect(foo.all? do |x|\n  x + 1\n  x >= 2\nend).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 41,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 48,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 51,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 41,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `be_something` matcher over `something?`.",
+            "correctable": true,
+            "length": 57,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 37,
+            "severity": "convention"
+          },
+          {
+            "line": 10,
+            "column": 0,
+            "message": "Prefer using `be_all` matcher over `all?`.",
+            "correctable": true,
+            "length": 22,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_all(&:present?)\nexpect(foo).to be_all(&:present?), 'fail'\nexpect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all(n) { |x| x.present? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_something(x) { |y| y.present? }\nexpect(foo).to be_all { }\nexpect(foo).to be_all do; end\n\nexpect(foo).to be_all do |x|\n  x + 1\n  x >= 2\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:7:inflected:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.empty?).to eq(true)\nexpect(foo.empty?).to eq(true), 'fail'\nexpect(foo.empty?).to be(true)\nexpect(foo.empty?).to be(false)\nexpect(foo.empty?).not_to be true\nexpect(foo.empty?).not_to be false\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.empty?).to eq(true)\nexpect(foo.empty?).to eq(true), 'fail'\nexpect(foo.empty?).to be(true)\nexpect(foo.empty?).to be(false)\nexpect(foo.empty?).not_to be true\nexpect(foo.empty?).not_to be false\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#7",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 38,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.empty?).to eq(true)\nexpect(foo.empty?).to eq(true), 'fail'\nexpect(foo.empty?).to be(true)\nexpect(foo.empty?).to be(false)\nexpect(foo.empty?).not_to be true\nexpect(foo.empty?).not_to be false\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 38,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 34,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).to be_empty\nexpect(foo).not_to be_empty\nexpect(foo).not_to be_empty\nexpect(foo).to be_empty\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:8:inflected:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.empty?).to eq(true)\nexpect(foo.empty?).to eq(true), 'fail'\nexpect(foo.empty?).not_to be(true)\nexpect(foo.empty?).to be(true)\nexpect(foo.empty?).to be(false)\nexpect(foo.empty?).not_to be true\nexpect(foo.empty?).not_to be false\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo.empty?).to eq(true)\nexpect(foo.empty?).to eq(true), 'fail'\nexpect(foo.empty?).not_to be(true)\nexpect(foo.empty?).to be(true)\nexpect(foo.empty?).to be(false)\nexpect(foo.empty?).not_to be true\nexpect(foo.empty?).not_to be false\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#8",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 38,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.empty?).to eq(true)\nexpect(foo.empty?).to eq(true), 'fail'\nexpect(foo.empty?).not_to be(true)\nexpect(foo.empty?).to be(true)\nexpect(foo.empty?).to be(false)\nexpect(foo.empty?).not_to be true\nexpect(foo.empty?).not_to be false\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 38,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 34,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).to be_empty\nexpect(foo).not_to be_empty\nexpect(foo).not_to be_empty\nexpect(foo).to be_empty\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:9:explicit:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).to have_something\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).to have_something\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `empty?` over `be_empty` matcher.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `empty?` over `be_empty` matcher.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `empty?` over `be_empty` matcher.",
+          "correctable": true,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `has_something?` over `have_something` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).to have_something\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `empty?` over `be_empty` matcher.",
+            "correctable": true,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `empty?` over `be_empty` matcher.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `empty?` over `be_empty` matcher.",
+            "correctable": true,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `has_something?` over `have_something` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.empty?).to be(true)\nexpect(foo.empty?).to be(true), 'fail'\nexpect(foo.empty?).to be(false)\nexpect(foo.has_something?).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:9:explicit:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).to have_something\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).to have_something\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#9",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `empty?` over `be_empty` matcher.",
+          "correctable": true,
+          "length": 23,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `empty?` over `be_empty` matcher.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `empty?` over `be_empty` matcher.",
+          "correctable": true,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `has_something?` over `have_something` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_empty\nexpect(foo).to be_empty, 'fail'\nexpect(foo).not_to be_empty\nexpect(foo).to have_something\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `empty?` over `be_empty` matcher.",
+            "correctable": true,
+            "length": 23,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `empty?` over `be_empty` matcher.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `empty?` over `be_empty` matcher.",
+            "correctable": true,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `has_something?` over `have_something` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.empty?).to be_truthy\nexpect(foo.empty?).to be_truthy, 'fail'\nexpect(foo.empty?).to be_falsey\nexpect(foo.has_something?).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:10:explicit:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_something(1, 2)\nexpect(foo).to have_key(1)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_something(1, 2)\nexpect(foo).to have_key(1)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `has_key?` over `have_key` matcher.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_something(1, 2)\nexpect(foo).to have_key(1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `has_key?` over `have_key` matcher.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.something?(1, 2)).to be(true)\nexpect(foo.has_key?(1)).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:10:explicit:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_something(1, 2)\nexpect(foo).to have_key(1)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_something(1, 2)\nexpect(foo).to have_key(1)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#10",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `has_key?` over `have_key` matcher.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_something(1, 2)\nexpect(foo).to have_key(1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `has_key?` over `have_key` matcher.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.something?(1, 2)).to be_truthy\nexpect(foo.has_key?(1)).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:11:explicit:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_all(&:present?)\nexpect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_something(x) { |y| y.present? }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_all(&:present?)\nexpect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_something(x) { |y| y.present? }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_all(&:present?)\nexpect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_something(x) { |y| y.present? }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.all?(&:present?)).to be(true)\nexpect(foo.all? { |x| x.present? }).to be(true)\nexpect(foo.all? { present }).to be(true)\nexpect(foo.something?(x) { |y| y.present? }).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:11:explicit:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_all(&:present?)\nexpect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_something(x) { |y| y.present? }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_all(&:present?)\nexpect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_something(x) { |y| y.present? }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#11",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 49,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_all(&:present?)\nexpect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_something(x) { |y| y.present? }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 49,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.all?(&:present?)).to be_truthy\nexpect(foo.all? { |x| x.present? }).to be_truthy\nexpect(foo.all? { present }).to be_truthy\nexpect(foo.something?(x) { |y| y.present? }).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:13:explicit:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to have_http_status(:ok)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to have_http_status(:ok)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `has_http_status?` over `have_http_status` matcher.",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to have_http_status(:ok)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `has_http_status?` over `have_http_status` matcher.",
+            "correctable": true,
+            "length": 36,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.has_http_status?(:ok)).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:13:explicit:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to have_http_status(:ok)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to have_http_status(:ok)\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#13",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `has_http_status?` over `have_http_status` matcher.",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to have_http_status(:ok)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `has_http_status?` over `have_http_status` matcher.",
+            "correctable": true,
+            "length": 36,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.has_http_status?(:ok)).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:15:explicit:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_something\nexpect(foo).to be_something, 'fail'\nexpect(foo).not_to be_something\nexpect(foo).to have_something\nexpect(foo).to be_a(Array)\nexpect(foo).to be_instance_of(Array)\nexpect(foo).to include('bar')\nexpect(foo).to respond_to(:method)\nexpect(foo).to be_something()\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_something\nexpect(foo).to be_something, 'fail'\nexpect(foo).not_to be_something\nexpect(foo).to have_something\nexpect(foo).to be_a(Array)\nexpect(foo).to be_instance_of(Array)\nexpect(foo).to include('bar')\nexpect(foo).to respond_to(:method)\nexpect(foo).to be_something()\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `has_something?` over `have_something` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `is_a?` over `be_a` matcher.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `instance_of?` over `be_instance_of` matcher.",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `include?` over `include` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 0,
+          "message": "Prefer using `respond_to?` over `respond_to` matcher.",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        },
+        {
+          "line": 9,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_something\nexpect(foo).to be_something, 'fail'\nexpect(foo).not_to be_something\nexpect(foo).to have_something\nexpect(foo).to be_a(Array)\nexpect(foo).to be_instance_of(Array)\nexpect(foo).to include('bar')\nexpect(foo).to respond_to(:method)\nexpect(foo).to be_something()\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `has_something?` over `have_something` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `is_a?` over `be_a` matcher.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `instance_of?` over `be_instance_of` matcher.",
+            "correctable": true,
+            "length": 36,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `include?` over `include` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 0,
+            "message": "Prefer using `respond_to?` over `respond_to` matcher.",
+            "correctable": true,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 9,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.something?).to be(true)\nexpect(foo.something?).to be(true), 'fail'\nexpect(foo.something?).to be(false)\nexpect(foo.has_something?).to be(true)\nexpect(foo.is_a?(Array)).to be(true)\nexpect(foo.instance_of?(Array)).to be(true)\nexpect(foo.include?('bar')).to be(true)\nexpect(foo.respond_to?(:method)).to be(true)\nexpect(foo.something?()).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:15:explicit:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_something\nexpect(foo).to be_something, 'fail'\nexpect(foo).not_to be_something\nexpect(foo).to have_something\nexpect(foo).to be_a(Array)\nexpect(foo).to be_instance_of(Array)\nexpect(foo).to include('bar')\nexpect(foo).to respond_to(:method)\nexpect(foo).to be_something()\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_something\nexpect(foo).to be_something, 'fail'\nexpect(foo).not_to be_something\nexpect(foo).to have_something\nexpect(foo).to be_a(Array)\nexpect(foo).to be_instance_of(Array)\nexpect(foo).to include('bar')\nexpect(foo).to respond_to(:method)\nexpect(foo).to be_something()\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#15",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 27,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 35,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `has_something?` over `have_something` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `is_a?` over `be_a` matcher.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        },
+        {
+          "line": 6,
+          "column": 0,
+          "message": "Prefer using `instance_of?` over `be_instance_of` matcher.",
+          "correctable": true,
+          "length": 36,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `include?` over `include` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 8,
+          "column": 0,
+          "message": "Prefer using `respond_to?` over `respond_to` matcher.",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        },
+        {
+          "line": 9,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_something\nexpect(foo).to be_something, 'fail'\nexpect(foo).not_to be_something\nexpect(foo).to have_something\nexpect(foo).to be_a(Array)\nexpect(foo).to be_instance_of(Array)\nexpect(foo).to include('bar')\nexpect(foo).to respond_to(:method)\nexpect(foo).to be_something()\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 27,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 35,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `has_something?` over `have_something` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `is_a?` over `be_a` matcher.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          },
+          {
+            "line": 6,
+            "column": 0,
+            "message": "Prefer using `instance_of?` over `be_instance_of` matcher.",
+            "correctable": true,
+            "length": 36,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `include?` over `include` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 8,
+            "column": 0,
+            "message": "Prefer using `respond_to?` over `respond_to` matcher.",
+            "correctable": true,
+            "length": 34,
+            "severity": "convention"
+          },
+          {
+            "line": 9,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.something?).to be_truthy\nexpect(foo.something?).to be_truthy, 'fail'\nexpect(foo.something?).to be_falsey\nexpect(foo.has_something?).to be_truthy\nexpect(foo.is_a?(Array)).to be_truthy\nexpect(foo.instance_of?(Array)).to be_truthy\nexpect(foo.include?('bar')).to be_truthy\nexpect(foo.respond_to?(:method)).to be_truthy\nexpect(foo.something?()).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:16:explicit:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_something(1)\nexpect(foo).to be_something(1, 2)\nexpect(foo).to be_something 1, 2\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_something(1)\nexpect(foo).to be_something(1, 2)\nexpect(foo).to be_something 1, 2\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#16",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_something(1)\nexpect(foo).to be_something(1, 2)\nexpect(foo).to be_something 1, 2\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 32,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.something?(1)).to be(true)\nexpect(foo.something?(1, 2)).to be(true)\nexpect(foo.something? 1, 2).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:16:explicit:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_something(1)\nexpect(foo).to be_something(1, 2)\nexpect(foo).to be_something 1, 2\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_something(1)\nexpect(foo).to be_something(1, 2)\nexpect(foo).to be_something 1, 2\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#16",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `something?` over `be_something` matcher.",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_something(1)\nexpect(foo).to be_something(1, 2)\nexpect(foo).to be_something 1, 2\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 30,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `something?` over `be_something` matcher.",
+            "correctable": true,
+            "length": 32,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.something?(1)).to be_truthy\nexpect(foo.something?(1, 2)).to be_truthy\nexpect(foo.something? 1, 2).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:17:explicit:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to include(<<~TEXT)\n  bar\nTEXT\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to include(<<~TEXT)\n  bar\nTEXT\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#17",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `include?` over `include` matcher.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to include(<<~TEXT)\n  bar\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `include?` over `include` matcher.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.include?(<<~TEXT)).to be(true)\n  bar\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:17:explicit:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to include(<<~TEXT)\n  bar\nTEXT\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to include(<<~TEXT)\n  bar\nTEXT\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#17",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `include?` over `include` matcher.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to include(<<~TEXT)\n  bar\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `include?` over `include` matcher.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.include?(<<~TEXT)).to be_truthy\n  bar\nTEXT\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:23:explicit:true",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all(n) { |x| x.ok? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_all { }\nexpect(foo).to be_all do; end\n\nexpect(foo).to be_all do |x|\n  x + 1\n  x >= 2\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all(n) { |x| x.ok? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_all { }\nexpect(foo).to be_all do; end\n\nexpect(foo).to be_all do |x|\n  x + 1\n  x >= 2\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#23",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 38,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all(n) { |x| x.ok? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_all { }\nexpect(foo).to be_all do; end\n\nexpect(foo).to be_all do |x|\n  x + 1\n  x >= 2\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 38,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 25,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 28,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.all? { |x| x.present? }).to be(true)\nexpect(foo.all?(n) { |x| x.ok? }).to be(true)\nexpect(foo.all? { present }).to be(true)\nexpect(foo.all? { }).to be(true)\nexpect(foo.all? do; end).to be(true)\n\nexpect(foo.all? do |x|\n  x + 1\n  x >= 2\nend).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "predicate_matcher_spec:23:explicit:false",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all(n) { |x| x.ok? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_all { }\nexpect(foo).to be_all do; end\n\nexpect(foo).to be_all do |x|\n  x + 1\n  x >= 2\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "expect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all(n) { |x| x.ok? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_all { }\nexpect(foo).to be_all do; end\n\nexpect(foo).to be_all do |x|\n  x + 1\n  x >= 2\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/predicate_matcher_spec.rb#23",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 2,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 38,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        },
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        },
+        {
+          "line": 5,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 29,
+          "severity": "convention"
+        },
+        {
+          "line": 7,
+          "column": 0,
+          "message": "Prefer using `all?` over `be_all` matcher.",
+          "correctable": true,
+          "length": 28,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_all { |x| x.present? }\nexpect(foo).to be_all(n) { |x| x.ok? }\nexpect(foo).to be_all { present }\nexpect(foo).to be_all { }\nexpect(foo).to be_all do; end\n\nexpect(foo).to be_all do |x|\n  x + 1\n  x >= 2\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 2,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 38,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          },
+          {
+            "line": 4,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 25,
+            "severity": "convention"
+          },
+          {
+            "line": 5,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 29,
+            "severity": "convention"
+          },
+          {
+            "line": 7,
+            "column": 0,
+            "message": "Prefer using `all?` over `be_all` matcher.",
+            "correctable": true,
+            "length": 28,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.all? { |x| x.present? }).to be_truthy\nexpect(foo.all?(n) { |x| x.ok? }).to be_truthy\nexpect(foo.all? { present }).to be_truthy\nexpect(foo.all? { }).to be_truthy\nexpect(foo.all? do; end).to be_truthy\n\nexpect(foo.all? do |x|\n  x + 1\n  x >= 2\nend).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Unknown receiver predicates and matcher dispatch can change truth strictness, eql/equal polarity, argument/block timing and failure-message evaluation. Preserve source; pinned real RSpec artifact proves concrete differences."
+  },
+  {
+    "id": "batch27:bool-eql",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect([].empty?).to eql(true)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 30,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect([].empty?).to eql(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 30,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect([]).not_to be_empty\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:bool-equal",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect([].empty?).to equal(true)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": false,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 32,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect([].empty?).to equal(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 32,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect([]).not_to be_empty\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:block-actual",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.any? { |x| x }).to be_truthy\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_any` matcher over `any?`.",
+          "correctable": true,
+          "length": 39,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.any? { |x| x }).to be_truthy\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_any` matcher over `any?`.",
+            "correctable": true,
+            "length": 39,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_any { |x| x }\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:timing",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo.empty?).to be_truthy, message.call\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "inflected",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `be_empty` matcher over `empty?`.",
+          "correctable": true,
+          "length": 45,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo.empty?).to be_truthy, message.call\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `be_empty` matcher over `empty?`.",
+            "correctable": true,
+            "length": 45,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo).to be_empty, message.call\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:explicit-timing",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_empty, message.call\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `empty?` over `be_empty` matcher.",
+          "correctable": true,
+          "length": 37,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_empty, message.call\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `empty?` over `be_empty` matcher.",
+            "correctable": true,
+            "length": 37,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.empty?).to be(true), message.call\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:explicit-outer-block",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_ready do\n work\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `ready?` over `be_ready` matcher.",
+          "correctable": true,
+          "length": 26,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_ready do\n work\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `ready?` over `be_ready` matcher.",
+            "correctable": true,
+            "length": 26,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.ready? do\n work\nend).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:explicit-outer-block-message",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_ready, \"failure\" do\n work\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `ready?` over `be_ready` matcher.",
+          "correctable": true,
+          "length": 34,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_ready, \"failure\" do\n work\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `ready?` over `be_ready` matcher.",
+            "correctable": true,
+            "length": 34,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.ready?).to be(true), \"failure\" do\n work\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:explicit-matcher-block",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to(be_ready { work })\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `ready?` over `be_ready` matcher.",
+          "correctable": true,
+          "length": 33,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to(be_ready { work })\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `ready?` over `be_ready` matcher.",
+            "correctable": true,
+            "length": 33,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.ready? { work }).to(be(true))\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:explicit-negative-literal",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(-1).to be_negative\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `negative?` over `be_negative` matcher.",
+          "correctable": true,
+          "length": 25,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(-1).to be_negative\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `negative?` over `be_negative` matcher.",
+            "correctable": true,
+            "length": 25,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(-1.negative?).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:explicit-hash",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect({a: 1}).to include(a: 1)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `include?` over `include` matcher.",
+          "correctable": true,
+          "length": 31,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect({a: 1}).to include(a: 1)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `include?` over `include` matcher.",
+            "correctable": true,
+            "length": 31,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect({a: 1}.include?(a: 1)).to be(true)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve predicate/matcher truth semantics, invocation timing, attached blocks, signed-number precedence and Hash include key-versus-pair semantics."
+  },
+  {
+    "id": "batch27:empty-prefix-have_",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to have_\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `?` over `have_` matcher.",
+          "correctable": true,
+          "length": 20,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to have_\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `?` over `have_` matcher.",
+            "correctable": true,
+            "length": 20,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.?).to be(true)\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | expect(foo.?).to be(true)\n    |            ^~ unexpected character literal; expecting a message to send to the receiver\n    |                          ^ unexpected end-of-input; expected a `)` to close the arguments\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    },
+    "safety_difference": "Original empty predicate-prefix conversion creates an invalid method selector; native reports exact original message and preserves source."
+  },
+  {
+    "id": "batch27:empty-prefix-be_",
+    "cop": "RSpec/PredicateMatcher",
+    "source": "expect(foo).to be_\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Strict": true,
+      "EnforcedStyle": "explicit",
+      "AllowedExplicitMatchers": [],
+      "SafeAutoCorrect": false,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original PredicateMatcher branch review",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Prefer using `?` over `be_` matcher.",
+          "correctable": true,
+          "length": 18,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "expect(foo).to be_\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 1,
+            "column": 0,
+            "message": "Prefer using `?` over `be_` matcher.",
+            "correctable": true,
+            "length": 18,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "expect(foo.?).to be(true)\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | expect(foo.?).to be(true)\n    |            ^~ unexpected character literal; expecting a message to send to the receiver\n    |                          ^ unexpected end-of-input; expected a `)` to close the arguments\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    },
+    "safety_difference": "Original empty predicate-prefix conversion creates an invalid method selector; native reports exact original message and preserves source."
   }
 ]
