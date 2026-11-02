@@ -1,35 +1,49 @@
-//! RSpec/Be — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::argument_nodes;
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct Be;
-
 impl Cop for Be {
     fn name(&self) -> &'static str {
         "RSpec/Be"
     }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
-    }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        _corrections: Option<&mut Vec<Correction>>,
     ) {
-        // Breadth-first stub: not implemented — avoid method-name false positives.
-        let _ = (source, node, diagnostics);
+        if !runner(source, node) {
+            return;
+        }
+        let args = argument_nodes(node);
+        let Some(matcher) = args.first().copied() else {
+            return;
+        };
+        if args.len() != 1 || !bare(source, matcher, b"be") || !argument_nodes(matcher).is_empty() {
+            return;
+        }
+        let target = selector(matcher);
+        report(
+            self,
+            source,
+            target.start_byte(),
+            target.end_byte(),
+            "Don't use `be` without an argument.".into(),
+            diagnostics,
+        );
     }
 }

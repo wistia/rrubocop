@@ -1,35 +1,64 @@
-//! RSpec/ContextMethod — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
+use crate::cop::rspec::helpers::{RSPEC_INCLUDE, bare_rspec_call, call_block};
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::{argument_nodes, node_bytes, push_replace};
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct ContextMethod;
-
 impl Cop for ContextMethod {
     fn name(&self) -> &'static str {
         "RSpec/ContextMethod"
     }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
-    }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        // Breadth-first stub: not implemented — avoid method-name false positives.
-        let _ = (source, node, diagnostics);
+        if bare_rspec_call(source, node) != Some(b"context") || call_block(node).is_none() {
+            return;
+        }
+        let Some(arg) = argument_nodes(node).first().copied() else {
+            return;
+        };
+        if !matches!(arg.kind(), "string" | "chained_string") {
+            return;
+        }
+        let bytes = node_bytes(source, arg);
+        if !matches!(bytes.get(1), Some(b'.' | b'#')) {
+            return;
+        }
+        let index = report(
+            self,
+            source,
+            arg.start_byte(),
+            arg.end_byte(),
+            "Use `describe` for testing methods.".into(),
+            diagnostics,
+        );
+        let target = selector(node);
+        if push_replace(
+            &mut corrections,
+            target.start_byte(),
+            target.end_byte(),
+            "describe",
+            self.name(),
+        ) {
+            diagnostics[index].corrected = true;
+        }
     }
 }

@@ -1,35 +1,48 @@
-//! RSpec/RemoveConst — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::argument_nodes;
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct RemoveConst;
-
 impl Cop for RemoveConst {
     fn name(&self) -> &'static str {
         "RSpec/RemoveConst"
     }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
-    }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        _corrections: Option<&mut Vec<Correction>>,
     ) {
-        // Breadth-first stub: not implemented — avoid method-name false positives.
-        let _ = (source, node, diagnostics);
+        if !matches!(name(source, node), Some(b"send" | b"__send__")) {
+            return;
+        }
+        let args = argument_nodes(node);
+        if args.len() != 2
+            || !matches!(args[0].kind(), "symbol" | "simple_symbol")
+            || symbol(source, args[0]) != Some(b"remove_const")
+        {
+            return;
+        }
+        report(
+            self,
+            source,
+            node.start_byte(),
+            header_end(node),
+            "Do not use remove_const in specs. Consider using e.g. `stub_const`.".into(),
+            diagnostics,
+        );
     }
 }
