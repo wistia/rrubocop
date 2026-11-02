@@ -114,6 +114,13 @@ pub fn shorthand_value(source: &SourceFile, key: Node<'_>) -> Option<ShorthandVa
     }
 }
 
+pub fn local_binding(source: &SourceFile, node: Node<'_>) -> Option<usize> {
+    crate::cop::ported::local_binding(source, node)
+}
+pub fn numbered_bindings(source: &SourceFile, node: Node<'_>) -> Option<Vec<usize>> {
+    crate::cop::ported::numbered_bindings(source, node)
+}
+
 pub fn regular_send_receiver<'n>(source: &SourceFile, node: Node<'n>) -> Option<Option<Node<'n>>> {
     if let Some(role) = shorthand_value(source, node) {
         return (role == ShorthandValue::Send).then_some(None);

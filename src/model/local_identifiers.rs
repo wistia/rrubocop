@@ -1,5 +1,5 @@
-use super::ScopeData;
-use std::collections::HashSet;
+use super::{ScopeData, ScopeKind};
+use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 pub(crate) struct LocalIdentifierScopes(Mutex<Option<Arc<Vec<ScopeData>>>>);
@@ -35,28 +35,59 @@ impl LocalIdentifierScopes {
 }
 
 #[derive(Default)]
-pub(crate) struct LocalIdentifiers(HashSet<usize>);
+pub(crate) struct LocalIdentifiers {
+    bindings: HashMap<usize, usize>,
+    numbered: HashMap<usize, Vec<usize>>,
+}
 
 impl LocalIdentifiers {
     pub(crate) fn from_scopes(scopes: &[ScopeData]) -> Self {
-        let mut bytes = HashSet::new();
+        let mut bytes = HashMap::new();
+        let mut numbered = HashMap::new();
         for scope in scopes {
+            if scope.kind == ScopeKind::Block {
+                let ids: Vec<_> = scope
+                    .entries
+                    .iter()
+                    .filter(|(name, _)| matches!(name.as_bytes(), [b'_', b'1'..=b'9']))
+                    .map(|(_, entry)| entry.intro_byte)
+                    .collect();
+                if !ids.is_empty() {
+                    numbered.insert(scope.entered_at, ids);
+                }
+            }
             for entry in scope.entries.values() {
-                bytes.insert(entry.intro_byte);
-                bytes.extend(entry.writes.iter().map(|write| write.byte));
+                bytes.insert(entry.intro_byte, entry.intro_byte);
+                bytes.extend(
+                    entry
+                        .writes
+                        .iter()
+                        .map(|write| (write.byte, entry.intro_byte)),
+                );
                 bytes.extend(
                     entry
                         .reads
                         .iter()
                         .filter(|read| !read.synthetic)
-                        .map(|read| read.byte),
+                        .map(|read| (read.byte, entry.intro_byte)),
                 );
             }
         }
-        Self(bytes)
+        Self {
+            bindings: bytes,
+            numbered,
+        }
+    }
+
+    pub(crate) fn binding(&self, byte: usize) -> Option<usize> {
+        self.bindings.get(&byte).copied()
+    }
+
+    pub(crate) fn numbered_bindings(&self, byte: usize) -> Option<Vec<usize>> {
+        self.numbered.get(&byte).cloned()
     }
 
     pub(crate) fn contains(&self, byte: usize) -> bool {
-        self.0.contains(&byte)
+        self.bindings.contains_key(&byte)
     }
 }
