@@ -201,32 +201,51 @@ fn explicit_autocorrection_disable_preserves_sources() {
             assert!(!diagnostics.is_empty());
         }
     }
-    assert_eq!(checked.len(), 46);
+    assert_eq!(checked.len(), 47);
 }
 
 #[test]
-fn original_rule_errors_do_not_crash_or_modify_source() {
+fn original_rule_errors_have_safe_native_results() {
     let cases: Vec<Value> = serde_json::from_str(include_str!(
         "../../../tests/fixtures/rspec-parity/original-rule-errors.json"
     ))
     .unwrap();
     for case in cases {
         let original = case["source"].as_str().unwrap();
-        for mode in [
-            AutocorrectMode::Off,
-            AutocorrectMode::Safe,
-            AutocorrectMode::All,
+        for (name, mode) in [
+            ("source", AutocorrectMode::Off),
+            ("rust_safe", AutocorrectMode::Safe),
+            ("rust_all", AutocorrectMode::All),
         ] {
             let (after, diagnostics) = inspect(&case, original, mode);
-            assert_eq!(after, original);
-            assert_eq!(
-                normalized(&diagnostics),
+            let expected = case.get(name).and_then(Value::as_str).unwrap_or(original);
+            assert_eq!(after, expected, "{}", case["id"]);
+            let expected_diagnostics = if after == original {
                 case.get("native_diagnostics")
-                    .cloned()
-                    .unwrap_or_else(|| serde_json::json!([])),
-                "{}",
-                case["id"]
-            );
+            } else {
+                case.get("native_final_diagnostics")
+            };
+            if matches!(mode, AutocorrectMode::Off) || after == original {
+                assert_eq!(
+                    normalized(&diagnostics),
+                    expected_diagnostics
+                        .cloned()
+                        .unwrap_or_else(|| serde_json::json!([])),
+                    "{}",
+                    case["id"]
+                );
+            } else {
+                let (_, final_diagnostics) = inspect(&case, &after, AutocorrectMode::Off);
+                assert_eq!(
+                    normalized(&final_diagnostics),
+                    expected_diagnostics
+                        .cloned()
+                        .unwrap_or_else(|| serde_json::json!([])),
+                    "{}",
+                    case["id"]
+                );
+                assert_eq!(inspect(&case, &after, mode).0, after);
+            }
         }
     }
 }

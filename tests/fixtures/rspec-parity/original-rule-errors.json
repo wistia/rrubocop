@@ -66,5 +66,38 @@
         "severity": "convention"
       }
     ]
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/MetadataStyle",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch23:spread-hash",
+    "source": "describe \"x\", :a, **metadata do\nend\n",
+    "corrected": "describe \"x\", :a, **metadata do\nend\n",
+    "config": {
+      "AutoCorrect": true,
+      "EnforcedStyle": "hash"
+    },
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "TypeError",
+      "message": "Expected a Parser::Source::Range, Comment or RuboCop::AST::Node, got NilClass",
+      "source": "lib/rubocop/cop/rspec/metadata_style.rb insert_pair_to_empty_hash_metadata",
+      "native_behavior": "Convert the tag into a pair after the implicit hash splat, preserving RSpec symbol precedence without a nil brace location."
+    },
+    "native_diagnostics": [
+      {
+        "line": 1,
+        "column": 14,
+        "length": 2,
+        "message": "Use hash style for metadata.",
+        "correctable": true,
+        "severity": "convention"
+      }
+    ],
+    "rust_safe": "describe \"x\", **metadata, a: true do\nend\n",
+    "rust_all": "describe \"x\", **metadata, a: true do\nend\n",
+    "native_final_diagnostics": []
   }
 ]

@@ -4092,5 +4092,185 @@
       }
     },
     "safety_difference": "Preserve interpolation values and __LINE__ positions; do not reproduce invalid decoded-quote or percent-literal rewrites."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/MetadataStyle",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch23:quoted-symbol",
+    "source": "describe \"x\", :\"a b\" do\nend\n",
+    "corrected": "describe \"x\", :\"a b\" do\nend\n",
+    "config": {
+      "EnforcedStyle": "hash",
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use hash style for metadata.",
+          "correctable": true,
+          "length": 6,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\", a b: true do\nend\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | describe \"x\", a b: true do\n    |                 ^~ unexpected label, ignoring it\n    |                 ^~ unexpected label, expecting end-of-input\n    |                         ^~ unexpected 'do', ignoring it\n    |                         ^~ unexpected 'do', expecting end-of-input\n> 2 | end\n    | ^~~ unexpected 'end', ignoring it\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      },
+      "all": {
+        "source": "describe \"x\", a b: true do\nend\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | describe \"x\", a b: true do\n    |                 ^~ unexpected label, ignoring it\n    |                 ^~ unexpected label, expecting end-of-input\n    |                         ^~ unexpected 'do', ignoring it\n    |                         ^~ unexpected 'do', expecting end-of-input\n> 2 | end\n    | ^~~ unexpected 'end', ignoring it\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    },
+    "safety_difference": "Preserve RSpec symbol-tag precedence against later false values/spreads, comments and quoted tag identity."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/MetadataStyle",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch23:spread-after",
+    "source": "describe \"x\", a: true, **metadata do\nend\n",
+    "corrected": "describe \"x\", a: true, **metadata do\nend\n",
+    "config": {
+      "EnforcedStyle": "symbol",
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use symbol style for metadata.",
+          "correctable": true,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\", :a, **metadata do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\", :a, **metadata do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve RSpec symbol-tag precedence against later false values/spreads, comments and quoted tag identity."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/MetadataStyle",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch23:pair-comment",
+    "source": "describe \"x\", a: # preserve\n true do\nend\n",
+    "corrected": "describe \"x\", a: # preserve\n true do\nend\n",
+    "config": {
+      "EnforcedStyle": "symbol",
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use symbol style for metadata.",
+          "correctable": true,
+          "length": 13,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\", :a do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\", :a do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve RSpec symbol-tag precedence against later false values/spreads, comments and quoted tag identity."
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/MetadataStyle",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch23:later-override",
+    "source": "describe \"x\", a: true, a: false do\nend\n",
+    "corrected": "describe \"x\", a: true, a: false do\nend\n",
+    "config": {
+      "EnforcedStyle": "symbol",
+      "AutoCorrect": true
+    },
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 14,
+          "message": "Use symbol style for metadata.",
+          "correctable": true,
+          "length": 7,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\", :a, a: false do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\", :a, a: false do\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Preserve RSpec symbol-tag precedence against later false values/spreads, comments and quoted tag identity."
   }
 ]

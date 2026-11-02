@@ -621,3 +621,37 @@ name probes also exposed Symbol#to_s encoding: ASCII-only symbols produce US-ASC
 inspection (x00/x01/x7F), while ordinary UTF-8 strings use u0000/u0001/u007F.
 VariableDefinition now selects the original symbol-string inspection semantics;
 the previous control-name regression remains unchanged and passing.
+
+## Batch 23: metadata style and exact metadata scope
+
+MetadataStyle replaces another original stub. The reviewed total is 74 original
+stubs plus all sixteen existing implementations (90 of 96); six original stubs
+remain. All fifty RSpec/RSpecRails tests pass with 1,663 strict original cases,
+47 correction-disable controls and 92 separate safeguards. A non-test
+cargo check --locked --lib also passes.
+
+Separate original-source review covers both styles, the Metadata mixin and
+RangeHelp whitespace/comma operations, including 24 upstream specimens. Controls
+cover implicit/braced/empty hashes, multiple and ambiguous tags, second description
+strings, quoted labels/symbols, splats, comments and exact metadata ranges. A shared
+logical argument view models implicit keyword hashes without changing the parser.
+Corrections use explicit offense ownership and validate the resulting syntax.
+
+Post-implementation trusted RSpec 3.13.0 probes and Metadata.build_hash_from source
+confirm that symbol tags override the final hash. Hash-style conversion preserves
+this precedence, including existing false values. Symbol-style conversion can
+incorrectly change a later false value or spread into true; those two concrete
+value hazards, comment deletion and quoted tag identity form four new safeguards.
+The runtime artifact records actual original and rewritten flag values.
+
+Metadata eligibility now matches the original ordinary-block and configure
+parameter/argument/lvar patterns. New negative controls also exercise existing
+EmptyMetadata, DuplicatedMetadata and SortMetadata with numbered groups and
+unsupported configure signatures, rather than silently broadening their scope.
+
+The pinned original MetadataStyle raises TypeError for hash-style conversion of
+`describe "x", :a, **metadata do ... end`: its empty-pairs path expects a brace
+location that an implicit splat hash does not have. This fourth original-rule error
+is retained separately. Native inserts the true pair after the splat, preserves
+RSpec precedence, and verifies final offense state and idempotence in both modes.
+The earlier four invalid-original-syntax specimens remain separate.

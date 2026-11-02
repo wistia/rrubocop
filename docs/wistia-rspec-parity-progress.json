@@ -150,10 +150,11 @@
     "original_source": "lib/rubocop/cop/rspec/duplicated_metadata.rb",
     "baseline_status": "unimplemented_noop_stub",
     "current_status": "implemented_and_differentially_tested",
-    "cases": 7,
+    "cases": 9,
     "deliberate_safeguards": [
       "comment-preservation:DuplicatedMetadata"
-    ]
+    ],
+    "metadata_scope_review": "Shared Metadata mixin scope now requires ordinary DSL blocks, zero-argument configure with exactly one ordinary parameter, and cached lvar receiver binding. New original negative probes cover numbered groups and two-parameter configure blocks."
   },
   {
     "name": "RSpec/EmptyExampleGroup",
@@ -230,10 +231,11 @@
     "original_source": "lib/rubocop/cop/rspec/empty_metadata.rb",
     "baseline_status": "unimplemented_noop_stub",
     "current_status": "implemented_and_differentially_tested",
-    "cases": 4,
+    "cases": 6,
     "deliberate_safeguards": [
       "comment-preservation:EmptyMetadata"
-    ]
+    ],
+    "metadata_scope_review": "Shared Metadata mixin scope now requires ordinary DSL blocks, zero-argument configure with exactly one ordinary parameter, and cached lvar receiver binding. New original negative probes cover numbered groups and two-parameter configure blocks."
   },
   {
     "name": "RSpec/EmptyOutput",
@@ -559,8 +561,15 @@
     "original_ruby": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
     "original_source": "lib/rubocop/cop/rspec/metadata_style.rb",
     "baseline_status": "unimplemented_noop_stub",
-    "current_status": "not_yet_reviewed",
-    "cases": 0
+    "current_status": "implemented_and_differentially_tested",
+    "cases": 43,
+    "deliberate_safeguards": [
+      "batch23:quoted-symbol",
+      "batch23:spread-after",
+      "batch23:pair-comment",
+      "batch23:later-override"
+    ],
+    "post_implementation_review": "Pinned MetadataStyle, Metadata mixin, RangeHelp algorithms and24upstream specimens reviewed separately. Covered both styles, implicit/braced/empty hashes, multiple/ambiguous tags, second descriptions, quoted labels/symbols, splats, comments, atomic correction ownership and exact offsets. Post-implementation real RSpec3.13.0 build_hash_from review confirmed symbols override the final hash: native guards only actual later-false/spread value changes. Configure parameter/argument/local-binding and numbered DSL scope branches match original. Original implicit-splat insertion TypeError retained separately; native corrects it safely and idempotently."
   },
   {
     "name": "RSpec/MissingExampleGroupArgument",
@@ -885,13 +894,14 @@
     "original_source": "lib/rubocop/cop/rspec/sort_metadata.rb",
     "baseline_status": "unimplemented_noop_stub",
     "current_status": "implemented_and_differentially_tested",
-    "cases": 16,
+    "cases": 18,
     "deliberate_safeguards": [
       "sort_metadata_spec:8",
       "batch5:dynamic-values",
       "batch5:dynamic-keys"
     ],
-    "post_implementation_review": "Pinned Ruby algorithms and upstream v3.0.4 specs reviewed separately; heredoc final location, comment directives, numbered blocks, one-liner configuration, metadata hash splitting and evaluation-order branches covered."
+    "post_implementation_review": "Pinned Ruby algorithms and upstream v3.0.4 specs reviewed separately; heredoc final location, comment directives, numbered blocks, one-liner configuration, metadata hash splitting and evaluation-order branches covered.",
+    "metadata_scope_review": "Shared Metadata mixin scope now requires ordinary DSL blocks, zero-argument configure with exactly one ordinary parameter, and cached lvar receiver binding. New original negative probes cover numbered groups and two-parameter configure blocks."
   },
   {
     "name": "RSpec/SpecFilePathFormat",

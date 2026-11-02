@@ -123,7 +123,10 @@ pub(super) fn metadata_call(source: &SourceFile, node: Node<'_>) -> bool {
     if !(is_example(method) || is_group(method) || hooks().contains(&method)) {
         return false;
     }
-    if bare_rspec_call(source, node).is_some() && call_block(node).is_some() {
+    if bare_rspec_call(source, node).is_some()
+        && call_block(node).is_some()
+        && !crate::cop::rspec::separation::numbered_block(source, node)
+    {
         return true;
     }
     if !hooks().contains(&method) {
@@ -134,14 +137,16 @@ pub(super) fn metadata_call(source: &SourceFile, node: Node<'_>) -> bool {
     };
     let mut ancestor = node.parent();
     while let Some(parent) = ancestor {
-        if bare_rspec_call(source, parent) == Some(b"configure") {
+        if bare_rspec_call(source, parent) == Some(b"configure") && call_args(parent).is_empty() {
             if let Some(parameters) =
                 call_block(parent).and_then(|b| b.child_by_field_name("parameters"))
             {
-                let mut cursor = parameters.walk();
-                return parameters.named_children(&mut cursor).any(|parameter| {
-                    node_bytes(source, parameter) == node_bytes(source, receiver)
-                });
+                let parameters = code_children(parameters);
+                return parameters.len() == 1
+                    && parameters[0].kind() == "identifier"
+                    && receiver.kind() == "identifier"
+                    && crate::cop::ported::local_identifier(source, receiver)
+                    && node_bytes(source, parameters[0]) == node_bytes(source, receiver);
             }
         }
         ancestor = parent.parent();
