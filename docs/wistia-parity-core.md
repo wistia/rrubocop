@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Twenty-six owned rules now have implemented behavior backed by original-Ruby
+Twenty-seven owned rules now have implemented behavior backed by original-Ruby
 comparisons, including all thirteen original direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. Additional UselessAssignment capture combinations
 remain under review. The exhaustive
-367-rule inventory retains 341 queued validation entries; some already had
+367-rule inventory retains 340 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -564,4 +564,15 @@ Real CLI validation covers276 safe/aggressive modes: all276 match bytes, exits a
 
 ## Explicit reference-version pinning
 
-Lockfile-free synthetic CLI configs previously selected the native1.91 baseline while receiving explicit cop options captured from Ruby1.65. Their reported byte comparisons remain measured bounded observations; they do not establish parity for version-sensitive branches. Actual Wistia-config probes used its1.65 lockfile. The capture helper now records the original software version separately from TargetRubyVersion, the Rust original-spec replay injects that version, and the synthetic CLI runner passes native --rubocop-version explicitly (default1.65.1). Newly captured hash-brace observations regenerate identically, and its version-sensitive pattern controls are undergoing the final CLI gate. The hash-brace implementation remains separate work in progress until that gate completes.
+Lockfile-free synthetic CLI configs previously selected the native1.91 baseline while receiving explicit cop options captured from Ruby1.65. Their reported byte comparisons remain measured bounded observations; they do not establish parity for version-sensitive branches. Actual Wistia-config probes used its1.65 lockfile. The capture helper now records the original software version separately from TargetRubyVersion, the Rust original-spec replay injects that version, and the synthetic CLI runner passes native --rubocop-version explicitly (default1.65.1). Newly captured hash-brace observations regenerate identically, and its version-sensitive pattern controls are covered by the completed hash-brace gate below.
+
+
+## Layout/SpaceInsideHashLiteralBraces
+
+Reviewed the complete pinned original cop, SurroundingSpace and rubocop-ast1.32.3 Token whitespace/type behavior. All28 unchanged upstream examples pass, yielding40 source/config states. The216 independent observations cover all three styles and both empty-brace settings, nested/compact delimiters, comments, implicit keyword hashes, Ruby1.65 pattern exclusions, Unicode, whitespace controls, heredocs, regexps and static/interpolated/percent strings. All256 direct cop diagnostic/message/range and first corrected-byte states match, with no declared safeguards.
+
+The port implements empty and multiline-whitespace hash correction, compact adjacent braces, original spacer ranges/messages and independent opening/closing comment handling. A bounded lexical-boundary helper reuses LeadingEmptyLines' verified monolithic-string/numeric handling, retaining its60-state replay. Literal delimiter types keep percent-string closing braces distinct from Ruby hash/block braces. Normalization edits carry an explicit owning offense in the cop; no scheduling or engine policy was changed.
+
+The initial explicitly pinned1.65 CLI gate covers512 modes with matching exits/scopes and498 matching bytes; its14 CRLF failures exposed unowned ancillary edits being removed by the real pipeline. After the cop-local fix, all36 CRLF modes were rechecked and match bytes/exits/scopes. Together with the unchanged non-CRLF branch, the composed512-mode result has zero remaining differences and1024 unique stable second passes. A real-engine CI regression checks both safe/aggressive modes and clean second passes for single/nested CRLF hashes. Eight Wistia-config modes/final states pass; the full native suite passes899 tests, one pre-existing ignored.
+
+Direct cop ranges match original zero-length control-whitespace ranges; the existing engine formatter enriches zero highlights to one, so identical rendered/wire range metadata is not claimed. Additional token families, encoded/BOM source, code-plus-DATA normalization, directive interactions and future-version pattern behavior remain bounded follow-ups. Correction scheduling and generic syntax expansion remain deferred.

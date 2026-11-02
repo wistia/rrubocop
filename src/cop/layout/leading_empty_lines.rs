@@ -1,5 +1,5 @@
 //! Layout/LeadingEmptyLines: locate the original lexer's first visible token.
-use crate::cop::shared::{for_each_descendant, node_bytes, push_replace};
+use crate::cop::shared::{node_bytes, push_replace, ruby_token_leaf};
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -14,31 +14,8 @@ fn first_token<'a>(source: &SourceFile, mut node: Node<'a>) -> Option<Node<'a>> 
         if node.kind() == "uninterpreted" {
             return None;
         }
-        if matches!(node.kind(), "integer" | "float" | "rational" | "complex") {
+        if ruby_token_leaf(source, node) {
             return Some(node);
-        }
-        if node.kind() == "string"
-            && node_bytes(source, node)
-                .first()
-                .is_some_and(|b| matches!(b, b'\'' | b'"'))
-        {
-            let mut dynamic = false;
-            for_each_descendant(node, |n| dynamic |= n.kind() == "interpolation");
-            let mut escaped = false;
-            let mut newline = false;
-            for byte in node_bytes(source, node) {
-                if *byte == b'\n' && !escaped {
-                    newline = true;
-                }
-                if *byte == b'\\' {
-                    escaped = !escaped;
-                } else if *byte != b'\r' {
-                    escaped = false;
-                }
-            }
-            if !dynamic && !newline {
-                return Some(node);
-            }
         }
         if node.child_count() == 0 {
             return (node.kind() != "program" && !node.is_missing()).then_some(node);
