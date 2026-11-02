@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Twenty-one owned rules now have implemented behavior backed by original-Ruby
-comparisons, including eleven of the original thirteen direct-file Style
+Twenty-two owned rules now have implemented behavior backed by original-Ruby
+comparisons, including twelve of the original thirteen direct-file Style
 stubs, the additional delegated RedundantParentheses stub, and both absent
 version-gated cops. HashSyntax shorthand branches and additional
 UselessAssignment capture combinations remain under review. The exhaustive
-367-rule inventory retains 346 queued validation entries; some already had
+367-rule inventory retains 345 queued validation entries; some already had
 implementations. These bounded original-spec results do not establish
 universal parity for arbitrary Ruby source.
 
@@ -487,3 +487,19 @@ Remaining limits include encoded non-UTF8 source, additional uncommon control/qu
 Original Ruby AST probes confirm that implicit numbered parameters in singleton-method receivers, class superclasses and singleton-class receiver expressions belong to the enclosing block. The model predeclaration walk now includes those outer-evaluated headers while retaining ordinary method/body scope boundaries. Three header-role probes and the earlier numbered-parameter role regression pass.
 
 A second independent role regression exposed synthetic usage bookkeeping: binding/bare-super mark variables as used at the call site, but those positions are not local-variable tokens. Read records now distinguish synthetic uses; cached membership filters them without changing usage counts or dataflow. Binding/local binding/binding() roles now match the original AST. Secondary shorthand bookkeeping and implicit reference helpers retain their usage semantics. The public model Read struct gains a synthetic field, and all in-tree constructors are updated. The integrated native suite passes882 tests, one pre-existing ignored; this includes the pending EachWithObject consumer that motivated the review.
+
+## Style/EachWithObject
+
+Reviewed the entire pinned `rubocop-1.65.1/lib/rubocop/cop/style/each_with_object.rb`, its block/numblock NodePatterns, basic-literal classification, assignment descendants and RangeHelp line-removal behavior. All13 unchanged original examples pass, yielding19 source/config states. Ninety-six independent completed original observations expand the matrix to115 exact diagnostic/range/message states:98 exact corrected states and17 explicit safeguards. One additional original investigation raises NoMethodError on a missing second parameter; native reports the style issue without crashing or changing source.
+
+Coverage includes explicit/optional/rest/destructured/shadow/keyword parameters; basic versus composite initial literals, pseudo literals and heredocs; keyword argument grouping; assignments/for/destructuring; pattern binds and pins; returned-parenthesis shapes; numbered arity/version/definition headers; comments/line removal; reflection and next control flow. Pattern binding, non-memo next values, splat/unsupported parameter roles, reflection, nested numbered scopes and shorthand keys can change behavior under the original conversion, so their original diagnostics remain with no correction. Source formatting was split into pattern/safety helpers after review; no new lexical decoder was introduced.
+
+Trusted authored Ruby programs confirm concrete original conversion differences: next nil returns nil versus the original object, pattern rebinding returns the element versus the original object, first-rest/shadow parameters alter returned values, local_variables ordering changes, and numbered shorthand can capture the memo recursively instead of the element. These are recorded separately from ordinary parity. The one-param original failure is preserved as original-failures.json, not treated as a matching Ruby result.
+
+Real original/native CLI validation covers230 modes:196 equal bytes,198 equal exits and exactly34 intentional safeguard byte differences. All460 second passes are stable. Four actual-production-config modes under `app/models` produce expected bytes and clean final states. The full native suite passes882 tests, one pre-existing ignored. Unreviewed encoded/CRLF whole-file rewrites, additional scope/parameter forms, overrides and reflective access remain bounded follow-ups; cross-cop scheduling remains deferred.
+
+The original EachWithObject one-parameter failure was also replayed through both real CLI modes: bytes and exits match, but Ruby emits an internal cop error while native emits an uncorrectable offense. The comparison harness now retains stderr and detects that original cop-error path even when exit1 is otherwise valid; both modes correctly remain reported as differences.
+
+## Open Layout signed-command follow-up
+
+A separate14-mode original/native CLI probe confirmed a source-semantics gap beyond the bounded SpaceAroundOperators corpus: Ruby keeps `puts +1` as a command unary argument, but native currently inserts a space and changes parsing to addition. Nested `foo +1 +2` and receiver calls are also affected; declared-local and explicit-parentheses controls distinguish real addition. The framework agent owns the shared semantic-command adapter and core owns Layout integration. This remains a confirmed open gap, not covered by the earlier131 original-spec comparisons.

@@ -1,0 +1,379 @@
+[
+  {
+    "id": "initial '*args'",
+    "original": "items.inject(*args) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(*args) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject(*args) { |memo, element| memo }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "initial '**options'",
+    "original": "items.inject(**options) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(**options) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject(**options) { |memo, element| memo }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "body case element; in [memo]; end; memo",
+    "original": "items.inject({}) do |memo, element|\n  case element; in [memo]; end; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  case element; in [memo]; end; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) do |memo, element|\n  case element; in [memo]; end; memo\nend\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "body element => memo; memo",
+    "original": "items.inject({}) do |memo, element|\n  element => memo; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  element => memo; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) do |memo, element|\n  element => memo; memo\nend\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "body case element; in {memo:}; end; memo",
+    "original": "items.inject({}) do |memo, element|\n  case element; in {memo:}; end; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  case element; in {memo:}; end; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) do |memo, element|\n  case element; in {memo:}; end; memo\nend\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "body next nil if element; memo",
+    "original": "items.inject({}) do |memo, element|\n  next nil if element; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  next nil if element; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) do |memo, element|\n  next nil if element; memo\nend\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "body trace << local_variables; memo",
+    "original": "items.inject({}) do |memo, element|\n  trace << local_variables; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  trace << local_variables; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) do |memo, element|\n  trace << local_variables; memo\nend\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "body capture(binding); memo",
+    "original": "items.inject({}) do |memo, element|\n  capture(binding); memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  capture(binding); \nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) do |memo, element|\n  capture(binding); memo\nend\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "body eval(code); memo",
+    "original": "items.inject({}) do |memo, element|\n  eval(code); memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  eval(code); \nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) do |memo, element|\n  eval(code); memo\nend\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "parameters |*memo, element|",
+    "original": "items.inject({}) { |*memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element, *memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) { |*memo, element| memo }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "parameters |memo; element|",
+    "original": "items.inject({}) { |memo; element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element; memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) { |memo; element| memo }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "parameters |; memo, element|",
+    "original": "items.inject({}) { |; memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |; element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) { |; memo, element| memo }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "parameters |memo:, element:|",
+    "original": "items.inject({}) { |memo:, element:| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element:, memo:|  }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) { |memo:, element:| memo }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "parameters |memo, &element|",
+    "original": "items.inject({}) { |memo, &element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |&element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) { |memo, &element| memo }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "numbered Ruby3.4 _2; helper(_2:); _1",
+    "original": "items.inject({}) { _2; helper(_2:); _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { _1; helper(_2:); _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) { _2; helper(_2:); _1 }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "numbered Ruby3.4 inner.map { _1 }; _2; _1",
+    "original": "items.inject({}) { inner.map { _1 }; _2; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { inner.map { _2 }; _1; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) { inner.map { _1 }; _2; _1 }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  },
+  {
+    "id": "numbered Ruby3.4 next nil if _2; _1",
+    "original": "items.inject({}) { next nil if _2; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { next nil if _1; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "items.inject({}) { next nil if _2; _1 }\n",
+    "safeguard_reason": "Preserve iterator memo/control flow, parameter roles, pattern assignments, reflective scope access or numbered shorthand/nested scope meaning."
+  }
+]

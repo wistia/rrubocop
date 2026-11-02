@@ -30,15 +30,15 @@ def observe(executable, options, path, source, cwd, environment):
     first = subprocess.run(command, cwd=cwd, env=environment, capture_output=True, text=True, timeout=30)
     corrected = path.read_bytes()
     second = subprocess.run(command, cwd=cwd, env=environment, capture_output=True, text=True, timeout=30)
-    error = ""
-    if first.returncode not in VALID_EXITS or second.returncode not in VALID_EXITS:
-        error = first.stderr + second.stderr
+    stderr = first.stderr + second.stderr
+    cop_error = "An error occurred while" in stderr and "cop was inspecting" in stderr
     return {
         "exit": first.returncode,
         "final_exit": second.returncode,
         "bytes": corrected.decode(),
         "idempotent": corrected == path.read_bytes(),
-        "stderr": error,
+        "stderr": stderr,
+        "cop_error": cop_error,
     }
 
 
@@ -79,7 +79,7 @@ def compare(index_case, settings, environment):
 
 def differs(row):
     return not row["equal_bytes"] or not row["equal_exit"] or any(
-        not observation["idempotent"] or observation["exit"] not in VALID_EXITS or observation["final_exit"] not in VALID_EXITS
+        not observation["idempotent"] or observation["exit"] not in VALID_EXITS or observation["final_exit"] not in VALID_EXITS or observation["cop_error"]
         for observation in row["observations"].values()
     )
 
