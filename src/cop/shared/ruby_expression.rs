@@ -169,6 +169,18 @@ fn symbol_shape(source: &SourceFile, node: Node<'_>) -> Option<StringAst> {
         Some(StringAst::Str(value))
     }
 }
+pub fn plain_string(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    if !matches!(node.kind(), "string" | "chained_string" | "character" | "heredoc_beginning")
+        || crate::cop::ported::static_symbol(source, node).is_some()
+    {
+        return None;
+    }
+    match string_shape(source, node)? {
+        StringAst::Str(value) => Some(value),
+        StringAst::Dstr(_) => None,
+    }
+}
+
 pub fn plain_symbol(source: &SourceFile, node: Node<'_>) -> Option<String> {
     match symbol_shape(source, node)? {
         StringAst::Str(value) => Some(value),
@@ -679,6 +691,23 @@ mod tests {
                 "Node#eql?: {}",
                 case.source
             );
+        }
+    }
+    #[test]
+    fn plain_strings_keep_original_static_ast_shape() {
+        for (text, expected) in [
+            ("\"\"", Some("")),
+            ("\"a\"", Some("a")),
+            ("?a", Some("a")),
+            ("\"a\nb\"", None),
+            ("\"a\" \"b\"", None),
+            (":a", None),
+            (":\"a\"", None),
+        ] {
+            let source = SourceFile::from_bytes("string.rb", text.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            let node = tree.root_node().named_child(0).unwrap();
+            assert_eq!(plain_string(&source, node).as_deref(), expected, "{text}");
         }
     }
     #[test]

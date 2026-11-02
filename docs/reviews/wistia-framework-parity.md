@@ -748,3 +748,9 @@ references. Full regression: 2014 originals, 4028 second passes, 66 trusted prog
 new difference. Native suite passes 919 tests, 1 ignored probe. All 81 production
 scope probes across 38 reviewed rules and four auxiliary policy probes pass.
 Totals: 38 reviewed implementations, 35 baseline stubs replaced, 32 stubs remain.
+
+### Typed enum AST follow-up
+
+Re-reviewed `rubocop-rails-2.26.0/lib/rubocop/cop/rails/enum_hash.rb` (`enum_name`, `source`) and `enum_uniqueness.rb` (`enum_name`). Their `sym`/`str` branches use decoded values; `dsym`/`dstr` branches preserve source. Both ports now use typed shared symbol/string APIs, retaining raw empty/multiline symbols and multiline/chained strings instead of flattening their values. Character literals still use the existing decoder. Runtime decoding is unchanged.
+
+Added 23 positive/negative enum-name/member specimens. The focused matrix now has 147 original cases, 294 second passes and two trusted programs; all new cases match. Its 23 retained events are the previously documented dynamic percent-array/comment safeguards and upstream stale heredoc AST hash discrepancy. Shared tests cover 75 original AST pairs, 76 regexp observations and typed string/symbol controls (four tests pass). No additional baseline stub was replaced.

@@ -237,6 +237,11 @@ def cases():
         add("Rails/EnumUniqueness", source)
     for source in ("enum :status, [- 1, -1, + 1, 1]", "enum :status, [- -1, 1]", "enum :status, [~1, -2]"):
         add("Rails/EnumUniqueness", source)
+    for key in ('type', ':""', '%s()', ':"a\nb"', '"a\nb"', '"a" "b"', '?a', '""'):
+        for cop in ("Rails/EnumHash", "Rails/EnumUniqueness"):
+            add(cop, f"enum {key}, [0, 0]")
+    for value in (':""', '%s()', ':"a\nb"', '"a\nb"', '"a" "b"', '?a', '""'):
+        add("Rails/EnumHash", f"enum :status, [{value}]")
     add("Performance/Caller", "caller(+ 1).first")
     for source in ("perform if value&.blank?", "perform unless value&.blank?", "if value&.blank?; perform; end", "unless value&.blank?; perform; else; other; end", "value&.blank? ? perform : other", "perform if (value&.blank?)", "perform if !value&.blank?", "perform if value.blank?", "perform if value&.blank?(extra)", "perform while value&.blank?", "if value&.blank?\n # keep\n perform\nend"):
         add("Rails/SafeNavigationWithBlank", source)

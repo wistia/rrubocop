@@ -60,25 +60,11 @@ fn element(source: &SourceFile, node: Node<'_>, array: Node<'_>) -> Option<Strin
             string_dump(&value)
         });
     }
-    if node.kind() == "character" {
-        let text = node_text(source, node);
-        let value = text.strip_prefix('?')?;
-        if !value.starts_with('\\') {
-            return Some(string_dump(value));
-        }
-        let parsed = SourceFile::from_bytes("character.rb", format!("\"{value}\"").into_bytes());
-        let tree = crate::parse::parse_ruby(&parsed).ok()?;
-        return crate::cop::ported::static_literal(&parsed, tree.root_node().named_child(0)?)
-            .map(|s| string_dump(&s));
+    if let Some(value) = crate::cop::shared::ruby_expression::plain_symbol(source, node) {
+        return Some(symbol_inspect(&value));
     }
-    if let Some(value) = crate::cop::ported::static_literal(source, node) {
-        return Some(
-            if matches!(node.kind(), "simple_symbol" | "delimited_symbol") {
-                symbol_inspect(&value)
-            } else {
-                string_dump(&value)
-            },
-        );
+    if let Some(value) = crate::cop::shared::ruby_expression::plain_string(source, node) {
+        return Some(string_dump(&value));
     }
     Some(node_text(source, node))
 }
@@ -92,7 +78,8 @@ impl EnumHash {
         diagnostics: &mut Vec<Diagnostic>,
         corrections: &mut Option<&mut Vec<Correction>>,
     ) {
-        let name = crate::cop::ported::static_literal(source, key)
+        let name = crate::cop::shared::ruby_expression::plain_symbol(source, key)
+            .or_else(|| crate::cop::shared::ruby_expression::plain_string(source, key))
             .unwrap_or_else(|| node_text(source, key));
         let (line, col) = source.offset_to_line_col(array.start_byte());
         let mut d=self.diagnostic(source,line,col,format!("Enum defined as an array found in `{name}` enum declaration. Use hash syntax instead."));

@@ -20,7 +20,8 @@ impl EnumUniqueness {
         values: Node<'_>,
         diagnostics: &mut Vec<Diagnostic>,
     ) {
-        let name = crate::cop::ported::static_literal(source, key)
+        let name = crate::cop::shared::ruby_expression::plain_symbol(source, key)
+            .or_else(|| crate::cop::shared::ruby_expression::plain_string(source, key))
             .unwrap_or_else(|| node_text(source, key));
         let elements: Vec<_> = named_kids(values)
             .into_iter()
