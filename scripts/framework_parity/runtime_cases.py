@@ -1,5 +1,9 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ("Rails/ReflectionClassName", "require 'active_record'\nclass Account; end\nclass Team < ActiveRecord::Base\nself.abstract_class = true\nhas_many :accounts, class_name: Account\nend\np Team.reflect_on_association(:accounts).class_name\n"),
+    ("Rails/ReflectionClassName", "require 'active_record'\nclass Account; end\nclass Team < ActiveRecord::Base\nself.abstract_class = true\nhas_many :accounts, class_name: Account.name\nend\np Team.reflect_on_association(:accounts).class_name\n"),
+    ("Rails/ReflectionClassName", "require 'active_record'\nclass Account; end\nclass Team < ActiveRecord::Base\nself.abstract_class = true\nhas_many :accounts, class_name: Account.to_s\nend\np Team.reflect_on_association(:accounts).class_name\n"),
+
     ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; validates_presence_of [:name, :age], allow_nil: true; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),
     ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; fields = [:name, [:age]]; validates_presence_of *fields; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),
     ("Rails/Validation", "require 'active_model'\nclass Form; include ActiveModel::Model; attr_accessor :name, :age; fields = [:name, :age]; validates_presence_of fields, allow_nil: true; end\nform = Form.new(name: nil, age: nil)\np [form.valid?, form.errors.details]\n"),

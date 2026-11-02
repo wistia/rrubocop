@@ -1,9 +1,8 @@
 # Framework cop parity implementation
 
 This branch owns 90 enabled Rails, Migration, Performance and FactoryBot cops.
-The baseline inventory contained 67 no-op stubs. The first twelve batches replace
-28 stubs and repair an existing ReverseEach detector/corrector; 39 stubs and the remaining implemented-cop gaps
-still need work. `wistia-framework-parity.json` tracks every owned rule.
+The baseline inventory contained 67 no-op stubs. The current branch replaces 36 stubs and reviews three existing implementations.
+Thirty-one baseline stubs and the remaining existing-cop gaps still need work. `wistia-framework-parity.json` tracks every owned rule.
 
 ## Original-rule review
 
@@ -754,3 +753,9 @@ Totals: 38 reviewed implementations, 35 baseline stubs replaced, 32 stubs remain
 Re-reviewed `rubocop-rails-2.26.0/lib/rubocop/cop/rails/enum_hash.rb` (`enum_name`, `source`) and `enum_uniqueness.rb` (`enum_name`). Their `sym`/`str` branches use decoded values; `dsym`/`dstr` branches preserve source. Both ports now use typed shared symbol/string APIs, retaining raw empty/multiline symbols and multiline/chained strings instead of flattening their values. Character literals still use the existing decoder. Runtime decoding is unchanged.
 
 Added 23 positive/negative enum-name/member specimens. The focused matrix now has 147 original cases, 294 second passes and two trusted programs; all new cases match. Its 23 retained events are the previously documented dynamic percent-array/comment safeguards and upstream stale heredoc AST hash discrepancy. Shared tests cover 75 original AST pairs, 76 regexp observations and typed string/symbol controls (four tests pass). No additional baseline stub was replaced.
+
+### ReflectionClassName source/spec parity review
+
+Pinned source: `rubocop-rails-2.26.0/lib/rubocop/cop/rails/reflection_class_name.rb`; upstream `v2.26.0/spec/rubocop/cop/rails/reflection_class_name_spec.rb` was read separately after the first port. All upstream branches are represented: the three association macros; optional scope argument; string/interpolated-string/plain-symbol exemptions; receiverless send exclusion; `to_s` on nonconstant receivers; local variables assigned string/symbol versus constants; shorthand options; correction limited to unqualified constants and their no-argument `name`/`to_s` sends. Additional negatives cover receivers, association arity, scoped constants, dynamic symbols, duplicate keys, splats, nested/forward local assignments, block arguments, safe sends, non-symbol keys and disabled autocorrection.
+
+The final focused gate contains 99 original cases (including three trusted ActiveRecord reflection programs), 198 second passes and **zero differences** in detections, locations/messages/metadata, safe/all bytes, final states or idempotence. Original `Safe: false` is respected: `-a` retains source, `-A` performs the bounded original corrections. No new semantic safeguard discrepancy was found in these trusted programs; dynamic class-name contracts remain the upstream documented unsafe assumption. The post-port review repaired shorthand-value detection and safe-mode classification before this checkpoint. Actual production CLI: 83 scope probes across 39 rules plus four auxiliary disabled-policy probes all pass. Native suite: 921 pass, one ignored. This replaces one baseline stub; totals are 36 replaced, three existing reviewed, 31 stubs remaining.
