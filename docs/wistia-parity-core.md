@@ -89,3 +89,28 @@ are explicitly different safeguards, not hidden parity exceptions:
 The actual Wistia `stats_helper.rb:470` regexp is now flagged with Ruby's same
 message, warning severity, starting location and three-character highlight.
 The fork deliberately does not emulate Ruby's mutation of shared regexp trees.
+
+## TernaryParentheses
+
+The third batch replaces the incomplete heuristic with the original
+`rubocop-1.65.1/lib/rubocop/cop/style/ternary_parentheses.rb` algorithm, including
+SafeAssignment and the original precedence/unsafe-removal branches. All 91
+unmodified upstream Ruby specs pass; all 135 captured original/iterated cases
+match Rust messages, locations, highlight lengths and correction bytes. The
+compiled CLI passes 270 safe/all-mode byte checks and 270 idempotence checks.
+The actual installer spec now produces Ruby's same two line-11 diagnostics at
+columns 8 and 51, rather than silently missing both.
+
+This includes the complex-condition style used by Wistia, simple/query/indexed
+conditions, assignments, defined/yield, keyword operators, safe navigation,
+multiline conditions, one-line pattern matching, and unsafe unparenthesized-call
+correction refusals. A tree-sitter precedence difference for `not (bar) ? ...`
+is normalized to Ruby's actual conditional span rather than rewriting `not`.
+
+An independent source review found another upstream safety issue:
+`(object&.predicate argument) ? a : b` becomes
+`object&.predicate argument ? a : b` in Ruby autocorrection. Ruby's own parsed AST
+shows the ternary moving from the outer expression into the safe-navigation
+call's argument. Rust reports the offense but withholds this semantic-changing
+removal. This is an explicit safety difference beyond the original passing
+spec corpus, not a claimed exact match.

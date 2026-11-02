@@ -13,7 +13,6 @@ mod control;
 pub use control::matches_if_with_semicolon;
 pub use control::matches_one_line_conditional;
 pub use control::matches_stabby_lambda_parentheses;
-pub use control::matches_ternary_parentheses;
 
 mod invertible_unless_condition;
 pub use invertible_unless_condition::matches_invertible_unless_condition;
