@@ -90,6 +90,13 @@ fn local_read(source: &SourceFile, node: Node<'_>) -> bool {
         b"spy",
         b"is_expected",
         b"subject",
+        b"be_nil",
+        b"be_a",
+        b"be_an",
+        b"be_kind_of",
+        b"be_a_kind_of",
+        b"not_to",
+        b"to_not",
         b"expect",
         b"receive_message_chain",
         b"stub_chain",
@@ -500,6 +507,9 @@ pub(super) fn ruby_string(value: &str) -> String {
             {
                 output.push_str("\\#")
             }
+            control if control.is_ascii_control() => {
+                output.push_str(&format!("\\x{:02X}", control as u32))
+            }
             control if control.is_control() => {
                 output.push_str(&format!("\\u{:04X}", control as u32))
             }
@@ -512,13 +522,15 @@ pub(super) fn ruby_string(value: &str) -> String {
 pub(super) fn ruby_symbol(value: &str) -> String {
     let candidate = format!(":{value}");
     let source = SourceFile::from_bytes("symbol.rb", candidate.as_bytes().to_vec());
-    if crate::parse::parse_ruby(&source).ok().is_some_and(|tree| {
-        !tree.root_node().has_error()
-            && tree.root_node().named_child_count() == 1
-            && tree.root_node().named_child(0).is_some_and(|node| {
-                node.kind() == "simple_symbol" && node.end_byte() == candidate.len()
-            })
-    }) {
+    if !matches!(value, "!@" | "~@")
+        && crate::parse::parse_ruby(&source).ok().is_some_and(|tree| {
+            !tree.root_node().has_error()
+                && tree.root_node().named_child_count() == 1
+                && tree.root_node().named_child(0).is_some_and(|node| {
+                    node.kind() == "simple_symbol" && node.end_byte() == candidate.len()
+                })
+        })
+    {
         candidate
     } else {
         format!(":{}", ruby_string(value))

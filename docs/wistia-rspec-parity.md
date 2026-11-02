@@ -204,3 +204,31 @@ error remains in the invalid-originals fixture and it is not counted as parity.
 The upstream import now retains 553 specimens, with thirteen host-generated
 templates still explicitly unimported. Neither of these two rules autocorrects;
 the existing correction-disable count remains 26.
+
+## Batch 8: six existing implementations repaired
+
+BeEq, BeEql, BeNil, ClassCheck, NotToNot, and SingleArgumentMessageChain now pass
+the original-Ruby gate. Existing receiver/arity false positives, incorrect or
+missing offense ranges, bare-method omissions, BeEql's positive-expectation
+requirement, signed/quoted literal omissions and missing single-key-hash
+correction were repaired. Both style directions and unsafe correction metadata
+are exercised. The total is 51 original stubs plus seven existing implementations
+reviewed, leaving 29 original stubs and nine existing implementations open.
+
+The strict matrix has 836 cases across 58 reviewed rules, with 15 explicit safety
+differences separate. Three additional safeguards retain comments in BeNil and
+array-chain rewrites, and render quoted hash keys as valid inspected symbols
+rather than copying Ruby's invalid `receive(:hello world)` output. All safeguard
+cases now also check final offense state and idempotence. The standard disabled
+correction controls cover 32 capabilities. The pinned import contains 601
+specimens; thirteen generated templates and three invalid yield originals remain
+explicit limitations.
+
+Distinct source review covered exact send patterns, method/local-variable
+boundaries, literal-node classification and decoded-dot checks, hash response
+construction, receiver preservation and selector ranges. Additional formatter
+probes cover Unicode, NUL, DEL, and the Ruby special symbols `!@` and `~@`.
+The trusted chain replay proves that single-message hash/array chains and their
+corrected receive/and_return forms produce identical repeated responses for nil,
+integer and string values. This proves those ordinary RSpec scenarios, while
+unsafe BeEq/BeEql corrections still require `-A` as in original Ruby.

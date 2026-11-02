@@ -131,6 +131,26 @@ fn documented_safety_differences_preserve_source_or_correct_behavior() {
                 "{} must preserve source or original runtime behavior",
                 case["id"]
             );
+            let (_, final_diagnostics) = inspect(&case, &after, AutocorrectMode::Off);
+            let expected_final = if after == original {
+                case.get("rust_diagnostics")
+                    .unwrap_or(&case["reference"]["diagnostics"])
+                    .clone()
+            } else {
+                serde_json::json!([])
+            };
+            assert_eq!(
+                normalized(&final_diagnostics),
+                expected_final,
+                "{} guarded final offense state",
+                case["id"]
+            );
+            let (second, _) = inspect(&case, &after, mode);
+            assert_eq!(
+                after, second,
+                "{} guarded correction is idempotent",
+                case["id"]
+            );
         }
     }
 }
@@ -179,5 +199,5 @@ fn explicit_autocorrection_disable_preserves_sources() {
             assert!(!diagnostics.is_empty());
         }
     }
-    assert_eq!(checked.len(), 26);
+    assert_eq!(checked.len(), 32);
 }

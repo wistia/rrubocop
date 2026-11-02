@@ -522,5 +522,134 @@
       }
     },
     "safety_difference": "Sorting dynamic metadata changes evaluation order; preserve original expression order."
+  },
+  {
+    "id": "batch8:nil-receiver-arity",
+    "cop": "RSpec/BeNil",
+    "source": "object.be(nil)\nobject&.be(nil)\nbe(nil, true)\nbe(\n # preserve\n nil\n)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "object.be(nil)\nobject&.be(nil)\nbe(nil, true)\nbe(\n # preserve\n nil\n)\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 4,
+          "column": 0,
+          "message": "Prefer `be_nil` over `be(nil)`.",
+          "correctable": true,
+          "length": 3,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "object.be(nil)\nobject&.be(nil)\nbe(nil, true)\nbe_nil\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "object.be(nil)\nobject&.be(nil)\nbe(nil, true)\nbe_nil\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Retain source comments rather than deleting them during the original Ruby correction."
+  },
+  {
+    "id": "batch8:array-comments",
+    "cop": "RSpec/SingleArgumentMessageChain",
+    "source": "receive_message_chain([\n # preserve\n :one\n])\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "receive_message_chain([\n # preserve\n :one\n])\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive` instead of calling `receive_message_chain` with a single argument.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:one)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "receive(:one)\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    },
+    "safety_difference": "Retain source comments rather than deleting them during the original Ruby correction."
+  },
+  {
+    "id": "batch8:quoted-hash",
+    "cop": "RSpec/SingleArgumentMessageChain",
+    "source": "receive_message_chain(:\"hello world\" => 42)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "receive_message_chain(:\"hello world\" => 42)\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 1,
+          "column": 0,
+          "message": "Use `receive` instead of calling `receive_message_chain` with a single argument.",
+          "correctable": true,
+          "length": 21,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "receive(:hello world).and_return(42)\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | receive(:hello world).and_return(42)\n    |                ^~~~~ unexpected local variable or method, expecting end-of-input\n    |                ^~~~~ unexpected local variable or method; expected a `)` to close the arguments\n    |                     ^ unexpected ')', ignoring it\n    |                     ^ unexpected ')', expecting end-of-input\n    |                      ^ unexpected '.', ignoring it\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      },
+      "all": {
+        "source": "receive(:hello world).and_return(42)\n",
+        "compile": {
+          "valid": false,
+          "error": "probe.rb:1: syntax errors found\n> 1 | receive(:hello world).and_return(42)\n    |                ^~~~~ unexpected local variable or method, expecting end-of-input\n    |                ^~~~~ unexpected local variable or method; expected a `)` to close the arguments\n    |                     ^ unexpected ')', ignoring it\n    |                     ^ unexpected ')', expecting end-of-input\n    |                      ^ unexpected '.', ignoring it\n"
+        },
+        "diagnostics": [],
+        "hazard": "Original Ruby correction produces invalid syntax"
+      }
+    },
+    "safety_difference": "Original Ruby concatenates a quoted symbol value into invalid Ruby. Rust uses a valid inspected symbol preserving its value.",
+    "rust_safe": "receive(:\"hello world\").and_return(42)\n",
+    "rust_all": "receive(:\"hello world\").and_return(42)\n"
   }
 ]

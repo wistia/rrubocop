@@ -1,54 +1,26 @@
-//! RSpec/BeNil — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{argument_nodes, call_method_name, method_node, push_replace};
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::call_receiver;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct BeNil;
-
-fn be_nil_rewrite(
-    style: &str,
-    source: &SourceFile,
-    node: Node<'_>,
-) -> Option<(&'static str, &'static str)> {
-    let method = call_method_name(source, node)?;
-    if style == "be_nil" {
-        if method != b"be" {
-            return None;
-        }
-        let args = argument_nodes(node);
-        if args.len() != 1 || args[0].kind() != "nil" {
-            return None;
-        }
-        Some(("Prefer `be_nil` over `be(nil)`.", "be_nil"))
-    } else if method == b"be_nil" {
-        Some(("Prefer `be(nil)` over `be_nil`.", "be(nil)"))
-    } else {
-        None
-    }
-}
-
 impl Cop for BeNil {
     fn name(&self) -> &'static str {
         "RSpec/BeNil"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
     fn supports_autocorrect(&self) -> bool {
         true
     }
-
-    fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
-    }
-
     fn check_node(
         &self,
         source: &SourceFile,
@@ -57,27 +29,40 @@ impl Cop for BeNil {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some((msg, repl)) =
-            be_nil_rewrite(config.get_str("EnforcedStyle", "be_nil"), source, node)
-        else {
+        if safe_send(source, node) || call_receiver(node).is_some() {
+            return;
+        }
+        let args = call_args(node);
+        let style = config.get_str("EnforcedStyle", "be_nil");
+        let (message, replacement) = if style == "be_nil"
+            && name(source, node) == Some(b"be")
+            && args.len() == 1
+            && args[0].kind() == "nil"
+        {
+            ("Prefer `be_nil` over `be(nil)`.", "be_nil")
+        } else if style == "be" && name(source, node) == Some(b"be_nil") && args.is_empty() {
+            ("Prefer `be(nil)` over `be_nil`.", "be(nil)")
+        } else {
             return;
         };
-        let at = if repl == "be_nil" {
-            node
-        } else {
-            method_node(node).unwrap_or(node)
-        };
-        let (line, col) = source.offset_to_line_col(at.start_byte());
-        let mut diag = self.diagnostic(source, line, col, msg.into());
-        if push_replace(
+        let index = report(
+            self,
+            source,
+            node.start_byte(),
+            header_end(node),
+            message.into(),
+            diagnostics,
+        );
+        if preserving_replace(
+            source,
+            node,
             &mut corrections,
             node.start_byte(),
-            node.end_byte(),
-            repl,
+            header_end(node),
+            replacement,
             self.name(),
         ) {
-            diag.corrected = true;
+            diagnostics[index].corrected = true;
         }
-        diagnostics.push(diag);
     }
 }

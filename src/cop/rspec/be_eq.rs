@@ -1,84 +1,66 @@
-//! RSpec/BeEq — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{argument_nodes, call_method_name, method_node, push_replace};
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct BeEq;
-
-fn eq_bool_or_nil(source: &SourceFile, node: Node<'_>) -> bool {
-    call_method_name(source, node) == Some(b"eq")
-        && argument_nodes(node)
-            .first()
-            .is_some_and(|a| matches!(a.kind(), "true" | "false" | "nil"))
-}
-
-fn report_prefer_be(
-    cop: &dyn Cop,
-    source: &SourceFile,
-    node: Node<'_>,
-    msg: &str,
-    diagnostics: &mut Vec<Diagnostic>,
-    corrections: &mut Option<&mut Vec<Correction>>,
-) {
-    let meth = method_node(node).unwrap_or(node);
-    let (line, col) = source.offset_to_line_col(meth.start_byte());
-    let mut diag = cop.diagnostic(source, line, col, msg.into());
-    if push_replace(
-        corrections,
-        meth.start_byte(),
-        meth.end_byte(),
-        "be",
-        cop.name(),
-    ) {
-        diag.corrected = true;
-    }
-    diagnostics.push(diag);
-}
-
 impl Cop for BeEq {
     fn name(&self) -> &'static str {
         "RSpec/BeEq"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
     fn supports_autocorrect(&self) -> bool {
         true
     }
-
     fn safe_autocorrect(&self) -> bool {
         false
     }
-
-    fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "false", "nil", "true", "command"]
-    }
-
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        if !eq_bool_or_nil(source, node) {
+        let _ = config;
+        if safe_send(source, node) || !bare(source, node, b"eq") {
             return;
         }
-        report_prefer_be(
+        let args = call_args(node);
+        if args.len() != 1 || !matches!(args[0].kind(), "true" | "false" | "nil") {
+            return;
+        }
+        let matcher = node;
+        let message = "Prefer `be` over `eq`.".into();
+        let replacement = "be";
+        let target = selector(matcher);
+        let index = report(
             self,
             source,
-            node,
-            "Prefer `be` over `eq`.",
+            target.start_byte(),
+            target.end_byte(),
+            message,
             diagnostics,
-            &mut corrections,
         );
+        if preserving_replace(
+            source,
+            matcher,
+            &mut corrections,
+            target.start_byte(),
+            target.end_byte(),
+            replacement,
+            self.name(),
+        ) {
+            diagnostics[index].corrected = true;
+        }
     }
 }

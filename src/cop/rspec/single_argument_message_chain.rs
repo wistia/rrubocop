@@ -1,148 +1,168 @@
-//! RSpec/SingleArgumentMessageChain — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{argument_nodes, call_method_name, method_node, node_text, push_replace};
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::node_text;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
+
+fn literal_argument(source: &SourceFile, node: Node<'_>) -> bool {
+    matches!(
+        node.kind(),
+        "string"
+            | "chained_string"
+            | "subshell"
+            | "integer"
+            | "float"
+            | "simple_symbol"
+            | "delimited_symbol"
+            | "true"
+            | "false"
+            | "nil"
+            | "regex"
+            | "range"
+            | "heredoc_beginning"
+    ) || node.kind() == "unary" && integer_value(source, node).is_some()
+}
+fn literal_contains_dot(source: &SourceFile, node: Node<'_>) -> bool {
+    let mut pending = vec![node];
+    while let Some(child) = pending.pop() {
+        if child.kind() == "string_content" && node_text(source, child).contains('.')
+            || child.kind() == "float"
+            || crate::cop::ported::static_literal(source, child)
+                .is_some_and(|value| value.contains('.'))
+        {
+            return true;
+        }
+        pending.extend(code_children(child));
+    }
+    false
+}
 
 pub struct SingleArgumentMessageChain;
-
-fn chain_prefer(method: &[u8]) -> Option<&'static str> {
-    match method {
-        b"receive_message_chain" => Some("receive"),
-        b"stub_chain" => Some("stub"),
-        _ => None,
-    }
-}
-
-fn named_count(node: Node<'_>, kind: Option<&str>) -> usize {
-    let mut cur = node.walk();
-    node.named_children(&mut cur)
-        .filter(|n| kind.is_none_or(|k| n.kind() == k))
-        .count()
-}
-
-fn single_message_arg(source: &SourceFile, arg: Node<'_>) -> bool {
-    if matches!(
-        arg.kind(),
-        "string" | "string_content" | "interpolated_string"
-    ) && node_text(source, arg).contains('.')
-    {
-        return false;
-    }
-    match arg.kind() {
-        "array" => named_count(arg, None) == 1,
-        "hash" => named_count(arg, Some("pair")) == 1,
-        _ => true,
-    }
-}
-
-fn single_chain_arg<'a, 't>(
-    source: &'a SourceFile,
-    node: Node<'t>,
-) -> Option<(&'static str, &'a [u8], Node<'t>)> {
-    let method = call_method_name(source, node)?;
-    let prefer = chain_prefer(method)?;
-    let args = argument_nodes(node);
-    if args.len() != 1 || !single_message_arg(source, args[0]) {
-        return None;
-    }
-    Some((prefer, method, args[0]))
-}
-
-fn unwrap_array_arg(
-    source: &SourceFile,
-    arg: Node<'_>,
-    corrections: &mut Option<&mut Vec<Correction>>,
-    cop_name: &'static str,
-) {
-    if arg.kind() != "array" {
-        return;
-    }
-    let mut cur = arg.walk();
-    if let Some(inner) = arg.named_children(&mut cur).next() {
-        push_replace(
-            corrections,
-            arg.start_byte(),
-            arg.end_byte(),
-            node_text(source, inner),
-            cop_name,
-        );
-    }
-}
-
-fn report_chain(
-    cop: &dyn Cop,
-    source: &SourceFile,
-    node: Node<'_>,
-    prefer: &str,
-    method: &[u8],
-    arg: Node<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
-    corrections: &mut Option<&mut Vec<Correction>>,
-) {
-    let current = std::str::from_utf8(method).unwrap_or("");
-    let meth = method_node(node).unwrap_or(node);
-    let (line, col) = source.offset_to_line_col(meth.start_byte());
-    let mut diag = cop.diagnostic(
-        source,
-        line,
-        col,
-        format!("Use `{prefer}` instead of calling `{current}` with a single argument."),
-    );
-    if push_replace(
-        corrections,
-        meth.start_byte(),
-        meth.end_byte(),
-        prefer,
-        cop.name(),
-    ) {
-        unwrap_array_arg(source, arg, corrections, cop.name());
-        diag.corrected = true;
-    }
-    diagnostics.push(diag);
-}
-
 impl Cop for SingleArgumentMessageChain {
     fn name(&self) -> &'static str {
         "RSpec/SingleArgumentMessageChain"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
     fn supports_autocorrect(&self) -> bool {
         true
     }
-
-    fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["array", "call", "string", "symbol", "command"]
-    }
-
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some((prefer, method, arg)) = single_chain_arg(source, node) else {
+        let _ = config;
+        if safe_send(source, node) {
+            return;
+        }
+        let Some(method) = name(source, node) else {
             return;
         };
-        report_chain(
+        let replacement = match method {
+            b"receive_message_chain" => "receive",
+            b"stub_chain" => "stub",
+            _ => return,
+        };
+        let args = call_args(node);
+        if args.len() != 1 {
+            return;
+        }
+        let argument = args[0];
+        let pair = if argument.kind() == "pair" {
+            Some(argument)
+        } else if argument.kind() == "hash" {
+            let pairs = code_children(argument);
+            if pairs.len() != 1 || pairs[0].kind() != "pair" {
+                return;
+            }
+            Some(pairs[0])
+        } else {
+            None
+        };
+        let array = argument.kind() == "array";
+        if array && code_children(argument).len() != 1 {
+            return;
+        }
+        if pair.is_none()
+            && !array
+            && (!literal_argument(source, argument) || literal_contains_dot(source, argument))
+        {
+            return;
+        }
+        let target = selector(node);
+        let message = format!(
+            "Use `{replacement}` instead of calling `{}` with a single argument.",
+            String::from_utf8_lossy(method)
+        );
+        let index = report(
             self,
             source,
-            node,
-            prefer,
-            method,
-            arg,
+            target.start_byte(),
+            target.end_byte(),
+            message,
             diagnostics,
-            &mut corrections,
         );
+        let mut edits = vec![(
+            target.start_byte(),
+            target.end_byte(),
+            replacement.to_string(),
+        )];
+        if let Some(pair) = pair {
+            let Some(key) = pair.child_by_field_name("key") else {
+                return;
+            };
+            let Some(value) = pair.child_by_field_name("value") else {
+                return;
+            };
+            let key = if symbol_node(key) || key.kind() == "hash_key_symbol" {
+                crate::cop::ported::static_literal(source, key)
+                    .map(|value| ruby_symbol(&value))
+                    .unwrap_or_else(|| node_text(source, key))
+            } else {
+                node_text(source, key)
+            };
+            edits.push((argument.start_byte(), argument.end_byte(), key));
+            edits.push((
+                header_end(node),
+                header_end(node),
+                format!(".and_return({})", node_text(source, value)),
+            ));
+        } else if array {
+            edits.push((
+                argument.start_byte(),
+                argument.end_byte(),
+                node_text(source, code_children(argument)[0]),
+            ));
+        }
+        let start = node.start_byte();
+        let end = header_end(node);
+        let mut text = node_text(source, node);
+        text.truncate(end - start);
+        edits.sort_by_key(|edit| std::cmp::Reverse(edit.0));
+        for (first, last, replacement) in edits {
+            text.replace_range(first - start..last - start, &replacement);
+        }
+        if preserving_replace(
+            source,
+            node,
+            &mut corrections,
+            start,
+            end,
+            text,
+            self.name(),
+        ) {
+            diagnostics[index].corrected = true;
+        }
     }
 }
