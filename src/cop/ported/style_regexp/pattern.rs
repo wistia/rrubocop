@@ -12,7 +12,7 @@ pub(super) struct Pattern<'a> {
     pub offset: usize,
     pub extended: bool,
     pub delimiters: [char; 2],
-    interpolations: Vec<(usize, usize)>,
+    pub(super) interpolations: Vec<(usize, usize)>,
     analysis: Arc<Analysis>,
 }
 impl<'a> Pattern<'a> {
@@ -51,7 +51,7 @@ impl<'a> Pattern<'a> {
                 .get_or_init(|| scanner::captures(self.text, self.extended, &self.interpolations))
         })
     }
-    fn tokens(&self) -> &[scanner::Token] {
+    pub(super) fn tokens(&self) -> &[scanner::Token] {
         self.analysis
             .tokens
             .get_or_init(|| scanner::scan(self.text, self.extended, &self.interpolations))

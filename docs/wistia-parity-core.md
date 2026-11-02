@@ -47,3 +47,45 @@ regressions under both `-a` and `-A` (22 checks), with 22 unchanged second-pass
 idempotence checks. Highlight lengths are compared for the captured original
 spec cases as well as messages and starting locations. The source review and
 131-case replay were performed separately before this batch was committed.
+
+## Standard Style stubs and MixedCaseRange
+
+The second batch implements three previously empty Style registrations:
+`DateTime`, `DirEmpty`, and `RedundantCurrentDirectoryInPath`. It also implements
+regexp detection and unsafe correction in `Lint/MixedCaseRange`, which previously
+only inspected string range objects and missed the repository's actual regexp
+finding.
+
+Each corresponding `rubocop-1.65.1/lib/rubocop/cop/{style,lint}/<name>.rb` was
+reviewed independently, followed by the unmodified original upstream spec at
+`rubocop/rubocop@v1.65.1/spec/rubocop/cop/{style,lint}/<name>_spec.rb`. The original
+spec results are 12 DateTime, 16 DirEmpty, 9 current-directory, and 30 mixed-case
+examples, all passing in Ruby. Independent probes add namespace, safe-navigation,
+block, comment, Unicode, decoded-character, numeric-radix, and escape-boundary
+coverage. Current captured source/config replay counts are 26, 33, 19, and 52
+respectively. They compare diagnostic messages, locations/highlight lengths and
+one-pass corrected bytes. Already-corrected states are retained as negative
+controls.
+
+DateTime's replacements and MixedCaseRange's regexp replacements remain unsafe
+(`-A` only by default), exactly as the original rule metadata specifies.
+DateTime coercion offenses and MixedCaseRange string-range offenses are reported
+without pretending to offer a correction. The class/date historical exception,
+AllowCoercion, target Ruby minimum for DirEmpty, escaped range endpoints and
+mixed/nested/interpolated regexp character sets are explicitly covered.
+
+The source review additionally found two unsafe upstream corrections. These
+are explicitly different safeguards, not hidden parity exceptions:
+
+- `Dir.children( # keep\n path).empty?` is diagnosed by both engines. Ruby deletes
+  the comment; Rust keeps the diagnosis but withholds that correction. Rust also
+  preserves raw argument bytes using two surrounding edits rather than rebuilding
+  arbitrary path arguments through UTF-8 strings.
+- For `require_relative "\x2e/foo/./bar"`, Ruby's search for the first literal
+  `./` targets a later path segment even though the leading `./` is encoded. Rust
+  detects the same range but withholds a correction unless the decoded literal
+  value proves that deleting that exact source span removes the intended prefix.
+
+The actual Wistia `stats_helper.rb:470` regexp is now flagged with Ruby's same
+message, warning severity, starting location and three-character highlight.
+The fork deliberately does not emulate Ruby's mutation of shared regexp trees.

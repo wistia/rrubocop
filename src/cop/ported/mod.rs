@@ -243,3 +243,15 @@ mod tests;
 
 #[cfg(test)]
 mod diagnostic_tests;
+
+pub(super) fn mixed_case_regexp_ranges(source: &SourceFile, node: Node<'_>) -> Vec<(usize, usize)> {
+    style_regexp::mixed_case_ranges(&Context::new(source, &CopConfig::default()), node)
+}
+
+pub(super) fn static_ruby_string(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    let context = Context::new(source, &config);
+    context
+        .ruby_static_string(node)
+        .map(|value| value.into_owned())
+}

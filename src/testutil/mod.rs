@@ -1,6 +1,7 @@
 //! Cop fixture helpers (nitrocop-compatible `^` annotations).
 
 mod assert;
+mod original_spec;
 mod parse;
 mod run;
 
@@ -8,6 +9,7 @@ pub use assert::{
     assert_cop_no_offenses_full, assert_cop_no_offenses_full_with_config, assert_cop_offenses_full,
     assert_cop_offenses_full_with_config,
 };
+pub use original_spec::assert_original_spec_parity;
 pub use parse::{ExpectedOffense, ParsedFixture, parse_fixture};
 pub use run::{run_cop_full, run_cop_full_internal, run_cop_full_with_config};
 

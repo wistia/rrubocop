@@ -116,3 +116,9 @@ pub(super) fn capture_counts(c: &Context<'_>, n: Node<'_>) -> Option<(usize, usi
     }
     Pattern::new(c, n)?.captures()
 }
+
+mod mixed_ranges;
+
+pub(super) fn mixed_case_ranges(c: &Context<'_>, node: Node<'_>) -> Vec<(usize, usize)> {
+    mixed_ranges::ranges(c, node)
+}

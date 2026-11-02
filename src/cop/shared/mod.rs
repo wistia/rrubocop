@@ -1,6 +1,8 @@
 //! Shared tree-sitter helpers for cops (nitrocop-inspired, AST-adapted).
 
 mod bare_args;
+mod integer;
+pub use integer::integer_value;
 mod block_pass;
 mod node_util;
 
@@ -112,6 +114,14 @@ pub fn argument_nodes<'a>(node: Node<'a>) -> Vec<Node<'a>> {
             .collect();
     }
     Vec::new()
+}
+
+/// Call arguments excluding comment trivia.
+pub fn semantic_argument_nodes(node: Node<'_>) -> Vec<Node<'_>> {
+    argument_nodes(node)
+        .into_iter()
+        .filter(|argument| argument.kind() != "comment")
+        .collect()
 }
 
 /// Walk all descendants, invoking `f` on each.

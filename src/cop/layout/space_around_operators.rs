@@ -389,7 +389,6 @@ impl Cop for SpaceAroundOperators {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::correction::CorrectionSet;
 
     #[test]
     fn resolves_sibling_operator_spacing_options() {
@@ -404,64 +403,12 @@ mod tests {
 
     #[test]
     fn matches_ruby_operator_regressions_without_source_loss() {
-        let cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/tests/fixtures/cops/layout/space_around_operators/parity.json"
-        )))
-        .unwrap();
-        let mut failures = Vec::new();
-        for case in cases.as_array().unwrap() {
-            let original = case["original"].as_str().unwrap();
-            let source = SourceFile::from_bytes("test.rb", original.as_bytes().to_vec());
-            let tree = crate::parse::parse_ruby(&source).unwrap();
-            let map = CodeMap::from_tree(tree.root_node(), source.as_bytes());
-            let mut diagnostics = Vec::new();
-            let mut corrections = Vec::new();
-            SpaceAroundOperators.check_source(
-                &source,
-                &tree,
-                &map,
-                &CopConfig {
-                    options: case["config"]
-                        .as_object()
-                        .map(|object| {
-                            object
-                                .iter()
-                                .map(|(k, v)| (k.clone(), serde_yml::to_value(v).unwrap()))
-                                .collect()
-                        })
-                        .unwrap_or_default(),
-                    ..CopConfig::default()
-                },
-                &mut diagnostics,
-                Some(&mut corrections),
-            );
-            diagnostics
-                .sort_by_key(|diagnostic| (diagnostic.location.line, diagnostic.location.column));
-            let expected = case["ruby_diagnostics"].as_array().unwrap();
-            let actual: Vec<_> = diagnostics
-                .iter()
-                .map(|diagnostic| {
-                    serde_json::json!({
-                        "line": diagnostic.location.line, "column": diagnostic.location.column + 1,
-                        "message": diagnostic.message, "length": diagnostic.highlight_length
-                    })
-                })
-                .collect();
-            let expected: Vec<_> = expected.iter().map(|diagnostic| serde_json::json!({
-                "line": diagnostic["line"], "column": diagnostic["column"], "message": diagnostic["message"], "length": diagnostic["length"]
-            })).collect();
-            let corrected = CorrectionSet::from_vec(corrections).apply(original.as_bytes());
-            if actual != expected || corrected != case["ruby_safe"].as_str().unwrap().as_bytes() {
-                failures.push(format!("{}\nsource: {:?}\nactual: {:?}\nexpected: {:?}\ncorrected: {:?}\nexpected correction: {:?}", case["id"], original, actual, expected, String::from_utf8_lossy(&corrected), case["ruby_safe"]));
-            }
-        }
-        assert!(
-            failures.is_empty(),
-            "{} / {} cases failed:\n{}",
-            failures.len(),
-            cases.as_array().unwrap().len(),
-            failures.join("\n\n")
+        crate::testutil::assert_original_spec_parity(
+            &SpaceAroundOperators,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/layout/space_around_operators/parity.json"
+            )),
         );
     }
 }
