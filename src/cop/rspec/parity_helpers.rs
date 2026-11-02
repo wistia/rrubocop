@@ -423,10 +423,7 @@ pub(super) fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'
         return false;
     }
     if left.kind() == "regex" {
-        return match (regex_value(source, left), regex_value(source, right)) {
-            (Some(a), Some(b)) => a == b,
-            _ => node_bytes(source, left) == node_bytes(source, right),
-        };
+        return same_regex(source, left, right);
     }
     if left.kind() == "float" {
         return String::from_utf8_lossy(node_bytes(source, left))
@@ -812,18 +809,62 @@ fn rational_value(
     Some((numerator / &a, denominator / a))
 }
 
-fn regex_value(source: &SourceFile, node: Node<'_>) -> Option<(Vec<u8>, Vec<u8>)> {
-    let parts = code_children(node);
-    if parts.iter().any(|part| part.kind() == "interpolation") {
-        return None;
+enum RegexPart<'a> {
+    Text(Vec<u8>),
+    Expression(Node<'a>),
+}
+fn regex_parts<'a>(source: &SourceFile, node: Node<'a>) -> Option<(Vec<RegexPart<'a>>, Vec<u8>)> {
+    let mut parts = Vec::new();
+    let mut content = Vec::new();
+    let opening = node
+        .child(0)
+        .and_then(|opener| node_bytes(source, opener).last().copied())?;
+    let closing = match opening {
+        b'(' => b')',
+        b'[' => b']',
+        b'{' => b'}',
+        b'<' => b'>',
+        other => other,
+    };
+    for child in code_children(node) {
+        if child.kind() == "interpolation" {
+            if !content.is_empty() {
+                parts.push(RegexPart::Text(std::mem::take(&mut content)));
+            }
+            parts.push(RegexPart::Expression(child));
+        } else {
+            let bytes = node_bytes(source, child);
+            if child.kind() == "escape_sequence"
+                && bytes.len() == 2
+                && bytes[0] == b'\\'
+                && (bytes[1] == opening || bytes[1] == closing)
+            {
+                content.push(bytes[1]);
+            } else {
+                content.extend_from_slice(bytes);
+            }
+        }
     }
-    let content = parts
-        .iter()
-        .flat_map(|part| node_bytes(source, *part).iter().copied())
-        .collect();
+    if !content.is_empty() {
+        parts.push(RegexPart::Text(content));
+    }
     let last = node.child(node.child_count().checked_sub(1)?.try_into().ok()?)?;
     let mut options = node_bytes(source, last).get(1..)?.to_vec();
     options.sort_unstable();
     options.dedup();
-    Some((content, options))
+    Some((parts, options))
+}
+fn same_regex(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
+    let (Some((a, flags_a)), Some((b, flags_b))) =
+        (regex_parts(source, left), regex_parts(source, right))
+    else {
+        return node_bytes(source, left) == node_bytes(source, right);
+    };
+    flags_a == flags_b
+        && a.len() == b.len()
+        && a.iter().zip(&b).all(|(a, b)| match (a, b) {
+            (RegexPart::Text(a), RegexPart::Text(b)) => a == b,
+            (RegexPart::Expression(a), RegexPart::Expression(b)) => same_expression(source, *a, *b),
+            _ => false,
+        })
 }

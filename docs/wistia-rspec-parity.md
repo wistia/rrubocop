@@ -283,3 +283,10 @@ while normalizing their order and delimiters, matching /a/im versus /a/mi and /a
 versus %r(a). These concrete branches pass the original engine; dynamic regex
 interpolation remains conservatively compared and broader AST equality is still
 a documented finite-evidence boundary for future shared-helper consolidation.
+
+The follow-up regex review closes the specific dynamic-interpolation boundary
+identified in batch 10. Original Ruby confirms repeated bodies using
+/#{pattern}/ versus %r(#{pattern}) and /a\/b/ versus %r(a/b). The comparator now
+compares interpolated expression nodes structurally and removes only escaped
+literal delimiters; distinct /i and /m flags remain distinct. Three more strict
+cases bring the matrix to 968 comparisons across the same 63 reviewed rules.

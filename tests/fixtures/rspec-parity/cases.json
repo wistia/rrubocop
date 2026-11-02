@@ -46455,5 +46455,200 @@
         ]
       }
     }
+  },
+  {
+    "id": "regex-review:dynamic-regex",
+    "cop": "RSpec/RepeatedExample",
+    "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/#{pattern}/) }\n  it(\"two\") { expect(x).to match(%r(#{pattern})) }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/#{pattern}/) }\n  it(\"two\") { expect(x).to match(%r(#{pattern})) }\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat examples within an example group.",
+          "correctable": false,
+          "length": 46,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Don't repeat examples within an example group.",
+          "correctable": false,
+          "length": 48,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/#{pattern}/) }\n  it(\"two\") { expect(x).to match(%r(#{pattern})) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat examples within an example group.",
+            "correctable": false,
+            "length": 46,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat examples within an example group.",
+            "correctable": false,
+            "length": 48,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/#{pattern}/) }\n  it(\"two\") { expect(x).to match(%r(#{pattern})) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat examples within an example group.",
+            "correctable": false,
+            "length": 46,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat examples within an example group.",
+            "correctable": false,
+            "length": 48,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "regex-review:escaped-delimiter",
+    "cop": "RSpec/RepeatedExample",
+    "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/a\\/b/) }\n  it(\"two\") { expect(x).to match(%r(a/b)) }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/a\\/b/) }\n  it(\"two\") { expect(x).to match(%r(a/b)) }\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [
+        {
+          "line": 2,
+          "column": 2,
+          "message": "Don't repeat examples within an example group.",
+          "correctable": false,
+          "length": 40,
+          "severity": "convention"
+        },
+        {
+          "line": 3,
+          "column": 2,
+          "message": "Don't repeat examples within an example group.",
+          "correctable": false,
+          "length": 41,
+          "severity": "convention"
+        }
+      ],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/a\\/b/) }\n  it(\"two\") { expect(x).to match(%r(a/b)) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat examples within an example group.",
+            "correctable": false,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat examples within an example group.",
+            "correctable": false,
+            "length": 41,
+            "severity": "convention"
+          }
+        ]
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/a\\/b/) }\n  it(\"two\") { expect(x).to match(%r(a/b)) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": [
+          {
+            "line": 2,
+            "column": 2,
+            "message": "Don't repeat examples within an example group.",
+            "correctable": false,
+            "length": 40,
+            "severity": "convention"
+          },
+          {
+            "line": 3,
+            "column": 2,
+            "message": "Don't repeat examples within an example group.",
+            "correctable": false,
+            "length": 41,
+            "severity": "convention"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "regex-review:different-flags",
+    "cop": "RSpec/RepeatedExample",
+    "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/a/i) }\n  it(\"two\") { expect(x).to match(/a/m) }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {},
+    "expected": [],
+    "corrected": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/a/i) }\n  it(\"two\") { expect(x).to match(/a/m) }\nend\n",
+    "origin": "reference",
+    "reference": {
+      "original_compile": {
+        "valid": true
+      },
+      "diagnostics": [],
+      "native_compile": {},
+      "safe": {
+        "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/a/i) }\n  it(\"two\") { expect(x).to match(/a/m) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      },
+      "all": {
+        "source": "describe \"x\" do\n  it(\"one\") { expect(x).to match(/a/i) }\n  it(\"two\") { expect(x).to match(/a/m) }\nend\n",
+        "compile": {
+          "valid": true
+        },
+        "diagnostics": []
+      }
+    }
   }
 ]
