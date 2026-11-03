@@ -26,9 +26,19 @@ pub(crate) struct InheritMode {
     pub(crate) override_keys: HashSet<String>,
 }
 
+/// Raw flags preserve explicit nulls and section order before defaults merge.
+#[derive(Debug, Clone)]
+pub(crate) struct SafetySettings {
+    pub(crate) section: String,
+    pub(crate) safe: Option<serde_yml::Value>,
+    pub(crate) safe_autocorrect: Option<serde_yml::Value>,
+}
+
 /// A single parsed config layer (before merging).
 #[derive(Debug, Clone)]
 pub(crate) struct ConfigLayer {
+    /// User/inherited settings; required gem defaults do not propagate here.
+    pub(crate) validation_safety: Vec<SafetySettings>,
     pub(crate) cop_configs: HashMap<String, CopConfig>,
     pub(crate) department_configs: HashMap<String, DepartmentConfig>,
     pub(crate) global_excludes: Vec<String>,
@@ -57,6 +67,7 @@ pub(crate) struct ConfigLayer {
 impl ConfigLayer {
     pub(crate) fn empty() -> Self {
         Self {
+            validation_safety: Vec::new(),
             cop_configs: HashMap::new(),
             department_configs: HashMap::new(),
             global_excludes: Vec::new(),

@@ -223,6 +223,7 @@ fn build_layer_from_raw(
         )?;
     }
     merge_local_layer(&mut base_layer, raw);
+    super::safety::validate(&base_layer.validation_safety, config_path)?;
     if export_own_inherit_mode {
         base_layer.inherit_mode = own_mode;
     }

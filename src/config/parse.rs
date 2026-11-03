@@ -11,6 +11,9 @@ pub(crate) fn parse_config_layer(raw: &Value) -> ConfigLayer {
     if let Value::Mapping(map) = raw {
         for (key, value) in map {
             if let Some(key_str) = key.as_str() {
+                if let Some(settings) = super::safety::capture(key_str, value) {
+                    layer.validation_safety.push(settings);
+                }
                 apply_layer_entry(&mut layer, key_str, value);
             }
         }
