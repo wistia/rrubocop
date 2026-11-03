@@ -2,7 +2,6 @@
   "branch": "feat/wistia-parity-integrated",
   "base": "0296d3c894e5decf8fcc800b6c72c7f3b0febd65",
   "recorded_at_utc": "2026-11-03T07:42:29.556821+00:00",
-  "validated_source_commit": "f53965625b703b92840d39dda09b6c5931d4e4ec",
   "snapshot_state": "merged_pending_integrated_validation",
   "source_snapshots": {
     "core": "63719171c3849fb294a020a2966350c923270ee2",
@@ -41,10 +40,13 @@
       "latest_numeric_prerequisite_check": "test_build_passed; non-test rerun pending"
     },
     "full_native": {
-      "status": "running",
-      "observed_failures": [
-        "cop::rspec::parity_tests::documented_safety_differences_preserve_source_or_correct_behavior"
-      ],
+      "status": "rerun_pending",
+      "first_run": {
+        "passed": 1080,
+        "failed": 4,
+        "ignored": 1,
+        "cause": "RSpec legacy numbered-block scan treated cached local identifiers as bare method names"
+      },
       "artifact": "/dev/shm/rrubocop-integrated-native-first.log"
     },
     "fresh_family_differentials": {
@@ -55,11 +57,28 @@
     },
     "registry_stub_inventory": {
       "status": "pending"
+    },
+    "rspec_focused_after_fix": {
+      "status": "passed",
+      "tests": 49,
+      "strict_original_fixtures": 1936,
+      "documented_guard_fixtures": 211,
+      "fixture_expectations_changed": false,
+      "artifact": "/dev/shm/rrubocop-integrated-rspec-after-binding.log"
     }
   },
   "branch_reports_are_not_integrated_validation": true,
   "open_limits": [
     "Original parser/safety gaps remain explicit in source family reports.",
     "Generic combined-cop autocorrection scheduling remains user-deferred."
+  ],
+  "source_commit_under_validation": "ddc2592a02416234dd7ee899030e3d54eb73eac0",
+  "integration_fixes": [
+    {
+      "commit": "ddc2592a02416234dd7ee899030e3d54eb73eac0",
+      "path": "src/cop/rspec/separation.rs",
+      "change": "delegate numbered-block classification to existing cached numbered_bindings API",
+      "preserved": "new Core model, local binding identity, synthetic-read filtering and all per-cop runtime guards"
+    }
   ]
 }

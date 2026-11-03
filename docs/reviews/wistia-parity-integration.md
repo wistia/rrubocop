@@ -18,3 +18,10 @@ Shared resolution preserves the newer AST/typed-literal APIs and golden unions,
 Core decoder wrappers, synthetic-read filtering plus cached binding identities,
 RSpec heredoc/inspect APIs, original Team/gem/global/schema harness contexts,
 all source/runtime safeguards and the user-deferred scheduling boundary.
+
+The first full run completed 1,080 tests and exposed four RSpec failures from one
+shared-model interaction: the old lexical numbered-block scan depended on bare
+method classification. It now uses existing cached numbered binding metadata.
+All 49 focused RSpec tests pass, including the strict original and safeguard
+corpora, with no fixture expectation changes. Full-suite rerun and fresh original
+reference regeneration remain pending.
