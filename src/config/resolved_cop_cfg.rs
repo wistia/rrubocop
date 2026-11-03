@@ -72,11 +72,18 @@ impl ResolvedConfig {
         ) {
             return;
         }
-        if name != "Style/TrailingBodyOnMethodDefinition"
-            && config
-                .options
-                .get("IndentationWidth")
-                .is_some_and(|value| value.as_u64().is_some())
+        let own_width = config.options.get("IndentationWidth");
+        if name == "Lint/ElseLayout" {
+            if own_width.is_some_and(|value| {
+                !matches!(
+                    value,
+                    serde_yml::Value::Null | serde_yml::Value::Bool(false)
+                )
+            }) {
+                return;
+            }
+        } else if name != "Style/TrailingBodyOnMethodDefinition"
+            && own_width.is_some_and(|value| value.as_u64().is_some())
         {
             return;
         }

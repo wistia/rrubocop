@@ -45,6 +45,21 @@ fn candidate(mut conditional: Node<'_>) -> Option<(Node<'_>, Node<'_>, Node<'_>)
     }
 }
 
+fn indentation_width(config: &CopConfig) -> Option<usize> {
+    match config.options.get("IndentationWidth") {
+        None | Some(serde_yml::Value::Null | serde_yml::Value::Bool(false)) => Some(2),
+        Some(serde_yml::Value::Number(number)) => {
+            if let Some(integer) = number.as_u64() {
+                return usize::try_from(integer).ok();
+            }
+            let integer = number.as_f64()?.trunc();
+            (integer.is_finite() && integer >= 0.0 && integer < usize::MAX as f64)
+                .then_some(integer as usize)
+        }
+        _ => None,
+    }
+}
+
 impl Cop for ElseLayout {
     fn name(&self) -> &'static str {
         "Lint/ElseLayout"
@@ -96,10 +111,12 @@ impl Cop for ElseLayout {
                 .chars()
                 .count();
             let prefix = &source.as_bytes()[keyword.end_byte()..first.start_byte()];
-            let indentation = source
-                .offset_to_line_col(conditional.start_byte())
-                .1
-                .checked_add(config.get_usize("IndentationWidth", 2));
+            let indentation = indentation_width(config).and_then(|width| {
+                source
+                    .offset_to_line_col(conditional.start_byte())
+                    .1
+                    .checked_add(width)
+            });
             diagnostic.correctable = valid
                 && indentation.is_some()
                 && prefix
@@ -212,5 +229,55 @@ mod tests {
             env!("CARGO_MANIFEST_DIR"),
             "/tests/fixtures/cops/lint/else_layout/original-independent.json"
         )));
+    }
+    #[test]
+    fn original_numeric_width_coercions() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/lint/else_layout/original-widths.json"
+        )));
+    }
+    #[test]
+    fn original_invalid_width_errors_decline_native_edits() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/docs/evidence/else-layout-original-invalid-widths.json"
+        )))
+        .unwrap();
+        for case in cases.as_array().unwrap() {
+            assert!(case.get("ruby_cop_error").is_some(), "{}", case["id"]);
+            let source = SourceFile::from_bytes(
+                "probe.rb",
+                case["original"].as_str().unwrap().as_bytes().to_vec(),
+            );
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(!tree.root_node().has_error(), "{}", case["id"]);
+            let config = CopConfig {
+                options: [(
+                    "IndentationWidth".into(),
+                    serde_yml::to_value(&case["effective_indentation_width"]).unwrap(),
+                )]
+                .into_iter()
+                .collect(),
+                ..Default::default()
+            };
+            let mut diagnostics = Vec::new();
+            let mut edits = Vec::new();
+            ElseLayout.check_source(
+                &source,
+                &tree,
+                &CodeMap::default(),
+                &config,
+                &mut diagnostics,
+                Some(&mut edits),
+            );
+            assert_eq!(diagnostics.len(), 1, "{}", case["id"]);
+            assert!(
+                !diagnostics[0].correctable && !diagnostics[0].corrected,
+                "{}",
+                case["id"]
+            );
+            assert!(edits.is_empty(), "{}", case["id"]);
+        }
     }
 }
