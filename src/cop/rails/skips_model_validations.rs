@@ -2,7 +2,9 @@
 
 use tree_sitter::Node;
 
-use crate::cop::shared::{argument_nodes, call_method_name, call_receiver, node_bytes};
+use crate::cop::shared::ruby_arguments::{Argument, arguments};
+use crate::cop::shared::ruby_expression::{plain_symbol, regular_send_name, send_name};
+use crate::cop::shared::{call_receiver, method_node, node_bytes};
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
@@ -37,7 +39,12 @@ fn in_list(config: &CopConfig, key: &str, name: &str) -> bool {
 }
 
 fn forbidden(config: &CopConfig, name: &str) -> bool {
-    if config.options.contains_key("Blacklist") {
+    if config.options.get("Blacklist").is_some_and(|value| {
+        !matches!(
+            value,
+            serde_yml::Value::Null | serde_yml::Value::Bool(false)
+        )
+    }) {
         return in_list(config, "Blacklist", name);
     }
     if config.options.contains_key("ForbiddenMethods") {
@@ -47,7 +54,12 @@ fn forbidden(config: &CopConfig, name: &str) -> bool {
 }
 
 fn allowed(config: &CopConfig, name: &str) -> bool {
-    if config.options.contains_key("Whitelist") {
+    if config.options.get("Whitelist").is_some_and(|value| {
+        !matches!(
+            value,
+            serde_yml::Value::Null | serde_yml::Value::Bool(false)
+        )
+    }) {
         return in_list(config, "Whitelist", name);
     }
     in_list(config, "AllowedMethods", name)
@@ -67,86 +79,31 @@ fn file_utils(source: &SourceFile, node: Node<'_>) -> bool {
 }
 
 fn good_touch(source: &SourceFile, node: Node<'_>, name: &str) -> bool {
-    if name != "touch" {
+    if name != "touch" || regular_send_name(source, node).is_none() {
         return false;
     }
     if call_receiver(node).is_some_and(|r| file_utils(source, r)) {
         return true;
     }
-    let args = argument_nodes(node);
-    args.len() == 1 && matches!(args[0].kind(), "true" | "false")
+    let args = arguments(node);
+    args.len() == 1
+        && args[0]
+            .node()
+            .is_some_and(|node| matches!(node.kind(), "true" | "false"))
 }
-
-fn sym_key<'a>(source: &'a SourceFile, pair: Node<'_>) -> Option<&'a str> {
-    let key = pair.child_by_field_name("key")?;
-    if !matches!(
-        key.kind(),
-        "simple_symbol" | "symbol" | "hash_key_symbol" | "identifier"
-    ) {
-        return None;
-    }
-    let text = std::str::from_utf8(node_bytes(source, key)).ok()?;
-    Some(text.trim_start_matches(':').trim_end_matches(':'))
-}
-
-fn other_symbol(source: &SourceFile, pair: Node<'_>) -> bool {
-    !matches!(
-        sym_key(source, pair),
-        None | Some("returning" | "unique_by")
-    )
-}
-
-fn hash_pairs<'a>(hash: Node<'a>) -> Vec<Node<'a>> {
-    let mut cur = hash.walk();
-    hash.named_children(&mut cur)
-        .filter(|c| c.kind() == "pair")
-        .collect()
-}
-
-fn second_arg_ok(source: &SourceFile, node: Node<'_>) -> bool {
-    node.kind() != "hash" || hash_pairs(node).iter().any(|p| other_symbol(source, *p))
-}
-
-fn insert_name(name: &str) -> bool {
-    name == "insert" || name == "insert!"
-}
-
-fn kw_index(args: &[Node<'_>]) -> usize {
-    args.iter()
-        .position(|n| n.kind() == "pair")
-        .unwrap_or(args.len())
-}
-
-fn insert_second_ok(source: &SourceFile, args: &[Node<'_>], kw_at: usize) -> bool {
-    if kw_at >= 2 {
-        return second_arg_ok(source, args[1]);
-    }
-    args[kw_at..].iter().any(|p| other_symbol(source, *p))
-}
-
-/// A non-hash second argument, or a hash with a real column key, is `String`/`Array#insert`.
-fn good_insert(source: &SourceFile, node: Node<'_>, name: &str) -> bool {
-    if !insert_name(name) {
+fn good_insert(source: &SourceFile, args: &[Argument<'_>], name: &str) -> bool {
+    if !matches!(name, "insert" | "insert!") || args.len() < 2 {
         return false;
     }
-    let args = argument_nodes(node);
-    let kw_at = kw_index(&args);
-    if kw_at + usize::from(kw_at < args.len()) < 2 {
-        return false;
-    }
-    insert_second_ok(source, &args, kw_at)
+    !args[1].hash
+        || args[1].parts().into_iter().any(|pair| {
+            pair.kind() == "pair"
+                && pair
+                    .child_by_field_name("key")
+                    .and_then(|key| plain_symbol(source, key))
+                    .is_some_and(|key| !matches!(key.as_str(), "returning" | "unique_by"))
+        })
 }
-
-fn skip_method(source: &SourceFile, node: Node<'_>, name: &str) -> bool {
-    (NEEDS_ARGS.contains(&name) && argument_nodes(node).is_empty())
-        || good_touch(source, node, name)
-        || good_insert(source, node, name)
-}
-
-fn method_name<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<&'a str> {
-    std::str::from_utf8(call_method_name(source, node)?).ok()
-}
-
 fn push_offense(
     cop: &dyn Cop,
     source: &SourceFile,
@@ -154,19 +111,30 @@ fn push_offense(
     name: &str,
     diagnostics: &mut Vec<Diagnostic>,
 ) {
-    let (line, col) = source.offset_to_line_col(
-        node.child_by_field_name("method")
-            .or_else(|| node.child_by_field_name("name"))
-            .unwrap_or(node)
-            .start_byte(),
-    );
+    let (start, end) = if node.kind() == "element_reference" {
+        let mut cursor = node.walk();
+        let brackets = node
+            .children(&mut cursor)
+            .filter(|child| matches!(child.kind(), "[" | "]"))
+            .collect::<Vec<_>>();
+        let (Some(first), Some(last)) = (brackets.first(), brackets.last()) else {
+            return;
+        };
+        (first.start_byte(), last.end_byte())
+    } else {
+        let selector = method_node(node)
+            .or_else(|| node.child_by_field_name("operator"))
+            .unwrap_or(node);
+        (selector.start_byte(), selector.end_byte())
+    };
+    let (line, col) = source.offset_to_line_col(start);
     let mut diag = cop.diagnostic(
         source,
         line,
         col,
         format!("Avoid using `{name}` because it skips validations."),
     );
-    diag.highlight_length = name.len();
+    diag.highlight_length = super::blank::highlight_length(source, start, end);
     diagnostics.push(diag);
 }
 
@@ -176,7 +144,14 @@ impl Cop for SkipsModelValidations {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
+        &[
+            "call",
+            "identifier",
+            "hash_key_symbol",
+            "binary",
+            "unary",
+            "element_reference",
+        ]
     }
 
     fn check_node(
@@ -187,10 +162,19 @@ impl Cop for SkipsModelValidations {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        let Some(name) = method_name(source, node) else {
+        let Some(bytes) = send_name(source, node) else {
             return;
         };
-        if allowed(config, name) || !forbidden(config, name) || skip_method(source, node, name) {
+        let Ok(name) = std::str::from_utf8(&bytes) else {
+            return;
+        };
+        let args = arguments(node);
+        if allowed(config, name)
+            || !forbidden(config, name)
+            || (NEEDS_ARGS.contains(&name) && args.is_empty())
+            || good_touch(source, node, name)
+            || good_insert(source, &args, name)
+        {
             return;
         }
         push_offense(self, source, node, name, diagnostics);
