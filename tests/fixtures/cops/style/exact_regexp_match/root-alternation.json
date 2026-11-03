@@ -1,0 +1,194 @@
+[
+  {
+    "id": "3.4: value.match?(/\\ABaseWorker\\z|::BaseWorker\\z/)",
+    "original": "value.match?(/\\ABaseWorker\\z|::BaseWorker\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value.match?(/\\ABaseWorker\\z|::BaseWorker\\z/)\n",
+    "rust_corrected": "value.match?(/\\ABaseWorker\\z|::BaseWorker\\z/)\n"
+  },
+  {
+    "id": "3.4: value&.match?(/\\ABaseWorker\\z|::BaseWorker\\z/)",
+    "original": "value&.match?(/\\ABaseWorker\\z|::BaseWorker\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value&.match?(/\\ABaseWorker\\z|::BaseWorker\\z/)\n",
+    "rust_corrected": "value&.match?(/\\ABaseWorker\\z|::BaseWorker\\z/)\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z|bar/)",
+    "original": "value.match?(/\\Afoo\\z|bar/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value.match?(/\\Afoo\\z|bar/)\n",
+    "rust_corrected": "value.match?(/\\Afoo\\z|bar/)\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z(?:a|b)/)",
+    "original": "value.match?(/\\Afoo\\z(?:a|b)/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 30,
+        "message": "Use `value == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "value == 'foo'\n",
+    "rust_corrected": "value.match?(/\\Afoo\\z(?:a|b)/)\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z[|]/)",
+    "original": "value.match?(/\\Afoo\\z[|]/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 26,
+        "message": "Use `value == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "value == 'foo'\n",
+    "rust_corrected": "value.match?(/\\Afoo\\z[|]/)\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z\\|/)",
+    "original": "value.match?(/\\Afoo\\z\\|/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 25,
+        "message": "Use `value == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "value == 'foo'\n",
+    "rust_corrected": "value.match?(/\\Afoo\\z\\|/)\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z(?#a|b)/)",
+    "original": "value.match?(/\\Afoo\\z(?#a|b)/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 30,
+        "message": "Use `value == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "value == 'foo'\n",
+    "rust_corrected": "value.match?(/\\Afoo\\z(?#a|b)/)\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z(?x)# a|b/)",
+    "original": "value.match?(/\\Afoo\\z(?x)# a|b/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 32,
+        "message": "Use `value == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "value == 'foo'\n",
+    "rust_corrected": "value.match?(/\\Afoo\\z(?x)# a|b/)\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z(?x:a|b)/)",
+    "original": "value.match?(/\\Afoo\\z(?x:a|b)/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 31,
+        "message": "Use `value == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "value == 'foo'\n",
+    "rust_corrected": "value.match?(/\\Afoo\\z(?x:a|b)/)\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z/)",
+    "original": "value.match?(/\\Afoo\\z/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 23,
+        "message": "Use `value == 'foo'`."
+      }
+    ],
+    "ruby_corrected": "value == 'foo'\n",
+    "rust_corrected": "value == 'foo'\n"
+  },
+  {
+    "id": "3.4: value.match?(/\\Afoo\\z(?:a|b)|c/)",
+    "original": "value.match?(/\\Afoo\\z(?:a|b)|c/)\n",
+    "config": {
+      "Description": "Checks for exact regexp match inside Regexp literals.",
+      "Enabled": true,
+      "VersionAdded": "1.51",
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value.match?(/\\Afoo\\z(?:a|b)|c/)\n",
+    "rust_corrected": "value.match?(/\\Afoo\\z(?:a|b)|c/)\n"
+  }
+]

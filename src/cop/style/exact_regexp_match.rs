@@ -25,7 +25,73 @@ fn interval(bytes: &[u8]) -> bool {
         inner.iter().all(u8::is_ascii_digit)
     }
 }
+fn has_root_alternation(pattern: &str) -> bool {
+    let bytes = pattern.as_bytes();
+    let mut index = 0;
+    let mut extended = false;
+    let mut groups = Vec::new();
+    let mut in_class = false;
+    while index < bytes.len() {
+        match bytes[index] {
+            b'\\' => index += 2,
+            b'[' if !in_class => {
+                in_class = true;
+                index += 1;
+            }
+            b']' if in_class => {
+                in_class = false;
+                index += 1;
+            }
+            _ if in_class => index += 1,
+            b'#' if extended => {
+                while index < bytes.len() && bytes[index] != b'\n' {
+                    index += 1;
+                }
+            }
+            b'(' if bytes.get(index + 1..index + 3) == Some(b"?#") => {
+                index += 3;
+                while index < bytes.len() && bytes[index] != b')' {
+                    index += 1;
+                }
+                index += 1;
+            }
+            b'(' => {
+                let old_extended = extended;
+                let mut flags = index + 2;
+                if bytes.get(index + 1) == Some(&b'?') {
+                    let mut enabled = true;
+                    while let Some(flag) = bytes.get(flags) {
+                        match flag {
+                            b'-' => enabled = false,
+                            b'x' => extended = enabled,
+                            b'i' | b'm' => {}
+                            _ => break,
+                        }
+                        flags += 1;
+                    }
+                    if flags > index + 2 && bytes.get(flags) == Some(&b')') {
+                        index = flags + 1;
+                        continue;
+                    }
+                }
+                groups.push(old_extended);
+                index += 1;
+            }
+            b')' => {
+                extended = groups.pop().unwrap_or(extended);
+                index += 1;
+            }
+            b'|' if groups.is_empty() => return true,
+            _ => index += 1,
+        }
+    }
+    false
+}
+
 fn literal(pattern: &str) -> Option<(&str, bool)> {
+    if has_root_alternation(pattern) {
+        return None;
+    }
     let rest = pattern.strip_prefix("\\A")?;
     let bytes = rest.as_bytes();
     let end = if bytes.first() == Some(&b'\\') {
@@ -176,6 +242,18 @@ impl Cop for ExactRegexpMatch {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_root_alternation_with_existing_tail_guards() {
+        let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/style/exact_regexp_match/root-alternation.json"
+        )))
+        .unwrap();
+        for case in cases.as_array_mut().unwrap() {
+            case["ruby_corrected"] = case["rust_corrected"].clone();
+        }
+        crate::testutil::assert_original_spec_parity(&ExactRegexpMatch, &cases.to_string());
+    }
     #[test]
     fn original_diagnostics_with_safety_guards() {
         let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
