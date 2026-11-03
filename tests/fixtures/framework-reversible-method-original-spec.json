@@ -1,0 +1,44 @@
+{
+  "source": "rubocop-rails2.26.0/spec/rubocop/cop/rails/reversible_migration_method_definition_spec.rb",
+  "cases": [
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[6.0]\n  def change\n    add_column :users, :email, :text, null: false\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[6.0]\n\n  def up\n    add_column :users, :email, :text, null: false\n  end\nend\n"
+    },
+    {
+      "source": "class ::SomeMigration < ActiveRecord::Migration[6.0]\n\n  def up\n    add_column :users, :email, :text, null: false\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[6.0]\n\n  def down\n    remove_column :users, :email\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[6.0]\n  def up\n    add_column :users, :email, :text, null: false\n  end\n\n  def down\n    remove_column :users, :email\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[6.0]\n  def chance\n    add_column :users, :email, :text, null: false\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[6.0]\n  def change\n    add_users_column :email, :text, null: false\n  end\n\n  private\n\n  def add_users_column(column_name, null: false)\n    add_column :users, column_name, type, null: null\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[6.0]\n  class Foo\n  end\n\n  def change\n    add_column :users, :email, :text, null: false\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[5.2]\n  def chance\n    add_column :users, :email, :text, null: false\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ActiveRecord::Migration[5.2]\n  def change\n    add_column :users, :email, :text, null: false\n  end\nend\n"
+    },
+    {
+      "source": "class SomeMigration < ::ActiveRecord::Migration[5.2]\n  def change\n    add_column :users, :email, :text, null: false\n  end\nend\n"
+    },
+    {
+      "source": "class AddNiceToAnimals < ActiveRecord::Migration[7.0]\n  def change\n    add_column :animals, :nice, :boolean, default: true\n  end\nend\n"
+    },
+    {
+      "source": "class AddNiceToAnimals < ActiveRecord::Migration[7.0]\n\n  def up\n    add_column :animals, :nice, :boolean, default: true\n  end\nend\n"
+    }
+  ]
+}

@@ -17,6 +17,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/ReversibleMigrationMethodDefinition', 'class Probe < ActiveRecord::Migration[6.0]; def up; end; end', 'db/migrate/20260101000000_framework_parity.rb', model),
  ('Rails/Exit', 'Kernel.exit!', model, 'spec/framework_parity_spec.rb'),
  ('Rails/DelegateAllowBlank', 'delegate :name, to: :account, allow_blank: true', model, service),
  ('Rails/RefuteMethods', 'refute false', 'test/models/framework_parity_test.rb', model),

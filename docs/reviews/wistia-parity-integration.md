@@ -63,3 +63,17 @@ Two rescued invalid ActiveSupport API declarations are separate: one is an
 intended option repair that changes output, and the false option is unmatched.
 Four actual scope controls match. The full native checkpoint follows the
 separately completed FloatOutOfRange leaf import.
+
+The completed cutoff now includes Core FloatOutOfRange and framework
+ReversibleMigrationMethodDefinition. The full native suite passes 1,088 tests
+with one ignored; the latter's fresh 225-original/450-final-state gate is exact.
+Float public CLI validation is still running. Later source reviews stay queued.
+
+The optimized 091dc33 full scan finishes without panic: cache population takes
+390.66 seconds and warm scans 0.44/0.45 seconds across 14,824 files. These numbers
+measure native cache consistency, not Ruby agreement. The follow-up real-corpus
+comparison is a material failure: Ruby reports three offenses on the 74 flagged
+files, while native reports 169; only three match, leaving 166 Rust-only
+observations. Those are being reconciled by owners. In particular, the 13
+GraphQL matcher-order and four RSpec block-matcher cases are owned here.
+No broad equivalence claim is justified by the synthetic gates.

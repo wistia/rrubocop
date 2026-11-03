@@ -1,0 +1,1646 @@
+{
+  "snapshot": "091dc33",
+  "invocation": {
+    "cwd": "/home/ubuntu/code/wistia-rrubocop-pr",
+    "wista_head": "310b8e42e91232d07210eff6cacc2f2035a01bda",
+    "ruby_argv": [
+      "bin/rubocop-ruby",
+      "--cache",
+      "false",
+      "--format",
+      "json",
+      "app/controllers/record/mochine_turns_controller.rb",
+      "app/graphql/mutations/edit/export/create_new_media.rb",
+      "app/graphql/mutations/edit/rescript/create.rb",
+      "app/graphql/mutations/edit/session/audio_asset/delete.rb",
+      "app/graphql/mutations/edit/session/bumper_clip/split.rb",
+      "app/graphql/mutations/edit/session/clip/enhance_audio.rb",
+      "app/graphql/mutations/edit/session/clip/split.rb",
+      "app/graphql/mutations/edit/session/image/delete.rb",
+      "app/graphql/mutations/edit/session/slide/split.rb",
+      "app/graphql/mutations/live/create_live_kit_participant_token.rb",
+      "app/graphql/mutations/live/create_live_kit_participant_token_v2.rb",
+      "app/graphql/types/edit/export/shared_input_type.rb",
+      "app/graphql/types/edit/session/clip/attributes/create.rb",
+      "app/graphql/types/edit/session/element/update_attributes.rb",
+      "app/graphql/types/edit/session/element/video_type.rb",
+      "app/graphql/types/query_type.rb",
+      "app/helpers/billing_helper.rb",
+      "app/helpers/stats/stats_helper.rb",
+      "app/lib/live/egress_providers/hms_web_composite_file_and_streaming_provider.rb",
+      "app/lib/live/egress_providers/livekit_tracks_composite_file_provider.rb",
+      "app/lib/live/egress_providers/providers_factory.rb",
+      "app/lib/ruby_llm/providers/open_ai_direct.rb",
+      "app/lib/search/graphql_id_enricher.rb",
+      "app/lib/video_remix_lantern_agent/agent.rb",
+      "app/lib/video_remix_lantern_agent/desktop_prompt.rb",
+      "app/lib/video_remix_lantern_agent/desktop_target.rb",
+      "app/lib/video_remix_lantern_agent/desktop_turn_fixture.rb",
+      "app/models/account_funnel_details.rb",
+      "app/models/concerns/json_attributes.rb",
+      "app/models/live/health_subscores/mux_active.rb",
+      "app/models/live/health_subscores/recording.rb",
+      "app/models/live/poll_analytics.rb",
+      "app/models/live_stream_event.rb",
+      "app/models/media_assignment_event.rb",
+      "app/models/plan/supported_subscription_products.rb",
+      "app/models/video_remix.rb",
+      "app/services/embed_and_share_options_service.rb",
+      "app/services/live/copy_live_event_service.rb",
+      "app/services/live/go_live_service.rb",
+      "app/services/live/hms_events_handler.rb",
+      "app/services/live/stop_live_stream_event_service.rb",
+      "app/services/media_assignment_notification_service.rb",
+      "app/services/record/mochine_turn_service.rb",
+      "app/workers/live/end_empty_event_worker.rb",
+      "app/workers/open_search/batch_index_part_worker.rb",
+      "cops/explicit_sidekiq_queue.rb",
+      "dev/spec/rrubocop_installer_spec.rb",
+      "lib/tasks/desktop_mochine.rake",
+      "not_production/controllers/fake_share_link_gate_email_controller.rb",
+      "promptfoo/agent_customer_examples/mining/failure_signals.rb",
+      "spec/controllers/record/mochine_turns_controller_spec.rb",
+      "spec/graphql/loaders/policy_scope_loader_spec.rb",
+      "spec/graphql/types/contact_type_latest_activity_events_spec.rb",
+      "spec/lib/live/egress_providers/livekit_tracks_composite_file_provider_spec.rb",
+      "spec/lib/live/vod_rebuild/stage_layout_spec.rb",
+      "spec/lib/tasks/desktop_mochine_export_spec.rb",
+      "spec/lib/video_remix_lantern_agent/agent_desktop_spec.rb",
+      "spec/lib/video_remix_lantern_agent/desktop_prompt_spec.rb",
+      "spec/lib/video_remix_lantern_agent/desktop_target_spec.rb",
+      "spec/lib/video_remix_lantern_agent/desktop_tools_contract_spec.rb",
+      "spec/lib/video_remix_lantern_agent/tools/client_tool_spec.rb",
+      "spec/models/concerns/open_search_indexable_spec.rb",
+      "spec/models/credit_ledger_spec.rb",
+      "spec/models/media_file/media_file_spec.rb",
+      "spec/models/video_remix_desktop_target_spec.rb",
+      "spec/policies/media_policy_spec.rb",
+      "spec/push_button_factories_spec.rb",
+      "spec/requests/api/lair/live_events_controller_spec.rb",
+      "spec/requests/record/mochine_turn_flow_spec.rb",
+      "spec/services/live/copy_live_event_service_spec.rb",
+      "spec/services/live/create_live_event_service_spec.rb",
+      "spec/services/live/series/copy_service_spec.rb",
+      "spec/support/scripted_desktop_llm.rb",
+      "spec/workers/remix_reminder_worker_spec.rb"
+    ],
+    "rust_revision": "091dc33eaa8fde4a1e8ca55c42fb33e85df95ce8",
+    "ruby_environment_overrides": {},
+    "ruby_exit_code": 1
+  },
+  "comparison": {
+    "ruby_summary": {
+      "offense_count": 3,
+      "target_file_count": 74,
+      "inspected_file_count": 74
+    },
+    "ruby": [
+      {
+        "path": "app/helpers/stats/stats_helper.rb",
+        "line": 470,
+        "column": 21,
+        "cop_name": "Lint/MixedCaseRange",
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      },
+      {
+        "path": "dev/spec/rrubocop_installer_spec.rb",
+        "line": 11,
+        "column": 8,
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Use parentheses for ternary expressions with complex conditions."
+      },
+      {
+        "path": "dev/spec/rrubocop_installer_spec.rb",
+        "line": 11,
+        "column": 51,
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Use parentheses for ternary expressions with complex conditions."
+      }
+    ],
+    "matched_rust": [
+      {
+        "path": "app/helpers/stats/stats_helper.rb",
+        "line": 470,
+        "column": 20,
+        "severity": "W",
+        "cop_name": "Lint/MixedCaseRange",
+        "message": "Lint/MixedCaseRange: Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols.",
+        "corrected": false
+      },
+      {
+        "path": "dev/spec/rrubocop_installer_spec.rb",
+        "line": 11,
+        "column": 7,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "dev/spec/rrubocop_installer_spec.rb",
+        "line": 11,
+        "column": 50,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      }
+    ],
+    "unmatched_rust": [
+      {
+        "path": "app/controllers/record/mochine_turns_controller.rb",
+        "line": 196,
+        "column": 62,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/edit/export/create_new_media.rb",
+        "line": 13,
+        "column": 15,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/edit/rescript/create.rb",
+        "line": 16,
+        "column": 13,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/edit/session/audio_asset/delete.rb",
+        "line": 8,
+        "column": 13,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/edit/session/bumper_clip/split.rb",
+        "line": 15,
+        "column": 15,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/edit/session/clip/enhance_audio.rb",
+        "line": 10,
+        "column": 13,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/edit/session/clip/split.rb",
+        "line": 16,
+        "column": 15,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/edit/session/image/delete.rb",
+        "line": 6,
+        "column": 13,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/edit/session/slide/split.rb",
+        "line": 15,
+        "column": 15,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/live/create_live_kit_participant_token.rb",
+        "line": 50,
+        "column": 24,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a method call.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/mutations/live/create_live_kit_participant_token_v2.rb",
+        "line": 55,
+        "column": 24,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a method call.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/types/edit/export/shared_input_type.rb",
+        "line": 21,
+        "column": 13,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/types/edit/session/clip/attributes/create.rb",
+        "line": 12,
+        "column": 13,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/types/edit/session/element/update_attributes.rb",
+        "line": 12,
+        "column": 13,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/types/edit/session/element/video_type.rb",
+        "line": 20,
+        "column": 15,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/graphql/types/query_type.rb",
+        "line": 62,
+        "column": 17,
+        "severity": "C",
+        "cop_name": "GraphQL/PrepareMethod",
+        "message": "GraphQL/PrepareMethod: Avoid using prepare lambdas, use prepare: :method_name or prepare: \"method_name\" instead.",
+        "corrected": false
+      },
+      {
+        "path": "app/helpers/billing_helper.rb",
+        "line": 42,
+        "column": 8,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a method call.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/live/egress_providers/hms_web_composite_file_and_streaming_provider.rb",
+        "line": 24,
+        "column": 24,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/live/egress_providers/hms_web_composite_file_and_streaming_provider.rb",
+        "line": 118,
+        "column": 45,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/live/egress_providers/livekit_tracks_composite_file_provider.rb",
+        "line": 95,
+        "column": 39,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/live/egress_providers/livekit_tracks_composite_file_provider.rb",
+        "line": 98,
+        "column": 47,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/live/egress_providers/livekit_tracks_composite_file_provider.rb",
+        "line": 236,
+        "column": 18,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/live/egress_providers/providers_factory.rb",
+        "line": 73,
+        "column": 30,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/ruby_llm/providers/open_ai_direct.rb",
+        "line": 167,
+        "column": 8,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/search/graphql_id_enricher.rb",
+        "line": 279,
+        "column": 6,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/agent.rb",
+        "line": 248,
+        "column": 82,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/agent.rb",
+        "line": 442,
+        "column": 33,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/agent.rb",
+        "line": 445,
+        "column": 49,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_prompt.rb",
+        "line": 87,
+        "column": 109,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_prompt.rb",
+        "line": 144,
+        "column": 67,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_target.rb",
+        "line": 268,
+        "column": 82,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_target.rb",
+        "line": 283,
+        "column": 28,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_target.rb",
+        "line": 284,
+        "column": 20,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_target.rb",
+        "line": 285,
+        "column": 21,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_turn_fixture.rb",
+        "line": 112,
+        "column": 33,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_turn_fixture.rb",
+        "line": 112,
+        "column": 74,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_turn_fixture.rb",
+        "line": 229,
+        "column": 17,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/lib/video_remix_lantern_agent/desktop_turn_fixture.rb",
+        "line": 234,
+        "column": 38,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/account_funnel_details.rb",
+        "line": 65,
+        "column": 18,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/account_funnel_details.rb",
+        "line": 65,
+        "column": 53,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/account_funnel_details.rb",
+        "line": 69,
+        "column": 21,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/account_funnel_details.rb",
+        "line": 69,
+        "column": 57,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/account_funnel_details.rb",
+        "line": 79,
+        "column": 21,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/account_funnel_details.rb",
+        "line": 79,
+        "column": 57,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/account_funnel_details.rb",
+        "line": 153,
+        "column": 21,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/account_funnel_details.rb",
+        "line": 153,
+        "column": 61,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/concerns/json_attributes.rb",
+        "line": 23,
+        "column": 51,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/concerns/json_attributes.rb",
+        "line": 81,
+        "column": 43,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/concerns/json_attributes.rb",
+        "line": 82,
+        "column": 35,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/concerns/json_attributes.rb",
+        "line": 83,
+        "column": 44,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/concerns/json_attributes.rb",
+        "line": 84,
+        "column": 34,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/live/health_subscores/mux_active.rb",
+        "line": 16,
+        "column": 8,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/live/health_subscores/recording.rb",
+        "line": 46,
+        "column": 8,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/live/poll_analytics.rb",
+        "line": 37,
+        "column": 32,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/live/poll_analytics.rb",
+        "line": 68,
+        "column": 43,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/live_stream_event.rb",
+        "line": 556,
+        "column": 73,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/live_stream_event.rb",
+        "line": 558,
+        "column": 72,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/media_assignment_event.rb",
+        "line": 49,
+        "column": 35,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/media_assignment_event.rb",
+        "line": 58,
+        "column": 34,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/plan/supported_subscription_products.rb",
+        "line": 83,
+        "column": 8,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/plan/supported_subscription_products.rb",
+        "line": 90,
+        "column": 8,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/plan/supported_subscription_products.rb",
+        "line": 91,
+        "column": 8,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/plan/supported_subscription_products.rb",
+        "line": 100,
+        "column": 8,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/video_remix.rb",
+        "line": 255,
+        "column": 47,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/models/video_remix.rb",
+        "line": 967,
+        "column": 93,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/embed_and_share_options_service.rb",
+        "line": 68,
+        "column": 69,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a logical expression.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/live/copy_live_event_service.rb",
+        "line": 115,
+        "column": 24,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/live/go_live_service.rb",
+        "line": 101,
+        "column": 43,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/live/hms_events_handler.rb",
+        "line": 80,
+        "column": 87,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/live/hms_events_handler.rb",
+        "line": 203,
+        "column": 87,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/live/hms_events_handler.rb",
+        "line": 351,
+        "column": 66,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/live/hms_events_handler.rb",
+        "line": 366,
+        "column": 66,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/live/hms_events_handler.rb",
+        "line": 390,
+        "column": 71,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/live/stop_live_stream_event_service.rb",
+        "line": 85,
+        "column": 43,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/media_assignment_notification_service.rb",
+        "line": 38,
+        "column": 67,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/services/record/mochine_turn_service.rb",
+        "line": 103,
+        "column": 108,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/workers/live/end_empty_event_worker.rb",
+        "line": 57,
+        "column": 70,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/workers/live/end_empty_event_worker.rb",
+        "line": 135,
+        "column": 19,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/workers/live/end_empty_event_worker.rb",
+        "line": 140,
+        "column": 8,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "app/workers/open_search/batch_index_part_worker.rb",
+        "line": 672,
+        "column": 6,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "cops/explicit_sidekiq_queue.rb",
+        "line": 32,
+        "column": 6,
+        "severity": "C",
+        "cop_name": "Style/ExactRegexpMatch",
+        "message": "Style/ExactRegexpMatch: Use `node.parent_class&.const_name == 'BaseWorker'`.",
+        "corrected": false
+      },
+      {
+        "path": "lib/tasks/desktop_mochine.rake",
+        "line": 22,
+        "column": 45,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "lib/tasks/desktop_mochine.rake",
+        "line": 23,
+        "column": 45,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "not_production/controllers/fake_share_link_gate_email_controller.rb",
+        "line": 42,
+        "column": 35,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "promptfoo/agent_customer_examples/mining/failure_signals.rb",
+        "line": 28,
+        "column": 81,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "promptfoo/agent_customer_examples/mining/failure_signals.rb",
+        "line": 36,
+        "column": 14,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "promptfoo/agent_customer_examples/mining/failure_signals.rb",
+        "line": 46,
+        "column": 60,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/controllers/record/mochine_turns_controller_spec.rb",
+        "line": 289,
+        "column": 74,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/controllers/record/mochine_turns_controller_spec.rb",
+        "line": 289,
+        "column": 113,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/controllers/record/mochine_turns_controller_spec.rb",
+        "line": 587,
+        "column": 85,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/graphql/loaders/policy_scope_loader_spec.rb",
+        "line": 15,
+        "column": 95,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/graphql/loaders/policy_scope_loader_spec.rb",
+        "line": 19,
+        "column": 79,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/graphql/types/contact_type_latest_activity_events_spec.rb",
+        "line": 236,
+        "column": 68,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/graphql/types/contact_type_latest_activity_events_spec.rb",
+        "line": 260,
+        "column": 80,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/live/egress_providers/livekit_tracks_composite_file_provider_spec.rb",
+        "line": 89,
+        "column": 48,
+        "severity": "C",
+        "cop_name": "Performance/Count",
+        "message": "Performance/Count: Use `count` instead of `select...count`.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/live/egress_providers/livekit_tracks_composite_file_provider_spec.rb",
+        "line": 89,
+        "column": 57,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/live/egress_providers/livekit_tracks_composite_file_provider_spec.rb",
+        "line": 119,
+        "column": 49,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/live/egress_providers/livekit_tracks_composite_file_provider_spec.rb",
+        "line": 496,
+        "column": 28,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/live/egress_providers/livekit_tracks_composite_file_provider_spec.rb",
+        "line": 548,
+        "column": 30,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/live/vod_rebuild/stage_layout_spec.rb",
+        "line": 41,
+        "column": 51,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 31,
+        "column": 71,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 79,
+        "column": 39,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 81,
+        "column": 35,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 86,
+        "column": 35,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 112,
+        "column": 37,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 129,
+        "column": 29,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 131,
+        "column": 43,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 133,
+        "column": 27,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/tasks/desktop_mochine_export_spec.rb",
+        "line": 229,
+        "column": 38,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/agent_desktop_spec.rb",
+        "line": 19,
+        "column": 57,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/agent_desktop_spec.rb",
+        "line": 163,
+        "column": 40,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/agent_desktop_spec.rb",
+        "line": 212,
+        "column": 44,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_prompt_spec.rb",
+        "line": 547,
+        "column": 19,
+        "severity": "C",
+        "cop_name": "Style/TernaryParentheses",
+        "message": "Style/TernaryParentheses: Only use parentheses for ternary expressions with complex conditions.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_target_spec.rb",
+        "line": 181,
+        "column": 25,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_target_spec.rb",
+        "line": 193,
+        "column": 25,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_target_spec.rb",
+        "line": 334,
+        "column": 42,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_target_spec.rb",
+        "line": 336,
+        "column": 54,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_target_spec.rb",
+        "line": 413,
+        "column": 49,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_tools_contract_spec.rb",
+        "line": 27,
+        "column": 42,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_tools_contract_spec.rb",
+        "line": 78,
+        "column": 27,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/desktop_tools_contract_spec.rb",
+        "line": 129,
+        "column": 67,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/lib/video_remix_lantern_agent/tools/client_tool_spec.rb",
+        "line": 19,
+        "column": 42,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/concerns/open_search_indexable_spec.rb",
+        "line": 331,
+        "column": 22,
+        "severity": "C",
+        "cop_name": "Style/RedundantParentheses",
+        "message": "Style/RedundantParentheses: Don't use parentheses around a literal.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/credit_ledger_spec.rb",
+        "line": 984,
+        "column": 17,
+        "severity": "C",
+        "cop_name": "FactoryBot/CreateList",
+        "message": "FactoryBot/CreateList: Prefer create_list.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/media_file/media_file_spec.rb",
+        "line": 231,
+        "column": 69,
+        "severity": "C",
+        "cop_name": "RSpec/Be",
+        "message": "RSpec/Be: Don't use `be` without an argument.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/media_file/media_file_spec.rb",
+        "line": 239,
+        "column": 69,
+        "severity": "C",
+        "cop_name": "RSpec/Be",
+        "message": "RSpec/Be: Don't use `be` without an argument.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/media_file/media_file_spec.rb",
+        "line": 247,
+        "column": 69,
+        "severity": "C",
+        "cop_name": "RSpec/Be",
+        "message": "RSpec/Be: Don't use `be` without an argument.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/media_file/media_file_spec.rb",
+        "line": 255,
+        "column": 69,
+        "severity": "C",
+        "cop_name": "RSpec/Be",
+        "message": "RSpec/Be: Don't use `be` without an argument.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/video_remix_desktop_target_spec.rb",
+        "line": 38,
+        "column": 61,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/video_remix_desktop_target_spec.rb",
+        "line": 39,
+        "column": 64,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/models/video_remix_desktop_target_spec.rb",
+        "line": 345,
+        "column": 120,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/policies/media_policy_spec.rb",
+        "line": 1626,
+        "column": 47,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/push_button_factories_spec.rb",
+        "line": 335,
+        "column": 80,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/push_button_factories_spec.rb",
+        "line": 337,
+        "column": 71,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/api/lair/live_events_controller_spec.rb",
+        "line": 172,
+        "column": 75,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/api/lair/live_events_controller_spec.rb",
+        "line": 184,
+        "column": 75,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 165,
+        "column": 93,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 174,
+        "column": 34,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 184,
+        "column": 41,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 184,
+        "column": 75,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 206,
+        "column": 65,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 241,
+        "column": 79,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 270,
+        "column": 69,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 315,
+        "column": 49,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 316,
+        "column": 24,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 316,
+        "column": 49,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 331,
+        "column": 34,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 345,
+        "column": 63,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 346,
+        "column": 55,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 346,
+        "column": 84,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 362,
+        "column": 36,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 363,
+        "column": 40,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 364,
+        "column": 51,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/requests/record/mochine_turn_flow_spec.rb",
+        "line": 364,
+        "column": 86,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/services/live/copy_live_event_service_spec.rb",
+        "line": 127,
+        "column": 85,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/services/live/copy_live_event_service_spec.rb",
+        "line": 146,
+        "column": 82,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/services/live/copy_live_event_service_spec.rb",
+        "line": 250,
+        "column": 70,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/services/live/create_live_event_service_spec.rb",
+        "line": 104,
+        "column": 60,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/services/live/series/copy_service_spec.rb",
+        "line": 82,
+        "column": 59,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/services/live/series/copy_service_spec.rb",
+        "line": 83,
+        "column": 60,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/services/live/series/copy_service_spec.rb",
+        "line": 113,
+        "column": 68,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/services/live/series/copy_service_spec.rb",
+        "line": 114,
+        "column": 69,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/support/scripted_desktop_llm.rb",
+        "line": 62,
+        "column": 39,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/support/scripted_desktop_llm.rb",
+        "line": 63,
+        "column": 40,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/support/scripted_desktop_llm.rb",
+        "line": 84,
+        "column": 22,
+        "severity": "W",
+        "cop_name": "Lint/UnderscorePrefixedVariableName",
+        "message": "Lint/UnderscorePrefixedVariableName: Do not use prefix `_` for a variable that is used.",
+        "corrected": false
+      },
+      {
+        "path": "spec/workers/remix_reminder_worker_spec.rb",
+        "line": 145,
+        "column": 6,
+        "severity": "C",
+        "cop_name": "FactoryBot/CreateList",
+        "message": "FactoryBot/CreateList: Prefer create_list.",
+        "corrected": false
+      }
+    ]
+  }
+}

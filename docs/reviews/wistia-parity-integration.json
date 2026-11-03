@@ -2,7 +2,7 @@
   "branch": "feat/wistia-parity-integrated",
   "base": "0296d3c894e5decf8fcc800b6c72c7f3b0febd65",
   "recorded_at_utc": "2026-11-03T07:42:29.556821+00:00",
-  "snapshot_state": "additional_leaf_reviews_targeted_validated_full_native_pending",
+  "snapshot_state": "completed_leaf_cutoff_native_validated_real_corpus_false_positive_reconciliation_in_progress",
   "source_snapshots": {
     "core": "63719171c3849fb294a020a2966350c923270ee2",
     "frameworks": "2022e0b0a1ccb4f1623a3e58cc299c965186ca44",
@@ -40,18 +40,18 @@
       "latest_numeric_prerequisite_check": "test_build_passed; non-test rerun pending"
     },
     "full_native": {
-      "status": "passed_after_numbered_binding_fix",
+      "status": "passed_through_completed_cutoff",
       "first_run": {
         "passed": 1080,
         "failed": 4,
         "ignored": 1,
         "cause": "RSpec legacy numbered-block scan treated cached local identifiers as bare method names"
       },
-      "artifact": "/dev/shm/rrubocop-integrated-native-panic-fixed.log",
-      "passed": 1086,
+      "artifact": "/dev/shm/rrubocop-integrated-native-leaves-float.log",
+      "passed": 1088,
       "failed": 0,
       "ignored": 1,
-      "snapshot": "091dc33"
+      "snapshot": "core9452548/frameworkcc3425f merged tree"
     },
     "fresh_family_differentials": {
       "rspec": {
@@ -143,20 +143,37 @@
     }
   ],
   "full_repository_validation": {
-    "status": "reproduced_panic_fixed_targeted_actual_file_passed_full_scan_pending",
+    "status": "091dc33_full_native_scan_complete_but_166_rust_only_offenses_need_reconciliation",
     "snapshot": "c9d11a4",
     "cop": "Style/TrailingCommaInArguments",
     "location": "src/cop/style/trailing_comma_in_arguments.rs:179",
     "reversed_slice": "11417..11416",
     "owner": "parity_core_fixes",
     "artifact": "/dev/shm/rrubocop-runtime-r3mbt5p2/uncached.stderr",
-    "runtime_benchmark_valid": false,
+    "runtime_benchmark_valid": true,
     "fix_integrated_commit": "091dc33",
     "fix_original_commit": "c53845d",
     "focused_tests_passed": 12,
     "actual_offending_file_native_exit": 0,
     "actual_offending_file_ruby_exit": 0,
-    "actual_offending_file_offenses": 0
+    "actual_offending_file_offenses": 0,
+    "runtime_artifact": "docs/evidence/integrated-runtime-091dc33.json",
+    "runtime_snapshot": "091dc33",
+    "timing_seconds": {
+      "cache_population": 390.66,
+      "warm": 0.44,
+      "warm_repeat": 0.45
+    },
+    "timing_note": "Native cache consistency only; 169 native findings are not established Ruby findings.",
+    "actual_ruby_comparison": {
+      "flagged_files": 74,
+      "ruby_offenses": 3,
+      "native_offenses": 169,
+      "matching_offenses": 3,
+      "rust_only_offenses": 166,
+      "status": "reconciliation_in_progress",
+      "artifact": "docs/evidence/091dc33-real-corpus-comparison.json"
+    }
   },
   "followup_registration_gate": {
     "full_native_passed": 1085,
@@ -217,6 +234,37 @@
       "artifact": "/dev/shm/rrubocop-integrated-leaf-two",
       "strict_driver_exit": 1,
       "full_native": "pending combined next checkpoint"
+    },
+    {
+      "source_commit": "cc3425f",
+      "rules": [
+        "Rails/ReversibleMigrationMethodDefinition"
+      ],
+      "implementation_changed": false,
+      "original_cases": 225,
+      "second_pass_cases": 450,
+      "strict_events": 0,
+      "artifact": "/dev/shm/rrubocop-integrated-reversible-method"
+    }
+  ],
+  "completed_cutoff": {
+    "core": "9452548",
+    "frameworks": "cc3425f"
+  },
+  "additional_core_reviews": [
+    {
+      "source_commits": [
+        "9df7ab6",
+        "9452548"
+      ],
+      "integrated_commits": [
+        "338e977",
+        "c462500"
+      ],
+      "rule": "Lint/FloatOutOfRange",
+      "full_native": "passed",
+      "public_cli_gate": "running",
+      "metadata_and_production_controls": "pending"
     }
   ]
 }
