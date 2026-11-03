@@ -1,0 +1,296 @@
+[
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression",
+    "original": "a ? (b ? b1 : b2) : a2\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 11,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead."
+      }
+    ],
+    "ruby_safe": "if a\nb ? b1 : b2\nelse\na2\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression",
+    "original": "if a\nb ? b1 : b2\nelse\na2\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "if a\nb ? b1 : b2\nelse\na2\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression with block",
+    "original": "cond ? foo : bar(foo.a ? foo.b : foo) { |e, k| e.nil? ? nil : e[k] }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 18,
+        "length": 19,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead."
+      },
+      {
+        "line": 1,
+        "column": 48,
+        "length": 19,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead."
+      }
+    ],
+    "ruby_safe": "if cond\nfoo\nelse\nbar(foo.a ? foo.b : foo) { |e, k| e.nil? ? nil : e[k] }\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression with block",
+    "original": "if cond\nfoo\nelse\nbar(foo.a ? foo.b : foo) { |e, k| e.nil? ? nil : e[k] }\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "if cond\nfoo\nelse\nbar(foo.a ? foo.b : foo) { |e, k| e.nil? ? nil : e[k] }\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression with no parentheses on the outside",
+    "original": "x ? y + (z ? 1 : 0) : nil\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead."
+      }
+    ],
+    "ruby_safe": "if x\ny + (z ? 1 : 0)\nelse\nnil\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression with no parentheses on the outside",
+    "original": "if x\ny + (z ? 1 : 0)\nelse\nnil\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "if x\ny + (z ? 1 : 0)\nelse\nnil\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator registers an offense when a ternary operator has a nested ternary operator within an `if`",
+    "original": "a ? (\n  if b\n    c ? 1 : 2\n  end\n) : 3\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 5,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead."
+      }
+    ],
+    "ruby_safe": "if a\n\n  if b\n    c ? 1 : 2\n  end\n\nelse\n3\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator registers an offense when a ternary operator has a nested ternary operator within an `if`",
+    "original": "if a\n\n  if b\n    c ? 1 : 2\n  end\n\nelse\n3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "if a\n\n  if b\n    c ? 1 : 2\n  end\n\nelse\n3\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator accepts a non-nested ternary operator within an if",
+    "original": "a = if x\n  cond ? b : c\nelse\n  d\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "a = if x\n  cond ? b : c\nelse\n  d\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator can handle multiple nested ternaries",
+    "original": "a ? b : c ? d : e ? f : g\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 9,
+        "length": 17,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead."
+      },
+      {
+        "line": 1,
+        "column": 17,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead."
+      }
+    ],
+    "ruby_safe": "if a\nb\nelse\nc ? d : e ? f : g\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator can handle multiple nested ternaries",
+    "original": "if a\nb\nelse\nc ? d : e ? f : g\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 9,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead."
+      }
+    ],
+    "ruby_safe": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::NestedTernaryOperator can handle multiple nested ternaries",
+    "original": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n"
+  }
+]
