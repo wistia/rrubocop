@@ -21,6 +21,12 @@ impl Cop for Focus {
     fn supports_autocorrect(&self) -> bool {
         true
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        crate::cop::rspec::helpers::example_and_group_names()
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        self.interested_call_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,
