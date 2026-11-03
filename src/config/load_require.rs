@@ -91,13 +91,25 @@ fn load_gem_yaml_layer(
         gem_path::GemConfigSrc::Disk(root) => {
             load_config_recursive(&root.join(rel_path), working_dir, visited, gem_cache)
         }
-        gem_path::GemConfigSrc::Embed { version, yaml } => load_config_recursive_inner(
-            &gem_path::virtual_config_path(gem_name, &version, rel_path),
-            working_dir,
-            visited,
-            gem_cache,
-            Some(yaml),
-        ),
+        gem_path::GemConfigSrc::Embed { version, yaml } => {
+            let mut layer = load_config_recursive_inner(
+                &gem_path::virtual_config_path(gem_name, &version, rel_path),
+                working_dir,
+                visited,
+                gem_cache,
+                Some(yaml),
+            )?;
+            for name in super::gem_configs::registered_without_defaults(gem_name, &version) {
+                layer
+                    .cop_configs
+                    .entry(name)
+                    .or_insert_with(|| crate::cop::CopConfig {
+                        enabled: EnabledState::True,
+                        ..Default::default()
+                    });
+            }
+            Ok(layer)
+        }
     }
 }
 

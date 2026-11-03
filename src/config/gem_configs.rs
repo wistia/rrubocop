@@ -83,3 +83,14 @@ mod tests {
         assert!(same_as("rubocop", "1.81.0").is_none());
     }
 }
+
+/// Classes registered by an exact vendored plugin version but absent from its YAML.
+pub fn registered_without_defaults(gem: &str, version: &str) -> Vec<String> {
+    let registrations: std::collections::HashMap<String, Vec<String>> =
+        serde_json::from_str(include_str!("../resources/gem_registry_supplements.json"))
+            .expect("vendored plugin registration metadata");
+    registrations
+        .get(&format!("{gem}/{version}"))
+        .cloned()
+        .unwrap_or_default()
+}

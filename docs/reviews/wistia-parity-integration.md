@@ -29,10 +29,13 @@ resolves the historical invalid-Safe configuration discrepancy.
 Registry comparison preserves all 672 baseline names and adds the two previously
 missing, target-inert rules. None of the 160 enabled baseline stub source paths
 retains its original stub marker; this static observation is not a parity proof.
-Fresh original config still enables 553/550 root/dev-spec names. Native config
-lists 552/549, missing GraphQL/PrepareMethod: the locked plugin registers that
-class without a default-YAML entry, exposing a versioned registration-inference
-gap. A bounded fix and positive corpus coverage inventory remain pending.
+Fresh original config still enables 553/550 root/dev-spec names. A bounded exact-version registration supplement now restores matching native
+553/550 counts: the locked plugin registers GraphQL/PrepareMethod without a
+default-YAML entry. Three actual CLI availability/disablement/scope controls
+match Ruby, and the updated full suite passes 1,085 tests with one ignored.
+Positive original/native evidence is mapped for 147 former stubs; the remaining
+13 Style rules need their separate original-spec corpus mapping. The existing
+GraphQL implementation still needs its full behavioral review.
 
 The full Wistia scan exposed a panic in Style/TrailingCommaInArguments at line179
 (reversed slice11417..11416). The core owner is preparing an isolated regression

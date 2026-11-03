@@ -786,3 +786,6 @@ mod tests {
 
 #[cfg(test)]
 mod anycable_tests;
+
+#[cfg(test)]
+mod plugin_registry_tests;
