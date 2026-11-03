@@ -201,3 +201,6 @@ pub fn has_hspace(bytes: &[u8], start: usize, end: usize) -> bool {
 
 mod line_literal;
 pub(crate) use line_literal::is_line_literal;
+
+mod numeric_send;
+pub use numeric_send::{float_literal_span, numeric_send_start};
