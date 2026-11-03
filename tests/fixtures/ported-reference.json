@@ -55972,7 +55972,10 @@
         "severity": "convention"
       }
     ],
-    "corrected": "items { |a| work(a) }.each { |c,d| work(c,d) }\n"
+    "corrected": "items { |a| work(a) }.each { |c,d| work(c,d) }\n",
+    "rust_corrected": "items { |a,| work(a) }.each { |c,d| work(c,d) }\n",
+    "rust_correctable": false,
+    "reason": "Original removal changes a single block parameter to procarg0 binding; preserve authored binding."
   },
   {
     "cop": "Style/TrailingCommaInBlockArgs",
@@ -55994,7 +55997,10 @@
         "severity": "convention"
       }
     ],
-    "corrected": "items { |a| work(a) }.each { |c,d,| work(c,d) }\n"
+    "corrected": "items { |a| work(a) }.each { |c,d,| work(c,d) }\n",
+    "rust_corrected": "items { |a,| work(a) }.each { |c,d,| work(c,d) }\n",
+    "rust_correctable": false,
+    "reason": "Original removal changes a single block parameter to procarg0 binding; preserve authored binding."
   },
   {
     "cop": "Style/TrailingCommaInBlockArgs",

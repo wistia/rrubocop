@@ -1,4 +1,5 @@
 use crate::cop::CopRegistry;
+use crate::cop::style::trailing_comma_in_block_args::TrailingCommaInBlockArgs;
 pub(super) fn register(r: &mut CopRegistry) {
     super::rules!(r;
         ("Style/FileRead", &["call"], file_read, true, true, false),
@@ -6,8 +7,8 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Style/HashConversion", &["element_reference","call"], hash_conversion, true, false, false),
         ("Style/HashExcept", &["call"], hash_except, true, true, false),
         ("Style/MapCompactWithConditionalBlock", &["call"], map_compact, false, true, false),
-        ("Style/TrailingCommaInBlockArgs", &["block","do_block"], block_comma, true, true, false)
     );
+    r.register(Box::new(TrailingCommaInBlockArgs));
 }
 
 mod file;
@@ -22,8 +23,6 @@ use hash_except::hash_except;
 mod map_compact;
 use map_compact::map_compact;
 
-mod block_comma;
-use block_comma::block_comma;
 
 #[cfg(test)]
 mod eligibility_tests;
