@@ -112,7 +112,10 @@ fn trailing_if_kw(t: &[u8]) -> bool {
 }
 
 /// Indent of `.find_each do |x|` / `.map do` when the next line is the body.
-pub(super) fn deeper_dot_block(line: &[u8], next_indent: Option<usize>) -> Option<usize> {
+pub(super) fn deeper_dot_block(
+    line: &[u8],
+    next_indent: impl FnOnce() -> Option<usize>,
+) -> Option<usize> {
     let indent = line
         .iter()
         .take_while(|&&b| b == b' ' || b == b'\t')
@@ -125,7 +128,7 @@ pub(super) fn deeper_dot_block(line: &[u8], next_indent: Option<usize>) -> Optio
     if !(t.ends_with(b" do") || t.ends_with(b"|")) {
         return None;
     }
-    next_indent.filter(|n| *n > indent)?;
+    next_indent().filter(|n| *n > indent)?;
     Some(indent)
 }
 
@@ -145,5 +148,38 @@ pub(super) fn aligned_continuation(
     } else {
         *cont_base = None;
         false
+    }
+}
+
+#[cfg(test)]
+mod performance_tests {
+    use super::*;
+    #[test]
+    fn dot_block_lookahead_is_lazy_and_retains_lexical_eligibility() {
+        for line in [
+            b"# comment".as_slice(),
+            b"",
+            b"  \r",
+            b"ordinary do",
+            b"  .ordinary",
+            b"  &.ordinary",
+            b"\xff",
+        ] {
+            assert_eq!(
+                deeper_dot_block(line, || panic!("ordinary lines must not look ahead")),
+                None
+            );
+        }
+        for line in [b"  .each do".as_slice(), b"  &.each { |x|", b"\t.each do\r"] {
+            let count = std::cell::Cell::new(0);
+            let result = deeper_dot_block(line, || {
+                count.set(count.get() + 1);
+                Some(4)
+            });
+            assert!(result.is_some());
+            assert_eq!(count.get(), 1);
+            assert_eq!(deeper_dot_block(line, || Some(0)), None);
+            assert_eq!(deeper_dot_block(line, || None), None);
+        }
     }
 }
