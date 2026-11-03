@@ -6,10 +6,10 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Thirty-nine owned rules have completed bounded original-Ruby validation,
+Forty owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 328 queued or in-progress entries;
+The exhaustive 367-rule inventory retains 327 queued or in-progress entries;
 some already have implementations. Security/Eval and Lint/AssignmentInCondition are complete within their
 bounded gates; the remaining owned queue continues. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
@@ -896,3 +896,9 @@ The16 invalid-original probes and one original-valid native-error nested-heredoc
 Pinned RuboCop1.65.1 `lint/empty_ensure.rb` reports exactly when the original Ensure body is nil, highlights only its keyword and removes only that keyword. Reviewed both unchanged upstream examples (three iterated captures) and220 independent valid states across Ruby2.7/3.4: explicit begin, instance/singleton method, block and class forms; semicolons, comments, nil, empty grouping/begin, calls and delayed heredocs; LF/CRLF. All match exact messages, six-byte keyword ranges and original first-corrected bytes. Every independent native tree is explicitly error-free and correction flags match;172 fresh final states are accepted by both parsers, offense-free and unchanged on original replay.
 
 The existing port treated semicolon-only native empty_statement nodes as real ensure bodies. The correction now ignores these alongside comments, sets the keyword range explicitly, preserves disabled-correction flags and uses the existing opt-in original CRLF adapter. It does not delete surrounding whitespace/comments or replace a nonempty body. Explicit null safety settings are normalized only for this cop's absent-default Ruby behavior. The full native checkpoint passes964 tests/one pre-existing ignored, followed by five focused tests including disabled correction. The reference helper passes actual Ruby lint and byte-identical regeneration. Public CLI, metadata and actual-scope gates remain pending; completed counts remain39/328. Additional source/version/encoding/directive families and combined-cop scheduling remain outside this bounded review.
+
+## EmptyEnsure final bounded gate
+
+Separate review confirms original nil-body detection, keyword-only removal and default warning/safe autocorrection metadata. Both upstream examples/three iterated captures plus220 independent valid states match detection, six-byte highlights and corrected bytes. The446 public CLI modes match bytes, exits and inspected-file counts, with892 stable second passes/zero cop errors; all446 modes finish clean in both engines. The172 unique fresh final states are offense-free and unchanged under the original, with both parsers accepting every state. All32 safety/correction metadata controls and16 actual Wistia-config scope probes match, including nested ensures and retained comments. The source checkpoint passes964 full native tests/one pre-existing ignored, followed by five focused tests; the binary builds and reference lint/regeneration match.
+
+No rule retirement, fixture execution, syntax recovery or generic scheduling changes were made. Other source/version/encoding/directive and combined-cop families remain outside bounded coverage. This completes40 owned bounded ports and leaves327 awaiting their full original-source gate. All13 initial direct Style stubs remain implemented. Lint/EmptyInterpolation source/spec review is next; initial review identifies semicolon/comment body roles and potentially unsafe empty percent-word deletion requiring separate safeguards.
