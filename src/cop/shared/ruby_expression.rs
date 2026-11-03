@@ -143,6 +143,18 @@ pub fn regular_send_name<'s>(source: &'s SourceFile, node: Node<'_>) -> Option<C
     }
     name(source, node)
 }
+pub fn send_name<'s>(source: &'s SourceFile, node: Node<'_>) -> Option<Cow<'s, [u8]>> {
+    if safe_send(source, node) {
+        is_send(source, node).then(|| name(source, node)).flatten()
+    } else {
+        regular_send_name(source, node)
+    }
+}
+pub fn send_arguments<'n>(source: &SourceFile, node: Node<'n>) -> Option<Vec<Node<'n>>> {
+    send_name(source, node)?;
+    Some(call_args(node))
+}
+
 pub fn regular_send_arguments<'n>(source: &SourceFile, node: Node<'n>) -> Option<Vec<Node<'n>>> {
     regular_send_receiver(source, node)?;
     Some(call_args(node))
@@ -924,6 +936,46 @@ mod tests {
                 assert_eq!(
                     crate::cop::ported::static_symbol(&source, node).as_deref(),
                     Some("")
+                );
+            }
+        }
+    }
+    #[test]
+    fn send_wrappers_preserve_regular_roles_and_include_safe_calls() {
+        for (text, expected, count) in [
+            ("touch", Some("touch"), 0),
+            ("value&.touch", Some("touch"), 0),
+            ("value&.touch(1)", Some("touch"), 1),
+            ("touch=1; touch", None, 0),
+            ("__LINE__", None, 0),
+            ("__FILE__", None, 0),
+            ("__ENCODING__", None, 0),
+            ("def touch; end", None, 0),
+            ("alias touch previous", None, 0),
+            ("undef touch", None, 0),
+            ("object.touch=1", Some("touch="), 1),
+            ("object&.touch=1", Some("touch="), 1),
+            ("value + 1", Some("+"), 1),
+        ] {
+            let source = SourceFile::from_bytes("send.rb", text.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            let root = tree.root_node();
+            let node = root.named_child((root.named_child_count() - 1) as u32).unwrap();
+            assert_eq!(
+                send_name(&source, node).as_deref(),
+                expected.map(str::as_bytes),
+                "{text}"
+            );
+            assert_eq!(
+                send_arguments(&source, node).map(|args| args.len()),
+                expected.map(|_| count),
+                "{text}"
+            );
+            if !text.contains("&.") {
+                assert_eq!(
+                    send_name(&source, node),
+                    regular_send_name(&source, node),
+                    "{text}"
                 );
             }
         }
