@@ -1,0 +1,101 @@
+{
+  "source_base": "091dc33eaa8fde4a1e8ca55c42fb33e85df95ce8",
+  "optimized_source": "35fcdb893cc66d3c006f1587d6de4c10a9aab30e",
+  "wistia_checkout": "310b8e42e91232d07210eff6cacc2f2035a01bda",
+  "platform": "linux-arm64",
+  "logical_cpus": 8,
+  "build": "optimized release, thin LTO",
+  "files_inspected": 14824,
+  "baseline_empty_cache": {
+    "wall_seconds": 390.66,
+    "user_cpu_seconds": 2592.02,
+    "system_cpu_seconds": 8.83
+  },
+  "exclude_useless_assignment_diagnostic_only": {
+    "wall_seconds": 209.7,
+    "user_cpu_seconds": 900.65,
+    "system_cpu_seconds": 5.66,
+    "limitation": "Overlapped six Ruby validation workers; exclusion is not an enforcement change."
+  },
+  "lazy_suggestions_only_uncached": {
+    "wall_seconds": 138.63,
+    "user_cpu_seconds": 917.7,
+    "system_cpu_seconds": 6.65
+  },
+  "all_optimizations_uncached": {
+    "wall_seconds": 98.48,
+    "user_cpu_seconds": 759.13,
+    "system_cpu_seconds": 6.64
+  },
+  "all_optimizations_cache_protocol": [
+    {
+      "label": "populate_cache",
+      "time": "Command exited with non-zero status 1\n98.24 756.28 6.57 541696\n",
+      "exit_code": 1,
+      "metadata": {
+        "files_inspected": 14824,
+        "offense_count": 169,
+        "corrected_count": 0
+      },
+      "stderr": ""
+    },
+    {
+      "label": "warm_cache",
+      "time": "Command exited with non-zero status 1\n0.45 0.66 0.32 37288\n",
+      "exit_code": 1,
+      "metadata": {
+        "files_inspected": 14824,
+        "offense_count": 169,
+        "corrected_count": 0
+      },
+      "stderr": ""
+    },
+    {
+      "label": "warm_cache_repeat",
+      "time": "Command exited with non-zero status 1\n0.45 0.65 0.33 36148\n",
+      "exit_code": 1,
+      "metadata": {
+        "files_inspected": 14824,
+        "offense_count": 169,
+        "corrected_count": 0
+      },
+      "stderr": ""
+    }
+  ],
+  "same_protocol_wall_reduction_percent": 74.85,
+  "output_comparison": {
+    "populate_cache": {
+      "metadata_identical": true,
+      "offenses_identical": true
+    },
+    "warm_cache": {
+      "metadata_identical": true,
+      "offenses_identical": true
+    },
+    "warm_cache_repeat": {
+      "metadata_identical": true,
+      "offenses_identical": true
+    }
+  },
+  "correctness_scope": "Performance-only invariance against frozen 169-offense baseline, not a claim of Ruby parity. Baseline contains known Rust-only false positives, repaired separately on the integration branch. Full Ruby/native result reconciliation is a separate required gate.",
+  "tests": {
+    "native_passed": 1086,
+    "native_failed": 0,
+    "native_ignored": 1,
+    "original_unused_assignment_and_safeguard_tests_passed": 4
+  },
+  "changes": [
+    "Compute unused-variable typo suggestions lazily, only for an offense needing them.",
+    "Index scope anchors by source position instead of rescanning all nodes for every scope.",
+    "Cache Rack::Test::Methods inclusion once per source.",
+    "Defer NonNilCheck ancestor analysis until an expression matches.",
+    "Reject irrelevant RSpec method names before ancestor/scope analysis."
+  ],
+  "profiling": "Temporary diagnostic-only instrumentation timed source/model cops and AST callbacks; instrumentation is not committed or included in measured optimized binary.",
+  "measurement_limits": [
+    "Single cold measurement per variant; baseline ran with some parallel validation workload.",
+    "Optimized final cache-population and warm measurements were run after other agents paused expensive jobs.",
+    "Current correctness-integrated output and later dispatch optimization require separate validation and timing."
+  ],
+  "optimized_binary_sha256": "0f55a0915aa2e399bf4633e0c897c8ccde05885e3b6b6f482cbd2d17032593d5"
+}
