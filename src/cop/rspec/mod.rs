@@ -6,6 +6,7 @@ mod be_eq;
 mod be_eql;
 mod be_nil;
 mod before_after_all;
+pub(crate) mod cache;
 mod change_by_zero;
 mod class_check;
 mod contain_exactly;

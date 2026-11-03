@@ -179,3 +179,52 @@ fn hot_cop_routing_skips_irrelevant_calls_and_identifiers() {
         assert_eq!(gated.3, 0);
     }
 }
+
+#[test]
+fn additional_rspec_routing_preserves_reference_and_guard_states() {
+    let registry = crate::cop::CopRegistry::default_registry();
+    let mut cases: Vec<serde_json::Value> = serde_json::from_str(include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/tests/fixtures/rspec-parity/cases.json"
+    )))
+    .unwrap();
+    cases.extend(
+        serde_json::from_str::<Vec<serde_json::Value>>(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/rspec-parity/safety-guards.json"
+        )))
+        .unwrap(),
+    );
+    for name in [
+        "RSpec/Be",
+        "RSpec/ExampleWording",
+        "RSpec/ContextWording",
+        "RSpec/VariableName",
+        "RSpec/VariableDefinition",
+        "RSpec/VerifiedDoubleReference",
+        "RSpec/ImplicitBlockExpectation",
+        "RSpec/DescribedClass",
+        "RSpec/NoExpectationExample",
+        "RSpec/ExcessiveDocstringSpacing",
+        "RSpec/RepeatedExample",
+        "RSpec/RepeatedDescription",
+    ] {
+        let mut selected: Vec<_> = cases
+            .iter()
+            .filter(|case| case["cop"] == name)
+            .cloned()
+            .collect();
+        if name == "RSpec/DescribedClass" {
+            selected.push(serde_json::json!({"id":"described-class-routing", "cop":name, "config":{}, "source":"describe Foo do; it { Foo.new; object.ordinary(value) }; end"}));
+        }
+        assert!(!selected.is_empty(), "{name}");
+        let counts = assert_routing(registry.get(name).unwrap(), &selected);
+        assert!(counts.1 < counts.0, "{name}: {counts:?}");
+        eprintln!(
+            "{name}: {} sources; callbacks {} -> {}",
+            selected.len(),
+            counts.0,
+            counts.1
+        );
+    }
+}

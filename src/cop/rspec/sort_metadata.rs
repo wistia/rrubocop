@@ -64,7 +64,7 @@ impl Cop for SortMetadata {
             .filter(|arg| arg.kind() == "pair")
             .collect();
         let mut sorted_symbols = symbols.clone();
-        sorted_symbols.sort_by_key(|symbol| {
+        sorted_symbols.sort_by_cached_key(|symbol| {
             if symbol_node(*symbol) || symbol.kind() == "string" {
                 crate::cop::ported::static_literal(source, *symbol)
                     .unwrap_or_else(|| node_text(source, *symbol))
@@ -74,7 +74,7 @@ impl Cop for SortMetadata {
             }
         });
         let mut sorted_pairs = pairs.clone();
-        sorted_pairs.sort_by_key(|pair| {
+        sorted_pairs.sort_by_cached_key(|pair| {
             pair.child_by_field_name("key")
                 .map(|key| node_text(source, key).to_lowercase())
                 .unwrap_or_default()
@@ -87,12 +87,6 @@ impl Cop for SortMetadata {
             return;
         };
         let last = metadata.last().unwrap();
-        let replacement = sorted_symbols
-            .iter()
-            .chain(&sorted_pairs)
-            .map(|node| node_text(source, *node))
-            .collect::<Vec<_>>()
-            .join(", ");
         let index = report(
             self,
             source,
@@ -104,6 +98,15 @@ impl Cop for SortMetadata {
         if metadata.iter().any(|value| !pure_literal(source, *value)) {
             return;
         }
+        if corrections.is_none() {
+            return;
+        }
+        let replacement = sorted_symbols
+            .iter()
+            .chain(&sorted_pairs)
+            .map(|node| node_text(source, *node))
+            .collect::<Vec<_>>()
+            .join(", ");
         if preserving_replace(
             source,
             node,

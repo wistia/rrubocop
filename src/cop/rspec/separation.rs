@@ -5,28 +5,28 @@ use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 use tree_sitter::Node;
 
-fn siblings(node: Node<'_>) -> Vec<Node<'_>> {
-    node.parent()
-        .filter(|parent| {
-            matches!(
-                parent.kind(),
-                "program"
-                    | "body_statement"
-                    | "block_body"
-                    | "then"
-                    | "else"
-                    | "when"
-                    | "rescue"
-                    | "ensure"
-            )
-        })
-        .map(code_children)
-        .unwrap_or_default()
-}
 pub(super) fn next_code_sibling(node: Node<'_>) -> Option<Node<'_>> {
-    let siblings = siblings(node);
-    let index = siblings.iter().position(|sibling| *sibling == node)?;
-    siblings.get(index + 1).copied()
+    node.parent().filter(|parent| {
+        matches!(
+            parent.kind(),
+            "program"
+                | "body_statement"
+                | "block_body"
+                | "then"
+                | "else"
+                | "when"
+                | "rescue"
+                | "ensure"
+        )
+    })?;
+    let mut next = node.next_named_sibling();
+    while let Some(sibling) = next {
+        if sibling.kind() != "comment" {
+            return Some(sibling);
+        }
+        next = sibling.next_named_sibling();
+    }
+    None
 }
 fn line_range(source: &SourceFile, line: usize) -> Option<(usize, usize)> {
     let start = source.line_start(line)?;
@@ -37,7 +37,7 @@ fn line_range(source: &SourceFile, line: usize) -> Option<(usize, usize)> {
     }
     Some((start, end))
 }
-struct CommentLines(Vec<(usize, usize, usize)>);
+struct CommentLines(std::collections::BTreeMap<usize, (usize, usize)>);
 fn comments(source: &SourceFile, node: Node<'_>) -> std::sync::Arc<CommentLines> {
     source.cached(0, || {
         let mut root = node;
@@ -50,8 +50,7 @@ fn comments(source: &SourceFile, node: Node<'_>) -> std::sync::Arc<CommentLines>
                 .map(|comment| {
                     (
                         comment.start_position().row + 1,
-                        comment.start_byte(),
-                        comment.end_byte(),
+                        (comment.start_byte(), comment.end_byte()),
                     )
                 })
                 .collect(),
@@ -69,24 +68,26 @@ pub(super) fn separate(
     if next_code_sibling(node).is_none() {
         return;
     }
-    let mut line = source.offset_to_line_col(node.end_byte()).0;
-    let mut pending = vec![node];
-    while let Some(child) = pending.pop() {
-        if child.kind() == "heredoc_beginning" {
-            if let Some(end) = crate::cop::ported::heredoc_end(source, child) {
-                line = line.max(source.offset_to_line_col(end).0);
+    #[derive(Clone)]
+    struct FinalLine(usize);
+    let mut line = super::cache::node_fact(source, node, || {
+        let mut line = source.offset_to_line_col(node.end_byte()).0;
+        let mut pending = vec![node];
+        while let Some(child) = pending.pop() {
+            if child.kind() == "heredoc_beginning" {
+                if let Some(end) = crate::cop::ported::heredoc_end(source, child) {
+                    line = line.max(source.offset_to_line_col(end).0);
+                }
             }
+            pending.extend(code_children(child));
         }
-        pending.extend(code_children(child));
-    }
+        FinalLine(line)
+    })
+    .0;
     let end_line = line;
     let mut enable = None;
     let comments = comments(source, node);
-    while let Some((_, start, end)) = comments
-        .0
-        .iter()
-        .find(|(comment_line, _, _)| *comment_line == line + 1)
-    {
+    while let Some((start, end)) = comments.0.get(&(line + 1)) {
         line += 1;
         if String::from_utf8_lossy(&source.as_bytes()[*start..*end])
             .trim_start_matches('#')

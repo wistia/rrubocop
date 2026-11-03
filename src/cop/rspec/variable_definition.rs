@@ -21,6 +21,12 @@ impl Cop for VariableDefinition {
     fn supports_autocorrect(&self) -> bool {
         true
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"let", b"let!", b"subject", b"subject!"]
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        self.interested_call_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -46,24 +52,24 @@ impl Cop for VariableDefinition {
         };
         let style = config.get_str("EnforcedStyle", "symbols");
         let value = crate::cop::ported::static_literal(source, variable);
+        enum Replacement {
+            Symbol(String),
+            String(String),
+            DynamicSymbol,
+        }
         let replacement = if style == "symbols" && variable.kind() == "string" {
             let Some(value) = value else {
                 return;
             };
-            ruby_symbol(&value)
+            Replacement::Symbol(value)
         } else if style == "strings" && symbol_node(variable) {
             if variable.kind() == "delimited_symbol" && value.is_none() {
-                String::from_utf8_lossy(
-                    node_bytes(source, variable)
-                        .strip_prefix(b":")
-                        .unwrap_or_default(),
-                )
-                .into_owned()
+                Replacement::DynamicSymbol
             } else {
                 let Some(value) = value else {
                     return;
                 };
-                crate::cop::shared::ruby_literal::symbol_to_string_inspect(&value)
+                Replacement::String(value)
             }
         } else {
             return;
@@ -76,6 +82,21 @@ impl Cop for VariableDefinition {
             format!("Use {style} for variable names."),
             diagnostics,
         );
+        if corrections.is_none() {
+            return;
+        }
+        let replacement = match replacement {
+            Replacement::Symbol(value) => ruby_symbol(&value),
+            Replacement::String(value) => {
+                crate::cop::shared::ruby_literal::symbol_to_string_inspect(&value)
+            }
+            Replacement::DynamicSymbol => String::from_utf8_lossy(
+                node_bytes(source, variable)
+                    .strip_prefix(b":")
+                    .unwrap_or_default(),
+            )
+            .into_owned(),
+        };
         if preserving_replace(
             source,
             node,

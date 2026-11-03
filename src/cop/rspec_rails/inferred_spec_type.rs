@@ -159,7 +159,13 @@ impl Cop for InferredSpecType {
         if !GROUPS.iter().any(|&g| g == method) || call_block(node).is_none() {
             return;
         }
-        let Some(inferred) = infer_type(source.path_str(), config) else {
+        #[derive(Clone)]
+        struct Inferred(Option<String>);
+        let Inferred(Some(inferred)) =
+            crate::cop::rspec::cache::config_fact(source, config, &["Inferences"], || {
+                Inferred(infer_type(source.path_str(), config))
+            })
+        else {
             return;
         };
         let Some((off_node, skip)) = scan_type_args(source, node, &inferred) else {

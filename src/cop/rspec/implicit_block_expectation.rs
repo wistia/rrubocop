@@ -27,6 +27,35 @@ fn lambda_subject(source: &SourceFile, node: Node<'_>) -> bool {
         })
 }
 
+#[derive(Clone)]
+struct GroupSubject(Option<bool>);
+fn group_subject(source: &SourceFile, group: Node<'_>) -> Option<bool> {
+    super::cache::node_fact(source, group, || {
+        let result = (|| {
+            let body = call_block(group)?.child_by_field_name("body")?;
+            let children = code_children(body);
+            if children.len() < 2 {
+                return None;
+            }
+            let subject = children.into_iter().find(|child| {
+                !safe_send(source, *child)
+                    && call_receiver(*child).is_none()
+                    && matches!(name(source, *child), Some(b"subject" | b"subject!"))
+                    && call_block(*child).is_some()
+            })?;
+            let Some(body) =
+                call_block(subject).and_then(|block| block.child_by_field_name("body"))
+            else {
+                return Some(false);
+            };
+            let children = code_children(body);
+            Some(children.len() == 1 && lambda_subject(source, children[0]))
+        })();
+        GroupSubject(result)
+    })
+    .0
+}
+
 pub struct ImplicitBlockExpectation;
 impl Cop for ImplicitBlockExpectation {
     fn name(&self) -> &'static str {
@@ -37,6 +66,12 @@ impl Cop for ImplicitBlockExpectation {
     }
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call", "identifier"]
+    }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"is_expected", b"should", b"should_not"]
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        self.interested_call_names()
     }
     fn check_node(
         &self,
@@ -63,29 +98,9 @@ impl Cop for ImplicitBlockExpectation {
             {
                 continue;
             }
-            let Some(body) = call_block(group).and_then(|block| block.child_by_field_name("body"))
-            else {
+            let Some(lambda) = group_subject(source, group) else {
                 continue;
             };
-            let children = code_children(body);
-            if children.len() < 2 {
-                continue;
-            }
-            let Some(subject) = children.into_iter().find(|child| {
-                !safe_send(source, *child)
-                    && call_receiver(*child).is_none()
-                    && matches!(name(source, *child), Some(b"subject" | b"subject!"))
-                    && call_block(*child).is_some()
-            }) else {
-                continue;
-            };
-            let Some(body) =
-                call_block(subject).and_then(|block| block.child_by_field_name("body"))
-            else {
-                return;
-            };
-            let children = code_children(body);
-            let lambda = children.len() == 1 && lambda_subject(source, children[0]);
             if lambda {
                 report(
                     self,

@@ -18,6 +18,9 @@ impl Cop for NoExpectationExample {
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call"]
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        crate::cop::rspec::helpers::example_and_group_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -55,7 +58,7 @@ impl Cop for NoExpectationExample {
         if skipped_metadata(source, node) {
             return;
         }
-        let allowed = compiled_patterns(config, "AllowedPatterns");
+        let allowed = compiled_patterns(source, config, "AllowedPatterns");
         let mut pending = vec![block];
         while let Some(current) = pending.pop() {
             if !(current.kind() == "identifier" && local_binding(source, current))

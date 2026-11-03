@@ -53,10 +53,16 @@ impl Cop for ReturnFromStub {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        let block_style = config.get_str("EnforcedStyle", "and_return") == "block";
+        if (block_style && (name(source, node) != Some(b"and_return") || safe_send(source, node)))
+            || (!block_style && (call_block(node).is_none() || numbered_block(source, node)))
+        {
+            return;
+        }
         if !contains_stub(source, node) {
             return;
         }
-        if config.get_str("EnforcedStyle", "and_return") == "block" {
+        if block_style {
             if name(source, node) != Some(b"and_return") || safe_send(source, node) {
                 return;
             }
@@ -87,6 +93,9 @@ impl Cop for ReturnFromStub {
                 || implicit_hash
                 || !stable_immutable_value(source, args[0])
             {
+                return;
+            }
+            if corrections.is_none() {
                 return;
             }
             let Some(receiver) = call_receiver(node) else {
@@ -156,6 +165,9 @@ impl Cop for ReturnFromStub {
                     .first()
                     .is_some_and(|value| !stable_immutable_value(source, *value))
             {
+                return;
+            }
+            if corrections.is_none() {
                 return;
             }
             let body = statements

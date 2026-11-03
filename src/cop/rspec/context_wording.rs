@@ -7,6 +7,49 @@ use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 use tree_sitter::Node;
 
+#[derive(Clone)]
+struct WordingPatterns {
+    patterns: std::sync::Arc<Vec<regex::Regex>>,
+    description: String,
+    empty: bool,
+}
+fn wording_patterns(source: &SourceFile, config: &CopConfig) -> WordingPatterns {
+    super::cache::config_fact(source, config, &["AllowedPatterns", "Prefixes"], || {
+        let raw = string_options(config, "AllowedPatterns");
+        let prefixes = string_options(config, "Prefixes");
+        let patterns = raw
+            .iter()
+            .cloned()
+            .chain(
+                prefixes
+                    .iter()
+                    .map(|prefix| format!(r"^{}\b", regex::escape(prefix))),
+            )
+            .filter_map(|pattern| regex::Regex::new(&pattern).ok())
+            .collect();
+        let mut descriptions: Vec<_> = raw
+            .iter()
+            .map(|pattern| {
+                let quoted = ruby_string(pattern);
+                format!("/{}/", &quoted[1..quoted.len() - 1])
+            })
+            .chain(
+                prefixes
+                    .iter()
+                    .map(|prefix| format!(r"/^{}\b/", ruby_regexp_escape(prefix))),
+            )
+            .collect();
+        if descriptions.len() > 1 {
+            let last = descriptions.pop().unwrap();
+            descriptions.push(format!("or {last}"));
+        }
+        WordingPatterns {
+            patterns: std::sync::Arc::new(patterns),
+            description: descriptions.join(", "),
+            empty: raw.is_empty() && prefixes.is_empty(),
+        }
+    })
+}
 pub struct ContextWording;
 impl Cop for ContextWording {
     fn name(&self) -> &'static str {
@@ -17,6 +60,12 @@ impl Cop for ContextWording {
     }
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call", "identifier"]
+    }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"context", b"shared_context"]
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        self.interested_call_names()
     }
     fn check_node(
         &self,
@@ -42,9 +91,8 @@ impl Cop for ContextWording {
         if !matches!(argument.kind(), "string" | "chained_string" | "subshell") {
             return;
         }
-        let raw = string_options(config, "AllowedPatterns");
-        let prefixes = string_options(config, "Prefixes");
-        if raw.is_empty() && prefixes.is_empty() {
+        let prepared = wording_patterns(source, config);
+        if prepared.empty {
             return;
         }
         let text = crate::cop::ported::static_literal(source, argument).unwrap_or_else(|| {
@@ -53,48 +101,19 @@ impl Cop for ContextWording {
                 .map(|child| node_text(source, *child))
                 .collect()
         });
-        let patterns: Vec<_> = raw
+        if prepared
+            .patterns
             .iter()
-            .cloned()
-            .chain(
-                prefixes
-                    .iter()
-                    .map(|prefix| format!(r"^{}\b", regex::escape(prefix))),
-            )
-            .collect();
-        if patterns
-            .iter()
-            .any(|pattern| regex::Regex::new(pattern).is_ok_and(|pattern| pattern.is_match(&text)))
+            .any(|pattern| pattern.is_match(&text))
         {
             return;
-        }
-        let mut descriptions: Vec<_> = raw
-            .iter()
-            .map(|pattern| {
-                format!(
-                    "/{}/",
-                    &ruby_string(pattern)[1..ruby_string(pattern).len() - 1]
-                )
-            })
-            .chain(
-                prefixes
-                    .iter()
-                    .map(|prefix| format!(r"/^{}\b/", ruby_regexp_escape(prefix))),
-            )
-            .collect();
-        if descriptions.len() > 1 {
-            let last = descriptions.pop().unwrap();
-            descriptions.push(format!("or {last}"));
         }
         report(
             self,
             source,
             argument.start_byte(),
             argument.end_byte(),
-            format!(
-                "Context description should match {}.",
-                descriptions.join(", ")
-            ),
+            format!("Context description should match {}.", prepared.description),
             diagnostics,
         );
     }

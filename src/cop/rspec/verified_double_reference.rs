@@ -24,6 +24,21 @@ impl Cop for VerifiedDoubleReference {
     fn safe_autocorrect(&self) -> bool {
         false
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[
+            b"class_double",
+            b"class_spy",
+            b"instance_double",
+            b"instance_spy",
+            b"mock_model",
+            b"object_double",
+            b"object_spy",
+            b"stub_model",
+        ]
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        self.interested_call_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -72,6 +87,9 @@ impl Cop for VerifiedDoubleReference {
             format!("Use a {style} class reference for verified doubles."),
             diagnostics,
         );
+        if corrections.is_none() {
+            return;
+        }
         let text = node_text(source, reference);
         let replacement = if style == "string" {
             format!("'{text}'")

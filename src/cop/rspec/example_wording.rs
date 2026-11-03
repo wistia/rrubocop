@@ -111,6 +111,10 @@ fn preprocess(text: &str) -> String {
     }
     result.to_lowercase()
 }
+enum WordingReplacement {
+    Transform,
+    StripPrefix(usize),
+}
 pub struct ExampleWording;
 impl Cop for ExampleWording {
     fn name(&self) -> &'static str {
@@ -124,6 +128,9 @@ impl Cop for ExampleWording {
     }
     fn supports_autocorrect(&self) -> bool {
         true
+    }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"it"]
     }
     fn check_node(
         &self,
@@ -152,17 +159,17 @@ impl Cop for ExampleWording {
         let (message, replacement) = if SHOULD.is_match(&text) {
             (
                 "Do not use should when describing your tests.",
-                Some(rewrite(&text, config)),
+                Some(WordingReplacement::Transform),
             )
         } else if WILL.is_match(&text) {
             (
                 "Do not use the future tense when describing your tests.",
-                Some(rewrite(&text, config)),
+                Some(WordingReplacement::Transform),
             )
         } else if let Some(prefix) = IT.find(&text) {
             (
                 "Do not repeat 'it' when describing your tests.",
-                Some(text[prefix.end()..].into()),
+                Some(WordingReplacement::StripPrefix(prefix.end())),
             )
         } else if string_options(config, "DisallowedExamples")
             .iter()
@@ -177,6 +184,13 @@ impl Cop for ExampleWording {
         let index = report(self, source, start, end, message.into(), diagnostics);
         diagnostics[index].correctable =
             replacement.is_some() && description.kind() != "heredoc_beginning";
+        if corrections.is_none() {
+            return;
+        }
+        let replacement = replacement.map(|replacement| match replacement {
+            WordingReplacement::Transform => rewrite(&text, config),
+            WordingReplacement::StripPrefix(start) => text[start..].to_owned(),
+        });
         if let Some(replacement) = replacement
             .filter(|replacement| description::safe_replacement(source, description, replacement))
         {

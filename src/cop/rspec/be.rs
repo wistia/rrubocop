@@ -17,6 +17,12 @@ impl Cop for Be {
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call", "identifier"]
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"to", b"not_to", b"to_not"]
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        self.interested_call_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,

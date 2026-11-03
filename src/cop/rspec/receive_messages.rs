@@ -11,6 +11,7 @@ use tree_sitter::Node;
 struct Stub<'a> {
     node: Node<'a>,
     allow: Node<'a>,
+    allow_arguments: Vec<Argument<'a>>,
     matcher: Node<'a>,
     message: String,
     value: Argument<'a>,
@@ -53,14 +54,13 @@ fn stub<'a>(source: &SourceFile, node: Node<'a>) -> Option<Stub<'a>> {
     Some(Stub {
         node,
         allow,
+        allow_arguments: arguments(allow),
         matcher,
         message,
         value,
     })
 }
-fn equal_first(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
-    let left = arguments(left);
-    let right = arguments(right);
+fn equal_first(source: &SourceFile, left: &[Argument<'_>], right: &[Argument<'_>]) -> bool {
     match (left.first(), right.first()) {
         (None, None) => true,
         (Some(a), Some(b)) if a.hash && b.hash => {
@@ -255,25 +255,32 @@ impl Cop for ReceiveMessages {
             .collect::<Vec<_>>();
         let mut groups: Vec<Vec<&Stub<'_>>> = Vec::new();
         for candidate in &candidates {
-            if let Some(group) = groups
-                .iter_mut()
-                .find(|group| equal_first(source, group[0].allow, candidate.allow))
-            {
+            if let Some(group) = groups.iter_mut().find(|group| {
+                equal_first(
+                    source,
+                    &group[0].allow_arguments,
+                    &candidate.allow_arguments,
+                )
+            }) {
                 group.push(candidate);
             } else {
                 groups.push(vec![candidate]);
             }
         }
         for group in groups {
+            let mut message_lines: std::collections::HashMap<&str, (usize, bool)> =
+                std::collections::HashMap::new();
+            for item in &group {
+                let line = item.node.start_position().row;
+                message_lines
+                    .entry(&item.message)
+                    .and_modify(|(first, multiple)| *multiple |= *first != line)
+                    .or_insert((line, false));
+            }
             let items = group
                 .iter()
                 .copied()
-                .filter(|item| {
-                    !group.iter().any(|other| {
-                        other.message == item.message
-                            && other.node.start_position().row != item.node.start_position().row
-                    })
-                })
+                .filter(|item| !message_lines[item.message.as_str()].1)
                 .collect::<Vec<_>>();
             let mut owners = Vec::new();
             for item in &items {

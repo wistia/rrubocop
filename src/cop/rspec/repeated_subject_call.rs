@@ -17,7 +17,13 @@ fn walk(
     diagnostics: &mut Vec<Diagnostic>,
 ) {
     let mut names = inherited.to_vec();
-    names.extend(subjects.get(&node.id()).into_iter().flatten().cloned());
+    names.extend(
+        subjects
+            .get(&super::cache::NodeRange::new(node))
+            .into_iter()
+            .flatten()
+            .cloned(),
+    );
     if subject_scopes::example(source, node) {
         let Some(body) = call_block(node).and_then(|block| block.child_by_field_name("body"))
         else {

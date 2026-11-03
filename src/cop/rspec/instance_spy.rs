@@ -8,6 +8,34 @@ use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 use tree_sitter::Node;
 
+fn spy_assignment<'a>(
+    source: &SourceFile,
+    assignment: Node<'a>,
+) -> Option<(Node<'a>, Node<'a>, Node<'a>)> {
+    if assignment.kind() != "assignment" {
+        return None;
+    }
+    let left = assignment
+        .child_by_field_name("left")
+        .filter(|left| left.kind() == "identifier")?;
+    let right = assignment.child_by_field_name("right")?;
+    if safe_send(source, right)
+        || name(source, right) != Some(b"as_null_object")
+        || !call_args(right).is_empty()
+        || call_block(right).is_some()
+    {
+        return None;
+    }
+    let double = call_receiver(right)?;
+    if !bare(source, double, b"instance_double")
+        || safe_send(source, double)
+        || call_block(double).is_some()
+    {
+        return None;
+    }
+    Some((left, right, double))
+}
+
 pub struct InstanceSpy;
 impl Cop for InstanceSpy {
     fn name(&self) -> &'static str {
@@ -44,55 +72,36 @@ impl Cop for InstanceSpy {
             descendants.push(child);
             pending.extend(code_children(child));
         }
-        for assignment in descendants
+        let assignments: Vec<_> = descendants
             .iter()
-            .filter(|child| child.kind() == "assignment")
-        {
-            let Some(left) = assignment
-                .child_by_field_name("left")
-                .filter(|left| left.kind() == "identifier")
-            else {
-                continue;
-            };
-            let Some(right) = assignment.child_by_field_name("right") else {
-                continue;
-            };
-            if safe_send(source, right)
-                || name(source, right) != Some(b"as_null_object")
-                || !call_args(right).is_empty()
-                || call_block(right).is_some()
-            {
-                continue;
-            }
-            let Some(double) = call_receiver(right) else {
-                continue;
-            };
-            if !bare(source, double, b"instance_double")
-                || safe_send(source, double)
-                || call_block(double).is_some()
-            {
-                continue;
-            }
-            let used = descendants.iter().any(|child| {
+            .filter_map(|child| spy_assignment(source, *child))
+            .collect();
+        if assignments.is_empty() {
+            return;
+        }
+        let received: std::collections::HashSet<Vec<u8>> = descendants
+            .iter()
+            .filter_map(|child| {
                 if safe_send(source, *child) || name(source, *child) != Some(b"to") {
-                    return false;
+                    return None;
                 }
-                let Some(expectation) = call_receiver(*child) else {
-                    return false;
-                };
+                let expectation = call_receiver(*child)?;
                 if !bare(source, expectation, b"expect") {
-                    return false;
+                    return None;
                 }
                 let expected = call_args(expectation);
                 let matchers = call_args(*child);
-                expected.len() == 1
+                (expected.len() == 1
                     && expected[0].kind() == "identifier"
-                    && node_bytes(source, expected[0]) == node_bytes(source, left)
                     && crate::cop::ported::local_identifier(source, expected[0])
                     && !matchers.is_empty()
                     && bare(source, matchers[0], b"have_received")
-                    && call_block(matchers[0]).is_none()
-            });
+                    && call_block(matchers[0]).is_none())
+                .then(|| node_bytes(source, expected[0]).to_vec())
+            })
+            .collect();
+        for (left, right, double) in assignments {
+            let used = received.contains(node_bytes(source, left));
             if !used {
                 continue;
             }
@@ -104,6 +113,9 @@ impl Cop for InstanceSpy {
                 "Use `instance_spy` when you check your double with `have_received`.".into(),
                 diagnostics,
             );
+            if corrections.is_none() {
+                continue;
+            }
             let target = selector(double);
             let mut replacement =
                 String::from_utf8_lossy(&source.as_bytes()[double.start_byte()..header_end(right)])

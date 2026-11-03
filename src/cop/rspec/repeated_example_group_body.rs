@@ -11,9 +11,13 @@ fn constant<'a>(args: &[Node<'a>]) -> Option<Node<'a>> {
         .filter(|arg| matches!(arg.kind(), "constant" | "scope_resolution"))
         .copied()
 }
-fn same_group(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
-    let a = call_args(left);
-    let b = call_args(right);
+fn same_group(
+    source: &SourceFile,
+    left: Node<'_>,
+    right: Node<'_>,
+    a: &[Node<'_>],
+    b: &[Node<'_>],
+) -> bool {
     if a.is_empty() != b.is_empty()
         || !eql_arguments(
             source,
@@ -23,7 +27,7 @@ fn same_group(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
     {
         return false;
     }
-    if !match (constant(&a), constant(&b)) {
+    if !match (constant(a), constant(b)) {
         (None, None) => true,
         (Some(a), Some(b)) => eql_expression(source, a, b),
         _ => false,
@@ -79,11 +83,20 @@ impl Cop for RepeatedExampleGroupBody {
                     )
             })
             .collect();
-        for group in &groups {
-            let repeats: Vec<_> = groups
+        let arguments: Vec<_> = groups.iter().map(|group| call_args(*group)).collect();
+        let repeated = repeated_indices(groups.len(), |left, right| {
+            same_group(
+                source,
+                groups[left],
+                groups[right],
+                &arguments[left],
+                &arguments[right],
+            )
+        });
+        for (position, group) in groups.iter().enumerate() {
+            let repeats: Vec<_> = repeated[position]
                 .iter()
-                .filter(|other| other != &group && same_group(source, *group, **other))
-                .map(|other| other.start_position().row + 1)
+                .map(|index| groups[*index].start_position().row + 1)
                 .collect();
             if !repeats.is_empty() {
                 report(
