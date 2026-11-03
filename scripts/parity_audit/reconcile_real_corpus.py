@@ -11,6 +11,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--ruby-project', type=Path, required=True)
 parser.add_argument('--native', type=Path, required=True)
 parser.add_argument('--output', type=Path, required=True)
+parser.add_argument('--manifest', type=Path, help='JSON target list for a full same-file comparison')
 parser.add_argument('--baseline', type=Path, default=Path(__file__).resolve().parents[2] /
                     'docs/evidence/091dc33-real-corpus-comparison.json')
 args = parser.parse_args()
@@ -20,8 +21,9 @@ baseline = json.loads(args.baseline.read_text())
 invocation = baseline['invocation']
 source_head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
 assert source_head == invocation['wista_head'], (source_head, invocation['wista_head'])
-paths = invocation['ruby_argv'][5:]
-assert len(paths) == len(set(paths)) == 74
+paths = json.loads(args.manifest.read_text()) if args.manifest else invocation['ruby_argv'][5:]
+assert paths and len(paths) == len(set(paths))
+assert args.manifest or len(paths) == 74
 before = {path: hashlib.sha256((root / path).read_bytes()).hexdigest() for path in paths}
 environment = {'ASDF_RUBY_VERSION': '3.4.9', 'BUNDLE_GEMFILE': str(root / 'Gemfile'),
                'RRUBOCOP_CACHE_DIR': str(args.output.resolve() / 'native-cache'),
