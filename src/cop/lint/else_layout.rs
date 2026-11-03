@@ -207,6 +207,14 @@ mod tests {
                     );
                 }
             }
+            if let Some(exit) = case.get("native_final_exit") {
+                assert_eq!(actual.is_empty(), exit == 0, "{}", case["id"]);
+                assert!(edits.is_empty(), "{}", case["id"]);
+                let final_bytes = case
+                    .get("rust_corrected")
+                    .unwrap_or(&case["ruby_corrected"]);
+                assert_eq!(&case["original"], final_bytes, "{}", case["id"]);
+            }
             if case.get("rust_corrected").is_some() {
                 case["ruby_corrected"] = case["rust_corrected"].clone();
             }
@@ -279,5 +287,12 @@ mod tests {
             );
             assert!(edits.is_empty(), "{}", case["id"]);
         }
+    }
+    #[test]
+    fn fresh_final_states_retain_only_documented_guards() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/lint/else_layout/final-states.json"
+        )));
     }
 }

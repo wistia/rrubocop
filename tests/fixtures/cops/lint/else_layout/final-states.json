@@ -1,0 +1,4202 @@
+[
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout registers an offense and corrects for expr on same line as else",
+    "original": "if something\n  test\nelse\n  ala\n  something\n  test\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if something\n  test\nelse\n  ala\n  something\n  test\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :test),\n  s(:begin,\n    s(:send, nil, :ala),\n    s(:send, nil, :something),\n    s(:send, nil, :test)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :test),\n  s(:begin,\n    s(:send, nil, :ala),\n    s(:send, nil, :something),\n    s(:send, nil, :test)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout registers an offense and corrects for the entire else body being on the same line",
+    "original": "if something\n  test\nelse\n  something_else\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if something\n  test\nelse\n  something_else\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :test),\n  s(:send, nil, :something_else))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :test),\n  s(:send, nil, :something_else))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout accepts proper else",
+    "original": "if something\n  test\nelse\n  something\n  test\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if something\n  test\nelse\n  something\n  test\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :test),\n  s(:begin,\n    s(:send, nil, :something),\n    s(:send, nil, :test)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :test),\n  s(:begin,\n    s(:send, nil, :something),\n    s(:send, nil, :test)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout registers an offense and corrects for elsifs",
+    "original": "if something\n  test\nelsif something\n  bala\nelse\n  ala\n  something\n  test\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if something\n  test\nelsif something\n  bala\nelse\n  ala\n  something\n  test\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :test),\n  s(:if,\n    s(:send, nil, :something),\n    s(:send, nil, :bala),\n    s(:begin,\n      s(:send, nil, :ala),\n      s(:send, nil, :something),\n      s(:send, nil, :test))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :test),\n  s(:if,\n    s(:send, nil, :something),\n    s(:send, nil, :bala),\n    s(:begin,\n      s(:send, nil, :ala),\n      s(:send, nil, :something),\n      s(:send, nil, :test))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout registers and corrects an offense when using multiple `elsif`s",
+    "original": "if condition_foo\n  foo\nelsif condition_bar\n  bar\nelsif condition_baz\n  baz\nelse\n  qux\n  quux\n  corge\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if condition_foo\n  foo\nelsif condition_bar\n  bar\nelsif condition_baz\n  baz\nelse\n  qux\n  quux\n  corge\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition_foo),\n  s(:send, nil, :foo),\n  s(:if,\n    s(:send, nil, :condition_bar),\n    s(:send, nil, :bar),\n    s(:if,\n      s(:send, nil, :condition_baz),\n      s(:send, nil, :baz),\n      s(:begin,\n        s(:send, nil, :qux),\n        s(:send, nil, :quux),\n        s(:send, nil, :corge)))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition_foo),\n  s(:send, nil, :foo),\n  s(:if,\n    s(:send, nil, :condition_bar),\n    s(:send, nil, :bar),\n    s(:if,\n      s(:send, nil, :condition_baz),\n      s(:send, nil, :baz),\n      s(:begin,\n        s(:send, nil, :qux),\n        s(:send, nil, :quux),\n        s(:send, nil, :corge)))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout accepts ternary ops",
+    "original": "x ? a : b",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "x ? a : b",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :x),\n  s(:send, nil, :a),\n  s(:send, nil, :b))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :x),\n  s(:send, nil, :a),\n  s(:send, nil, :b))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout accepts modifier forms",
+    "original": "x if something",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "x if something",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :x), nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :x), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout accepts empty braces",
+    "original": "if something\n  ()\nelse\n  ()\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if something\n  ()\nelse\n  ()\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:begin),\n  s(:begin))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:begin),\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout does not register an offense for an elsif with no body",
+    "original": "if something\n  foo\nelsif something_else\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if something\n  foo\nelsif something_else\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :foo),\n  s(:if,\n    s(:send, nil, :something_else), nil, nil))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :something),\n  s(:send, nil, :foo),\n  s(:if,\n    s(:send, nil, :something_else), nil, nil))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::ElseLayout does not register an offense if the entire if is on a single line",
+    "original": "if a then b else c end\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Check for odd code arrangement in an else block.",
+      "Enabled": true,
+      "VersionAdded": "0.17",
+      "VersionChanged": "1.2",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if a then b else c end\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:send, nil, :c))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:send, nil, :c))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-0",
+    "original": "if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-2",
+    "original": "unless condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :work),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :work),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-4",
+    "original": "if condition\n first\nelse\n  work; other\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  work; other\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-6",
+    "original": "unless condition\n first\nelse\n  work; other\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  work; other\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-8",
+    "original": "if condition\n first\nelse\n  nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  nil\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:nil))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:nil))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-10",
+    "original": "unless condition\n first\nelse\n  nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  nil\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:nil),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:nil),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-12",
+    "original": "if condition\n first\nelse ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse ()\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-13",
+    "original": "if condition\r\n first\r\nelse ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\r\n first\r\nelse ()\r\nend\r\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-14",
+    "original": "unless condition\n first\nelse ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse ()\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-15",
+    "original": "unless condition\r\n first\r\nelse ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\r\n first\r\nelse ()\r\nend\r\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-16",
+    "original": "if condition\n first\nelse (work)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse (work)\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-17",
+    "original": "if condition\r\n first\r\nelse (work)\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\r\n first\r\nelse (work)\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-18",
+    "original": "unless condition\n first\nelse (work)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  work)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\n first\nelse (work)\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-19",
+    "original": "unless condition\r\n first\r\nelse (work)\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  work)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\r\n first\r\nelse (work)\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-20",
+    "original": "if condition\n first\nelse (work; other)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work; other)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse (work; other)\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-21",
+    "original": "if condition\r\n first\r\nelse (work; other)\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work; other)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\r\n first\r\nelse (work; other)\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-22",
+    "original": "unless condition\n first\nelse (work; other)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  work; other)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\n first\nelse (work; other)\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-23",
+    "original": "unless condition\r\n first\r\nelse (work; other)\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  work; other)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\r\n first\r\nelse (work; other)\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-24",
+    "original": "if condition\n first\nelse ((work))\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 6,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  (work))\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:begin,\n      s(:send, nil, :work))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse ((work))\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-25",
+    "original": "if condition\r\n first\r\nelse ((work))\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 6,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  (work))\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:begin,\n      s(:send, nil, :work))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\r\n first\r\nelse ((work))\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-26",
+    "original": "unless condition\n first\nelse ((work))\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 6,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  (work))\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:begin,\n      s(:send, nil, :work))),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\n first\nelse ((work))\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-27",
+    "original": "unless condition\r\n first\r\nelse ((work))\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 6,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  (work))\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:begin,\n      s(:send, nil, :work))),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\r\n first\r\nelse ((work))\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-28",
+    "original": "if condition\n first\nelse\n  (); work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  (); work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:begin),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:begin),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-30",
+    "original": "unless condition\n first\nelse\n  (); work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  (); work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:begin),\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:begin),\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-32",
+    "original": "if condition\n first\nelse\n  begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  begin;end\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:kwbegin))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:kwbegin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-34",
+    "original": "unless condition\n first\nelse\n  begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  begin;end\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:kwbegin),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:kwbegin),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-36",
+    "original": "if condition\n first\nelse\n  \"héllo 😀\"\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  \"héllo 😀\"\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:str, \"héllo 😀\"))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:str, \"héllo 😀\"))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-38",
+    "original": "unless condition\n first\nelse\n  \"héllo 😀\"\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  \"héllo 😀\"\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:str, \"héllo 😀\"),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:str, \"héllo 😀\"),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-40",
+    "original": "if condition\n first\nelse\n  consume { work }\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  consume { work }\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:block,\n    s(:send, nil, :consume),\n    s(:args),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:block,\n    s(:send, nil, :consume),\n    s(:args),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-42",
+    "original": "unless condition\n first\nelse\n  consume { work }\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  consume { work }\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:block,\n    s(:send, nil, :consume),\n    s(:args),\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:block,\n    s(:send, nil, :consume),\n    s(:args),\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-44",
+    "original": "if condition\n first\nelse __LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 8,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  __LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:int, 4))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse __LINE__\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-45",
+    "original": "if condition\r\n first\r\nelse __LINE__\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 8,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  __LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:int, 4))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\r\n first\r\nelse __LINE__\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-46",
+    "original": "unless condition\n first\nelse __LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 8,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  __LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:int, 3),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:int, 4),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\n first\nelse __LINE__\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-47",
+    "original": "unless condition\r\n first\r\nelse __LINE__\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 8,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  __LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:int, 3),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:int, 4),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\r\n first\r\nelse __LINE__\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-48",
+    "original": "if condition\n first\nelse\n  obj.__LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  obj.__LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-50",
+    "original": "unless condition\n first\nelse\n  obj.__LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  obj.__LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-56",
+    "original": "if condition\n first\nelse\n  x=value\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  x=value\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:lvasgn, :x,\n    s(:send, nil, :value)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:lvasgn, :x,\n    s(:send, nil, :value)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-58",
+    "original": "unless condition\n first\nelse\n  x=value\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  x=value\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:lvasgn, :x,\n    s(:send, nil, :value)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:lvasgn, :x,\n    s(:send, nil, :value)),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-60",
+    "original": "if condition;first;else work;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition;first;else work;end\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-61",
+    "original": "if condition\n first\nelse\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-62",
+    "original": "if condition\n first\nelse # note\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse # note\n work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-63",
+    "original": "case condition\nwhen :value;first\nelse work; other\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "case condition\nwhen :value;first\nelse work; other\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:sym, :value),\n    s(:send, nil, :first)),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:sym, :value),\n    s(:send, nil, :first)),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-64",
+    "original": "begin\n work\nrescue\n fallback\nelse work; other\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n work\nrescue\n fallback\nelse work; other\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:rescue,\n    s(:send, nil, :work),\n    s(:resbody, nil, nil,\n      s(:send, nil, :fallback)),\n    s(:begin,\n      s(:send, nil, :work),\n      s(:send, nil, :other))))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:rescue,\n    s(:send, nil, :work),\n    s(:resbody, nil, nil,\n      s(:send, nil, :fallback)),\n    s(:begin,\n      s(:send, nil, :work),\n      s(:send, nil, :other))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-65",
+    "original": "if condition\n first\nelsif other; other;else\n  work;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelsif other; other;else\n  work;end\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-66",
+    "original": "if condition\n first\nelsif other\n other\nelsif another\n another\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelsif other\n other\nelsif another\n another\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:if,\n      s(:send, nil, :another),\n      s(:send, nil, :another),\n      s(:send, nil, :work))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:if,\n      s(:send, nil, :another),\n      s(:send, nil, :another),\n      s(:send, nil, :work))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-67",
+    "original": "if condition\n first\nelse\n  if other\n other\nelse\n       work\nend\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  if other\n other\nelse\n       work\nend\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-68",
+    "original": "if condition\n first\nelse work\nend\n__LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work\nend\n__LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)),\n  s(:int, 5))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)),\n  s(:int, 6))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse work\nend\n__LINE__\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-69",
+    "original": "__LINE__\nif condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "__LINE__\nif condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:begin,\n  s(:int, 1),\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:int, 1),\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-70",
+    "original": "if condition\n first\nelse\n  work\nend\nobj.__LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  work\nend\nobj.__LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-71",
+    "original": "if condition\n first\nelse\n  <<DOC\ntext\nDOC\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  <<DOC\ntext\nDOC\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:str, \"text\\n\"))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:str, \"text\\n\"))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-72",
+    "original": "if condition\n first\nelse (<<DOC)\ntext\nDOC\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 5,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  <<DOC)\ntext\nDOC\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:str, \"text\\n\")))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse (<<DOC)\ntext\nDOC\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-73",
+    "original": "if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-75",
+    "original": "unless condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :work),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :work),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-77",
+    "original": "if condition\n first\nelse\n  work; other\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  work; other\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-79",
+    "original": "unless condition\n first\nelse\n  work; other\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  work; other\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-81",
+    "original": "if condition\n first\nelse\n  nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  nil\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:nil))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:nil))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-83",
+    "original": "unless condition\n first\nelse\n  nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  nil\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:nil),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:nil),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-85",
+    "original": "if condition\n first\nelse ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse ()\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-86",
+    "original": "if condition\r\n first\r\nelse ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\r\n first\r\nelse ()\r\nend\r\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-87",
+    "original": "unless condition\n first\nelse ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse ()\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-88",
+    "original": "unless condition\r\n first\r\nelse ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\r\n first\r\nelse ()\r\nend\r\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-89",
+    "original": "if condition\n first\nelse (work)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse (work)\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-90",
+    "original": "if condition\r\n first\r\nelse (work)\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\r\n first\r\nelse (work)\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-91",
+    "original": "unless condition\n first\nelse (work)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  work)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\n first\nelse (work)\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-92",
+    "original": "unless condition\r\n first\r\nelse (work)\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  work)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\r\n first\r\nelse (work)\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-93",
+    "original": "if condition\n first\nelse (work; other)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work; other)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse (work; other)\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-94",
+    "original": "if condition\r\n first\r\nelse (work; other)\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work; other)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\r\n first\r\nelse (work; other)\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-95",
+    "original": "unless condition\n first\nelse (work; other)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  work; other)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\n first\nelse (work; other)\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-96",
+    "original": "unless condition\r\n first\r\nelse (work; other)\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  work; other)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\r\n first\r\nelse (work; other)\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-97",
+    "original": "if condition\n first\nelse ((work))\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 6,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  (work))\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:begin,\n      s(:send, nil, :work))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse ((work))\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-98",
+    "original": "if condition\r\n first\r\nelse ((work))\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 6,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  (work))\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:begin,\n      s(:send, nil, :work))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\r\n first\r\nelse ((work))\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-99",
+    "original": "unless condition\n first\nelse ((work))\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 6,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  (work))\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:begin,\n      s(:send, nil, :work))),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\n first\nelse ((work))\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-100",
+    "original": "unless condition\r\n first\r\nelse ((work))\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 6,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  (work))\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:begin,\n      s(:send, nil, :work))),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\r\n first\r\nelse ((work))\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-101",
+    "original": "if condition\n first\nelse\n  (); work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  (); work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:begin),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:begin),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-103",
+    "original": "unless condition\n first\nelse\n  (); work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  (); work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:begin),\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:begin,\n    s(:begin),\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-105",
+    "original": "if condition\n first\nelse\n  begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  begin;end\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:kwbegin))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:kwbegin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-107",
+    "original": "unless condition\n first\nelse\n  begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  begin;end\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:kwbegin),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:kwbegin),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-109",
+    "original": "if condition\n first\nelse\n  \"héllo 😀\"\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  \"héllo 😀\"\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:str, \"héllo 😀\"))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:str, \"héllo 😀\"))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-111",
+    "original": "unless condition\n first\nelse\n  \"héllo 😀\"\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  \"héllo 😀\"\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:str, \"héllo 😀\"),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:str, \"héllo 😀\"),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-113",
+    "original": "if condition\n first\nelse\n  consume { work }\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  consume { work }\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:block,\n    s(:send, nil, :consume),\n    s(:args),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:block,\n    s(:send, nil, :consume),\n    s(:args),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-115",
+    "original": "unless condition\n first\nelse\n  consume { work }\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  consume { work }\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:block,\n    s(:send, nil, :consume),\n    s(:args),\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:block,\n    s(:send, nil, :consume),\n    s(:args),\n    s(:send, nil, :work)),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-117",
+    "original": "if condition\n first\nelse __LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 8,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  __LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:int, 4))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse __LINE__\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-118",
+    "original": "if condition\r\n first\r\nelse __LINE__\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 8,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  __LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:int, 4))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\r\n first\r\nelse __LINE__\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-119",
+    "original": "unless condition\n first\nelse __LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 8,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  __LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:int, 3),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:int, 4),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\n first\nelse __LINE__\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-120",
+    "original": "unless condition\r\n first\r\nelse __LINE__\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 8,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "unless condition\n first\nelse\n  __LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:int, 3),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:int, 4),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "unless condition\r\n first\r\nelse __LINE__\r\nend\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-121",
+    "original": "if condition\n first\nelse\n  obj.__LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  obj.__LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-123",
+    "original": "unless condition\n first\nelse\n  obj.__LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  obj.__LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-129",
+    "original": "if condition\n first\nelse\n  x=value\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  x=value\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:lvasgn, :x,\n    s(:send, nil, :value)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:lvasgn, :x,\n    s(:send, nil, :value)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-131",
+    "original": "unless condition\n first\nelse\n  x=value\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless condition\n first\nelse\n  x=value\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:lvasgn, :x,\n    s(:send, nil, :value)),\n  s(:send, nil, :first))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:lvasgn, :x,\n    s(:send, nil, :value)),\n  s(:send, nil, :first))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-133",
+    "original": "if condition;first;else work;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition;first;else work;end\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-134",
+    "original": "if condition\n first\nelse\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-135",
+    "original": "if condition\n first\nelse # note\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse # note\n work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-136",
+    "original": "case condition\nwhen :value;first\nelse work; other\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "case condition\nwhen :value;first\nelse work; other\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:sym, :value),\n    s(:send, nil, :first)),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:sym, :value),\n    s(:send, nil, :first)),\n  s(:begin,\n    s(:send, nil, :work),\n    s(:send, nil, :other)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-137",
+    "original": "begin\n work\nrescue\n fallback\nelse work; other\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n work\nrescue\n fallback\nelse work; other\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:rescue,\n    s(:send, nil, :work),\n    s(:resbody, nil, nil,\n      s(:send, nil, :fallback)),\n    s(:begin,\n      s(:send, nil, :work),\n      s(:send, nil, :other))))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:rescue,\n    s(:send, nil, :work),\n    s(:resbody, nil, nil,\n      s(:send, nil, :fallback)),\n    s(:begin,\n      s(:send, nil, :work),\n      s(:send, nil, :other))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-138",
+    "original": "if condition\n first\nelsif other; other;else\n  work;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelsif other; other;else\n  work;end\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-139",
+    "original": "if condition\n first\nelsif other\n other\nelsif another\n another\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelsif other\n other\nelsif another\n another\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:if,\n      s(:send, nil, :another),\n      s(:send, nil, :another),\n      s(:send, nil, :work))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:if,\n      s(:send, nil, :another),\n      s(:send, nil, :another),\n      s(:send, nil, :work))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-140",
+    "original": "if condition\n first\nelse\n  if other\n other\nelse\n       work\nend\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  if other\n other\nelse\n       work\nend\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:if,\n    s(:send, nil, :other),\n    s(:send, nil, :other),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-141",
+    "original": "if condition\n first\nelse work\nend\n__LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "line-value",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 6,
+        "length": 4,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  work\nend\n__LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)),\n  s(:int, 5))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)),\n  s(:int, 6))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse work\nend\n__LINE__\n",
+    "rust_correctable": false,
+    "reason": "Preserve real later __LINE__ values",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-142",
+    "original": "__LINE__\nif condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "__LINE__\nif condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:begin,\n  s(:int, 1),\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:int, 1),\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-143",
+    "original": "if condition\n first\nelse\n  work\nend\nobj.__LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  work\nend\nobj.__LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)),\n  s(:send,\n    s(:send, nil, :obj), :__LINE__))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-144",
+    "original": "if condition\n first\nelse\n  <<DOC\ntext\nDOC\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n  <<DOC\ntext\nDOC\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:str, \"text\\n\"))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:str, \"text\\n\"))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-145",
+    "original": "if condition\n first\nelse (<<DOC)\ntext\nDOC\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": "syntax",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 5,
+        "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if condition\n first\nelse\n  <<DOC)\ntext\nDOC\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:begin,\n    s(:str, \"text\\n\")))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if condition\n first\nelse (<<DOC)\ntext\nDOC\nend\n",
+    "rust_correctable": false,
+    "reason": "Preserve source grouping that original rewrite invalidates",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-else-layout-146",
+    "original": "  if condition\n first\nelse\n    work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n    work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-147",
+    "original": "\tif condition\n first\nelse\n   work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\tif condition\n first\nelse\n   work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-148",
+    "original": "consume(if condition\n first\nelse\n          work\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "consume(if condition\n first\nelse\n          work\nend)\n",
+    "ruby_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-149",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 0
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-150",
+    "original": "\tif condition\n first\nelse\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 0
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\tif condition\n first\nelse\n work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-151",
+    "original": "consume(if condition\n first\nelse\n        work\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 0
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "consume(if condition\n first\nelse\n        work\nend)\n",
+    "ruby_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-152",
+    "original": "  if condition\n first\nelse\n      work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 4,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n      work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-153",
+    "original": "\tif condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 4,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\tif condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-154",
+    "original": "consume(if condition\n first\nelse\n            work\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 4
+    },
+    "sibling_cops": {},
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 4,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "consume(if condition\n first\nelse\n            work\nend)\n",
+    "ruby_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-155",
+    "original": "  if condition\n first\nelse\n      work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": null
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 4,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n      work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-156",
+    "original": "\tif condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": null
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 4,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\tif condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-157",
+    "original": "consume(if condition\n first\nelse\n            work\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": null
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 4,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "consume(if condition\n first\nelse\n            work\nend)\n",
+    "ruby_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-158",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": false
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 3
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-159",
+    "original": "\tif condition\n first\nelse\n    work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": false
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 3
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\tif condition\n first\nelse\n    work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-160",
+    "original": "consume(if condition\n first\nelse\n           work\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": false
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 3
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "consume(if condition\n first\nelse\n           work\nend)\n",
+    "ruby_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-161",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 0
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-162",
+    "original": "\tif condition\n first\nelse\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 0
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\tif condition\n first\nelse\n work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-163",
+    "original": "consume(if condition\n first\nelse\n        work\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 0
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "consume(if condition\n first\nelse\n        work\nend)\n",
+    "ruby_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-164",
+    "original": "  if condition\n first\nelse\n    work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": null
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n    work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-165",
+    "original": "\tif condition\n first\nelse\n   work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": null
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\tif condition\n first\nelse\n   work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-layout-166",
+    "original": "consume(if condition\n first\nelse\n          work\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": null
+      }
+    },
+    "guard": null,
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 2,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "consume(if condition\n first\nelse\n          work\nend)\n",
+    "ruby_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:send, nil, :consume,\n  s(:if,\n    s(:send, nil, :condition),\n    s(:send, nil, :first),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-0",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 3.5
+    },
+    "sibling_cops": {},
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-1",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 3.5
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 7
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-2",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": -0.5
+    },
+    "sibling_cops": {},
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": -0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-3",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": -0.5
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 7
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": -0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-4",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 0.5
+    },
+    "sibling_cops": {},
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-5",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 0.5
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 7
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-6",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 3.0
+    },
+    "sibling_cops": {},
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-7",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": 3.0
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 7
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-18",
+    "original": "if condition\n first\nelse\n   work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": null
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 3.5
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n   work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-19",
+    "original": "if condition\n first\nelse\n   work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": false
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 3.5
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n   work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-20",
+    "original": "if condition\n first\nelse\nwork\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": null
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": -0.5
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": -0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\nwork\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-21",
+    "original": "if condition\n first\nelse\nwork\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7,
+      "IndentationWidth": false
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": -0.5
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": -0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\nwork\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-22",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 3.5
+    },
+    "sibling_cops": {},
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-23",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 3.5
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 7
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-24",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": -0.5
+    },
+    "sibling_cops": {},
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": -0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-25",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": -0.5
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 7
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": -0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-26",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 0.5
+    },
+    "sibling_cops": {},
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-27",
+    "original": "  if condition\n first\nelse\n  work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 0.5
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 7
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n  work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-28",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 3.0
+    },
+    "sibling_cops": {},
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-29",
+    "original": "  if condition\n first\nelse\n     work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 3.0
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 7
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.0,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "  if condition\n first\nelse\n     work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-40",
+    "original": "if condition\n first\nelse\n   work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": null
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 3.5
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n   work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-41",
+    "original": "if condition\n first\nelse\n   work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": false
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 3.5
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": 3.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\n   work\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-42",
+    "original": "if condition\n first\nelse\nwork\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": null
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": -0.5
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": -0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\nwork\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-else-typed-width-43",
+    "original": "if condition\n first\nelse\nwork\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": false
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": -0.5
+      }
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "effective_indentation_width": -0.5,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n first\nelse\nwork\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :condition),\n  s(:send, nil, :first),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  }
+]
