@@ -147,7 +147,15 @@ fn start(node: Node<'_>) -> usize {
         .and_then(|p| p.child_by_field_name("body"))
         .map_or(node.start_byte(), |n| n.start_byte())
 }
+struct ObservationIndex {
+    boundaries: std::collections::BTreeMap<usize, usize>,
+    observers: Vec<usize>,
+}
 fn observed(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {
+    type Key = (usize, usize, usize, u64);
+    struct Indexes(
+        std::sync::Mutex<std::collections::HashMap<Key, std::sync::Arc<ObservationIndex>>>,
+    );
     let scope = scope(node);
     let mut root = scope
         .and_then(|n| n.child_by_field_name("body"))
@@ -157,19 +165,64 @@ fn observed(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {
             root = parent;
         }
     }
-    let nodes = nodes(root);
+    let key = (
+        scope.map_or(usize::MAX, |node| node.start_byte()),
+        root.start_byte(),
+        root.end_byte(),
+        config.get_f64("TargetRubyVersion", 3.4).to_bits(),
+    );
+    let indexes = source.cached(0, || Indexes(Default::default()));
+    let index = indexes
+        .0
+        .lock()
+        .unwrap()
+        .entry(key)
+        .or_insert_with(|| {
+            let mut boundaries = std::collections::BTreeMap::new();
+            let mut observers = Vec::new();
+            for (position, current) in nodes(root).into_iter().enumerate() {
+                if self::scope(current) != scope {
+                    continue;
+                }
+                if candidate(source, current, config) {
+                    let entry = boundaries
+                        .entry(start(current))
+                        .or_insert((position, current.start_byte()));
+                    if position < entry.0 {
+                        *entry = (position, current.start_byte());
+                    }
+                }
+                if observer(source, current) {
+                    observers.push(current.start_byte());
+                }
+            }
+            let mut first = (usize::MAX, usize::MAX);
+            let mut suffix = std::collections::BTreeMap::new();
+            for (start, event) in boundaries.into_iter().rev() {
+                if event.0 < first.0 {
+                    first = event;
+                }
+                suffix.insert(start, first.1);
+            }
+            observers.sort_unstable();
+            std::sync::Arc::new(ObservationIndex {
+                boundaries: suffix,
+                observers,
+            })
+        })
+        .clone();
     let from = start(node);
-    let to = nodes
-        .iter()
-        .find(|n| candidate(source, **n, config) && start(**n) > from && self::scope(**n) == scope)
-        .map_or(usize::MAX, |n| n.start_byte());
-    nodes.iter().any(|n| {
-        n.start_byte() >= from
-            && n.start_byte() <= to
-            && self::scope(*n) == scope
-            && observer(source, *n)
-    })
+    let to = index
+        .boundaries
+        .range((std::ops::Bound::Excluded(from), std::ops::Bound::Unbounded))
+        .next()
+        .map_or(usize::MAX, |(_, end)| *end);
+    index
+        .observers
+        .get(index.observers.partition_point(|&position| position < from))
+        .is_some_and(|&position| position <= to)
 }
+
 fn condition(node: Node<'_>) -> bool {
     let Some(parent) = node.parent() else {
         return false;
@@ -194,13 +247,21 @@ fn condition(node: Node<'_>) -> bool {
     })
 }
 fn indirect_captures_observed(source: &SourceFile, mut node: Node<'_>) -> bool {
-    while let Some(parent) = node.parent() {
-        node = parent;
-    }
-    nodes(node)
-        .iter()
-        .any(|n| crate::cop::shared::indirect_capture_observer(source, *n))
+    struct IndirectCapture(bool);
+    source
+        .cached(0, || {
+            while let Some(parent) = node.parent() {
+                node = parent;
+            }
+            IndirectCapture(
+                nodes(node)
+                    .iter()
+                    .any(|n| crate::cop::shared::indirect_capture_observer(source, *n)),
+            )
+        })
+        .0
 }
+
 pub struct RegexpMatch;
 impl Cop for RegexpMatch {
     fn name(&self) -> &'static str {
@@ -211,6 +272,9 @@ impl Cop for RegexpMatch {
     }
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call", "binary"]
+    }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"match", b"=~", b"!~", b"==="]
     }
     fn check_node(
         &self,
@@ -293,5 +357,90 @@ impl Cop for RegexpMatch {
             }
         }
         diagnostics.push(d);
+    }
+}
+
+#[cfg(test)]
+mod performance_tests {
+    use super::*;
+    fn original_observed(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {
+        let scope = scope(node);
+        let mut root = scope
+            .and_then(|n| n.child_by_field_name("body"))
+            .unwrap_or(node);
+        if scope.is_none() {
+            while let Some(parent) = root.parent() {
+                root = parent;
+            }
+        }
+        let nodes = nodes(root);
+        let from = start(node);
+        let to = nodes
+            .iter()
+            .find(|n| {
+                candidate(source, **n, config) && start(**n) > from && self::scope(**n) == scope
+            })
+            .map_or(usize::MAX, |n| n.start_byte());
+        nodes.iter().any(|n| {
+            n.start_byte() >= from
+                && n.start_byte() <= to
+                && self::scope(*n) == scope
+                && observer(source, *n)
+        })
+    }
+    #[test]
+    fn observer_index_preserves_original_scope_boundaries_and_modifier_order() {
+        let mut cases: Vec<serde_json::Value> = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/performance-seven-upstream/cases.json"
+        )))
+        .unwrap();
+        for source in [
+            "work if /a/.match(x); p $1; work if /b/.match(x)",
+            "if /a/.match(x); if /b/.match(x); p $1; end; end",
+            "class A; if /a/.match(x); work; end; def m; p $1; end; end",
+            "if /a/.match(x); work; end; p $1; if /b/.match(x); work; end",
+            "if /a/.match(x); work; end; def m; if /b/.match(x); p $1; end; end",
+        ] {
+            cases.push(
+                serde_json::json!({"cop":"Performance/RegexpMatch", "source":source, "config":{}}),
+            );
+        }
+        let mut checked = 0;
+        for case in cases
+            .into_iter()
+            .filter(|case| case["cop"] == "Performance/RegexpMatch")
+        {
+            let source = SourceFile::from_bytes(
+                "test.rb",
+                case["source"].as_str().unwrap().as_bytes().to_vec(),
+            );
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            for version in [2.5, 3.4] {
+                let config = CopConfig {
+                    options: [(
+                        "TargetRubyVersion".into(),
+                        serde_yml::to_value(version).unwrap(),
+                    )]
+                    .into_iter()
+                    .collect(),
+                    ..Default::default()
+                };
+                for node in nodes(tree.root_node())
+                    .into_iter()
+                    .filter(|node| candidate(&source, *node, &config))
+                {
+                    assert_eq!(
+                        observed(&source, node, &config),
+                        original_observed(&source, node, &config),
+                        "{}",
+                        case["source"]
+                    );
+                    checked += 1;
+                }
+            }
+        }
+        assert!(checked > 100);
+        eprintln!("RegexpMatch observer queries checked: {checked}");
     }
 }
