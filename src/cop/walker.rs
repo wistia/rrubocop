@@ -383,3 +383,6 @@ mod tests {
 
 #[cfg(test)]
 mod identifier_tests;
+
+#[cfg(test)]
+mod hot_cop_tests;
