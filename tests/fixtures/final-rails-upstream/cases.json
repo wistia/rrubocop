@@ -1,0 +1,1252 @@
+[
+  {
+    "cop": "Rails/Delegate",
+    "source": "def foo\n  bar.foo\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 7,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def foo(baz)\n  bar.foo(baz)\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 20,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def foo\n  self.foo\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 33,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def bar_foo\n  bar.foo\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 46,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def bar_foo\n  self.bar_foo\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 59,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def self.fox\n  new.fox\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 72,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def fox\n  bar.foo.fox\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 80,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def fox(baz)\n  bar.fox(foo)\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 88,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def fox(foo = nil)\n  bar.fox(foo || 5)\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 96,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def fox(a, baz)\n  bar.fox(a)\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 104,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def fox(foo:)\n  bar.fox(foo)\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 112,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def fox_foo\n  bar.foo\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 120,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def fox(bar)\n  bar.fox\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 128,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def fox\n  bar(42).fox\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 136,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "private def fox # leading spaces are on purpose\n  bar.fox\nend\n\nprivate\n\ndef fox\n  bar.fox\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 144,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "protected def fox # leading spaces are on purpose\n  bar.fox\nend\n\nprotected\n\ndef fox\n  bar.fox\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 158,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "class A\n  class B\n\n    private\n\n    def foo\n      bar.foo\n    end\n  end\n\n  def baz\n    foo.baz\n  end\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 172,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def new\n  @bar = Foo.new\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 207,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "FOO = []\ndef size\n  FOO.size\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 215,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def change\n  add_column :images, :size, :integer\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 224,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def bar_foo\n  bar.foo\nend\n",
+    "config": {
+      "EnforceForPrefixed": false
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 237,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/Delegate",
+    "source": "def foo\n  bar&.foo\nend\n",
+    "config": {
+      "EnforceForPrefixed": true
+    },
+    "upstream": "delegate_spec.rb",
+    "line": 246,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "Rails.root.join('app', 'models', 'user.rb')\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 9,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "File.join(Rails.root, '/app/models', '/user.rb')\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 22,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "::Rails.root.join('app', 'models', 'user.rb')\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 35,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "system \"rm -rf #{Rails.root.join('a', 'b.png')}\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 48,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root.join('log/production.log')}\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 61,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root}. a message\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 69,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "repo_name = \"#{repo_name}/#{repo_name}\" unless repo_name.include?('/')\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 77,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{42}/\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 85,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "File.join(Rails.root, 'app', 'models')\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 93,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "::File.join(Rails.root, 'app', 'models')\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 106,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "Rails.root.join('app/models/goober')",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 119,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root}/app/models/goober\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 125,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root}/a/#{b}\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 138,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "system \"rm -rf #{Rails.root}/foo/bar\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 151,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root.join('tmp', user.id, 'icon')}.png\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 164,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "foo(bar(File.join(Rails.root, \"app\", \"models\")))\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 177,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "foo(Rails.root.join('app/models'))\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 190,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "Rails.root.join(\"tmp\", \"data\", index/3, \"data.csv\")\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "puts \"test #{123}. Hey!\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 206,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root}:/foo/bar\"\n",
+    "config": {
+      "EnforcedStyle": "slashes"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 214,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "Rails.root.join('app', 'models', 'user.rb')",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 226,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "'system \"rm -rf #{Rails.root.join(\\'a\\', \\'b.png\\')}\"'\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 232,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root.join('log', 'production.log')}\"\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 240,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "repo_name = \"#{repo_name}/#{repo_name}\" unless repo_name.include?('/')\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 248,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{42}/\"\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 256,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "File.join(Rails.root, 'app', 'models')\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 264,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "File.join(Rails.root, '/app/models', '/user.rb')\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 277,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "Rails.root.join('app/models/goober')\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 290,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root}/app/models/goober\"\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 303,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "system \"rm -rf #{Rails.root}/foo/bar\"\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 316,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root.join('tmp', user.id, 'icon')}.png\"\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 329,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "foo(bar(File.join(Rails.root, \"app\", \"models\")))\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 342,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "foo(Rails.root.join(\"app/models\"))\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 355,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "Rails.root.join(\"tmp\", \"data\", index/3, \"data.csv\")\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 368,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "puts \"test #{123}. Hey!\"\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 376,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/FilePath",
+    "source": "\"#{Rails.root}:/foo/bar\"\n",
+    "config": {
+      "EnforcedStyle": "arguments"
+    },
+    "upstream": "file_path_spec.rb",
+    "line": 384,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :create, user_id: @user.id",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 6,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post :create, user_id: @user.id",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 10,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "patch :update, user_id: @user.id",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 14,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "put :update, user_id: @user.id",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "delete :destroy, id: @user.id",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 22,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "head :destroy, id: @user.id",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 26,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "process :new, method: :get, params: { user_id: @user.id }\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, params: { user_id: @user.id }",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 47,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, xhr: true",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 47,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, session: { foo: 'bar' }",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 47,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, format: :json",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 47,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, user_id: @user.id",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 54,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 59,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "patch :update,\n      id: @user.id,\n      ac: {\n        article_id: @article1.id,\n        profile_id: @profile1.id,\n        content: 'Some Text'\n      }\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 66,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post :create,\n     id: @user.id,\n     ac: {\n       article_id: @article1.id,\n       profile_id: @profile1.id,\n       content: 'Some Text'\n     }\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 80,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.get.id = ''",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 94,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.post.id = ''",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 94,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.patch.id = ''",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 94,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.put.id = ''",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 94,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.head.id = ''",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 94,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.delete.id = ''",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 94,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :create, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 101,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get '/test', to: 'admin/admin#test'\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 112,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post :create, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 118,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "patch :update, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "put :create, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 140,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "delete :create, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 151,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "head :create, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 162,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "puts :create, user_id: @user.id",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 173,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "process :new, method: :get, params: { user_id: @user.id }\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 178,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, method: :get",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, params: { user_id: @user.id }",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, xhr: true",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, session: { foo: 'bar' }",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, format: :json",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, headers: {}",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, body: \"foo\"",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, flash: {}",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, as: :json",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, env: \"test\"",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 198,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 205,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get :new",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 217,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "patch :update,\n      id: @user.id,\n      ac: {\n        article_id: @article1.id,\n        profile_id: @profile1.id,\n        content: 'Some Text'\n      }\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 224,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post :create,\n     id: @user.id,\n     ac: {\n       article_id: @article1.id,\n       profile_id: @profile1.id,\n       content: 'Some Text'\n     }\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 247,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.head.id = ''",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 270,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.post.id = ''",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 270,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.get.id = ''",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 270,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.patch.id = ''",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 270,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.put.id = ''",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 270,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "@user.delete.id = ''",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 270,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post user_attrs, id: 1\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 275,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post :user_attrs, id: 1\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 286,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post(:user_attrs, id: 1)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 297,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get '/auth/linkedin/callback', id: 1\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 308,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get some_path(profile.id), {}, 'HTTP_REFERER' => p_url(p.id).to_s\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 319,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "get some_path(profile.id), { user_id: @user.id, profile_id: p.id }, 'HTTP_REFERER' => p_url(p.id).to_s\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 330,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post :create, confirmation_data\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 341,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post :create, id: 7, comment: { body: \"hei\" }\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 352,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post :create, id: 7, format: :rss\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 363,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "params = { id: 1 }\npost user_attrs, params\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 374,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post user_attrs, params\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 387,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "post user_attrs, params.merge(foo: bar)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 398,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "[{ format: :json }, { format: :html }].each do |args|\n  get :nothing, **args\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 411,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "routes do\n  get :list, on: :collection\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 420,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "Rails.application.routes.draw do\n  get :list, on: :collection\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 428,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "include Rack::Test::Methods\n\nget :create, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 437,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HttpPositionalArguments",
+    "source": "include ::Rack::Test::Methods\n\nget :create, user_id: @user.id\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "http_positional_arguments_spec.rb",
+    "line": 447,
+    "assertion": "expect_no_offenses"
+  }
+]

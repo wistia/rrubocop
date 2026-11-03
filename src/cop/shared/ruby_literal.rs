@@ -63,6 +63,9 @@ pub(crate) fn string_literal(value: &str) -> String {
         format!("'{}'", value.replace('\\', "\\\\"))
     }
 }
+pub(crate) fn string_inspect(value: &str) -> String {
+    quote(value, QuoteStyle::Inspect)
+}
 pub(crate) fn string_dump(value: &str) -> String {
     quote(value, QuoteStyle::Dump)
 }
