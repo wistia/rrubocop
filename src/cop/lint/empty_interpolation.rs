@@ -156,6 +156,14 @@ mod tests {
                     assert_eq!(actual, expected, "{} {key}", case["id"]);
                 }
             }
+            if let Some(exit) = case.get("native_final_exit") {
+                assert_eq!(actual.is_empty(), exit == 0, "{}", case["id"]);
+                let corrected = case
+                    .get("rust_corrected")
+                    .unwrap_or(&case["ruby_corrected"]);
+                assert_eq!(&case["original"], corrected, "{}", case["id"]);
+                assert!(edits.is_empty(), "{}", case["id"]);
+            }
             if case.get("rust_corrected").is_some() {
                 case["ruby_corrected"] = case["rust_corrected"].clone();
             }
@@ -184,6 +192,13 @@ mod tests {
         replay(include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
             "/tests/fixtures/cops/lint/empty_interpolation/original-edges.json"
+        )));
+    }
+    #[test]
+    fn fresh_final_states_preserve_only_documented_guards() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/lint/empty_interpolation/final-states.json"
         )));
     }
 }
