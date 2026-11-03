@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Thirty-five owned rules have completed bounded original-Ruby validation,
+Thirty-six owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 332 queued or in-progress entries;
-some already have implementations. LiteralAsCondition is the current
-implementation batch. Documented safety and syntax limits remain, including
+The exhaustive 367-rule inventory retains 331 queued or in-progress entries;
+some already have implementations. LiteralAsCondition is complete within its
+bounded gate; NestedTernaryOperator is the next batch. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
 not establish universal parity for arbitrary Ruby source. Earlier sections
 retain their historical checkpoint counts; the newest completion section
@@ -824,3 +824,11 @@ Reviewed original RuboCop 1.65.1 `lib/rubocop/cop/lint/literal_as_condition.rb`,
 The port covers condition callbacks for if/elsif/unless/ternary, modifier and post-test loops, boolean operand/parenthesis traversal, standalone prefix/explicit negations, case subjects and subjectless when groups, plus case-match binding exemptions (including nested cases). Regex/current-line matching and flip-flop conversion differ from ordinary case/explicit-send literal roles. Primitive arrays recurse through the original basic-literal distinction; dynamic strings, symbols, word arrays and heredocs reuse the existing string-parts adapter. Infinite-loop exceptions apply only to the original direct boolean condition. Global location deduplication matches overlapping original conditional/negation callbacks. Ranges and embedded source messages preserve original multiline/CRLF behavior.
 
 Independent role probes also establish that current native grammar emits identifiers for all three magic names: original `__FILE__` is Str, `__LINE__` is Int and `__ENCODING__` is Const. The first two receive scoped literal classification; the encoding constant remains nonliteral. The cop emits no edits and all source bytes remain unchanged. No fixture program executes, including the parsed command-string specimens. Full-suite/build, public CLI, actual production scope, metadata and separate final review gates remain pending. Completed bounded counts remain 35, with 332 awaiting full review, plus documented limits.
+
+### LiteralAsCondition final bounded gate
+
+The separate final review confirms the original literal/basic-literal taxonomy, direct-only infinite-loop exceptions, boolean/parenthesis/negation traversal and deduplication, ordinary-case exceptions and case-match binding exemptions. All 127 unchanged original examples pass in Ruby and generate 122 unique captures. Native matches all 618 supported diagnostic/message/full-range states, including 496 independent sources. Every supported native tree is explicitly error-free; three original-invalid probes stay separate. The cop supports no autocorrection and emits no edits.
+
+All 1,236 public safe/aggressive CLI modes match bytes, exits and inspected-file scopes. All 2,472 second passes are stable, with zero cop errors or unexpected differences. Both engines finish 248 modes clean and 988 with the same retained warnings. Fresh original replay covers 616 unique final native source/config states: 493 retain warnings, 123 are clean, all parse cleanly in both parsers and none proposes an edit. Thirty-two safety/autocorrection metadata modes and 16 actual Wistia-config probes all match, including positive/negative scope controls. Full native validation passed 947 tests/one pre-existing ignored, followed by five focused final tests; the binary builds, the reference helper passes actual Ruby lint and regeneration is byte-identical. No fixture program executes.
+
+Both original parser versions reject a case-match without a subject, so the cop's hypothetical nil-subject branch is not claimed valid-source coverage. Additional versions/encodings/directives/wire-format families and generic syntax/combined-cop scheduling remain outside this bounded claim. The separately reviewed bounded port is complete: owned bounded ports now total 36, with 13/13 direct Style stubs implemented; another 331 owned rules await their full original-source/parity gate, alongside documented limits. Next is NestedTernaryOperator; original preparation has already identified and retained unsafe original correction evidence.

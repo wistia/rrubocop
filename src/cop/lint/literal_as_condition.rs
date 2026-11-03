@@ -271,6 +271,40 @@ mod tests {
         crate::testutil::assert_original_spec_parity(&LiteralAsCondition, fixture);
     }
     #[test]
+    fn final_native_states_match_fresh_original_and_parse_cleanly() {
+        let fixture = include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/lint/literal_as_condition/final-states.json"
+        ));
+        let cases: serde_json::Value = serde_json::from_str(fixture).unwrap();
+        for case in cases.as_array().unwrap() {
+            assert!(case.get("ruby_cop_error").is_none());
+            assert!(
+                !case["ruby_parser_diagnostics"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|diagnostic| matches!(
+                        diagnostic["level"].as_str(),
+                        Some("error" | "fatal")
+                    ))
+            );
+            assert_eq!(case["ruby_corrected"], case["original"]);
+            let source = SourceFile::from_bytes(
+                "probe.rb",
+                case["original"].as_str().unwrap().as_bytes().to_vec(),
+            );
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(
+                !tree.root_node().has_error(),
+                "{} {}",
+                case["id"],
+                tree.root_node().to_sexp()
+            );
+        }
+        crate::testutil::assert_original_spec_parity(&LiteralAsCondition, fixture);
+    }
+    #[test]
     fn unchanged_original_examples() {
         let fixture = include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
