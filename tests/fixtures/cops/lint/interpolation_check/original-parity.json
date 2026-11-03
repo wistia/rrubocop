@@ -1,0 +1,290 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense and corrects for interpolation in single quoted string",
+    "original": "'foo #{bar}'\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_safe": "\"foo #{bar}\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense and corrects for interpolation in single quoted string",
+    "original": "\"foo #{bar}\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "\"foo #{bar}\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense and corrects when including interpolation and double quoted string in single quoted string",
+    "original": "'foo \"#{bar}\"'\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 14,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_safe": "%{foo \"#{bar}\"}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense and corrects when including interpolation and double quoted string in single quoted string",
+    "original": "%{foo \"#{bar}\"}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "%{foo \"#{bar}\"}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense for interpolation in single quoted split string",
+    "original": "'x' \\\n  'foo #{bar}'\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_safe": "'x' \\\n  \"foo #{bar}\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense for interpolation in double + single quoted split string",
+    "original": "\"x\" \\\n  'foo #{bar}'\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_safe": "\"x\" \\\n  \"foo #{bar}\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for properly interpolation strings",
+    "original": "hello = \"foo #{bar}\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "hello = \"foo #{bar}\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for interpolation in nested strings",
+    "original": "foo = \"bar '#{baz}' qux\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo = \"bar '#{baz}' qux\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for interpolation in a regexp",
+    "original": "/\\#{20}/\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "/\\#{20}/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for an escaped interpolation",
+    "original": "\"\\#{msg}\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "\"\\#{msg}\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not crash for \\xff",
+    "original": "foo = \"\\xff\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo = \"\\xff\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for escaped crab claws in dstr",
+    "original": "foo = \"alpha #{variable} beta \\#{gamma}\\\" delta\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo = \"alpha #{variable} beta \\#{gamma}\\\" delta\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register offense for strings in %w()",
+    "original": "%w(\"#{a}-foo\")\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "%w(\"#{a}-foo\")\n"
+  }
+]

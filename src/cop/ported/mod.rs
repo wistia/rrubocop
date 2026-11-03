@@ -192,7 +192,9 @@ fn finding_diagnostic(
 ) -> Diagnostic {
     let (line, col) = source.offset_to_line_col(finding.start);
     let mut diagnostic = rule.diagnostic(source, line, col, finding.message.clone());
-    diagnostic.highlight_length = highlight_length(source, finding.start, finding.end);
+    diagnostic.highlight_length = finding
+        .highlight_length
+        .unwrap_or_else(|| highlight_length(source, finding.start, finding.end));
     diagnostic.correctable = finding.correctable;
     diagnostic.severity = config.severity.unwrap_or(diagnostic.severity);
     diagnostic
