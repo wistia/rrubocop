@@ -190,3 +190,6 @@ PROGRAMS += assertion_request_programs()
 
 from delegate_allow_blank_runtime import programs as delegate_allow_blank_programs
 PROGRAMS += delegate_allow_blank_programs()
+
+from real_corpus_runtime import programs as real_corpus_programs
+PROGRAMS += real_corpus_programs()

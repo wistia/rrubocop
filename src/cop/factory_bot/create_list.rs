@@ -49,7 +49,7 @@ impl Cop for CreateList {
             {
                 return;
             }
-            let message = if n_times || dynamic_arguments(source, values[0]) {
+            let message = if n_times || dynamic_arguments(source, values[0], config) {
                 format!("Prefer {}.times.map.", values.len())
             } else {
                 "Prefer create_list.".into()
@@ -104,6 +104,11 @@ impl Cop for CreateList {
         let Some(block) = node.child_by_field_name("block") else {
             return;
         };
+        if config.get_f64("TargetRubyVersion", 3.4) >= 2.7
+            && crate::cop::shared::ruby_expression::numbered_bindings(source, block).is_some()
+        {
+            return;
+        }
         let Some(body) = block.child_by_field_name("body") else {
             return;
         };
@@ -116,7 +121,7 @@ impl Cop for CreateList {
         }
         let create = statements[0];
         if !factory_call(source, create, b"create", config)
-            || dynamic_arguments(source, create)
+            || dynamic_arguments(source, create, config)
             || used_parameter(source, block, body)
         {
             return;
@@ -125,7 +130,11 @@ impl Cop for CreateList {
             .iter()
             .rposition(|b| !b.is_ascii_whitespace())
             .map_or(block.start_byte(), |last| node.start_byte() + last + 1);
-        let replacement = render_list(source, create, count);
+        let replacement = if safe_navigation_argument(source, create) {
+            None
+        } else {
+            render_list(source, create, count)
+        };
         report(
             self,
             source,
@@ -238,12 +247,42 @@ fn repeat_count<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
         _ => None,
     }
 }
-fn dynamic_arguments(source: &SourceFile, node: Node<'_>) -> bool {
+fn dynamic_arguments(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {
     let mut found = false;
     for argument in argument_nodes(node).iter().skip(1) {
         for_each_descendant(*argument, |n| {
-            found |= n.kind() == "call"
-                || (n.kind() == "identifier" && !crate::cop::ported::local_identifier(source, n))
+            found |= crate::cop::shared::ruby_expression::regular_send_name(source, n).is_some()
+                || (config.get_f64("TargetRubyVersion", 3.4) < 2.7
+                    && legacy_numbered_read(source, n))
+        });
+    }
+    found
+}
+
+fn legacy_numbered_read(source: &SourceFile, node: Node<'_>) -> bool {
+    let Some(binding) = crate::cop::ported::local_binding(source, node) else {
+        return false;
+    };
+    let mut ancestor = node.parent();
+    while let Some(parent) = ancestor {
+        if crate::cop::shared::ruby_expression::numbered_bindings(source, parent)
+            .is_some_and(|bindings| bindings.contains(&binding))
+        {
+            return true;
+        }
+        ancestor = parent.parent();
+    }
+    false
+}
+
+fn safe_navigation_argument(source: &SourceFile, node: Node<'_>) -> bool {
+    let mut found = false;
+    for argument in argument_nodes(node).iter().skip(1) {
+        for_each_descendant(*argument, |node| {
+            found |= node.kind() == "call"
+                && node
+                    .child_by_field_name("operator")
+                    .is_some_and(|op| node_bytes(source, op) == b"&.");
         });
     }
     found

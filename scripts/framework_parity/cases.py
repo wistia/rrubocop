@@ -516,4 +516,6 @@ def cases():
     extend(add)
     from reversible_method_cases import extend
     extend(add)
+    from real_corpus_cases import extend
+    extend(add)
     return rows
