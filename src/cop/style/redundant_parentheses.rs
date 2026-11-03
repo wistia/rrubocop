@@ -81,6 +81,16 @@ mod tests {
         crate::testutil::assert_original_spec_parity(&RedundantParentheses, &fixture.to_string());
     }
     #[test]
+    fn original_real_corpus_parent_roles() {
+        crate::testutil::assert_original_spec_parity(
+            &RedundantParentheses,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/redundant_parentheses/real-role-regressions.json"
+            )),
+        );
+    }
+    #[test]
     fn original_ruby_specs() {
         crate::testutil::assert_original_spec_parity(
             &RedundantParentheses,
