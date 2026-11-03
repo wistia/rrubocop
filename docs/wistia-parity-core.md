@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Thirty-six owned rules have completed bounded original-Ruby validation,
+Thirty-seven owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 331 queued or in-progress entries;
-some already have implementations. LiteralAsCondition is complete within its
-bounded gate; NestedTernaryOperator is the next batch. Documented safety and syntax limits remain, including
+The exhaustive 367-rule inventory retains 330 queued or in-progress entries;
+some already have implementations. NestedTernaryOperator is complete within
+its bounded gate; Security/Eval is the next batch. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
 not establish universal parity for arbitrary Ruby source. Earlier sections
 retain their historical checkpoint counts; the newest completion section
@@ -844,3 +844,13 @@ The renderer ports exact token/surrounding-whitespace edits and one genuine cons
 The guard/metadata follow-up expands this pending gate to 121 states (109 independent plus 12 upstream captures): 95 byte-exact first corrections and the same 26 proven safeguards. Actual newline deltas now permit rewrites that preserve existing `__LINE__` values; reserved method-definition/alias/undef names are distinguished from real line-value reads, with original AST proof and positive controls. Four public null-safety differences are fixed by applying the existing scoped absent-default adapter to this cop's absent Safe/SafeAutoCorrect defaults; all 32 metadata modes now match. This does not broaden nullable-default policy for unrelated cops.
 
 The first expanded 236 CLI modes have exactly 52 guarded byte differences, all matching scopes, 472 stable second passes and zero cop errors. Sixteen actual Wistia-config probes pass. The 100-state fresh final replay and three focused tests pass after the 950-test full checkpoint/one ignored; the three new name-role controls are being added to the final CLI/fresh-state gate. The binary builds, reference lint passes and existing reference regeneration is byte-identical. The port remains pending final completion; counts remain 36 complete and 331 awaiting full review.
+
+### NestedTernaryOperator final bounded gate
+
+Separate final review confirms original descendant traversal, exact nested ranges, one outer rewrite per ignored region, per-offense correctability/corrected flags and explicit correction ownership. The gate includes all six unchanged upstream examples/12 iterated captures plus 109 independent sources: 121 exact diagnostic/message/full-range states, 95 byte-exact corrections and 26 documented safeguards. Original AST comparison proves the 18 malformed rewrites and eight line-value changes; positive geometry and definition/alias/undef-name controls avoid unnecessary guards. All initial/final supported native trees are explicitly error-free. The scoped null-safety adapter matches the absent original defaults without broadening unrelated cop policy.
+
+All 242 public modes finish with 190 byte matches plus exactly 52 safeguarded byte differences. All scopes match, all 484 second passes are stable and there are zero cop errors/unexpected differences. Exits match in 226 modes; the 16 line-value guard modes intentionally retain warnings where original becomes clean. Original finishes 206 modes clean/36 with syntax offenses; native finishes 190 clean/52 with guarded cop warnings. These differences are intentional and are not claimed correction parity.
+
+Fresh original replay covers 103 unique final native source/config states. Both parsers accept every source: 77 are clean with no further edit; 26 retain the deliberately declined original offenses/corrections. All 32 metadata modes and 16 actual Wistia-config probes pass, including Unicode, negative ordinary-if and guarded line-value controls. The full native checkpoint passes 950 tests/one ignored, followed by three focused final tests; binary build, actual Ruby helper lint and byte-identical regeneration pass. No fixture programs execute.
+
+The line guard checks each rewritten root independently; cancellation of deltas across disjoint roots is not optimized. Additional versions/encodings/directives/wire-format/delayed-heredoc ownership families and generic syntax/combined-cop scheduling remain outside this bounded claim. The bounded port is complete: 37 owned ports have completed their review/gate, all 13 direct Style stubs are implemented, and 330 owned rules still await their full original-source/parity gate, alongside documented limits. Security/Eval is next.

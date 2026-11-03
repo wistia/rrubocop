@@ -2370,5 +2370,62 @@
     "ruby_preserves_ast_without_grouping": true,
     "reference_investigation": "fresh cop per independent source/config",
     "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-name-role-0",
+    "original": "if a\nb ? c : d\nelse\ne\nend\ndef __LINE__;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\ndef __LINE__;end\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:def, :__LINE__,\n    s(:args), nil))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:def, :__LINE__,\n    s(:args), nil))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-name-role-1",
+    "original": "if a\nb ? c : d\nelse\ne\nend\nalias __LINE__ something\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nalias __LINE__ something\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:alias,\n    s(:sym, :__LINE__),\n    s(:sym, :something)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:alias,\n    s(:sym, :__LINE__),\n    s(:sym, :something)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-name-role-2",
+    "original": "if a\nb ? c : d\nelse\ne\nend\nundef __LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nundef __LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:undef,\n    s(:sym, :__LINE__)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:undef,\n    s(:sym, :__LINE__)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
   }
 ]
