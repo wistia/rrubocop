@@ -1,0 +1,195 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::FloatOutOfRange does not register an offense for 0.0",
+    "original": "0.0",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Catches floating-point literals too large or small for Ruby to represent.",
+      "Enabled": true,
+      "VersionAdded": "0.36",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_float_literals": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 3,
+        "source": "0.0",
+        "value": "0.0"
+      }
+    ],
+    "ruby_member_calls": [],
+    "ruby_corrected": "0.0",
+    "ruby_ast": "s(:float, 0.0)",
+    "ruby_corrected_ast": "s(:float, 0.0)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::FloatOutOfRange does not register an offense for tiny little itty bitty floats",
+    "original": "1.1e-100",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Catches floating-point literals too large or small for Ruby to represent.",
+      "Enabled": true,
+      "VersionAdded": "0.36",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_float_literals": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "source": "1.1e-100",
+        "value": "1.1e-100"
+      }
+    ],
+    "ruby_member_calls": [],
+    "ruby_corrected": "1.1e-100",
+    "ruby_ast": "s(:float, 1.1e-100)",
+    "ruby_corrected_ast": "s(:float, 1.1e-100)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::FloatOutOfRange does not register an offense for respectably sized floats",
+    "original": "55.7e89",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Catches floating-point literals too large or small for Ruby to represent.",
+      "Enabled": true,
+      "VersionAdded": "0.36",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_float_literals": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 7,
+        "source": "55.7e89",
+        "value": "5.57e+90"
+      }
+    ],
+    "ruby_member_calls": [],
+    "ruby_corrected": "55.7e89",
+    "ruby_ast": "s(:float, 5.57e+90)",
+    "ruby_corrected_ast": "s(:float, 5.57e+90)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::FloatOutOfRange on whopping big floats which tip the scales registers an offense",
+    "original": "9.9999e999\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Catches floating-point literals too large or small for Ruby to represent.",
+      "Enabled": true,
+      "VersionAdded": "0.36",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 10,
+        "message": "Float out of range.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_float_literals": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 10,
+        "source": "9.9999e999",
+        "value": "Infinity"
+      }
+    ],
+    "ruby_member_calls": [],
+    "ruby_corrected": "9.9999e999\n",
+    "ruby_ast": "s(:float, Infinity)",
+    "ruby_corrected_ast": "s(:float, Infinity)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::FloatOutOfRange on floats so close to zero that nobody can tell the difference registers an offense",
+    "original": "1.0e-400\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Catches floating-point literals too large or small for Ruby to represent.",
+      "Enabled": true,
+      "VersionAdded": "0.36",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "message": "Float out of range.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_float_literals": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "source": "1.0e-400",
+        "value": "0.0"
+      }
+    ],
+    "ruby_member_calls": [],
+    "ruby_corrected": "1.0e-400\n",
+    "ruby_ast": "s(:float, 0.0)",
+    "ruby_corrected_ast": "s(:float, 0.0)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]
