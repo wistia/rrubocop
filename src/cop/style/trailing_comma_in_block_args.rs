@@ -264,6 +264,42 @@ mod tests {
         }
     }
     #[test]
+    fn final_native_states_match_fresh_original_and_parse_cleanly() {
+        let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/style/trailing_comma_in_block_args/final-states.json"
+        )))
+        .unwrap();
+        for case in cases.as_array_mut().unwrap() {
+            assert!(case.get("ruby_cop_error").is_none());
+            assert!(
+                !case["ruby_parser_diagnostics"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|d| matches!(d["level"].as_str(), Some("error" | "fatal")))
+            );
+            let source = SourceFile::from_bytes(
+                "probe.rb",
+                case["original"].as_str().unwrap().as_bytes().to_vec(),
+            );
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(
+                !tree.root_node().has_error(),
+                "{} {}",
+                case["id"],
+                tree.root_node().to_sexp()
+            );
+            if case.get("rust_corrected").is_some() {
+                case["ruby_corrected"] = case["rust_corrected"].clone();
+            }
+        }
+        crate::testutil::assert_original_spec_parity(
+            &TrailingCommaInBlockArgs,
+            &serde_json::to_string(&cases).unwrap(),
+        );
+    }
+    #[test]
     fn original_roles() {
         let rows: serde_json::Value = serde_json::from_str(include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
