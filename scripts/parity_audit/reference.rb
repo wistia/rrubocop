@@ -69,6 +69,7 @@ class AuditReference < PortedReference
     return [] if cop.class.respond_to?(:support_target_ruby_version?) &&
                  !cop.class.support_target_ruby_version?(cop.target_ruby_version)
 
+    return [] unless RuboCop::Cop::Team.new([], cop.config).send(:support_target_rails_version?, cop)
     return [] unless cop.send(:target_satisfies_all_gem_version_requirements?)
 
     [cop]
