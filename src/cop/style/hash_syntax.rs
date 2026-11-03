@@ -1,5 +1,8 @@
 //! Style/HashSyntax.
 
+use std::collections::HashMap;
+use std::sync::{Arc, Mutex};
+
 use crate::cop::shared::{node_bytes, push_replace};
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -20,6 +23,68 @@ fn pairs(node: Node<'_>) -> Vec<Node<'_>> {
         .named_children(&mut cursor)
         .filter(|child| child.kind() == "pair")
         .collect()
+}
+
+struct SiblingSummary {
+    all_symbols: bool,
+    symbol_value: bool,
+    first_operator: Option<&'static str>,
+    first_rocket: Option<usize>,
+    first_start: usize,
+    last_end: usize,
+}
+
+fn sibling_summary(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> Arc<SiblingSummary> {
+    type Key = (bool, u64);
+    struct Summaries(Mutex<HashMap<Key, Arc<SiblingSummary>>>);
+    let group = source.cached(
+        node.parent().map_or(node.id(), |parent| parent.id()),
+        || Summaries(Default::default()),
+    );
+    let key = (
+        config.get_bool("PreferHashRocketsForNonAlnumEndingSymbols", false),
+        config.get_f64("TargetRubyVersion", 2.7).to_bits(),
+    );
+    group
+        .0
+        .lock()
+        .unwrap()
+        .entry(key)
+        .or_insert_with(|| {
+            let siblings = pairs(node);
+            Arc::new(SiblingSummary {
+                all_symbols: siblings
+                    .iter()
+                    .all(|pair| acceptable(source, *pair, config)),
+                symbol_value: siblings.iter().any(|pair| {
+                    pair.child_by_field_name("value").is_some_and(|value| {
+                        if !matches!(value.kind(), "simple_symbol" | "delimited_symbol") {
+                            return false;
+                        }
+                        let mut interpolation = false;
+                        crate::cop::shared::for_each_descendant(value, |child| {
+                            interpolation |= child.kind() == "interpolation"
+                        });
+                        !interpolation
+                    })
+                }),
+                first_operator: siblings
+                    .first()
+                    .and_then(|pair| operator(*pair))
+                    .map(|op| op.kind()),
+                first_rocket: siblings
+                    .iter()
+                    .find(|pair| operator(**pair).is_some_and(|op| op.kind() == "=>"))
+                    .map(|pair| pair.id()),
+                first_start: siblings
+                    .first()
+                    .map_or(node.start_byte(), |pair| pair.start_byte()),
+                last_end: siblings
+                    .last()
+                    .map_or(node.end_byte(), |pair| pair.end_byte()),
+            })
+        })
+        .clone()
 }
 
 fn operator(node: Node<'_>) -> Option<Node<'_>> {
@@ -93,33 +158,17 @@ impl Cop for HashSyntax {
         let Some(op) = operator(node) else {
             return;
         };
-        let siblings = pairs(node);
-        let all_symbols = siblings
-            .iter()
-            .all(|pair| acceptable(source, *pair, config));
-        let force_rockets = config.get_bool("UseHashRocketsWithSymbolValues", false)
-            && siblings.iter().any(|pair| {
-                pair.child_by_field_name("value").is_some_and(|value| {
-                    if !matches!(value.kind(), "simple_symbol" | "delimited_symbol") {
-                        return false;
-                    }
-                    let mut interpolation = false;
-                    crate::cop::shared::for_each_descendant(value, |child| {
-                        interpolation |= child.kind() == "interpolation"
-                    });
-                    !interpolation
-                })
-            });
+        let siblings = sibling_summary(source, node, config);
+        let all_symbols = siblings.all_symbols;
+        let force_rockets =
+            config.get_bool("UseHashRocketsWithSymbolValues", false) && siblings.symbol_value;
         let style = config.get_str("EnforcedStyle", "ruby19");
         let (wanted, message) = if style == "hash_rockets" || force_rockets {
             ("=>", "Use hash rockets syntax.")
         } else if style == "no_mixed_keys" {
             (
                 if all_symbols {
-                    siblings
-                        .first()
-                        .and_then(|pair| operator(*pair))
-                        .map_or("=>", |op| op.kind())
+                    siblings.first_operator.unwrap_or("=>")
                 } else {
                     "=>"
                 },
@@ -191,19 +240,16 @@ impl Cop for HashSyntax {
                 if parent
                     .parent()
                     .is_some_and(|parent| parent.kind() == "return")
-                    && siblings
-                        .iter()
-                        .find(|pair| operator(**pair).is_some_and(|op| op.kind() == "=>"))
-                        .is_some_and(|first| first.id() == node.id())
+                    && siblings.first_rocket == Some(node.id())
                 {
                     push_replace(
                         &mut corrections,
-                        siblings[0].start_byte(),
-                        siblings[0].start_byte(),
+                        siblings.first_start,
+                        siblings.first_start,
                         "{",
                         self.name(),
                     );
-                    let end = siblings.last().unwrap().end_byte();
+                    let end = siblings.last_end;
                     push_replace(&mut corrections, end, end, "}", self.name());
                 }
             }
@@ -239,6 +285,36 @@ impl Cop for HashSyntax {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn sibling_cache_separates_mutated_config_values() {
+        let source = SourceFile::from_bytes("hash.rb", b"{ :ok => 1, :odd? => :value }\n".to_vec());
+        let tree = crate::parse::parse_ruby(&source).unwrap();
+        let mut first = None;
+        crate::cop::shared::for_each_descendant(tree.root_node(), |node| {
+            if node.kind() == "pair" && first.is_none() {
+                first = Some(node);
+            }
+        });
+        let pair = first.unwrap();
+        let mut config = CopConfig::default();
+        let original = sibling_summary(&source, pair, &config);
+        assert!(original.all_symbols);
+        assert!(original.symbol_value);
+        assert!(Arc::ptr_eq(
+            &original,
+            &sibling_summary(&source, pair, &config)
+        ));
+        config.options.insert(
+            "PreferHashRocketsForNonAlnumEndingSymbols".into(),
+            serde_yml::Value::Bool(true),
+        );
+        assert!(!sibling_summary(&source, pair, &config).all_symbols);
+        config.options.clear();
+        assert!(Arc::ptr_eq(
+            &original,
+            &sibling_summary(&source, pair, &config)
+        ));
+    }
     #[test]
     fn additional_original_argument_scopes() {
         crate::testutil::assert_original_spec_parity(

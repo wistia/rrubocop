@@ -41,3 +41,22 @@ fn cached_unicode_columns_match_byte_prefix_counting_even_inside_characters() {
         &source.columns(2)
     ));
 }
+
+#[test]
+fn indexed_raw_lines_preserve_split_semantics() {
+    for bytes in [
+        b"".as_slice(),
+        b"one",
+        b"a\nb\n",
+        b"a\r\n\r\n",
+        b"\xff\n\xc3\xa9\r\n",
+    ] {
+        let source = super::SourceFile::from_bytes("raw.rb", bytes.to_vec());
+        let expected: Vec<_> = source.lines().collect();
+        assert_eq!(source.line_bytes(0), None);
+        for (index, line) in expected.iter().enumerate() {
+            assert_eq!(source.line_bytes(index + 1), Some(*line));
+        }
+        assert_eq!(source.line_bytes(expected.len() + 1), None);
+    }
+}

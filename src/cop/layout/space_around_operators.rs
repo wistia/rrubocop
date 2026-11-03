@@ -56,6 +56,11 @@ fn operators(node: Node<'_>) -> Vec<(Node<'_>, Option<Node<'_>>)> {
     }
 }
 
+fn neighbor_indices(index: usize, len: usize, backwards: bool) -> impl Iterator<Item = usize> {
+    let range = if backwards { 0..index } else { index + 1..len };
+    range.map(move |step| if backwards { index - step - 1 } else { step })
+}
+
 fn horizontal_space(byte: u8) -> bool {
     matches!(byte, b' ' | b'\t' | b'\r')
 }
@@ -111,11 +116,7 @@ impl<'a> Alignment<'a> {
     fn adjacent(&self, index: usize, indent: Option<usize>) -> Vec<&[u8]> {
         let mut candidates = Vec::new();
         for backwards in [true, false] {
-            let indices: Vec<_> = if backwards {
-                (0..index).rev().collect()
-            } else {
-                (index + 1..self.lines.len()).collect()
-            };
+            let indices = neighbor_indices(index, self.lines.len(), backwards);
             for line in indices {
                 let Some(current_indent) = self.indent(line) else {
                     continue;
@@ -134,26 +135,25 @@ impl<'a> Alignment<'a> {
 
     fn assignment_aligned(operator: &[u8], column: usize, line: &[u8]) -> bool {
         let end = column + operator.len();
-        let line: Vec<_> = String::from_utf8_lossy(line).chars().collect();
-        (operator.ends_with(b"=") && line.get(end.saturating_sub(1)) == Some(&'='))
-            || (operator == b"<<" && line.get(end.saturating_sub(1)) == Some(&'='))
+        let line = String::from_utf8_lossy(line);
+        ((operator.ends_with(b"=") || operator == b"<<")
+            && line.chars().nth(end.saturating_sub(1)) == Some('='))
             || (operator.ends_with(b"=")
                 && end >= 2
-                && line.get(end - 2..end) == Some(&['<', '<'][..]))
+                && line.chars().skip(end - 2).take(2).eq(['<', '<']))
     }
 
     fn aligned(&self, offset: usize, token: &[u8], words: bool) -> bool {
         let (line, column) = self.source.offset_to_line_col(offset);
+        let token = String::from_utf8_lossy(token);
+        let token_length = token.chars().count();
         for indent in [None, self.indent(line - 1)] {
             for candidate in self.adjacent(line - 1, indent) {
                 let line: Vec<_> = String::from_utf8_lossy(candidate).chars().collect();
-                let token: Vec<_> = String::from_utf8_lossy(token).chars().collect();
-                if line.get(column..column + token.len()) == Some(token.as_slice())
-                    || Self::assignment_aligned(
-                        &token.iter().collect::<String>().into_bytes(),
-                        column,
-                        candidate,
-                    )
+                if line
+                    .get(column..column + token_length)
+                    .is_some_and(|characters| characters.iter().copied().eq(token.chars()))
+                    || Self::assignment_aligned(token.as_bytes(), column, candidate)
                     || (words
                         && column > 0
                         && line
@@ -174,11 +174,7 @@ impl<'a> Alignment<'a> {
         let (line, column) = self.source.offset_to_line_col(op.start_byte());
         let index = line - 1;
         let indent = self.indent(index)?;
-        let indices: Vec<_> = if backwards {
-            (0..index).rev().collect()
-        } else {
-            (index + 1..self.lines.len()).collect()
-        };
+        let indices = neighbor_indices(index, self.lines.len(), backwards);
         let mut at_level = true;
         for neighbor in indices {
             let current = self.indent(neighbor);

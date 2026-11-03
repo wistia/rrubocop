@@ -8,23 +8,6 @@ use crate::parse::source::SourceFile;
 
 pub struct ClassLength;
 
-fn irrelevant_line(line: &[u8], count_comments: bool) -> bool {
-    let trimmed = trim_ascii(line);
-    trimmed.is_empty() || (!count_comments && trimmed.starts_with(b"#"))
-}
-
-fn trim_ascii(line: &[u8]) -> &[u8] {
-    let mut start = 0;
-    while start < line.len() && matches!(line[start], b' ' | b'\t') {
-        start += 1;
-    }
-    let mut end = line.len();
-    while end > start && matches!(line[end - 1], b' ' | b'\t' | b'\r') {
-        end -= 1;
-    }
-    &line[start..end]
-}
-
 /// Lines strictly inside the class (between `class`/`end`), RuboCop-style.
 fn body_line_count(source: &SourceFile, node: Node<'_>, count_comments: bool) -> usize {
     let start_line = node.start_position().row + 1;
@@ -32,14 +15,7 @@ fn body_line_count(source: &SourceFile, node: Node<'_>, count_comments: bool) ->
     if end_line <= start_line + 1 {
         return 0;
     }
-    source
-        .lines()
-        .enumerate()
-        .filter(|(i, line)| {
-            let ln = *i + 1;
-            ln > start_line && ln < end_line && !irrelevant_line(line, count_comments)
-        })
-        .count()
+    super::line_counts::count(source, start_line + 1, end_line, count_comments)
 }
 
 fn check_class(

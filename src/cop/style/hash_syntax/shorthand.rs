@@ -1,9 +1,10 @@
-use super::{HashSyntax, operator, pairs};
+use super::{HashSyntax, operator};
 use crate::cop::shared::{collect_comments, named_kids, node_bytes, push_replace};
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use std::sync::Arc;
 use tree_sitter::Node;
 
 fn dispatch(pair: Node<'_>) -> Option<Node<'_>> {
@@ -96,9 +97,40 @@ fn last_expression(node: Node<'_>) -> bool {
     }
     true
 }
+struct Siblings {
+    last_index: u32,
+    has_omitted: bool,
+    has_needed: bool,
+}
+fn siblings(source: &SourceFile, pair: Node<'_>) -> Arc<Siblings> {
+    let parent = pair.parent().unwrap();
+    source.cached(parent.id(), || {
+        let mut result = Siblings {
+            last_index: 0,
+            has_omitted: false,
+            has_needed: false,
+        };
+        for index in 0..parent.named_child_count() {
+            let child = parent.named_child(index as u32).unwrap();
+            if child.kind() != "pair" {
+                continue;
+            }
+            result.last_index = index as u32;
+            result.has_omitted |= child.child_by_field_name("value").is_none();
+            result.has_needed |=
+                child.child_by_field_name("value").is_some() && !omittable(source, child);
+        }
+        result
+    })
+}
+fn last_pair<'a>(source: &SourceFile, pair: Node<'a>) -> Node<'a> {
+    pair.parent()
+        .unwrap()
+        .named_child(siblings(source, pair).last_index)
+        .unwrap()
+}
 fn wrap_call<'a>(source: &SourceFile, pair: Node<'a>) -> Option<Node<'a>> {
-    let siblings = pairs(pair);
-    let last = *siblings.last()?;
+    let last = last_pair(source, pair);
     let key = last.child_by_field_name("key")?;
     let value = last.child_by_field_name("value").unwrap_or(key);
     if node_bytes(source, key) != node_bytes(source, value) {
@@ -154,13 +186,9 @@ pub(super) fn check(
         "always" if !omitted && eligible => (true, false),
         "never" if omitted => (false, false),
         "consistent" | "either_consistent" => {
-            let siblings = pairs(pair);
-            let has_omitted = siblings
-                .iter()
-                .any(|p| p.child_by_field_name("value").is_none());
-            let has_needed = siblings
-                .iter()
-                .any(|p| p.child_by_field_name("value").is_some() && !omittable(source, *p));
+            let siblings = siblings(source, pair);
+            let has_omitted = siblings.has_omitted;
+            let has_needed = siblings.has_needed;
             if has_needed && omitted {
                 (false, true)
             } else if !has_needed && !omitted && eligible && (has_omitted || style == "consistent")
@@ -196,9 +224,9 @@ pub(super) fn check(
     };
     let wrapper = wrap_call(source, pair);
     let wrapper_complete = wrapper.is_none()
-        || pairs(pair).last().is_some_and(|last| {
+        || Some(last_pair(source, pair)).is_some_and(|last| {
             if omit {
-                last.child_by_field_name("value").is_some() && omittable(source, *last)
+                last.child_by_field_name("value").is_some() && omittable(source, last)
             } else {
                 last.child_by_field_name("value").is_none()
             }
@@ -222,7 +250,7 @@ pub(super) fn check(
                     args.first(),
                     args.last(),
                 ) {
-                    if pairs(pair).last() == Some(&pair)
+                    if last_pair(source, pair) == pair
                         && matches!(last.kind(), "pair" | "hash_splat_argument")
                     {
                         push_replace(

@@ -4,6 +4,8 @@
 //! (`applyTime` after `=> { applyTime: }`) are flagged; intros via `match_var`
 //! are not.
 
+use std::sync::{Arc, Mutex};
+
 use std::sync::LazyLock;
 
 use regex::Regex;
@@ -67,21 +69,53 @@ fn string_list(config: &CopConfig, key: &str) -> Vec<String> {
     }
 }
 
-fn allowed(config: &CopConfig, name: &str) -> bool {
-    if string_list(config, "AllowedIdentifiers")
-        .iter()
-        .any(|a| a == name)
-    {
-        return true;
+const OPTION_KEYS: [&str; 4] = [
+    "AllowedIdentifiers",
+    "AllowedPatterns",
+    "ForbiddenIdentifiers",
+    "ForbiddenPatterns",
+];
+struct NameOptions {
+    values: [Option<serde_yml::Value>; 4],
+    allowed_identifiers: Vec<String>,
+    allowed_patterns: Vec<Regex>,
+    forbidden_identifiers: Vec<String>,
+    forbidden_patterns: Vec<Regex>,
+}
+fn name_options(source: &SourceFile, config: &CopConfig) -> Arc<NameOptions> {
+    struct Settings(Mutex<Vec<Arc<NameOptions>>>);
+    let settings = source.cached(0, || Settings(Default::default()));
+    let mut options = settings.0.lock().unwrap();
+    if let Some(existing) = options.iter().find(|entry| {
+        OPTION_KEYS
+            .iter()
+            .enumerate()
+            .all(|(index, key)| entry.values[index].as_ref() == config.options.get(*key))
+    }) {
+        return existing.clone();
     }
-    for p in string_list(config, "AllowedPatterns") {
-        if let Ok(re) = Regex::new(&p) {
-            if re.is_match(name) {
-                return true;
-            }
-        }
-    }
-    false
+    let compile = |key| {
+        string_list(config, key)
+            .into_iter()
+            .filter_map(|pattern| Regex::new(&pattern).ok())
+            .collect()
+    };
+    let result = Arc::new(NameOptions {
+        values: OPTION_KEYS.map(|key| config.options.get(key).cloned()),
+        allowed_identifiers: string_list(config, "AllowedIdentifiers"),
+        allowed_patterns: compile("AllowedPatterns"),
+        forbidden_identifiers: string_list(config, "ForbiddenIdentifiers"),
+        forbidden_patterns: compile("ForbiddenPatterns"),
+    });
+    options.push(result.clone());
+    result
+}
+fn allowed(options: &NameOptions, name: &str) -> bool {
+    options.allowed_identifiers.iter().any(|a| a == name)
+        || options
+            .allowed_patterns
+            .iter()
+            .any(|pattern| pattern.is_match(name))
 }
 
 fn forbidden_msg(name: &str) -> String {
@@ -94,20 +128,15 @@ fn check_forbidden(
     name: &str,
     line: usize,
     column: usize,
-    config: &CopConfig,
+    options: &NameOptions,
     diagnostics: &mut Vec<Diagnostic>,
 ) {
-    if string_list(config, "ForbiddenIdentifiers")
-        .iter()
-        .any(|f| f == name)
-    {
+    if options.forbidden_identifiers.iter().any(|f| f == name) {
         diagnostics.push(cop.diagnostic(source, line, column, forbidden_msg(name)));
     }
-    for p in string_list(config, "ForbiddenPatterns") {
-        if let Ok(re) = Regex::new(&p) {
-            if re.is_match(name) {
-                diagnostics.push(cop.diagnostic(source, line, column, forbidden_msg(name)));
-            }
+    for pattern in &options.forbidden_patterns {
+        if pattern.is_match(name) {
+            diagnostics.push(cop.diagnostic(source, line, column, forbidden_msg(name)));
         }
     }
 }
@@ -122,9 +151,21 @@ fn check_name_str(
     diagnostics: &mut Vec<Diagnostic>,
 ) {
     let name = bare_name(name);
-    check_forbidden(cop, source, name, line, column, config, diagnostics);
-    if allowed(config, name) {
-        return;
+    let configured_names = OPTION_KEYS
+        .iter()
+        .any(|key| match config.options.get(*key) {
+            Some(serde_yml::Value::String(_)) => true,
+            Some(serde_yml::Value::Sequence(values)) => {
+                values.iter().any(|value| value.as_str().is_some())
+            }
+            _ => false,
+        });
+    if configured_names {
+        let options = name_options(source, config);
+        check_forbidden(cop, source, name, line, column, &options, diagnostics);
+        if allowed(&options, name) {
+            return;
+        }
     }
     let style = config.get_str("EnforcedStyle", "snake_case");
     if style_ok(name, style) {
@@ -242,4 +283,30 @@ impl Cop for VariableName {
 mod tests {
     use super::*;
     crate::cop_fixture_tests!(VariableName, "cops/naming/variable_name");
+    #[test]
+    fn option_cache_tracks_value_changes_and_keeps_duplicate_forbidden_matches() {
+        let source = SourceFile::from_bytes("names.rb", vec![]);
+        let mut config = CopConfig::default();
+        config.options.insert(
+            "AllowedPatterns".into(),
+            serde_yml::from_str("['^Foo$', '[']").unwrap(),
+        );
+        let first = name_options(&source, &config);
+        assert!(allowed(&first, "Foo"));
+        assert!(Arc::ptr_eq(&first, &name_options(&source, &config)));
+        config.options.insert(
+            "AllowedPatterns".into(),
+            serde_yml::from_str("['^Bar$']").unwrap(),
+        );
+        config.options.insert(
+            "ForbiddenPatterns".into(),
+            serde_yml::from_str("['^Foo$', '^F', '[']").unwrap(),
+        );
+        let next = name_options(&source, &config);
+        assert!(!allowed(&next, "Foo"));
+        assert!(allowed(&next, "Bar"));
+        let mut diagnostics = Vec::new();
+        check_forbidden(&VariableName, &source, "Foo", 1, 0, &next, &mut diagnostics);
+        assert_eq!(diagnostics.len(), 2);
+    }
 }
