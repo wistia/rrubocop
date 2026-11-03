@@ -38,16 +38,7 @@ fn surrounding_space(source: &SourceFile, node: Node<'_>) -> (usize, usize) {
     }
     (start, end)
 }
-fn line_literal(source: &SourceFile, node: Node<'_>) -> bool {
-    node.kind() == "identifier"
-        && node_bytes(source, node) == b"__LINE__"
-        && !node.parent().is_some_and(|parent| {
-            parent.child_by_field_name("method") == Some(node)
-                || matches!(parent.kind(), "alias" | "undef")
-                || matches!(parent.kind(), "method" | "singleton_method")
-                    && parent.child_by_field_name("name") == Some(node)
-        })
-}
+
 fn first_bare_argument(source: &SourceFile, node: Node<'_>) -> bool {
     node.parent().is_some_and(|parent| {
         parent.kind() == "argument_list"
@@ -140,7 +131,7 @@ impl Cop for NestedTernaryOperator {
         let line_literals: Vec<_> = nodes
             .iter()
             .copied()
-            .filter(|node| line_literal(source, *node))
+            .filter(|node| shared::is_line_literal(source, *node))
             .map(|node| node.start_byte())
             .collect();
         let initial = corrections.as_ref().map_or(0, |edits| edits.len());

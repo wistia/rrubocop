@@ -198,3 +198,6 @@ pub fn has_hspace(bytes: &[u8], start: usize, end: usize) -> bool {
         .iter()
         .any(|&b| b == b' ' || b == b'\t')
 }
+
+mod line_literal;
+pub(crate) use line_literal::is_line_literal;
