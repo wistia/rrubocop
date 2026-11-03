@@ -1,10 +1,11 @@
+mod correction;
 use super::{ACCEPTED_METHODS, TimeZone};
 use crate::cop::shared::ruby_arguments::{Argument, from_nodes};
 use crate::cop::shared::ruby_expression::{
     plain_string, plain_symbol, regular_send_arguments, regular_send_name, regular_send_receiver,
     send_name,
 };
-use crate::cop::shared::{call_method_name, method_node, node_bytes};
+use crate::cop::shared::{call_method_name, method_node, node_bytes, push_replace};
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -165,6 +166,9 @@ fn report(
     node: Node<'_>,
     text: String,
     diagnostics: &mut Vec<Diagnostic>,
+    edits: Option<correction::Edits>,
+    config: &CopConfig,
+    mut corrections: Option<&mut Vec<Correction>>,
 ) {
     let Some((start, end)) = selector(node) else {
         return;
@@ -172,7 +176,12 @@ fn report(
     let (line, col) = source.offset_to_line_col(start);
     let mut d = cop.diagnostic(source, line, col, text);
     d.highlight_length = super::super::blank::highlight_length(source, start, end);
-    d.correctable = false;
+    d.correctable = edits.is_some() && !config.autocorrect_disabled();
+    if d.correctable {
+        for (start, end, replacement) in edits.unwrap() {
+            d.corrected |= push_replace(&mut corrections, start, end, replacement, cop.name());
+        }
+    }
     diagnostics.push(d);
 }
 pub(super) fn check(
@@ -181,7 +190,7 @@ pub(super) fn check(
     node: Node<'_>,
     config: &CopConfig,
     diagnostics: &mut Vec<Diagnostic>,
-    _corrections: Option<&mut Vec<Correction>>,
+    corrections: Option<&mut Vec<Correction>>,
 ) {
     if node.kind() == "call"
         && call_method_name(source, node) == Some(b"to_time")
@@ -198,6 +207,9 @@ pub(super) fn check(
             node,
             "Do not use `String#to_time` without zone. Use `Time.zone.parse` instead.".into(),
             diagnostics,
+            correction::string(source, node),
+            config,
+            corrections,
         );
         return;
     }
@@ -267,7 +279,16 @@ pub(super) fn check(
         }
         message(&dangerous.join("."), !args.is_empty(), flexible)
     };
-    report(cop, source, call, text, diagnostics);
+    report(
+        cop,
+        source,
+        call,
+        text,
+        diagnostics,
+        correction::time(source, call, !flexible),
+        config,
+        corrections,
+    );
 }
 
 #[cfg(test)]

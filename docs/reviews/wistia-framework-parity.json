@@ -640,15 +640,24 @@
       "baseline_noop": false,
       "baseline_ruby_correctable": true,
       "baseline_rust_correctable": true,
-      "status": "detection_reviewed_correction_pending",
+      "status": "reviewed_with_explicit_safeguards",
       "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/time_zone.rb; rubocop-ast-1.32.3/lib/rubocop/ast/node/dstr_node.rb",
-      "original_cases": 847,
-      "second_pass_cases": 1694,
+      "original_cases": 941,
+      "second_pass_cases": 1882,
       "scalar_value_observations": 30,
       "remaining_limits": [
-        "Pinned 2.26 correction implementation and trusted runtime safeguards remain pending; this checkpoint deliberately offers no pinned edits",
-        "Other plugin versions retain their previous implementation and are not covered by this pinned review"
-      ]
+        "Corrections require closed top-level UTC process/zone initialization and bounded literal inputs; unproven contexts remain warnings without edits",
+        "Consumed Time/TimeWithZone object results and changes to instants, whitespace or source line numbers are deliberately guarded",
+        "Permitted conversions retain the standard non-overridden framework/core API assumption",
+        "Other plugin versions retain their prior implementation and are outside this pinned review"
+      ],
+      "trusted_runtime_scenarios": 23,
+      "permitted_exact_rewrites": 25,
+      "original_ruby_version": "3.4.9",
+      "original_parser_version": "3.3.5.0",
+      "original_ast_version": "1.32.3",
+      "actual_cli_mode_comparisons": 6,
+      "actual_cli_mode_safety_differences": 2
     },
     {
       "name": "Rails/UniqBeforePluck",
@@ -952,7 +961,7 @@
       "upstream_source": "rubocop-factory_bot-2.26.1/lib/rubocop/cop/factory_bot/factory_class_name.rb"
     }
   ],
-  "implemented_on_branch": 65,
+  "implemented_on_branch": 66,
   "replaced_noop_stubs": 53,
   "actual_config_scope_cases": 140,
   "actual_config_scope_mismatches": 0,
@@ -965,7 +974,7 @@
   "remaining_unimplemented_noop_stubs": 0,
   "pending_delegated_noop_stubs": 0,
   "pending_delegated_existing_reviews": 0,
-  "retained_pending_existing_reviews": 1,
+  "retained_pending_existing_reviews": 0,
   "physical_target_gem_controls": 36,
   "completed_delegated_existing_reviews": 10
 }

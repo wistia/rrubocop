@@ -19,3 +19,15 @@ def extend(add):
         for source in ('Time&.now','Time.now&.utc','Time.now { work }.utc','wrap(Time.now).utc','Time.now(Time.at(0))','Time.now(Time.new)','Time[0].now','Time.now(Time + 1)','Time.now = value','Time.now # rubocop:disable Rails/TimeZone'):
             add(cop,source,EnforcedStyle=style)
     add(cop,'Time.now',AutoCorrect='disabled')
+
+    for style in ('strict','flexible'):
+        for header in ("ENV['TZ']='UTC'; Time.zone='UTC'; ","ENV['TZ']='UTC'; Time.zone=nil; ","ENV['TZ']='EST5'; Time.zone='UTC'; ","ENV['TZ']='UTC'; Time.zone='UTC'; value=1; "):
+            for body in ('Time.now', 'Time.new', 'Time.new(2020)', 'Time.at(0)', 'p Time.at(0).to_i', 'p Time.new(2020).to_i', 'p "2020-01-02".to_time.to_i', 'p Time.new(2020).in_time_zone.to_i'):
+                add(cop,header+body,EnforcedStyle=style)
+    add(cop,"ENV['TZ']='UTC'; Time.zone='UTC'; Time.now",AutoCorrect='disabled')
+
+    for body in ('p Time.parse("+020-01-02").to_i','p "2020-+1-02".to_time.to_i','p Time.new(2020). in_time_zone.to_i','p Time.new(2020)::in_time_zone.to_i'):
+        add(cop,"ENV['TZ']='UTC'; Time.zone='UTC'; "+body,EnforcedStyle='strict')
+
+    for body in ('factory().p(Time.new(2020).to_i)','Kernel.p(Time.at(0).to_i)'):
+        add(cop,"ENV['TZ']='UTC'; Time.zone='UTC'; "+body,EnforcedStyle='strict')

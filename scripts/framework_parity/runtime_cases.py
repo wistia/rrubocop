@@ -196,3 +196,6 @@ PROGRAMS += real_corpus_programs()
 
 from find_each_runtime import programs as find_each_programs
 PROGRAMS += find_each_programs()
+
+from time_zone_runtime import programs as time_zone_programs
+PROGRAMS += time_zone_programs()
