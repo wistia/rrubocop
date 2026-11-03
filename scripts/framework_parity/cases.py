@@ -9,7 +9,7 @@ def cases():
             config.setdefault("GemVersions", {"railties": "8.1.3.1"})
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
-        rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop=="Rails/ContentTag" else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+        rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
     for body in ("(has_many :children)", "begin; has_many :children; end", "if flag; has_many :children; end", "(has_many :children do; work; end)"):
         for prefix in ("", "work; "):
             add("Rails/HasManyOrHasOneDependent",f"class Model; with_options dependent: :destroy do; {prefix}{body}; end; end")
@@ -22,6 +22,21 @@ def cases():
     add("Rails/ContentTag","tag( # rubocop:disable Rails/ContentTag\n :br, data: {nested: tag(:br)})")
     add("Rails/ContentTag","tag(1, data: {nested: tag(:br)})")
     add("Rails/ContentTag","object.tag(:br, data: {nested: tag(:br)})")
+    add("Rails/LinkToBlank","link_to 'text', '/url', # rubocop:disable Rails/LinkToBlank\n target: '_blank'")
+    add("Rails/LinkToBlank","link_to 'text', '/url',\n target: '_blank' # rubocop:disable Rails/LinkToBlank")
+    for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-link-blank-original-spec.json").read_text())["cases"]:
+        add("Rails/LinkToBlank",row["source"].rstrip("\n"),**row["config"])
+    for macro in ("link_to", "link_to_if", "link_to_unless"):
+        prefix="'text', '/url'" if macro=="link_to" else "condition, 'text', '/url'"
+        for target in ("'_blank'", '"_blank"', ":_blank", "%q(_blank)", "'_self'", "'_BLANK'", "target", "nil"):
+            for rel in ("", ", rel: 'nofollow'", ', rel: "nofollow"', ", rel: :nofollow", ", rel: 'noopener'", ", rel: 'noreferrer'", ", rel: 'unrelated noopener'", ", rel: 'unrelated noreferrer'", ", rel: ''", ", rel: nil", ", rel: false", ", rel: rel", ", rel:", ", rel: %q(nofollow)", ", rel: ['nofollow']", ', rel: "#{rel}"'):
+                add("Rails/LinkToBlank",f"{macro} {prefix}, target: {target}{rel}")
+    for point in list(range(128))+[0x85,0xa0,0x1680,0x2003,0x2028,0x2029,0x3000]:
+        value=json.dumps('nofollow'+chr(point)+'noopener',ensure_ascii=False)
+        add("Rails/LinkToBlank",f"link_to 'text', '/url', target: '_blank', rel: {value}")
+    for source in ["link_to '/url', target: '_blank'", "link_to '/url', target: '_blank' do; 'text'; end", "link_to 'text', '/url', {target: '_blank'}", "helper.link_to 'text', '/url', target: '_blank'", "helper&.link_to 'text', '/url', target: '_blank'", "{target: '_blank'}.link_to('text','/url')", "link_to 'text', {target: '_blank'}, {class: 'x'}", "link_to 'text', {target: '_blank'}, {target: '_blank'}", "link_to 'text', '/url', target: '_blank', **options", "link_to 'text', '/url', **options, target: '_blank'", "link_to 'text', '/url', target: '_blank', target: '_self'", "link_to 'text', '/url', target: '_blank', rel: 'nofollow', rel: 'other'", "link_to 'text', '/url', {key => 'nofollow', target: '_blank'}", "link_to 'text', '/url', target: '_blank', rel: # keep\n 'nofollow'", "link_to 'text', '/url', target: '_blank', &block", "link_to '/url', {target: '_blank'}, &block", 'link_to \'text\', \'/url\', target: \'_blank\', rel: "nofollow\\"value"', 'link_to \'text\', \'/url\', target: \'_blank\', rel: "\\xFF noopener"', "link_to +1, target: '_blank'"]:
+        add("Rails/LinkToBlank",source)
+    add("Rails/LinkToBlank","link_to 'text', '/url', target: '_blank'",AutoCorrect="disabled")
     for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-content-tag-original-spec.json").read_text())["cases"]:
         add("Rails/ContentTag",row["source"].rstrip("\n"),**row["config"])
     for value in (":br", ":p", ":hr", ":'foo-bar'", "'foo_bar'", ":_foo", "'BR'", "'br\nx'", "''", ":\"\"", "nil", "true", "false", "1", "-1", "1.5", "1r", "1i", "/x/", "[]", "{}", "name", "@name", "CONST", "provider.name", '"#{name}"', '"b" "r"', "?b", "__LINE__", "__FILE__", "(:br)", "(1)"):
@@ -340,7 +355,7 @@ def cases():
     for cop, source, *options in PROGRAMS:
         runtime_config=dict(options[0]) if options else {}
         if cop=="Rails/ContentTag": runtime_config.setdefault("GemVersions",{"railties":"8.1.3.1"})
-        rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop=="Rails/ContentTag" else "app/models/example.rb", source=source, expected=[], corrected=source, config=runtime_config, trusted_runtime=True))
+        rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source, expected=[], corrected=source, config=runtime_config, trusted_runtime=True))
     for source in ("[1, 2].size", "{}.length", "'text'.size", ":text.size", "'text'.count('t')", "'text'.count(variable)", "[1, 2].count(1)", "COUNT = [1, 2].size", "items.each { [1, 2].size }", "[*items].size", "{ **options }.size", "[1].count { |n| n.odd? }", "\"#{value}\".size", "items.size", "[1]&.size"):
         add("Performance/FixedSize", source)
     for source in ("items.map { |n| [n] }.flatten(1)", "items.collect { |n| [n] }.flatten(1)", "items.map(&:children).flatten(1)", "items&.map { |n| [n] }&.flatten(1)", "items.map { |n| [n] }.flatten", "items.map { |n| [n] }.flatten(2)", "items.map { |n| [n] }.flatten(depth)", "items.map.flatten(1)"):

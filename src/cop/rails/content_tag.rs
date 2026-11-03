@@ -86,7 +86,7 @@ fn file_facts(source: &SourceFile, node: Node<'_>) -> std::sync::Arc<TagFacts> {
         crate::cop::shared::for_each_descendant(root, |n| {
             facts.line |= n.kind() == "identifier"
                 && node_text(source, n) == "__LINE__"
-                && crate::cop::ported::bare_call_identifier(source, n);
+                && crate::cop::shared::ruby_expression::integer_ast(source, n).is_some();
             facts.xml |= root_constant(source, n, "REXML")
                 || n.kind() == "scope_resolution"
                     && n.child_by_field_name("scope")

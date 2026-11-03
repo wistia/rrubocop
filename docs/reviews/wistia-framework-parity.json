@@ -1,7 +1,7 @@
 {
   "base_sha": "a8c56ec204a0cb9debb33d3a6f3f1b23b63bb58c",
   "owned_enabled_cops": 90,
-  "remaining_noop_stubs": 19,
+  "remaining_noop_stubs": 18,
   "rules": [
     {
       "name": "Migration/DepartmentName",
@@ -309,7 +309,16 @@
       "baseline_noop": true,
       "baseline_ruby_correctable": true,
       "baseline_rust_correctable": false,
-      "status": "pending"
+      "status": "implemented_with_explicit_safeguards_and_parser_gap",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/link_to_blank.rb",
+      "upstream_spec": "tests/fixtures/framework-link-blank-original-spec.json",
+      "open_correction_limits": [
+        "Dynamic/omitted rel values, ambiguous routing hashes, unknown option keys, duplicate/spread precedence and unsupported heredoc rel edits remain warnings without correction.",
+        "Symbol rel tokens and literal escapes are preserved instead of reproducing original token loss or introduced interpolation."
+      ],
+      "open_detection_limits": [
+        "Signed command link_to +1, target: _blank has an existing native parser ERROR; three warning-state differences stay explicit."
+      ]
     },
     {
       "name": "Rails/NotNullColumn",
@@ -765,16 +774,16 @@
       "upstream_source": "rubocop-factory_bot-2.26.1/lib/rubocop/cop/factory_bot/factory_class_name.rb"
     }
   ],
-  "implemented_on_branch": 51,
-  "replaced_noop_stubs": 48,
-  "actual_config_scope_cases": 110,
+  "implemented_on_branch": 52,
+  "replaced_noop_stubs": 49,
+  "actual_config_scope_cases": 112,
   "actual_config_scope_mismatches": 0,
   "original_ast_equality_pairs": 75,
   "auxiliary_policy_cases": 4,
   "transferred_enabled_cops": 11,
   "retained_enabled_cops": 79,
-  "remaining_owned_noop_stubs": 8,
+  "remaining_owned_noop_stubs": 7,
   "completed_delegated_noop_stubs": 7,
-  "remaining_unimplemented_noop_stubs": 12,
+  "remaining_unimplemented_noop_stubs": 11,
   "pending_delegated_noop_stubs": 4
 }

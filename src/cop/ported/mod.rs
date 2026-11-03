@@ -309,3 +309,9 @@ pub(super) fn original_string_value(source: &SourceFile, node: Node<'_>) -> Opti
     let config = CopConfig::default();
     Context::new(source, &config).original_string_value(node)
 }
+
+pub(super) fn static_literal_bytes(source: &SourceFile, node: Node<'_>) -> Option<Vec<u8>> {
+    Context::new(source, &CopConfig::default())
+        .duplicate_literal_bytes(node)
+        .map(|(bytes, _)| bytes)
+}
