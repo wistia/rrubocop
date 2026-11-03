@@ -1,0 +1,180 @@
+{
+  "source": "rubocop-rails v2.26.0/spec/rubocop/cop/rails/has_many_or_has_one_dependent_spec.rb",
+  "cases": [
+    {
+      "source": "class Person < ApplicationRecord\n  has_one :foo\nend\n",
+      "config": {},
+      "original_spec_line": 6
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_one :foo, class_name: 'bar'\nend\n",
+      "config": {},
+      "original_spec_line": 15
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_one :foo, dependent: :destroy\nend\n",
+      "config": {},
+      "original_spec_line": 24
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_one :foo, **{dependent: :destroy}\nend\n",
+      "config": {},
+      "original_spec_line": 32
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_one :foo, **bar\nend\n",
+      "config": {},
+      "original_spec_line": 40
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_one :foo, dependent: nil\nend\n",
+      "config": {},
+      "original_spec_line": 49
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_one :foo, through: :bar\nend\n",
+      "config": {},
+      "original_spec_line": 58
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_one :foo, through: nil\nend\n",
+      "config": {},
+      "original_spec_line": 66
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  with_options dependent: :destroy do\n    has_one :foo\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 77
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  with_options dependent: :destroy do\n    has_one :foo, class_name: 'Foo'\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 87
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  with_options dependent: :destroy do |model|\n    model.has_one :foo\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 97
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_many :foo\nend\n",
+      "config": {},
+      "original_spec_line": 110
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_many :foo, class_name: 'bar'\nend\n",
+      "config": {},
+      "original_spec_line": 119
+    },
+    {
+      "source": "class User < ApplicationRecord\n  has_many :articles, -> { where(active: true) }\nend\n",
+      "config": {},
+      "original_spec_line": 128
+    },
+    {
+      "source": "class User < ApplicationRecord\n  has_many :articles, -> { where(active: true) }, dependent: :destroy\nend\n",
+      "config": {},
+      "original_spec_line": 141
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_many :foo, dependent: nil\nend\n",
+      "config": {},
+      "original_spec_line": 149
+    },
+    {
+      "source": "class User < ApplicationRecord\n  has_many :activities, -> { order(created_at: :desc) }, through: :notes, source: :activities\nend\n",
+      "config": {},
+      "original_spec_line": 162
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  has_many :foo, through: nil\nend\n",
+      "config": {},
+      "original_spec_line": 170
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  with_options through: nil do\n    has_many :foo\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 181
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  with_options dependent: :destroy do\n    has_many :foo\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 192
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  with_options dependent: :destroy do |model|\n    model.has_many :foo\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 202
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  with_options dependent: :destroy do\n    has_many :foo do\n      def bar\n      end\n    end\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 212
+    },
+    {
+      "source": "class Person < ApplicationRecord\n  with_options dependent: :destroy do\n    has_many :foo\n    has_many :bar\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 226
+    },
+    {
+      "source": "class Article < ApplicationRecord\n  with_options dependent: :destroy do\n    has_many :tags\n    with_options class_name: 'Tag' do\n      has_many :special_tags, foreign_key: :special_id, inverse_of: :special\n    end\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 240
+    },
+    {
+      "source": "class Person < ActiveRecord::Base\n  has_one :foo\nend\n",
+      "config": {},
+      "original_spec_line": 256
+    },
+    {
+      "source": "module Foo\n  extend ActiveSupport::Concern\n\n  included do\n    has_many :bazs\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 266
+    },
+    {
+      "source": "module Foo\n  def self.included(base)\n    base.has_many :bazs\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 279
+    },
+    {
+      "source": "module Foo\n  def self.included(base)\n    base.has_many :bazs, dependent: :destroy\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 291
+    },
+    {
+      "source": "class User < ActiveResource::Base\n  has_many :projects, class_name: 'API::Project'\nend\n",
+      "config": {},
+      "original_spec_line": 302
+    },
+    {
+      "source": "class User < ::ActiveResource::Base\n  has_many :projects, class_name: 'API::Project'\nend\n",
+      "config": {},
+      "original_spec_line": 310
+    },
+    {
+      "source": "class Person < ActiveRecord::Base\n  has_one :foo\n\n  def readonly?\n    true\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 320
+    },
+    {
+      "source": "class Person < ActiveRecord::Base\n  has_one :foo\n\n  def readonly?\n    false\n  end\nend\n",
+      "config": {},
+      "original_spec_line": 332
+    },
+    {
+      "source": "class Person < ApplicationRecord\nend\n",
+      "config": {},
+      "original_spec_line": 347
+    },
+    {
+      "source": "has_many :foo, dependent: :bar\n",
+      "config": {},
+      "original_spec_line": 137
+    },
+    {
+      "source": "has_many :foo, through: :bars\n",
+      "config": {},
+      "original_spec_line": 158
+    }
+  ]
+}

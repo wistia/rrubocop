@@ -83,8 +83,49 @@ fn closing(open: u8) -> u8 {
 mod escapes;
 mod ruby;
 pub(super) use ruby::string as ruby_string;
+pub(super) use ruby::{heredoc_span, parts as ruby_parts};
 mod duplicate;
 pub(super) use duplicate::value as duplicate_bytes;
+
+fn continued(line: &str) -> bool {
+    line.strip_suffix('\n')
+        .is_some_and(|line| line.bytes().rev().take_while(|byte| *byte == b'\\').count() % 2 == 1)
+}
+fn decoded_parts(content: &str, mode: Option<(bool, u8)>) -> Option<Vec<String>> {
+    let mut parts = Vec::new();
+    let mut group = String::new();
+    for line in content.split_inclusive('\n') {
+        group.push_str(line);
+        if !mode.is_some_and(|(double, _)| double) || !continued(line) {
+            parts.push(match mode {
+                Some((double, delimiter)) if group.contains('\\') => {
+                    decode(&group, double, delimiter)?
+                }
+                _ => std::mem::take(&mut group),
+            });
+            group.clear();
+        }
+    }
+    if !group.is_empty() {
+        parts.push(match mode {
+            Some((double, delimiter)) if group.contains('\\') => decode(&group, double, delimiter)?,
+            _ => group,
+        });
+    }
+    Some(parts)
+}
+fn string_parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
+    if descendants(n).any(|n| n.kind() == "interpolation") {
+        return None;
+    }
+    let (content, double, delimiter) = contents(c.text(n))?;
+    let content = content.replace("\r\n", "\n");
+    let mut parts = decoded_parts(&content, Some((double, delimiter)))?;
+    if parts.is_empty() {
+        parts.push(String::new());
+    }
+    Some(parts)
+}
 
 fn single_escape(
     bytes: &mut std::iter::Peekable<std::str::Bytes<'_>>,
@@ -111,5 +152,164 @@ mod tests {
     fn nested_control_escapes_do_not_recurse() {
         let text = format!("{}A", r"\C-".repeat(10_000));
         assert_eq!(decode(&text, true, b'"').as_deref(), Some("\x01"));
+    }
+}
+
+pub(in crate::cop::ported) fn decode_double_quoted_content(inner: &str) -> Option<String> {
+    decode(inner, true, b'"')
+}
+
+pub(in crate::cop::ported) fn decode_regexp_content(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<u8>> {
+    let text = std::str::from_utf8(inner).ok()?;
+    let mut bytes = text.bytes().peekable();
+    let mut output = Vec::with_capacity(inner.len());
+    while let Some(byte) = bytes.next() {
+        if byte == b'\r' && bytes.peek() == Some(&b'\n') {
+            continue;
+        }
+        if byte != b'\\' {
+            output.push(byte);
+            continue;
+        }
+        let escaped = *bytes.peek()?;
+        if (escaped == opening || escaped == closing) && !b"\\$()*+.<>?[]^{|}".contains(&escaped) {
+            output.push(bytes.next()?);
+        } else if escaped == b'\n'
+            || escaped == b'\r' && bytes.clone().nth(1) == Some(b'\n')
+            || ruby_version >= 3.1 && matches!(escaped, b'c' | b'C' | b'm' | b'M')
+        {
+            escapes::append(&mut bytes, &mut output)?;
+        } else {
+            output.push(byte);
+            output.push(bytes.next()?);
+        }
+    }
+    Some(output)
+}
+
+pub(in crate::cop::ported) fn decode_regexp_parts(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<Vec<u8>>> {
+    let text = std::str::from_utf8(inner).ok()?;
+    if !text.contains('\n') {
+        let value = decode_regexp_content(inner, opening, closing, ruby_version)?;
+        return Some(if value.is_empty() {
+            Vec::new()
+        } else {
+            vec![value]
+        });
+    }
+    let text = if text.contains("\r\n") {
+        Cow::Owned(text.replace("\r\n", "\n"))
+    } else {
+        Cow::Borrowed(text)
+    };
+    let mut parts = Vec::new();
+    let mut group = String::new();
+    for line in text.split_inclusive('\n') {
+        group.push_str(line);
+        if !continued(line) {
+            let value = decode_regexp_content(group.as_bytes(), opening, closing, ruby_version)?;
+            if !value.is_empty() {
+                parts.push(value);
+            }
+            group.clear();
+        }
+    }
+    if !group.is_empty() {
+        let value = decode_regexp_content(group.as_bytes(), opening, closing, ruby_version)?;
+        if !value.is_empty() {
+            parts.push(value);
+        }
+    }
+    Some(parts)
+}
+
+pub(super) fn original_string_value(c: &Context<'_>, node: Node<'_>) -> Option<String> {
+    if node.kind() == "chained_string" {
+        let mut cursor = node.walk();
+        return node
+            .named_children(&mut cursor)
+            .filter(|n| n.kind() != "comment")
+            .map(|n| original_string_value(c, n))
+            .collect::<Option<Vec<_>>>()
+            .map(|parts| parts.concat());
+    }
+    if let Some(parts) =
+        ruby_parts(c, node).filter(|_| !symbol_label(c, node) && node.kind() != "delimited_symbol")
+    {
+        return Some(parts.concat());
+    }
+    if node.kind() != "string" || symbol_label(c, node) {
+        return None;
+    }
+    let (inner, double, delimiter) = contents(c.text(node))?;
+    let end = node.end_byte() - 1;
+    let mut start = end - inner.len();
+    let mut output = String::new();
+    let mut cursor = node.walk();
+    for child in node
+        .named_children(&mut cursor)
+        .filter(|n| n.kind() == "interpolation")
+    {
+        let text = std::str::from_utf8(c.source.as_bytes().get(start..child.start_byte())?)
+            .ok()?
+            .replace("\r\n", "\n");
+        output.push_str(&decode(&text, double, delimiter)?);
+        let interpolation = c.text(child).replace("\r\n", "\n");
+        output.push_str(if interpolation.starts_with("#{") {
+            &interpolation
+        } else {
+            interpolation.strip_prefix('#').unwrap_or(&interpolation)
+        });
+        start = child.end_byte();
+    }
+    let text = std::str::from_utf8(c.source.as_bytes().get(start..end)?)
+        .ok()?
+        .replace("\r\n", "\n");
+    output.push_str(&decode(&text, double, delimiter)?);
+    Some(output)
+}
+
+#[cfg(test)]
+mod original_string_value_tests {
+    use super::*;
+    #[test]
+    fn string_values_match_original_ast() {
+        let fixture: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/framework-string-values.json"
+        )))
+        .unwrap();
+        for row in fixture["cases"].as_array().unwrap() {
+            let source = SourceFile::from_bytes(
+                "probe.rb",
+                row["source"].as_str().unwrap().as_bytes().to_vec(),
+            );
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(!tree.root_node().has_error(), "{}", row["source"]);
+            let config = CopConfig::default();
+            let context = Context::new(&source, &config);
+            let mut target = None;
+            crate::cop::shared::for_each_descendant(tree.root_node(), |n| {
+                if crate::cop::shared::call_method_name(&source, n) == Some(b"probe") {
+                    target = crate::cop::shared::argument_nodes(n).first().copied();
+                }
+            });
+            assert_eq!(
+                original_string_value(&context, target.unwrap()).as_deref(),
+                row["value"].as_str(),
+                "{}",
+                row["source"]
+            );
+        }
     }
 }

@@ -47,6 +47,26 @@ fn configuration(case: &Case) -> ResolvedConfig {
     let mut config = ResolvedConfig::empty();
     config.target_ruby_version = Some(3.4);
     config.display_cop_names = false;
+    if let Some(gems) = case
+        .config
+        .get("GemVersions")
+        .and_then(serde_yml::Value::as_mapping)
+    {
+        config.railties_in_lockfile =
+            gems.contains_key(serde_yml::Value::String("railties".into()));
+        config.railties_version = gems
+            .get(serde_yml::Value::String("railties".into()))
+            .and_then(serde_yml::Value::as_str)
+            .and_then(|version| {
+                version
+                    .split('.')
+                    .take(2)
+                    .collect::<Vec<_>>()
+                    .join(".")
+                    .parse()
+                    .ok()
+            });
+    }
     config.cop_configs.insert(
         case.cop.clone(),
         CopConfig {

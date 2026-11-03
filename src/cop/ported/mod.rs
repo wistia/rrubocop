@@ -243,3 +243,75 @@ mod tests;
 
 #[cfg(test)]
 mod diagnostic_tests;
+
+pub(super) fn static_literal(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    let context = Context::new(source, &config);
+    context
+        .static_value(node)
+        .or_else(|| context.ruby_static_string(node))
+        .map(std::borrow::Cow::into_owned)
+}
+
+pub(super) fn local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
+    let config = CopConfig::default();
+    context::local_identifier(&Context::new(source, &config), node)
+}
+
+pub(super) fn static_symbol(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    Context::new(source, &config)
+        .static_symbol(node)
+        .map(std::borrow::Cow::into_owned)
+}
+
+pub(super) fn bare_call_identifier(source: &SourceFile, node: Node<'_>) -> bool {
+    node.kind() == "identifier"
+        && !local_identifier(source, node)
+        && !node.parent().is_some_and(|parent| {
+            parent.child_by_field_name("method") == Some(node)
+                || matches!(parent.kind(), "alias" | "undef")
+                || matches!(parent.kind(), "method" | "singleton_method")
+                    && parent.child_by_field_name("name") == Some(node)
+        })
+}
+
+pub(super) fn ruby_string_parts(source: &SourceFile, node: Node<'_>) -> Option<Vec<String>> {
+    let config = CopConfig::default();
+    Context::new(source, &config).ruby_string_parts(node)
+}
+pub(super) fn heredoc_span(source: &SourceFile, node: Node<'_>) -> Option<(usize, usize)> {
+    let config = CopConfig::default();
+    Context::new(source, &config).ruby_heredoc_span(node)
+}
+
+pub(super) fn decode_ruby_double_quoted_content(inner: &str) -> Option<String> {
+    context::decode_double_quoted_content(inner)
+}
+
+pub(super) fn decode_regexp_parts(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<Vec<u8>>> {
+    context::decode_regexp_parts(inner, opening, closing, ruby_version)
+}
+
+pub(super) fn local_binding(source: &SourceFile, node: Node<'_>) -> Option<usize> {
+    context::local_binding(&Context::new(source, &CopConfig::default()), node)
+}
+pub(super) fn numbered_bindings(source: &SourceFile, node: Node<'_>) -> Option<Vec<usize>> {
+    context::numbered_bindings(&Context::new(source, &CopConfig::default()), node)
+}
+
+pub(super) fn original_string_value(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    Context::new(source, &config).original_string_value(node)
+}
+
+pub(super) fn static_literal_bytes(source: &SourceFile, node: Node<'_>) -> Option<Vec<u8>> {
+    Context::new(source, &CopConfig::default())
+        .duplicate_literal_bytes(node)
+        .map(|(bytes, _)| bytes)
+}

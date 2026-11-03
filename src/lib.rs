@@ -159,7 +159,12 @@ fn lint_stdin(args: &Args, config: &ResolvedConfig, registry: &CopRegistry) -> R
     let mut buf = Vec::new();
     std::io::stdin().read_to_end(&mut buf)?;
     let diags = lint_stdin_source(args, config, registry, path, &mut buf)?;
-    Ok(print_results(args, &diags, std::slice::from_ref(path)))
+    let files = if diags.is_some() {
+        std::slice::from_ref(path)
+    } else {
+        &[]
+    };
+    Ok(print_results(args, diags.as_deref().unwrap_or(&[]), files))
 }
 
 fn lint_stdin_source(
@@ -168,8 +173,11 @@ fn lint_stdin_source(
     registry: &CopRegistry,
     path: &std::path::Path,
     bytes: &mut Vec<u8>,
-) -> Result<Vec<Diagnostic>> {
+) -> Result<Option<Vec<Diagnostic>>> {
     let filters = CopFilterSet::build(config, registry);
+    if args.force_exclusion && filters.is_globally_excluded(path) {
+        return Ok(None);
+    }
     let only = (!args.only.is_empty()).then(|| args.only.clone());
     let mode = args.autocorrect_mode();
     let diags = lint_bytes_autocorrect(
@@ -186,5 +194,8 @@ fn lint_stdin_source(
     if mode != AutocorrectMode::Off && path.is_file() {
         std::fs::write(path, bytes)?;
     }
-    Ok(diags)
+    Ok(Some(diags))
 }
+
+#[cfg(test)]
+mod stdin_tests;

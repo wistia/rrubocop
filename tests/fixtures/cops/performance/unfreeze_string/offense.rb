@@ -1,4 +1,2 @@
 String.new
-^^^^^^^^^^ Performance/UnfreezeString: Prefer unary plus to get an unfrozen string literal.
-String.new('')
-^^^^^^^^^^^^^^ Performance/UnfreezeString: Prefer unary plus to get an unfrozen string literal.
+^^^^^^^^^^ Performance/UnfreezeString: Use unary plus to get an unfrozen string literal.

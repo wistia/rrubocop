@@ -25,6 +25,11 @@ impl Builder<'_> {
                 } else if let Some(sc) = n.child_by_field_name("superclass") {
                     self.walk(sc, parent, false);
                 }
+                if matches!(kind, "class" | "module") {
+                    if let Some(name) = n.child_by_field_name("name") {
+                        self.walk(name, parent, false);
+                    }
+                }
                 let s = self.scope_for(n, ScopeKind::ClassLike, None);
                 if let Some(body) = n.child_by_field_name("body") {
                     self.walk(body, s, false);
@@ -53,7 +58,52 @@ impl Builder<'_> {
             self.declare_params(p, s); // block params always shadow
         }
         if let Some(body) = body_of(n) {
+            if n.child_by_field_name("parameters").is_none() {
+                self.declare_numbered_params(body, s);
+            }
             self.walk(body, s, false);
+        }
+    }
+
+    fn declare_numbered_params(&mut self, node: Node<'_>, scope: ScopeId) {
+        let headers: Option<Vec<Node<'_>>> = match node.kind() {
+            "block" | "do_block" | "lambda" | "method" => Some(Vec::new()),
+            "singleton_method" => Some(node.child_by_field_name("object").into_iter().collect()),
+            "singleton_class" => Some(node.child_by_field_name("value").into_iter().collect()),
+            "class" | "module" => Some(
+                [
+                    node.child_by_field_name("name"),
+                    node.child_by_field_name("superclass"),
+                ]
+                .into_iter()
+                .flatten()
+                .collect(),
+            ),
+            _ => None,
+        };
+        if let Some(headers) = headers {
+            for header in headers {
+                self.declare_numbered_params(header, scope);
+            }
+            return;
+        }
+        if node.kind() == "identifier" {
+            let text = &self.src[node.start_byte()..node.end_byte()];
+            let method_name = node.parent().is_some_and(|parent| {
+                parent.child_by_field_name("method") == Some(node)
+                    || matches!(parent.kind(), "alias" | "undef")
+            });
+            if matches!(text, [b'_', b'1'..=b'9']) && !method_name {
+                self.bind_param(
+                    scope,
+                    String::from_utf8_lossy(text).into_owned(),
+                    node.start_byte(),
+                );
+            }
+        }
+        let mut cursor = node.walk();
+        for child in node.named_children(&mut cursor) {
+            self.declare_numbered_params(child, scope);
         }
     }
 

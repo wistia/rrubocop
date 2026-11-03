@@ -1,71 +1,93 @@
-//! Performance/BindCall — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{argument_nodes, call_method_name, call_receiver, node_text};
+//! Combine unbound-method binding and invocation.
+use crate::cop::shared::{
+    argument_nodes, call_method_name, call_receiver, collect_comments, method_node, node_text,
+    push_replace,
+};
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
-
+use tree_sitter::Node;
 pub struct BindCall;
-
-fn bind_arg(source: &SourceFile, node: Node<'_>) -> Option<String> {
-    if call_method_name(source, node) != Some(b"call") {
-        return None;
-    }
-    let recv = call_receiver(node)?;
-    if !matches!(recv.kind(), "call" | "command") {
-        return None;
-    }
-    if call_method_name(source, recv) != Some(b"bind") {
-        return None;
-    }
-    let args = argument_nodes(recv);
-    (args.len() == 1).then(|| node_text(source, args[0]))
-}
-
-fn call_args_src(source: &SourceFile, node: Node<'_>) -> String {
-    argument_nodes(node)
-        .into_iter()
-        .map(|a| node_text(source, a))
-        .collect::<Vec<_>>()
-        .join(", ")
-}
-
-fn offense_msg(source: &SourceFile, node: Node<'_>) -> Option<String> {
-    let bind_arg = bind_arg(source, node)?;
-    let args = call_args_src(source, node);
-    let comma = if args.is_empty() { "" } else { ", " };
-    Some(format!(
-        "Use `bind_call({bind_arg}{comma}{args})` instead of `bind({bind_arg}).call({args})`."
-    ))
-}
-
 impl Cop for BindCall {
     fn name(&self) -> &'static str {
         "Performance/BindCall"
     }
-
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
+        &["call"]
     }
-
-    fn interested_call_names(&self) -> &'static [&'static [u8]] {
-        &[b"call"]
-    }
-
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some(msg) = offense_msg(source, node) else {
+        if crate::cop::shared::is_setter_call(node) {
+            return;
+        }
+        if config.get_f64("TargetRubyVersion", 3.4) < 2.7
+            || !matches!(call_method_name(source, node), Some(b"call") | None)
+        {
+            return;
+        }
+        let Some(bind) = call_receiver(node) else {
             return;
         };
-        let (line, col) = source.offset_to_line_col(node.start_byte());
-        diagnostics.push(self.diagnostic(source, line, col, msg));
+        if call_method_name(source, bind) != Some(b"bind")
+            || bind.child_by_field_name("block").is_some()
+            || [node, bind].iter().any(|n| {
+                n.child_by_field_name("operator")
+                    .is_some_and(|op| node_text(source, op) == "&.")
+            })
+        {
+            return;
+        }
+        let args = argument_nodes(bind);
+        let [arg] = args.as_slice() else {
+            return;
+        };
+        let Some(selector) = method_node(bind) else {
+            return;
+        };
+        let bind_arg = node_text(source, *arg);
+        let call_args = argument_nodes(node)
+            .into_iter()
+            .map(|n| node_text(source, n))
+            .collect::<Vec<_>>()
+            .join(", ");
+        let comma = if call_args.is_empty() { "" } else { ", " };
+        let end = super::send_range::end(node);
+        let (line, col) = source.offset_to_line_col(selector.start_byte());
+        let mut d=self.diagnostic(source,line,col,format!("Use `bind_call({bind_arg}{comma}{call_args})` instead of `bind({bind_arg}).call({call_args})`."));
+        let raw = &source.as_bytes()[selector.start_byte()..end];
+        d.highlight_length =
+            String::from_utf8_lossy(raw.split(|b| *b == b'\n').next().unwrap_or(raw))
+                .chars()
+                .count();
+        d.correctable = !config.autocorrect_disabled()
+            && std::str::from_utf8(raw).is_ok()
+            && !collect_comments(node)
+                .iter()
+                .any(|c| c.start_byte() >= selector.start_byte() && c.start_byte() < end);
+        if d.correctable {
+            d.corrected = push_replace(
+                &mut corrections,
+                selector.start_byte(),
+                end,
+                format!("bind_call({bind_arg}{comma}{call_args})"),
+                self.name(),
+            );
+        }
+        diagnostics.push(d);
     }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    crate::cop_fixture_tests!(BindCall, "cops/performance/bind_call");
 }

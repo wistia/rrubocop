@@ -1,0 +1,131 @@
+{
+  "source": "rubocop-rails 2.26.0/spec/rubocop/cop/rails/presence_spec.rb",
+  "cases": [
+    {
+      "source": "a.present? ? a : nil"
+    },
+    {
+      "source": "!a.present? ? nil: a"
+    },
+    {
+      "source": "a.blank? ? nil : a"
+    },
+    {
+      "source": "!a.blank? ? a : nil"
+    },
+    {
+      "source": "a.present? ? a : b"
+    },
+    {
+      "source": "!a.present? ? b : a"
+    },
+    {
+      "source": "a.blank? ? b : a"
+    },
+    {
+      "source": "!a.blank? ? a : b"
+    },
+    {
+      "source": "a.present? ? a : 1"
+    },
+    {
+      "source": "a.blank? ? 1 : a"
+    },
+    {
+      "source": "a(:bar).map(&:baz).present? ? a(:bar).map(&:baz) : nil"
+    },
+    {
+      "source": "a.present? ? a : b[:c]"
+    },
+    {
+      "source": "if a.present?\n  a\nelse\n  nil\nend"
+    },
+    {
+      "source": "unless a.present?\n  nil\nelse\n  a\nend"
+    },
+    {
+      "source": "if a.present?\n  a\nelse\n  b.to_f + 12.0\nend"
+    },
+    {
+      "source": "if a.present?\n  a\nelse\n  b.to_f * 12.0\nend"
+    },
+    {
+      "source": "a if a.present?"
+    },
+    {
+      "source": "a unless a.blank?"
+    },
+    {
+      "source": "if [1, 2, 3].map { |num| num + 1 }\n            .map { |num| num + 2 }\n            .present?\n            [1, 2, 3].map { |num| num + 1 }.map { |num| num + 2 }\nelse\n  b\nend"
+    },
+    {
+      "source": "a.present? ?\n  a :\n  nil"
+    },
+    {
+      "source": "if value.present?\n  value\nelse\n  do_something(value)\nend"
+    },
+    {
+      "source": "if value.present?\n  value\nelse\n  do_something value\nend"
+    },
+    {
+      "source": "if value.present?\n  value\nelse\n  do_something arg1, arg2\nend"
+    },
+    {
+      "source": "if value.present?\n  value\nelse\n  foo.do_something value\nend"
+    },
+    {
+      "source": "a < if b.present?\n  b\nelse\n  c\nend"
+    },
+    {
+      "source": "a > if b.present?\n  b\nelse\n  c\nend"
+    },
+    {
+      "source": "a <= if b.present?\n  b\nelse\n  c\nend"
+    },
+    {
+      "source": "a >= if b.present?\n  b\nelse\n  c\nend"
+    },
+    {
+      "source": "a == if b.present?\n  b\nelse\n  c\nend"
+    },
+    {
+      "source": "a != if b.present?\n  b\nelse\n  c\nend"
+    },
+    {
+      "source": "a.presence"
+    },
+    {
+      "source": "a.present? ? b : nil"
+    },
+    {
+      "source": "puts foo if present?\nputs foo if !present?"
+    },
+    {
+      "source": "a.blank? ? nil : b"
+    },
+    {
+      "source": "puts foo if blank?\nputs foo if !blank?"
+    },
+    {
+      "source": "if a.present?\n  a\nelse\n  something\n  something\n  something\nend"
+    },
+    {
+      "source": "if a.present?\n  a\nelse\n  something; something; something\nend"
+    },
+    {
+      "source": "if a.present?\n  a\nelsif b\n  b\nend"
+    },
+    {
+      "source": "if a.present?\n  a\nelse\n  b if c\nend"
+    },
+    {
+      "source": "if something_method.present?\n  something_method\nelse\n  invalid_method rescue StandardError\nend"
+    },
+    {
+      "source": "if a.present?\n  a\nelse\n  fetch_state while waiting?\nend"
+    },
+    {
+      "source": "if something?\n  a\nelsif b.present?\n  b\nend"
+    }
+  ]
+}

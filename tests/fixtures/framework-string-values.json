@@ -1,0 +1,151 @@
+{
+  "cases": [
+    {
+      "ast_type": "str",
+      "source": "probe(\"text\")\n",
+      "value": "text"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe('text')\n",
+      "value": "text"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a#{name}\")\n",
+      "value": "a#{name}"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"#{name}\")\n",
+      "value": "#{name}"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a#{first}b#{second}c\")\n",
+      "value": "a#{first}b#{second}c"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a\\n#{name}\\t\")\n",
+      "value": "a\n#{name}\t"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(%Q[a\\]#{name}])\n",
+      "value": "a]#{name}"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(%Q{a\\}#{name}})\n",
+      "value": "a}#{name}"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a#@value\")\n",
+      "value": "a@value"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a#$value\")\n",
+      "value": "a$value"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"#{first; second}\")\n",
+      "value": "#{first; second}"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"#{'text'}\")\n",
+      "value": "#{'text'}"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a\" \"b\")\n",
+      "value": "ab"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a#{name}\" \"b\")\n",
+      "value": "a#{name}b"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a\" \"b#{name}\")\n",
+      "value": "ab#{name}"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe(\"\")\n",
+      "value": ""
+    },
+    {
+      "ast_type": "str",
+      "source": "probe('')\n",
+      "value": ""
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a\nb\")\n",
+      "value": "a\nb"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"a\nb\n\")\n",
+      "value": "a\nb\n"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe(\"a\\nb\")\n",
+      "value": "a\nb"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe(?a)\n",
+      "value": "a"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe(?\\n)\n",
+      "value": "\n"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(\"\\u{1f600}#{name}\")\n",
+      "value": "😀#{name}"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe(%q(a\\)b))\n",
+      "value": "a)b"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(%Q[a#{name}b\\n])\n",
+      "value": "a#{name}b\n"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe(\"a\\#{name}\")\n",
+      "value": "a#{name}"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe(\"a\\\nb\")\n",
+      "value": "ab"
+    },
+    {
+      "ast_type": "dstr",
+      "source": "probe(<<~TEXT)\n  a\n  b\nTEXT\n",
+      "value": "a\nb\n"
+    },
+    {
+      "ast_type": "str",
+      "source": "probe(<<~'TEXT')\n  a\\nb\nTEXT\n",
+      "value": "a\\nb\n"
+    }
+  ],
+  "rubocop": "1.65.1",
+  "source": "StrNode/DstrNode#value"
+}

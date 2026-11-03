@@ -1,3 +1,6 @@
+mod anchored_match;
+mod anchored_regexp;
+mod anchored_substitution;
 mod big_decimal_with_numeric_argument;
 mod bind_call;
 mod caller;
@@ -17,6 +20,7 @@ mod redundant_match;
 mod redundant_merge;
 mod regexp_match;
 mod reverse_each;
+mod send_range;
 mod size;
 mod start_with;
 mod string_replacement;

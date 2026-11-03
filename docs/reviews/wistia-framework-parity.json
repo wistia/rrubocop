@@ -1,0 +1,890 @@
+{
+  "base_sha": "a8c56ec204a0cb9debb33d3a6f3f1b23b63bb58c",
+  "owned_enabled_cops": 90,
+  "remaining_noop_stubs": 14,
+  "rules": [
+    {
+      "name": "Migration/DepartmentName",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/ActiveRecordAliases",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "reviewed_on_delegated_branch",
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/ActiveRecordOverride",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/active_record_override.rb"
+    },
+    {
+      "name": "Rails/ActiveSupportAliases",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "reviewed_on_delegated_branch",
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/ApplicationController",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "reviewed_on_delegated_branch",
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/ApplicationJob",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "reviewed_on_delegated_branch",
+      "original_minimum_target_rails_version": 5.0,
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/ApplicationMailer",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "reviewed_on_delegated_branch",
+      "original_minimum_target_rails_version": 5.0,
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/ApplicationRecord",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "reviewed_on_delegated_branch",
+      "original_minimum_target_rails_version": 5.0,
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/ArelStar",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/arel_star.rb"
+    },
+    {
+      "name": "Rails/AssertNot",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/assert_not.rb"
+    },
+    {
+      "name": "Rails/BelongsTo",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "reviewed_on_delegated_branch",
+      "original_minimum_target_rails_version": 5.0,
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/Blank",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/blank.rb"
+    },
+    {
+      "name": "Rails/BulkChangeTable",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_schema",
+      "implementation_branch": "feat/wistia-parity-schema",
+      "implementation_sha": "fea4911",
+      "review_report": "docs/reviews/schema-parity-handoff.md"
+    },
+    {
+      "name": "Rails/ContentTag",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards_and_parser_gap",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/content_tag.rb",
+      "upstream_spec": "tests/fixtures/framework-content-tag-original-spec.json",
+      "open_correction_limits": [
+        "Unsafe -A only for supported default HTML void helpers; -a is deliberately demoted for serialization/XML risk.",
+        "Non-void names, positional options, escape control keys, dynamic/data/heredoc/XML/comment/line-value contexts stay warnings without correction."
+      ],
+      "open_detection_limits": [
+        "Signed command tail tag +1, options is an existing native parser ERROR; all three states remain explicit warning differences.",
+        "Xstr/AST-object and dynamic-heredoc first-name value projections remain bounded shared-value follow-ups."
+      ],
+      "original_minimum_target_rails_version": 5.1,
+      "independent_target_and_gem_gates_reviewed": true
+    },
+    {
+      "name": "Rails/CreateTableWithTimestamps",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/create_table_with_timestamps.rb"
+    },
+    {
+      "name": "Rails/Date",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/date.rb"
+    },
+    {
+      "name": "Rails/Delegate",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_rails_final",
+      "implementation_branch": "feat/wistia-parity-rails-final",
+      "implementation_sha": "01f5a5b",
+      "review_report": "docs/reviews/final-rails-handoff.md"
+    },
+    {
+      "name": "Rails/DelegateAllowBlank",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/DynamicFindBy",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/dynamic_find_by.rb",
+      "upstream_spec": "tests/fixtures/framework-dynamic-find-original-spec.json",
+      "open_correction_limits": [
+        "Invalid generated keyword syntax and duplicate-column corrections remain warnings without correction.",
+        "Custom finder contracts and schema-dependent attribute aliases remain unsafe and require configuration review."
+      ]
+    },
+    {
+      "name": "Rails/EnumHash",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_known_parser_byte_difference",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/enum_hash.rb",
+      "unresolved": "Tree-sitter rejects bare emoji symbols emitted by Ruby Symbol#inspect; native uses equivalent quoted symbols."
+    },
+    {
+      "name": "Rails/EnumUniqueness",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_known_upstream_hash_difference",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/enum_uniqueness.rb",
+      "unresolved": "Pinned AST precomputed hash can drift after continued-heredoc mutation; native eql? detects a duplicate original hash grouping misses."
+    },
+    {
+      "name": "Rails/EnvironmentComparison",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/environment_comparison.rb"
+    },
+    {
+      "name": "Rails/Exit",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/FilePath",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_rails_final",
+      "implementation_branch": "feat/wistia-parity-rails-final",
+      "implementation_sha": "01f5a5b",
+      "review_report": "docs/reviews/final-rails-handoff.md"
+    },
+    {
+      "name": "Rails/FindBy",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/find_by.rb"
+    },
+    {
+      "name": "Rails/FindEach",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/HasAndBelongsToMany",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/has_and_belongs_to_many.rb"
+    },
+    {
+      "name": "Rails/HasManyOrHasOneDependent",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/has_many_or_has_one_dependent.rb",
+      "upstream_spec": "tests/fixtures/framework-dependent-original-spec.json",
+      "open_correction_limits": [
+        "Detection-only original cop: no autocorrection.",
+        "Empty option hashes crash the original; native keeps a warning instead.",
+        "Private parent projection is bounded to the recorded association/context shapes; broader parser-recovery forms remain open."
+      ]
+    },
+    {
+      "name": "Rails/HelperInstanceVariable",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "reviewed_on_delegated_branch",
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/HttpPositionalArguments",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_rails_final",
+      "implementation_branch": "feat/wistia-parity-rails-final",
+      "original_minimum_target_rails_version": 5.0,
+      "implementation_sha": "01f5a5b",
+      "review_report": "docs/reviews/final-rails-handoff.md"
+    },
+    {
+      "name": "Rails/HttpStatus",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/http_status.rb"
+    },
+    {
+      "name": "Rails/IgnoredSkipActionFilterOption",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/ignored_skip_action_filter_option.rb"
+    },
+    {
+      "name": "Rails/IndexBy",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/index_by.rb"
+    },
+    {
+      "name": "Rails/IndexWith",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/index_with.rb",
+      "original_minimum_target_rails_version": 6.0,
+      "independent_target_and_gem_gates_reviewed": true
+    },
+    {
+      "name": "Rails/InverseOf",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/inverse_of.rb",
+      "upstream_spec": "tests/fixtures/framework-inverse-of-original-spec.json",
+      "open_correction_limits": [
+        "Detection-only original cop: no autocorrection.",
+        "Additional parser-recovery and exotic receiver AST shapes remain outside the bounded fixture inventory."
+      ]
+    },
+    {
+      "name": "Rails/LexicallyScopedActionFilter",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/lexically_scoped_action_filter.rb"
+    },
+    {
+      "name": "Rails/LinkToBlank",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards_and_parser_gap",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/link_to_blank.rb",
+      "upstream_spec": "tests/fixtures/framework-link-blank-original-spec.json",
+      "open_correction_limits": [
+        "Dynamic/omitted rel values, ambiguous routing hashes, unknown option keys, duplicate/spread precedence and unsupported heredoc rel edits remain warnings without correction.",
+        "Symbol rel tokens and literal escapes are preserved instead of reproducing original token loss or introduced interpolation."
+      ],
+      "open_detection_limits": [
+        "Signed command link_to +1, target: _blank has an existing native parser ERROR; three warning-state differences stay explicit."
+      ]
+    },
+    {
+      "name": "Rails/NotNullColumn",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_schema",
+      "implementation_branch": "feat/wistia-parity-schema",
+      "implementation_sha": "fea4911",
+      "review_report": "docs/reviews/schema-parity-handoff.md"
+    },
+    {
+      "name": "Rails/OutputSafety",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/output_safety.rb"
+    },
+    {
+      "name": "Rails/Pick",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/pick.rb",
+      "original_minimum_target_rails_version": 6.0,
+      "independent_target_and_gem_gates_reviewed": true
+    },
+    {
+      "name": "Rails/PluralizationGrammar",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/pluralization_grammar.rb"
+    },
+    {
+      "name": "Rails/Presence",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards_and_parser_gap",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/presence.rb",
+      "original_cases": 187,
+      "second_pass_cases": 374,
+      "trusted_runtime_scenarios": 20,
+      "remaining_limits": [
+        "Original-valid command-with-comma fallback has confirmed tree-sitter ERROR; three warning states differ",
+        "Unsafe original corrections are guarded; no complete universal Ruby parent/source projection is claimed"
+      ]
+    },
+    {
+      "name": "Rails/Present",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/present.rb",
+      "native_safe_autocorrect": false,
+      "ruby_safe_autocorrect": true
+    },
+    {
+      "name": "Rails/RakeEnvironment",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "reviewed_on_delegated_branch",
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/ReadWriteAttribute",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "reviewed_on_delegated_branch",
+      "owner": "parity_rails_review",
+      "implementation_branch": "feat/wistia-parity-rails-review",
+      "implementation_sha": "90b2798"
+    },
+    {
+      "name": "Rails/RedundantAllowNil",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/redundant_allow_nil.rb",
+      "open_correction_limits": [
+        "Non-primitive flag values remain warnings without correction.",
+        "Additional AST/value-encoding shapes beyond captured cases remain open."
+      ]
+    },
+    {
+      "name": "Rails/RedundantForeignKey",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/redundant_foreign_key.rb",
+      "upstream_spec": "tests/fixtures/framework-foreign-key-original-spec.json",
+      "open_correction_limits": [
+        "Duplicate/spread option precedence, interpolated as names and comment removal remain warnings without correction.",
+        "Dynamic heredoc/Xstr-valued as names and file pseudo-literal shapes remain bounded value-projection follow-ups.",
+        "Application-specific inflection acronym/model-name customization is outside the default inflection API."
+      ]
+    },
+    {
+      "name": "Rails/RedundantReceiverInWithOptions",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/redundant_receiver_in_with_options.rb",
+      "open_correction_limits": [
+        "Non-simple/default/rest/block/shadow parameter shapes remain conservatively uncorrected.",
+        "Version/patched-Object visibility outside the pinned Ruby3.4/ActiveSupport8.1.3.1 metadata is not an exhaustive proof.",
+        "Parser-error recovery and additional semantic-frame edges remain separate follow-up work."
+      ]
+    },
+    {
+      "name": "Rails/ReflectionClassName",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/reflection_class_name.rb"
+    },
+    {
+      "name": "Rails/RefuteMethods",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/RelativeDateConstant",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/relative_date_constant.rb",
+      "original_cases": 219,
+      "second_pass_cases": 438,
+      "trusted_runtime_scenarios": 12,
+      "remaining_limits": [
+        "Unsafe API-changing correction is guarded; unknown external consumers remain an unsafe -A contract"
+      ]
+    },
+    {
+      "name": "Rails/RequestReferer",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/ReversibleMigration",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_schema",
+      "implementation_branch": "feat/wistia-parity-schema",
+      "implementation_sha": "fea4911",
+      "review_report": "docs/reviews/schema-parity-handoff.md"
+    },
+    {
+      "name": "Rails/ReversibleMigrationMethodDefinition",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/SafeNavigation",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/safe_navigation.rb",
+      "original_cases": 350,
+      "second_pass_cases": 700,
+      "trusted_runtime_scenarios": 24,
+      "remaining_limits": [
+        "Corrections deliberately decline eager-argument/visibility/override/setter/quoted-symbol hazards and unproven ConvertTry public-method existence",
+        "Original incompatibility with Style/RedundantSelf remains part of deferred scheduler integration"
+      ],
+      "original_minimum_target_ruby_version": 2.3
+    },
+    {
+      "name": "Rails/SafeNavigationWithBlank",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/safe_navigation_with_blank.rb"
+    },
+    {
+      "name": "Rails/ScopeArgs",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/scope_args.rb"
+    },
+    {
+      "name": "Rails/SkipsModelValidations",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/TimeZone",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": true,
+      "status": "pending"
+    },
+    {
+      "name": "Rails/UniqBeforePluck",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/uniq_before_pluck.rb",
+      "original_cases": 368,
+      "second_pass_cases": 736,
+      "trusted_runtime_scenarios": 5,
+      "remaining_limits": [
+        "Unsafe correction assumes standard relation methods and compatible database collation; source-visible overrides, arguments and blocks are guarded"
+      ]
+    },
+    {
+      "name": "Rails/UniqueValidationWithoutIndex",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_schema",
+      "implementation_branch": "feat/wistia-parity-schema",
+      "implementation_sha": "fea4911",
+      "review_report": "docs/reviews/schema-parity-handoff.md"
+    },
+    {
+      "name": "Rails/UnknownEnv",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/unknown_env.rb"
+    },
+    {
+      "name": "Rails/Validation",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/validation.rb"
+    },
+    {
+      "name": "Performance/BindCall",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/bind_call.rb",
+      "original_minimum_target_ruby_version": 2.7
+    },
+    {
+      "name": "Performance/Caller",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/caller.rb"
+    },
+    {
+      "name": "Performance/CompareWithBlock",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_performance",
+      "implementation_branch": "feat/wistia-parity-performance",
+      "implementation_sha": "00c5d3f",
+      "review_report": "docs/reviews/performance-seven-handoff.md"
+    },
+    {
+      "name": "Performance/Count",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/count.rb"
+    },
+    {
+      "name": "Performance/DeletePrefix",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/delete_prefix.rb",
+      "original_minimum_target_ruby_version": 2.5
+    },
+    {
+      "name": "Performance/DeleteSuffix",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/delete_suffix.rb",
+      "original_minimum_target_ruby_version": 2.5
+    },
+    {
+      "name": "Performance/Detect",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_performance",
+      "implementation_branch": "feat/wistia-parity-performance",
+      "implementation_sha": "00c5d3f",
+      "review_report": "docs/reviews/performance-seven-handoff.md"
+    },
+    {
+      "name": "Performance/DoubleStartEndWith",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/double_start_end_with.rb"
+    },
+    {
+      "name": "Performance/EndWith",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/end_with.rb"
+    },
+    {
+      "name": "Performance/FixedSize",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": false,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/fixed_size.rb"
+    },
+    {
+      "name": "Performance/FlatMap",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/flat_map.rb"
+    },
+    {
+      "name": "Performance/InefficientHashSearch",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/inefficient_hash_search.rb"
+    },
+    {
+      "name": "Performance/RangeInclude",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/range_include.rb"
+    },
+    {
+      "name": "Performance/RedundantBlockCall",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_performance",
+      "implementation_branch": "feat/wistia-parity-performance",
+      "implementation_sha": "00c5d3f",
+      "review_report": "docs/reviews/performance-seven-handoff.md"
+    },
+    {
+      "name": "Performance/RedundantMatch",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_performance",
+      "implementation_branch": "feat/wistia-parity-performance",
+      "implementation_sha": "00c5d3f",
+      "review_report": "docs/reviews/performance-seven-handoff.md"
+    },
+    {
+      "name": "Performance/RedundantMerge",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_performance",
+      "implementation_branch": "feat/wistia-parity-performance",
+      "implementation_sha": "00c5d3f",
+      "review_report": "docs/reviews/performance-seven-handoff.md"
+    },
+    {
+      "name": "Performance/RegexpMatch",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_performance",
+      "implementation_branch": "feat/wistia-parity-performance",
+      "implementation_sha": "00c5d3f",
+      "review_report": "docs/reviews/performance-seven-handoff.md",
+      "original_minimum_target_ruby_version": 2.4
+    },
+    {
+      "name": "Performance/ReverseEach",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_explicit_safeguards",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/reverse_each.rb"
+    },
+    {
+      "name": "Performance/Size",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/size.rb"
+    },
+    {
+      "name": "Performance/StartWith",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/start_with.rb"
+    },
+    {
+      "name": "Performance/StringReplacement",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_on_delegated_branch",
+      "owner": "parity_performance",
+      "implementation_branch": "feat/wistia-parity-performance",
+      "implementation_sha": "00c5d3f",
+      "review_report": "docs/reviews/performance-seven-handoff.md"
+    },
+    {
+      "name": "Performance/TimesMap",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "pending"
+    },
+    {
+      "name": "Performance/UnfreezeString",
+      "baseline_noop": false,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/unfreeze_string.rb",
+      "original_minimum_target_ruby_version": 2.3
+    },
+    {
+      "name": "Performance/UriDefaultParser",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-performance-1.21.1/lib/rubocop/cop/performance/uri_default_parser.rb"
+    },
+    {
+      "name": "FactoryBot/AttributeDefinedStatically",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-factory_bot-2.26.1/lib/rubocop/cop/factory_bot/attribute_defined_statically.rb"
+    },
+    {
+      "name": "FactoryBot/CreateList",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-factory_bot-2.26.1/lib/rubocop/cop/factory_bot/create_list.rb"
+    },
+    {
+      "name": "FactoryBot/FactoryClassName",
+      "baseline_noop": true,
+      "baseline_ruby_correctable": true,
+      "baseline_rust_correctable": false,
+      "status": "implemented_with_bounded_differential_evidence",
+      "upstream_source": "rubocop-factory_bot-2.26.1/lib/rubocop/cop/factory_bot/factory_class_name.rb"
+    }
+  ],
+  "implemented_on_branch": 56,
+  "replaced_noop_stubs": 53,
+  "actual_config_scope_cases": 120,
+  "actual_config_scope_mismatches": 0,
+  "original_ast_equality_pairs": 75,
+  "auxiliary_policy_cases": 4,
+  "transferred_enabled_cops": 24,
+  "retained_enabled_cops": 66,
+  "remaining_owned_noop_stubs": 0,
+  "completed_delegated_noop_stubs": 14,
+  "remaining_unimplemented_noop_stubs": 0,
+  "pending_delegated_noop_stubs": 0,
+  "pending_delegated_existing_reviews": 0,
+  "retained_pending_existing_reviews": 10,
+  "physical_target_gem_controls": 36,
+  "completed_delegated_existing_reviews": 10
+}

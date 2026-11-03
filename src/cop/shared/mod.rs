@@ -1,8 +1,32 @@
 //! Shared tree-sitter helpers for cops (nitrocop-inspired, AST-adapted).
+mod line_literal;
+pub(crate) use line_literal::is_line_literal;
+mod numeric_send;
+pub use numeric_send::numeric_send_start;
+mod heredoc_interpolations;
+pub(crate) use heredoc_interpolations::heredoc_interpolations;
 
 mod bare_args;
+mod command_call;
+pub use command_call::{
+    CommandArgument, CommandUnaryPlus, UnaryCommandCall, command_unary_plus,
+    command_unary_plus_call,
+};
+mod regexp;
+pub use regexp::{captures_observed, decode_ruby_double_quoted_content, is_literal_regexp_text};
 mod block_pass;
+mod integer;
 mod node_util;
+mod send_range;
+pub use integer::integer_value;
+pub use send_range::{end as send_end, is_setter_call};
+mod ruby_word;
+pub use ruby_word::word_value;
+pub mod ruby_arguments;
+pub mod ruby_expression;
+pub mod ruby_inflection;
+pub(crate) mod ruby_literal;
+pub mod ruby_semantics;
 
 pub use bare_args::replace_arg;
 pub use block_pass::{EXCLUDED_BLOCK_PARENTS, METHOD_STOPS, NESTED_SCOPES, Passes, ScanOpts, scan};
@@ -108,15 +132,15 @@ pub fn argument_nodes<'a>(node: Node<'a>) -> Vec<Node<'a>> {
         let mut cur = args.walk();
         return args
             .named_children(&mut cur)
-            .filter(|n| n.kind() != ",")
+            .filter(|n| !matches!(n.kind(), "," | "comment"))
             .collect();
     }
     Vec::new()
 }
 
 /// Walk all descendants, invoking `f` on each.
-pub fn for_each_descendant(node: Node<'_>, mut f: impl FnMut(Node<'_>)) {
-    fn walk(node: Node<'_>, f: &mut impl FnMut(Node<'_>)) {
+pub fn for_each_descendant<'a>(node: Node<'a>, mut f: impl FnMut(Node<'a>)) {
+    fn walk<'a>(node: Node<'a>, f: &mut impl FnMut(Node<'a>)) {
         f(node);
         let mut cur = node.walk();
         for child in node.children(&mut cur) {
@@ -170,4 +194,31 @@ pub fn has_hspace(bytes: &[u8], start: usize, end: usize) -> bool {
     bytes[start..end.min(bytes.len())]
         .iter()
         .any(|&b| b == b' ' || b == b'\t')
+}
+
+#[cfg(test)]
+mod argument_tests {
+    use super::*;
+
+    fn arguments(bytes: &[u8]) -> Vec<String> {
+        let source = SourceFile::from_bytes("test.rb", bytes.to_vec());
+        let tree = crate::parse::parse_ruby(&source).unwrap();
+        argument_nodes(tree.root_node().named_child(0).unwrap())
+            .into_iter()
+            .map(|node| node_text(&source, node))
+            .collect()
+    }
+
+    #[test]
+    fn syntax_comments_are_not_semantic_arguments() {
+        assert_eq!(
+            arguments(b"foo( # first\n1, # between\n2 # last\n)\n"),
+            vec!["1", "2"]
+        );
+    }
+
+    #[test]
+    fn comment_only_parentheses_have_no_arguments() {
+        assert!(arguments(b"foo( # comment\n)\n").is_empty());
+    }
 }
