@@ -57,3 +57,10 @@ GraphQL optional string/symbol-style correction capability remains queued.
 Generic combined-cop correction scheduling remains deferred at the user's
 request. Later source reviews and the optional selector-routing optimization
 are queued separately and are outside this validated checkpoint.
+
+Final supplemental controls match: 32 Float metadata exit/byte checks, 16
+virtual production Float probes and two migration path controls. They create no
+project source files. The integrated CreateList/Count recheck covers 318 originals
+and 636 final states, with no warning differences beyond correctability; all
+15 trusted programs preserve behavior in both native modes. Its strict driver
+retains 40 documented unsafe-original metadata/byte/runtime events unchanged.
