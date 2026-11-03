@@ -41,9 +41,12 @@ fn surrounding_space(source: &SourceFile, node: Node<'_>) -> (usize, usize) {
 fn line_literal(source: &SourceFile, node: Node<'_>) -> bool {
     node.kind() == "identifier"
         && node_bytes(source, node) == b"__LINE__"
-        && !node
-            .parent()
-            .is_some_and(|parent| parent.child_by_field_name("method") == Some(node))
+        && !node.parent().is_some_and(|parent| {
+            parent.child_by_field_name("method") == Some(node)
+                || matches!(parent.kind(), "alias" | "undef")
+                || matches!(parent.kind(), "method" | "singleton_method")
+                    && parent.child_by_field_name("name") == Some(node)
+        })
 }
 fn first_bare_argument(source: &SourceFile, node: Node<'_>) -> bool {
     node.parent().is_some_and(|parent| {
@@ -60,12 +63,6 @@ fn replacement(source: &SourceFile, node: Node<'_>, line_literals: &[usize]) -> 
         return None;
     }
     let question = token(node, "?")?;
-    if line_literals
-        .iter()
-        .any(|offset| *offset > question.start_byte())
-    {
-        return None;
-    }
     let colon = token(node, ":")?;
     let branch = node.child_by_field_name("consequence")?;
     let branch_text = node_bytes(source, branch);
@@ -79,6 +76,28 @@ fn replacement(source: &SourceFile, node: Node<'_>, line_literals: &[usize]) -> 
     };
     let (q_start, q_end) = surrounding_space(source, question);
     let (c_start, c_end) = surrounding_space(source, colon);
+    let line_delta = |start, end, inserted: isize| {
+        inserted
+            - source.as_bytes()[start..end]
+                .iter()
+                .filter(|byte| **byte == b'\n')
+                .count() as isize
+    };
+    let changes = [
+        (q_end, line_delta(q_start, q_end, 1)),
+        (c_end, line_delta(c_start, c_end, 2)),
+        (node.end_byte(), 1),
+    ];
+    if line_literals.iter().any(|offset| {
+        changes
+            .iter()
+            .filter(|(end, _)| offset >= end)
+            .map(|(_, delta)| delta)
+            .sum::<isize>()
+            != 0
+    }) {
+        return None;
+    }
     let mut edits = vec![
         (q_start, q_end, "\n".to_string()),
         (c_start, c_end, "\nelse\n".to_string()),
@@ -177,24 +196,22 @@ impl Cop for NestedTernaryOperator {
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[test]
-    fn unchanged_original_examples() {
-        crate::testutil::assert_original_spec_parity(
-            &NestedTernaryOperator,
-            include_str!(concat!(
-                env!("CARGO_MANIFEST_DIR"),
-                "/tests/fixtures/cops/style/nested_ternary_operator/original-parity.json"
-            )),
-        );
-    }
-    #[test]
-    fn independent_original_states() {
-        let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/tests/fixtures/cops/style/nested_ternary_operator/original-independent.json"
-        )))
-        .unwrap();
+    fn replay(fixture: &str) {
+        let mut cases: serde_json::Value = serde_json::from_str(fixture).unwrap();
         for case in cases.as_array_mut().unwrap() {
+            assert!(case.get("ruby_cop_error").is_none());
+            if let Some(diagnostics) = case.get("ruby_parser_diagnostics") {
+                assert!(
+                    !diagnostics
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|diagnostic| matches!(
+                            diagnostic["level"].as_str(),
+                            Some("error" | "fatal")
+                        ))
+                );
+            }
             let source = SourceFile::from_bytes(
                 "probe.rb",
                 case["original"].as_str().unwrap().as_bytes().to_vec(),
@@ -226,25 +243,34 @@ mod tests {
                 Some(&mut corrections),
             );
             actual.sort_by_key(|diagnostic| (diagnostic.location.line, diagnostic.location.column));
-            let expected: Vec<_> = case["ruby_diagnostics"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .map(|diagnostic| {
-                    case.get("rust_correctable")
-                        .and_then(serde_json::Value::as_bool)
-                        .unwrap_or_else(|| diagnostic["correctable"].as_bool().unwrap())
-                })
-                .collect();
-            assert_eq!(
-                actual
+            for key in ["correctable", "corrected"] {
+                let expected: Option<Vec<_>> = case["ruby_diagnostics"]
+                    .as_array()
+                    .unwrap()
                     .iter()
-                    .map(|diagnostic| diagnostic.correctable)
-                    .collect::<Vec<_>>(),
-                expected,
-                "{}",
-                case["id"]
-            );
+                    .map(|diagnostic| {
+                        case.get("rust_correctable")
+                            .and_then(serde_json::Value::as_bool)
+                            .or_else(|| diagnostic[key].as_bool())
+                    })
+                    .collect();
+                if let Some(expected) = expected {
+                    let actual: Vec<_> = actual
+                        .iter()
+                        .map(|diagnostic| {
+                            if key == "correctable" {
+                                diagnostic.correctable
+                            } else {
+                                diagnostic.corrected
+                            }
+                        })
+                        .collect();
+                    assert_eq!(actual, expected, "{} {key}", case["id"]);
+                }
+            }
+            if let Some(exit) = case.get("native_final_exit") {
+                assert_eq!(actual.is_empty(), exit == 0, "{}", case["id"]);
+            }
             if case.get("rust_corrected").is_some() {
                 case["ruby_corrected"] = case["rust_corrected"].clone();
             }
@@ -253,5 +279,26 @@ mod tests {
             &NestedTernaryOperator,
             &serde_json::to_string(&cases).unwrap(),
         );
+    }
+    #[test]
+    fn unchanged_original_examples() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/style/nested_ternary_operator/original-parity.json"
+        )));
+    }
+    #[test]
+    fn independent_original_states() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/style/nested_ternary_operator/original-independent.json"
+        )));
+    }
+    #[test]
+    fn final_native_states_match_fresh_original_and_parse_cleanly() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/style/nested_ternary_operator/final-states.json"
+        )));
     }
 }

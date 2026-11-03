@@ -47,5 +47,10 @@ cases.each do |entry|
   entry["ruby_preserves_ast_without_grouping"] = OriginalNestedTernaryReference.without_grouping(processed.ast) == OriginalNestedTernaryReference.without_grouping(corrected.ast)
   entry.delete("ruby_safe")
   entry["reference_investigation"] = "fresh cop per independent source/config"
+  unless entry.fetch("ruby_preserves_ast_without_grouping")
+    entry["rust_corrected"] = entry.fetch("original")
+    entry["rust_correctable"] = false
+    entry["reason"] = "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense."
+  end
 end
 File.write(output, "#{JSON.pretty_generate(cases)}\n")
