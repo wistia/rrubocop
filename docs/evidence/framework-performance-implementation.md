@@ -42,13 +42,29 @@ source-equivalent frozen baseline's **entire parsed JSON**, exits and stderr:
 74 inspected, exactly the same three original offenses, zero corrections, exit 1,
 empty stderr. No offense is filtered out of that equality comparison.
 
-A fresh differential matrix is running across all **6,383 existing specimens**
-for the ten affected Rails/Performance/FactoryBot rules, including native
-safe/unsafe final states, original Ruby diagnostics/correctability/bytes and
-trusted runtime controls. Its actual result will be recorded separately; a
-running reference job is not counted as passing. GraphQL and Migration coverage
-also retain the unchanged full native/reference fixtures. Additional validation
-will not be used to change the source without an explicit new checkpoint.
+The fresh matrix is complete: **6,383 initial specimens, 12,766 derived final
+source/config states, 57,447 native mode results and 66 trusted runtime scenarios**.
+The strict original Ruby checker reports **11,100 differences**, including known
+safety/correction differences, original-invalid inputs and original cop errors.
+They are not filtered, allowlisted or called a parity pass.
+
+To distinguish existing differences from optimization regressions, the unchanged
+audit executable was built from frozen `362240f` (source/harness identical to
+`2db3f58`) and replayed on the exact same 19,149 input rows in the same working
+directory. The baseline and optimized **entire 57,447-row JSONL files are byte-
+identical**, SHA256 `182e5caa2222141de08bcacbca32eec6a6cac6d2bfddfb81144c1d218bfc26db`.
+There are zero before/after diagnostic/correctability/flag/range/message/edit-
+source/final-state differences. Trusted runtime programs' corrected source bytes
+are consequently unchanged as well. All native second passes are stable and
+there are no invalid native corrections in this matrix.
+
+Deterministic compressed raw inputs, shared identical native results, Ruby
+reference results, all strict failures and trusted runtime observations are
+committed under `framework-performance-matrix/`, with compressed/uncompressed
+hashes and source identities in its manifest. The original runtime job was
+paused for the parent's quiet benchmark; its expired wall-clock timeout was
+handled by rerunning runtime/postprocessing against the completed, identical
+raw input/reference/native outputs. No case or failure was removed.
 
 No production benchmark was run by this agent. Expected asymptotic reductions
 and cached query counts are not elapsed-time measurements. Parent integration
