@@ -33,13 +33,15 @@ Fresh original config still enables 553/550 root/dev-spec names. A bounded exact
 553/550 counts: the locked plugin registers GraphQL/PrepareMethod without a
 default-YAML entry. Three actual CLI availability/disablement/scope controls
 match Ruby, and the updated full suite passes 1,085 tests with one ignored.
-Positive original/native evidence is mapped for 147 former stubs; the remaining
-13 Style rules need their separate original-spec corpus mapping. The existing
+All 160 former stubs now have mapped positive Ruby/native detection evidence
+in wistia-baseline-stub-evidence.json. This is detection coverage, not a claim
+that the documented correction or behavioral gaps are closed. The existing
 GraphQL implementation still needs its full behavioral review.
 
 The full Wistia scan exposed a panic in Style/TrailingCommaInArguments at line179
-(reversed slice11417..11416). The core owner is preparing an isolated regression
-fix. Cold/warm benchmark timings are invalid until that fix is integrated and
-the full scan succeeds. Generic multi-cop correction scheduling remains deferred
+(reversed slice11417..11416). The isolated original-backed fix is integrated as 091dc33: all 12 focused
+tests pass, both actual-file CLIs exit zero with no offenses, and the full
+integrated suite passes 1,086 tests with one ignored. The full repository scan
+and cold/warm benchmark still need to rerun; prior timings remain invalid. Generic multi-cop correction scheduling remains deferred
 at the user's request. Per-family reports retain their branch provenance;
 this report separately records integrated validation and remaining limits.
