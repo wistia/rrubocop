@@ -1,7 +1,5 @@
 //! Remove explicit association keys only when the original default can be derived.
-use crate::cop::shared::ruby_expression::{
-    float_value, integer_ast, numbered_bindings, plain_string, plain_symbol, rational_value,
-};
+use crate::cop::shared::ruby_expression::{numbered_bindings, plain_string, plain_symbol};
 use crate::cop::shared::ruby_inflection::foreign_key;
 use crate::cop::shared::{
     argument_nodes, call_method_name, call_receiver, named_kids, node_text, push_replace,
@@ -118,13 +116,6 @@ fn parent_module(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> Opt
         parts.join("::")
     })
 }
-fn scalar(source: &SourceFile, node: Node<'_>) -> Option<String> {
-    plain_symbol(source, node)
-        .or_else(|| crate::cop::ported::original_string_value(source, node))
-        .or_else(|| integer_ast(source, node).map(|n| n.to_string()))
-        .or_else(|| float_value(source, node).map(super::pluralization_grammar::float_text))
-        .or_else(|| rational_value(source, node).map(|(n, d)| format!("{n}/{d}")))
-}
 
 impl Cop for RedundantForeignKey {
     fn name(&self) -> &'static str {
@@ -205,7 +196,7 @@ impl Cop for RedundantForeignKey {
             let Some(as_value) = as_pair.child_by_field_name("value") else {
                 return;
             };
-            scalar(source, as_value).map(|n| format!("{n}_id"))
+            super::literal_value::value(source, as_value).map(|n| format!("{n}_id"))
         } else {
             parent_module(source, node, config).map(|n| foreign_key(&n))
         };

@@ -1,4 +1,5 @@
 //! Match ActiveSupport numeric extension names to literal numeric values.
+use super::literal_value::float_text;
 use crate::cop::shared::ruby_expression::{float_value, integer_ast};
 use crate::cop::shared::{
     call_method_name, call_receiver, method_node, node_text, push_replace, send_end,
@@ -27,27 +28,7 @@ const SINGULAR: &[&str] = &[
     "exabyte",
     "zettabyte",
 ];
-pub(super) fn float_text(value: f64) -> String {
-    if value.is_infinite() {
-        return if value.is_sign_negative() {
-            "-Infinity"
-        } else {
-            "Infinity"
-        }
-        .into();
-    }
-    if value != 0.0 && (value.abs() < 0.0001 || value.abs() >= 1e15) {
-        let text = format!("{value:e}");
-        let (mantissa, exponent) = text.split_once('e').unwrap();
-        let mantissa = if mantissa.contains('.') {
-            mantissa.to_owned()
-        } else {
-            format!("{mantissa}.0")
-        };
-        return format!("{mantissa}e{:+03}", exponent.parse::<i32>().unwrap());
-    }
-    format!("{value:?}")
-}
+
 impl Cop for PluralizationGrammar {
     fn name(&self) -> &'static str {
         "Rails/PluralizationGrammar"

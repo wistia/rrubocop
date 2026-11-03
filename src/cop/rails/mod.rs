@@ -37,6 +37,7 @@ mod index_with;
 mod inverse_of;
 mod lexically_scoped_action_filter;
 mod link_to_blank;
+mod literal_value;
 mod not_null_column;
 mod output;
 mod output_safety;

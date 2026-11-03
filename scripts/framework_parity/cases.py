@@ -5,17 +5,36 @@ from pathlib import Path
 def cases():
     rows = []
     def add(cop, source, **config):
-        if cop == "Rails/IndexWith":
+        if cop in ("Rails/IndexWith", "Rails/ContentTag"):
             config.setdefault("GemVersions", {"railties": "8.1.3.1"})
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
-        rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+        rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop=="Rails/ContentTag" else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
     for body in ("(has_many :children)", "begin; has_many :children; end", "if flag; has_many :children; end", "(has_many :children do; work; end)"):
         for prefix in ("", "work; "):
             add("Rails/HasManyOrHasOneDependent",f"class Model; with_options dependent: :destroy do; {prefix}{body}; end; end")
     for ruby in (2.5,2.7,3.4):
         for source in ("with_options dependent: :destroy do; _1.has_many :children; end", "with_options dependent: :destroy do; has_many :children do; _1; end; end"):
             add("Rails/HasManyOrHasOneDependent",source,TargetRubyVersion=ruby)
+    add("Rails/ContentTag", "tag(<<~NAME)\nbr\nNAME")
+    add("Rails/ContentTag", "tag(:br, data: <<~HTML)\n#{tag(:br)}\nHTML")
+    add("Rails/ContentTag","tag(:br, data: {nested: tag(:br)})",AutoCorrect="disabled")
+    add("Rails/ContentTag","tag( # rubocop:disable Rails/ContentTag\n :br, data: {nested: tag(:br)})")
+    add("Rails/ContentTag","tag(1, data: {nested: tag(:br)})")
+    add("Rails/ContentTag","object.tag(:br, data: {nested: tag(:br)})")
+    for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-content-tag-original-spec.json").read_text())["cases"]:
+        add("Rails/ContentTag",row["source"].rstrip("\n"),**row["config"])
+    for value in (":br", ":p", ":hr", ":'foo-bar'", "'foo_bar'", ":_foo", "'BR'", "'br\nx'", "''", ":\"\"", "nil", "true", "false", "1", "-1", "1.5", "1r", "1i", "/x/", "[]", "{}", "name", "@name", "CONST", "provider.name", '"#{name}"', '"b" "r"', "?b", "__LINE__", "__FILE__", "(:br)", "(1)"):
+        for rest in ("", ", class: 'x'", ", class: 'x', id: 'y'", ", {class: 'x'}", ", nil", ", options", ", **options", ", &block", ", escape: false", ", {}, true"):
+            add("Rails/ContentTag",f"tag({value}{rest})")
+    for name in ("area","base","br","col","embed","hr","img","input","keygen","link","meta","source","track","wbr"):
+        add("Rails/ContentTag",f"tag(:{name}, class: 'x')")
+    for version in (4.2,5.0,5.1,8.1):
+        for gem in ({}, {"railties":"5.0.9"}, {"railties":"5.1.0"}, {"railties":"8.1.3.1"}):
+            add("Rails/ContentTag","tag(:br)",TargetRailsVersion=version,GemVersions=gem)
+    for source in ("tag :br", "self.tag(:br)", "object.tag(:br)", "object&.tag(:br)", "tag(:br, data: {nested: tag(:br)})", "tag(:p, data: {nested: tag(:br)})", "tag(:br) { tag(:div) }", "tag(:div) { work }", "tag(:br, # keep\nclass: 'x')", "tag(:br, class: # keep\n'x')", "tag(:br,\n class: __LINE__)", "tag(:br,\n class: 'x'); p __LINE__", "Nokogiri::XML.fragment(tag(:br))", "Nokogiri.XML(tag(:br))", "REXML::Document.new(tag(:br))", "tag +1", "tag +1, options", "tag +1.5", "tag +1r", "tag +\"br\"", "tag +name", "tag +1 +2", "tag(+ 1)", "tag(- 1)", "tag(:br) = value"):
+        add("Rails/ContentTag",source)
+    add("Rails/ContentTag","tag(:br)",AutoCorrect="disabled")
     for row in json.loads((Path(__file__).parents[2] / "tests/fixtures/framework-string-values.json").read_text())["cases"]:
         if "<<" not in row["source"]:
             value=row["source"][6:-2]
@@ -319,7 +338,9 @@ def cases():
         add("FactoryBot/CreateList", source, **({"EnforcedStyle":"n_times"} if source.startswith("create_list") else {}))
     from runtime_cases import PROGRAMS
     for cop, source, *options in PROGRAMS:
-        rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/models/example.rb", source=source, expected=[], corrected=source, config=options[0] if options else {}, trusted_runtime=True))
+        runtime_config=dict(options[0]) if options else {}
+        if cop=="Rails/ContentTag": runtime_config.setdefault("GemVersions",{"railties":"8.1.3.1"})
+        rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop=="Rails/ContentTag" else "app/models/example.rb", source=source, expected=[], corrected=source, config=runtime_config, trusted_runtime=True))
     for source in ("[1, 2].size", "{}.length", "'text'.size", ":text.size", "'text'.count('t')", "'text'.count(variable)", "[1, 2].count(1)", "COUNT = [1, 2].size", "items.each { [1, 2].size }", "[*items].size", "{ **options }.size", "[1].count { |n| n.odd? }", "\"#{value}\".size", "items.size", "[1]&.size"):
         add("Performance/FixedSize", source)
     for source in ("items.map { |n| [n] }.flatten(1)", "items.collect { |n| [n] }.flatten(1)", "items.map(&:children).flatten(1)", "items&.map { |n| [n] }&.flatten(1)", "items.map { |n| [n] }.flatten", "items.map { |n| [n] }.flatten(2)", "items.map { |n| [n] }.flatten(depth)", "items.map.flatten(1)"):

@@ -1,7 +1,7 @@
 {
   "base_sha": "a8c56ec204a0cb9debb33d3a6f3f1b23b63bb58c",
   "owned_enabled_cops": 90,
-  "remaining_noop_stubs": 20,
+  "remaining_noop_stubs": 19,
   "rules": [
     {
       "name": "Migration/DepartmentName",
@@ -96,14 +96,26 @@
       "baseline_noop": true,
       "baseline_ruby_correctable": false,
       "baseline_rust_correctable": false,
-      "status": "pending"
+      "status": "delegated_pending",
+      "owner": "parity_schema",
+      "implementation_branch": "feat/wistia-parity-schema"
     },
     {
       "name": "Rails/ContentTag",
       "baseline_noop": true,
       "baseline_ruby_correctable": true,
       "baseline_rust_correctable": false,
-      "status": "pending"
+      "status": "implemented_with_explicit_safeguards_and_parser_gap",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/content_tag.rb",
+      "upstream_spec": "tests/fixtures/framework-content-tag-original-spec.json",
+      "open_correction_limits": [
+        "Unsafe -A only for supported default HTML void helpers; -a is deliberately demoted for serialization/XML risk.",
+        "Non-void names, positional options, escape control keys, dynamic/data/heredoc/XML/comment/line-value contexts stay warnings without correction."
+      ],
+      "open_detection_limits": [
+        "Signed command tail tag +1, options is an existing native parser ERROR; all three states remain explicit warning differences.",
+        "Xstr/AST-object and dynamic-heredoc first-name value projections remain bounded shared-value follow-ups."
+      ]
     },
     {
       "name": "Rails/CreateTableWithTimestamps",
@@ -304,7 +316,9 @@
       "baseline_noop": true,
       "baseline_ruby_correctable": false,
       "baseline_rust_correctable": false,
-      "status": "pending"
+      "status": "delegated_pending",
+      "owner": "parity_schema",
+      "implementation_branch": "feat/wistia-parity-schema"
     },
     {
       "name": "Rails/OutputSafety",
@@ -434,7 +448,9 @@
       "baseline_noop": true,
       "baseline_ruby_correctable": false,
       "baseline_rust_correctable": false,
-      "status": "pending"
+      "status": "delegated_pending",
+      "owner": "parity_schema",
+      "implementation_branch": "feat/wistia-parity-schema"
     },
     {
       "name": "Rails/ReversibleMigrationMethodDefinition",
@@ -492,7 +508,9 @@
       "baseline_noop": true,
       "baseline_ruby_correctable": false,
       "baseline_rust_correctable": false,
-      "status": "pending"
+      "status": "delegated_pending",
+      "owner": "parity_schema",
+      "implementation_branch": "feat/wistia-parity-schema"
     },
     {
       "name": "Rails/UnknownEnv",
@@ -747,15 +765,16 @@
       "upstream_source": "rubocop-factory_bot-2.26.1/lib/rubocop/cop/factory_bot/factory_class_name.rb"
     }
   ],
-  "implemented_on_branch": 50,
-  "replaced_noop_stubs": 47,
-  "actual_config_scope_cases": 108,
+  "implemented_on_branch": 51,
+  "replaced_noop_stubs": 48,
+  "actual_config_scope_cases": 110,
   "actual_config_scope_mismatches": 0,
   "original_ast_equality_pairs": 75,
   "auxiliary_policy_cases": 4,
-  "transferred_enabled_cops": 7,
-  "retained_enabled_cops": 83,
-  "remaining_owned_noop_stubs": 13,
+  "transferred_enabled_cops": 11,
+  "retained_enabled_cops": 79,
+  "remaining_owned_noop_stubs": 8,
   "completed_delegated_noop_stubs": 7,
-  "remaining_unimplemented_noop_stubs": 13
+  "remaining_unimplemented_noop_stubs": 12,
+  "pending_delegated_noop_stubs": 4
 }

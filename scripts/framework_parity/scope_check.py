@@ -17,6 +17,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/ContentTag', 'tag(:br)', 'app/helpers/framework_parity_probe.rb', model),
  ('Rails/RedundantForeignKey', "class Post; has_many :comments, foreign_key: 'post_id'; end", model, service),
  ('Rails/HasManyOrHasOneDependent', 'class Model; has_many :children; end', model, service),
  ('Rails/InverseOf', 'has_many :children, foreign_key: :owner_id', model, service),
