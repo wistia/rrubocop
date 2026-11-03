@@ -30,4 +30,5 @@ pub(super) fn value(source: &SourceFile, node: Node<'_>) -> Option<String> {
         .or_else(|| integer_ast(source, node).map(|n| n.to_string()))
         .or_else(|| float_value(source, node).map(float_text))
         .or_else(|| rational_value(source, node).map(|(n, d)| format!("{n}/{d}")))
+        .or_else(|| super::literal_ast_value::command_value(source, node))
 }

@@ -9,6 +9,7 @@ use autoload::top_level;
 mod migration;
 use crate::cop::CopRegistry;
 use migration::migration;
+pub(super) use migration::migration_class;
 pub(super) fn register(r: &mut CopRegistry) {
     super::rules!(r;
         ("Cops/EnforceNoShowInPolicies", &["method"], no_show, false, true, true),

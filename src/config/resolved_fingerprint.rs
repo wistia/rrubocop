@@ -15,6 +15,7 @@ impl ResolvedConfig {
         self.hash_cop_configs(&mut h);
         self.hash_departments(&mut h);
         self.hash_mentioned(&mut h);
+        self.hash_schema_dependencies(&mut h);
         h.finalize().to_vec()
     }
 

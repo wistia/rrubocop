@@ -3,9 +3,11 @@
 require_relative "../refresh_ported_reference"
 require "timeout"
 require_relative "reference/results"
+require_relative "reference/schema_fixtures"
 
 class AuditReference < PortedReference
   include AuditResults
+  include SchemaFixtures
 
   def run(input, output)
     configure_autoload_fixture
@@ -57,6 +59,7 @@ class AuditReference < PortedReference
     config = configuration(test)
     parsed.config = config
     cop = cop_class(test.fetch("cop")).new(config, autocorrect: true, safe_autocorrect: safe)
+    configure_schema_fixtures(cop, test)
     cops = supported_cops(cop)
     report = RuboCop::Cop::Commissioner.new(cops, RuboCop::Cop::Team.forces_for(cops),
       raise_error: true).investigate(parsed)

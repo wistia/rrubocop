@@ -26,7 +26,7 @@ fn empty_method(n: Node<'_>) -> bool {
     n.kind() == "method" && field(n, "parameters").is_none_or(|p| kids(p).is_empty())
 }
 
-fn migration_class(c: &Context<'_>, n: Node<'_>) -> bool {
+pub(in crate::cop::ported) fn migration_class(c: &Context<'_>, n: Node<'_>) -> bool {
     let Some(name) = field(n, "name") else {
         return false;
     };

@@ -500,4 +500,6 @@ def cases():
     extend_transferred_performance(add, rows)
     from performance_seven_runtime import extend as extend_transferred_runtime
     extend_transferred_runtime(rows)
+    from schema_cases import extend as extend_schema_cases
+    extend_schema_cases(add, rows)
     return rows

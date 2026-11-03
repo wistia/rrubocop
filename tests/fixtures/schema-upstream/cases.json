@@ -1,0 +1,2896 @@
+[
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n    t.string :address, null: true\n  end\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 49,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\n  remove_column :users, :nickname\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 60,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 97,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 108,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {},
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n    t.string :address, null: true\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 6,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\n  remove_column :users, :nickname\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 18,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 85,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_reference :users, :team\n  add_column :users, :name, :string, null: false\n  remove_column :users, :nickname\n  remove_column :users, :flag\n  add_column :teams, :owner_name, :string, null: false\n  add_column :teams, :member_count, :integer, null: false\n  User.reset_column_information\n  User.all.each do |user|\n    user.refresh!\n  end\n  remove_column :users, :name\n  remove_column :users, :metadata\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 200,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users, bulk: true do |t|\n    t.string :name, null: false\n    t.string :address, null: true\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 222,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users, bulk: false do |t|\n    t.string :name, null: false\n    t.string :address, null: true\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 233,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.belongs_to :team\n    t.string :name, null: false\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 244,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 255,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    if Rails.env.test?\n      t.string :name, null: true\n      t.string :address, null: true\n    else\n      t.string :name, null: false\n      t.string :address, null: false\n    end\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 265,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  reversible do |dir|\n    change_table :users do |t|\n      dir.up do\n        t.string :name, null: false\n        t.string :address, null: false\n      end\n\n      dir.down do\n        t.remove :name\n        t.remove :address\n      end\n    end\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 281,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_reference :users, :team\n  add_column :users, :name, :string, null: false\n  remove_column :teams, :owner_name\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 301,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\n  add_reference :users, :team\n  remove_column :users, :nickname\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 311,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\n  User.find_each do |user|\n    user.update(name: user.nickname)\n  end\n  remove_column :users, :nickname\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 321,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_reference :users, :team\n  add_column :users, :name, :string, null: false\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 333,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 342,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  if Rails.env.test?\n    add_reference :users, :team\n    add_column :users, :name, :string, null: true\n    remove_column :users, :nickname\n  else\n    add_reference :users, :team\n    add_column :users, :name, :string, null: false\n    remove_column :users, :nickname\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 350,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "class EmptyMigration < ActiveRecord::Migration[5.1]\n  def change; end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 366,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index \"users\", :name\n  remove_index \"users\", :address\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 374,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index \"users\", :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 384,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  %w[owners members].each do |table|\n    add_column table, :name, :string, null: false\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 394,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.remove :name, :metadata\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 404,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.remove :name\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 415,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.remove :name, :metadata, type: :string\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 425,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.remove :name, type: :string\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 436,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 446,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_null :name, false\n    t.change_null :address, false\n  end\nend\n",
+    "config": {
+      "Database": "mysql",
+      "Include": [
+        "*"
+      ]
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 455,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n    t.string :address, null: true\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 6,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\n  remove_column :users, :nickname\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 18,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 97,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 108,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 121,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 133,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 480,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_null :name, false\n    t.change_null :address, false\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.2
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 489,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n    t.string :address, null: true\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 49,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\n  remove_column :users, :nickname\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 60,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 97,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 108,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 5.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 6.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 508,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_null :name, false\n    t.change_null :address, false\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 6.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 518,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users, bulk: true do |t|\n    t.change_null :name, false\n    t.change_null :address, false\n  end\nend\n",
+    "config": {
+      "Database": "postgresql",
+      "Include": [
+        "*"
+      ],
+      "TargetRailsVersion": 6.1
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 530,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "mysql2"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "mysql2"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 85,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "mysql2"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "mysql2"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 85,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "trilogy"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "trilogy"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 85,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "trilogy"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "trilogy"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 85,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgresql"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 121,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgresql"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 133,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgresql"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgresql"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgresql"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgresql"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgresql"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgresql"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgresql"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 121,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgresql"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 133,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgresql"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgresql"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgresql"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgresql"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgresql"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgresql"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgis"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 121,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgis"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 133,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgis"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgis"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgis"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgis"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgis"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "adapter": "postgis"
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgis"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 121,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgis"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 133,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgis"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgis"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgis"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgis"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgis"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseYAML": {
+        "development": {
+          "primary": {
+            "adapter": "postgis"
+          }
+        }
+      }
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n    t.string :address, null: true\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": null
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 49,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\n  remove_column :users, :nickname\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": null
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 60,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": null
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseYAML": null
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseURL": "mysql2://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "SchemaDatabaseURL": "mysql2://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 85,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.index :name\n    t.index :address\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseURL": "trilogy://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  remove_index :users, :name\n  remove_index :users, :address\nend\n",
+    "config": {
+      "SchemaDatabaseURL": "trilogy://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 85,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseURL": "postgres://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 121,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseURL": "postgres://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 133,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseURL": "postgres://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgres://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgres://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgres://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgres://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgres://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseURL": "postgresql://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 121,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseURL": "postgresql://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 133,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.2,
+      "SchemaDatabaseURL": "postgresql://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.change_default :name, 'unknown'\n    t.change_default :address, nil\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgresql://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 154,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_default :users, :name, false\n  change_column_default :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgresql://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 165,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_column_null :users, :name, false\n  change_column_null :users, :address, false\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgresql://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 172,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgresql://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.1,
+      "SchemaDatabaseURL": "postgresql://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n    t.string :address, null: true\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseURL": "sqlserver://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 49,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def change\n  add_column :users, :name, :string, null: false\n  remove_column :users, :nickname\nend\n",
+    "config": {
+      "SchemaDatabaseURL": "sqlserver://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 60,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users)\nend\n",
+    "config": {
+      "SchemaDatabaseURL": "sqlserver://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BulkChangeTable",
+    "source": "def up\n  change_table(:users) do\n  end\nend\n",
+    "config": {
+      "SchemaDatabaseURL": "sqlserver://localhost/my_database"
+    },
+    "upstream": "bulk_change_table_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_column :users, :name, :string, null: false\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 9,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_column :users, :name, :string, null: false, default: \"\"\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_column(:users, :name, type, default: 'default')\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 26,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_column :users, :name, :string, null: false, default: nil\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 34,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_column :users, :height_in, :virtual, as: \"height_cm / 2.54\", null: false, default: nil\nadd_column :users, :height_in, 'virtual', as: \"height_cm / 2.54\", null: false, default: nil\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 41,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_column :users, :name, :string, null: true\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 50,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_column :users, :name, :string\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 58,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_column :users, :name, :string\nUser.update_all(name: \"dummy\")\nchange_column :users, :name, :string, null: false\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 67,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "class CreateUsersTable < ActiveRecord::Migration\n  def change\n    create_table :users do |t|\n      t.string :name, null: false\n      t.timestamps null: false\n    end\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 77,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :invoices do |t|\n    end\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 90,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 105,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false\n    t.string :address, null: false\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 116,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name, null: false, default: \"\"\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 131,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.string :name\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.column :name, :string, null: false\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 157,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.column :name, :string, null: false, default: \"\"\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 170,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.column :name, :string\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 182,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.references :address, null: false\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 196,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  change_table :users do |t|\n    t.references :address\n  end\nend\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 209,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_reference :products, :category, null: false\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 224,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_reference :products, :category, null: false, default: 1\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 233,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "add_reference :products, :category\n",
+    "config": {
+      "Include": null
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 241,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  add_column :articles, :content, :text, null: false\nend\n",
+    "config": {
+      "Database": "mysql"
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 254,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  add_column :articles, :content, 'text', null: false\nend\n",
+    "config": {
+      "Database": "mysql"
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 262,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/NotNullColumn",
+    "source": "def change\n  add_column :articles, :content, :text, null: false\nend\n",
+    "config": {
+      "Database": "postgresql"
+    },
+    "upstream": "not_null_column_spec.rb",
+    "line": 276,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    create_table :users do |t|\n  t.string :name\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    create_table :users do\n  _1.string :name\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    execute \"ALTER TABLE `pages_linked_pages` ADD UNIQUE `page_id_linked_page_id` (`page_id`,`linked_page_id`)\"\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    up_only { execute \"UPDATE posts SET published = 'true'\" }\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    [:users, :articles].each do |table|\n  create_table table do |t|\n    t.string :name\n  end\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    [:pages_linked_pages, :pages_unlinked_pages].each do |table|\n  execute \"ALTER TABLE `table` ADD UNIQUE `page_id_linked_page_id` (`page_id`,`linked_page_id`)\"\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    def change\n  change_table :invoices do |t|\n    decimals_params = {precision: 10, scale: 2}\n\n    t.decimal :total_discount, decimals_params\n  end\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    def change\n  change_table :invoices do |t|\n  end\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    reversible do |dir|\n  dir.up do\n    execute \"ALTER TABLE `pages_linked_pages` ADD UNIQUE `page_id_linked_page_id` (`page_id`,`linked_page_id`)\"\n  end\n\n  dir.down do\n    execute \"ALTER TABLE `pages_linked_pages` DROP INDEX `page_id_linked_page_id`\"\n  end\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    drop_table :users do |t|\n  t.string :name\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    drop_table :users, &:timestamps\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    drop_table :users\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    up_only { change_column(:posts, :state, :string) }\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_column(:posts, :state, :string)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_column(:posts, :state, :string, null: false)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          change_column_default(:posts, :state, from: nil, to: \"draft\")\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          change_column_default(:posts, :state, to: \"draft\", from: nil)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          columns = [:foo, :bar]\n      change_column_default(*columns, from: nil, to: \"draft\")\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          change_column_default(:suppliers, :qualification, 'new')\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          change_table_comment(:posts, from: nil, to: \"draft\")\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          change_table_comment(:suppliers, 'new')\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          change_column_comment(:posts, :state, from: nil, to: \"draft\")\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          change_column_comment(:suppliers, :qualification, 'new')\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_column(:suppliers, :qualification, :string)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_column(:suppliers, :qualification, :string, null: false)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_column(:suppliers, :qualification)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_foreign_key :accounts, :branches\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_foreign_key :accounts, to_table: :branches\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_foreign_key :accounts, column: :owner_id\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :users do |t|\n  t.column :name, :string\n  t.text :description\n  t.boolean :authorized\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :users do |t|\n  t.change :description, :text\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n          change_table :users do |t|\n        t.change_default :authorized, from: nil, to: 1\n      end\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :users do |t|\n  t.change_default :authorized, 1\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :users do\n  _1.change_default :authorized, 1\nend\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :users do |t|\n  t.remove(:posts, type: :text)\nend\n\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 6.1
+    },
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :users do |t|\n  t.remove(:posts)\nend\n\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 6.1
+    },
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :users do |t|\n  t.remove(:posts, type: :text)\nend\n\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 6.0
+    },
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    change_table :users do |t|\n  t.remove(:posts)\nend\n\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 6.0
+    },
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_columns(:posts, :title, :body, type: :text)\n\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 6.1
+    },
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_columns(:posts, :title, :body)\n\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 6.1
+    },
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_columns(:posts, :title, :body, type: :text)\n\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 6.0
+    },
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_columns(:posts, :title, :body)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_index(:posts, column: :body)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_index(:posts, :body)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ExampleMigration < ActiveRecord::Migration[7.0]\n  def change\n    remove_index(:posts, name: :index_columns_on_body)\n\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 26,
+    "assertion": "inspect_source"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class CreateAnimals < ActiveRecord::Migration[7.0]\n  def change\n    create_table :animals\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 315,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class RemoveAnimals < ActiveRecord::Migration[7.0]\n  def change\n    drop_table :animals\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 325,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReversibleMigration",
+    "source": "class ::RemoveAnimals < ActiveRecord::Migration[7.0]\n  def change\n    drop_table :animals\n  end\nend\n",
+    "config": {},
+    "upstream": "reversible_migration_spec.rb",
+    "line": 338,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User < ApplicationRecord\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": null
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 7,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User < ApplicationRecord\n  validates :name, presence: true\nend\n",
+    "config": {
+      "SchemaSource": null
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 17,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    # t.index [\"account\"], name: \"index_users_on_account\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 40,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: false\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    # t.index [\"account\"], name: \"index_users_on_account\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 49,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: nil\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    # t.index [\"account\"], name: \"index_users_on_account\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 57,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    # t.index [\"account\"], name: \"index_users_on_account\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 65,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates\n  after_commit :foo\n  def foo; true; end\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    # t.index [\"account\"], name: \"index_users_on_account\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 73,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    t.index [\"account\"], name: \"index_users_on_account\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 94,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, presence: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    t.index [\"account\"], name: \"index_users_on_account\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 103,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    t.index [\"account\"], name: \"index_users_on_account\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 122,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n    t.index [\"account\"], name: \"index_users_on_account\", unique: true\n    t.check_constraint nil, 'expression', name: \"constraint_name\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 142,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  validates :user_id, uniqueness: { scope: :article_id }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n    t.bigint \"article_id\", null: false\n    t.index [\"user_id\"], name: \"idx_uid\", unique: true\n    t.index [\"article_id\"], name: \"idx_aid\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 164,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  validates :user_id, uniqueness: { scope: :article_id }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n    t.bigint \"article_id\", null: false\n    t.index [\"user_id\", \"article_id\"], name: \"idx_uid_aid\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 185,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  belongs_to :author, polymorphic: true\n  validates :title, uniqueness: { scope: :author }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.string \"title\", null: false\n    t.string \"author_type\", null: false\n    t.bigint \"author_id\", null: false\n    t.index [\"title\", \"author_id\"], name: \"idx_aid\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 208,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  belongs_to :author, polymorphic: true\n  validates :title, uniqueness: { scope: :author }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.string \"title\", null: false\n    t.string \"author_type\", null: false\n    t.bigint \"author_id\", null: false\n    t.index [\"title\", \"author_id\", \"author_type\"], name: \"idx_aid\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 231,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  belongs_to :author, polymorphic: false\n  validates :title, uniqueness: { scope: :author }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.string \"title\", null: false\n    t.string \"author_type\", null: false\n    t.bigint \"author_id\", null: false\n    t.index [\"title\", \"author_id\"], name: \"idx_aid\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 253,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  belongs_to :author\n  validates :title, uniqueness: { scope: :author }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.string \"title\", null: false\n    t.string \"author_type\", null: false\n    t.bigint \"author_id\", null: false\n    t.index [\"title\", \"author_id\"], name: \"idx_aid\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 275,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  validates :a_id, uniqueness: { scope: [:b_id, :c_id] }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.bigint \"a_id\", null: false\n    t.bigint \"b_id\", null: false\n    t.bigint \"c_id\", null: false\n    t.index [\"a_id\"], name: \"idx_aid\", unique: true\n    t.index [\"b_id\"], name: \"idx_bid\", unique: true\n    t.index [\"c_id\"], name: \"idx_cid\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 301,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  validates :a_id, uniqueness: { scope: [:b_id, :c_id] }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.bigint \"a_id\", null: false\n    t.bigint \"b_id\", null: false\n    t.bigint \"c_id\", null: false\n    t.index [\"a_id\", \"b_id\", \"c_id\"], name: \"idx_ids\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 323,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class WrittenArticles\n  validates :a_id, uniqueness: { scope: [:b_id, :c_id].freeze }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"written_articles\", force: :cascade do |t|\n    t.bigint \"a_id\", null: false\n    t.bigint \"b_id\", null: false\n    t.bigint \"c_id\", null: false\n    t.index [\"a_id\", \"b_id\", \"c_id\"], name: \"idx_ids\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 332,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :user\n  validates :user, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n    t.index [\"user_id\"], name: \"idx_user_id\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 354,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :user\n  validates :user, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n    t.index [\"user_id\"], name: \"idx_user_id\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 375,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :user\n  validates :user, uniqueness: true, if: -> { false }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 394,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :user\n  validates :user, uniqueness: true, unless: -> { true }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 403,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :user\n  validates :user, uniqueness: { if: -> { false } }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 412,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :user\n  validates :user, uniqueness: { unless: -> { false } }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 421,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :user\n  enum :status, [:draft, :published]\n  validates :user, uniqueness: { conditions: -> { published } }\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 430,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :user\n  validates :user, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"member_id\", null: false\n    t.index [\"user_id\"], name: \"idx_user_id\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 451,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 470,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :member, foreign_key: :user_id\n  validates :member, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n    t.index [\"user_id\"], name: \"idx_user_id\"\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 490,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :member, foreign_key: :user_id\n  validates :member, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"user_id\", null: false\n    t.index [\"user_id\"], name: \"idx_user_id\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 511,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  belongs_to :member, foreign_key: :user_id\n  validates :member, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"articles\", force: :cascade do |t|\n    t.bigint \"foo_id\", null: false\n    t.index [\"user_id\"], name: \"idx_user_id\", unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 531,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  self.table_name = 'members'\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"members\", force: :cascade do |t|\n    t.string \"account\", null: false\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 551,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "module Admin\n  class User\n    validates :account, uniqueness: true\n  end\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"admin_users\", force: :cascade do |t|\n    t.string \"account\", null: false\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 571,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Admin::User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"admin_users\", force: :cascade do |t|\n    t.string \"account\", null: false\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 582,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Email < ApplicationRecord\n  validates :address, presence: true, uniqueness: { case_sensitive: false }, email: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table 'emails', force: :cascade do |t|\n    t.string 'address', null: false\n    t.index 'lower(address)', name: 'index_emails_on_lower_address', unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 603,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Email < ApplicationRecord\n  validates :address, presence: true, uniqueness: { case_sensitive: false }, email: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table 'emails', force: :cascade do |t|\n    t.string 'address', null: false\n    t.index 'lower(unexpected_column_name)', name: 'index_emails_on_lower_address', unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 622,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n  end\n  add_index \"users\", \"account\", name: \"index_users_on_account\"\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 644,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false\n  end\n  add_index \"users\", [\"account\"], name: \"index_users_on_account\", unique: true\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 664,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class Article\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false, unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 683,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "module User\n  extend ActiveSupport::Concern\n  included do\n    validates :account, uniqueness: true\n  end\nend\n",
+    "config": {
+      "SchemaSource": "ActiveRecord::Schema.define(version: 2020_02_02_075409) do\n  create_table \"users\", force: :cascade do |t|\n    t.string \"account\", null: false, unique: true\n  end\nend\n"
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 701,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/UniqueValidationWithoutIndex",
+    "source": "class User\n  validates :account, uniqueness: true\nend\n",
+    "config": {
+      "SchemaSource": ""
+    },
+    "upstream": "unique_validation_without_index_spec.rb",
+    "line": 716,
+    "assertion": "expect_no_offenses"
+  }
+]

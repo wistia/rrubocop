@@ -12,6 +12,7 @@ mod blank;
 mod bulk_change_table;
 mod content_tag;
 mod create_table_with_timestamps;
+mod database;
 mod date;
 mod delegate;
 mod delegate_allow_blank;
@@ -37,7 +38,9 @@ mod index_with;
 mod inverse_of;
 mod lexically_scoped_action_filter;
 mod link_to_blank;
+mod literal_ast_value;
 mod literal_value;
+mod migration_body;
 mod not_null_column;
 mod output;
 mod output_safety;
@@ -58,6 +61,7 @@ mod request_referer;
 mod reversible_migration;
 mod safe_navigation;
 mod safe_navigation_with_blank;
+mod schema_model;
 mod scope_args;
 mod skips_model_validations;
 mod time_zone;
@@ -136,3 +140,6 @@ pub fn register_all(registry: &mut CopRegistry) {
         validation::Validation,
     );
 }
+
+pub(crate) use database::from_directory as database_dependency_adapter;
+pub(crate) use schema_model::path_from as schema_dependency_path;
