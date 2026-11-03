@@ -6,14 +6,16 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Twenty-seven owned rules now have implemented behavior backed by original-Ruby
-comparisons, including all thirteen original direct-file Style
-stubs, the additional delegated RedundantParentheses stub, and both absent
-version-gated cops. Additional UselessAssignment capture combinations
-remain under review. The exhaustive
-367-rule inventory retains 340 queued validation entries; some already had
-implementations. These bounded original-spec results do not establish
-universal parity for arbitrary Ruby source.
+Thirty-five owned rules have completed bounded original-Ruby validation,
+including all thirteen original direct-file Style stubs, the additional
+delegated RedundantParentheses stub and both absent version-gated cops.
+The exhaustive 367-rule inventory retains 332 queued or in-progress entries;
+some already have implementations. LiteralAsCondition is the current
+implementation batch. Documented safety and syntax limits remain, including
+additional UselessAssignment capture combinations. These bounded results do
+not establish universal parity for arbitrary Ruby source. Earlier sections
+retain their historical checkpoint counts; the newest completion section
+and exhaustive ledger carry the current status.
 
 ## Layout/SpaceAroundOperators
 
@@ -814,3 +816,11 @@ The public CLI gate completes 214 modes: 166 byte matches plus 48 intentional ag
 Fresh original replay covers all 107 final native source/configuration states. Every source parses cleanly in both parsers: 59 are clean with no further original edit and 48 retain the intentionally declined original offenses/corrections. All native findings in the replay are explicitly verified uncorrectable with no emitted edits. Thirty-two safety/autocorrection metadata modes contain 15 byte/exit matches (including two matching invalid-config rejections) and 17 guarded original rewrites; no unexpected differences remain. Eight actual Wistia-config probes cover expressions, quote selection and Unicode in both modes, with matching scope and stable final states.
 
 The two original-valid percent-space delimiter span mismatches and two original-invalid inputs stay separate from supported coverage. Additional source/version/encoding/directive/wire-format families and generic syntax/cross-cop scheduling remain outside this bounded claim. The separately reviewed bounded port is complete: owned bounded ports now total 35, with 13/13 direct Style stubs implemented; another 332 owned rules still await their full original-source/parity gate, alongside documented limits.
+
+## LiteralAsCondition source checkpoint (public gate pending)
+
+Reviewed original RuboCop 1.65.1 `lib/rubocop/cop/lint/literal_as_condition.rb`, rubocop-ast 1.32.3 literal/basic-literal sets and method-identifier negation predicates. All 127 unchanged upstream examples pass in Ruby and yield 122 unique captures. Native matches those plus 496 independent original-valid states with exact messages/full ranges and explicit native parse-clean coverage. Three original-invalid probes remain separate; both tested parser versions reject the hypothetical subjectless case-match callback branch, so it is not claimed valid-source coverage.
+
+The port covers condition callbacks for if/elsif/unless/ternary, modifier and post-test loops, boolean operand/parenthesis traversal, standalone prefix/explicit negations, case subjects and subjectless when groups, plus case-match binding exemptions (including nested cases). Regex/current-line matching and flip-flop conversion differ from ordinary case/explicit-send literal roles. Primitive arrays recurse through the original basic-literal distinction; dynamic strings, symbols, word arrays and heredocs reuse the existing string-parts adapter. Infinite-loop exceptions apply only to the original direct boolean condition. Global location deduplication matches overlapping original conditional/negation callbacks. Ranges and embedded source messages preserve original multiline/CRLF behavior.
+
+Independent role probes also establish that current native grammar emits identifiers for all three magic names: original `__FILE__` is Str, `__LINE__` is Int and `__ENCODING__` is Const. The first two receive scoped literal classification; the encoding constant remains nonliteral. The cop emits no edits and all source bytes remain unchanged. No fixture program executes, including the parsed command-string specimens. Full-suite/build, public CLI, actual production scope, metadata and separate final review gates remain pending. Completed bounded counts remain 35, with 332 awaiting full review, plus documented limits.
