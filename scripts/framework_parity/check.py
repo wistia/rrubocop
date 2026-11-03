@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 from cases import cases
+from json_lines import read_jsonl
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--ruby-project', type=Path, required=True)
@@ -18,7 +19,7 @@ def native(rows):
     (args.output / 'cases.json').write_text(json.dumps(rows))
     env = {**os.environ, 'RRUBOCOP_AUDIT_INPUT': str(args.output / 'cases.json'), 'RRUBOCOP_AUDIT_OUTPUT': str(args.output / 'native.jsonl')}
     subprocess.run(['cargo', 'test', '--locked', '--lib', 'custom_parity_audit_probe', '--', '--ignored'], cwd=root, env=env, check=True)
-    return {(r['id'], r['mode']): r['result'] for r in map(json.loads, (args.output / 'native.jsonl').read_text().splitlines())}
+    return {(r['id'], r['mode']): r['result'] for r in read_jsonl(args.output / 'native.jsonl')}
 
 rows = cases()
 initial = native(rows)
@@ -29,7 +30,7 @@ for case in rows:
 all_rows = rows + state_rows
 results = native(all_rows)
 subprocess.run(['bundle', 'exec', 'ruby', str(root / 'scripts/parity_audit/reference.rb'), str(args.ruby_project / '.rubocop.yml'), str(args.output / 'cases.json'), str(args.output / 'reference.jsonl')], cwd=args.ruby_project, check=True)
-reference = {r['id']: r['result'] for r in map(json.loads, (args.output / 'reference.jsonl').read_text().splitlines())}
+reference = {r['id']: r['result'] for r in read_jsonl(args.output / 'reference.jsonl')}
 failures = []
 for case in all_rows:
     name = case['id']
