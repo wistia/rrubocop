@@ -39,6 +39,7 @@ mod resolved_inject;
 mod resolved_state;
 mod resolved_versions;
 mod ruby_ver;
+mod schema_fingerprint;
 mod standard;
 mod standard_convert;
 mod types;

@@ -33,24 +33,40 @@ pub(super) fn database(source: &SourceFile, config: &CopConfig) -> Option<String
             return Some(value.as_str().unwrap_or("").into());
         }
     }
+    #[cfg(test)]
+    if config.options.contains_key("SchemaDatabaseYAML")
+        || config.options.contains_key("SchemaDatabaseURL")
+    {
+        let yaml = config
+            .options
+            .get("SchemaDatabaseYAML")
+            .and_then(|yaml| serde_yml::to_string(yaml).ok())
+            .and_then(|text| yaml_database(&text));
+        let url = if let Some(value) = config.options.get("SchemaDatabaseURL") {
+            value.as_str().map(str::to_owned)
+        } else {
+            std::env::var("DATABASE_URL").ok()
+        };
+        return yaml.or_else(|| url.as_deref().and_then(url_database));
+    }
     struct DatabaseSnapshot(Option<String>);
-    let path = std::env::current_dir().ok()?.join("config/database.yml");
+    let directory = std::env::current_dir().ok()?;
+    let path = directory.join("config/database.yml");
     source
         .operation()
-        .cached(&path, || {
-            DatabaseSnapshot(
-                std::fs::read_to_string(&path)
-                    .ok()
-                    .and_then(|text| yaml_database(&text))
-                    .or_else(|| {
-                        std::env::var("DATABASE_URL")
-                            .ok()
-                            .and_then(|url| url_database(&url))
-                    }),
-            )
-        })
+        .cached(&path, || DatabaseSnapshot(from_directory(&directory)))
         .0
         .clone()
+}
+pub(crate) fn from_directory(directory: &std::path::Path) -> Option<String> {
+    std::fs::read_to_string(directory.join("config/database.yml"))
+        .ok()
+        .and_then(|text| yaml_database(&text))
+        .or_else(|| {
+            std::env::var("DATABASE_URL")
+                .ok()
+                .and_then(|url| url_database(&url))
+        })
 }
 #[cfg(test)]
 mod tests {

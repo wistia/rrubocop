@@ -85,6 +85,8 @@ cases += [dict(cop='Lint/RedundantCopDisableDirective', extra_cops=['Rails/Valid
 cases += [dict(cop='Rails/LexicallyScopedActionFilter', source='class C; before_action :authorize, only: :missing; end\n', path='app/mailers/framework_parity_probe.rb', positive=True),
           dict(cop='Rails/LexicallyScopedActionFilter', source='class C; before_action :authorize, only: :missing; end # rubocop:disable Rails/LexicallyScopedActionFilter\n', path='app/controllers/framework_parity_probe.rb', positive=False)]
 cases += [dict(cop='Rails/RedundantReceiverInWithOptions', source='with_options(flag: true) do |m|\n m.foo # rubocop:disable Rails/RedundantReceiverInWithOptions\n m.bar\nend\n', path=model, positive=True)]
+from schema_scope import extra_cases as schema_extra_cases
+cases.extend(schema_extra_cases(model))
 if a.cop:
     selected = set(a.cop)
     known = {case['cop'] for case in cases} | {cop for case in cases for cop in case.get('extra_cops', [])}
@@ -97,9 +99,15 @@ a.output.mkdir(parents=True, exist_ok=True)
 auxiliary_config=a.output/'auxiliary-policy.yml'
 auxiliary_config.write_text('inherit_from: '+json.dumps(str(a.ruby_project/'.rubocop.yml'))+'\nLint/RedundantCopDisableDirective:\n  Enabled: true\nRails/Validation:\n  Include:\n    - '+json.dumps(str(a.ruby_project/'app/models/**/*.rb'))+'\n')
 
+schema_config=a.output/'schema-database.yml'
+schema_config.write_text('inherit_from: '+json.dumps(str(a.ruby_project/'.rubocop.yml'))+'\nRails/BulkChangeTable:\n  Database: mysql\n')
+
 def observe(command, case):
     flags = ['--force-exclusion'] if case.get('force_exclusion',True) else []
     selection=['--config',str(auxiliary_config)] if case.get('extra_cops') else ['--only',case['cop']]
+    if case.get('schema_database'):
+        schema_config=a.output/'schema-database.yml'
+        selection=['--config',str(schema_config),'--only',case['cop']]
     result = subprocess.run(command + ['--stdin', case['path'], '--format', 'json', '--cache', 'false'] + selection + flags, input=case['source'], capture_output=True, text=True, cwd=a.ruby_project, env=env, timeout=30)
     if result.returncode not in (0, 1):
         return dict(error=result.stderr, code=result.returncode)

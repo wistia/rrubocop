@@ -2,7 +2,7 @@ use crate::cop::shared::ruby_arguments::{Argument, arguments};
 use crate::cop::shared::ruby_expression::{
     plain_string, plain_symbol, regular_send_name, regular_send_receiver,
 };
-use crate::cop::shared::{call_method_name, named_kids, node_bytes};
+use crate::cop::shared::{call_method_name, node_bytes};
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
@@ -70,16 +70,6 @@ fn reversible(source: &SourceFile, node: Node<'_>, version: f64) -> bool {
         _ => true,
     }
 }
-fn direct_statements(body: Node<'_>) -> Vec<Node<'_>> {
-    if matches!(body.kind(), "block_body" | "body_statement") {
-        named_kids(body)
-            .into_iter()
-            .filter(|n| n.kind() != "comment")
-            .collect()
-    } else {
-        vec![body]
-    }
-}
 pub struct ReversibleMigration;
 impl Cop for ReversibleMigration {
     fn name(&self) -> &'static str {
@@ -113,11 +103,14 @@ impl Cop for ReversibleMigration {
                     findings.push((node, String::from_utf8_lossy(method.unwrap()).into_owned()))
                 }
                 Some(b"drop_table")
-                    if node.child_by_field_name("block").is_none()
-                        && !args
-                            .last()
-                            .and_then(|a| a.node())
-                            .is_some_and(|n| n.kind() == "block_argument") =>
+                    if !node.child_by_field_name("block").is_some_and(|block| {
+                        config.get_f64("TargetRubyVersion", 3.4) < 2.7
+                            || crate::cop::shared::ruby_expression::numbered_bindings(source, block)
+                                .is_none()
+                    }) && !args
+                        .last()
+                        .and_then(|a| a.node())
+                        .is_some_and(|n| n.kind() == "block_argument") =>
                 {
                     findings.push((node, "drop_table(without block)".into()))
                 }
@@ -173,12 +166,7 @@ impl Cop for ReversibleMigration {
                 .and_then(|b| b.child_by_field_name("body"))
             {
                 let table = args[0].node();
-                for child in direct_statements(body) {
-                    if regular_send_name(source, child).is_none()
-                        || child.child_by_field_name("block").is_some()
-                    {
-                        continue;
-                    }
+                for child in super::migration_body::body_sends(source, body) {
                     let receiver = regular_send_receiver(source, child).flatten();
                     let same = match (table, receiver) {
                         (Some(a), Some(b)) => {
@@ -217,13 +205,7 @@ impl Cop for ReversibleMigration {
             let mut d = self.diagnostic(source, line, column, message);
             d.severity = config.severity.unwrap_or(d.severity);
             let end = super::super::shared::send_end(target);
-            d.highlight_length =
-                String::from_utf8_lossy(&source.as_bytes()[target.start_byte()..end])
-                    .split('\n')
-                    .next()
-                    .unwrap_or("")
-                    .chars()
-                    .count();
+            d.highlight_length = super::blank::highlight_length(source, target.start_byte(), end);
             diagnostics.push(d);
         }
     }

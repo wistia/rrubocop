@@ -164,12 +164,7 @@ impl Cop for NotNullColumn {
             );
             d.severity = config.severity.unwrap_or(d.severity);
             d.highlight_length =
-                String::from_utf8_lossy(&source.as_bytes()[pair.start_byte()..pair.end_byte()])
-                    .split('\n')
-                    .next()
-                    .unwrap_or("")
-                    .chars()
-                    .count();
+                super::blank::highlight_length(source, pair.start_byte(), pair.end_byte());
             diagnostics.push(d);
         }
     }

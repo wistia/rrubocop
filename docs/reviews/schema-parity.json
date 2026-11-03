@@ -10,18 +10,26 @@
   "rules": [
     {
       "cop": "Rails/BulkChangeTable",
-      "status": "pending",
+      "status": "implemented_source_reviewed",
       "baseline": "unimplemented_noop_stub",
-      "supports_autocorrect": false
+      "supports_autocorrect": false,
+      "original_cases": 249,
+      "second_pass_cases": 498,
+      "strict_driver_exit": 0,
+      "strict_failures": {},
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "retained_differences": []
     },
     {
       "cop": "Rails/NotNullColumn",
-      "status": "implemented_upstream_gate_edges_in_progress",
+      "status": "implemented_source_reviewed",
       "baseline": "unimplemented_noop_stub",
       "supports_autocorrect": false,
       "original_cases": 84,
       "second_pass_cases": 168,
-      "strict_failures": 0,
+      "strict_failures": {},
       "original_upstream_sources": 25,
       "production_scope": "116 controls/51 rules, zero differences; two owned DB positives and model exclusions",
       "source_notes": [
@@ -29,26 +37,125 @@
         "Default:nil does not exempt; other values do. Static virtual/text type nodes differ from shortcut Ruby Symbol method names.",
         "Single parenthesized body begin is inspected; nested begin/kwbegin/condition shapes follow original shallow traversal.",
         "Database resolver has15 original-backed file/YAML/environment observations, including aliases and precedence."
-      ]
+      ],
+      "strict_driver_exit": 0,
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "retained_differences": []
     },
     {
       "cop": "Rails/ReversibleMigration",
-      "status": "implemented_upstream_gate_edges_in_progress",
+      "status": "implemented_source_reviewed",
       "baseline": "unimplemented_noop_stub",
       "supports_autocorrect": false,
-      "original_cases": 48,
-      "second_pass_cases": 96,
-      "strict_failures": 0,
+      "original_cases": 164,
+      "second_pass_cases": 328,
+      "strict_failures": {
+        "error": 3
+      },
       "original_upstream_sources": 48,
-      "remaining": [
-        "Expanded method/scope/version/negative body shapes and production scope gate before completion."
+      "strict_driver_exit": 1,
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "retained_differences": [
+        {
+          "id": "Rails/ReversibleMigration:schema:151",
+          "source": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end\n",
+          "kind": "error",
+          "ruby": {
+            "error": "NoMethodError: undefined method 'block_pass_type?' for nil"
+          },
+          "native": {
+            "diagnostics": [
+              {
+                "cop_name": "Rails/ReversibleMigration",
+                "correctable": false,
+                "corrected": false,
+                "highlight_length": 10,
+                "location": {
+                  "column": 67,
+                  "line": 1
+                },
+                "message": "drop_table(without block) is not reversible.",
+                "path": "db/migrate/20990101000000_schema_parity.rb",
+                "severity": "Convention",
+                "source_line": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end"
+              }
+            ],
+            "source": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end\n"
+          }
+        },
+        {
+          "id": "Rails/ReversibleMigration:schema:151:safe:second-pass",
+          "source": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end\n",
+          "kind": "error",
+          "ruby": {
+            "error": "NoMethodError: undefined method 'block_pass_type?' for nil"
+          },
+          "native": {
+            "diagnostics": [
+              {
+                "cop_name": "Rails/ReversibleMigration",
+                "correctable": false,
+                "corrected": false,
+                "highlight_length": 10,
+                "location": {
+                  "column": 67,
+                  "line": 1
+                },
+                "message": "drop_table(without block) is not reversible.",
+                "path": "db/migrate/20990101000000_schema_parity.rb",
+                "severity": "Convention",
+                "source_line": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end"
+              }
+            ],
+            "source": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end\n"
+          }
+        },
+        {
+          "id": "Rails/ReversibleMigration:schema:151:all:second-pass",
+          "source": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end\n",
+          "kind": "error",
+          "ruby": {
+            "error": "NoMethodError: undefined method 'block_pass_type?' for nil"
+          },
+          "native": {
+            "diagnostics": [
+              {
+                "cop_name": "Rails/ReversibleMigration",
+                "correctable": false,
+                "corrected": false,
+                "highlight_length": 10,
+                "location": {
+                  "column": 67,
+                  "line": 1
+                },
+                "message": "drop_table(without block) is not reversible.",
+                "path": "db/migrate/20990101000000_schema_parity.rb",
+                "severity": "Convention",
+                "source_line": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end"
+              }
+            ],
+            "source": "class ExampleMigration < ActiveRecord::Migration[7.0]; def change; drop_table; end; end\n"
+          }
+        }
       ]
     },
     {
       "cop": "Rails/UniqueValidationWithoutIndex",
-      "status": "pending",
+      "status": "implemented_source_reviewed",
       "baseline": "unimplemented_noop_stub",
-      "supports_autocorrect": false
+      "supports_autocorrect": false,
+      "original_cases": 79,
+      "second_pass_cases": 158,
+      "strict_driver_exit": 0,
+      "strict_failures": {},
+      "diagnostic_differences": 0,
+      "invalid_native_corrections": 0,
+      "idempotence_differences": 0,
+      "retained_differences": []
     }
   ],
   "upstream_import": {
@@ -63,8 +170,47 @@
     "/dev/shm/schema-not-null-scope"
   ],
   "native_gate": {
-    "passed": 934,
+    "passed": 937,
     "ignored": 1
   },
-  "ruby_lint": "two new scripts clean under actual Wistia config; data round trips identical"
+  "ruby_lint": "four new Ruby scripts clean under actual Wistia config; inherited reference harness retains Cops/RescueMustReportError; data round trips identical",
+  "totals": {
+    "original_cases": 576,
+    "second_pass_cases": 1152,
+    "implemented_rules": 4,
+    "diagnostic_differences": 0,
+    "invalid_native_corrections": 0,
+    "idempotence_differences": 0
+  },
+  "cache_cli_controls": {
+    "controls": 15,
+    "differences": 0,
+    "cache": "native enabled; compared against fresh original Ruby diagnostics",
+    "inputs": [
+      "schema absent/created/deleted",
+      "index added and same-size/same-mtime index changed",
+      "YAML database adapter changes",
+      "environment database adapter changes",
+      "Gemfile.lock railties absent/5.1/5.2/6.0/6.1"
+    ]
+  },
+  "owned_production_scope": {
+    "cases": 10,
+    "rules": 4,
+    "differences": 0,
+    "missing_positive_controls": [],
+    "note": "Bulk uses an isolated Database:mysql override inheriting the actual Wistia config; other rules use actual production settings/schema."
+  },
+  "shared_original_properties": {
+    "database_resolution": 15,
+    "new_pluralization_tableize": 335,
+    "preserved_underscore_foreign_key": 285
+  },
+  "bounded_families": [
+    "Canonical schema.rb AST shapes and current Wistia schema are covered; arbitrary executable schema DSLs are not evaluated.",
+    "AST-value rendering for exotic command-interpolation expressions beyond tested scalar/send cases remains bounded; commands are never executed.",
+    "Non-UTF8 literal families and runtime custom ActiveSupport inflection registries are not universal-equivalence claims.",
+    "The original crashes for bare drop_table with missing required arguments; this remains explicit error evidence, not an allowlist.",
+    "Generic multi-cop scheduling remains explicitly deferred."
+  ]
 }
