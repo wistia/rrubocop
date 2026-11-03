@@ -1,0 +1,22 @@
+[
+  {
+    "id": "defined-space-4",
+    "original": "if <<OUT\n#{consume(<<INNER)}\n#{x=y}\nINNER\nOUT\nwork\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "AllowSafeAssignment": true
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if <<OUT\n#{consume(<<INNER)}\n#{x=y}\nINNER\nOUT\nwork\nend\n",
+    "ruby_ast": "s(:if,\n  s(:dstr,\n    s(:begin,\n      s(:send, nil, :consume,\n        s(:dstr,\n          s(:begin,\n            s(:lvasgn, :x,\n              s(:send, nil, :y))),\n          s(:str, \"\\n\")))),\n    s(:str, \"\\n\"),\n    s(:begin,\n      s(:lvasgn, :x,\n        s(:send, nil, :y))),\n    s(:str, \"\\n\"),\n    s(:str, \"INNER\\n\")),\n  s(:send, nil, :work), nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:dstr,\n    s(:begin,\n      s(:send, nil, :consume,\n        s(:dstr,\n          s(:begin,\n            s(:lvasgn, :x,\n              s(:send, nil, :y))),\n          s(:str, \"\\n\")))),\n    s(:str, \"\\n\"),\n    s(:begin,\n      s(:lvasgn, :x,\n        s(:send, nil, :y))),\n    s(:str, \"\\n\"),\n    s(:str, \"INNER\\n\")),\n  s(:send, nil, :work), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_status": "Original-valid nested heredoc yields native ERROR instead of an if node; generic parser work deferred, not passing cop parity."
+  }
+]

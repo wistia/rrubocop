@@ -21,6 +21,7 @@ def arguments():
     parser.add_argument("--gemfile", type=pathlib.Path)
     parser.add_argument("--output", type=pathlib.Path, required=True)
     parser.add_argument("--jobs", type=int, default=4)
+    parser.add_argument("--preserve-null-option", action="append", default=[])
     parser.add_argument("--rubocop-version", default="1.65.1")
     return parser.parse_args()
 
@@ -69,7 +70,7 @@ def compare(index_case, settings, environment):
             raise ValueError(f"CLI fixtures require a relative path beneath the temporary root: {fixture_path}")
         path = root.joinpath(*fixture_path.parts)
         path.parent.mkdir(parents=True, exist_ok=True)
-        options = {key: value for key, value in case["config"].items() if value is not None and key != "TargetRubyVersion"}
+        options = {key: value for key, value in case["config"].items() if key != "TargetRubyVersion" and (value is not None or key in getattr(settings, "preserve_null_option", ()))}
         document = {
             "AllCops": {
                 "DisabledByDefault": True,

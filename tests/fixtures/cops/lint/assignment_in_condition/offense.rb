@@ -10,6 +10,6 @@ return unless group = deq
                     ^ Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
 
 until (parent, base = File.split(path); parent == path)
-                    ^ Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or move the assignment up out of the condition.
+                    ^ Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.
   x
 end
