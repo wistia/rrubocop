@@ -1,0 +1,184 @@
+{
+  "base": "2db3f585334e669e5b1466ded9ffadb1e7dff0ec",
+  "branch": "perf/wistia-rspec-cops",
+  "source_commit": "06570c47ce7def2052016ae98132d5822dd8b5c6",
+  "prerequisite": {
+    "commit": "0c75ac4",
+    "original": "8873ea0",
+    "purpose": "Focus/Pending/NonNil selector routing"
+  },
+  "full_native": {
+    "command": "cargo test --lib",
+    "passed": 1102,
+    "failed": 0,
+    "ignored": 1,
+    "seconds": 79.28,
+    "log_sha256": "f0436a574e62a96cb683f67d762bc0b7bf0ab6e4433b85a62ef2e3f7dbfdb74a"
+  },
+  "format_check": "passed",
+  "non_test_cargo_check_lib": "passed",
+  "original_reference_gate": {
+    "cases": 1936,
+    "safety_cases": 211,
+    "rule_runtime": "Ruby 3.4.9, RuboCop 1.65.1, rubocop-rspec 3.0.4, parser 3.3.5.0",
+    "scope": "Retained original fixtures: exact diagnostics/metadata/ranges, -a/-A bytes, final diagnostics and idempotence in full native suite",
+    "combined_cop_corrections": "excluded; generic scheduler user-deferred"
+  },
+  "additional_routing": {
+    "sources": 357,
+    "cops": 12,
+    "observations": "off/on correction sink; exact diagnostics, edits, corrected bytes and second pass",
+    "rows": [
+      {
+        "cop": "RSpec/Be",
+        "sources": 10,
+        "ungated_callbacks": 198,
+        "gated_callbacks": 52
+      },
+      {
+        "cop": "RSpec/ExampleWording",
+        "sources": 78,
+        "ungated_callbacks": 160,
+        "gated_callbacks": 154
+      },
+      {
+        "cop": "RSpec/ContextWording",
+        "sources": 32,
+        "ungated_callbacks": 136,
+        "gated_callbacks": 124
+      },
+      {
+        "cop": "RSpec/VariableName",
+        "sources": 40,
+        "ungated_callbacks": 338,
+        "gated_callbacks": 168
+      },
+      {
+        "cop": "RSpec/VariableDefinition",
+        "sources": 25,
+        "ungated_callbacks": 244,
+        "gated_callbacks": 120
+      },
+      {
+        "cop": "RSpec/VerifiedDoubleReference",
+        "sources": 9,
+        "ungated_callbacks": 64,
+        "gated_callbacks": 48
+      },
+      {
+        "cop": "RSpec/ImplicitBlockExpectation",
+        "sources": 17,
+        "ungated_callbacks": 502,
+        "gated_callbacks": 36
+      },
+      {
+        "cop": "RSpec/DescribedClass",
+        "sources": 1,
+        "ungated_callbacks": 8,
+        "gated_callbacks": 2
+      },
+      {
+        "cop": "RSpec/NoExpectationExample",
+        "sources": 31,
+        "ungated_callbacks": 126,
+        "gated_callbacks": 90
+      },
+      {
+        "cop": "RSpec/ExcessiveDocstringSpacing",
+        "sources": 72,
+        "ungated_callbacks": 164,
+        "gated_callbacks": 144
+      },
+      {
+        "cop": "RSpec/RepeatedExample",
+        "sources": 13,
+        "ungated_callbacks": 182,
+        "gated_callbacks": 80
+      },
+      {
+        "cop": "RSpec/RepeatedDescription",
+        "sources": 29,
+        "ungated_callbacks": 222,
+        "gated_callbacks": 188
+      }
+    ],
+    "described_class": "One native routing specimen plus existing fixtures, not a new original reference claim"
+  },
+  "new_helper_tests": [
+    "configuration_snapshots_reuse_failures_and_keep_nested_overrides_distinct",
+    "owned_node_ranges_resolve_against_reparsed_trees_without_retaining_nodes",
+    "fragment_decoding_matches_full_source_surrogates_for_nested_and_multiline_descriptions"
+  ],
+  "trusted_runtime": [
+    {
+      "program": "scripts/rspec_parity_description_semantics.rb",
+      "exit": 0,
+      "seconds": 0.4725870918482542,
+      "stderr": "",
+      "output": "runtime-description.json",
+      "output_sha256": "4dcd2219de1d4e3650a161d16693efd38206e16ca551f9a5e922715d90cbbc00"
+    },
+    {
+      "program": "scripts/rspec_parity_return_semantics.rb",
+      "exit": 0,
+      "seconds": 0.49806791357696056,
+      "stderr": "",
+      "output": "runtime-return.json",
+      "output_sha256": "23ce78e968465253698b28f0b3bdf01d84edf2301d54f8a253392f2b97e96d6a"
+    },
+    {
+      "program": "scripts/rspec_parity_subject_spy_semantics.rb",
+      "exit": 0,
+      "seconds": 0.5737925269640982,
+      "stderr": "",
+      "output": "runtime-subject_spy.json",
+      "output_sha256": "fc33a31bd3a4db15253d66c43418782fc62a103bad8e893b6a9dcf4799f45161"
+    },
+    {
+      "program": "scripts/rspec_parity_ordering_semantics.rb",
+      "exit": 0,
+      "seconds": 0.5849608471617103,
+      "stderr": "",
+      "output": "runtime-ordering.json",
+      "output_sha256": "f2a617a2aa61dc2725ad34f2c346d122578e4aa5b0dea2c8a0248da66d9d1196"
+    },
+    {
+      "program": "scripts/rspec_parity_metadata_style_semantics.rb",
+      "exit": 0,
+      "seconds": 0.5610540439374745,
+      "stderr": "",
+      "output": "runtime-metadata_style.json",
+      "output_sha256": "de13a6ce8fd0fe6f8fa296bb9b00b22c2225786c88c16467e129259d68bf2306"
+    },
+    {
+      "program": "scripts/rspec_parity_receive_messages_semantics.rb",
+      "exit": 0,
+      "seconds": 0.49982487969100475,
+      "stderr": "",
+      "output": "runtime-receive_messages.json",
+      "output_sha256": "548cac0acdb68f1e19c9d9c2ff215d36d7562d08542a725160f5a2dc812d2d63"
+    },
+    {
+      "program": "scripts/rspec_parity_scattered_setup_semantics.rb",
+      "exit": 0,
+      "seconds": 0.5818925579078496,
+      "stderr": "",
+      "output": "runtime-scattered_setup.json",
+      "output_sha256": "586ad80d8b1c8e9ea22bcde8285dc9b9fd291aa44499879072b9541f85d5e5e3"
+    }
+  ],
+  "production_benchmark": {
+    "run": false,
+    "reason": "Parent owns combined same-target uncached/warm benchmark and complete Ruby reconciliation"
+  },
+  "disposition_report": "../wistia-rspec-efficiency.md",
+  "remaining_risks": [
+    "No new production speed claim before integrated benchmark",
+    "Canonical AST hashing deferred until strict equivalence contract exists",
+    "Pass-local emission state is not stored on SourceFile",
+    "Heredoc surrogate/requested correction guards retain original parser/safety context",
+    "Operation-wide config dedup needs immutable scoped-config identity",
+    "SpecFilePathFormat regex is once-per-program: audit correction",
+    "Argument representation redesign deferred without allocation measurements"
+  ]
+}
