@@ -233,7 +233,7 @@ fn scan_line<'a>(
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<&mut Vec<Correction>>,
 ) {
-    if let Some(indent) = cont::deeper_dot_block(line, next_code_indent(source, i)) {
+    if let Some(indent) = cont::deeper_dot_block(line, || next_code_indent(source, i)) {
         state.prev_indent = Some(indent);
         state.prev_line = line;
         return;

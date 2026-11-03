@@ -192,6 +192,25 @@ fn readonly(source: &SourceFile, node: Node<'_>) -> bool {
                 || n.kind() == "body_statement" && nodes.len() == 1 && nodes[0].kind() == "true"
         })
 }
+fn parent_exemption(source: &SourceFile, parent: View<'_>) -> bool {
+    type Key = (usize, usize, u16, bool);
+    struct Exemptions(std::sync::Mutex<std::collections::HashMap<Key, bool>>);
+    let node = parent.node();
+    let key = (
+        node.start_byte(),
+        node.end_byte(),
+        node.kind_id(),
+        matches!(parent, View::Block(_)),
+    );
+    let exemptions = source.cached(0, || Exemptions(Default::default()));
+    *exemptions.0.lock().unwrap().entry(key).or_insert_with(|| {
+        let mut nodes = Vec::new();
+        descendants(parent, &mut nodes);
+        nodes
+            .iter()
+            .any(|n| active_resource(source, *n) || readonly(source, *n))
+    })
+}
 impl Cop for HasManyOrHasOneDependent {
     fn name(&self) -> &'static str {
         "Rails/HasManyOrHasOneDependent"
@@ -221,19 +240,14 @@ impl Cop for HasManyOrHasOneDependent {
         {
             return;
         }
+        let (count, options) = call_options(node);
+        if count != 1 && valid(source, options) {
+            return;
+        }
         let Some(parent) = View::Node(node).parent() else {
             return;
         };
-        let mut nodes = Vec::new();
-        descendants(parent, &mut nodes);
-        if nodes
-            .iter()
-            .any(|n| active_resource(source, *n) || readonly(source, *n))
-        {
-            return;
-        }
-        let (count, options) = call_options(node);
-        if count != 1 && valid(source, options) {
+        if parent_exemption(source, parent) {
             return;
         }
         let context = if parent.begin() || extension(source, parent, config) {
@@ -251,5 +265,49 @@ impl Cop for HasManyOrHasOneDependent {
         let mut d = self.diagnostic(source, line, col, "Specify a `:dependent` option.".into());
         d.highlight_length = node_text(source, method).chars().count();
         diagnostics.push(d);
+    }
+}
+
+#[cfg(test)]
+mod performance_tests {
+    use super::*;
+    #[test]
+    fn parent_summary_distinguishes_call_view_from_its_own_block() {
+        let source = SourceFile::from_bytes(
+            "app/models/example.rb",
+            b"with_options dependent: :destroy do; def readonly?; true; end; end".to_vec(),
+        );
+        let tree = crate::parse::parse_ruby(&source).unwrap();
+        let call = children(tree.root_node())[0];
+        assert!(!parent_exemption(&source, View::Node(call)));
+        assert!(parent_exemption(&source, View::Block(call)));
+        assert!(!parent_exemption(&source, View::Node(call)));
+    }
+    #[test]
+    fn cached_parent_summaries_equal_the_original_descendant_predicate() {
+        for text in [
+            "class A < ActiveResource::Base; has_many :x; has_one :y; end",
+            "class A; def readonly?; true; end; has_many :x; end",
+            "class A; def readonly?; false; end; has_many :x; end",
+            "with_options dependent: :destroy do; has_many :x; has_one :y; end",
+            "class A; has_many :x do; has_one :y; end; end",
+            "class A; has_many :x, dependent: nil; has_one :y, through: nil; end",
+        ] {
+            let source = SourceFile::from_bytes("app/models/example.rb", text.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            let mut pending = vec![tree.root_node()];
+            while let Some(node) = pending.pop() {
+                for view in [View::Node(node), View::Block(node)] {
+                    let mut original = Vec::new();
+                    descendants(view, &mut original);
+                    let expected = original
+                        .iter()
+                        .any(|node| active_resource(&source, *node) || readonly(&source, *node));
+                    assert_eq!(parent_exemption(&source, view), expected);
+                    assert_eq!(parent_exemption(&source, view), expected);
+                }
+                pending.extend(children(node));
+            }
+        }
     }
 }
