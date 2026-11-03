@@ -30,7 +30,8 @@ impl ResolvedConfig {
             "Lint/TrailingCommaInAttributeDeclaration"
             | "Style/NestedTernaryOperator"
             | "Lint/EmptyEnsure"
-            | "Lint/EmptyInterpolation" => &[("Safe", false), ("SafeAutoCorrect", false)],
+            | "Lint/EmptyInterpolation"
+            | "Lint/ElseLayout" => &[("Safe", false), ("SafeAutoCorrect", false)],
             "Lint/AssignmentInCondition" => &[("Safe", false), ("SafeAutoCorrect", true)],
             _ => &[],
         };
@@ -63,6 +64,7 @@ impl ResolvedConfig {
         if !matches!(
             name,
             "Style/TrailingBodyOnMethodDefinition"
+                | "Lint/ElseLayout"
                 | "Style/ComparableClamp"
                 | "Layout/ArrayAlignment"
                 | "Layout/ParameterAlignment"

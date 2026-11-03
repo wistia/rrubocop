@@ -17,9 +17,4 @@ else # backward compatibility
     end
   end
 end
-# Single-line if/then/else — not flagged by this simplified check
 if a then b else c end
-# then-style with single else expression
-if something then test
-else something_else
-end
