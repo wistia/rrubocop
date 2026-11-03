@@ -7,6 +7,9 @@ use crate::parse::source::SourceFile;
 
 pub const CALL_KINDS: &[&str] = &["call", "command", "command_call"];
 
+pub const FIELD_METHODS: &[&[u8]] = &[b"field"];
+pub const ARGUMENT_METHODS: &[&[u8]] = &[b"argument", b"public_argument"];
+
 pub const DEPT_INCLUDE: &[&str] = &["**/graphql/**/*"];
 
 /// Bare `method` call/command with no receiver.
@@ -21,11 +24,16 @@ pub fn bare_method(source: &SourceFile, node: Node<'_>, name: &[u8]) -> bool {
 }
 
 pub fn is_field_call(source: &SourceFile, node: Node<'_>) -> bool {
-    bare_method(source, node, b"field") && first_sym_arg(source, node).is_some()
+    FIELD_METHODS
+        .iter()
+        .any(|name| bare_method(source, node, name))
+        && first_sym_arg(source, node).is_some()
 }
 
 pub fn is_argument_call(source: &SourceFile, node: Node<'_>) -> bool {
-    (bare_method(source, node, b"argument") || bare_method(source, node, b"public_argument"))
+    ARGUMENT_METHODS
+        .iter()
+        .any(|name| bare_method(source, node, name))
         && first_sym_arg(source, node).is_some()
 }
 
@@ -41,6 +49,18 @@ pub fn sym_text(source: &SourceFile, node: Node<'_>) -> Option<String> {
 }
 
 pub fn first_sym_arg(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    type Key = (usize, usize);
+    struct Names(std::sync::Mutex<std::collections::HashMap<Key, Option<String>>>);
+    let names = source.cached(0, || Names(Default::default()));
+    names
+        .0
+        .lock()
+        .unwrap()
+        .entry((node.start_byte(), node.end_byte()))
+        .or_insert_with(|| first_sym_arg_uncached(source, node))
+        .clone()
+}
+fn first_sym_arg_uncached(source: &SourceFile, node: Node<'_>) -> Option<String> {
     let first = argument_nodes(node)
         .into_iter()
         .find(|n| n.kind() != "comment")?;

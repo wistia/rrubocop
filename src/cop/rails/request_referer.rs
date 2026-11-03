@@ -118,18 +118,22 @@ impl Cop for RequestReferer {
             .count()
             != replacement.bytes().filter(|b| *b == b'\n').count();
         if removes_lines {
-            let mut root = node;
-            while let Some(parent) = root.parent() {
-                root = parent;
-            }
-            let mut pending = vec![root];
-            while let Some(node) = pending.pop() {
-                if crate::cop::shared::is_line_literal(source, node) {
-                    d.correctable = false;
-                    break;
+            struct LineSensitive(bool);
+            let sensitive = source.cached(0, || {
+                let mut root = node;
+                while let Some(parent) = root.parent() {
+                    root = parent;
                 }
-                pending.extend(named_kids(node));
-            }
+                let mut pending = vec![root];
+                while let Some(node) = pending.pop() {
+                    if crate::cop::shared::is_line_literal(source, node) {
+                        return LineSensitive(true);
+                    }
+                    pending.extend(named_kids(node));
+                }
+                LineSensitive(false)
+            });
+            d.correctable &= !sensitive.0;
         }
         if d.correctable {
             let mut proposed = source.as_bytes().to_vec();

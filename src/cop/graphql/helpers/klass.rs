@@ -44,29 +44,29 @@ pub fn find_method_def<'a>(
     source: &SourceFile,
     method: &str,
 ) -> Option<Node<'a>> {
-    for stmt in class_body_stmts(class_node) {
-        if let Some(d) = match_method(source, stmt, method) {
-            return Some(d);
+    struct Methods(std::collections::HashMap<String, (usize, usize)>);
+    let methods = source.cached(class_node.start_byte(), || {
+        let mut methods = std::collections::HashMap::new();
+        let mut statements = Vec::new();
+        for statement in class_body_stmts(class_node) {
+            statements.push(statement);
+            if statement.kind() == "singleton_class" {
+                statements.extend(class_body_stmts(statement));
+            }
         }
-        if stmt.kind() == "singleton_class" {
-            for inner in class_body_stmts(stmt) {
-                if let Some(d) = match_method(source, inner, method) {
-                    return Some(d);
+        for statement in statements {
+            if matches!(statement.kind(), "method" | "singleton_method") {
+                if let Some(name) = statement.child_by_field_name("name") {
+                    methods
+                        .entry(node_text(source, name))
+                        .or_insert((statement.start_byte(), statement.end_byte()));
                 }
             }
         }
-    }
-    None
-}
-
-fn match_method<'a>(source: &SourceFile, stmt: Node<'a>, method: &str) -> Option<Node<'a>> {
-    if matches!(stmt.kind(), "method" | "singleton_method") {
-        let name = stmt.child_by_field_name("name")?;
-        if node_text(source, name) == method {
-            return Some(stmt);
-        }
-    }
-    None
+        Methods(methods)
+    });
+    let &(start, end) = methods.0.get(method)?;
+    class_node.named_descendant_for_byte_range(start, end.saturating_sub(1))
 }
 
 pub fn enclosing_class(node: Node<'_>) -> Option<Node<'_>> {

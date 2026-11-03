@@ -25,6 +25,9 @@ impl Cop for MultipleFieldDefinitions {
         CALL_KINDS
     }
 
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        super::helpers::FIELD_METHODS
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -42,10 +45,7 @@ impl Cop for MultipleFieldDefinitions {
         if nested_class(class) {
             return;
         }
-        let Some(name) = field_name(source, node) else {
-            return;
-        };
-        if !ungrouped_last_def(source, class, node, &name) {
+        if !ungrouped_last_def(source, class, node) {
             return;
         }
         let (line, col) = source.offset_to_line_col(node.start_byte());
@@ -58,23 +58,51 @@ impl Cop for MultipleFieldDefinitions {
     }
 }
 
-fn ungrouped_last_def(source: &SourceFile, class: Node<'_>, node: Node<'_>, name: &str) -> bool {
-    is_last_ungrouped(&same_name_defs(source, class, name), node)
+fn ungrouped_last_def(source: &SourceFile, class: Node<'_>, node: Node<'_>) -> bool {
+    struct Ungrouped(std::collections::HashSet<usize>);
+    let index = source.cached(class.start_byte(), || {
+        let mut definitions = std::collections::HashMap::<String, Vec<(usize, usize)>>::new();
+        for (position, statement) in class_body_stmts(class).into_iter().enumerate() {
+            if is_field_call(source, statement) {
+                if let Some(name) = field_name(source, statement) {
+                    definitions
+                        .entry(name)
+                        .or_default()
+                        .push((position, statement.start_byte()));
+                }
+            }
+        }
+        Ungrouped(
+            definitions
+                .into_values()
+                .filter_map(|definitions| {
+                    (definitions.len() > 1
+                        && definitions.windows(2).any(|pair| pair[1].0 - pair[0].0 > 1))
+                    .then(|| definitions.last().unwrap().1)
+                })
+                .collect(),
+        )
+    });
+    index.0.contains(&node.start_byte())
 }
 
-fn same_name_defs<'a>(source: &SourceFile, class: Node<'a>, name: &str) -> Vec<(usize, Node<'a>)> {
-    class_body_stmts(class)
-        .into_iter()
-        .enumerate()
-        .filter(|(_, n)| {
-            is_field_call(source, *n) && field_name(source, *n).as_deref() == Some(name)
-        })
-        .map(|(i, n)| (i, n))
-        .collect()
-}
-
-fn is_last_ungrouped(defs: &[(usize, Node<'_>)], node: Node<'_>) -> bool {
-    defs.len() > 1
-        && defs.last().map(|(_, n)| n.id()) == Some(node.id())
-        && defs.windows(2).any(|w| w[1].0 - w[0].0 > 1)
+#[cfg(test)]
+mod performance_tests {
+    use super::*;
+    #[test]
+    fn class_index_retains_statement_gaps_and_class_boundaries() {
+        let code = b"class A
+ field :x, String
+ field :y, String
+ field :x, String
+end
+class B
+ field :x, String
+ field :x, String
+end
+";
+        let offenses = crate::testutil::run_cop_full(&MultipleFieldDefinitions, code);
+        assert_eq!(offenses.len(), 1);
+        assert_eq!(offenses[0].location.line, 4);
+    }
 }

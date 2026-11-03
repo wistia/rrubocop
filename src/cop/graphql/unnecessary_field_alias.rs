@@ -24,6 +24,9 @@ impl Cop for UnnecessaryFieldAlias {
         CALL_KINDS
     }
 
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        super::helpers::FIELD_METHODS
+    }
     fn check_node(
         &self,
         source: &SourceFile,

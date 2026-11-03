@@ -60,7 +60,7 @@ fn report_pair(
     let (Some(pn), Some(cn)) = (argument_name(source, prev), argument_name(source, curr)) else {
         return;
     };
-    if correct_order(&pn, &cn, order_ref) {
+    if correct_order(&pn, &cn, order_ref, source) {
         return;
     }
     let (line, col) = source.offset_to_line_col(curr.start_byte());

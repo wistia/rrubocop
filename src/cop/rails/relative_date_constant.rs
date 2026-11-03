@@ -110,6 +110,58 @@ fn passive(source: &SourceFile, node: Node<'_>) -> Option<DateValue> {
         _ => None,
     }
 }
+struct RelativeFacts {
+    counts: std::collections::HashMap<String, usize>,
+    veto: bool,
+}
+fn facts(source: &SourceFile, node: Node<'_>) -> std::sync::Arc<RelativeFacts> {
+    source.cached(0, || {
+        let mut counts = std::collections::HashMap::<String, usize>::new();
+        let mut root = node;
+        while let Some(parent) = root.parent() {
+            root = parent;
+        }
+        let mut stack = vec![root];
+        while let Some(child) = stack.pop() {
+            if child.kind() == "superclass" {
+                return RelativeFacts { counts, veto: true };
+            }
+            if child.kind() == "constant" {
+                *counts.entry(node_text(source, child)).or_default() += 1;
+            }
+            if matches!(
+                child.kind(),
+                "method" | "singleton_method" | "comment" | "heredoc_beginning"
+            ) {
+                return RelativeFacts { counts, veto: true };
+            }
+            if child.kind() == "identifier"
+                && matches!(
+                    node_text(source, child).as_str(),
+                    "__LINE__"
+                        | "eval"
+                        | "class_eval"
+                        | "module_eval"
+                        | "const_get"
+                        | "const_defined?"
+                        | "constants"
+                        | "remove_const"
+                        | "private_constant"
+                        | "public_constant"
+                        | "autoload"
+                        | "deprecate_constant"
+                )
+            {
+                return RelativeFacts { counts, veto: true };
+            }
+            stack.extend(named_kids(child));
+        }
+        RelativeFacts {
+            counts,
+            veto: false,
+        }
+    })
+}
 const BASE_METHODS: &str = include_str!("relative_date_base_methods.txt");
 fn replacement(
     source: &SourceFile,
@@ -133,47 +185,8 @@ fn replacement(
     {
         return None;
     }
-    let mut count = 0;
-    let mut root = node;
-    while let Some(parent) = root.parent() {
-        root = parent;
-    }
-    let mut stack = vec![root];
-    while let Some(child) = stack.pop() {
-        if child.kind() == "superclass" {
-            return None;
-        }
-        if child.kind() == "constant" && node_text(source, child) == name {
-            count += 1;
-        }
-        if matches!(
-            child.kind(),
-            "method" | "singleton_method" | "comment" | "heredoc_beginning"
-        ) {
-            return None;
-        }
-        if child.kind() == "identifier"
-            && matches!(
-                node_text(source, child).as_str(),
-                "__LINE__"
-                    | "eval"
-                    | "class_eval"
-                    | "module_eval"
-                    | "const_get"
-                    | "const_defined?"
-                    | "constants"
-                    | "remove_const"
-                    | "private_constant"
-                    | "public_constant"
-                    | "autoload"
-                    | "deprecate_constant"
-            )
-        {
-            return None;
-        }
-        stack.extend(named_kids(child));
-    }
-    if count != 1 {
+    let facts = facts(source, node);
+    if facts.veto || facts.counts.get(&name) != Some(&1) {
         return None;
     }
     let (_, column) = source.offset_to_line_col(node.start_byte());

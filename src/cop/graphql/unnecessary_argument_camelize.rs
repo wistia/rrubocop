@@ -22,6 +22,9 @@ impl Cop for UnnecessaryArgumentCamelize {
         CALL_KINDS
     }
 
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        super::helpers::ARGUMENT_METHODS
+    }
     fn check_node(
         &self,
         source: &SourceFile,

@@ -70,6 +70,12 @@ fn call<'a>(
     Some((name, args, receiver))
 }
 fn line_sensitive(source: &SourceFile, node: Node<'_>) -> bool {
+    struct LineSensitive(bool);
+    source
+        .cached(0, || LineSensitive(line_sensitive_uncached(source, node)))
+        .0
+}
+fn line_sensitive_uncached(source: &SourceFile, node: Node<'_>) -> bool {
     let mut root = node;
     while let Some(parent) = root.parent() {
         root = parent;

@@ -79,7 +79,7 @@ fn emit_groups(
     max_fields: usize,
     diagnostics: &mut Vec<Diagnostic>,
 ) {
-    let mut already = Vec::new();
+    let mut already = std::collections::HashSet::new();
     for (prefix, mut group) in sorted {
         group.retain(|(n, _)| !already.contains(n));
         if group.len() < max_fields {
