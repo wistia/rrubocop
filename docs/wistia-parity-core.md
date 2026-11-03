@@ -6,10 +6,10 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Forty-four owned rules have completed bounded original-Ruby validation,
+Forty-five owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 323 queued or in-progress entries;
+The exhaustive 367-rule inventory retains 322 queued or in-progress entries;
 some already have implementations. Security/Eval and Lint/AssignmentInCondition are complete within their
 bounded gates; the remaining owned queue continues. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
@@ -1002,3 +1002,14 @@ Reviewed pinned RuboCop 1.65.1 `lib/rubocop/cop/lint/float_out_of_range.rb` and 
 The original predicate reports infinity, or a zero Float value with any nonzero ASCII digit anywhere in its original source span. The port preserves that complete source test, including exponent digits and digits in comments between a folded sign and numeric token. It also excludes native rational/complex component tokens that are not original FloatNodes. The reviewed cases cover finite and IEEE overflow/subnormal boundaries, true zero versus underflow, numeric separators, both signs and unary/power precedence, command/local roles, calls/index/constant receivers, Unicode/CRLF and literal-type exclusions. No correction is proposed and no fixture executes.
 
 The source gate passes 365 states; full native validation passes 982 tests / one pre-existing ignored, and the binary builds. Both Ruby generators pass actual lint, with byte-identical original reference and compact span regeneration. All 32 metadata and 16 actual production-config probes pass. The 730 public CLI modes are running; completed counts remain 44 / 323 pending. Additional source/runtime-version/encoding/directive and wire-format families remain outside the bounded review.
+
+
+## FloatOutOfRange final bounded gate
+
+Separate source review confirms original FloatNode dispatch, the infinity/zero-source-digit predicate, signed full ranges and unsupported correction metadata. All five unchanged examples plus 360 independent valid sources match exact diagnostics, bytes and flags. Twelve original-invalid rational/exponent forms stay separate; nonfatal original lexer warnings remain covered. The 730 public modes match every byte/exit/scope comparison, with 1,460 stable second passes and zero cop errors, stderr warnings or differences. Both engines finish 322 modes clean and 408 with the same retained offenses.
+
+The 365 fresh original source/config states also describe the final states because neither engine edits source; native no-edit/flag assertions and public second passes independently verify that identity. All 32 metadata and 16 actual Wistia-config probes match. The source checkpoint passes 982 full native tests / one pre-existing ignored; binary build, original helper lint and byte-identical regeneration pass. The shared signed-span adapter separately preserves the existing Framework 114-source / 129-call-start test and passes 360 observations with 318 FloatNode ranges / 78 member-call starts. Additional runtime-version/source/encoding/directive and wire families remain outside this bounded gate. This completes 45 owned bounded ports, including all 13 original direct Style stubs; 322 owned rules await full review.
+
+### Benchmark regression checkpoint
+
+The real-codebase trailing-argument delimiter panic was fixed independently in c53845d and integrated in 091dc33. Its actual-file repro, 21 original-backed controls, all 12 prior/new cop tests and parser-limit safeguards are recorded in `docs/evidence/trailing-comma-block-chain-panic.md`. The rebuilt original/native CLIs both inspect the triggering Wistia file successfully with no offenses. This fixes a missed source shape in an already bounded-reviewed rule; it does not increase the completed-cop count.
