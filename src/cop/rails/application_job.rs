@@ -24,14 +24,14 @@ impl Cop for ApplicationJob {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["class"]
+        &["class", "call"]
     }
 
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         corrections: Option<&mut Vec<Correction>>,
     ) {
@@ -41,7 +41,8 @@ impl Cop for ApplicationJob {
             node,
             "ActiveJob::Base",
             "ApplicationJob",
-            "Use `ApplicationJob` instead of `ActiveJob::Base`.",
+            "Jobs should subclass `ApplicationJob`.",
+            config,
             diagnostics,
             corrections,
         );

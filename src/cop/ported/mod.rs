@@ -363,3 +363,9 @@ pub(super) fn regexp_capture_counts(source: &SourceFile, node: Node<'_>) -> Opti
 pub(super) fn migration_class(source: &SourceFile, node: Node<'_>) -> bool {
     wistia_scopes::migration_class(&Context::new(source, &CopConfig::default()), node)
 }
+
+pub(super) fn constant_name(source: &SourceFile, node: tree_sitter::Node<'_>) -> Option<String> {
+    context::Context::new(source, &crate::cop::CopConfig::default())
+        .constant_name(node)
+        .map(|name| name.into_owned())
+}

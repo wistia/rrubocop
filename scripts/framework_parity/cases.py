@@ -504,4 +504,6 @@ def cases():
     extend_schema_cases(add, rows)
     from final_rails_cases import cases as final_rails_cases
     rows.extend(final_rails_cases())
+    from rails_review_cases import cases as rails_review_cases
+    rows.extend(rails_review_cases())
     return rows

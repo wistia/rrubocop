@@ -81,6 +81,8 @@ rows.extend(schema_scope_rows(model))
 
 from final_rails_scope import ROWS as final_rails_rows, extra_cases as final_rails_extra
 rows += final_rails_rows
+from rails_review_scope import ROWS as rails_review_rows, extra_cases as rails_review_extra
+rows += rails_review_rows
 cases = [dict(cop=cop, source=source+'\n', path=path, positive=index==0)
          for cop, source, *paths in rows for index, path in enumerate(paths)]
 cases += [dict(cop='Rails/CreateTableWithTimestamps', source='create_table :users\n', path=path, positive=False)
@@ -98,6 +100,7 @@ cases += [dict(cop='Rails/RedundantReceiverInWithOptions', source='with_options(
 from schema_scope import extra_cases as schema_extra_cases
 cases.extend(schema_extra_cases(model))
 cases += final_rails_extra()
+cases += rails_review_extra()
 if a.cop:
     selected = set(a.cop)
     known = {case['cop'] for case in cases} | {cop for case in cases for cop in case.get('extra_cops', [])}

@@ -19,10 +19,6 @@ impl Cop for ApplicationRecord {
         false
     }
 
-    fn default_exclude(&self) -> &'static [&'static str] {
-        &["db/**/*.rb"]
-    }
-
     fn supports_autocorrect(&self) -> bool {
         true
     }
@@ -32,14 +28,14 @@ impl Cop for ApplicationRecord {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["class"]
+        &["class", "call"]
     }
 
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         corrections: Option<&mut Vec<Correction>>,
     ) {
@@ -50,6 +46,7 @@ impl Cop for ApplicationRecord {
             "ActiveRecord::Base",
             "ApplicationRecord",
             "Models should subclass `ApplicationRecord`.",
+            config,
             diagnostics,
             corrections,
         );

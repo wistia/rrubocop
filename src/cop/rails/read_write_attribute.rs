@@ -1,126 +1,133 @@
-//! Rails/ReadWriteAttribute — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{argument_nodes, call_method_name, node_text, push_replace};
+use crate::cop::shared::ruby_arguments::arguments;
+use crate::cop::shared::ruby_expression::{plain_symbol, regular_send_name, regular_send_receiver};
+use crate::cop::shared::{for_each_descendant, node_text, push_replace, send_end};
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
-
+use tree_sitter::Node;
 pub struct ReadWriteAttribute;
-
-fn attribute_rewrite<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<(String, &'a str)> {
-    if node
-        .child_by_field_name("receiver")
-        .is_some_and(|n| n.kind() != "self")
-    {
-        return None;
-    }
-    let method = call_method_name(source, node)?;
-    let args = argument_nodes(node);
-    let repl = match method {
-        b"read_attribute" if args.len() == 1 => {
-            format!("self[{}]", node_text(source, args[0]))
-        }
-        b"write_attribute" if args.len() == 2 => {
-            format!(
-                "self[{}] = {}",
-                node_text(source, args[0]),
-                node_text(source, args[1])
-            )
-        }
-        _ => return None,
+fn shadowed(source: &SourceFile, node: Node<'_>, first: Node<'_>, write: bool) -> bool {
+    let Some(value) = plain_symbol(source, first)
+        .or_else(|| crate::cop::ported::original_string_value(source, first))
+    else {
+        return false;
     };
-    Some((repl, std::str::from_utf8(method).unwrap_or("")))
+    let wanted = if write { format!("{value}=") } else { value };
+    let mut parent = node.parent();
+    while let Some(ancestor) = parent {
+        if ancestor.kind() == "method" {
+            return ancestor
+                .child_by_field_name("name")
+                .is_some_and(|n| node_text(source, n) == wanted);
+        }
+        parent = ancestor.parent();
+    }
+    false
 }
-
+fn unsafe_write_context(source: &SourceFile, node: Node<'_>) -> bool {
+    if node.child_by_field_name("block").is_some() {
+        return true;
+    }
+    node.parent().is_some_and(|p| {
+        if p.kind() == "binary" {
+            let op = p
+                .child_by_field_name("operator")
+                .map(|n| node_text(source, n))
+                .unwrap_or_default();
+            return !matches!(op.as_str(), "and" | "or")
+                && !(matches!(op.as_str(), "&&" | "||")
+                    && p.child_by_field_name("right") == Some(node));
+        }
+        matches!(p.kind(), "unary" | "range" | "conditional")
+            || p.kind() == "call" && p.child_by_field_name("receiver") == Some(node)
+    })
+}
 impl Cop for ReadWriteAttribute {
     fn name(&self) -> &'static str {
         "Rails/ReadWriteAttribute"
     }
-
-    fn default_include(&self) -> &'static [&'static str] {
-        &["**/app/models/**/*.rb"]
-    }
-
     fn supports_autocorrect(&self) -> bool {
         true
     }
-
-    fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
+    fn default_include(&self) -> &'static [&'static str] {
+        &["app/models/**/*.rb"]
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call"]
+    }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"read_attribute", b"write_attribute"]
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some((repl, method)) = attribute_rewrite(source, node) else {
+        if regular_send_receiver(source, node) != Some(None) {
+            return;
+        }
+        let Some(method) = regular_send_name(source, node) else {
             return;
         };
-        if within_shadowing_method(source, node) {
+        let write = match method.as_ref() {
+            b"read_attribute" => false,
+            b"write_attribute" => true,
+            _ => return,
+        };
+        let args = arguments(node);
+        if args.len() != if write { 2 } else { 1 } {
             return;
         }
+        if args[0]
+            .node()
+            .is_some_and(|first| shadowed(source, node, first, write))
+        {
+            return;
+        }
+        let first = String::from_utf8_lossy(&source.as_bytes()[args[0].start()..args[0].end()]);
+        let replacement = if write {
+            format!(
+                "self[{first}] = {}",
+                String::from_utf8_lossy(&source.as_bytes()[args[1].start()..args[1].end()])
+            )
+        } else {
+            format!("self[{first}]")
+        };
         let (line, col) = source.offset_to_line_col(node.start_byte());
-        let mut diag = self.diagnostic(
-            source,
-            line,
-            col,
-            format!("Prefer `{repl}` over `{method}`."),
-        );
-        if push_replace(
-            &mut corrections,
-            node.start_byte(),
-            node.end_byte(),
-            repl,
-            self.name(),
-        ) {
-            diag.corrected = true;
+        let multiline = source.offset_to_line_col(send_end(node)).0 != line;
+        let message = if multiline {
+            if write {
+                "self[:attr] = val"
+            } else {
+                "self[:attr]"
+            }
+        } else {
+            &replacement
+        };
+        let mut d = self.diagnostic(source, line, col, format!("Prefer `{message}`."));
+        d.highlight_length =
+            super::blank::highlight_length(source, node.start_byte(), send_end(node));
+        if let Some(s) = config.severity {
+            d.severity = s;
         }
-        diagnostics.push(diag);
-    }
-}
-
-fn within_shadowing_method(source: &SourceFile, node: Node<'_>) -> bool {
-    let Some(first) = argument_nodes(node).into_iter().next() else {
-        return false;
-    };
-    let Some(attr) = sym_arg(source, first) else {
-        return false;
-    };
-    let Some(method) = enclosing_method(node) else {
-        return false;
-    };
-    let Some(name) = method
-        .child_by_field_name("name")
-        .map(|n| node_text(source, n))
-    else {
-        return false;
-    };
-    let shadow = if call_method_name(source, node) == Some(b"write_attribute") {
-        format!("{attr}=")
-    } else {
-        attr
-    };
-    name == shadow
-}
-
-fn sym_arg(source: &SourceFile, node: Node<'_>) -> Option<String> {
-    Some(node_text(source, node).trim_start_matches(':').to_string())
-}
-
-fn enclosing_method(node: Node<'_>) -> Option<Node<'_>> {
-    let mut p = node.parent();
-    while let Some(n) = p {
-        if matches!(n.kind(), "method" | "singleton_method") {
-            return Some(n);
+        let mut comment = false;
+        for_each_descendant(node, |n| comment |= n.kind() == "comment");
+        d.correctable = !config.autocorrect_disabled()
+            && !comment
+            && !(write && (unsafe_write_context(source, node) || args[1].hash && !args[1].braces));
+        if d.correctable {
+            d.corrected = push_replace(
+                &mut corrections,
+                node.start_byte(),
+                send_end(node),
+                replacement,
+                self.name(),
+            );
         }
-        p = n.parent();
+        diagnostics.push(d);
     }
-    None
 }

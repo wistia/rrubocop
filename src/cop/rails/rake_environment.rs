@@ -1,174 +1,168 @@
-//! Rails/RakeEnvironment — rake tasks should depend on `:environment`.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{argument_nodes, call_method_name, call_receiver, node_bytes};
+use crate::cop::shared::ruby_arguments::{Argument, arguments};
+use crate::cop::shared::ruby_expression::{
+    numbered_bindings, plain_string, plain_symbol, regular_send_name, regular_send_receiver,
+};
+use crate::cop::shared::{for_each_descendant, named_kids, push_replace, send_end};
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
-
+use tree_sitter::Node;
 pub struct RakeEnvironment;
-
+fn literal_name(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    plain_symbol(source, node).or_else(|| plain_string(source, node))
+}
+fn array(node: Node<'_>) -> bool {
+    matches!(node.kind(), "array" | "string_array" | "symbol_array")
+}
+fn task_name(source: &SourceFile, first: &Argument<'_>) -> Option<String> {
+    if !first.hash {
+        return literal_name(source, first.node()?);
+    }
+    let parts = first.parts();
+    if parts.len() != 1 || parts[0].kind() != "pair" {
+        return None;
+    }
+    literal_name(source, parts[0].child_by_field_name("key")?)
+}
+fn dependencies(hash: &Argument<'_>) -> bool {
+    let Some(value) = hash
+        .parts()
+        .into_iter()
+        .find(|n| n.kind() == "pair")
+        .and_then(|n| n.child_by_field_name("value"))
+    else {
+        return false;
+    };
+    !array(value) || named_kids(value).iter().any(|n| n.kind() != "comment")
+}
+fn valid_label(value: &str) -> bool {
+    let source = SourceFile::from_bytes(
+        "rake-label.rb",
+        format!("{{{value}: :environment}}\n").into_bytes(),
+    );
+    let Ok(tree) = crate::parse::parse_ruby(&source) else {
+        return false;
+    };
+    if tree.root_node().has_error() {
+        return false;
+    }
+    let mut found = false;
+    for_each_descendant(tree.root_node(), |n| {
+        if n.kind() == "pair"
+            && n.child_by_field_name("key")
+                .and_then(|n| plain_symbol(&source, n))
+                .as_deref()
+                == Some(value)
+        {
+            found = true;
+        }
+    });
+    found
+}
 impl Cop for RakeEnvironment {
     fn name(&self) -> &'static str {
         "Rails/RakeEnvironment"
     }
-
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn default_include(&self) -> &'static [&'static str] {
         &["**/Rakefile", "**/*.rake"]
     }
-
     fn default_exclude(&self) -> &'static [&'static str] {
-        &["**/lib/capistrano/tasks/**/*.rake"]
+        &["lib/capistrano/tasks/**/*.rake"]
     }
-
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command", "command_call"]
+        &["call"]
     }
-
     fn interested_call_names(&self) -> &'static [&'static [u8]] {
         &[b"task"]
     }
-
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        if call_receiver(node).is_some() {
+        if regular_send_receiver(source, node) != Some(None)
+            || !regular_send_name(source, node).is_some_and(|n| n.as_ref() == b"task")
+        {
             return;
         }
-        if call_method_name(source, node) != Some(b"task") {
+        let Some(block) = node.child_by_field_name("block") else {
+            return;
+        };
+        if config.get_f64("TargetRubyVersion", 3.4) >= 2.7
+            && numbered_bindings(source, block).is_some()
+        {
             return;
         }
-        if !has_task_block(node) {
+        let args = arguments(node);
+        let first = args.first();
+        if first.and_then(|a| task_name(source, a)).as_deref() == Some("default") {
             return;
         }
-        if task_name_is_default(source, node) {
+        let hash = first
+            .filter(|a| a.hash)
+            .or_else(|| args.get(1).filter(|a| a.hash));
+        if hash.is_some_and(dependencies) {
             return;
         }
-        if with_dependencies(node) {
-            return;
+        let target = args
+            .get(1)
+            .filter(|a| a.node().is_some_and(array))
+            .or(first);
+        let mut replacement = None;
+        if let Some(target) = target {
+            let raw = String::from_utf8_lossy(&source.as_bytes()[target.start()..target.end()]);
+            if args
+                .get(1)
+                .is_some_and(|a| a.start() == target.start() && a.node().is_some_and(array))
+            {
+                replacement = Some(format!("{raw} => :environment"));
+            } else if let Some(symbol) = target.node().and_then(|n| plain_symbol(source, n)) {
+                let name: String = raw
+                    .chars()
+                    .filter(|c| !matches!(c, ':' | '|' | '\'' | '"'))
+                    .collect();
+                if name == symbol && valid_label(&name) {
+                    replacement = Some(format!("{name}: :environment"));
+                }
+            } else {
+                replacement = Some(format!("{raw} => :environment"));
+            }
         }
-        let (line, column) = source.offset_to_line_col(node.start_byte());
-        diagnostics.push(self.diagnostic(
+        let (line, col) = source.offset_to_line_col(node.start_byte());
+        let mut d = self.diagnostic(
             source,
             line,
-            column,
+            col,
             "Include `:environment` task as a dependency for all Rake tasks.".into(),
-        ));
-    }
-}
-
-fn has_task_block(node: Node<'_>) -> bool {
-    if node.child_by_field_name("block").is_some() {
-        return true;
-    }
-    let mut cur = node.walk();
-    node.named_children(&mut cur)
-        .any(|c| matches!(c.kind(), "block" | "do_block"))
-}
-
-fn task_name_is_default(source: &SourceFile, task: Node<'_>) -> bool {
-    let Some(first) = argument_nodes(task).into_iter().next() else {
-        return false;
-    };
-    match first.kind() {
-        "simple_symbol" | "symbol" | "string" | "string_content" => {
-            symbol_or_string_is_default(source, first)
+        );
+        d.highlight_length =
+            super::blank::highlight_length(source, node.start_byte(), send_end(node));
+        if let Some(s) = config.severity {
+            d.severity = s;
         }
-        "hash" => hash_key_is_default(source, first),
-        "pair" => pair_key_is_default(source, first),
-        _ => false,
-    }
-}
-
-fn symbol_or_string_is_default(source: &SourceFile, node: Node<'_>) -> bool {
-    let b = node_bytes(source, node);
-    let name = b.strip_prefix(b":").unwrap_or(b);
-    let name = name
-        .strip_prefix(b"'")
-        .or_else(|| name.strip_prefix(b"\""))
-        .unwrap_or(name);
-    let name = name
-        .strip_suffix(b"'")
-        .or_else(|| name.strip_suffix(b"\""))
-        .unwrap_or(name);
-    name == b"default"
-}
-
-fn pair_key_is_default(source: &SourceFile, pair: Node<'_>) -> bool {
-    let Some(key) = pair.child_by_field_name("key").or_else(|| {
-        let mut c = pair.walk();
-        pair.named_children(&mut c).next()
-    }) else {
-        return false;
-    };
-    let b = node_bytes(source, key);
-    let name = b.strip_prefix(b":").unwrap_or(b);
-    name.strip_suffix(b":").unwrap_or(name) == b"default"
-        || symbol_or_string_is_default(source, key)
-}
-
-fn hash_key_is_default(source: &SourceFile, hash: Node<'_>) -> bool {
-    let mut cur = hash.walk();
-    let pairs: Vec<_> = hash
-        .named_children(&mut cur)
-        .filter(|n| n.kind() == "pair")
-        .collect();
-    if pairs.len() != 1 {
-        return false;
-    }
-    pair_key_is_default(source, pairs[0])
-}
-
-fn with_dependencies(node: Node<'_>) -> bool {
-    let args = argument_nodes(node);
-    let Some(first) = args.first() else {
-        return false;
-    };
-    if is_hash_arg(*first) {
-        return hash_style_deps(*first);
-    }
-    if let Some(second) = args.get(1) {
-        if is_hash_arg(*second) {
-            return hash_style_deps(*second);
+        d.correctable = !config.autocorrect_disabled()
+            && replacement.is_some()
+            && !target.is_some_and(|t| t.hash && !t.braces);
+        if d.correctable {
+            let target = target.unwrap();
+            d.corrected = push_replace(
+                &mut corrections,
+                target.start(),
+                target.end(),
+                replacement.unwrap(),
+                self.name(),
+            );
         }
+        diagnostics.push(d);
     }
-    false
 }
-
-fn is_hash_arg(node: Node<'_>) -> bool {
-    matches!(node.kind(), "hash" | "pair")
-}
-
-fn hash_style_deps(node: Node<'_>) -> bool {
-    let Some(value) = first_pair_value(node) else {
-        return false;
-    };
-    if value.kind() == "array" {
-        let mut c = value.walk();
-        return value.named_children(&mut c).next().is_some();
-    }
-    true
-}
-
-fn first_pair_value(node: Node<'_>) -> Option<Node<'_>> {
-    let pair = if node.kind() == "pair" {
-        node
-    } else {
-        let mut cur = node.walk();
-        node.named_children(&mut cur).find(|n| n.kind() == "pair")?
-    };
-    pair.child_by_field_name("value").or_else(|| {
-        let mut c = pair.walk();
-        pair.named_children(&mut c).nth(1)
-    })
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

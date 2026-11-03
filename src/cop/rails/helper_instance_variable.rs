@@ -1,92 +1,67 @@
-//! Rails/HelperInstanceVariable — no ivars in helpers (outside nested classes).
-
-use tree_sitter::Node;
-
+use crate::cop::shared::{named_kids, node_text};
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
-
+use tree_sitter::Node;
 pub struct HelperInstanceVariable;
-
-const MSG: &str = "Do not use instance variables in helpers.";
-
-fn is_or_eq_assign(source: &SourceFile, node: Node<'_>) -> bool {
-    let op = &source.as_bytes()[node.start_byte()..node.end_byte()];
-    op.windows(3).any(|w| w == b"||=")
-}
-
-fn assigned_ivar<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
-    let left = node.child_by_field_name("left")?;
-    if left.kind() != "instance_variable" {
-        return None;
-    }
-    if node.kind() == "operator_assignment" && is_or_eq_assign(source, node) {
-        return None;
-    }
-    Some(left)
-}
-
-fn target_ivar<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
-    match node.kind() {
-        "instance_variable" => {
-            // RuboCop skips `||=` memoization; the ivar child still fires `on_ivar`.
-            if parent_is_or_eq(source, node) {
-                None
-            } else {
-                Some(node)
-            }
-        }
-        "assignment" | "operator_assignment" => assigned_ivar(source, node),
-        _ => None,
-    }
-}
-
-fn parent_is_or_eq(source: &SourceFile, ivar: Node<'_>) -> bool {
-    let Some(parent) = ivar.parent() else {
-        return false;
-    };
-    parent.kind() == "operator_assignment" && is_or_eq_assign(source, parent)
-}
-
-fn nested_in_class(node: Node<'_>) -> bool {
-    let mut p = node.parent();
-    while let Some(cur) = p {
-        if cur.kind() == "class" {
+fn form_builder(source: &SourceFile, node: Node<'_>) -> bool {
+    let mut parent = node.parent();
+    while let Some(ancestor) = parent {
+        if ancestor.kind() == "class"
+            && ancestor
+                .child_by_field_name("superclass")
+                .and_then(|s| named_kids(s).into_iter().find(|n| n.kind() != "comment"))
+                .and_then(|s| crate::cop::ported::constant_name(source, s))
+                .as_deref()
+                == Some("ActionView::Helpers::FormBuilder")
+        {
             return true;
         }
-        p = cur.parent();
+        parent = ancestor.parent();
     }
     false
 }
-
 impl Cop for HelperInstanceVariable {
     fn name(&self) -> &'static str {
         "Rails/HelperInstanceVariable"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
         &["app/helpers/**/*.rb"]
     }
-
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["instance_variable", "assignment", "operator_assignment"]
+        &["instance_variable"]
     }
-
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        let Some(ivar) = target_ivar(source, node) else {
-            return;
-        };
-        if nested_in_class(node) {
+        if node.kind() != "instance_variable" || form_builder(source, node) {
             return;
         }
-        let (line, col) = source.offset_to_line_col(ivar.start_byte());
-        diagnostics.push(self.diagnostic(source, line, col, MSG.to_string()));
+        if node.parent().is_some_and(|p| {
+            p.kind() == "operator_assignment"
+                && p.child_by_field_name("left") == Some(node)
+                && p.child_by_field_name("operator")
+                    .is_some_and(|op| node_text(source, op) == "||=")
+        }) {
+            return;
+        }
+        let (line, col) = source.offset_to_line_col(node.start_byte());
+        let mut d = self.diagnostic(
+            source,
+            line,
+            col,
+            "Do not use instance variables in helpers.".into(),
+        );
+        d.highlight_length =
+            super::blank::highlight_length(source, node.start_byte(), node.end_byte());
+        if let Some(s) = config.severity {
+            d.severity = s;
+        }
+        diagnostics.push(d);
     }
 }
