@@ -1,0 +1,39 @@
+{
+  "baseline_snapshot": "091dc33",
+  "actual_wistia_source": "310b8e42e91232d07210eff6cacc2f2035a01bda",
+  "original_ruby": "3.4.9",
+  "rubocop": "1.65.1",
+  "parser": "3.3.5.0",
+  "original_rule_sources_sha256": {
+    "rubocop-rspec-3.0.4/lib/rubocop/cop/rspec/be.rb": "6c848a47068523cb58cef87b25f344137b9d0f6879b65a09f4e903e463831726",
+    "rubocop-graphql-1.5.4/lib/rubocop/cop/graphql/prepare_method.rb": "23b211b45f6100127d2870b11c870670c510f1cf6062f96b92f7def169c1dc54"
+  },
+  "rules": {
+    "RSpec/Be": {
+      "rust_only_production_findings": 4,
+      "root_cause": "Argument with attached block is original block wrapper, not plain send be.",
+      "original_cases": 27,
+      "positive_original_cases": 11
+    },
+    "GraphQL/PrepareMethod": {
+      "rust_only_production_findings": 13,
+      "root_cause": "Original matcher requires prepare as final pair of final hash; previous native matched any keyword.",
+      "original_cases": 43,
+      "positive_original_cases": 25,
+      "additional_source_branches": "Bare method without artificial first-symbol-argument restriction; true block/const value shape; exact first-line value ranges.",
+      "remaining_limit": "Existing optional string/symbol EnforcedStyle autocorrection implementation remains queued; this is production-default matcher repair, not a full completion claim."
+    }
+  },
+  "gates": {
+    "fresh_original_cases": 70,
+    "original_invalid_cases": 0,
+    "native_unit_tests_passed": 2,
+    "native_audit_modes": 210,
+    "diagnostic_message_range_severity_correctability_differences": 0,
+    "source_byte_differences": 0,
+    "source_identity_all_modes": true,
+    "post_implementation_source_review": "Distinct recheck against both pinned original NodePatterns, including curly versus do/end binding, final argument/hash ordering, key AST type, value shape and message-style branches.",
+    "actual_production_cli": "pending fresh binary/reconciliation cutoff",
+    "full_native": "pending reconciliation cutoff"
+  }
+}

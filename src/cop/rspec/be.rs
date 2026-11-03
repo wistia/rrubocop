@@ -1,4 +1,4 @@
-use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::helpers::{RSPEC_INCLUDE, call_block};
 use crate::cop::rspec::parity_helpers::*;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -35,7 +35,11 @@ impl Cop for Be {
         let Some(matcher) = args.first().copied() else {
             return;
         };
-        if args.len() != 1 || !bare(source, matcher, b"be") || !call_args(matcher).is_empty() {
+        if args.len() != 1
+            || !bare(source, matcher, b"be")
+            || !call_args(matcher).is_empty()
+            || call_block(matcher).is_some()
+        {
             return;
         }
         let target = selector(matcher);
@@ -46,6 +50,20 @@ impl Cop for Be {
             target.end_byte(),
             "Don't use `be` without an argument.".into(),
             diagnostics,
+        );
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn original_block_binding_and_production_regressions() {
+        crate::testutil::assert_original_spec_parity(
+            &super::Be,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/production-matchers/rspec-be.json"
+            )),
         );
     }
 }

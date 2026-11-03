@@ -2,8 +2,9 @@
 
 use tree_sitter::Node;
 
-use super::helpers::{CALL_KINDS, DEPT_INCLUDE, is_argument_call, kwarg_value};
+use super::helpers::{CALL_KINDS, DEPT_INCLUDE, bare_method};
 use crate::cop::shared::node_text;
+use crate::cop::shared::{ruby_arguments, ruby_expression::plain_symbol};
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
@@ -31,29 +32,65 @@ impl Cop for PrepareMethod {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        if !is_argument_call(source, node) {
+        if !(bare_method(source, node, b"argument")
+            || bare_method(source, node, b"public_argument"))
+        {
             return;
         }
-        let Some(prep) = kwarg_value(source, node, "prepare") else {
+        let Some(prep) = last_prepare_value(source, node) else {
             return;
         };
         let style = config.get_str("EnforcedStyle", "");
-        let (line, col) = source.offset_to_line_col(prep.start_byte());
-        if is_prepare_lambda(source, prep) {
-            diagnostics.push(self.diagnostic(source, line, col, lambda_msg(style).into()));
+        if block_or_constant(prep) {
+            diagnostics.push(at_value(self, source, prep, lambda_msg(style).into()));
             return;
         }
         if let Some(msg) = style_mismatch_msg(source, prep, style) {
-            diagnostics.push(self.diagnostic(source, line, col, msg));
+            diagnostics.push(at_value(self, source, prep, msg));
         }
     }
 }
 
-fn is_prepare_lambda(source: &SourceFile, prep: Node<'_>) -> bool {
+fn last_prepare_value<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
+    let arguments = ruby_arguments::arguments(node);
+    let hash = arguments.last().filter(|arg| arg.hash)?;
+    let pair = hash
+        .parts()
+        .last()
+        .copied()
+        .filter(|node| node.kind() == "pair")?;
+    let key = pair.child_by_field_name("key")?;
+    if plain_symbol(source, key).as_deref() != Some("prepare") {
+        return None;
+    }
+    pair.child_by_field_name("value")
+}
+
+fn at_value(
+    cop: &PrepareMethod,
+    source: &SourceFile,
+    node: Node<'_>,
+    message: String,
+) -> Diagnostic {
+    let (line, column) = source.offset_to_line_col(node.start_byte());
+    let mut diagnostic = cop.diagnostic(source, line, column, message);
+    let (last_line, last_column) = source.offset_to_line_col(node.end_byte());
+    let end_column = if last_line == line {
+        last_column
+    } else {
+        source
+            .line_text(line)
+            .map_or(column, |text| text.chars().count())
+    };
+    diagnostic.highlight_length = end_column.saturating_sub(column).max(1);
+    diagnostic
+}
+
+fn block_or_constant(prep: Node<'_>) -> bool {
     matches!(
         prep.kind(),
         "block" | "do_block" | "lambda" | "constant" | "scope_resolution"
-    ) || (prep.kind() == "call" && node_text(source, prep).contains("->"))
+    ) || prep.child_by_field_name("block").is_some()
 }
 
 fn lambda_msg(style: &str) -> &'static str {
@@ -84,5 +121,19 @@ fn style_mismatch_msg(source: &SourceFile, prep: Node<'_>, style: &str) -> Optio
         ))
     } else {
         None
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn original_final_hash_pair_and_production_regressions() {
+        crate::testutil::assert_original_spec_parity(
+            &super::PrepareMethod,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/production-matchers/graphql-prepare.json"
+            )),
+        );
     }
 }
