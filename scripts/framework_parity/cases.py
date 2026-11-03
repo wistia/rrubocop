@@ -10,6 +10,8 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    from safe_nav_cases import extend as safe_nav_cases
+    safe_nav_cases(add)
     from uniq_pluck_cases import extend as uniq_pluck_cases
     uniq_pluck_cases(add)
     from relative_date_cases import extend as relative_date_cases

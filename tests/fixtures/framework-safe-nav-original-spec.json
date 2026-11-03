@@ -1,0 +1,87 @@
+{
+  "source": "rubocop-rails 2.26.0/spec/rubocop/cop/rails/safe_navigation_spec.rb",
+  "expansion": "Distinct literal/shared-example source inputs, expanded over original ConvertTry and Ruby-version contexts by the cases module",
+  "cases": [
+    {
+      "source": "[1, 2].join"
+    },
+    {
+      "source": "[1, 2].try!(:join)"
+    },
+    {
+      "source": "[1, 2].try!(:join, \",\")"
+    },
+    {
+      "source": "[1, 2].try!(:join, bar, baz)"
+    },
+    {
+      "source": "[foo, bar].try!(:map) do |e|\n  e.some_method\nend"
+    },
+    {
+      "source": "[foo, bar].try!(:each_with_object, []) do |e, acc|\n  acc << e.some_method\nend"
+    },
+    {
+      "source": "foo.try!(:thing=, bar)"
+    },
+    {
+      "source": "try!(:join)"
+    },
+    {
+      "source": "foo.try!(:[], :bar)"
+    },
+    {
+      "source": "foo.try!(:==, bar)"
+    },
+    {
+      "source": "foo.try!(:+, bar)"
+    },
+    {
+      "source": "bar = :==\nfoo.try!(baz, bar)"
+    },
+    {
+      "source": "[1, 2].try!(:something?)"
+    },
+    {
+      "source": "[1, 2].try!(:something!)"
+    },
+    {
+      "source": "[1, 2].try(:join)"
+    },
+    {
+      "source": "[1, 2].try(:join, \",\")"
+    },
+    {
+      "source": "[1, 2].try(:join, bar, baz)"
+    },
+    {
+      "source": "[foo, bar].try(:map) do |e|\n  e.some_method\nend"
+    },
+    {
+      "source": "[foo, bar].try(:each_with_object, []) do |e, acc|\n  acc << e.some_method\nend"
+    },
+    {
+      "source": "foo.try(:thing=, bar)"
+    },
+    {
+      "source": "try(:join)"
+    },
+    {
+      "source": "foo.try(:[], :bar)"
+    },
+    {
+      "source": "foo.try(:==, bar)"
+    },
+    {
+      "source": "foo.try(:+, bar)"
+    },
+    {
+      "source": "bar = :==\nfoo.try(baz, bar)"
+    },
+    {
+      "source": "[1, 2].try(:something?)"
+    },
+    {
+      "source": "[1, 2].try(:something!)"
+    }
+  ]
+}

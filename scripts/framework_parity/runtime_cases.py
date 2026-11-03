@@ -175,3 +175,6 @@ PROGRAMS = [
     ("Performance/ReverseEach", "seen = []\n[1, 2, 3].reverse.each { |item| seen << item }\np seen\n"),
     ("Performance/ReverseEach", "def order; [1, 2, 3].reverse.each {}; end\np order\n"),
 ]
+
+from safe_nav_runtime import programs as safe_nav_programs
+PROGRAMS += safe_nav_programs()

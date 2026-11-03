@@ -1,4 +1,6 @@
 //! Shared tree-sitter helpers for cops (nitrocop-inspired, AST-adapted).
+mod line_literal;
+pub(crate) use line_literal::is_line_literal;
 mod numeric_send;
 pub use numeric_send::numeric_send_start;
 mod heredoc_interpolations;
