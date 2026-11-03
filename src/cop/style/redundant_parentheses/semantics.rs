@@ -184,11 +184,72 @@ fn hash_start(node: Node<'_>) -> Option<Node<'_>> {
     }
     None
 }
+fn continued_range_endpoint(source: &SourceFile, node: Node<'_>) -> bool {
+    let mut previous = node.prev_named_sibling();
+    while previous.is_some_and(|node| node.kind() == "comment") {
+        previous = previous.and_then(|node| node.prev_named_sibling());
+    }
+    let Some(mut range) = previous else {
+        return false;
+    };
+    while range.kind() == "assignment" {
+        let Some(right) = range.child_by_field_name("right") else {
+            return false;
+        };
+        range = right;
+    }
+    if range.kind() != "range"
+        || range.child_by_field_name("end").is_some()
+        || range.child_by_field_name("begin").is_none()
+        || range.end_position().row >= node.start_position().row
+    {
+        return false;
+    }
+    source.as_bytes()[range.end_byte()..node.start_byte()]
+        .split(|byte| *byte == b'\n')
+        .all(|line| {
+            line.iter()
+                .take_while(|byte| **byte != b'#')
+                .all(u8::is_ascii_whitespace)
+        })
+}
+
 fn allowed(source: &SourceFile, node: Node<'_>, kids: &[Node<'_>], config: &CopConfig) -> bool {
     let Some(first) = kids.first().copied() else {
         return true;
     };
     let p = parent(node);
+    if continued_range_endpoint(source, node) {
+        return true;
+    }
+    if let Some(list) = node.parent().filter(|list| list.kind() == "argument_list") {
+        if list.byte_range() == node.byte_range()
+            && list.parent().is_some_and(|call| {
+                call.child_by_field_name("method")
+                    .is_some_and(|method| method.end_byte() == node.start_byte())
+            })
+        {
+            return true;
+        }
+    }
+    if p.is_some_and(|p| {
+        p.kind() == "assignment"
+            && p.child_by_field_name("right") == Some(node)
+            && p.child_by_field_name("left")
+                .is_some_and(|left| left.kind() == "call")
+    }) {
+        return true;
+    }
+    if p.is_some_and(|p| {
+        p.kind() == "binary"
+            && p.child_by_field_name("right") == Some(node)
+            && !matches!(
+                operator(source, p),
+                b"+" | b"-" | b"*" | b"/" | b"%" | b"**" | b"&&" | b"||" | b"and" | b"or"
+            )
+    }) {
+        return true;
+    }
     if p.is_some_and(|p| {
         p.kind() == "unary"
             && operator(source, p) == b"defined?"
@@ -398,15 +459,18 @@ pub(super) fn message(
                     && config.get_bool("ParenthesesAroundConditionEnabled", true)
                     && config.get_bool("AllowInMultilineConditions", false))
                 || p.is_some_and(|p| {
-                    matches!(
-                        p.kind(),
-                        "binary"
-                            | "call"
-                            | "element_reference"
-                            | "splat_argument"
-                            | "hash_splat_argument"
-                            | "conditional"
-                    )
+                    (p.kind() == "assignment"
+                        && p.child_by_field_name("left")
+                            .is_some_and(|left| left.kind() == "element_reference"))
+                        || matches!(
+                            p.kind(),
+                            "binary"
+                                | "call"
+                                | "element_reference"
+                                | "splat_argument"
+                                | "hash_splat_argument"
+                                | "conditional"
+                        )
                 })
             {
                 return None;
