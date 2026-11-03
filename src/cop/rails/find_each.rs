@@ -102,32 +102,48 @@ fn configured_allowed(config: &CopConfig, name: &[u8]) -> bool {
     matches!(name, b"order" | b"limit" | b"select" | b"lock")
 }
 
-fn pattern_hit(config: &CopConfig, name: &[u8]) -> bool {
+fn pattern_hit(source: &SourceFile, config: &CopConfig, name: &[u8]) -> bool {
     let Ok(text) = std::str::from_utf8(name) else {
         return false;
     };
-    config
-        .options
-        .get("AllowedPatterns")
-        .and_then(|v| v.as_sequence())
-        .is_some_and(|seq| {
-            seq.iter()
-                .filter_map(|v| v.as_str())
-                .any(|pat| Regex::new(pat).is_ok_and(|re| re.is_match(text)))
-        })
+    let raw = config.options.get("AllowedPatterns");
+    if raw
+        .and_then(|value| value.as_sequence())
+        .is_none_or(|patterns| patterns.is_empty())
+    {
+        return false;
+    }
+    struct Patterns(std::sync::Mutex<Vec<(Option<serde_yml::Value>, std::sync::Arc<Vec<Regex>>)>>);
+    let cache = source.cached(0, || Patterns(Default::default()));
+    let mut entries = cache.0.lock().unwrap();
+    let patterns = if let Some((_, compiled)) = entries.iter().find(|(key, _)| key.as_ref() == raw)
+    {
+        compiled.clone()
+    } else {
+        let patterns = raw
+            .and_then(|value| value.as_sequence())
+            .into_iter()
+            .flatten()
+            .filter_map(|value| value.as_str().map(str::to_owned))
+            .collect();
+        let compiled = crate::cop::shared::compiled_patterns(source, patterns);
+        entries.push((raw.cloned(), compiled.clone()));
+        compiled
+    };
+    patterns.iter().any(|pattern| pattern.is_match(text))
 }
 
-fn name_allowed(config: &CopConfig, name: &[u8]) -> bool {
+fn name_allowed(source: &SourceFile, config: &CopConfig, name: &[u8]) -> bool {
     configured_allowed(config, name)
         || listed(config, "IgnoredMethods", name)
         || listed(config, "ExcludedMethods", name)
-        || pattern_hit(config, name)
+        || pattern_hit(source, config, name)
 }
 
 /// Receiver chain and arguments, not the block (`each { order }` still flags).
 fn any_allowed(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {
     if is_call(node) {
-        if call_method_name(source, node).is_some_and(|n| name_allowed(config, n)) {
+        if call_method_name(source, node).is_some_and(|n| name_allowed(source, config, n)) {
             return true;
         }
         if call_receiver(node).is_some_and(|r| any_allowed(source, r, config)) {
@@ -222,4 +238,27 @@ mod tests {
     use super::*;
 
     crate::cop_fixture_tests!(FindEach, "cops/rails/find_each");
+    #[test]
+    fn configured_patterns_keep_mutations_invalid_patterns_and_empty_fast_path() {
+        let source = SourceFile::from_bytes("model.rb", vec![]);
+        let mut config = CopConfig::default();
+        assert!(!pattern_hit(&source, &config, b"name"));
+        for (patterns, expected) in [
+            (vec!["[", "^name$"], true),
+            (vec!["^other$"], false),
+            (vec![], false),
+        ] {
+            config.options.insert(
+                "AllowedPatterns".into(),
+                serde_yml::Value::Sequence(
+                    patterns
+                        .into_iter()
+                        .map(|pattern| serde_yml::Value::String(pattern.into()))
+                        .collect(),
+                ),
+            );
+            assert_eq!(pattern_hit(&source, &config, b"name"), expected);
+            assert_eq!(pattern_hit(&source, &config, b"name"), expected);
+        }
+    }
 }

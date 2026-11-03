@@ -23,7 +23,7 @@ struct Settings {
     allow_qualified: bool,
     ignore_directives: bool,
     schemes: Vec<String>,
-    patterns: Vec<Regex>,
+    patterns: std::sync::Arc<Vec<Regex>>,
     heredocs: Vec<(usize, usize)>,
 }
 
@@ -45,7 +45,7 @@ fn allow_heredoc(config: &CopConfig) -> bool {
     )
 }
 
-fn load_settings(config: &CopConfig, tree: &Tree) -> Settings {
+fn load_settings(source: &SourceFile, config: &CopConfig, tree: &Tree) -> Settings {
     let mut schemes = string_list(config, "URISchemes");
     if schemes.is_empty() {
         schemes = vec!["http".into(), "https".into()];
@@ -58,10 +58,10 @@ fn load_settings(config: &CopConfig, tree: &Tree) -> Settings {
         allow_qualified: config.get_bool("AllowQualifiedName", true),
         ignore_directives: config.get_bool("IgnoreCopDirectives", true),
         schemes,
-        patterns: string_list(config, "AllowedPatterns")
-            .into_iter()
-            .filter_map(|p| Regex::new(&p).ok())
-            .collect(),
+        patterns: crate::cop::shared::compiled_patterns(
+            source,
+            string_list(config, "AllowedPatterns"),
+        ),
         heredocs: if allow_hdoc {
             heredoc_body_lines(tree)
         } else {
@@ -197,7 +197,7 @@ impl Cop for LineLength {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        let cfg = load_settings(config, tree);
+        let cfg = load_settings(source, config, tree);
         for (idx, raw) in source.lines().enumerate() {
             check_line(self, source, &cfg, idx, raw, diagnostics);
         }

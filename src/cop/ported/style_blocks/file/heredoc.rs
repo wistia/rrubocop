@@ -7,23 +7,22 @@ pub(super) fn suffix(
     target: Node<'_>,
     content: Option<Node<'_>>,
 ) -> String {
-    let references = references(call, content);
-    pairs(call)
+    let mut references = references(call, content)
         .into_iter()
-        .filter(|(opener, body)| {
-            references.contains(opener) && body.end_byte() <= target.end_byte()
-        })
-        .map(|(_, body)| c.text(body))
-        .collect()
-}
-
-fn pairs(call: Node<'_>) -> Vec<(Node<'_>, Node<'_>)> {
+        .map(|node| node.start_byte())
+        .collect::<Vec<_>>();
+    references.sort_unstable();
+    references.dedup();
     let root = ancestors(call).last().unwrap_or(call);
-    let mut openers = nodes_of_kind(root, "heredoc_beginning");
-    let mut bodies = nodes_of_kind(root, "heredoc_body");
-    openers.sort_by_key(|node| node.start_byte());
-    bodies.sort_by_key(|node| node.start_byte());
-    openers.into_iter().zip(bodies).collect()
+    let index = crate::cop::shared::heredoc_index::heredoc_index(c.source, root);
+    references
+        .into_iter()
+        .filter_map(|start| index.body_for_opener(start))
+        .filter(|body| body.node.end <= target.end_byte())
+        .map(|body| {
+            std::str::from_utf8(&c.source.as_bytes()[body.node.start..body.node.end]).unwrap_or("")
+        })
+        .collect()
 }
 
 fn references<'n>(call: Node<'n>, content: Option<Node<'n>>) -> Vec<Node<'n>> {
