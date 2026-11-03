@@ -6,10 +6,10 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Forty-one owned rules have completed bounded original-Ruby validation,
+Forty-two owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 326 queued or in-progress entries;
+The exhaustive 367-rule inventory retains 325 queued or in-progress entries;
 some already have implementations. Security/Eval and Lint/AssignmentInCondition are complete within their
 bounded gates; the remaining owned queue continues. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
@@ -947,3 +947,10 @@ Reviewed pinned RuboCop1.65.1 `lib/rubocop/cop/lint/empty_when.rb`, `lib/rubocop
 The original comment exemption is a source-line window: from the When keyword line up to its next original AST sibling's line, or the containing case end. It can include comments before an else body and excludes comments on a same-row following branch/end. The old native descendant-or-same-end-row shortcut had both missed and spurious exemptions. The scoped helper now models the reviewed sibling/window cases without a generic semantic-parent adapter. Explicit null AllowComments is false by original truthiness; other non-false values remain truthy. No parser, model, correction or scheduling behavior changes.
 
 All296 source/spec states pass scoped tests; full native validation passes973 tests/one pre-existing ignored, and reference lint/regeneration pass byte-identically. The binary and592-mode public CLI/metadata/production gates are next. Completed counts remain41/326 until active public gates finish. Other source/version/encoding/directive and generic syntax families remain outside this bounded review.
+
+
+## EmptyExpression final bounded gate
+
+Separate pinned-source review confirms zero-child Begin detection, including empty interpolation, with explicit KwBegin excluded and no autocorrection. All12 unchanged upstream examples plus386 independent sources match exact messages/full normalized ranges/unchanged bytes, with accepted native/original trees and false correction flags. Every one of the796 public modes matches bytes, exits and inspected scope; all1,592 second passes are stable and there are zero cop errors or differences. Both engines finish176 modes clean and620 with the same retained offenses. Fresh original processing of the398 reviewed source/config states remains the final-state oracle because neither engine edits any byte; native flag/no-edit assertions and public second passes independently verify this identity.
+
+All32 metadata modes and16 actual Wistia-config probes match. Two pre-existing truncated multiline golden highlights were updated only after fresh original evidence confirmed their full18-character range. The full native gate passed971 tests/one ignored; the subsequent EmptyWhen source checkpoint passes973/one ignored without altering this cop. Binary build, original helper lint and byte-identical regeneration pass. Other source/version/encoding/directive and combined-cop families remain outside this bounded gate. This completes42 owned bounded ports, including all13 initial direct Style stubs;325 owned rules still await full review, including the running EmptyWhen public gate.
