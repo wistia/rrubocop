@@ -355,3 +355,7 @@ pub(super) fn static_literal_bytes(source: &SourceFile, node: Node<'_>) -> Optio
         .duplicate_literal_bytes(node)
         .map(|(bytes, _)| bytes)
 }
+
+pub(super) fn regexp_capture_counts(source: &SourceFile, node: Node<'_>) -> Option<(usize, usize)> {
+    style_regexp::capture_counts(&Context::new(source, &CopConfig::default()), node)
+}

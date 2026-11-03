@@ -41,6 +41,21 @@ impl ResolvedConfig {
             }
         }
         self.inject_indentation_width_fallback(name, config);
+        if name == "Performance/Detect" {
+            if let Some(methods) = self
+                .cop_configs
+                .get("Style/CollectionMethods")
+                .and_then(|sibling| sibling.options.get("PreferredMethods"))
+            {
+                config.options.insert(
+                    "PreferredDetectMethod".into(),
+                    methods
+                        .get("detect")
+                        .cloned()
+                        .unwrap_or(serde_yml::Value::Null),
+                );
+            }
+        }
         inject_rack_version(self, name, config);
         inject_line_length(self, name, config);
         inject_redundant_line_break(self, name, config);

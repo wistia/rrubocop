@@ -13,7 +13,10 @@ pub use command_call::{
     command_unary_plus_call,
 };
 pub mod regexp;
-pub use regexp::{captures_observed, decode_ruby_double_quoted_content, is_literal_regexp_text};
+pub use regexp::{
+    captures_observed, decode_ruby_double_quoted_content, indirect_capture_observer,
+    is_literal_regexp_text,
+};
 mod corrected_crlf;
 pub(crate) use corrected_crlf::normalize_corrected_crlf;
 mod numbered_parameters;
