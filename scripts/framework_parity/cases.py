@@ -500,4 +500,6 @@ def cases():
     add("Rails/Date","date.to_time",EnforcedStyle="strict")
     add("Rails/Date","Date.today.to_time",EnforcedStyle="strict")
     add("Rails/Date", ":'2020-01-01Z'.to_time",AllowToTime=False)
+    from delegate_allow_blank_cases import extend
+    extend(add)
     return rows

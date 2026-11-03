@@ -187,3 +187,6 @@ PROGRAMS += times_map_programs()
 
 from assertion_request_runtime import programs as assertion_request_programs
 PROGRAMS += assertion_request_programs()
+
+from delegate_allow_blank_runtime import programs as delegate_allow_blank_programs
+PROGRAMS += delegate_allow_blank_programs()
