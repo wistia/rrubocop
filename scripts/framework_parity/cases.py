@@ -10,6 +10,8 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    from presence_cases import extend as presence_cases
+    presence_cases(add)
     from rails_minimum_cases import extend as rails_minimum_cases
     rails_minimum_cases(add)
     from safe_nav_cases import extend as safe_nav_cases

@@ -17,6 +17,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/Presence', 'value.present? ? value : nil', model, service),
  ('Rails/SafeNavigation', 'foo.try!(:bar)', model, service),
  ('Rails/UniqBeforePluck', 'Model.pluck(:name).uniq', model, service),
  ('Rails/RelativeDateConstant', 'DATE = Date.yesterday', model, service),

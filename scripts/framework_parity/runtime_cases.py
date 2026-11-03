@@ -178,3 +178,6 @@ PROGRAMS = [
 
 from safe_nav_runtime import programs as safe_nav_programs
 PROGRAMS += safe_nav_programs()
+
+from presence_runtime import programs as presence_programs
+PROGRAMS += presence_programs()

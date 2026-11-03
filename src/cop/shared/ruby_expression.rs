@@ -350,6 +350,69 @@ fn complex_value(source: &SourceFile, node: Node<'_>) -> Option<ComplexPart> {
     ))
 }
 
+pub(crate) fn numeric_sign_equal(
+    source: &SourceFile,
+    left: Node<'_>,
+    left_negative: bool,
+    right: Node<'_>,
+    right_negative: bool,
+) -> Option<bool> {
+    if let Some((mut value, denominator)) = rational_value(source, left) {
+        if left_negative {
+            value = -value;
+        }
+        return Some(
+            rational_value(source, right).is_some_and(|(mut rhs, denom)| {
+                if right_negative {
+                    rhs = -rhs;
+                }
+                value == rhs && denominator == denom
+            }),
+        );
+    }
+    if let Some(mut value) = integer_ast(source, left) {
+        if left_negative {
+            value = -value;
+        }
+        return Some(integer_ast(source, right).is_some_and(|mut rhs| {
+            if right_negative {
+                rhs = -rhs;
+            }
+            value == rhs
+        }));
+    }
+    if let Some(mut value) = float_value(source, left) {
+        if left_negative {
+            value = -value;
+        }
+        return Some(float_value(source, right).is_some_and(|mut rhs| {
+            if right_negative {
+                rhs = -rhs;
+            }
+            value == rhs
+        }));
+    }
+    fn signed(value: ComplexPart, negative: bool) -> ComplexPart {
+        if !negative {
+            return value;
+        }
+        match value {
+            ComplexPart::Integer(v) => ComplexPart::Integer(-v),
+            ComplexPart::Float(v) => ComplexPart::Float(-v),
+            ComplexPart::Rational(n, d) => ComplexPart::Rational(-n, d),
+        }
+    }
+    complex_value(source, left).map(|value| {
+        complex_value(source, right).is_some_and(|rhs| {
+            complex_equal(
+                &signed(value, left_negative),
+                &signed(rhs, right_negative),
+                false,
+            )
+        })
+    })
+}
+
 /// Equality used by repeated legacy AST bindings.
 pub fn same_expression(source: &SourceFile, left: Node<'_>, right: Node<'_>) -> bool {
     compare_expression(source, left, right, false)
