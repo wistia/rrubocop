@@ -1,0 +1,45 @@
+{
+  "base": "8d4780e32735490b42378407b5419801a7b5b2b3",
+  "branch": "perf/wistia-config-startup",
+  "findings": {
+    "R6": "implemented: raw lockfile snapshot per synchronous config load; original parser/fallback/selection unchanged",
+    "R8": "implemented: prepared exact glob verifiers, retaining broad prefilter"
+  },
+  "validation_status": "passed",
+  "production_benchmark": {
+    "run": false,
+    "owner": "parent integrated benchmark"
+  },
+  "remaining_assigned_deferrals": [],
+  "full_native": {
+    "command": "cargo test --lib",
+    "passed": 1121,
+    "failed": 0,
+    "ignored": 1,
+    "seconds": 90.52,
+    "config_tests": 68,
+    "log_sha256": "6692db999660e950c3ae690f905a0d8a75bda9581b0dd6cdb0dde6a0c20ea602"
+  },
+  "new_tests": [
+    "config::filter::prepared_exclusion_tests::prepared_verifiers_preserve_lossy_matching_for_non_utf8_paths",
+    "config::lockfile_snapshot::consumer_tests::failed_reads_are_shared_without_losing_fallback_or_directory_identity",
+    "config::lockfile_snapshot::consumer_tests::plugin_and_runtime_versions_share_bytes_but_preserve_per_gem_fallback",
+    "config::lockfile_snapshot::tests::bytes_and_absence_are_stable_only_within_the_load",
+    "config::lockfile_snapshot::tests::independent_threads_and_unwinding_do_not_reuse_a_snapshot",
+    "config::filter::prepared_exclusion_tests::prepared_verifiers_preserve_exact_glob_and_regex_path_forms",
+    "config::filter::prepared_exclusion_tests::prepared_filters_keep_inherited_and_nested_config_exclusion_policies_separate",
+    "config::lockfile_snapshot::consumer_tests::independent_public_loads_refresh_versions_including_after_config_errors"
+  ],
+  "format_check": "passed",
+  "non_test_library_check": "passed",
+  "exclusion_evidence": {
+    "pattern_sets": 12,
+    "paths_per_set": 21,
+    "forms_per_path": 3,
+    "primary_legacy_comparisons": 756,
+    "additional": "non-UTF8 paths and real inherited/nested config checks through discovery and full filter constructors",
+    "reference": "original broad-prefilter AND per-pattern glob_matches, unchanged regexp/path forms"
+  },
+  "cache_lifetime": "one synchronous load_config/load_default_config call; byte paths and negative read results; original parsing and final selection unchanged",
+  "source_commit": "0bffc8f988139e452396645d8097e5c3082197b4"
+}
