@@ -12,6 +12,40 @@ fn collection(node: Node<'_>) -> bool {
         "array" | "string_array" | "symbol_array" | "hash"
     )
 }
+fn grouped_values<'a>(source: &SourceFile, elements: Vec<Node<'a>>) -> Vec<Vec<Node<'a>>> {
+    let mut groups: Vec<Vec<Node<'_>>> = vec![];
+    let mut integers = std::collections::HashMap::<num_bigint::BigInt, Vec<usize>>::new();
+    let mut opaque = Vec::new();
+    for item in elements {
+        let integer = crate::cop::shared::ruby_expression::integer_ast(source, item);
+        let matching = if let Some(integer) = &integer {
+            integers
+                .get(integer)
+                .into_iter()
+                .flatten()
+                .chain(&opaque)
+                .copied()
+                .filter(|&index| eql_expression(source, groups[index][0], item))
+                .min()
+        } else {
+            groups
+                .iter()
+                .position(|items| eql_expression(source, items[0], item))
+        };
+        if let Some(index) = matching {
+            groups[index].push(item);
+        } else {
+            let index = groups.len();
+            if let Some(integer) = integer {
+                integers.entry(integer).or_default().push(index);
+            } else {
+                opaque.push(index);
+            }
+            groups.push(vec![item]);
+        }
+    }
+    groups
+}
 impl EnumUniqueness {
     fn report(
         &self,
@@ -34,17 +68,7 @@ impl EnumUniqueness {
                 }
             })
             .collect();
-        let mut groups: Vec<Vec<Node<'_>>> = vec![];
-        for item in elements {
-            if let Some(items) = groups
-                .iter_mut()
-                .find(|items| eql_expression(source, items[0], item))
-            {
-                items.push(item);
-            } else {
-                groups.push(vec![item]);
-            }
-        }
+        let groups = grouped_values(source, elements);
         for items in groups {
             for item in items.into_iter().skip(1) {
                 let (line, col) = source.offset_to_line_col(item.start_byte());
@@ -125,4 +149,40 @@ impl Cop for EnumUniqueness {
 mod tests {
     use super::*;
     crate::cop_fixture_tests!(EnumUniqueness, "cops/rails/enum_uniqueness");
+}
+
+#[cfg(test)]
+mod performance_tests {
+    use super::*;
+    #[test]
+    fn integer_buckets_preserve_strict_groups_order_and_opaque_fallback() {
+        let distinct = format!(
+            "[{}]",
+            (0..128)
+                .map(|n| n.to_string())
+                .collect::<Vec<_>>()
+                .join(",")
+        );
+        for code in [
+            distinct.as_str(),
+            "[1, 1.0, 0x1, __LINE__, 1r, 1i, 1.0i, :x, 'x', :x, [1], [0x1], -1, -0x1, 1, {a: 1}, {a: 0x1}]",
+        ] {
+            let source = SourceFile::from_bytes("test.rb", code.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            let array = named_kids(tree.root_node())[0];
+            let values = named_kids(array);
+            let mut original: Vec<Vec<Node<'_>>> = Vec::new();
+            for &item in &values {
+                if let Some(group) = original
+                    .iter_mut()
+                    .find(|group| eql_expression(&source, group[0], item))
+                {
+                    group.push(item);
+                } else {
+                    original.push(vec![item]);
+                }
+            }
+            assert_eq!(grouped_values(&source, values), original);
+        }
+    }
 }
