@@ -135,7 +135,7 @@ impl Cop for UselessAssignment {
         for (scope_id, scope) in model.scopes.iter().enumerate() {
             let mut entries: Vec<_> = scope.entries.iter().collect();
             entries.sort_by_key(|(name, entry)| (entry.intro_byte, *name));
-            let names = index.names(source, model, scope_id);
+            let names = std::cell::OnceCell::new();
             for (name, entry) in entries {
                 if name.starts_with('_') {
                     continue;
@@ -182,7 +182,8 @@ impl Cop for UselessAssignment {
                     if write.kind != WriteKind::OpAssign
                         && !(write.kind == WriteKind::Masgn && multiple_hint(node))
                     {
-                        if let Some(similar) = similarity::suggestion(name, &names) {
+                        let names = names.get_or_init(|| index.names(source, model, scope_id));
+                        if let Some(similar) = similarity::suggestion(name, names) {
                             message += &format!(" Did you mean `{similar}`?");
                         }
                     }
