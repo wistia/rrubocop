@@ -502,4 +502,6 @@ def cases():
     extend_transferred_runtime(rows)
     from schema_cases import extend as extend_schema_cases
     extend_schema_cases(add, rows)
+    from final_rails_cases import cases as final_rails_cases
+    rows.extend(final_rails_cases())
     return rows
