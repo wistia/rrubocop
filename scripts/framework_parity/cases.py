@@ -504,4 +504,6 @@ def cases():
     extend(add)
     from exit_cases import extend
     extend(add)
+    from reversible_method_cases import extend
+    extend(add)
     return rows
