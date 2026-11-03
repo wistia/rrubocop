@@ -1,0 +1,70 @@
+{
+  "branch": "feat/wistia-parity-schema",
+  "base": "71223ed",
+  "reference": {
+    "ruby": "3.4.9",
+    "rubocop": "1.65.1",
+    "rubocop_rails": "2.26.0",
+    "parser": "3.3.5.0"
+  },
+  "rules": [
+    {
+      "cop": "Rails/BulkChangeTable",
+      "status": "pending",
+      "baseline": "unimplemented_noop_stub",
+      "supports_autocorrect": false
+    },
+    {
+      "cop": "Rails/NotNullColumn",
+      "status": "implemented_upstream_gate_edges_in_progress",
+      "baseline": "unimplemented_noop_stub",
+      "supports_autocorrect": false,
+      "original_cases": 84,
+      "second_pass_cases": 168,
+      "strict_failures": 0,
+      "original_upstream_sources": 25,
+      "production_scope": "116 controls/51 rules, zero differences; two owned DB positives and model exclusions",
+      "source_notes": [
+        "Convention severity and db/**/*.rb match original defaults; stub metadata was incorrect.",
+        "Default:nil does not exempt; other values do. Static virtual/text type nodes differ from shortcut Ruby Symbol method names.",
+        "Single parenthesized body begin is inspected; nested begin/kwbegin/condition shapes follow original shallow traversal.",
+        "Database resolver has15 original-backed file/YAML/environment observations, including aliases and precedence."
+      ]
+    },
+    {
+      "cop": "Rails/ReversibleMigration",
+      "status": "implemented_upstream_gate_edges_in_progress",
+      "baseline": "unimplemented_noop_stub",
+      "supports_autocorrect": false,
+      "original_cases": 48,
+      "second_pass_cases": 96,
+      "strict_failures": 0,
+      "original_upstream_sources": 48,
+      "remaining": [
+        "Expanded method/scope/version/negative body shapes and production scope gate before completion."
+      ]
+    },
+    {
+      "cop": "Rails/UniqueValidationWithoutIndex",
+      "status": "pending",
+      "baseline": "unimplemented_noop_stub",
+      "supports_autocorrect": false
+    }
+  ],
+  "upstream_import": {
+    "sources": 255,
+    "unresolved": 0,
+    "execution": "Prism scalar/template/closed-loop parsing only; no imported code execution"
+  },
+  "scheduling": "Generic autocorrect scheduling remains explicitly deferred.",
+  "artifacts": [
+    "/dev/shm/schema-two-first",
+    "/dev/shm/schema-db-resolution.log",
+    "/dev/shm/schema-not-null-scope"
+  ],
+  "native_gate": {
+    "passed": 934,
+    "ignored": 1
+  },
+  "ruby_lint": "two new scripts clean under actual Wistia config; data round trips identical"
+}

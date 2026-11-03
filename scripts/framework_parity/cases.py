@@ -450,4 +450,6 @@ def cases():
     add("Rails/Date","date.to_time",EnforcedStyle="strict")
     add("Rails/Date","Date.today.to_time",EnforcedStyle="strict")
     add("Rails/Date", ":'2020-01-01Z'.to_time",AllowToTime=False)
+    from schema_cases import extend as extend_schema_cases
+    extend_schema_cases(add, rows)
     return rows

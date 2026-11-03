@@ -309,3 +309,7 @@ pub(super) fn original_string_value(source: &SourceFile, node: Node<'_>) -> Opti
     let config = CopConfig::default();
     Context::new(source, &config).original_string_value(node)
 }
+
+pub(super) fn migration_class(source: &SourceFile, node: Node<'_>) -> bool {
+    wistia_scopes::migration_class(&Context::new(source, &CopConfig::default()), node)
+}

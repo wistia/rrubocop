@@ -68,6 +68,9 @@ rows = [
  ('Rails/IgnoredSkipActionFilterOption', 'skip_before_action :login, only: :show, if: :trusted?', 'app/controllers/framework_parity_controller.rb', model),
  ('Rails/CreateTableWithTimestamps', 'create_table :users', 'db/migrate/20990101000000_framework_parity.rb', model),
 ]
+from schema_scope import rows as schema_scope_rows
+rows.extend(schema_scope_rows(model))
+
 cases = [dict(cop=cop, source=source+'\n', path=path, positive=index==0)
          for cop, source, *paths in rows for index, path in enumerate(paths)]
 cases += [dict(cop='Rails/CreateTableWithTimestamps', source='create_table :users\n', path=path, positive=False)

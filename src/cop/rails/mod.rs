@@ -12,6 +12,7 @@ mod blank;
 mod bulk_change_table;
 mod content_tag;
 mod create_table_with_timestamps;
+mod database;
 mod date;
 mod delegate;
 mod delegate_allow_blank;
