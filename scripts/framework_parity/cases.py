@@ -5,11 +5,13 @@ from pathlib import Path
 def cases():
     rows = []
     def add(cop, source, **config):
-        if cop in ("Rails/IndexWith", "Rails/ContentTag"):
+        if cop in ("Rails/IndexWith", "Rails/ContentTag", "Rails/Pick"):
             config.setdefault("GemVersions", {"railties": "8.1.3.1"})
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    from rails_minimum_cases import extend as rails_minimum_cases
+    rails_minimum_cases(add)
     from safe_nav_cases import extend as safe_nav_cases
     safe_nav_cases(add)
     from uniq_pluck_cases import extend as uniq_pluck_cases
@@ -360,7 +362,7 @@ def cases():
     from runtime_cases import PROGRAMS
     for cop, source, *options in PROGRAMS:
         runtime_config=dict(options[0]) if options else {}
-        if cop=="Rails/ContentTag": runtime_config.setdefault("GemVersions",{"railties":"8.1.3.1"})
+        if cop in ("Rails/ContentTag", "Rails/Pick"): runtime_config.setdefault("GemVersions",{"railties":"8.1.3.1"})
         rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source, expected=[], corrected=source, config=runtime_config, trusted_runtime=True))
     for source in ("[1, 2].size", "{}.length", "'text'.size", ":text.size", "'text'.count('t')", "'text'.count(variable)", "[1, 2].count(1)", "COUNT = [1, 2].size", "items.each { [1, 2].size }", "[*items].size", "{ **options }.size", "[1].count { |n| n.odd? }", "\"#{value}\".size", "items.size", "[1]&.size"):
         add("Performance/FixedSize", source)

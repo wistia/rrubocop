@@ -249,7 +249,8 @@ impl Cop for ContentTag {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        if !config.get_bool("__RailtiesInLockfile", true)
+        if config.get_f64("TargetRailsVersion", 8.1) < 5.1
+            || !config.get_bool("__RailtiesInLockfile", true)
             || config.get_f64(
                 "__RailtiesVersion",
                 config.get_f64("TargetRailsVersion", 8.1),

@@ -120,7 +120,8 @@ pub(super) fn check(
         return;
     }
     if !by
-        && (!config.get_bool("__RailtiesInLockfile", true)
+        && (config.get_f64("TargetRailsVersion", 8.1) < 6.0
+            || !config.get_bool("__RailtiesInLockfile", true)
             || config.get_f64(
                 "__RailtiesVersion",
                 config.get_f64("TargetRailsVersion", 8.1),
