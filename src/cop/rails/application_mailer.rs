@@ -15,10 +15,6 @@ impl Cop for ApplicationMailer {
         "Rails/ApplicationMailer"
     }
 
-    fn default_include(&self) -> &'static [&'static str] {
-        &["app/mailers/**/*.rb"]
-    }
-
     fn supports_autocorrect(&self) -> bool {
         true
     }
@@ -28,14 +24,14 @@ impl Cop for ApplicationMailer {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["class"]
+        &["class", "call"]
     }
 
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         corrections: Option<&mut Vec<Correction>>,
     ) {
@@ -45,7 +41,8 @@ impl Cop for ApplicationMailer {
             node,
             "ActionMailer::Base",
             "ApplicationMailer",
-            "Use `ApplicationMailer` instead of `ActionMailer::Base`.",
+            "Mailers should subclass `ApplicationMailer`.",
+            config,
             diagnostics,
             corrections,
         );

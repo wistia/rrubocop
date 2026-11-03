@@ -28,14 +28,14 @@ impl Cop for ApplicationController {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["class"]
+        &["class", "call"]
     }
 
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
         corrections: Option<&mut Vec<Correction>>,
     ) {
@@ -46,6 +46,7 @@ impl Cop for ApplicationController {
             "ActionController::Base",
             "ApplicationController",
             "Controllers should subclass `ApplicationController`.",
+            config,
             diagnostics,
             corrections,
         );

@@ -1,0 +1,1158 @@
+[
+  {
+    "cop": "Rails/ActiveRecordAliases",
+    "source": "book.update_attributes(author: \"Alice\")\n",
+    "config": {},
+    "upstream": "active_record_aliases_spec.rb",
+    "line": 6,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveRecordAliases",
+    "source": "book&.update_attributes(author: \"Alice\")\n",
+    "config": {},
+    "upstream": "active_record_aliases_spec.rb",
+    "line": 18,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveRecordAliases",
+    "source": "user.update(update_attributes)\n",
+    "config": {},
+    "upstream": "active_record_aliases_spec.rb",
+    "line": 31,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ActiveRecordAliases",
+    "source": "book.update_attributes!(author: \"Bob\")\n",
+    "config": {},
+    "upstream": "active_record_aliases_spec.rb",
+    "line": 40,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveRecordAliases",
+    "source": "book.update(author: \"Alice\")",
+    "config": {},
+    "upstream": "active_record_aliases_spec.rb",
+    "line": 53,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ActiveRecordAliases",
+    "source": "book.update!(author: \"Bob\")",
+    "config": {},
+    "upstream": "active_record_aliases_spec.rb",
+    "line": 59,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ActiveRecordAliases",
+    "source": "update_attributes_book.update_attributes(author: \"Alice\")\n",
+    "config": {},
+    "upstream": "active_record_aliases_spec.rb",
+    "line": 65,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "'some_string'.starts_with?('prefix')\n",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 7,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "'some_string'&.starts_with?('prefix')\n",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 20,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "'some_string'.start_with?('prefix')",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 33,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "'some_string'.ends_with?('prefix')\n",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 39,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "'some_string'&.ends_with?('prefix')\n",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 52,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "'some_string'.end_with?('prefix')",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 65,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "[1, 'a', 3].append('element')\n",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "[1, 'a', 3]&.append('element')\n",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 84,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "[1, 'a', 3] << 'element'",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 95,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "[1, 'a', 3].prepend('element')\n",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 101,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "[1, 'a', 3]&.prepend('element')\n",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 114,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ActiveSupportAliases",
+    "source": "[1, 'a', 3].unshift('element')",
+    "config": {},
+    "upstream": "active_support_aliases_spec.rb",
+    "line": 127,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "class ApplicationController < ActionController::Base; end\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 5,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "ApplicationController = Class.new(ActionController::Base)\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 11,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "class MyController < ActionController::Base; end\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 17,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "class MyController < ::ActionController::Base; end\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 28,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "module Nested\n  class MyController < ActionController::Base; end\nend\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 39,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "class Nested::MyController < ActionController::Base; end\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 54,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "MyController = Class.new(ActionController::Base)\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 65,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "Nested::MyController = Class.new(ActionController::Base)\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 76,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationController",
+    "source": "Class.new(ActionController::Base) {}\n",
+    "config": {},
+    "upstream": "application_controller_spec.rb",
+    "line": 87,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "class ApplicationJob < ActiveJob::Base\nend\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 6,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "class MyJob < ActiveJob::Base\nend\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 13,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "class MyJob < ActiveJob::Base; end",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 20,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "module Nested\n  class MyJob < ActiveJob::Base\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 24,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "class Nested::MyJob < ActiveJob::Base\nend\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 33,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "MyJob = Class.new(ActiveJob::Base)",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 40,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "Nested::MyJob = Class.new(ActiveJob::Base)",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 44,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "Class.new(ActiveJob::Base) {}",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 48,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "ApplicationJob = Class.new(ActiveJob::Base)",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 52,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "class ApplicationJob < ActiveJob::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 58,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "class MyJob < ActiveJob::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 65,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "class MyJob < ::ActiveJob::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 78,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "module Nested\n  class MyJob < ActiveJob::Base; end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 91,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "class Nested::MyJob < ActiveJob::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 102,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "MyJob = Class.new(ActiveJob::Base)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 110,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "Nested::MyJob = Class.new(ActiveJob::Base)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 121,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "Class.new(ActiveJob::Base) {}\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 132,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationJob",
+    "source": "ApplicationJob = Class.new(ActiveJob::Base)",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_job_spec.rb",
+    "line": 143,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "class ApplicationMailer < ActionMailer::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 6,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "ApplicationMailer = Class.new(ActionMailer::Base)\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 12,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "class MyMailer < ActionMailer::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "module Nested\n  class MyMailer < ActionMailer::Base; end\nend\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 24,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "class Nested::MyMailer < ActionMailer::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 32,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "MyMailer = Class.new(ActionMailer::Base)\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "Nested::MyMailer = Class.new(ActionMailer::Base)\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 44,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "Class.new(ActionMailer::Base) {}\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 50,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "class ApplicationMailer < ActionMailer::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 58,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "ApplicationMailer = Class.new(ActionMailer::Base)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 64,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "class MyMailer < ActionMailer::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 70,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "class MyMailer < ::ActionMailer::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 81,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "module Nested\n  class MyMailer < ActionMailer::Base; end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 92,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "class Nested::MyMailer < ActionMailer::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 107,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "MyMailer = Class.new(ActionMailer::Base)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 118,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "Nested::MyMailer = Class.new(ActionMailer::Base)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 129,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationMailer",
+    "source": "Class.new(ActionMailer::Base) {}\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_mailer_spec.rb",
+    "line": 140,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class ApplicationRecord < ActiveRecord::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 6,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class MyModel < ActiveRecord::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 12,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class MyModel < ActiveRecord::Base; end",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 18,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "module Nested\n  class MyModel < ActiveRecord::Base; end\nend\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 22,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class Nested::MyModel < ActiveRecord::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 30,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "MyModel = Class.new(ActiveRecord::Base)",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 36,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "Nested::MyModel = Class.new(ActiveRecord::Base)",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 40,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "Class.new(ActiveRecord::Base) {}",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 44,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "ApplicationRecord = Class.new(ActiveRecord::Base)",
+    "config": {
+      "TargetRailsVersion": 4.2
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 48,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class ApplicationRecord < ActiveRecord::Base\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 54,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class MyModel < ActiveRecord::Base\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 61,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class MyModel < ::ActiveRecord::Base\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 74,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class MyModel < ActiveRecord::Base; end\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 87,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "module Nested\n  class MyModel < ActiveRecord::Base\n  end\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 98,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "class Nested::MyModel < ActiveRecord::Base\nend\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 115,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "MyModel = Class.new(ActiveRecord::Base)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 128,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "Nested::MyModel = Class.new(ActiveRecord::Base)\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 139,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "Class.new(ActiveRecord::Base) {}\n",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 150,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ApplicationRecord",
+    "source": "ApplicationRecord = Class.new(ActiveRecord::Base)",
+    "config": {
+      "TargetRailsVersion": 5.0
+    },
+    "upstream": "application_record_spec.rb",
+    "line": 161,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BelongsTo",
+    "source": "belongs_to :foo, required: false\n",
+    "config": {},
+    "upstream": "belongs_to_spec.rb",
+    "line": 5,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BelongsTo",
+    "source": "belongs_to :foo, required: true\n",
+    "config": {},
+    "upstream": "belongs_to_spec.rb",
+    "line": 16,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BelongsTo",
+    "source": "belongs_to :foo, -> { bar }, required: false\n",
+    "config": {},
+    "upstream": "belongs_to_spec.rb",
+    "line": 27,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/BelongsTo",
+    "source": "belongs_to :foo, optional: true",
+    "config": {},
+    "upstream": "belongs_to_spec.rb",
+    "line": 38,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BelongsTo",
+    "source": "belongs_to :foo",
+    "config": {},
+    "upstream": "belongs_to_spec.rb",
+    "line": 42,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/BelongsTo",
+    "source": "belongs_to :foo, polymorphic: true",
+    "config": {},
+    "upstream": "belongs_to_spec.rb",
+    "line": 43,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HelperInstanceVariable",
+    "source": "def welcome_message\n  \"Hello #{@user.name}\"\nend\n",
+    "config": {},
+    "upstream": "helper_instance_variable_spec.rb",
+    "line": 5,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HelperInstanceVariable",
+    "source": "def welcome_message(user)\n  @user_name = user.name\nend\n",
+    "config": {},
+    "upstream": "helper_instance_variable_spec.rb",
+    "line": 14,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/HelperInstanceVariable",
+    "source": "def welcome_message(user)\n  \"Hello #{user.name}\"\nend\n",
+    "config": {},
+    "upstream": "helper_instance_variable_spec.rb",
+    "line": 23,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HelperInstanceVariable",
+    "source": "def foo\n  @cache ||= heavy_load\nend\n",
+    "config": {},
+    "upstream": "helper_instance_variable_spec.rb",
+    "line": 31,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HelperInstanceVariable",
+    "source": "class MyFormBuilder < ActionView::Helpers::FormBuilder\n  def do_something\n    @template\n    @template = do_something\n  end\nend\n",
+    "config": {},
+    "upstream": "helper_instance_variable_spec.rb",
+    "line": 39,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HelperInstanceVariable",
+    "source": "class MyFormBuilder < ::ActionView::Helpers::FormBuilder\n  def do_something\n    @template\n    @template = do_something\n  end\nend\n",
+    "config": {},
+    "upstream": "helper_instance_variable_spec.rb",
+    "line": 50,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/HelperInstanceVariable",
+    "source": "class Foo\n  def do_something\n    @template\n    @template = do_something\n  end\nend\n",
+    "config": {},
+    "upstream": "helper_instance_variable_spec.rb",
+    "line": 61,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task :foo do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 5,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task 'bar' do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 18,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task 'foo:bar:baz' do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 31,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task :foo, [:arg] do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 44,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task foo: [:bar, `:environment`] do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 57,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task foo: :bar do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 64,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task foo: [:foo, :bar] do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 71,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task foo: [:bar, dep]\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 78,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task foo: `:environment` do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 84,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task foo: [`:environment`, :bar] do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 91,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task :foo, [:arg] => `:environment` do\nend\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 98,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task foo: dep\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 105,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task foo: [dep, :bar]\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 111,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task default: :spec\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 117,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task(:foo).do_something\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 123,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/RakeEnvironment",
+    "source": "task 'foo' => [dep, :bar]\n",
+    "config": {},
+    "upstream": "rake_environment_spec.rb",
+    "line": 129,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "res = read_attribute(:test)\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 6,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "res = read_attribute('test')\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 17,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "def foo\n  bar || read_attribute(:foo)\nend\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 28,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "def foo\n  bar || read_attribute(:baz)\nend\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 36,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "res = read_attribute 'test'\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 51,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "res = read_attribute('test_' + postfix)\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 62,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "res = read_attribute(\n(\n'test_' + postfix\n).to_sym\n)\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 73,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "res = object.read_attribute(:test)",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 90,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "def do_the_read_from(column)\n  read_attribute(column)\nend\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 96,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "def do_the_read\n  read_attribute(ATTR_NAME)\nend\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 113,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "write_attribute(:test, val)\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 133,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "def do_the_write_to(column)\n  write_attribute(column, 'value')\nend\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 147,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "def do_the_write(value)\n  write_attribute(ATTR_NAME, value)\nend\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 164,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "write_attribute('attr', 'test')\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 182,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "write_attribute 'attr', 'test'\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 194,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "def foo=(value)\n  bar(value) || write_attribute(:foo, \"baz\")\nend\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 205,
+    "assertion": "expect_no_offenses"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "def foo=(value)\n  bar(value) || write_attribute(:baz, \"baz\")\nend\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 213,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "write_attribute(:attr, 'test_' + postfix)\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 228,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "write_attribute(\n:attr,\n(\n'test_' + postfix\n).to_sym\n)\n",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 239,
+    "assertion": "expect_offense"
+  },
+  {
+    "cop": "Rails/ReadWriteAttribute",
+    "source": "object.write_attribute(:test, val)",
+    "config": {},
+    "upstream": "read_write_attribute_spec.rb",
+    "line": 257,
+    "assertion": "expect_no_offenses"
+  }
+]

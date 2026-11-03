@@ -315,3 +315,9 @@ pub(super) fn static_literal_bytes(source: &SourceFile, node: Node<'_>) -> Optio
         .duplicate_literal_bytes(node)
         .map(|(bytes, _)| bytes)
 }
+
+pub(super) fn constant_name(source: &SourceFile, node: tree_sitter::Node<'_>) -> Option<String> {
+    context::Context::new(source, &crate::cop::CopConfig::default())
+        .constant_name(node)
+        .map(|name| name.into_owned())
+}

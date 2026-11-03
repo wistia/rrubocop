@@ -92,11 +92,7 @@ fn decimal_prefix(value: &str) -> num_bigint::BigInt {
         }
     }
     let value = num_bigint::BigInt::parse_bytes(digits.as_bytes(), 10).unwrap_or_default();
-    if negative {
-        -value
-    } else {
-        value
-    }
+    if negative { -value } else { value }
 }
 fn status_value<'a>(
     source: &SourceFile,

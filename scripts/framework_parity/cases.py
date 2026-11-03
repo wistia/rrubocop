@@ -494,4 +494,6 @@ def cases():
     add("Rails/Date","date.to_time",EnforcedStyle="strict")
     add("Rails/Date","Date.today.to_time",EnforcedStyle="strict")
     add("Rails/Date", ":'2020-01-01Z'.to_time",AllowToTime=False)
+    from rails_review_cases import cases as rails_review_cases
+    rows.extend(rails_review_cases())
     return rows

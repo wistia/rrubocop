@@ -73,6 +73,8 @@ rows = [
  ('Rails/IgnoredSkipActionFilterOption', 'skip_before_action :login, only: :show, if: :trusted?', 'app/controllers/framework_parity_controller.rb', model),
  ('Rails/CreateTableWithTimestamps', 'create_table :users', 'db/migrate/20990101000000_framework_parity.rb', model),
 ]
+from rails_review_scope import ROWS as rails_review_rows, extra_cases as rails_review_extra
+rows += rails_review_rows
 cases = [dict(cop=cop, source=source+'\n', path=path, positive=index==0)
          for cop, source, *paths in rows for index, path in enumerate(paths)]
 cases += [dict(cop='Rails/CreateTableWithTimestamps', source='create_table :users\n', path=path, positive=False)
@@ -87,6 +89,7 @@ cases += [dict(cop='Lint/RedundantCopDisableDirective', extra_cops=['Rails/Valid
 cases += [dict(cop='Rails/LexicallyScopedActionFilter', source='class C; before_action :authorize, only: :missing; end\n', path='app/mailers/framework_parity_probe.rb', positive=True),
           dict(cop='Rails/LexicallyScopedActionFilter', source='class C; before_action :authorize, only: :missing; end # rubocop:disable Rails/LexicallyScopedActionFilter\n', path='app/controllers/framework_parity_probe.rb', positive=False)]
 cases += [dict(cop='Rails/RedundantReceiverInWithOptions', source='with_options(flag: true) do |m|\n m.foo # rubocop:disable Rails/RedundantReceiverInWithOptions\n m.bar\nend\n', path=model, positive=True)]
+cases += rails_review_extra()
 if a.cop:
     selected = set(a.cop)
     known = {case['cop'] for case in cases} | {cop for case in cases for cop in case.get('extra_cops', [])}
