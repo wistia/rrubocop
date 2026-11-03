@@ -56,6 +56,13 @@ impl Cop for Count {
             return;
         };
         let block = filter.child_by_field_name("block");
+        if config.get_f64("TargetRubyVersion", 3.4) >= 2.7
+            && block.is_some_and(|block| {
+                crate::cop::shared::ruby_expression::numbered_bindings(source, block).is_some()
+            })
+        {
+            return;
+        }
         let args = argument_nodes(filter);
         let pass = args
             .first()
