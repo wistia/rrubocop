@@ -3,11 +3,12 @@
 All seven frozen completed source snapshots are merged on
 `feat/wistia-parity-integrated`. Exact snapshot SHAs and semantic merge decisions
 are recorded in `wistia-parity-integration.json`; source branches remain preserved.
-The validated source snapshot is c9d11a4. Core's tested numeric-span prerequisite
-is included; its unfinished consumers are excluded.
+The latest validated code checkpoint is 091dc33: 1,086 native tests pass
+with one ignored. The broad family differential below was run on c9d11a4;
+subsequent registration and panic fixes have their own focused gates. Core's
+tested numeric-span prerequisite is included; unfinished consumers are excluded.
 
-The integrated suite passes 1,084 native tests with one ignored. One merge
-interaction required replacing RSpec's legacy numbered-block scan with the
+One merge interaction required replacing RSpec's legacy numbered-block scan with the
 existing cached binding API. All 1,936 fresh original Ruby RSpec references match
 and 49 focused native RSpec tests pass without fixture changes.
 
@@ -29,19 +30,28 @@ resolves the historical invalid-Safe configuration discrepancy.
 Registry comparison preserves all 672 baseline names and adds the two previously
 missing, target-inert rules. None of the 160 enabled baseline stub source paths
 retains its original stub marker; this static observation is not a parity proof.
-Fresh original config still enables 553/550 root/dev-spec names. A bounded exact-version registration supplement now restores matching native
-553/550 counts: the locked plugin registers GraphQL/PrepareMethod without a
+Fresh original config still enables 553/550 root/dev-spec names. A bounded
+exact-version registration supplement restores matching native 553/550 counts: the locked plugin registers GraphQL/PrepareMethod without a
 default-YAML entry. Three actual CLI availability/disablement/scope controls
-match Ruby, and the updated full suite passes 1,085 tests with one ignored.
+match Ruby.
 All 160 former stubs now have mapped positive Ruby/native detection evidence
 in wistia-baseline-stub-evidence.json. This is detection coverage, not a claim
 that the documented correction or behavioral gaps are closed. The existing
 GraphQL implementation still needs its full behavioral review.
 
 The full Wistia scan exposed a panic in Style/TrailingCommaInArguments at line179
-(reversed slice11417..11416). The isolated original-backed fix is integrated as 091dc33: all 12 focused
-tests pass, both actual-file CLIs exit zero with no offenses, and the full
+(reversed slice11417..11416). The isolated original-backed fix is integrated
+as 091dc33: all 12 focused tests pass, both actual-file CLIs exit zero with no offenses, and the full
 integrated suite passes 1,086 tests with one ignored. The full repository scan
-and cold/warm benchmark still need to rerun; prior timings remain invalid. Generic multi-cop correction scheduling remains deferred
-at the user's request. Per-family reports retain their branch provenance;
+and cold/warm benchmark still need to rerun; prior timings remain invalid. Generic multi-cop
+correction scheduling remains deferred at the user's request. Per-family reports retain their branch provenance;
 this report separately records integrated validation and remaining limits.
+
+The next completed framework leaf checkpoint, 0b81f9d, adds TimesMap,
+RefuteMethods and RequestReferer reviews without shared helper changes. Its
+integrated gate covers 875 originals and 1,750 final states; all 51 valid authored
+programs preserve behavior in 102 native observations, and six actual scope
+controls match. The strict driver exits one, retaining 1,212 safety-contract
+events (including 516 correctability-only diagnostics and 27 comparisons to
+unsafe original runtime rewrites). No warning differences beyond correctability
+remain. The combined full native rerun follows the next checkpoint.

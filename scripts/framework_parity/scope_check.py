@@ -17,6 +17,9 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/RefuteMethods', 'refute false', 'test/models/framework_parity_test.rb', model),
+ ('Rails/RequestReferer', 'request.referrer', 'app/controllers/framework_parity_probe.rb', model),
+ ('Performance/TimesMap', '4.times.map { |i| i.to_s }', model, service),
  ('Rails/Presence', 'value.present? ? value : nil', model, service),
  ('Rails/SafeNavigation', 'foo.try!(:bar)', model, service),
  ('Rails/UniqBeforePluck', 'Model.pluck(:name).uniq', model, service),

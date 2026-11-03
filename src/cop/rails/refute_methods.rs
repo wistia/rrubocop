@@ -1,8 +1,9 @@
-//! Rails/RefuteMethods — breadth-first tree-sitter port.
+//! Rename implicit Rails assertion aliases without changing custom/default-message behavior.
 
 use tree_sitter::Node;
 
-use crate::cop::shared::{call_method_name, method_node, push_replace};
+use crate::cop::shared::ruby_expression::{plain_string, regular_send_name, regular_send_receiver};
+use crate::cop::shared::{argument_nodes, method_node, named_kids, node_bytes, push_replace};
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -38,6 +39,48 @@ fn style_pair<'a>(style: &str, method: &'a [u8]) -> Option<(&'a str, &'a str)> {
     }
 }
 
+struct AssertionOverrides(bool);
+fn overridden(source: &SourceFile, node: Node<'_>) -> bool {
+    source
+        .cached(0, || {
+            let mut root = node;
+            while let Some(parent) = root.parent() {
+                root = parent;
+            }
+            let mut pending = vec![root];
+            while let Some(node) = pending.pop() {
+                if matches!(node.kind(), "method" | "singleton_method")
+                    && node.child_by_field_name("name").is_some_and(|name| {
+                        CORRECTIONS.iter().any(|(bad, good)| {
+                            node_bytes(source, name) == *bad
+                                || node_bytes(source, name) == good.as_bytes()
+                        })
+                    })
+                {
+                    return AssertionOverrides(true);
+                }
+                if node.kind() == "alias"
+                    || regular_send_name(source, node).is_some_and(|name| {
+                        matches!(
+                            name.as_ref(),
+                            b"alias_method"
+                                | b"define_method"
+                                | b"define_singleton_method"
+                                | b"class_eval"
+                                | b"module_eval"
+                                | b"eval"
+                                | b"prepend"
+                        )
+                    })
+                {
+                    return AssertionOverrides(true);
+                }
+                pending.extend(named_kids(node));
+            }
+            AssertionOverrides(false)
+        })
+        .0
+}
 impl Cop for RefuteMethods {
     fn name(&self) -> &'static str {
         "Rails/RefuteMethods"
@@ -52,7 +95,7 @@ impl Cop for RefuteMethods {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
+        &["call", "identifier"]
     }
 
     fn check_node(
@@ -63,23 +106,42 @@ impl Cop for RefuteMethods {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some(method) = call_method_name(source, node) else {
+        let Some(method) = regular_send_name(source, node) else {
             return;
         };
-        let Some((bad, good)) = style_pair(config.get_str("EnforcedStyle", "assert_not"), method)
+        if regular_send_receiver(source, node) != Some(None) {
+            return;
+        }
+        let Some((bad, good)) = style_pair(config.get_str("EnforcedStyle", "assert_not"), &method)
         else {
             return;
         };
         let meth = method_node(node).unwrap_or(node);
         let (line, col) = source.offset_to_line_col(meth.start_byte());
         let mut diag = self.diagnostic(source, line, col, format!("Prefer `{good}` over `{bad}`."));
-        if push_replace(
-            &mut corrections,
-            meth.start_byte(),
-            meth.end_byte(),
-            good,
-            self.name(),
-        ) {
+        diag.highlight_length = meth.end_byte() - meth.start_byte();
+        let args = argument_nodes(node);
+        let plain = matches!(method.as_ref(), b"refute" | b"assert_not");
+        let same_message = !plain
+            || args
+                .first()
+                .is_some_and(|arg| matches!(arg.kind(), "nil" | "false"))
+            || args
+                .get(1)
+                .is_some_and(|arg| plain_string(source, *arg).is_some());
+        diag.correctable = !config.autocorrect_disabled()
+            && node.kind() != "identifier"
+            && same_message
+            && !overridden(source, node);
+        if diag.correctable
+            && push_replace(
+                &mut corrections,
+                meth.start_byte(),
+                meth.end_byte(),
+                good,
+                self.name(),
+            )
+        {
             diag.corrected = true;
         }
         diagnostics.push(diag);

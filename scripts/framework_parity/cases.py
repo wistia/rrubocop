@@ -9,7 +9,11 @@ def cases():
             config.setdefault("GemVersions", {"railties": "8.1.3.1"})
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
-        rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+        rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="test/models/example_test.rb" if cop=="Rails/RefuteMethods" else "app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    from assertion_request_cases import extend as assertion_request_cases
+    assertion_request_cases(add)
+    from times_map_cases import extend as times_map_cases
+    times_map_cases(add)
     from presence_cases import extend as presence_cases
     presence_cases(add)
     from rails_minimum_cases import extend as rails_minimum_cases
@@ -365,7 +369,7 @@ def cases():
     for cop, source, *options in PROGRAMS:
         runtime_config=dict(options[0]) if options else {}
         if cop in ("Rails/ContentTag", "Rails/Pick"): runtime_config.setdefault("GemVersions",{"railties":"8.1.3.1"})
-        rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source, expected=[], corrected=source, config=runtime_config, trusted_runtime=True))
+        rows.append(dict(id=f"{cop}:runtime:{len(rows)}", cop=cop, path="test/models/example_test.rb" if cop=="Rails/RefuteMethods" else "app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source, expected=[], corrected=source, config=runtime_config, trusted_runtime=True))
     for source in ("[1, 2].size", "{}.length", "'text'.size", ":text.size", "'text'.count('t')", "'text'.count(variable)", "[1, 2].count(1)", "COUNT = [1, 2].size", "items.each { [1, 2].size }", "[*items].size", "{ **options }.size", "[1].count { |n| n.odd? }", "\"#{value}\".size", "items.size", "[1]&.size"):
         add("Performance/FixedSize", source)
     for source in ("items.map { |n| [n] }.flatten(1)", "items.collect { |n| [n] }.flatten(1)", "items.map(&:children).flatten(1)", "items&.map { |n| [n] }&.flatten(1)", "items.map { |n| [n] }.flatten", "items.map { |n| [n] }.flatten(2)", "items.map { |n| [n] }.flatten(depth)", "items.map.flatten(1)"):
