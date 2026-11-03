@@ -15,6 +15,7 @@ pub mod parse;
 pub mod testutil;
 
 use std::io::Read;
+use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
 use anyhow::Result;
@@ -56,19 +57,46 @@ pub fn run() -> Result<ExitCode> {
 }
 
 fn resolved_config(args: &Args) -> Result<ResolvedConfig> {
-    let target = args.paths.first().map(|p| p.as_path());
+    let target = configuration_target(&args.paths);
     let mut config = if args.force_default_config {
-        let mut cfg = load_default_config(target, None);
+        let mut cfg = load_default_config(target.as_deref(), None);
         // `--only` may name plugin cops; register departments so filters allow them.
         if !args.only.is_empty() {
             cfg.register_departments_from_only(&args.only);
         }
         cfg
     } else {
-        load_config(args.config.as_deref(), target, None)?
+        load_config(args.config.as_deref(), target.as_deref(), None)?
     };
     config.apply_display_cli(args.display_cop_names_override());
     Ok(config)
+}
+
+fn configuration_target(paths: &[PathBuf]) -> Option<PathBuf> {
+    let first = paths.first()?;
+    if paths.len() == 1 {
+        return Some(first.clone());
+    }
+    let working_dir = std::env::current_dir().ok()?;
+    let directory = |path: &Path| {
+        let absolute = working_dir.join(path);
+        let path = absolute.canonicalize().unwrap_or(absolute);
+        if path.is_file() {
+            path.parent().unwrap_or(&path).to_path_buf()
+        } else {
+            path
+        }
+    };
+    let mut common = directory(first);
+    for path in &paths[1..] {
+        let directory = directory(path);
+        while !directory.starts_with(&common) {
+            if !common.pop() {
+                return None;
+            }
+        }
+    }
+    Some(common)
 }
 
 fn list_and_exit(args: &Args, registry: &CopRegistry) -> Option<ExitCode> {
@@ -199,3 +227,6 @@ fn lint_stdin_source(
 
 #[cfg(test)]
 mod stdin_tests;
+
+#[cfg(test)]
+mod config_target_tests;

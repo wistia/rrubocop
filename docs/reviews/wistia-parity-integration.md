@@ -77,3 +77,20 @@ files, while native reports 169; only three match, leaving 166 Rust-only
 observations. Those are being reconciled by owners. In particular, the 13
 GraphQL matcher-order and four RSpec block-matcher cases are owned here.
 No broad equivalence claim is justified by the synthetic gates.
+
+All 166 original Rust-only observations have now been repaired. A fresh actual
+74-file all-cop run reports exactly three offenses in each engine, with no
+difference in cop, file, line, column, severity or raw message. All three original
+positive findings remain and all files are unchanged. The first repaired run
+exposed one additional CLI discovery bug: selecting only the first operand's
+subtree missed a sibling nested config. Multi-operand lookup now uses the common
+directory, with operand-order, sibling-directory, single-file and explicit-config
+regression tests. The second actual 74-file comparison is exact.
+
+The three measured performance commits are included separately from the
+correctness fixes. Their benchmark deliberately retained the old 169 outputs
+to demonstrate performance-only invariance. The full read-only original Ruby
+scan is running on the exact same 14,824-file manifest; full-corpus parity is
+still unverified. Float's separate 730-mode CLI gate is exact, with 1,460 stable
+engine second passes. The remaining metadata/production and combined native
+checks follow this checkpoint.
