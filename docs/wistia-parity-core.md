@@ -6,10 +6,10 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Forty owned rules have completed bounded original-Ruby validation,
+Forty-one owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 327 queued or in-progress entries;
+The exhaustive 367-rule inventory retains 326 queued or in-progress entries;
 some already have implementations. Security/Eval and Lint/AssignmentInCondition are complete within their
 bounded gates; the remaining owned queue continues. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
@@ -926,3 +926,10 @@ Fresh original replay validates265 unique final native states:241 offense-free a
 Pinned RuboCop1.65.1 `lint/empty_expression.rb` handles every empty Begin node, without correction. Reviewed all12 unchanged upstream examples plus386 independent original-valid states across Ruby2.7/3.4. They match exact diagnostics, normalized full ranges and unchanged bytes; every original/native input tree is accepted. All native correction flags are false and no edit is generated. The cases cover empty/semicolon/comment parentheses, Unicode/multiline LF/CRLF geometry, nesting, conditions/loops/return/calls/defined/arrays/case branches, and direct empty interpolation across ordinary strings/commands/symbols/regexps/word arrays/heredocs. Nil, explicit keyword-begin, ordinary empty call arguments and escaped/single-quoted markers are negative controls.
 
 The retained handler now visits both native parenthesized statements and interpolations, filters semicolon/comment body nodes and reports the complete normalized original range. Explicit keyword begin remains excluded as original KwBegin. Registration position and enforcement are retained. No correction, native parser/model change or rule exception was introduced. Two scoped original suites pass398 states; full native/build/lint/regeneration and CLI/metadata/production gates are running. Counts remain40 completed and327 awaiting full gates, including the active interpolation/expression batches.
+
+
+## EmptyInterpolation final bounded gate
+
+Separate source/spec review confirms the pinned1.65.1 direct-Begin interpolation callback, empty body taxonomy, full normalized ranges and safe-correction defaults. Four unchanged examples/five captures plus440 independent states and64 role/guard cases match diagnostics and flags apart from24 explicit correction safeguards. All509 supported initial trees are error-free. The1,018 CLI modes produce970 exact byte/exit comparisons and48 intentional guard differences:40 preserve percent-array element identity and8 preserve later real __LINE__ values. All1,018 scopes match; all2,036 second passes are stable; there are zero cop errors or unexpected differences. Original finishes all1,018 modes clean; native finishes970 clean and48 with retained visible warnings.
+
+Fresh original replay validates265 unique final sources:241 clean and24 retained guards, both parsers accepting every state and native proposing no fresh edit. All32 metadata controls and16 actual production-config probes match within their supported cases. Full native validation passes968 tests/one pre-existing ignored followed by four focused suites, with build/lint/byte-identical regeneration passing. Original unsafe AST/output examples remain unchanged in the evidence, while guard predicates are structural and never fixture-specific. Other source/version/encoding/directive families, generic syntax recovery and combined-cop scheduling remain outside this bounded gate. This completes41 owned bounded ports, including all13 initial direct Style stubs;326 owned rules still await full review, including the active EmptyExpression gate.
