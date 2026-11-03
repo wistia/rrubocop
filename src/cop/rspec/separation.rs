@@ -119,25 +119,7 @@ pub(super) fn separate(
     }
 }
 pub(super) fn numbered_block(source: &SourceFile, node: Node<'_>) -> bool {
-    let Some(block) = crate::cop::rspec::helpers::call_block(node) else {
-        return false;
-    };
-    if block.child_by_field_name("parameters").is_some() {
-        return false;
-    }
-    let mut pending = code_children(block);
-    while let Some(current) = pending.pop() {
-        if matches!(current.kind(), "block" | "do_block") {
-            continue;
-        }
-        if current.kind() == "identifier"
-            && name(source, current).is_some_and(|value| {
-                value.len() == 2 && value[0] == b'_' && matches!(value[1], b'1'..=b'9')
-            })
-        {
-            return true;
-        }
-        pending.extend(code_children(current));
-    }
-    false
+    crate::cop::rspec::helpers::call_block(node).is_some_and(|block| {
+        crate::cop::shared::ruby_expression::numbered_bindings(source, block).is_some()
+    })
 }
