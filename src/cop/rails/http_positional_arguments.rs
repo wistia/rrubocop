@@ -7,6 +7,7 @@ use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 use tree_sitter::Node;
 pub struct HttpPositionalArguments;
+struct RackTestMethods(bool);
 fn name(source: &SourceFile, node: Node<'_>, names: &[&[u8]]) -> bool {
     regular_send_name(source, node).is_some_and(|name| names.contains(&name.as_ref()))
 }
@@ -91,35 +92,38 @@ impl Cop for HttpPositionalArguments {
             }
             ancestor = parent.parent();
         }
-        let mut root = node;
-        while let Some(parent) = root.parent() {
-            root = parent;
-        }
-        let mut rack = false;
-        for_each_descendant(root, |n| {
-            if rack
-                || regular_send_receiver(source, n) != Some(None)
-                || !name(source, n, &[b"include"])
-                || n == root
-            {
-                return;
+        let rack = source.cached(0, || {
+            let mut root = node;
+            while let Some(parent) = root.parent() {
+                root = parent;
             }
-            let a = arguments(n);
-            if a.len() == 1
-                && a[0].node().is_some_and(|n| {
-                    n.kind() == "scope_resolution"
-                        && node_text(source, n)
-                            .chars()
-                            .filter(|c| !c.is_whitespace())
-                            .collect::<String>()
-                            .trim_start_matches("::")
-                            == "Rack::Test::Methods"
-                })
-            {
-                rack = true;
-            }
+            let mut rack = false;
+            for_each_descendant(root, |n| {
+                if rack
+                    || regular_send_receiver(source, n) != Some(None)
+                    || !name(source, n, &[b"include"])
+                    || n == root
+                {
+                    return;
+                }
+                let a = arguments(n);
+                if a.len() == 1
+                    && a[0].node().is_some_and(|n| {
+                        n.kind() == "scope_resolution"
+                            && node_text(source, n)
+                                .chars()
+                                .filter(|c| !c.is_whitespace())
+                                .collect::<String>()
+                                .trim_start_matches("::")
+                                == "Rack::Test::Methods"
+                    })
+                {
+                    rack = true;
+                }
+            });
+            RackTestMethods(rack)
         });
-        if rack {
+        if rack.0 {
             return;
         }
         let data = &args[1];

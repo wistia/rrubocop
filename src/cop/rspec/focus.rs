@@ -1,6 +1,6 @@
 use crate::cop::rspec::helpers::{RSPEC_INCLUDE, bare_rspec_call};
 use crate::cop::rspec::parity_helpers::*;
-use crate::cop::shared::call_receiver;
+use crate::cop::shared::{call_method_name, call_receiver, node_bytes};
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
@@ -29,6 +29,17 @@ impl Cop for Focus {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
+        let method_name = if node.kind() == "identifier" {
+            Some(node_bytes(source, node))
+        } else {
+            call_method_name(source, node)
+        };
+        if !method_name.is_some_and(|method| {
+            crate::cop::rspec::helpers::is_group(method)
+                || crate::cop::rspec::helpers::is_example(method)
+        }) {
+            return;
+        }
         let _ = config;
         if safe_send(source, node)
             || node

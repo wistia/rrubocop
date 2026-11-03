@@ -3,7 +3,7 @@ use crate::cop::rspec::helpers::{
 };
 use crate::cop::rspec::parity_helpers::*;
 use crate::cop::rspec::separation::numbered_block;
-use crate::cop::shared::call_receiver;
+use crate::cop::shared::{call_method_name, call_receiver, node_bytes};
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
@@ -105,6 +105,17 @@ impl Cop for PendingWithoutReason {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
+        let method_name = if node.kind() == "identifier" {
+            Some(node_bytes(source, node))
+        } else {
+            call_method_name(source, node)
+        };
+        if !method_name.is_some_and(|method| {
+            crate::cop::rspec::helpers::is_group(method)
+                || crate::cop::rspec::helpers::is_example(method)
+        }) {
+            return;
+        }
         if safe_send(source, node) {
             return;
         }
