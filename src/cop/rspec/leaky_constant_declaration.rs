@@ -3,6 +3,7 @@
 use tree_sitter::Node;
 
 use crate::cop::rspec::helpers::{RSPEC_INCLUDE, inside_spec_group};
+use crate::cop::rspec::parity_helpers::*;
 use crate::cop::shared::is_const_assign;
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
@@ -28,7 +29,13 @@ impl Cop for LeakyConstantDeclaration {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["assignment", "class", "module"]
+        &[
+            "assignment",
+            "class",
+            "module",
+            "constant",
+            "scope_resolution",
+        ]
     }
 
     fn check_node(
@@ -43,11 +50,28 @@ impl Cop for LeakyConstantDeclaration {
         if kind == "assignment" && !is_const_assign(node) {
             return;
         }
+        if matches!(kind, "constant" | "scope_resolution") {
+            let Some(parent) = node.parent() else {
+                return;
+            };
+            if !(parent.kind() == "operator_assignment"
+                && parent.child_by_field_name("left") == Some(node)
+                || parent.kind() == "left_assignment_list")
+            {
+                return;
+            }
+        }
         if !inside_spec_group(source, node) {
             return;
         }
-        let (line, col) = source.offset_to_line_col(node.start_byte());
-        diagnostics.push(self.diagnostic(source, line, col, offense_message(kind).into()));
+        report(
+            self,
+            source,
+            node.start_byte(),
+            node.end_byte(),
+            offense_message(kind).into(),
+            diagnostics,
+        );
     }
 }
 

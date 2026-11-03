@@ -155,6 +155,10 @@ mod tests {
     }
 }
 
+pub(super) fn heredoc_end(c: &Context<'_>, n: Node<'_>) -> Option<usize> {
+    ruby::heredoc_end(c, n)
+}
+
 pub(in crate::cop::ported) fn decode_double_quoted_content(inner: &str) -> Option<String> {
     decode(inner, true, b'"')
 }

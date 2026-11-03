@@ -10,7 +10,7 @@ use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
 
-mod local;
+use crate::cop::rspec::separation::numbered_block;
 
 pub struct NamedSubject;
 
@@ -58,6 +58,7 @@ fn is_example_or_hook(source: &SourceFile, node: Node<'_>) -> bool {
         return false;
     }
     node.parent()
+        .filter(|call| !numbered_block(source, *call))
         .and_then(|call| bare_method(source, call))
         .is_some_and(|name| EXAMPLES.contains(&name) || HOOKS.contains(&name))
 }
@@ -65,8 +66,9 @@ fn is_example_or_hook(source: &SourceFile, node: Node<'_>) -> bool {
 fn is_shared_examples(source: &SourceFile, node: Node<'_>) -> bool {
     matches!(node.kind(), "do_block" | "block")
         && node.parent().is_some_and(|call| {
-            bare_rspec_call(source, call)
-                .is_some_and(|name| matches!(name, b"shared_examples" | b"shared_examples_for"))
+            !numbered_block(source, call)
+                && bare_rspec_call(source, call)
+                    .is_some_and(|name| matches!(name, b"shared_examples" | b"shared_examples_for"))
         })
 }
 
@@ -95,11 +97,20 @@ fn bare_subject_call<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>
 }
 
 fn bare_subject_read<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
-    if node.kind() != "identifier" || node_bytes(source, node) != b"subject" || is_method_name(node)
+    if node.kind() == "hash_key_symbol"
+        && node_bytes(source, node) == b"subject"
+        && node.parent().is_some_and(|pair| {
+            pair.kind() == "pair" && pair.child_by_field_name("value").is_none()
+        })
+        && !crate::cop::ported::local_identifier(source, node)
     {
-        return None;
+        return Some(node);
     }
-    if local::is_local(source, node) {
+    if node.kind() != "identifier"
+        || node_bytes(source, node) != b"subject"
+        || is_method_name(node)
+        || !crate::cop::ported::bare_call_identifier(source, node)
+    {
         return None;
     }
     Some(node)
@@ -121,7 +132,7 @@ fn subject_def_named(source: &SourceFile, node: Node<'_>) -> Option<bool> {
     if name != b"subject" && name != b"subject!" {
         return None;
     }
-    if call_block(node).is_none() {
+    if call_block(node).is_none() || numbered_block(source, node) {
         return None;
     }
     Some(!argument_nodes(node).is_empty())
@@ -129,20 +140,43 @@ fn subject_def_named(source: &SourceFile, node: Node<'_>) -> Option<bool> {
 
 fn subject_named_in(source: &SourceFile, block: Node<'_>) -> Option<bool> {
     let body = block.child_by_field_name("body")?;
-    statements(body)
+    let statements = statements(body);
+    let candidates = if statements.len() == 1 {
+        let single = statements[0];
+        if let Some(block) = call_block(single) {
+            block
+                .child_by_field_name("body")
+                .map(|body| {
+                    let nodes = crate::cop::rspec::parity_helpers::code_children(body);
+                    if nodes.len() == 1 { nodes } else { vec![body] }
+                })
+                .unwrap_or_default()
+        } else if single.kind() == "call" {
+            let mut children: Vec<_> = call_receiver(single).into_iter().collect();
+            children.extend(argument_nodes(single));
+            children
+        } else {
+            crate::cop::rspec::parity_helpers::code_children(single)
+        }
+    } else {
+        statements
+    };
+    candidates
         .into_iter()
-        .find_map(|stmt| subject_def_named(source, stmt))
+        .find_map(|candidate| subject_def_named(source, candidate))
 }
 
 fn nearest_named(source: &SourceFile, node: Node<'_>) -> bool {
-    let mut parent = node.parent();
-    while let Some(cur) = parent {
-        if matches!(cur.kind(), "do_block" | "block")
-            && let Some(named) = subject_named_in(source, cur)
-        {
-            return named;
+    let mut ancestor = node.parent();
+    while let Some(parent) = ancestor {
+        if !numbered_block(source, parent) {
+            if let Some(named) =
+                call_block(parent).and_then(|block| subject_named_in(source, block))
+            {
+                return named;
+            }
         }
-        parent = cur.parent();
+        ancestor = parent.parent();
     }
     false
 }
@@ -162,6 +196,13 @@ fn push_offense(
     diagnostics: &mut Vec<Diagnostic>,
 ) {
     let (line, col) = source.offset_to_line_col(node.start_byte());
+    if diagnostics.iter().any(|diagnostic| {
+        diagnostic.cop_name == cop.name()
+            && diagnostic.location.line == line
+            && diagnostic.location.column == col
+    }) {
+        return;
+    }
     let mut diag = cop.diagnostic(source, line, col, MSG.to_string());
     diag.highlight_length = node.end_byte().saturating_sub(node.start_byte()).max(1);
     diagnostics.push(diag);
@@ -174,11 +215,8 @@ fn report_usages(
     style: &str,
     diagnostics: &mut Vec<Diagnostic>,
 ) {
-    let mut stack = vec![block];
+    let mut stack = vec![block.parent().unwrap_or(block)];
     while let Some(node) = stack.pop() {
-        if node.id() != block.id() && is_example_or_hook(source, node) {
-            continue;
-        }
         if let Some(target) =
             bare_subject_call(source, node).or_else(|| bare_subject_read(source, node))
             && !allowed(style, source, target)

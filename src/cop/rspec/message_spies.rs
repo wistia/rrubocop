@@ -1,112 +1,22 @@
-//! RSpec/MessageSpies — `expect(x).to receive` vs `have_received`.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{argument_nodes, call_method_name, call_receiver, method_node, node_text};
+use crate::cop::rspec::helpers::{RSPEC_INCLUDE, call_block};
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::{call_receiver, node_text};
 use crate::cop::{Cop, CopConfig};
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct MessageSpies;
-
-const HAVE_RECEIVED: &str = "have_received";
-
-fn is_spy(name: &[u8]) -> bool {
-    matches!(name, b"receive" | b"have_received")
-}
-
-fn expect_source(source: &SourceFile, runner: Node<'_>) -> Option<String> {
-    let recv = call_receiver(runner)?;
-    if call_receiver(recv).is_some() || call_method_name(source, recv) != Some(b"expect") {
-        return None;
-    }
-    argument_nodes(recv)
-        .into_iter()
-        .next()
-        .map(|arg| node_text(source, arg))
-}
-
-fn bare_name<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<&'a [u8]> {
-    if !matches!(node.kind(), "call" | "command" | "command_call") {
-        return None;
-    }
-    if call_receiver(node).is_some() {
-        return None;
-    }
-    call_method_name(source, node)
-}
-
-fn spy_message(style: &str, expect_src: &str) -> String {
-    if style == "receive" {
-        "Prefer `receive` for setting message expectations.".to_string()
-    } else {
-        format!(
-            "Prefer `{HAVE_RECEIVED}` for setting message expectations. Setup `{expect_src}` as a spy using `allow` or `instance_spy`."
-        )
-    }
-}
-
-fn push_spy(
-    cop: &MessageSpies,
-    source: &SourceFile,
-    node: Node<'_>,
-    message: String,
-    diagnostics: &mut Vec<Diagnostic>,
-) {
-    let meth = method_node(node).unwrap_or(node);
-    let (line, col) = source.offset_to_line_col(meth.start_byte());
-    let mut diag = cop.diagnostic(source, line, col, message);
-    diag.highlight_length = meth.end_byte().saturating_sub(meth.start_byte()).max(1);
-    diagnostics.push(diag);
-}
-
-/// Walk in source order. A preferred matcher stops the search, as RuboCop does.
-fn walk_spies(
-    cop: &MessageSpies,
-    source: &SourceFile,
-    node: Node<'_>,
-    style: &str,
-    expect_src: &str,
-    diagnostics: &mut Vec<Diagnostic>,
-) -> bool {
-    if let Some(name) = bare_name(source, node).filter(|n| is_spy(n)) {
-        if name == style.as_bytes() {
-            return true;
-        }
-        push_spy(
-            cop,
-            source,
-            node,
-            spy_message(style, expect_src),
-            diagnostics,
-        );
-    }
-    let mut cur = node.walk();
-    for child in node.children(&mut cur) {
-        if walk_spies(cop, source, child, style, expect_src, diagnostics) {
-            return true;
-        }
-    }
-    false
-}
-
 impl Cop for MessageSpies {
     fn name(&self) -> &'static str {
         "RSpec/MessageSpies"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command", "command_call"]
+        &["call", "identifier"]
     }
-
-    fn interested_call_names(&self) -> &'static [&'static [u8]] {
-        &[b"to", b"not_to", b"to_not"]
-    }
-
     fn check_node(
         &self,
         source: &SourceFile,
@@ -115,26 +25,69 @@ impl Cop for MessageSpies {
         diagnostics: &mut Vec<Diagnostic>,
         _corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
-        let Some(method) = call_method_name(source, node) else {
-            return;
-        };
-        if !matches!(method, b"to" | b"not_to" | b"to_not") {
+        if !runner(source, node) {
             return;
         }
-        let Some(expect_src) = expect_source(source, node) else {
+        let Some(expectation) = call_receiver(node) else {
             return;
         };
-        walk_spies(
-            self,
-            source,
-            node,
-            &config.get_str("EnforcedStyle", HAVE_RECEIVED),
-            &expect_src,
-            diagnostics,
-        );
+        if !bare(source, expectation, b"expect")
+            || safe_send(source, expectation)
+            || call_block(expectation).is_some()
+        {
+            return;
+        }
+        let targets = call_args(expectation);
+        if targets.len() != 1
+            && (targets.is_empty()
+                || targets
+                    .iter()
+                    .any(|target| !matches!(target.kind(), "pair" | "hash_splat_argument")))
+        {
+            return;
+        }
+        let style = config.get_str("EnforcedStyle", "have_received");
+        let target = if targets.len() == 1 {
+            node_text(source, targets[0])
+        } else {
+            String::from_utf8_lossy(
+                &source.as_bytes()[targets[0].start_byte()..targets.last().unwrap().end_byte()],
+            )
+            .into_owned()
+        };
+        let mut pending = Vec::new();
+        let mut root_children = vec![expectation];
+        root_children.extend(call_args(node));
+        pending.extend(root_children.into_iter().rev());
+        while let Some(child) = pending.pop() {
+            if !safe_send(source, child)
+                && call_receiver(child).is_none()
+                && matches!(name(source, child), Some(b"receive" | b"have_received"))
+            {
+                if name(source, child) == Some(style.as_bytes()) {
+                    break;
+                }
+                let selector = selector(child);
+                let message = if style == "receive" {
+                    "Prefer `receive` for setting message expectations.".into()
+                } else {
+                    format!(
+                        "Prefer `have_received` for setting message expectations. Setup `{target}` as a spy using `allow` or `instance_spy`."
+                    )
+                };
+                report(
+                    self,
+                    source,
+                    selector.start_byte(),
+                    selector.end_byte(),
+                    message,
+                    diagnostics,
+                );
+            }
+            pending.extend(code_children(child).into_iter().rev());
+        }
     }
 }
-
 #[cfg(test)]
 mod tests {
     use super::*;

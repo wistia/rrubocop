@@ -68,6 +68,7 @@ mod nested_groups;
 mod no_expectation_example;
 mod not_to_not;
 mod overwriting_setup;
+mod parity_helpers;
 mod pending_without_reason;
 mod predicate_matcher;
 mod receive_counts;
@@ -85,6 +86,7 @@ mod repeated_subject_call;
 mod return_from_stub;
 mod scattered_let;
 mod scattered_setup;
+mod separation;
 mod shared_context;
 mod shared_examples;
 mod single_argument_message_chain;
@@ -214,3 +216,14 @@ pub fn register_all(registry: &mut CopRegistry) {
         yield_cop::Yield,
     );
 }
+
+#[cfg(test)]
+mod parity_tests;
+
+mod subject_scopes;
+
+mod ordering;
+
+mod description;
+
+mod ruby_arguments;

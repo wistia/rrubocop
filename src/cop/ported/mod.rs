@@ -285,6 +285,10 @@ pub(super) fn local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
     context::local_identifier(&Context::new(source, &config), node)
 }
 
+pub(super) fn heredoc_end(source: &SourceFile, node: Node<'_>) -> Option<usize> {
+    context::heredoc_end(&Context::new(source, &CopConfig::default()), node)
+}
+
 pub(super) fn static_symbol(source: &SourceFile, node: Node<'_>) -> Option<String> {
     let config = CopConfig::default();
     Context::new(source, &config)

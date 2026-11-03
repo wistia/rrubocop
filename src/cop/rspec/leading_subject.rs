@@ -1,104 +1,107 @@
-//! RSpec/LeadingSubject — `subject` must come before `let` helpers.
-
-use tree_sitter::Node;
-
-use crate::cop::rspec::helpers::{
-    RSPEC_INCLUDE, bare_rspec_call, block_body, call_block, is_group, is_let_helper,
-};
-use crate::cop::shared::{call_method_name, method_node};
+use crate::cop::rspec::helpers::{RSPEC_INCLUDE, call_block};
+use crate::cop::rspec::separation::numbered_block;
+use crate::cop::rspec::{ordering, parity_helpers::*};
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct LeadingSubject;
-
-const MSG: &str = "Declare `subject` above any other `let` declarations.";
-
-fn is_subject(method: &[u8]) -> bool {
-    method == b"subject" || method == b"subject!"
-}
-
-fn group_stmts(body: Node<'_>) -> Vec<Node<'_>> {
-    if matches!(body.kind(), "body_statement" | "statements") {
-        let mut cur = body.walk();
-        body.named_children(&mut cur).collect()
-    } else {
-        vec![body]
-    }
-}
-
-fn report_subject(
-    cop: &LeadingSubject,
-    source: &SourceFile,
-    call: Node<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
-) {
-    let (line, col) = source.offset_to_line_col(method_node(call).unwrap_or(call).start_byte());
-    diagnostics.push(cop.diagnostic(source, line, col, MSG.into()));
-}
-
-fn check_group_body(
-    source: &SourceFile,
-    body: Node<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
-    cop: &LeadingSubject,
-) {
-    let mut seen_let = false;
-    for stmt in group_stmts(body) {
-        if !matches!(stmt.kind(), "call" | "command") {
-            continue;
-        }
-        let Some(method) = call_method_name(source, stmt) else {
-            continue;
-        };
-        if is_subject(method) {
-            if seen_let {
-                report_subject(cop, source, stmt, diagnostics);
-            }
-        } else if is_let_helper(method) {
-            seen_let = true;
-        }
-    }
-}
-
 impl Cop for LeadingSubject {
     fn name(&self) -> &'static str {
         "RSpec/LeadingSubject"
     }
-
     fn supports_autocorrect(&self) -> bool {
         true
     }
-
     fn default_include(&self) -> &'static [&'static str] {
         RSPEC_INCLUDE
     }
-
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
+        &["call"]
     }
-
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some(method) = bare_rspec_call(source, node) else {
-            return;
-        };
-        if !is_group(method) {
+        if call_block(node).is_none()
+            || !ordering::helper(source, node, &[b"subject", b"subject!"])
+            || !inside_root_spec_group(source, node)
+        {
             return;
         }
-        let Some(body) = call_block(node).and_then(block_body) else {
+        let mut ancestor = node.parent();
+        let mut parent = None;
+        while let Some(candidate) = ancestor {
+            if call_block(candidate).is_some() && !numbered_block(source, candidate) {
+                parent = Some(candidate);
+                break;
+            }
+            ancestor = candidate.parent();
+        }
+        let Some(parent) = parent else {
             return;
         };
-        check_group_body(source, body, diagnostics, self);
+        let siblings = ordering::body(parent);
+        if siblings.len() < 2 {
+            return;
+        }
+        let Some(index) = siblings.iter().position(|sibling| *sibling == node) else {
+            return;
+        };
+        let previous = &siblings[..index];
+        let Some(offender) = previous.iter().copied().find(|sibling| {
+            ordering::helper(source, *sibling, &[b"let", b"let!"])
+                || ordering::hook(source, *sibling)
+                || ordering::example(source, *sibling)
+                || ordering::group(source, *sibling)
+                || ordering::includes(source, *sibling)
+        }) else {
+            return;
+        };
+        let diagnostic = report(
+            self,
+            source,
+            node.start_byte(),
+            node.end_byte(),
+            format!(
+                "Declare `subject` above any other `{}` declarations.",
+                String::from_utf8_lossy(name(source, offender).unwrap())
+            ),
+            diagnostics,
+        );
+        let offender_index = previous
+            .iter()
+            .position(|sibling| *sibling == offender)
+            .unwrap();
+        let crossed = &previous[offender_index..];
+        let moved_name = ordering::definition_name(source, node);
+        if name(source, node) == Some(b"subject!")
+            || !ordering::stable_arguments(source, node)
+            || crossed.iter().any(|sibling| {
+                ordering::includes(source, *sibling)
+                    || ordering::helper(
+                        source,
+                        *sibling,
+                        &[b"let", b"let!", b"subject", b"subject!"],
+                    ) && (ordering::definition_name(source, *sibling) == moved_name
+                        || ordering::definition_name(source, *sibling).as_deref()
+                            == Some("subject")
+                        || matches!(name(source, *sibling), Some(b"subject" | b"subject!")))
+            })
+        {
+            return;
+        }
+        if ordering::move_node(source, node, offender, false, &mut corrections, self.name()) {
+            diagnostics[diagnostic].corrected = true;
+        }
     }
 }
-
 #[cfg(test)]
 mod tests {
     use super::*;

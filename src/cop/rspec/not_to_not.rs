@@ -1,32 +1,25 @@
-//! RSpec/NotToNot — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
-use crate::cop::shared::{call_method_name, method_node, push_replace};
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct NotToNot;
-
 impl Cop for NotToNot {
     fn name(&self) -> &'static str {
         "RSpec/NotToNot"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
     fn supports_autocorrect(&self) -> bool {
         true
     }
-
-    fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
-    }
-
     fn check_node(
         &self,
         source: &SourceFile,
@@ -35,35 +28,43 @@ impl Cop for NotToNot {
         diagnostics: &mut Vec<Diagnostic>,
         mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some(method) = call_method_name(source, node) else {
-            return;
-        };
-        let prefer = config.get_str("EnforcedStyle", "not_to");
-        let wrong = if prefer == "not_to" {
-            "to_not"
-        } else {
-            "not_to"
-        };
-        if method != wrong.as_bytes() {
+        if safe_send(source, node) {
             return;
         }
-        let meth = method_node(node).unwrap_or(node);
-        let (line, col) = source.offset_to_line_col(meth.start_byte());
-        let mut diag = self.diagnostic(
-            source,
-            line,
-            col,
-            format!("Prefer `{prefer}` over `{wrong}`."),
+        let style = config.get_str("EnforcedStyle", "not_to");
+        let wrong = if style == "not_to" {
+            b"to_not".as_slice()
+        } else {
+            b"not_to".as_slice()
+        };
+        if name(source, node) != Some(wrong) {
+            return;
+        }
+        let matcher = node;
+        let replacement = style;
+        let message = format!(
+            "Prefer `{style}` over `{}`.",
+            String::from_utf8_lossy(wrong)
         );
-        if push_replace(
+        let target = selector(matcher);
+        let index = report(
+            self,
+            source,
+            target.start_byte(),
+            target.end_byte(),
+            message,
+            diagnostics,
+        );
+        if preserving_replace(
+            source,
+            matcher,
             &mut corrections,
-            meth.start_byte(),
-            meth.end_byte(),
-            prefer,
+            target.start_byte(),
+            target.end_byte(),
+            replacement,
             self.name(),
         ) {
-            diag.corrected = true;
+            diagnostics[index].corrected = true;
         }
-        diagnostics.push(diag);
     }
 }

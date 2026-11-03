@@ -1,35 +1,40 @@
-//! RSpec/HooksBeforeExamples — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::ordering::{self, Style};
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct HooksBeforeExamples;
-
 impl Cop for HooksBeforeExamples {
     fn name(&self) -> &'static str {
         "RSpec/HooksBeforeExamples"
     }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
-    }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call"]
+    }
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        corrections: Option<&mut Vec<Correction>>,
     ) {
-        // Breadth-first stub: not implemented — avoid method-name false positives.
-        let _ = (source, node, diagnostics);
+        ordering::check(
+            self,
+            Style::HooksBeforeExamples,
+            source,
+            node,
+            diagnostics,
+            corrections,
+        );
     }
 }

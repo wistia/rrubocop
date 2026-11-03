@@ -1,0 +1,106 @@
+[
+  {
+    "id": "empty_hook_spec:13",
+    "cop": "RSpec/EmptyHook",
+    "source": "around { yield }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Description": "Checks for empty before and after hooks.",
+      "Enabled": true,
+      "AutoCorrect": "contextual",
+      "VersionAdded": "1.39",
+      "VersionChanged": "2.31",
+      "Reference": "https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/EmptyHook",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "around { yield }\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_hook_spec.rb#13",
+    "reference": {
+      "original_invalid": true,
+      "original_compile": {
+        "valid": false,
+        "error": "probe.rb:1: Invalid yield"
+      }
+    }
+  },
+  {
+    "id": "empty_hook_spec:14",
+    "cop": "RSpec/EmptyHook",
+    "source": "around(:suite) do\n  setup_users\n  yield\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Description": "Checks for empty before and after hooks.",
+      "Enabled": true,
+      "AutoCorrect": "contextual",
+      "VersionAdded": "1.39",
+      "VersionChanged": "2.31",
+      "Reference": "https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/EmptyHook",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "around(:suite) do\n  setup_users\n  yield\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/empty_hook_spec.rb#14",
+    "reference": {
+      "original_invalid": true,
+      "original_compile": {
+        "valid": false,
+        "error": "probe.rb:3: Invalid yield"
+      }
+    }
+  },
+  {
+    "id": "around_block_spec:10",
+    "cop": "RSpec/AroundBlock",
+    "source": "around do |test|\n  foo { yield(some_arg, test) }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Description": "Checks that around blocks actually run the test.",
+      "Enabled": true,
+      "VersionAdded": "1.11",
+      "Reference": "https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/AroundBlock",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "around do |test|\n  foo { yield(some_arg, test) }\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/around_block_spec.rb#10",
+    "reference": {
+      "original_invalid": true,
+      "original_compile": {
+        "valid": false,
+        "error": "probe.rb:2: Invalid yield"
+      }
+    }
+  },
+  {
+    "id": "pending_without_reason_spec:15",
+    "cop": "RSpec/PendingWithoutReason",
+    "source": "RSpec.describe Foo do\n  pending\n  skip\n  _1\n  context 'when something' do\n    _1\n    pending\n    skip\n    it 'does something' do\n      _1\n      skip\n      pending\n      _1\n    end\n  end\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Description": "Checks for pending or skipped examples without reason.",
+      "Enabled": true,
+      "VersionAdded": "2.16",
+      "Reference": "https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/PendingWithoutReason",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "expected": [],
+    "corrected": "RSpec.describe Foo do\n  pending\n  skip\n  _1\n  context 'when something' do\n    _1\n    pending\n    skip\n    it 'does something' do\n      _1\n      skip\n      pending\n      _1\n    end\n  end\nend\n",
+    "origin": "reference",
+    "upstream": "rubocop-rspec@3.0.4/spec/rubocop/cop/rspec/pending_without_reason_spec.rb#15",
+    "reference": {
+      "original_invalid": true,
+      "original_compile": {
+        "valid": false,
+        "error": "probe.rb:10: syntax errors found\n   4 |   _1\n   5 |   context 'when something' do\n>  6 |     _1\n     |     ^~ numbered parameter is already used in outer block\n   7 |     pending\n   8 |     skip\n   9 |     it 'does something' do\n> 10 |       _1\n     |       ^~ numbered parameter is already used in outer block\n  11 |       skip\n  12 |       pending\n> 13 |       _1\n     |       ^~ numbered parameter is already used in outer block\n  14 |     end\n  15 |   end\n"
+      }
+    }
+  }
+]

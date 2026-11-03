@@ -21,6 +21,9 @@ const EXAMPLES: &[&[u8]] = &[
     b"xit",
     b"xspecify",
     b"pending",
+    b"scenario",
+    b"fscenario",
+    b"xscenario",
 ];
 
 const GROUPS: &[&[u8]] = &[
@@ -32,6 +35,8 @@ const GROUPS: &[&[u8]] = &[
     b"fcontext",
     b"xdescribe",
     b"xcontext",
+    b"xfeature",
+    b"ffeature",
     b"shared_examples",
     b"shared_context",
     b"shared_examples_for",
@@ -52,9 +57,17 @@ pub fn is_let_helper(name: &[u8]) -> bool {
 }
 
 pub fn bare_rspec_call<'a>(source: &'a SourceFile, node: Node<'_>) -> Option<&'a [u8]> {
+    if node
+        .child_by_field_name("operator")
+        .is_some_and(|operator| node_bytes(source, operator) == b"&.")
+    {
+        return None;
+    }
     let name = call_method_name(source, node)?;
     if let Some(recv) = call_receiver(node) {
-        if !(recv.kind() == "constant" && node_bytes(source, recv) == b"RSpec") {
+        if !((recv.kind() == "constant" && node_bytes(source, recv) == b"RSpec")
+            || (recv.kind() == "scope_resolution" && node_bytes(source, recv) == b"::RSpec"))
+        {
             return None;
         }
     }
@@ -134,18 +147,15 @@ fn is_spec_group_call(source: &SourceFile, node: Node<'_>) -> bool {
     bare_rspec_call(source, node).is_some_and(is_group) && call_block(node).is_some()
 }
 
-/// True when `node` sits inside an RSpec example-group `do`/`{ }` block.
+/// RSpec group ancestry through an ordinary block, including its send arguments.
 pub fn inside_spec_group(source: &SourceFile, node: Node<'_>) -> bool {
-    let mut p = node.parent();
-    while let Some(cur) = p {
-        if matches!(cur.kind(), "do_block" | "block")
-            && cur
-                .parent()
-                .is_some_and(|call| is_spec_group_call(source, call))
+    let mut ancestor = node.parent();
+    while let Some(parent) = ancestor {
+        if is_spec_group_call(source, parent) && !super::separation::numbered_block(source, parent)
         {
             return true;
         }
-        p = cur.parent();
+        ancestor = parent.parent();
     }
     false
 }
@@ -168,7 +178,7 @@ fn collect_top_level_groups<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node
     }
 }
 
-fn top_level_groups<'a>(source: &SourceFile, program: Node<'a>) -> Vec<Node<'a>> {
+pub(super) fn top_level_groups<'a>(source: &SourceFile, program: Node<'a>) -> Vec<Node<'a>> {
     let stmts: Vec<_> = named_code_children(program).collect();
     match stmts.as_slice() {
         [only] => collect_top_level_groups(source, *only),

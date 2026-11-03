@@ -43,7 +43,10 @@ fn quote(value: &str, style: QuoteStyle) -> String {
     output.push('"');
     output
 }
-pub(crate) fn string_literal(value: &str) -> String {
+pub fn string_inspect(value: &str) -> String {
+    quote(value, QuoteStyle::Inspect)
+}
+pub fn string_literal(value: &str) -> String {
     let inspected = quote(value, QuoteStyle::Inspect);
     let mut chars = inspected[1..inspected.len() - 1].chars().peekable();
     let mut double = false;
@@ -63,10 +66,17 @@ pub(crate) fn string_literal(value: &str) -> String {
         format!("'{}'", value.replace('\\', "\\\\"))
     }
 }
-pub(crate) fn string_dump(value: &str) -> String {
+pub fn string_dump(value: &str) -> String {
     quote(value, QuoteStyle::Dump)
 }
-pub(crate) fn symbol_inspect(value: &str) -> String {
+pub fn symbol_to_string_inspect(value: &str) -> String {
+    if value.is_ascii() {
+        quote(value, QuoteStyle::Dump)
+    } else {
+        quote(value, QuoteStyle::Inspect)
+    }
+}
+pub fn symbol_inspect(value: &str) -> String {
     let candidate = format!(":{value}");
     let source = SourceFile::from_bytes("symbol.rb", candidate.as_bytes().to_vec());
     if !matches!(value, "!@" | "~@")

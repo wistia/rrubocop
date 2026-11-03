@@ -1,112 +1,203 @@
-//! RSpec/ExpectActual — `expect` must not receive a literal actual.
-
-use tree_sitter::Node;
-
-use crate::cop::rspec::helpers::RSPEC_INCLUDE;
-use crate::cop::shared::{argument_nodes, call_method_name, call_receiver};
+use crate::cop::rspec::helpers::{RSPEC_INCLUDE, call_block};
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::{call_receiver, node_bytes};
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
+
+fn literal(source: &SourceFile, node: Node<'_>) -> bool {
+    if symbol_node(node) {
+        return crate::cop::ported::static_symbol(source, node).is_some()
+            && crate::cop::ported::ruby_string_parts(source, node)
+                .is_none_or(|parts| parts.len() == 1);
+    }
+    if matches!(node.kind(), "string" | "character" | "heredoc_beginning") {
+        return crate::cop::ported::ruby_string_parts(source, node)
+            .is_some_and(|parts| parts.len() == 1);
+    }
+    if matches!(
+        node.kind(),
+        "true"
+            | "false"
+            | "nil"
+            | "integer"
+            | "float"
+            | "complex"
+            | "rational"
+            | "regex_options"
+            | "string_content"
+            | "escape_sequence"
+    ) {
+        return true;
+    }
+    if node.kind() == "unary" {
+        return stable_immutable_value(source, node);
+    }
+    matches!(node.kind(), "array" | "hash" | "pair" | "range" | "regex")
+        && code_children(node)
+            .into_iter()
+            .all(|child| literal(source, child))
+}
+fn implicit_hash(args: &[Node<'_>]) -> bool {
+    !args.is_empty()
+        && args
+            .iter()
+            .all(|arg| matches!(arg.kind(), "pair" | "hash_splat_argument"))
+}
 
 pub struct ExpectActual;
-
-const SKIP_MATCHERS: &[&[u8]] = &[b"route_to", b"be_routable"];
-
-const SIMPLE: &[&str] = &[
-    "true",
-    "false",
-    "nil",
-    "integer",
-    "float",
-    "string",
-    "simple_symbol",
-    "symbol",
-];
-
-fn complex_literal(node: Node<'_>) -> bool {
-    if !matches!(node.kind(), "array" | "hash" | "pair" | "range" | "regex") {
-        return false;
-    }
-    let mut cur = node.walk();
-    node.named_children(&mut cur).all(is_literal)
-}
-
-fn is_literal(node: Node<'_>) -> bool {
-    if node.kind() == "string" {
-        let mut cursor = node.walk();
-        return !node
-            .named_children(&mut cursor)
-            .any(|n| n.kind() == "interpolation");
-    }
-    SIMPLE.contains(&node.kind()) || complex_literal(node)
-}
-
-fn matcher_name<'a>(source: &'a SourceFile, runner: Node<'_>) -> Option<&'a [u8]> {
-    let first = argument_nodes(runner).into_iter().next()?;
-    match first.kind() {
-        "call" | "command" => call_method_name(source, first),
-        "identifier" => Some(crate::cop::shared::node_bytes(source, first)),
-        _ => None,
-    }
-}
-
-fn expect_actual_arg<'a>(source: &SourceFile, runner: Node<'a>) -> Option<Node<'a>> {
-    if argument_nodes(runner).len() != 1 {
-        return None;
-    }
-    let recv = call_receiver(runner)?;
-    if call_method_name(source, recv) != Some(b"expect") {
-        return None;
-    }
-    let actual = argument_nodes(recv).into_iter().next()?;
-    is_literal(actual).then_some(actual)
-}
-
 impl Cop for ExpectActual {
     fn name(&self) -> &'static str {
         "RSpec/ExpectActual"
     }
-
     fn default_include(&self) -> &'static [&'static str] {
         RSPEC_INCLUDE
     }
-
     fn default_exclude(&self) -> &'static [&'static str] {
         &["**/spec/routing/**/*"]
     }
-
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call"]
     }
-
     fn interested_call_names(&self) -> &'static [&'static [u8]] {
         &[b"to", b"not_to", b"to_not"]
     }
-
+    fn supports_autocorrect(&self) -> bool {
+        true
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
         _config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        mut corrections: Option<&mut Vec<Correction>>,
     ) {
-        let Some(actual) = expect_actual_arg(source, node) else {
-            return;
-        };
-        if matcher_name(source, node).is_some_and(|m| SKIP_MATCHERS.contains(&m)) {
+        if !runner(source, node) {
             return;
         }
-        let (line, col) = source.offset_to_line_col(actual.start_byte());
-        diagnostics.push(self.diagnostic(
+        let Some(expect) = call_receiver(node).filter(|expect| {
+            bare(source, *expect, b"expect")
+                && !safe_send(source, *expect)
+                && call_block(*expect).is_none()
+        }) else {
+            return;
+        };
+        let actual = call_args(expect);
+        if actual.is_empty()
+            || !implicit_hash(&actual) && actual.len() != 1
+            || actual.iter().any(|actual| !literal(source, *actual))
+        {
+            return;
+        }
+        let arguments = call_args(node);
+        if arguments.len() != 1 {
+            return;
+        }
+        let matcher = arguments[0];
+        if call_block(matcher).is_some() || safe_send(source, matcher) {
+            return;
+        }
+        let expected_args = call_args(matcher);
+        let (method, expected, expected_literal) = if matcher.kind() == "binary"
+            && matcher
+                .child_by_field_name("operator")
+                .is_some_and(|operator| node_bytes(source, operator) == b"==")
+            && matcher.child_by_field_name("left").is_some_and(|left| {
+                bare(source, left, b"be")
+                    && call_args(left).is_empty()
+                    && call_block(left).is_none()
+            }) {
+            let expected = matcher.child_by_field_name("right").unwrap();
+            (b"be".as_slice(), expected, literal(source, expected))
+        } else {
+            let Some(method) = name(source, matcher).filter(|_| call_receiver(matcher).is_none())
+            else {
+                return;
+            };
+            let Some(expected) = expected_args.first().copied() else {
+                return;
+            };
+            (
+                method,
+                expected,
+                if implicit_hash(&expected_args) {
+                    expected_args.iter().all(|arg| literal(source, *arg))
+                } else {
+                    literal(source, expected)
+                },
+            )
+        };
+        if matches!(method, b"route_to" | b"be_routable") {
+            return;
+        }
+        let start = actual[0].start_byte();
+        let end = actual.last().unwrap().end_byte();
+        let index = report(
+            self,
             source,
-            line,
-            col,
+            start,
+            end,
             "Provide the actual value you are testing to `expect(...)`.".into(),
-        ));
+            diagnostics,
+        );
+        diagnostics[index].correctable =
+            matches!(method, b"eq" | b"eql" | b"equal" | b"be") && !expected_literal;
+        if !diagnostics[index].correctable
+            || actual.len() != 1
+            || !stable_immutable_value(source, actual[0])
+            || !stable_immutable_value(source, expected)
+            || expected_args.len() > 1
+        {
+            return;
+        }
+        let old = String::from_utf8_lossy(&source.as_bytes()[start..end]);
+        let replacement = String::from_utf8_lossy(node_bytes(source, expected));
+        if !preserves_comments(source, expect, start, end, &replacement) {
+            return;
+        }
+        let (target_start, target_end, matcher_replacement) = if method == b"be" {
+            (expected.start_byte(), expected.end_byte(), old.into_owned())
+        } else {
+            (
+                matcher.start_byte(),
+                matcher.end_byte(),
+                format!("{}({old})", String::from_utf8_lossy(method)),
+            )
+        };
+        if !preserves_comments(
+            source,
+            matcher,
+            target_start,
+            target_end,
+            &matcher_replacement,
+        ) {
+            return;
+        }
+        if preserving_replace(
+            source,
+            expect,
+            &mut corrections,
+            start,
+            end,
+            replacement,
+            self.name(),
+        ) {
+            preserving_replace(
+                source,
+                matcher,
+                &mut corrections,
+                target_start,
+                target_end,
+                matcher_replacement,
+                self.name(),
+            );
+            diagnostics[index].corrected = true;
+        }
     }
 }
-
 #[cfg(test)]
 mod tests {
     use super::*;

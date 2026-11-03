@@ -12,7 +12,7 @@ pub use command_call::{
     CommandArgument, CommandUnaryPlus, UnaryCommandCall, command_unary_plus,
     command_unary_plus_call,
 };
-mod regexp;
+pub mod regexp;
 pub use regexp::{captures_observed, decode_ruby_double_quoted_content, is_literal_regexp_text};
 mod corrected_crlf;
 pub(crate) use corrected_crlf::normalize_corrected_crlf;
@@ -32,7 +32,7 @@ pub use ruby_word::word_value;
 pub mod ruby_arguments;
 pub mod ruby_expression;
 pub mod ruby_inflection;
-pub(crate) mod ruby_literal;
+pub mod ruby_literal;
 pub mod ruby_semantics;
 
 pub use bare_args::replace_arg;

@@ -26,6 +26,10 @@ fn character(text: &str) -> Option<Cow<'_, str>> {
 #[cfg(test)]
 mod tests;
 
+pub(in crate::cop::ported::context) fn heredoc_end(c: &Context<'_>, n: Node<'_>) -> Option<usize> {
+    heredoc::end_offset(c, n)
+}
+
 pub(in crate::cop::ported::context) fn parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
     match n.kind() {
         "string" | "delimited_symbol" => super::string_parts(c, n),

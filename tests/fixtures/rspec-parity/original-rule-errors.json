@@ -1,0 +1,242 @@
+[
+  {
+    "cop": "RSpec/Yield",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch18:yield-empty-body",
+    "source": "receive(:bar) { |&block| }\n",
+    "corrected": "receive(:bar) { |&block| }\n",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "NoMethodError",
+      "message": "undefined method 'begin_type?' for nil",
+      "source": "lib/rubocop/cop/rspec/yield.rb:54 calling_block?",
+      "native_behavior": "No offense; preserve empty callback without crashing."
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:numbered-group",
+    "source": "describe Foo do\n consume(_1)\n let(:a) { a }\n subject { b }\nend\n",
+    "corrected": "describe Foo do\n consume(_1)\n let(:a) { a }\n subject { b }\nend\n",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "NoMethodError",
+      "message": "undefined method 'body' for nil",
+      "source": "lib/rubocop/cop/rspec/leading_subject.rb:67 parent",
+      "native_behavior": "Preserve numbered root group without crashing; original only searches ordinary block ancestors."
+    }
+  },
+  {
+    "cop": "RSpec/LeadingSubject",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "AutoCorrect": true
+    },
+    "expected": [],
+    "origin": "reference",
+    "id": "batch21:same-line",
+    "source": "describe Foo do; let(:value) { a }; subject { b }; end\n",
+    "corrected": "describe Foo do; let(:value) { a }; subject { b }; end\n",
+    "safety_difference": "Preserve eager hook execution, helper override order, dynamic name evaluation and neighboring statements when hoisting a subject.",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "Parser::ClobberingError",
+      "message": "Parser::Source::TreeRewriter detected clobbering",
+      "source": "parser/source/tree_rewriter.rb:427 from RSpec::Corrector::MoveNode",
+      "native_behavior": "Report the offense and preserve neighboring statements instead of conflicting whole-line movement."
+    },
+    "native_diagnostics": [
+      {
+        "line": 1,
+        "column": 36,
+        "length": 13,
+        "message": "Declare `subject` above any other `let` declarations.",
+        "correctable": true,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "path": "/tmp/spec/parity_spec.rb",
+    "cop": "RSpec/MetadataStyle",
+    "expected": [],
+    "origin": "reference",
+    "id": "batch23:spread-hash",
+    "source": "describe \"x\", :a, **metadata do\nend\n",
+    "corrected": "describe \"x\", :a, **metadata do\nend\n",
+    "config": {
+      "AutoCorrect": true,
+      "EnforcedStyle": "hash"
+    },
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "TypeError",
+      "message": "Expected a Parser::Source::Range, Comment or RuboCop::AST::Node, got NilClass",
+      "source": "lib/rubocop/cop/rspec/metadata_style.rb insert_pair_to_empty_hash_metadata",
+      "native_behavior": "Convert the tag into a pair after the implicit hash splat, preserving RSpec symbol precedence without a nil brace location."
+    },
+    "native_diagnostics": [
+      {
+        "line": 1,
+        "column": 14,
+        "length": 2,
+        "message": "Use hash style for metadata.",
+        "correctable": true,
+        "severity": "convention"
+      }
+    ],
+    "rust_safe": "describe \"x\", **metadata, a: true do\nend\n",
+    "rust_all": "describe \"x\", **metadata, a: true do\nend\n",
+    "native_final_diagnostics": []
+  },
+  {
+    "id": "batch25:standalone",
+    "cop": "RSpec/ChangeByZero",
+    "source": "change(Foo, :bar).by(0)\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "NegatedMatcher": null,
+      "AutoCorrect": true,
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ChangeByZero branch review",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "NoMethodError",
+      "message": "undefined method 'method_name' for nil",
+      "source": "lib/rubocop/cop/rspec/change_by_zero.rb:121 compound_expectations?",
+      "native_behavior": "Report the matcher offense without crashing and preserve the standalone matcher."
+    },
+    "native_diagnostics": [
+      {
+        "line": 1,
+        "column": 0,
+        "length": 23,
+        "message": "Prefer `not_to change` over `to change.by(0)`.",
+        "correctable": true,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "id": "batch29:same-line",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe(\"x\") { before { first }; before { second } }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Description": "Checks for setup scattered across multiple hooks in an example group.",
+      "Enabled": true,
+      "AutoCorrect": "contextual",
+      "VersionAdded": "1.10",
+      "VersionChanged": "2.31",
+      "Reference": "https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/ScatteredSetup",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "Parser::ClobberingError",
+      "message": "Parser::Source::TreeRewriter detected clobbering",
+      "source": "/home/ubuntu/.asdf/installs/ruby/3.4.9/lib/ruby/gems/3.4.0/gems/parser-3.3.5.0/lib/parser/source/tree_rewriter.rb:427:in 'Parser::Source::TreeRewriter#trigger_policy'",
+      "native_behavior": "Report same-line hook offenses and preserve their shared source line rather than overlapping whole-line removals."
+    },
+    "native_diagnostics": [
+      {
+        "line": 1,
+        "column": 16,
+        "length": 16,
+        "message": "Do not define multiple `before` hooks in the same example group (also defined on lines ).",
+        "correctable": false,
+        "severity": "convention"
+      },
+      {
+        "line": 1,
+        "column": 34,
+        "length": 17,
+        "message": "Do not define multiple `before` hooks in the same example group (also defined on lines ).",
+        "correctable": true,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "id": "batch29:numbered-root-negative",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe(\"x\") { before { first }; before { _1 } }\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Description": "Checks for setup scattered across multiple hooks in an example group.",
+      "Enabled": true,
+      "AutoCorrect": "contextual",
+      "VersionAdded": "1.10",
+      "VersionChanged": "2.31",
+      "Reference": "https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/ScatteredSetup",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "Parser::ClobberingError",
+      "message": "Parser::Source::TreeRewriter detected clobbering",
+      "source": "/home/ubuntu/.asdf/installs/ruby/3.4.9/lib/ruby/gems/3.4.0/gems/parser-3.3.5.0/lib/parser/source/tree_rewriter.rb:427:in 'Parser::Source::TreeRewriter#trigger_policy'",
+      "native_behavior": "Report same-line hook offenses and preserve their shared source line rather than overlapping whole-line removals."
+    },
+    "native_diagnostics": [
+      {
+        "line": 1,
+        "column": 16,
+        "length": 16,
+        "message": "Do not define multiple `before` hooks in the same example group (also defined on lines ).",
+        "correctable": false,
+        "severity": "convention"
+      },
+      {
+        "line": 1,
+        "column": 34,
+        "length": 13,
+        "message": "Do not define multiple `before` hooks in the same example group (also defined on lines ).",
+        "correctable": true,
+        "severity": "convention"
+      }
+    ]
+  },
+  {
+    "id": "batch29:metadata-node-error",
+    "cop": "RSpec/ScatteredSetup",
+    "source": "describe \"x\" do\n before(:each, metadata) { first }\n before(:each, metadata) { second }\nend\n",
+    "path": "/tmp/spec/parity_spec.rb",
+    "config": {
+      "Description": "Checks for setup scattered across multiple hooks in an example group.",
+      "Enabled": true,
+      "AutoCorrect": "contextual",
+      "VersionAdded": "1.10",
+      "VersionChanged": "2.31",
+      "Reference": "https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/ScatteredSetup",
+      "__RubocopVersion": "1.65.1",
+      "TargetRubyVersion": 3.4
+    },
+    "origin": "Pinned original ScatteredSetup branch review",
+    "reference_error": {
+      "version": "rubocop-rspec 3.0.4 / Ruby RuboCop 1.65.1",
+      "class": "NoMethodError",
+      "message": "undefined method 'pairs' for an instance of RuboCop::AST::SendNode",
+      "source": "/home/ubuntu/.asdf/installs/ruby/3.4.9/lib/ruby/gems/3.4.0/gems/rubocop-rspec-3.0.4/lib/rubocop/rspec/hook.rb:62:in 'RuboCop::RSpec::Hook#transform_metadata'",
+      "native_behavior": "Skip unsupported metadata safely instead of invoking Hash#pairs on a SendNode."
+    },
+    "native_diagnostics": []
+  }
+]

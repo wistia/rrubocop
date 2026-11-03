@@ -1,35 +1,69 @@
-//! RSpec/VariableName — breadth-first tree-sitter port.
-
-use tree_sitter::Node;
-
+use crate::cop::rspec::helpers::RSPEC_INCLUDE;
+use crate::cop::rspec::parity_helpers::*;
+use crate::cop::shared::call_receiver;
 use crate::cop::{Cop, CopConfig};
+use crate::correction::Correction;
 use crate::diagnostic::Diagnostic;
 use crate::parse::source::SourceFile;
+use tree_sitter::Node;
 
 pub struct VariableName;
-
 impl Cop for VariableName {
     fn name(&self) -> &'static str {
         "RSpec/VariableName"
     }
-
-    fn redundant_disable_audit(&self) -> bool {
-        false
-    }
-
     fn default_include(&self) -> &'static [&'static str] {
-        &["**/*_spec.rb", "**/spec/**/*"]
+        RSPEC_INCLUDE
     }
-
+    fn interested_node_kinds(&self) -> &'static [&'static str] {
+        &["call", "identifier"]
+    }
     fn check_node(
         &self,
         source: &SourceFile,
         node: Node<'_>,
-        _config: &CopConfig,
+        config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        _corrections: Option<&mut Vec<Correction>>,
     ) {
-        // Breadth-first stub: not implemented — avoid method-name false positives.
-        let _ = (source, node, diagnostics);
+        if safe_send(source, node) {
+            return;
+        }
+        if call_receiver(node).is_some()
+            || !matches!(
+                name(source, node),
+                Some(b"subject" | b"subject!" | b"let" | b"let!")
+            )
+            || !inside_root_spec_group(source, node)
+        {
+            return;
+        }
+        let Some(variable) = call_args(node).first().copied() else {
+            return;
+        };
+        if variable.kind() == "chained_string" {
+            return;
+        }
+        let Some(value) = crate::cop::ported::static_literal(source, variable) else {
+            return;
+        };
+        if compiled_patterns(config, "AllowedPatterns")
+            .iter()
+            .any(|pattern| pattern.is_match(&value))
+        {
+            return;
+        }
+        let style = config.get_str("EnforcedStyle", "snake_case");
+        if variable_style(&value, style) {
+            return;
+        }
+        report(
+            self,
+            source,
+            variable.start_byte(),
+            variable.end_byte(),
+            format!("Use {style} for variable names."),
+            diagnostics,
+        );
     }
 }
