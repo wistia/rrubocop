@@ -1,0 +1,66 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::EmptyEnsure registers an offense and corrects empty ensure",
+    "original": "begin\n  something\nensure # hello\n  # world\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty ensure block.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.10",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 1,
+        "length": 6,
+        "message": "Empty `ensure` block detected."
+      }
+    ],
+    "ruby_safe": "begin\n  something\n # hello\n  # world\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyEnsure registers an offense and corrects empty ensure",
+    "original": "begin\n  something\n # hello\n  # world\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty ensure block.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.10",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "begin\n  something\n # hello\n  # world\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyEnsure does not register an offense for non-empty ensure",
+    "original": "begin\n  something\n  return\nensure\n  file.close\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty ensure block.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.10",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "begin\n  something\n  return\nensure\n  file.close\nend\n"
+  }
+]

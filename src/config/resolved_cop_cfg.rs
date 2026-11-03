@@ -27,9 +27,9 @@ impl ResolvedConfig {
         inject_globals(self, config);
         let nullable_safety: &[(&str, bool)] = match name {
             "Style/TrailingCommaInBlockArgs" => &[("SafeAutoCorrect", false)],
-            "Lint/TrailingCommaInAttributeDeclaration" | "Style/NestedTernaryOperator" => {
-                &[("Safe", false), ("SafeAutoCorrect", false)]
-            }
+            "Lint/TrailingCommaInAttributeDeclaration"
+            | "Style/NestedTernaryOperator"
+            | "Lint/EmptyEnsure" => &[("Safe", false), ("SafeAutoCorrect", false)],
             "Lint/AssignmentInCondition" => &[("Safe", false), ("SafeAutoCorrect", true)],
             _ => &[],
         };
