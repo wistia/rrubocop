@@ -32,7 +32,19 @@ fn has_interpolation(text: &str) -> bool {
 mod tests {
     fn replay(fixture: &str) {
         let mut cases: serde_json::Value = serde_json::from_str(fixture).unwrap();
+        let registry = crate::cop::CopRegistry::default_registry();
+        let cop = registry.get("Lint/InterpolationCheck").unwrap();
         for case in cases.as_array_mut().unwrap() {
+            if let Some(diagnostics) = case.get("ruby_parser_diagnostics") {
+                assert!(
+                    !diagnostics
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|d| matches!(d["level"].as_str(), Some("error" | "fatal")))
+                );
+            }
+            assert!(case.get("ruby_cop_error").is_none());
             let source = crate::parse::source::SourceFile::from_bytes(
                 "probe.rb",
                 case["original"].as_str().unwrap().as_bytes().to_vec(),
@@ -44,19 +56,41 @@ mod tests {
                 case["id"],
                 tree.root_node().to_sexp()
             );
+            let config = crate::cop::CopConfig {
+                options: case["config"]
+                    .as_object()
+                    .unwrap()
+                    .iter()
+                    .map(|(key, value)| (key.clone(), serde_yml::to_value(value).unwrap()))
+                    .collect(),
+                ..Default::default()
+            };
+            let mut diagnostics = Vec::new();
+            let mut corrections = Vec::new();
+            crate::cop::walker::BatchedWalker::new(vec![cop], vec![&config]).walk(
+                &source,
+                tree.root_node(),
+                &mut diagnostics,
+                Some(&mut corrections),
+            );
+            assert!(diagnostics.iter().all(|diagnostic| !diagnostic.correctable));
+            assert!(corrections.is_empty());
             case["ruby_corrected"] = case["original"].clone();
         }
-        let registry = crate::cop::CopRegistry::default_registry();
-        crate::testutil::assert_original_spec_parity(
-            registry.get("Lint/InterpolationCheck").unwrap(),
-            &serde_json::to_string(&cases).unwrap(),
-        );
+        crate::testutil::assert_original_spec_parity(cop, &serde_json::to_string(&cases).unwrap());
     }
     #[test]
     fn unchanged_original_examples_preserve_literal_expressions() {
         replay(include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
             "/tests/fixtures/cops/lint/interpolation_check/original-parity.json"
+        )));
+    }
+    #[test]
+    fn final_native_states_match_fresh_original_and_parse_cleanly() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/lint/interpolation_check/final-states.json"
         )));
     }
     #[test]

@@ -1,0 +1,3103 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense and corrects for interpolation in single quoted string",
+    "original": "'foo #{bar}'\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"foo #{bar}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'foo #{bar}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense and corrects for interpolation in single quoted string",
+    "original": "\"foo #{bar}\"\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"foo #{bar}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense and corrects when including interpolation and double quoted string in single quoted string",
+    "original": "'foo \"#{bar}\"'\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 14,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "%{foo \"#{bar}\"}\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'foo \"#{bar}\"'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense and corrects when including interpolation and double quoted string in single quoted string",
+    "original": "%{foo \"#{bar}\"}\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%{foo \"#{bar}\"}\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense for interpolation in single quoted split string",
+    "original": "'x' \\\n  'foo #{bar}'\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "'x' \\\n  \"foo #{bar}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'x' \\\n  'foo #{bar}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck registers an offense for interpolation in double + single quoted split string",
+    "original": "\"x\" \\\n  'foo #{bar}'\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"x\" \\\n  \"foo #{bar}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "\"x\" \\\n  'foo #{bar}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for properly interpolation strings",
+    "original": "hello = \"foo #{bar}\"\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "hello = \"foo #{bar}\"\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for interpolation in nested strings",
+    "original": "foo = \"bar '#{baz}' qux\"\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = \"bar '#{baz}' qux\"\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for interpolation in a regexp",
+    "original": "/\\#{20}/\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/\\#{20}/\n",
+    "ruby_ast_types": [
+      "regexp",
+      "str",
+      "regopt"
+    ],
+    "ruby_corrected_ast_types": [
+      "regexp",
+      "str",
+      "regopt"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for an escaped interpolation",
+    "original": "\"\\#{msg}\"\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"\\#{msg}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not crash for \\xff",
+    "original": "foo = \"\\xff\"\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = \"\\xff\"\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register an offense for escaped crab claws in dstr",
+    "original": "foo = \"alpha #{variable} beta \\#{gamma}\\\" delta\"\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = \"alpha #{variable} beta \\#{gamma}\\\" delta\"\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::InterpolationCheck does not register offense for strings in %w()",
+    "original": "%w(\"#{a}-foo\")\n",
+    "config": {
+      "Description": "Checks for interpolation in a single quoted string.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "0.50",
+      "VersionChanged": "1.40",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%w(\"#{a}-foo\")\n",
+    "ruby_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-0",
+    "original": "'#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-1",
+    "original": "'\"#{value}\"'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "%{\"#{value}\"}\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'\"#{value}\"'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-2",
+    "original": "'#{work()}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{work()}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{work()}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-3",
+    "original": "'#{'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-4",
+    "original": "'#{value'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{value'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-5",
+    "original": "'#{value\\n}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value\\n}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "bare_backslash"
+      }
+    ],
+    "rust_corrected": "'#{value\\n}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-6",
+    "original": "'#{value\n}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{value\n}'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-7",
+    "original": "'before\n#{value}\nafter'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'before\n#{value}\nafter'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-8",
+    "original": "'#{one}\n#{two}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{one}\n#{two}'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-9",
+    "original": "'\\#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'\\#{value}'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-10",
+    "original": "'\\\\#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'\\\\#{value}'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-11",
+    "original": "'\\\\\\#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'\\\\\\#{value}'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-12",
+    "original": "'#{one} \\#{two}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 16,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{one} \\#{two}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{one} \\#{two}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-13",
+    "original": "'#{one\n} #{two}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{one\n} #{two}'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-14",
+    "original": "'é #{value}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"é #{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'é #{value}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-15",
+    "original": "'#{\nvalue}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{\nvalue}'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-16",
+    "original": "'#{value}\r\nnext'\r\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{value}\r\nnext'\r\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-17",
+    "original": "\"\\#{value}\"\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"\\#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-18",
+    "original": "\"#{value}\"\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-19",
+    "original": "%q(#{value})\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q(#{value})\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-20",
+    "original": "%q{#{value}}\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q{#{value}}\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-21",
+    "original": "%q[#{value}]\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q[#{value}]\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-22",
+    "original": "%q!#{value}!\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q!#{value}!\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-24",
+    "original": "%Q(\\#{value})\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%Q(\\#{value})\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-25",
+    "original": "%Q(#{value})\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%Q(#{value})\n",
+    "ruby_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-26",
+    "original": "%w(#{value})\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%w(#{value})\n",
+    "ruby_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-27",
+    "original": "%W(\\#{value})\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%W(\\#{value})\n",
+    "ruby_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-28",
+    "original": "%i(#{value})\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%i(#{value})\n",
+    "ruby_ast_types": [
+      "array",
+      "sym"
+    ],
+    "ruby_corrected_ast_types": [
+      "array",
+      "sym"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-29",
+    "original": ":'#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": ":'#{value}'\n",
+    "ruby_ast_types": [
+      "sym"
+    ],
+    "ruby_corrected_ast_types": [
+      "sym"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-30",
+    "original": "/\\#{20}/\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/\\#{20}/\n",
+    "ruby_ast_types": [
+      "regexp",
+      "str",
+      "regopt"
+    ],
+    "ruby_corrected_ast_types": [
+      "regexp",
+      "str",
+      "regopt"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-31",
+    "original": "\"x\" \\\n  '#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"x\" \\\n  \"#{value}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "\"x\" \\\n  '#{value}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-32",
+    "original": "'x' \\\n  '#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "'x' \\\n  \"#{value}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'x' \\\n  '#{value}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-33",
+    "original": "value = <<~'TEXT'\n#{value}\nTEXT\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value = <<~'TEXT'\n#{value}\nTEXT\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-34",
+    "original": "value = <<~TEXT\n\\#{value}\nTEXT\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value = <<~TEXT\n\\#{value}\nTEXT\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-35",
+    "original": "value = <<~TEXT\n#{'#{value}'}\nTEXT\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value = <<~TEXT\n#{'#{value}'}\nTEXT\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "dstr",
+      "begin",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "dstr",
+      "begin",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-36",
+    "original": "\"#{'#{value}'}\"\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{\"#{value}\"}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "begin",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "\"#{'#{value}'}\"\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-37",
+    "original": "'#{x} #{y}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{x} #{y}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{x} #{y}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-38",
+    "original": "'#{x}\r}'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{x}\r}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{x}\r}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v2.7-39",
+    "original": "'#{value}' # comment\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\" # comment\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}' # comment\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-0",
+    "original": "'#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-1",
+    "original": "'\"#{value}\"'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "%{\"#{value}\"}\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'\"#{value}\"'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-2",
+    "original": "'#{work()}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{work()}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{work()}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-3",
+    "original": "'#{'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-4",
+    "original": "'#{value'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{value'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-5",
+    "original": "'#{value\\n}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value\\n}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "bare_backslash"
+      }
+    ],
+    "rust_corrected": "'#{value\\n}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-6",
+    "original": "'#{value\n}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{value\n}'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-7",
+    "original": "'before\n#{value}\nafter'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'before\n#{value}\nafter'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-8",
+    "original": "'#{one}\n#{two}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{one}\n#{two}'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-9",
+    "original": "'\\#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'\\#{value}'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-10",
+    "original": "'\\\\#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'\\\\#{value}'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-11",
+    "original": "'\\\\\\#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'\\\\\\#{value}'\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-12",
+    "original": "'#{one} \\#{two}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 16,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{one} \\#{two}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{one} \\#{two}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-13",
+    "original": "'#{one\n} #{two}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{one\n} #{two}'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-14",
+    "original": "'é #{value}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"é #{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'é #{value}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-15",
+    "original": "'#{\nvalue}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{\nvalue}'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-16",
+    "original": "'#{value}\r\nnext'\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'#{value}\r\nnext'\r\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-17",
+    "original": "\"\\#{value}\"\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"\\#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-18",
+    "original": "\"#{value}\"\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-19",
+    "original": "%q(#{value})\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q(#{value})\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-20",
+    "original": "%q{#{value}}\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q{#{value}}\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-21",
+    "original": "%q[#{value}]\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q[#{value}]\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-22",
+    "original": "%q!#{value}!\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q!#{value}!\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-24",
+    "original": "%Q(\\#{value})\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%Q(\\#{value})\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-25",
+    "original": "%Q(#{value})\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%Q(#{value})\n",
+    "ruby_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-26",
+    "original": "%w(#{value})\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%w(#{value})\n",
+    "ruby_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-27",
+    "original": "%W(\\#{value})\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%W(\\#{value})\n",
+    "ruby_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "array",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-28",
+    "original": "%i(#{value})\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "%i(#{value})\n",
+    "ruby_ast_types": [
+      "array",
+      "sym"
+    ],
+    "ruby_corrected_ast_types": [
+      "array",
+      "sym"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-29",
+    "original": ":'#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": ":'#{value}'\n",
+    "ruby_ast_types": [
+      "sym"
+    ],
+    "ruby_corrected_ast_types": [
+      "sym"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-30",
+    "original": "/\\#{20}/\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/\\#{20}/\n",
+    "ruby_ast_types": [
+      "regexp",
+      "str",
+      "regopt"
+    ],
+    "ruby_corrected_ast_types": [
+      "regexp",
+      "str",
+      "regopt"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-31",
+    "original": "\"x\" \\\n  '#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"x\" \\\n  \"#{value}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "\"x\" \\\n  '#{value}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-32",
+    "original": "'x' \\\n  '#{value}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "'x' \\\n  \"#{value}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "str",
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'x' \\\n  '#{value}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-33",
+    "original": "value = <<~'TEXT'\n#{value}\nTEXT\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value = <<~'TEXT'\n#{value}\nTEXT\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-34",
+    "original": "value = <<~TEXT\n\\#{value}\nTEXT\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value = <<~TEXT\n\\#{value}\nTEXT\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-35",
+    "original": "value = <<~TEXT\n#{'#{value}'}\nTEXT\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value = <<~TEXT\n#{'#{value}'}\nTEXT\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "dstr",
+      "begin",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "dstr",
+      "begin",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-36",
+    "original": "\"#{'#{value}'}\"\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{\"#{value}\"}\"\n",
+    "ruby_ast_types": [
+      "dstr",
+      "begin",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "\"#{'#{value}'}\"\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-37",
+    "original": "'#{x} #{y}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{x} #{y}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{x} #{y}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-38",
+    "original": "'#{x}\r}'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{x}\r}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{x}\r}'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-v3.4-39",
+    "original": "'#{value}' # comment\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 10,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\" # comment\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}' # comment\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v2.7-0",
+    "original": "'#{value}\n'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\n'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v2.7-1",
+    "original": "'#{value}\r\n'\r\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\r\n'\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v2.7-2",
+    "original": "%q(#{value}\n)\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 13,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q(#{value}\n)\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v2.7-3",
+    "original": "'#{value}\\\n'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\\\n\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\\\n'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v2.7-4",
+    "original": "{'#{value}': 1}\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "{'#{value}': 1}\n",
+    "ruby_ast_types": [
+      "hash",
+      "pair",
+      "sym",
+      "int"
+    ],
+    "ruby_corrected_ast_types": [
+      "hash",
+      "pair",
+      "sym",
+      "int"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v2.7-6",
+    "original": "value = <<~TEXT\n#{%q(#{value})}\nTEXT\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value = <<~TEXT\n#{%q(#{value})}\nTEXT\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "dstr",
+      "begin",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "dstr",
+      "begin",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v2.7-7",
+    "original": "'#{value}\n' 'tail'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\" 'tail'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "dstr",
+      "begin",
+      "send",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\n' 'tail'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v2.7-8",
+    "original": "'#{value}\n' \\\n 'tail'\n",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\" \\\n 'tail'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "dstr",
+      "begin",
+      "send",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\n' \\\n 'tail'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v3.4-0",
+    "original": "'#{value}\n'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\n'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v3.4-1",
+    "original": "'#{value}\r\n'\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\r\n'\r\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v3.4-2",
+    "original": "%q(#{value}\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 13,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q(#{value}\n)\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v3.4-3",
+    "original": "'#{value}\\\n'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\\\n\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\\\n'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v3.4-4",
+    "original": "{'#{value}': 1}\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "{'#{value}': 1}\n",
+    "ruby_ast_types": [
+      "hash",
+      "pair",
+      "sym",
+      "int"
+    ],
+    "ruby_corrected_ast_types": [
+      "hash",
+      "pair",
+      "sym",
+      "int"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v3.4-6",
+    "original": "value = <<~TEXT\n#{%q(#{value})}\nTEXT\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "value = <<~TEXT\n#{%q(#{value})}\nTEXT\n",
+    "ruby_ast_types": [
+      "lvasgn",
+      "dstr",
+      "begin",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "lvasgn",
+      "dstr",
+      "begin",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v3.4-7",
+    "original": "'#{value}\n' 'tail'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\" 'tail'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "dstr",
+      "begin",
+      "send",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\n' 'tail'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "interpolation-extra-v3.4-8",
+    "original": "'#{value}\n' \\\n 'tail'\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\n\" \\\n 'tail'\n",
+    "ruby_ast_types": [
+      "dstr",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "dstr",
+      "begin",
+      "send",
+      "str",
+      "str"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "'#{value}\n' \\\n 'tail'\n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]
