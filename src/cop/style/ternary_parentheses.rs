@@ -67,6 +67,9 @@ fn complex(source: &SourceFile, node: Node<'_>) -> bool {
         return false;
     }
     if node.kind() == "call" {
+        if node.child_by_field_name("block").is_some() {
+            return true;
+        }
         let Some(method) = call_method_name(source, node) else {
             return true;
         };
@@ -250,6 +253,16 @@ mod tests {
         assert!(!diagnostics[0].correctable);
     }
 
+    #[test]
+    fn original_block_condition_roles() {
+        crate::testutil::assert_original_spec_parity(
+            &TernaryParentheses,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/ternary_parentheses/block-conditions.json"
+            )),
+        );
+    }
     #[test]
     fn original_ruby_specs() {
         crate::testutil::assert_original_spec_parity(
