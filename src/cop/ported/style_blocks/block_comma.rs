@@ -50,3 +50,18 @@ fn first_parameters<'n>(n: Node<'n>, parameters: Node<'n>) -> Node<'n> {
         .find(|child| child.kind() == parameters.kind())
         .unwrap_or(parameters)
 }
+
+#[cfg(test)]
+mod original_tests {
+    #[test]
+    fn original_spec_states() {
+        let registry = crate::cop::CopRegistry::default_registry();
+        crate::testutil::assert_original_spec_parity(
+            registry.get("Style/TrailingCommaInBlockArgs").unwrap(),
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_block_args/original-parity.json"
+            )),
+        );
+    }
+}
