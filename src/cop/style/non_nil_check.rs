@@ -97,7 +97,6 @@ impl Cop for NonNilCheck {
         if !semantic
             && config.get_bool("NilComparisonEnabled", true)
             && config.get_str("NilComparisonEnforcedStyle", "predicate") == "comparison"
-            || predicate_result(source, node)
         {
             return;
         }
@@ -227,6 +226,9 @@ impl Cop for NonNilCheck {
         } else {
             return;
         };
+        if predicate_result(source, node) {
+            return;
+        }
         if !crate::cop::shared::collect_comments(node).is_empty()
             || std::str::from_utf8(node_bytes(source, node)).is_err()
             || comparison.is_some() && node.kind() == "call"
