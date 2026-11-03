@@ -1,7 +1,7 @@
 //! Prefer one factory-list call or the configured repeated-create style.
 use crate::cop::shared::{
-    argument_nodes, call_method_name, call_receiver, collect_comments, for_each_descendant,
-    method_node, named_kids, node_bytes, node_text, push_replace,
+    argument_nodes, call_method_name, call_receiver, collect_comments, method_node, named_kids,
+    node_bytes, node_text, push_replace,
 };
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -49,7 +49,7 @@ impl Cop for CreateList {
             {
                 return;
             }
-            let message = if n_times || dynamic_arguments(source, values[0], config) {
+            let message = if n_times || argument_safety(source, values[0], config).dynamic {
                 format!("Prefer {}.times.map.", values.len())
             } else {
                 "Prefer create_list.".into()
@@ -120,17 +120,18 @@ impl Cop for CreateList {
             return;
         }
         let create = statements[0];
-        if !factory_call(source, create, b"create", config)
-            || dynamic_arguments(source, create, config)
-            || used_parameter(source, block, body)
-        {
+        if !factory_call(source, create, b"create", config) {
+            return;
+        }
+        let safety = argument_safety(source, create, config);
+        if safety.dynamic || used_parameter(source, block, body) {
             return;
         }
         let end = node_bytes(source, node)[..block.start_byte() - node.start_byte()]
             .iter()
             .rposition(|b| !b.is_ascii_whitespace())
             .map_or(block.start_byte(), |last| node.start_byte() + last + 1);
-        let replacement = if safe_navigation_argument(source, create) {
+        let replacement = if safety.safe_navigation {
             None
         } else {
             render_list(source, create, count)
@@ -247,16 +248,35 @@ fn repeat_count<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
         _ => None,
     }
 }
-fn dynamic_arguments(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {
-    let mut found = false;
-    for argument in argument_nodes(node).iter().skip(1) {
-        for_each_descendant(*argument, |n| {
-            found |= crate::cop::shared::ruby_expression::regular_send_name(source, n).is_some()
-                || (config.get_f64("TargetRubyVersion", 3.4) < 2.7
-                    && legacy_numbered_read(source, n))
-        });
+fn any_descendant(node: Node<'_>, mut predicate: impl FnMut(Node<'_>) -> bool) -> bool {
+    let mut pending = vec![node];
+    while let Some(node) = pending.pop() {
+        if predicate(node) {
+            return true;
+        }
+        pending.extend(named_kids(node));
     }
-    found
+    false
+}
+#[derive(Default)]
+struct ArgumentSafety {
+    dynamic: bool,
+    safe_navigation: bool,
+}
+fn argument_safety(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> ArgumentSafety {
+    let mut safety = ArgumentSafety::default();
+    let legacy = config.get_f64("TargetRubyVersion", 3.4) < 2.7;
+    safety.dynamic = argument_nodes(node).into_iter().skip(1).any(|argument| {
+        any_descendant(argument, |node| {
+            safety.safe_navigation |= node.kind() == "call"
+                && node
+                    .child_by_field_name("operator")
+                    .is_some_and(|op| node_bytes(source, op) == b"&.");
+            crate::cop::shared::ruby_expression::regular_send_name(source, node).is_some()
+                || (legacy && legacy_numbered_read(source, node))
+        })
+    });
+    safety
 }
 
 fn legacy_numbered_read(source: &SourceFile, node: Node<'_>) -> bool {
@@ -275,34 +295,20 @@ fn legacy_numbered_read(source: &SourceFile, node: Node<'_>) -> bool {
     false
 }
 
-fn safe_navigation_argument(source: &SourceFile, node: Node<'_>) -> bool {
-    let mut found = false;
-    for argument in argument_nodes(node).iter().skip(1) {
-        for_each_descendant(*argument, |node| {
-            found |= node.kind() == "call"
-                && node
-                    .child_by_field_name("operator")
-                    .is_some_and(|op| node_bytes(source, op) == b"&.");
-        });
-    }
-    found
-}
-
 fn used_parameter(source: &SourceFile, block: Node<'_>, body: Node<'_>) -> bool {
     let Some(parameters) = block.child_by_field_name("parameters") else {
         return false;
     };
-    let names: Vec<_> = named_kids(parameters)
+    let names: std::collections::HashSet<_> = named_kids(parameters)
         .into_iter()
         .filter(|n| n.kind() == "identifier")
         .map(|n| node_bytes(source, n))
         .collect();
-    let mut used = false;
-    for_each_descendant(body, |n| {
-        used |= n.kind() == "identifier" && names.contains(&node_bytes(source, n))
-    });
-    used
+    any_descendant(body, |n| {
+        n.kind() == "identifier" && names.contains(node_bytes(source, n))
+    })
 }
+
 fn invocation(source: &SourceFile, node: Node<'_>, method: &str, arguments: String) -> String {
     let receiver = call_receiver(node)
         .map(|n| format!("{}.", node_text(source, n)))
