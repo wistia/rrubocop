@@ -7,6 +7,8 @@ def cases():
     def add(cop, source, **config):
         if cop in ("Rails/IndexWith", "Rails/ContentTag", "Rails/Pick"):
             config.setdefault("GemVersions", {"railties": "8.1.3.1"})
+        if cop == "Rails/TimeZone":
+            config.setdefault("__RubocopRailsVersion", "2.26.0")
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="test/models/example_test.rb" if cop=="Rails/RefuteMethods" else "app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
@@ -513,5 +515,7 @@ def cases():
     from real_corpus_cases import extend
     extend(add)
     from find_each_cases import extend
+    extend(add)
+    from time_zone_cases import extend
     extend(add)
     return rows

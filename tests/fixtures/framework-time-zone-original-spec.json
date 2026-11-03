@@ -1,0 +1,357 @@
+{
+  "source": "rubocop-rails2.26.0/spec/rubocop/cop/rails/time_zone_spec.rb",
+  "cases": [
+    {
+      "source": "Time.now\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now(in: nil)\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now(in: '+03:00')\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.new\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.new(2012, 6, 10, 12, 00)\n",
+      "style": "strict"
+    },
+    {
+      "source": "Range.new(1, Time.class.to_s)\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.new(1988, 3, 15, 3, 0, 0, '-05:00')\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.new(2012, 6, 10, 12, 00, in: nil)\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.new(2012, 6, 10, 12, 00, in: '-05:00')\n",
+      "style": "strict"
+    },
+    {
+      "source": "::Time.now\n",
+      "style": "strict"
+    },
+    {
+      "source": "Some::Time.now(0).strftime('%H:%M')\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.in_time_zone\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.utc\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.getlocal\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.xmlschema\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.iso8601\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.jisx0301\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.rfc3339\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.httpdate\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.to_i\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.to_f\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now.in_time_zone\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.local\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.new\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.at\n",
+      "style": "strict"
+    },
+    {
+      "source": "\"2012-03-02 16:05:37\".to_time\n",
+      "style": "strict"
+    },
+    {
+      "source": "\"2012-03-02 16:05:37\"&.to_time\n",
+      "style": "strict"
+    },
+    {
+      "source": "to_time\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse(\"2012-03-02 16:05:37\")\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse(\"2012-03-02T16:05:37Z\")\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse(\"2012-03-02T16:05:37z\")\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse(\"2012-03-02T16:05:37E\")\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse(\"2012-03-02 16:05:37 +0100\")\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse(\"2012-03-02 16:05:37 +01:00\")\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.at(ts)\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.at(ts).in_time_zone\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.at(ts, in: nil)\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.at(ts, in: '+03:00')\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse('12:00').localtime('+03:00')\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse('12:00').localtime\n",
+      "style": "strict"
+    },
+    {
+      "source": "return Foo, Time.parse(\"2012-03-02 16:05:37\")\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.current\n",
+      "style": "strict"
+    },
+    {
+      "source": "Some::Time.now\n",
+      "style": "strict"
+    },
+    {
+      "source": "Some::Time.local\n",
+      "style": "strict"
+    },
+    {
+      "source": "Some::Time.new\n",
+      "style": "strict"
+    },
+    {
+      "source": "Some::Time.parse\n",
+      "style": "strict"
+    },
+    {
+      "source": "Some::Time.at\n",
+      "style": "strict"
+    },
+    {
+      "source": "Time.now\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.current\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.in_time_zone\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.utc\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.getlocal\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.xmlschema\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.iso8601\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.jisx0301\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.rfc3339\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.httpdate\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.to_i\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.now.to_f\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.zone.now\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.zone_default.now\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.find_zone('EST').now\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.find_zone!('EST').now\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.current.now\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.current.local\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.current.new\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.current.parse\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.current.at\n",
+      "style": "flexible"
+    },
+    {
+      "source": "Time.zone.now",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone.today",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone.local(2012, 6, 10, 12, 00)",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone.parse(\"2012-03-02 16:05:37\")",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone.at(ts)",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone.parse('12:00').localtime",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone.parse('12:00').localtime('+03:00')",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone_default.now",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone_default.today",
+      "style": "strict"
+    },
+    {
+      "source": "Time.zone_default.local(2012, 6, 10, 12, 00)",
+      "style": "strict"
+    },
+    {
+      "source": "Time.find_zone('EST').now",
+      "style": "strict"
+    },
+    {
+      "source": "Time.find_zone('EST').today",
+      "style": "strict"
+    },
+    {
+      "source": "Time.find_zone('EST').local(2012, 6, 10, 12, 00)",
+      "style": "strict"
+    },
+    {
+      "source": "Time.find_zone!('EST').now",
+      "style": "strict"
+    },
+    {
+      "source": "Time.find_zone!('EST').today",
+      "style": "strict"
+    },
+    {
+      "source": "Time.find_zone!('EST').local(2012, 6, 10, 12, 00)",
+      "style": "strict"
+    },
+    {
+      "source": "Time.parse('12:00').localtime('+03:00')",
+      "style": "flexible"
+    },
+    {
+      "source": "A",
+      "style": "flexible"
+    }
+  ]
+}

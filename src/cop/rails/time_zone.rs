@@ -1,6 +1,7 @@
 //! Rails/TimeZone — Time methods without zone (tree-sitter port).
 
 mod detect;
+mod pinned;
 pub(super) use detect::ACCEPTED as ACCEPTED_METHODS;
 
 use tree_sitter::Node;
@@ -100,7 +101,7 @@ impl Cop for TimeZone {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command"]
+        &["call", "command", "constant", "scope_resolution"]
     }
 
     fn check_node(
@@ -109,8 +110,15 @@ impl Cop for TimeZone {
         node: Node<'_>,
         config: &CopConfig,
         diagnostics: &mut Vec<Diagnostic>,
-        _corrections: Option<&mut Vec<crate::correction::Correction>>,
+        corrections: Option<&mut Vec<crate::correction::Correction>>,
     ) {
+        if config
+            .get_str("__RubocopRailsVersion", "2.37.0")
+            .starts_with("2.26.")
+        {
+            pinned::check(self, source, node, config, diagnostics, corrections);
+            return;
+        }
         if legacy_timezone_literal(source, node, config) {
             return;
         }
