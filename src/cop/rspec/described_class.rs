@@ -145,6 +145,19 @@ fn report_usage(
     diagnostics.push(diag);
 }
 
+#[derive(Clone)]
+struct AncestorExclusions {
+    method: bool,
+    class_new: bool,
+}
+struct ConstantRanges(Vec<super::cache::NodeRange>);
+fn ancestor_exclusions(source: &SourceFile, node: Node<'_>) -> AncestorExclusions {
+    super::cache::node_fact(source, node, || AncestorExclusions {
+        method: inside_method(node),
+        class_new: inside_class_new_block(source, node),
+    })
+}
+
 fn reportable_const_usage(
     source: &SourceFile,
     n: Node<'_>,
@@ -156,8 +169,10 @@ fn reportable_const_usage(
         && !skip_describe_arg(n, describe)
         && !(only_static && is_scope_prefix(n))
         && !is_nested_describe_arg(source, n)
-        && !inside_method(n)
-        && !inside_class_new_block(source, n)
+        && {
+            let excluded = ancestor_exclusions(source, n);
+            !excluded.method && !excluded.class_new
+        }
 }
 
 impl Cop for DescribedClass {
@@ -177,6 +192,9 @@ impl Cop for DescribedClass {
         &["call", "command"]
     }
 
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"describe"]
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -202,11 +220,36 @@ impl Cop for DescribedClass {
         let Some(block) = call_block(node) else {
             return;
         };
-        for_each_descendant(block, |n| {
+        let mut root = node;
+        while let Some(parent) = root.parent() {
+            root = parent;
+        }
+        let constants = source.cached(0, || {
+            let mut ranges = Vec::new();
+            for_each_descendant(root, |child| {
+                if matches!(child.kind(), "constant" | "scope_resolution") {
+                    ranges.push(super::cache::NodeRange::new(child));
+                }
+            });
+            ConstantRanges(ranges)
+        });
+        let first = constants
+            .0
+            .partition_point(|range| range.start < block.start_byte());
+        for range in constants.0[first..]
+            .iter()
+            .take_while(|range| range.start < block.end_byte())
+        {
+            let Some(n) = range
+                .resolve(root)
+                .filter(|n| n.end_byte() <= block.end_byte())
+            else {
+                continue;
+            };
             if reportable_const_usage(source, n, node, const_name, only_static) {
                 report_usage(self, source, n, const_name, diagnostics, &mut corrections);
             }
-        });
+        }
     }
 }
 

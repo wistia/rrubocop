@@ -62,6 +62,9 @@ impl Cop for ExcessiveDocstringSpacing {
     fn supports_autocorrect(&self) -> bool {
         true
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        crate::cop::rspec::helpers::example_and_group_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -97,6 +100,9 @@ impl Cop for ExcessiveDocstringSpacing {
             "Excessive whitespace.".into(),
             diagnostics,
         );
+        if corrections.is_none() {
+            return;
+        }
         let replacement = normalize(&text);
         if description::safe_replacement(source, description, &replacement)
             && preserving_replace(

@@ -70,8 +70,14 @@ fn walk(
     diagnostics: &mut Vec<Diagnostic>,
 ) {
     let mut names = inherited.to_vec();
-    names.extend(subjects.get(&node.id()).into_iter().flatten().cloned());
-    if let Some(overrides) = overrides.get(&node.id()) {
+    names.extend(
+        subjects
+            .get(&super::cache::NodeRange::new(node))
+            .into_iter()
+            .flatten()
+            .cloned(),
+    );
+    if let Some(overrides) = overrides.get(&super::cache::NodeRange::new(node)) {
         names.retain(|name| !overrides.contains(name));
     }
     let children = if expectation(source, node, &names) {

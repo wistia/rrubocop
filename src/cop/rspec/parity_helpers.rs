@@ -241,16 +241,27 @@ pub(super) fn literal_starts_with(source: &SourceFile, node: Node<'_>, prefixes:
         .is_some_and(|byte| prefixes.contains(byte))
 }
 
-pub(super) fn compiled_patterns(config: &crate::cop::CopConfig, key: &str) -> Vec<regex::Regex> {
-    config
-        .options
-        .get(key)
-        .and_then(|value| value.as_sequence())
-        .into_iter()
-        .flatten()
-        .filter_map(|pattern| pattern.as_str())
-        .filter_map(|pattern| regex::Regex::new(pattern).ok())
-        .collect()
+#[derive(Clone)]
+struct AllowedPatterns(std::sync::Arc<Vec<regex::Regex>>);
+pub(super) fn compiled_patterns(
+    source: &SourceFile,
+    config: &crate::cop::CopConfig,
+    key: &str,
+) -> std::sync::Arc<Vec<regex::Regex>> {
+    super::cache::config_fact(source, config, &[key], || {
+        AllowedPatterns(std::sync::Arc::new(
+            config
+                .options
+                .get(key)
+                .and_then(|value| value.as_sequence())
+                .into_iter()
+                .flatten()
+                .filter_map(|pattern| pattern.as_str())
+                .filter_map(|pattern| regex::Regex::new(pattern).ok())
+                .collect(),
+        ))
+    })
+    .0
 }
 
 pub(super) fn metadata_pairs(node: Node<'_>) -> Vec<Node<'_>> {
@@ -476,7 +487,7 @@ pub(super) fn pure_literal(source: &SourceFile, node: Node<'_>) -> bool {
             .all(|child| pure_literal(source, *child))
 }
 
-pub(super) fn scoped_examples<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node<'a>> {
+fn uncached_scoped_examples<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node<'a>> {
     use crate::cop::rspec::helpers::{bare_rspec_call, call_block, is_example, is_group};
     use crate::cop::rspec::separation::numbered_block;
     let mut examples = Vec::new();
@@ -513,6 +524,24 @@ pub(super) fn scoped_examples<'a>(source: &SourceFile, node: Node<'a>) -> Vec<No
     }
     examples.sort_by_key(Node::start_byte);
     examples
+}
+
+#[derive(Clone)]
+struct ScopedExampleRanges(std::sync::Arc<Vec<super::cache::NodeRange>>);
+pub(super) fn scoped_examples<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node<'a>> {
+    let ranges = super::cache::node_fact(source, node, || {
+        ScopedExampleRanges(std::sync::Arc::new(
+            uncached_scoped_examples(source, node)
+                .into_iter()
+                .map(super::cache::NodeRange::new)
+                .collect(),
+        ))
+    });
+    ranges
+        .0
+        .iter()
+        .filter_map(|range| range.resolve(node))
+        .collect()
 }
 
 pub(super) fn literal_or_const(source: &SourceFile, node: Node<'_>) -> bool {
@@ -581,4 +610,40 @@ pub(super) fn stable_immutable_value(source: &SourceFile, node: Node<'_>) -> boo
         "integer" | "float" | "rational" | "complex" | "nil" | "true" | "false"
     ) || symbol_node(node) && crate::cop::ported::static_symbol(source, node).is_some()
         || node.kind() == "unary" && literal_or_const(source, node)
+}
+
+// Equality remains the pinned AST comparator; indices retain source order for messages.
+pub(super) fn repeated_indices(
+    length: usize,
+    mut equal: impl FnMut(usize, usize) -> bool,
+) -> Vec<Vec<usize>> {
+    let mut repeats = vec![Vec::new(); length];
+    for left in 0..length {
+        for right in left + 1..length {
+            if equal(left, right) {
+                repeats[left].push(right);
+                repeats[right].push(left);
+            }
+        }
+    }
+    for indices in &mut repeats {
+        indices.sort_unstable();
+    }
+    repeats
+}
+
+pub(super) fn repeated_flags(
+    length: usize,
+    mut equal: impl FnMut(usize, usize) -> bool,
+) -> Vec<bool> {
+    let mut repeated = vec![false; length];
+    for left in 0..length {
+        for right in left + 1..length {
+            if !(repeated[left] && repeated[right]) && equal(left, right) {
+                repeated[left] = true;
+                repeated[right] = true;
+            }
+        }
+    }
+    repeated
 }

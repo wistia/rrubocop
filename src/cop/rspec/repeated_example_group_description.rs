@@ -59,23 +59,22 @@ impl Cop for RepeatedExampleGroupDescription {
                     && !pending_group(source, *child)
             })
             .collect();
-        for group in &groups {
-            let repeats: Vec<_> = groups
+        let arguments: Vec<_> = groups.iter().map(|group| call_args(*group)).collect();
+        let numbered: Vec<_> = groups
+            .iter()
+            .map(|group| numbered_block(source, *group))
+            .collect();
+        let repeated = repeated_indices(groups.len(), |left, right| {
+            match (numbered[left], numbered[right]) {
+                (true, true) => true,
+                (false, false) => eql_arguments(source, &arguments[left], &arguments[right]),
+                _ => false,
+            }
+        });
+        for (position, group) in groups.iter().enumerate() {
+            let repeats: Vec<_> = repeated[position]
                 .iter()
-                .filter(|other| {
-                    other != &group
-                        && match (
-                            numbered_block(source, *group),
-                            numbered_block(source, **other),
-                        ) {
-                            (true, true) => true,
-                            (false, false) => {
-                                eql_arguments(source, &call_args(*group), &call_args(**other))
-                            }
-                            _ => false,
-                        }
-                })
-                .map(|other| other.start_position().row + 1)
+                .map(|index| groups[*index].start_position().row + 1)
                 .collect();
             if !repeats.is_empty() {
                 report(

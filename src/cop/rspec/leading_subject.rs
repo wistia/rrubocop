@@ -75,6 +75,9 @@ impl Cop for LeadingSubject {
             ),
             diagnostics,
         );
+        if corrections.is_none() {
+            return;
+        }
         let offender_index = previous
             .iter()
             .position(|sibling| *sibling == offender)

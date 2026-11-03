@@ -17,6 +17,9 @@ impl Cop for RepeatedDescription {
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call"]
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        crate::cop::rspec::helpers::example_and_group_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -32,21 +35,24 @@ impl Cop for RepeatedDescription {
             return;
         }
         let examples = scoped_examples(source, node);
-        for example in &examples {
-            let args = call_args(*example);
-            if args.is_empty() {
-                continue;
-            }
-            let its = name(source, *example) == Some(b"its");
-            let repeated = examples.iter().any(|other| {
-                other != example
-                    && (name(source, *other) == Some(b"its")) == its
-                    && if its {
-                        eql_expression(source, *example, *other)
-                    } else {
-                        eql_arguments(source, &args, &call_args(*other))
-                    }
-            });
+        let arguments: Vec<_> = examples.iter().map(|example| call_args(*example)).collect();
+        let kinds: Vec<_> = examples
+            .iter()
+            .map(|example| name(source, *example) == Some(b"its"))
+            .collect();
+        let repeats = repeated_flags(examples.len(), |left, right| {
+            !arguments[left].is_empty()
+                && !arguments[right].is_empty()
+                && kinds[left] == kinds[right]
+                && if kinds[left] {
+                    eql_expression(source, examples[left], examples[right])
+                } else {
+                    eql_arguments(source, &arguments[left], &arguments[right])
+                }
+        });
+        for (position, example) in examples.iter().enumerate() {
+            let its = kinds[position];
+            let repeated = repeats[position];
             if repeated {
                 report(
                     self,

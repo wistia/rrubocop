@@ -23,6 +23,7 @@ fn static_text(source: &SourceFile, node: Node<'_>) -> Option<String> {
     crate::cop::ported::static_literal(source, node)
         .or_else(|| crate::cop::ported::ruby_string_parts(source, node).map(|parts| parts.concat()))
 }
+struct InterpolationIndex(Vec<super::cache::NodeRange>);
 pub(super) fn interpolations<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node<'a>> {
     let range = if node.kind() == "heredoc_beginning" {
         crate::cop::ported::heredoc_span(source, node)
@@ -36,20 +37,69 @@ pub(super) fn interpolations<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Nod
     while let Some(parent) = root.parent() {
         root = parent;
     }
-    let mut pending = vec![root];
-    let mut result = Vec::new();
-    while let Some(child) = pending.pop() {
-        if child.kind() == "interpolation" && child.start_byte() >= start && child.end_byte() <= end
-        {
-            result.push(child);
-        } else {
+    let index = source.cached(0, || {
+        let mut pending = vec![root];
+        let mut ranges = Vec::new();
+        while let Some(child) = pending.pop() {
+            if child.kind() == "interpolation" {
+                ranges.push(super::cache::NodeRange::new(child));
+            }
             pending.extend(code_children(child));
         }
-    }
-    result.sort_by_key(Node::start_byte);
-    result
+        ranges.sort_by_key(|range| (range.start, std::cmp::Reverse(range.end)));
+        InterpolationIndex(ranges)
+    });
+    let first = index.0.partition_point(|range| range.start < start);
+    let mut last_end = start;
+    index.0[first..]
+        .iter()
+        .take_while(|range| range.start < end)
+        .filter_map(|range| {
+            if range.end > end || range.start < last_end {
+                return None;
+            }
+            let node = range.resolve(root)?;
+            last_end = range.end;
+            Some(node)
+        })
+        .collect()
 }
+#[derive(Clone)]
+struct DescriptionText(Option<String>);
 pub(super) fn text(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    super::cache::node_fact(source, node, || {
+        DescriptionText(uncached_text(source, node))
+    })
+    .0
+}
+fn marker_value(
+    source: &SourceFile,
+    node: Node<'_>,
+    expressions: &[Node<'_>],
+    markers: &[String],
+    fragment: bool,
+) -> Option<String> {
+    let offset = if fragment { node.start_byte() } else { 0 };
+    let mut bytes = if fragment {
+        node_bytes(source, node).to_vec()
+    } else {
+        source.as_bytes().to_vec()
+    };
+    for (expression, marker) in expressions.iter().zip(markers).rev() {
+        bytes.splice(
+            expression.start_byte() - offset..expression.end_byte() - offset,
+            marker.bytes(),
+        );
+    }
+    let surrogate = SourceFile::from_bytes("description.rb", bytes);
+    let tree = crate::parse::parse_ruby(&surrogate).ok()?;
+    if tree.root_node().has_error() {
+        return None;
+    }
+    let literal = find(tree.root_node(), node.start_byte() - offset, node.kind())?;
+    static_text(&surrogate, literal)
+}
+fn uncached_text(source: &SourceFile, node: Node<'_>) -> Option<String> {
     if !string(node) {
         return None;
     }
@@ -64,20 +114,10 @@ pub(super) fn text(source: &SourceFile, node: Node<'_>) -> Option<String> {
         let markers: Vec<_> = (0..expressions.len())
             .map(|index| format!("RRUBOCOP_INTERPOLATION_{salt}_{index}_END"))
             .collect();
-        let mut bytes = source.as_bytes().to_vec();
-        for (expression, marker) in expressions.iter().zip(&markers).rev() {
-            bytes.splice(
-                expression.start_byte()..expression.end_byte(),
-                marker.bytes(),
-            );
-        }
-        let surrogate = SourceFile::from_bytes("description.rb", bytes);
-        let tree = crate::parse::parse_ruby(&surrogate).ok()?;
-        if tree.root_node().has_error() {
-            return None;
-        }
-        let literal = find(tree.root_node(), node.start_byte(), node.kind())?;
-        let value = static_text(&surrogate, literal)?;
+        let value = (node.kind() != "heredoc_beginning")
+            .then(|| marker_value(source, node, &expressions, &markers, true))
+            .flatten()
+            .or_else(|| marker_value(source, node, &expressions, &markers, false))?;
         if markers
             .iter()
             .any(|marker| value.matches(marker.as_str()).count() != 1)
@@ -231,4 +271,45 @@ pub(super) fn blank(character: char) -> bool {
         '\t' | ' ' | '\u{00a0}' | '\u{1680}' | '\u{2000}'
             ..='\u{200a}' | '\u{202f}' | '\u{205f}' | '\u{3000}'
     )
+}
+
+#[cfg(test)]
+mod efficiency_tests {
+    use super::*;
+
+    #[test]
+    fn fragment_decoding_matches_full_source_surrogates_for_nested_and_multiline_descriptions() {
+        for input in [
+            "describe A do\n it \"should #{name} run\" do; work; end\nend\n",
+            "# encoding: UTF-8\r\ndescribe A do\r\n it %Q(should #{\"#{name}\"} run) do; work; end\r\nend\r\n",
+            "describe A do; it \"should RRUBOCOP_INTERPOLATION_0_0_END #{__LINE__} run\" do; work; end; end",
+            "describe A do; it \"should #{name}\" ' run' do; work; end; end",
+            "describe A do; it \"should \\\n#{name} run\" do; work; end; end",
+        ] {
+            let source = SourceFile::from_bytes("spec/a_spec.rb", input.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(!tree.root_node().has_error(), "{input}");
+            let mut nodes = vec![tree.root_node()];
+            while let Some(node) = nodes.pop() {
+                nodes.extend(code_children(node));
+                if !string(node) {
+                    continue;
+                }
+                let expressions = interpolations(&source, node);
+                if expressions.is_empty() {
+                    continue;
+                }
+                let markers: Vec<_> = (0..expressions.len())
+                    .map(|i| format!("MARKER_{i}_END"))
+                    .collect();
+                assert_eq!(
+                    marker_value(&source, node, &expressions, &markers, true),
+                    marker_value(&source, node, &expressions, &markers, false),
+                    "{input}: {}",
+                    node.kind()
+                );
+                assert_eq!(text(&source, node), uncached_text(&source, node));
+            }
+        }
+    }
 }

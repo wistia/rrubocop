@@ -138,7 +138,7 @@ fn subject_def_named(source: &SourceFile, node: Node<'_>) -> Option<bool> {
     Some(!argument_nodes(node).is_empty())
 }
 
-fn subject_named_in(source: &SourceFile, block: Node<'_>) -> Option<bool> {
+fn uncached_subject_named_in(source: &SourceFile, block: Node<'_>) -> Option<bool> {
     let body = block.child_by_field_name("body")?;
     let statements = statements(body);
     let candidates = if statements.len() == 1 {
@@ -164,6 +164,15 @@ fn subject_named_in(source: &SourceFile, block: Node<'_>) -> Option<bool> {
     candidates
         .into_iter()
         .find_map(|candidate| subject_def_named(source, candidate))
+}
+
+#[derive(Clone)]
+struct SubjectNamed(Option<bool>);
+fn subject_named_in(source: &SourceFile, block: Node<'_>) -> Option<bool> {
+    super::cache::node_fact(source, block, || {
+        SubjectNamed(uncached_subject_named_in(source, block))
+    })
+    .0
 }
 
 fn nearest_named(source: &SourceFile, node: Node<'_>) -> bool {

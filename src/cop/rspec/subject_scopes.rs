@@ -6,8 +6,8 @@ use crate::parse::source::SourceFile;
 use std::collections::HashMap;
 use tree_sitter::Node;
 
-pub(super) type Names = HashMap<usize, Vec<Vec<u8>>>;
-pub(super) fn definitions(source: &SourceFile, top: Node<'_>, helpers: bool) -> Names {
+pub(super) type Names = HashMap<super::cache::NodeRange, Vec<Vec<u8>>>;
+fn uncached_definitions(source: &SourceFile, top: Node<'_>, helpers: bool) -> Names {
     let mut names = Names::new();
     let mut pending = code_children(top);
     while let Some(node) = pending.pop() {
@@ -46,7 +46,10 @@ pub(super) fn definitions(source: &SourceFile, top: Node<'_>, helpers: bool) -> 
                 && call_block(group).is_some()
                 && !numbered_block(source, group)
             {
-                names.entry(group.id()).or_default().push(value);
+                names
+                    .entry(super::cache::NodeRange::new(group))
+                    .or_default()
+                    .push(value);
                 break;
             }
             ancestor = group.parent();
@@ -54,6 +57,30 @@ pub(super) fn definitions(source: &SourceFile, top: Node<'_>, helpers: bool) -> 
     }
     names
 }
+#[derive(Clone)]
+struct SubjectDefinitions(std::sync::Arc<Names>);
+#[derive(Clone)]
+struct HelperDefinitions(std::sync::Arc<Names>);
+pub(super) fn definitions(
+    source: &SourceFile,
+    top: Node<'_>,
+    helpers: bool,
+) -> std::sync::Arc<Names> {
+    if helpers {
+        super::cache::node_fact(source, top, || {
+            HelperDefinitions(std::sync::Arc::new(uncached_definitions(source, top, true)))
+        })
+        .0
+    } else {
+        super::cache::node_fact(source, top, || {
+            SubjectDefinitions(std::sync::Arc::new(uncached_definitions(
+                source, top, false,
+            )))
+        })
+        .0
+    }
+}
+
 pub(super) fn example(source: &SourceFile, node: Node<'_>) -> bool {
     call_receiver(node).is_none()
         && bare_rspec_call(source, node).is_some_and(is_example)

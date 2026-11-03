@@ -75,6 +75,34 @@ impl Cop for LetSetup {
             pending.extend(code_children(child));
         }
         lets.sort_by_key(Node::start_byte);
+        if !lets
+            .iter()
+            .any(|helper| name(source, *helper) == Some(b"let!"))
+        {
+            return;
+        }
+        let mut uses = std::collections::HashSet::new();
+        let mut pending = vec![node];
+        while let Some(child) = pending.pop() {
+            if !safe_send(source, child)
+                && call_receiver(child).is_none()
+                && call_args(child).is_empty()
+            {
+                if let Some(name) = name(source, child) {
+                    uses.insert(name.to_vec());
+                }
+            }
+            if child.kind() == "hash_key_symbol"
+                && child.parent().is_some_and(|pair| {
+                    pair.kind() == "pair" && pair.child_by_field_name("value").is_none()
+                })
+                && !local_binding(source, child)
+            {
+                let bytes = node_bytes(source, child);
+                uses.insert(bytes.strip_suffix(b":").unwrap_or(bytes).to_vec());
+            }
+            pending.extend(code_children(child));
+        }
         for helper in lets {
             if name(source, helper) != Some(b"let!") {
                 continue;
@@ -100,32 +128,7 @@ impl Cop for LetSetup {
             let Some(value) = crate::cop::ported::static_literal(source, argument) else {
                 continue;
             };
-            let mut pending = vec![node];
-            let mut used = false;
-            while let Some(child) = pending.pop() {
-                if !safe_send(source, child)
-                    && call_receiver(child).is_none()
-                    && call_args(child).is_empty()
-                    && name(source, child) == Some(value.as_bytes())
-                {
-                    used = true;
-                    break;
-                }
-                if child.kind() == "hash_key_symbol"
-                    && child.parent().is_some_and(|pair| {
-                        pair.kind() == "pair" && pair.child_by_field_name("value").is_none()
-                    })
-                    && node_bytes(source, child)
-                        .strip_suffix(b":")
-                        .unwrap_or(node_bytes(source, child))
-                        == value.as_bytes()
-                    && !local_binding(source, child)
-                {
-                    used = true;
-                    break;
-                }
-                pending.extend(code_children(child));
-            }
+            let used = uses.contains(value.as_bytes());
             if !used {
                 report(
                     self,

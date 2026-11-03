@@ -49,15 +49,17 @@ impl Cop for RepeatedIncludeExample {
                         .all(|argument| literal_or_const(source, *argument))
             })
             .collect();
-        for item in &items {
-            let args = call_args(*item);
-            let Some(first) = args.first() else {
+        let arguments: Vec<_> = items.iter().map(|item| call_args(*item)).collect();
+        let repeated = repeated_indices(items.len(), |left, right| {
+            eql_arguments(source, &arguments[left], &arguments[right])
+        });
+        for (position, item) in items.iter().enumerate() {
+            let Some(first) = arguments[position].first() else {
                 continue;
             };
-            let repeats: Vec<_> = items
+            let repeats: Vec<_> = repeated[position]
                 .iter()
-                .filter(|other| other != &item && eql_arguments(source, &args, &call_args(**other)))
-                .map(|other| other.start_position().row + 1)
+                .map(|index| items[*index].start_position().row + 1)
                 .collect();
             if !repeats.is_empty() {
                 report(

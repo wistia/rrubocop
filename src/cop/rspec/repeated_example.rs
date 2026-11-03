@@ -28,6 +28,9 @@ impl Cop for RepeatedExample {
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call"]
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        crate::cop::rspec::helpers::example_and_group_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -43,25 +46,27 @@ impl Cop for RepeatedExample {
             return;
         }
         let examples = scoped_examples(source, node);
-        for example in &examples {
-            let args = call_args(*example);
-            let its = name(source, *example) == Some(b"its");
-            let repeated = examples.iter().any(|other| {
-                let other_args = call_args(*other);
-                other != example
-                    && (name(source, *other) == Some(b"its")) == its
-                    && args.is_empty() == other_args.is_empty()
-                    && if its {
-                        eql_arguments(source, &args, &other_args)
-                    } else {
-                        eql_arguments(
-                            source,
-                            args.get(1..).unwrap_or_default(),
-                            other_args.get(1..).unwrap_or_default(),
-                        )
-                    }
-                    && same_body(source, *example, *other)
-            });
+        let arguments: Vec<_> = examples.iter().map(|example| call_args(*example)).collect();
+        let its: Vec<_> = examples
+            .iter()
+            .map(|example| name(source, *example) == Some(b"its"))
+            .collect();
+        let repeats = repeated_flags(examples.len(), |left, right| {
+            its[left] == its[right]
+                && arguments[left].is_empty() == arguments[right].is_empty()
+                && if its[left] {
+                    eql_arguments(source, &arguments[left], &arguments[right])
+                } else {
+                    eql_arguments(
+                        source,
+                        arguments[left].get(1..).unwrap_or_default(),
+                        arguments[right].get(1..).unwrap_or_default(),
+                    )
+                }
+                && same_body(source, examples[left], examples[right])
+        });
+        for (position, example) in examples.iter().enumerate() {
+            let repeated = repeats[position];
             if repeated {
                 report(
                     self,

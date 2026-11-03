@@ -59,13 +59,6 @@ fn option_strings(config: &CopConfig, key: &str) -> Vec<String> {
         .unwrap_or_default()
 }
 
-fn allowed_patterns(config: &CopConfig) -> Vec<Regex> {
-    option_strings(config, "AllowedPatterns")
-        .iter()
-        .filter_map(|p| Regex::new(p).ok())
-        .collect()
-}
-
 fn is_allowed(name: &[u8], identifiers: &[String], patterns: &[Regex]) -> bool {
     identifiers.iter().any(|a| a.as_bytes() == name)
         || patterns
@@ -92,7 +85,7 @@ fn collect_indexed_lets<'a, 'b>(
     config: &CopConfig,
 ) -> Vec<(&'a [u8], Node<'b>)> {
     let identifiers = option_strings(config, "AllowedIdentifiers");
-    let patterns = allowed_patterns(config);
+    let patterns = super::parity_helpers::compiled_patterns(source, config, "AllowedPatterns");
     indexed_let_names(source, body)
         .into_iter()
         .filter(|(name, _)| !is_allowed(name, &identifiers, &patterns))

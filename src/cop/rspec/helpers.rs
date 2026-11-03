@@ -184,7 +184,7 @@ fn collect_top_level_groups<'a>(source: &SourceFile, node: Node<'a>) -> Vec<Node
     }
 }
 
-pub(super) fn top_level_groups<'a>(source: &SourceFile, program: Node<'a>) -> Vec<Node<'a>> {
+fn uncached_top_level_groups<'a>(source: &SourceFile, program: Node<'a>) -> Vec<Node<'a>> {
     let stmts: Vec<_> = named_code_children(program).collect();
     match stmts.as_slice() {
         [only] => collect_top_level_groups(source, *only),
@@ -193,6 +193,24 @@ pub(super) fn top_level_groups<'a>(source: &SourceFile, program: Node<'a>) -> Ve
             .filter(|s| is_spec_group_call(source, *s))
             .collect(),
     }
+}
+
+#[derive(Clone)]
+struct TopGroupRanges(std::sync::Arc<Vec<super::cache::NodeRange>>);
+pub(super) fn top_level_groups<'a>(source: &SourceFile, program: Node<'a>) -> Vec<Node<'a>> {
+    let ranges = super::cache::node_fact(source, program, || {
+        TopGroupRanges(std::sync::Arc::new(
+            uncached_top_level_groups(source, program)
+                .into_iter()
+                .map(super::cache::NodeRange::new)
+                .collect(),
+        ))
+    });
+    ranges
+        .0
+        .iter()
+        .filter_map(|range| range.resolve(program))
+        .collect()
 }
 
 /// RuboCop `TopLevelGroup`: example/shared groups at the file root.

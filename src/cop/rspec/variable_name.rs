@@ -18,6 +18,12 @@ impl Cop for VariableName {
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call", "identifier"]
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"let", b"let!", b"subject", b"subject!"]
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        self.interested_call_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,
@@ -47,7 +53,7 @@ impl Cop for VariableName {
         let Some(value) = crate::cop::ported::static_literal(source, variable) else {
             return;
         };
-        if compiled_patterns(config, "AllowedPatterns")
+        if compiled_patterns(source, config, "AllowedPatterns")
             .iter()
             .any(|pattern| pattern.is_match(&value))
         {

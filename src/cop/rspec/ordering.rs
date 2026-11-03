@@ -72,7 +72,7 @@ fn line_end(source: &SourceFile, offset: usize) -> usize {
         .unwrap_or(source.as_bytes().len());
     end - usize::from(end > 0 && source.as_bytes()[end - 1] == b'\n')
 }
-fn final_end(source: &SourceFile, node: Node<'_>) -> usize {
+fn uncached_final_end(source: &SourceFile, node: Node<'_>) -> usize {
     let mut end = node.end_byte();
     let mut pending = vec![node];
     while let Some(child) = pending.pop() {
@@ -87,6 +87,13 @@ fn final_end(source: &SourceFile, node: Node<'_>) -> usize {
     }
     end
 }
+#[derive(Clone)]
+struct FinalEnd(usize);
+fn final_end(source: &SourceFile, node: Node<'_>) -> usize {
+    super::cache::node_fact(source, node, || FinalEnd(uncached_final_end(source, node))).0
+}
+struct DirectiveComments(Vec<(usize, usize)>);
+
 fn with_comments(source: &SourceFile, node: Node<'_>) -> (usize, usize) {
     let mut start = line_start(source, node.start_byte());
     let mut probe = start;
@@ -122,19 +129,28 @@ pub(super) fn move_node(
     while let Some(parent) = root.parent() {
         root = parent;
     }
-    let mut pending = vec![root];
-    while let Some(child) = pending.pop() {
-        if child.kind() == "comment"
-            && child.start_byte() >= start
-            && child.end_byte() <= end
-            && source.as_bytes()[child.start_byte()..child.end_byte()]
-                .windows(8)
-                .any(|bytes| bytes == b"rubocop:")
-        {
-            return false;
-        }
-        let mut cursor = child.walk();
-        pending.extend(child.named_children(&mut cursor));
+    let comments = source.cached(0, || {
+        DirectiveComments(
+            crate::cop::shared::collect_comments(root)
+                .into_iter()
+                .filter(|child| {
+                    source.as_bytes()[child.start_byte()..child.end_byte()]
+                        .windows(8)
+                        .any(|bytes| bytes == b"rubocop:")
+                })
+                .map(|child| (child.start_byte(), child.end_byte()))
+                .collect(),
+        )
+    });
+    let first = comments
+        .0
+        .partition_point(|(comment_start, _)| *comment_start < start);
+    if comments.0[first..]
+        .iter()
+        .take_while(|(comment_start, _)| *comment_start <= end)
+        .any(|(_, comment_end)| *comment_end <= end)
+    {
+        return false;
     }
 
     if !source.as_bytes()[line_start(source, node.start_byte())..node.start_byte()]
@@ -265,6 +281,13 @@ pub(super) fn check(
             && includes(source, *child)
             && name(source, *child) == Some(b"include_examples")
     });
+    let mut helper_prefix = vec![0usize; children.len() + 1];
+    if scattered {
+        for (index, child) in children.iter().enumerate() {
+            helper_prefix[index + 1] =
+                helper_prefix[index] + usize::from(helper(source, *child, &[b"let", b"let!"]));
+        }
+    }
     let mut candidates: Vec<_> = children.iter().copied().enumerate().skip(first).collect();
     if !hooks_first {
         candidates.reverse();
@@ -274,11 +297,7 @@ pub(super) fn check(
             if !helper(source, child, &[b"let", b"let!"]) {
                 continue;
             }
-            let expected = first
-                + children[first..index]
-                    .iter()
-                    .filter(|child| helper(source, **child, &[b"let", b"let!"]))
-                    .count();
+            let expected = first + helper_prefix[index] - helper_prefix[first];
             if index == expected {
                 continue;
             }
@@ -311,6 +330,9 @@ pub(super) fn check(
         );
         if !hooks_first && !scattered && !no_include_examples {
             diagnostics[diagnostic].correctable = false;
+            continue;
+        }
+        if corrections.is_none() {
             continue;
         }
         let crossed = &children[first..index];

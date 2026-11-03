@@ -91,6 +91,27 @@ fn walk_names(
     }
 }
 
+#[derive(Clone)]
+struct NamesWithoutSubject(std::sync::Arc<HashSet<Vec<u8>>>);
+#[derive(Clone)]
+struct NamesWithSubject(std::sync::Arc<HashSet<Vec<u8>>>);
+fn own_names(
+    source: &SourceFile,
+    body: Node<'_>,
+    allow_subject: bool,
+) -> std::sync::Arc<HashSet<Vec<u8>>> {
+    let build = || {
+        let mut names = HashSet::new();
+        walk_names(source, body, allow_subject, &mut names);
+        std::sync::Arc::new(names)
+    };
+    if allow_subject {
+        super::cache::node_fact(source, body, || NamesWithoutSubject(build())).0
+    } else {
+        super::cache::node_fact(source, body, || NamesWithSubject(build())).0
+    }
+}
+
 fn ancestor_names(
     source: &SourceFile,
     mut node: Node<'_>,
@@ -109,7 +130,7 @@ fn ancestor_names(
             continue;
         }
         if let Some(body) = call_block(node).and_then(block_body) {
-            walk_names(source, body, allow_subject, out);
+            out.extend(own_names(source, body, allow_subject).iter().cloned());
         }
     }
 }
@@ -138,7 +159,7 @@ fn group_helper_total(
     allow_subject: bool,
 ) -> usize {
     let mut names = HashSet::new();
-    walk_names(source, body, allow_subject, &mut names);
+    names.extend(own_names(source, body, allow_subject).iter().cloned());
     ancestor_names(source, node, allow_subject, &mut names);
     names.len()
 }
