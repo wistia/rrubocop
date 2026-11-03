@@ -1,5 +1,11 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ('Rails/UniqBeforePluck', "$events=[]\nclass Model\n  def self.pluck(*columns)\n    $events << [:pluck, columns]\n    ['Ada','Ada','ADA']\n  end\n  def self.distinct\n    $events << :distinct\n    self\n  end\nend\nbegin\np Model.pluck(:name).uniq\nrescue ArgumentError => error\np error.class\nend\np $events\n"),
+    ('Rails/UniqBeforePluck', "$events=[]\nclass Model\n  def self.pluck(*columns)\n    $events << [:pluck, columns]\n    ['Ada','Ada','ADA']\n  end\n  def self.distinct\n    $events << :distinct\n    self\n  end\nend\nbegin\np Model.pluck(:name).uniq { _1.downcase }\nrescue ArgumentError => error\np error.class\nend\np $events\n"),
+    ('Rails/UniqBeforePluck', "$events=[]\nclass Model\n  def self.pluck(*columns)\n    $events << [:pluck, columns]\n    ['Ada','Ada','ADA']\n  end\n  def self.distinct\n    $events << :distinct\n    self\n  end\nend\nbegin\np Model.pluck(:name).uniq(nil)\nrescue ArgumentError => error\np error.class\nend\np $events\n"),
+    ('Rails/UniqBeforePluck', "$events=[]\nclass Model\n  def self.pluck(*columns)\n    $events << [:pluck, columns]\n    ['Ada','Ada','ADA']\n  end\n  def self.distinct\n    $events << :distinct\n    self\n  end\nend\nbegin\np Model.pluck(:name).uniq.tap { puts :complete }\nrescue ArgumentError => error\np error.class\nend\np $events\n"),
+    ('Rails/UniqBeforePluck', "$events=[]\nModel=Class.new\nModel.define_singleton_method(:pluck) { |*columns| $events << :pluck; ['Ada','Ada','ADA'] }\nModel.define_singleton_method(:distinct) { $events << :distinct; self }\np Model.pluck(:name).uniq\np $events\n"),
+
     ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nclass Example\nNEW = Date.yesterday\nend\np Example.new.class\n"),
     ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nDATE = Date.yesterday\np DATE\n"),
     ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nDATE = 1.day.ago\np DATE.class\n"),

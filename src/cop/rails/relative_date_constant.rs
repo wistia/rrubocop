@@ -255,7 +255,7 @@ impl Cop for RelativeDateConstant {
             );
             d.highlight_length = super::blank::highlight_length(source, start, end);
             d.correctable = false;
-            if node.kind() == "assignment" && constant(left) {
+            if !config.autocorrect_disabled() && node.kind() == "assignment" && constant(left) {
                 if let Some(text) = replacement(source, node, left, right) {
                     let mut proposed = source.content.clone();
                     proposed.splice(node.start_byte()..node.end_byte(), text.bytes());

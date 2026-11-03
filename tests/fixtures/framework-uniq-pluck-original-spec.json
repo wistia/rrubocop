@@ -1,0 +1,44 @@
+{
+  "source": "rubocop-rails 2.26.0/spec/rubocop/cop/rails/uniq_before_pluck_spec.rb",
+  "cases": [
+    {
+      "source": "Model.pluck(:name).uniq\n"
+    },
+    {
+      "source": "Model.pluck(:name)\n  .uniq\n"
+    },
+    {
+      "source": "Model.pluck(:name).\n  uniq\n"
+    },
+    {
+      "source": "Model.where(foo: 1).uniq.pluck(:something)\n"
+    },
+    {
+      "source": "uniq.something\n"
+    },
+    {
+      "source": "Model.uniq\n"
+    },
+    {
+      "source": "Model.where(foo: 1).pluck(:name).uniq { |k| k[0] }\n"
+    },
+    {
+      "source": "Model.pluck(:name).uniq\n"
+    },
+    {
+      "source": "Model.scope.pluck(:name).uniq\n"
+    },
+    {
+      "source": "instance.assoc.pluck(:name).uniq\n"
+    },
+    {
+      "source": "Model.scope.pluck(:name).uniq\n"
+    },
+    {
+      "source": "instance.assoc.pluck(:name).uniq\n"
+    },
+    {
+      "source": "pluck(:name).uniq\n"
+    }
+  ]
+}

@@ -17,6 +17,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/UniqBeforePluck', 'Model.pluck(:name).uniq', model, service),
  ('Rails/RelativeDateConstant', 'DATE = Date.yesterday', model, service),
  ('Rails/LinkToBlank', "link_to 'text', '/url', target: '_blank'", 'app/helpers/framework_parity_probe.rb', model),
  ('Rails/ContentTag', 'tag(:br)', 'app/helpers/framework_parity_probe.rb', model),
