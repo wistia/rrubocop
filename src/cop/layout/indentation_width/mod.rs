@@ -114,8 +114,8 @@ fn is_end_like(line: &[u8]) -> bool {
 fn end_relative_ok(source: &SourceFile, line_no: usize, indent: usize, width: usize) -> bool {
     // RuboCop `on_block`: body indent is checked against `end`, not `do`.
     // When `end` is itself mis-indented, body at end_col+width is accepted.
-    for later in source.lines().enumerate().skip(line_no) {
-        let (idx, line) = later;
+    for idx in line_no..source.line_count() {
+        let line = source.line_bytes(idx + 1).unwrap();
         let Some(end_indent) = line_indent(line) else {
             continue;
         };
@@ -209,7 +209,8 @@ impl<'a> Default for ScanState<'a> {
 }
 
 fn next_code_indent(source: &SourceFile, after: usize) -> Option<usize> {
-    source.lines().skip(after + 1).find_map(|line| {
+    (after + 2..=source.line_count()).find_map(|number| {
+        let line = source.line_bytes(number).unwrap();
         if line.iter().all(|&b| matches!(b, b' ' | b'\t' | b'\r')) {
             return None;
         }

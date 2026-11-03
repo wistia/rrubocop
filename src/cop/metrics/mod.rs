@@ -2,6 +2,7 @@ mod abc_size;
 mod block_nesting;
 mod class_length;
 mod collection_literal_length;
+mod line_counts;
 mod module_length;
 mod parameter_lists;
 

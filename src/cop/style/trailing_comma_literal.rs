@@ -37,14 +37,37 @@ fn items(node: Node<'_>) -> Vec<(usize, usize)> {
 }
 
 fn comma(source: &SourceFile, node: Node<'_>, end: usize, close: usize) -> Option<usize> {
-    let mut heredoc = false;
-    crate::cop::shared::for_each_descendant(node, |child| {
-        heredoc |= child.kind() == "heredoc_beginning"
-    });
     let after = source.as_bytes().get(end..close)?;
     let offset = after.iter().position(|byte| !byte.is_ascii_whitespace())?;
-    (after[offset] == b',' && (!heredoc || !after[..offset].contains(&b'\n')))
-        .then_some(end + offset)
+    if after[offset] != b',' {
+        return None;
+    }
+    if !after[..offset].contains(&b'\n') {
+        return Some(end + offset);
+    }
+    struct Heredocs(Vec<usize>);
+    let beginnings = source.cached(0, || {
+        let mut root = node;
+        while let Some(parent) = root.parent() {
+            root = parent;
+        }
+        let mut offsets = Vec::new();
+        crate::cop::shared::for_each_descendant(root, |child| {
+            if child.kind() == "heredoc_beginning" {
+                offsets.push(child.start_byte());
+            }
+        });
+        offsets.sort_unstable();
+        Heredocs(offsets)
+    });
+    let index = beginnings
+        .0
+        .partition_point(|offset| *offset < node.start_byte());
+    let heredoc = beginnings
+        .0
+        .get(index)
+        .is_some_and(|offset| *offset < node.end_byte());
+    (!heredoc).then_some(end + offset)
 }
 
 fn should_have_comma(

@@ -15,6 +15,13 @@ fn semantic(node: Node<'_>) -> bool {
     !node.is_extra() && !matches!(node.kind(), "comment" | "heredoc_body" | "heredoc_end")
 }
 fn heredoc(source: &SourceFile, node: Node<'_>) -> bool {
+    struct TailHeredoc(bool);
+    source
+        .cached(node.id(), || TailHeredoc(heredoc_tail(source, node)))
+        .0
+}
+
+fn heredoc_tail(source: &SourceFile, node: Node<'_>) -> bool {
     match node.kind() {
         "heredoc_beginning" => true,
         "pair" | "hash" => named_kids(node)
@@ -195,15 +202,16 @@ impl TrailingCommaInArguments {
                 "consistent_comma" => !same_line,
                 _ => false,
             };
-        let any_heredoc = args
-            .iter()
-            .any(|arg| arg.nodes.last().is_some_and(|node| heredoc(source, *node)));
         let after = &source.as_bytes()[last.end()..close];
         let comma = after
             .iter()
             .position(|byte| !byte.is_ascii_whitespace())
             .filter(|offset| {
-                after[*offset] == b',' && (!any_heredoc || !after[..*offset].contains(&b'\n'))
+                after[*offset] == b','
+                    && (!after[..*offset].contains(&b'\n')
+                        || !args
+                            .iter()
+                            .any(|arg| arg.nodes.last().is_some_and(|node| heredoc(source, *node))))
             })
             .map(|offset| last.end() + offset);
         let (start, end, message, edit_start, edit_end, replacement) = match (comma, want) {

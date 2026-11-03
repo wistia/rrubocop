@@ -8,23 +8,6 @@ use crate::parse::source::SourceFile;
 
 pub struct ModuleLength;
 
-fn irrelevant_line(line: &[u8], count_comments: bool) -> bool {
-    let trimmed = trim_ascii(line);
-    trimmed.is_empty() || (!count_comments && trimmed.starts_with(b"#"))
-}
-
-fn trim_ascii(line: &[u8]) -> &[u8] {
-    let mut start = 0;
-    while start < line.len() && matches!(line[start], b' ' | b'\t') {
-        start += 1;
-    }
-    let mut end = line.len();
-    while end > start && matches!(line[end - 1], b' ' | b'\t' | b'\r') {
-        end -= 1;
-    }
-    &line[start..end]
-}
-
 fn nested_skip_ranges(node: Node<'_>) -> Vec<(usize, usize)> {
     let Some(body) = node.child_by_field_name("body") else {
         return Vec::new();
@@ -36,32 +19,19 @@ fn nested_skip_ranges(node: Node<'_>) -> Vec<(usize, usize)> {
         .collect()
 }
 
-fn line_counted(
-    ln: usize,
-    start_line: usize,
-    end_line: usize,
-    line: &[u8],
-    count_comments: bool,
-    skip: &[(usize, usize)],
-) -> bool {
-    ln > start_line
-        && ln < end_line
-        && !irrelevant_line(line, count_comments)
-        && !skip.iter().any(|&(s, e)| ln >= s && ln <= e)
-}
-
 fn body_line_count(source: &SourceFile, node: Node<'_>, count_comments: bool) -> usize {
     let start_line = node.start_position().row + 1;
     let end_line = node.end_position().row + 1;
     if end_line <= start_line + 1 {
         return 0;
     }
-    let skip = nested_skip_ranges(node);
-    source
-        .lines()
-        .enumerate()
-        .filter(|(i, line)| line_counted(*i + 1, start_line, end_line, line, count_comments, &skip))
-        .count()
+    let mut next = start_line + 1;
+    let mut count = 0;
+    for (start, end) in nested_skip_ranges(node) {
+        count += super::line_counts::count(source, next, start.min(end_line), count_comments);
+        next = next.max(end.saturating_add(1));
+    }
+    count + super::line_counts::count(source, next, end_line, count_comments)
 }
 
 /// RuboCop `namespace_module?` — body is a nested `class`/`module` only (`sclass` excluded).

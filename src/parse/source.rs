@@ -76,6 +76,16 @@ impl SourceFile {
         self.content.split(|&b| b == b'\n')
     }
 
+    /// Raw line bytes without `\n`, preserving `\r` and invalid UTF-8, as in `lines()`.
+    pub fn line_bytes(&self, line: usize) -> Option<&[u8]> {
+        let start = self.line_start(line)?;
+        let end = self
+            .line_starts
+            .get(line)
+            .map_or(self.content.len(), |next| next - 1);
+        Some(&self.content[start..end])
+    }
+
     /// Number of lines (including a trailing empty line after a final `\n`).
     pub fn line_count(&self) -> usize {
         self.line_starts.len()

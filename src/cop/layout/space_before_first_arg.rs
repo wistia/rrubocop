@@ -48,16 +48,24 @@ fn aligned_with_adjacent(source: &SourceFile, first_start: usize) -> bool {
     if line == 0 || col == 0 {
         return false;
     }
-    let lines: Vec<&[u8]> = source.lines().collect();
-    let idx = line - 1;
-    lines.iter().enumerate().any(|(other, line_bytes)| {
-        if other == idx || is_full_line_comment(line_bytes) {
-            return false;
+    struct WordColumns(std::collections::HashMap<usize, usize>);
+    let columns = source.cached(0, || {
+        let mut columns = std::collections::HashMap::new();
+        for bytes in source.lines().filter(|line| !is_full_line_comment(line)) {
+            for column in 1..bytes.len() {
+                if matches!(bytes[column - 1], b' ' | b'\t') && line_has_nonspace_at(bytes, column)
+                {
+                    *columns.entry(column).or_insert(0) += 1;
+                }
+            }
         }
-        // `\s\S` at `col-1` / `col` — word begins at the argument column.
-        matches!(line_bytes.get(col - 1), Some(b' ') | Some(b'\t'))
-            && line_has_nonspace_at(line_bytes, col)
-    })
+        WordColumns(columns)
+    });
+    let current = source.line_bytes(line).unwrap_or(b"");
+    let current_matches = !is_full_line_comment(current)
+        && matches!(current.get(col - 1), Some(b' ') | Some(b'\t'))
+        && line_has_nonspace_at(current, col);
+    columns.0.get(&col).copied().unwrap_or(0) > usize::from(current_matches)
 }
 
 fn offense(source: &SourceFile, node: Node<'_>, allow_align: bool) -> Option<(usize, usize)> {
@@ -138,4 +146,13 @@ impl Cop for SpaceBeforeFirstArg {
 mod tests {
     use super::*;
     crate::cop_fixture_tests!(SpaceBeforeFirstArg, "cops/layout/space_before_first_arg");
+    #[test]
+    fn cached_alignment_excludes_current_line_and_full_comments() {
+        let source = SourceFile::from_bytes("align.rb", b"foo  bar\n#    word\n\n".to_vec());
+        assert!(!aligned_with_adjacent(&source, 5));
+        let source = SourceFile::from_bytes("align.rb", b"foo  bar\n     word\r\n".to_vec());
+        assert!(aligned_with_adjacent(&source, 5));
+        let source = SourceFile::from_bytes("align.rb", b"foo  bar\n\xff    word\n".to_vec());
+        assert!(aligned_with_adjacent(&source, 5));
+    }
 }

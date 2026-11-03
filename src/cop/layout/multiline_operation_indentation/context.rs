@@ -28,10 +28,7 @@ pub(super) fn keyword_context(
     if let Some(ctx) = keyword_from_ancestors(node) {
         return Some(ctx);
     }
-    let line = source
-        .lines()
-        .nth(left_line.saturating_sub(1))
-        .unwrap_or(b"");
+    let line = source.line_bytes(left_line.max(1)).unwrap_or(b"");
     if let Some(ctx) = keyword_on_line(line, left_col) {
         return Some(ctx);
     }
@@ -46,7 +43,7 @@ fn keyword_from_prev_line(
     if left_line <= 1 {
         return None;
     }
-    let prev = source.lines().nth(left_line - 2).unwrap_or(b"");
+    let prev = source.line_bytes(left_line - 1).unwrap_or(b"");
     if last_significant_index(prev).is_some_and(|idx| prev[idx] == b'\\') {
         return keyword_on_line(prev, prev.len());
     }
@@ -100,17 +97,14 @@ pub(super) fn assignment_context(
     left_line: usize,
     left_col: usize,
 ) -> Option<AssignmentContext> {
-    let line = source
-        .lines()
-        .nth(left_line.saturating_sub(1))
-        .unwrap_or(b"");
+    let line = source.line_bytes(left_line.max(1)).unwrap_or(b"");
     if has_assignment_before_col(line, left_col) {
         return Some(AssignmentContext {
             rhs_begins_line: false,
         });
     }
     if left_line > 1
-        && line_ends_with_assignment(source.lines().nth(left_line - 2).unwrap_or(b""))
+        && line_ends_with_assignment(source.line_bytes(left_line - 1).unwrap_or(b""))
         && left_col == line_indent_bytes(line)
     {
         return Some(AssignmentContext {
