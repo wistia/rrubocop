@@ -1,0 +1,149 @@
+[
+  {
+    "id": "attr-parenthesized",
+    "original": "class C\nattr(:a, def b; end)\nend\n",
+    "ruby_corrected": "class C\nattr(:a def b; end)\nend\n",
+    "native_expected": "class C\nattr(:a, def b; end)\nend\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      }
+    ]
+  },
+  {
+    "id": "attr_reader-parenthesized",
+    "original": "class C\nattr_reader(:a, def b; end)\nend\n",
+    "ruby_corrected": "class C\nattr_reader(:a def b; end)\nend\n",
+    "native_expected": "class C\nattr_reader(:a, def b; end)\nend\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      }
+    ]
+  },
+  {
+    "id": "attr_writer-parenthesized",
+    "original": "class C\nattr_writer(:a, def b; end)\nend\n",
+    "ruby_corrected": "class C\nattr_writer(:a def b; end)\nend\n",
+    "native_expected": "class C\nattr_writer(:a, def b; end)\nend\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      }
+    ]
+  },
+  {
+    "id": "attr_accessor-parenthesized",
+    "original": "class C\nattr_accessor(:a, def b; end)\nend\n",
+    "ruby_corrected": "class C\nattr_accessor(:a def b; end)\nend\n",
+    "native_expected": "class C\nattr_accessor(:a, def b; end)\nend\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      }
+    ]
+  },
+  {
+    "id": "shape-13",
+    "original": "class C\nattr_reader :a \\\n , def b; end\nend\n",
+    "ruby_corrected": "class C\nattr_reader :a \n , def b; end\nend\n",
+    "native_expected": "class C\nattr_reader :a \\\n , def b; end\nend\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ]
+  },
+  {
+    "id": "shape-19",
+    "original": "class C\nattr_reader(:a,\n def b; end,\n)\nend\n",
+    "ruby_corrected": "class C\nattr_reader(:a\n def b; end,\n)\nend\n",
+    "native_expected": "class C\nattr_reader(:a,\n def b; end,\n)\nend\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ]
+  },
+  {
+    "id": "shape-21",
+    "original": "class C\nattr_reader :a, def b;end; def c;end\nend\n",
+    "ruby_corrected": "class C\nattr_reader :a def b;end; def c;end\nend\n",
+    "native_expected": "class C\nattr_reader :a, def b;end; def c;end\nend\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      }
+    ]
+  },
+  {
+    "id": "crlf-attr-parenthesized",
+    "original": "class C\r\nattr(:a, def b; end)\r\nend\r\n",
+    "ruby_corrected": "class C\nattr(:a def b; end)\nend\n",
+    "native_expected": "class C\r\nattr(:a, def b; end)\r\nend\r\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 2
+      }
+    ]
+  },
+  {
+    "id": "separation-1",
+    "original": "class C\nattr_reader :a, \\\n def b;end\nend\n",
+    "ruby_corrected": "class C\nattr_reader :a \\\n def b;end\nend\n",
+    "native_expected": "class C\nattr_reader :a, \\\n def b;end\nend\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ]
+  }
+]

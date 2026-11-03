@@ -1,3 +1,4 @@
+pub(crate) mod trailing_comma_in_attribute_declaration;
 mod ambiguous_operator;
 mod ambiguous_regexp_literal;
 mod assignment_in_condition;

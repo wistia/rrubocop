@@ -25,10 +25,15 @@ impl ResolvedConfig {
 
     fn inject_cop_options(&self, name: &str, config: &mut CopConfig) {
         inject_globals(self, config);
-        if name == "Style/TrailingCommaInBlockArgs"
-            && config.options.get("SafeAutoCorrect") == Some(&serde_yml::Value::Null)
-        {
-            config.options.insert("SafeAutoCorrect".into(), false.into());
+        let nullable_safety: &[&str] = match name {
+            "Style/TrailingCommaInBlockArgs" => &["SafeAutoCorrect"],
+            "Lint/TrailingCommaInAttributeDeclaration" => &["Safe", "SafeAutoCorrect"],
+            _ => &[],
+        };
+        for key in nullable_safety {
+            if config.options.get(*key) == Some(&serde_yml::Value::Null) {
+                config.options.insert((*key).into(), false.into());
+            }
         }
         self.inject_indentation_width_fallback(name, config);
         inject_rack_version(self, name, config);

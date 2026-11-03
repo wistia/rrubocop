@@ -8,9 +8,8 @@ mod redundant_with;
 use redundant_with::{with_index, with_object};
 mod erb;
 use erb::erb;
-mod attr_comma;
 use crate::cop::CopRegistry;
-use attr_comma::attr_comma;
+use crate::cop::lint::trailing_comma_in_attribute_declaration::TrailingCommaInAttributeDeclaration;
 pub(super) fn register(r: &mut CopRegistry) {
     super::rules!(r;
         ("Lint/RaiseException", &["call"], raise_exception, true, true, false),
@@ -20,8 +19,8 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Lint/RedundantWithIndex", &["call"], with_index, true, true, false),
         ("Lint/RedundantWithObject", &["call"], with_object, true, true, false),
         ("Lint/ErbNewArguments", &["call"], erb, true, true, false),
-        ("Lint/TrailingCommaInAttributeDeclaration", &["call"], attr_comma, true, true, false)
     );
+    r.register(Box::new(TrailingCommaInAttributeDeclaration));
 }
 
 #[cfg(test)]
