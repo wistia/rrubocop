@@ -512,4 +512,6 @@ def cases():
     rows.extend(rails_review_cases())
     from delegate_allow_blank_cases import extend
     extend(add)
+    from exit_cases import extend
+    extend(add)
     return rows

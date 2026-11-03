@@ -55,3 +55,11 @@ controls match. The strict driver exits one, retaining 1,212 safety-contract
 events (including 516 correctability-only diagnostics and 27 comparisons to
 unsafe original runtime rewrites). No warning differences beyond correctability
 remain. The combined full native rerun follows the next checkpoint.
+
+DelegateAllowBlank and Exit add 504 originals and 1,008 final states, with
+107 retained strict safety differences and no warning differences beyond
+correctability. Seven valid programs preserve behavior in 14 native modes.
+Two rescued invalid ActiveSupport API declarations are separate: one is an
+intended option repair that changes output, and the false option is unmatched.
+Four actual scope controls match. The full native checkpoint follows the
+separately completed FloatOutOfRange leaf import.
