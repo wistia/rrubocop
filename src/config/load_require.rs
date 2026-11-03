@@ -212,6 +212,14 @@ pub(crate) fn process_require_plugins(
             base_layer,
         );
     }
+    if gems.iter().any(|gem| gem == "standard") {
+        base_layer
+            .cop_configs
+            .entry("Lint/AssignmentInCondition".into())
+            .or_default()
+            .options
+            .insert("__StandardAssignmentMessage".into(), true.into());
+    }
     record_require_enabled(base_layer);
     *visited = visited_before;
     register_plugin_depts(base_layer, &gems);

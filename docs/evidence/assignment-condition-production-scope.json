@@ -1,0 +1,274 @@
+[
+  {
+    "case": "plain",
+    "engine": "ruby",
+    "mode": "-a",
+    "exit": 1,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if x=value;work;end\n  end\nend\n",
+    "diagnostics": [
+      [
+        3,
+        9,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ]
+    ],
+    "final_exit": 1,
+    "final_offenses": 1,
+    "idempotent": true
+  },
+  {
+    "case": "plain",
+    "engine": "rust",
+    "mode": "-a",
+    "exit": 1,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if x=value;work;end\n  end\nend\n",
+    "diagnostics": [
+      [
+        3,
+        9,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ]
+    ],
+    "final_exit": 1,
+    "final_offenses": 1,
+    "idempotent": true
+  },
+  {
+    "case": "plain",
+    "engine": "ruby",
+    "mode": "-A",
+    "exit": 1,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if x=value;work;end\n  end\nend\n",
+    "diagnostics": [
+      [
+        3,
+        9,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ]
+    ],
+    "final_exit": 1,
+    "final_offenses": 1,
+    "idempotent": true
+  },
+  {
+    "case": "plain",
+    "engine": "rust",
+    "mode": "-A",
+    "exit": 1,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if x=value;work;end\n  end\nend\n",
+    "diagnostics": [
+      [
+        3,
+        9,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ]
+    ],
+    "final_exit": 1,
+    "final_offenses": 1,
+    "idempotent": true
+  },
+  {
+    "case": "nested",
+    "engine": "ruby",
+    "mode": "-a",
+    "exit": 1,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if x=y=value;work;end\n  end\nend\n",
+    "diagnostics": [
+      [
+        3,
+        9,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ],
+      [
+        3,
+        11,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ]
+    ],
+    "final_exit": 1,
+    "final_offenses": 2,
+    "idempotent": true
+  },
+  {
+    "case": "nested",
+    "engine": "rust",
+    "mode": "-a",
+    "exit": 1,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if x=y=value;work;end\n  end\nend\n",
+    "diagnostics": [
+      [
+        3,
+        9,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ],
+      [
+        3,
+        11,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ]
+    ],
+    "final_exit": 1,
+    "final_offenses": 2,
+    "idempotent": true
+  },
+  {
+    "case": "nested",
+    "engine": "ruby",
+    "mode": "-A",
+    "exit": 1,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if x=y=value;work;end\n  end\nend\n",
+    "diagnostics": [
+      [
+        3,
+        9,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ],
+      [
+        3,
+        11,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ]
+    ],
+    "final_exit": 1,
+    "final_offenses": 2,
+    "idempotent": true
+  },
+  {
+    "case": "nested",
+    "engine": "rust",
+    "mode": "-A",
+    "exit": 1,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if x=y=value;work;end\n  end\nend\n",
+    "diagnostics": [
+      [
+        3,
+        9,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ],
+      [
+        3,
+        11,
+        "warning",
+        "Wrap assignment in parentheses if intentional"
+      ]
+    ],
+    "final_exit": 1,
+    "final_offenses": 2,
+    "idempotent": true
+  },
+  {
+    "case": "call-boundary",
+    "engine": "ruby",
+    "mode": "-a",
+    "exit": 0,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if include?(x=value);work;end\n  end\nend\n",
+    "diagnostics": [],
+    "final_exit": 0,
+    "final_offenses": 0,
+    "idempotent": true
+  },
+  {
+    "case": "call-boundary",
+    "engine": "rust",
+    "mode": "-a",
+    "exit": 0,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if include?(x=value);work;end\n  end\nend\n",
+    "diagnostics": [],
+    "final_exit": 0,
+    "final_offenses": 0,
+    "idempotent": true
+  },
+  {
+    "case": "call-boundary",
+    "engine": "ruby",
+    "mode": "-A",
+    "exit": 0,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if include?(x=value);work;end\n  end\nend\n",
+    "diagnostics": [],
+    "final_exit": 0,
+    "final_offenses": 0,
+    "idempotent": true
+  },
+  {
+    "case": "call-boundary",
+    "engine": "rust",
+    "mode": "-A",
+    "exit": 0,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    if include?(x=value);work;end\n  end\nend\n",
+    "diagnostics": [],
+    "final_exit": 0,
+    "final_offenses": 0,
+    "idempotent": true
+  },
+  {
+    "case": "post-loop",
+    "engine": "ruby",
+    "mode": "-a",
+    "exit": 0,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    begin;work;end while x=value\n  end\nend\n",
+    "diagnostics": [],
+    "final_exit": 0,
+    "final_offenses": 0,
+    "idempotent": true
+  },
+  {
+    "case": "post-loop",
+    "engine": "rust",
+    "mode": "-a",
+    "exit": 0,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    begin;work;end while x=value\n  end\nend\n",
+    "diagnostics": [],
+    "final_exit": 0,
+    "final_offenses": 0,
+    "idempotent": true
+  },
+  {
+    "case": "post-loop",
+    "engine": "ruby",
+    "mode": "-A",
+    "exit": 0,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    begin;work;end while x=value\n  end\nend\n",
+    "diagnostics": [],
+    "final_exit": 0,
+    "final_offenses": 0,
+    "idempotent": true
+  },
+  {
+    "case": "post-loop",
+    "engine": "rust",
+    "mode": "-A",
+    "exit": 0,
+    "inspected": 1,
+    "corrected": "class RrubocopAssignmentConditionParityProbe\n  def probe(value)\n    begin;work;end while x=value\n  end\nend\n",
+    "diagnostics": [],
+    "final_exit": 0,
+    "final_offenses": 0,
+    "idempotent": true
+  }
+]

@@ -214,7 +214,14 @@ impl Cop for AssignmentInCondition {
                 source,
                 line,
                 column,
-                if allow { SAFE } else { UNSAFE }.into(),
+                if config.get_bool("__StandardAssignmentMessage", false) {
+                    "Wrap assignment in parentheses if intentional"
+                } else if allow {
+                    SAFE
+                } else {
+                    UNSAFE
+                }
+                .into(),
             );
             diagnostic.highlight_length = node_bytes(source, operator).len();
             diagnostic.correctable = can_correct;
@@ -336,6 +343,65 @@ mod tests {
             serde_json::to_string(&native_errors).unwrap()
         );
         crate::testutil::assert_original_spec_parity(&AssignmentInCondition, fixture);
+    }
+    #[test]
+    fn final_native_states_match_fresh_original() {
+        let fixture = include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/lint/assignment_in_condition/final-states.json"
+        ));
+        let cases: serde_json::Value = serde_json::from_str(fixture).unwrap();
+        for case in cases.as_array().unwrap() {
+            let source = SourceFile::from_bytes(
+                "probe.rb",
+                case["original"].as_str().unwrap().as_bytes().to_vec(),
+            );
+            assert!(
+                !crate::parse::parse_ruby(&source)
+                    .unwrap()
+                    .root_node()
+                    .has_error(),
+                "{}",
+                case["id"]
+            );
+            assert_eq!(
+                case["ruby_parser_diagnostics"],
+                serde_json::json!([]),
+                "{}",
+                case["id"]
+            );
+            assert_eq!(case["original"], case["ruby_corrected"], "{}", case["id"]);
+        }
+        crate::testutil::assert_original_spec_parity(&AssignmentInCondition, fixture);
+    }
+    #[test]
+    fn standard_runtime_extension_changes_only_message() {
+        let source = SourceFile::from_bytes("probe.rb", b"if x=value;work;end\n".to_vec());
+        let tree = crate::parse::parse_ruby(&source).unwrap();
+        for standard in [false, true] {
+            let mut config = CopConfig::default();
+            config
+                .options
+                .insert("__StandardAssignmentMessage".into(), standard.into());
+            let mut diagnostics = Vec::new();
+            AssignmentInCondition.check_source(
+                &source,
+                &tree,
+                &CodeMap::default(),
+                &config,
+                &mut diagnostics,
+                None,
+            );
+            assert_eq!(diagnostics.len(), 1);
+            assert_eq!(
+                diagnostics[0].message,
+                if standard {
+                    "Wrap assignment in parentheses if intentional"
+                } else {
+                    SAFE
+                }
+            );
+        }
     }
     #[test]
     fn unchanged_original_examples() {

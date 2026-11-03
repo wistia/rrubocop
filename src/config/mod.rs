@@ -430,6 +430,38 @@ mod tests {
     }
 
     #[test]
+    fn standard_assignment_extension_requires_loading_standard() {
+        for required in [false, true] {
+            let dir = tempfile::tempdir().unwrap();
+            std::fs::write(
+                dir.path().join("Gemfile.lock"),
+                "GEM\n  specs:\n    standard (1.40.0)\n",
+            )
+            .unwrap();
+            let yaml = format!(
+                "{}inherit_gem:\n  standard: config/base.yml\n",
+                if required {
+                    "require: [standard]\n"
+                } else {
+                    ""
+                }
+            );
+            let config = load_config(
+                Some(&write_config(dir.path(), &yaml)),
+                Some(dir.path()),
+                None,
+            )
+            .unwrap();
+            assert_eq!(
+                config
+                    .cop_config("Lint/AssignmentInCondition")
+                    .get_bool("__StandardAssignmentMessage", false),
+                required
+            );
+        }
+    }
+
+    #[test]
     fn require_anycable_vendored_needs_no_install() {
         let dir = tempfile::tempdir().unwrap();
         let config = load_config(

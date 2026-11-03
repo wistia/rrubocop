@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Thirty-eight owned rules have completed bounded original-Ruby validation,
+Thirty-nine owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 329 queued or in-progress entries;
-some already have implementations. Security/Eval is complete within its
-bounded gate; Lint/AssignmentInCondition is the next batch. Documented safety and syntax limits remain, including
+The exhaustive 367-rule inventory retains 328 queued or in-progress entries;
+some already have implementations. Security/Eval and Lint/AssignmentInCondition are complete within their
+bounded gates; the remaining owned queue continues. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
 not establish universal parity for arbitrary Ruby source. Earlier sections
 retain their historical checkpoint counts; the newest completion section
@@ -882,3 +882,11 @@ The port respects ordinary call/element-read/prefix-send subtree boundaries, equ
 Nested wrapper edits are rendered as complete assignment clusters, retaining repeated closing parentheses and identical-edit owner aliases instead of allowing the selector to collapse duplicate closing insertions. Non-UTF8/invalid native trees decline edits. Option-false offenses remain uncorrectable; the default unsafe autocorrection metadata is retained. Full native validation passes 957 tests/one pre-existing ignored, the binary builds and reference lint/regeneration pass. The CLI harness can now explicitly preserve a selected null option while still omitting unrelated null capture-only fields; the Assignment gate uses that option so nil configuration states are not silently tested as defaults.
 
 An original-valid nested-heredoc condition separately produces native ERROR and loses the if node; generic syntax work remains deferred and this is not counted as passing parity. Heterogeneous disable directives across a nested correction cluster, other wire/encoding/version families and generic scheduling remain unreviewed. The 1,290-mode public CLI and metadata/production/fresh final-state/review gates remain pending. Completed bounded counts remain 38 with 329 awaiting full review, plus documented limits.
+
+## AssignmentInCondition final bounded gate
+
+The separate review confirms pinned RuboCop1.65.1 traversal, SafeAssignment grouping/setter roles, nil option truthiness, exact operator highlights and unsafe correction metadata. All645 supported initial states (25 unchanged upstream examples/37 iterated captures plus608 independent states) pass exact diagnostics, flags and corrected bytes. All1,290 public CLI modes match bytes, exits and inspected scope, with2,580 stable second passes and zero cop errors. Fresh original replay validates623 unique final native states:385 clean and238 retaining the same intentionally uncorrected offenses; all trees are accepted by both parsers and no fresh edit is proposed.
+
+All32 metadata controls match, including explicit nullable safety resets and invalid-setting rejection. All16 actual Wistia scope/correction probes match exact messages, positions, severities and bytes. These probes revealed Standard1.40.0's `lib/standard/rubocop/ext.rb` message override, loaded by `require: standard`. The runtime loader records that extension separately from configuration inheritance; four original/native require-versus-inherit-only controls and a native loader regression verify that only loading the extension selects the shorter message. Plain pinned cop fixtures keep their original long messages. Full native validation passes960 tests/one pre-existing ignored; the binary build and original helper lint/regeneration pass.
+
+The16 invalid-original probes and one original-valid native-error nested-heredoc condition remain separate, outside successful coverage. Heterogeneous directives across nested correction clusters, broader version/encoding/source families and combined-cop scheduling remain unreviewed/deferred. No syntax recovery or scheduling expansion was added. This completes39 bounded owned ports, including all13 initial direct Style stubs;328 owned rules still await their full review/gate alongside documented limits.

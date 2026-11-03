@@ -25,16 +25,17 @@ impl ResolvedConfig {
 
     fn inject_cop_options(&self, name: &str, config: &mut CopConfig) {
         inject_globals(self, config);
-        let nullable_safety: &[&str] = match name {
-            "Style/TrailingCommaInBlockArgs" => &["SafeAutoCorrect"],
+        let nullable_safety: &[(&str, bool)] = match name {
+            "Style/TrailingCommaInBlockArgs" => &[("SafeAutoCorrect", false)],
             "Lint/TrailingCommaInAttributeDeclaration" | "Style/NestedTernaryOperator" => {
-                &["Safe", "SafeAutoCorrect"]
+                &[("Safe", false), ("SafeAutoCorrect", false)]
             }
+            "Lint/AssignmentInCondition" => &[("Safe", false), ("SafeAutoCorrect", true)],
             _ => &[],
         };
-        for key in nullable_safety {
+        for (key, reset) in nullable_safety {
             if config.options.get(*key) == Some(&serde_yml::Value::Null) {
-                config.options.insert((*key).into(), false.into());
+                config.options.insert((*key).into(), (*reset).into());
             }
         }
         self.inject_indentation_width_fallback(name, config);
