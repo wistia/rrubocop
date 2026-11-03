@@ -8,7 +8,7 @@ use regex::RegexSet;
 
 use crate::cop::CopRegistry;
 
-use super::globutil::glob_matches;
+use super::globutil::exact_glob_matches;
 use super::resolved::ResolvedConfig;
 
 /// Pre-compiled glob filter for a single cop.
@@ -72,7 +72,7 @@ impl CopFilter {
 /// Pre-compiled filter set for all cops + global excludes.
 pub struct CopFilterSet {
     pub(crate) global_exclude: GlobSet,
-    pub(crate) global_exclude_patterns: Vec<String>,
+    pub(crate) global_exclude_exact: Vec<globset::GlobMatcher>,
     pub(crate) global_exclude_re: Option<RegexSet>,
     pub(crate) filters: Vec<CopFilter>,
     pub(crate) name_to_index: HashMap<String, usize>,
@@ -133,9 +133,9 @@ impl CopFilterSet {
     pub(crate) fn matches_global_exclude_glob(&self, path: &Path) -> bool {
         self.global_exclude.is_match(path)
             && self
-                .global_exclude_patterns
+                .global_exclude_exact
                 .iter()
-                .any(|pattern| glob_matches(pattern, path))
+                .any(|matcher| exact_glob_matches(matcher, path))
     }
 
     fn exclude_re_matches(&self, path: &Path) -> bool {
@@ -199,4 +199,173 @@ fn first_timestamp_leq(basename: &str, version: &str) -> bool {
         }
     }
     false
+}
+
+#[cfg(test)]
+mod prepared_exclusion_tests {
+    use super::*;
+    use crate::config::globutil::{extract_ruby_regexp, glob_matches};
+
+    fn legacy_forms(filters: &CopFilterSet, patterns: &[String], path: &Path) -> bool {
+        filters.global_exclude.is_match(path)
+            && patterns
+                .iter()
+                .filter(|pattern| extract_ruby_regexp(pattern).is_none())
+                .any(|pattern| glob_matches(pattern, path))
+            || filters.exclude_re_matches(path)
+    }
+    fn legacy_excluded(filters: &CopFilterSet, patterns: &[String], path: &Path) -> bool {
+        legacy_forms(filters, patterns, path)
+            || path
+                .strip_prefix("./")
+                .is_ok_and(|path| legacy_forms(filters, patterns, path))
+            || [&filters.base_dir, &filters.config_dir]
+                .into_iter()
+                .flatten()
+                .any(|dir| {
+                    path.strip_prefix(dir)
+                        .is_ok_and(|path| legacy_forms(filters, patterns, path))
+                })
+    }
+
+    #[test]
+    fn prepared_verifiers_preserve_exact_glob_and_regex_path_forms() {
+        let patterns = [
+            "vendor/**/*",
+            "**/tmp/**/file?.rb",
+            "**/.git/**/*",
+            "a/*/c.rb",
+            "foo{,bar}/**/*.rb",
+            "[ab]/**/*.rb",
+            "[",
+            "/excluded\\.rb$/i",
+            "/(?i)flagged\\.rb$/",
+            "/[invalid/",
+            "root/**/nested/**/probe.rb",
+        ];
+        let paths = [
+            "vendor/a.rb",
+            "vendor/a/b.rb",
+            "./vendor/a.rb",
+            "tmp/file1.rb",
+            "x/tmp/y/file2.rb",
+            ".git/HEAD",
+            "x/.git/objects/aa",
+            "a/b/c.rb",
+            "a/b/d/c.rb",
+            "foo/test.rb",
+            "foobar/x/test.rb",
+            "a/deep/probe.rb",
+            "b/test.rb",
+            "excluded.rb",
+            "EXCLUDED.rb",
+            "FLAGGED.rb",
+            "ok.rb",
+            "root/nested/probe.rb",
+            "root/x/nested/y/probe.rb",
+            "[",
+            "",
+        ];
+        for selection in patterns
+            .iter()
+            .map(|pattern| vec![pattern.to_string()])
+            .chain(std::iter::once(
+                patterns.iter().map(|pattern| pattern.to_string()).collect(),
+            ))
+        {
+            let mut config = ResolvedConfig::empty();
+            config.global_excludes = selection.clone();
+            config.base_dir = Some(PathBuf::from("/repo"));
+            config.config_dir = Some(PathBuf::from("/repo/nested"));
+            let filters = CopFilterSet::for_discover(&config);
+            for path in paths {
+                for form in [
+                    PathBuf::from(path),
+                    PathBuf::from("/repo").join(path),
+                    PathBuf::from("/repo/nested").join(path),
+                ] {
+                    assert_eq!(
+                        filters.is_globally_excluded(&form),
+                        legacy_excluded(&filters, &selection, &form),
+                        "{selection:?} / {form:?}"
+                    );
+                }
+            }
+        }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn prepared_verifiers_preserve_lossy_matching_for_non_utf8_paths() {
+        use std::os::unix::ffi::OsStringExt;
+        let mut config = ResolvedConfig::empty();
+        config.global_excludes = vec!["ignored/*".into(), "**/�.rb".into()];
+        let filters = CopFilterSet::for_discover(&config);
+        for raw in [
+            b"ignored/\xff.rb".to_vec(),
+            b"x/\xff.rb".to_vec(),
+            b"other/ok.rb".to_vec(),
+        ] {
+            let path = PathBuf::from(std::ffi::OsString::from_vec(raw));
+            assert_eq!(
+                filters.is_globally_excluded(&path),
+                legacy_excluded(&filters, &config.global_excludes, &path)
+            );
+        }
+    }
+
+    #[test]
+    fn prepared_filters_keep_inherited_and_nested_config_exclusion_policies_separate() {
+        let dir = tempfile::tempdir().unwrap();
+        let child = dir.path().join("nested");
+        std::fs::create_dir(&child).unwrap();
+        let root_yaml = dir.path().join(".rubocop.yml");
+        let child_yaml = child.join(".rubocop.yml");
+        std::fs::write(&root_yaml, "AllCops:\n  Exclude: ['tmp/**/*']\n").unwrap();
+        std::fs::write(
+            &child_yaml,
+            "inherit_from: ../.rubocop.yml\nAllCops:\n  Exclude: ['generated/**/*']\n",
+        )
+        .unwrap();
+        let root_config =
+            crate::config::load_config(Some(&root_yaml), Some(dir.path()), None).unwrap();
+        let child_config =
+            crate::config::load_config(Some(&child_yaml), Some(&child), None).unwrap();
+        let registry = CopRegistry::default_registry();
+        for config in [&root_config, &child_config] {
+            for filters in [
+                CopFilterSet::for_discover(config),
+                CopFilterSet::build(config, &registry),
+            ] {
+                for path in [
+                    "tmp/a.rb",
+                    "nested/tmp/a.rb",
+                    "nested/generated/a.rb",
+                    "nested/generated/deep/b.rb",
+                    "lib/a.rb",
+                    "./tmp/a.rb",
+                ] {
+                    for form in [PathBuf::from(path), dir.path().join(path)] {
+                        assert_eq!(
+                            filters.is_globally_excluded(&form),
+                            legacy_excluded(&filters, &config.global_excludes, &form),
+                            "{form:?}"
+                        );
+                    }
+                }
+            }
+        }
+        assert!(
+            CopFilterSet::for_discover(&root_config)
+                .is_globally_excluded(&dir.path().join("tmp/a.rb"))
+        );
+        assert!(
+            CopFilterSet::for_discover(&child_config)
+                .is_globally_excluded(&child.join("generated/a.rb"))
+        );
+        assert!(
+            !CopFilterSet::for_discover(&child_config)
+                .is_globally_excluded(&child.join("tmp/a.rb"))
+        );
+    }
 }

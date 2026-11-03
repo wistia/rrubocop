@@ -10,7 +10,7 @@ use crate::cop::CopRegistry;
 use super::ResolvedConfig;
 use super::discover::discover_sub_config_dirs;
 use super::filter::{CopFilter, CopFilterSet};
-use super::globutil::{build_glob_set, build_regex_set, extract_ruby_regexp};
+use super::globutil::{build_exact_glob_matchers, build_glob_set, build_regex_set};
 use super::resolved_state::{
     effective_exclude, effective_include, lint_constant_resolution_on,
     redundant_constant_base_blocked, resolve_enabled_state, state_to_enabled,
@@ -20,13 +20,13 @@ use super::resolved_state::{
 impl ResolvedConfig {
     /// Build pre-compiled cop filters for fast per-file enablement checks.
     pub fn build_cop_filters(&self, registry: &CopRegistry) -> CopFilterSet {
-        let (global_exclude, global_exclude_patterns, global_exclude_re) =
+        let (global_exclude, global_exclude_exact, global_exclude_re) =
             self.build_global_excludes();
         let filters = self.build_all_filters(registry);
         let (universal_cop_indices, pattern_cop_indices) = partition_filter_indices(&filters);
         CopFilterSet {
             global_exclude,
-            global_exclude_patterns,
+            global_exclude_exact,
             global_exclude_re,
             filters,
             name_to_index: name_index_map(registry),
@@ -42,11 +42,11 @@ impl ResolvedConfig {
 
     /// Filters for file discovery (`--list-target-files`): AllCops.Exclude only.
     pub fn build_discover_filters(&self) -> CopFilterSet {
-        let (global_exclude, global_exclude_patterns, global_exclude_re) =
+        let (global_exclude, global_exclude_exact, global_exclude_re) =
             self.build_global_excludes();
         CopFilterSet {
             global_exclude,
-            global_exclude_patterns,
+            global_exclude_exact,
             global_exclude_re,
             filters: Vec::new(),
             name_to_index: HashMap::new(),
@@ -77,15 +77,11 @@ impl ResolvedConfig {
             .collect()
     }
 
-    fn build_global_excludes(&self) -> (GlobSet, Vec<String>, Option<RegexSet>) {
+    fn build_global_excludes(&self) -> (GlobSet, Vec<globset::GlobMatcher>, Option<RegexSet>) {
         let pats: Vec<&str> = self.global_excludes.iter().map(|s| s.as_str()).collect();
         (
             build_glob_set(&pats).unwrap_or_else(GlobSet::empty),
-            self.global_excludes
-                .iter()
-                .filter(|pattern| extract_ruby_regexp(pattern).is_none())
-                .cloned()
-                .collect(),
+            build_exact_glob_matchers(&pats),
             build_regex_set(&pats),
         )
     }

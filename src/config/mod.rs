@@ -23,6 +23,7 @@ mod load_lockfile;
 mod load_recursive;
 mod load_require;
 mod load_resolve;
+mod lockfile_snapshot;
 mod merge;
 mod merge_cop;
 mod parse;

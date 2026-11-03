@@ -95,14 +95,16 @@ pub fn load_config(
     target_dir: Option<&Path>,
     gem_cache: Option<&HashMap<String, PathBuf>>,
 ) -> Result<ResolvedConfig> {
-    match resolve_config_load(path, resolve_start_dir(target_dir)) {
-        ConfigLoadPath::Empty => Ok(ResolvedConfig::empty()),
-        ConfigLoadPath::NoConfig(dir) => no_config_resolved(dir, gem_cache),
-        ConfigLoadPath::Resolved {
-            config_path,
-            scan_root,
-        } => assemble_resolved(path.is_some(), config_path, scan_root, gem_cache, None),
-    }
+    super::lockfile_snapshot::with_snapshot(|| {
+        match resolve_config_load(path, resolve_start_dir(target_dir)) {
+            ConfigLoadPath::Empty => Ok(ResolvedConfig::empty()),
+            ConfigLoadPath::NoConfig(dir) => no_config_resolved(dir, gem_cache),
+            ConfigLoadPath::Resolved {
+                config_path,
+                scan_root,
+            } => assemble_resolved(path.is_some(), config_path, scan_root, gem_cache, None),
+        }
+    })
 }
 
 /// No `.rubocop.yml`/`.standard.yml` found: Rails apps (`rails new`, 7.2+)
@@ -141,9 +143,11 @@ pub fn load_default_config(
     target_dir: Option<&Path>,
     gem_cache: Option<&HashMap<String, PathBuf>>,
 ) -> ResolvedConfig {
-    defaults_only_resolved(
-        resolve_start_dir(target_dir).unwrap_or_else(|| PathBuf::from(".")),
-        None,
-        gem_cache,
-    )
+    super::lockfile_snapshot::with_snapshot(|| {
+        defaults_only_resolved(
+            resolve_start_dir(target_dir).unwrap_or_else(|| PathBuf::from(".")),
+            None,
+            gem_cache,
+        )
+    })
 }

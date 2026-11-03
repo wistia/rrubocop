@@ -1,6 +1,5 @@
 //! Lockfile / baseline version selection for vendored gem configs.
 
-use std::fs;
 use std::path::Path;
 
 use anyhow::Result;
@@ -76,7 +75,7 @@ fn baseline_version(gem_name: &str) -> Option<String> {
 /// Full `x.y.z` (or longer) version from Gemfile.lock / gems.locked.
 fn lockfile_gem_version_str(working_dir: &Path, gem_name: &str) -> Option<String> {
     for lock_name in &["Gemfile.lock", "gems.locked"] {
-        let Ok(content) = fs::read_to_string(working_dir.join(lock_name)) else {
+        let Some(content) = super::lockfile_snapshot::read(&working_dir.join(lock_name)) else {
             continue;
         };
         if let Some(ver) = parse_gem_version_str(&content, gem_name) {

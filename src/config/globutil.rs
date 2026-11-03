@@ -2,7 +2,7 @@
 
 use std::path::Path;
 
-use globset::{GlobBuilder, GlobSet, GlobSetBuilder};
+use globset::{GlobBuilder, GlobMatcher, GlobSet, GlobSetBuilder};
 use regex::RegexSet;
 
 /// Check if a pattern string is a Ruby regexp (from `!ruby/regexp /pattern/`).
@@ -96,15 +96,31 @@ pub(crate) fn build_regex_set(patterns: &[&str]) -> Option<RegexSet> {
     RegexSet::new(&regexes).ok()
 }
 
+pub(crate) fn build_exact_glob_matchers(patterns: &[&str]) -> Vec<GlobMatcher> {
+    patterns
+        .iter()
+        .filter(|pattern| extract_ruby_regexp(pattern).is_none())
+        .flat_map(|pattern| expand_zero_depth_globs(pattern))
+        .filter_map(|pattern| {
+            GlobBuilder::new(&pattern)
+                .literal_separator(false)
+                .build()
+                .ok()
+        })
+        .map(|glob| glob.compile_matcher())
+        .collect()
+}
+
+pub(crate) fn exact_glob_matches(matcher: &GlobMatcher, path: &Path) -> bool {
+    matcher.is_match(path) || matcher.is_match(path.to_string_lossy().as_ref())
+}
+
 fn glob_expanded_matches(expanded: &str, path: &Path) -> bool {
     let Ok(glob) = GlobBuilder::new(expanded).literal_separator(false).build() else {
         return false;
     };
     let matcher = glob.compile_matcher();
-    if matcher.is_match(path) {
-        return true;
-    }
-    matcher.is_match(path.to_string_lossy().as_ref())
+    exact_glob_matches(&matcher, path)
 }
 
 /// Match a RuboCop-style glob (or Ruby regexp) against a file path.
