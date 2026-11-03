@@ -203,20 +203,33 @@ impl Cop for Eval {
 mod tests {
     use super::*;
     crate::cop_fixture_tests!(Eval, "cops/security/eval");
-    #[test]
-    fn independent_original_states() {
-        let fixture = include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/tests/fixtures/cops/security/eval/original-independent.json"
-        ));
+    fn replay(fixture: &str) {
         let cases: serde_json::Value = serde_json::from_str(fixture).unwrap();
-        let mut errors = Vec::new();
         for case in cases.as_array().unwrap() {
+            assert!(case.get("ruby_cop_error").is_none());
+            if let Some(diagnostics) = case.get("ruby_parser_diagnostics") {
+                assert!(
+                    !diagnostics
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|diagnostic| matches!(
+                            diagnostic["level"].as_str(),
+                            Some("error" | "fatal")
+                        ))
+                );
+            }
             let source = SourceFile::from_bytes(
                 "probe.rb",
                 case["original"].as_str().unwrap().as_bytes().to_vec(),
             );
             let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(
+                !tree.root_node().has_error(),
+                "{} {}",
+                case["id"],
+                tree.root_node().to_sexp()
+            );
             let config = CopConfig {
                 options: case["config"]
                     .as_object()
@@ -241,43 +254,53 @@ mod tests {
                         .iter()
                         .all(|diagnostic| !diagnostic.correctable && !diagnostic.corrected)
             );
-            let expected: Vec<_> = case["ruby_diagnostics"]
+            let expected: Option<Vec<_>> = case["ruby_diagnostics"]
                 .as_array()
                 .unwrap()
                 .iter()
                 .map(|diagnostic| {
-                    crate::diagnostic::Severity::from_str(diagnostic["severity"].as_str().unwrap())
-                        .unwrap()
+                    diagnostic
+                        .get("severity")
+                        .and_then(serde_json::Value::as_str)
+                        .and_then(crate::diagnostic::Severity::from_str)
                 })
                 .collect();
-            assert_eq!(
-                actual
-                    .iter()
-                    .map(|diagnostic| diagnostic.severity)
-                    .collect::<Vec<_>>(),
-                expected,
-                "{}",
-                case["id"]
-            );
-            if tree.root_node().has_error() {
-                errors.push(serde_json::json!({"id":case["id"],"source":case["original"],"tree":tree.root_node().to_sexp()}));
+            if let Some(expected) = expected {
+                assert_eq!(
+                    actual
+                        .iter()
+                        .map(|diagnostic| diagnostic.severity)
+                        .collect::<Vec<_>>(),
+                    expected,
+                    "{}",
+                    case["id"]
+                );
+            }
+            if let Some(corrected) = case.get("ruby_corrected") {
+                assert_eq!(corrected, &case["original"], "{}", case["id"]);
             }
         }
-        assert!(
-            errors.is_empty(),
-            "NATIVE_ERROR_COVERAGE {}",
-            serde_json::to_string(&errors).unwrap()
-        );
         crate::testutil::assert_original_spec_parity(&Eval, fixture);
     }
     #[test]
     fn unchanged_original_examples() {
-        crate::testutil::assert_original_spec_parity(
-            &Eval,
-            include_str!(concat!(
-                env!("CARGO_MANIFEST_DIR"),
-                "/tests/fixtures/cops/security/eval/original-parity.json"
-            )),
-        );
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/security/eval/original-parity.json"
+        )));
+    }
+    #[test]
+    fn independent_original_states() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/security/eval/original-independent.json"
+        )));
+    }
+    #[test]
+    fn final_native_states_match_fresh_original_and_parse_cleanly() {
+        replay(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/security/eval/final-states.json"
+        )));
     }
 }

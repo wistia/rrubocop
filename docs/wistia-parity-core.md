@@ -6,12 +6,12 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Thirty-seven owned rules have completed bounded original-Ruby validation,
+Thirty-eight owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 330 queued or in-progress entries;
-some already have implementations. NestedTernaryOperator is complete within
-its bounded gate; Security/Eval is the next batch. Documented safety and syntax limits remain, including
+The exhaustive 367-rule inventory retains 329 queued or in-progress entries;
+some already have implementations. Security/Eval is complete within its
+bounded gate; Lint/AssignmentInCondition is the next batch. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
 not establish universal parity for arbitrary Ruby source. Earlier sections
 retain their historical checkpoint counts; the newest completion section
@@ -862,3 +862,13 @@ Reviewed pinned RuboCop 1.65.1 `security/eval.rb`, rubocop-ast 1.32.3 recursive-
 The old port flagged explicit Kernel receivers and static strings, missed implicit binding receivers, reported receiver-start locations and used warning severity. The new port matches the original nil/zero-argument implicit-binding receiver pattern, safe-navigation/block/parenthesis exclusions and first-argument string/Dstr policy. Recursive-literal exemptions port the pinned allowed methods and child types, including prefix-negation conditional projection and single/multi-child grouping, word/symbol arrays, hashes/omitted values, regular expressions/ranges, pseudo literals and delayed heredocs. Existing argument/identifier/heredoc adapters are reused; no literal decoder or private parser recovery was added. The original Kernel exclusion is retained in the negative fixture rather than an incorrect expected offense. No fixture program executes.
 
 Full native validation passes 953 tests/one pre-existing ignored. The binary builds, the reference utility passes actual Ruby autocorrection/lint and regenerates byte-identically. Two Ruby-2.7-invalid shorthand probes are separate. The shared percent-space ownership bug is separately reproduced on two valid original version probes: the original sees two eval calls and flags the second, while the native error-free tree swallows it into the first string. This is not counted as passing cop parity and no wrong first-call offense is retained to conceal it. Generic syntax recovery remains deferred; its separate CLI evidence is being recorded. The 518-mode supported CLI, actual scope, metadata, fresh final-state and separate final review gates remain pending. Completed counts remain 37, with 330 awaiting their full review, alongside documented limits.
+
+### Security/Eval final bounded gate
+
+Separate final review confirms the pinned receiver pattern, first-argument Str/Dstr distinction, recursive literal type/method policy, prefix conditional projection and no-argument/safe-navigation/block/shadow exclusions. All 13 unchanged original examples plus 246 independent sources match exact diagnostics, selector ranges, convention severity and unsupported-correction flags. Every supported initial/final native tree is explicitly error-free. The source remains byte-identical in both correction modes, and no fixture program executes.
+
+All 518 public modes match bytes, exits and inspected-file scopes; all 1,036 second passes are stable, with zero cop errors or unexpected supported-state differences. Both engines finish 274 modes clean and 244 with the same retained offenses. Fresh original replay covers 255 unique final native source/config states: 137 clean and 118 with matching offenses, all accepted by both parsers and none proposing an edit. Thirty-two metadata modes and 24 actual Wistia-config probes match, including positions, messages and severity. The full checkpoint passes 953 native tests/one ignored, followed by five focused final tests; the binary builds, the Ruby helper passes actual lint and regeneration is byte-identical.
+
+The deferred percent-space syntax is measured separately: all four modes preserve bytes and scope and have eight stable second passes/zero cop errors, but original exits 1 for the second eval while native exits 0 because that call is swallowed into the first literal. Those four exit/offense mismatches are not counted as successful parity. The two Ruby-2.7-invalid shorthand sources are likewise separate. Additional source/version/encoding/directive/wire-format families and generic syntax/combined-cop scheduling remain outside this bounded claim. Shared pseudo-literal equality repair already exists on the Framework branch (9019831); this isolated core branch does not duplicate that dependency.
+
+The bounded Eval port is complete: 38 owned ports have completed their review/gate, all 13 direct Style stubs are implemented, and 329 owned rules still await their full original-source/parity gate, alongside documented limits. Lint/AssignmentInCondition is next.
