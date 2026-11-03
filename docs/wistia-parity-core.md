@@ -6,10 +6,10 @@ retirement of enforced rules or relaxed parity exceptions is authorized here.
 
 ## Current scope
 
-Forty-two owned rules have completed bounded original-Ruby validation,
+Forty-three owned rules have completed bounded original-Ruby validation,
 including all thirteen original direct-file Style stubs, the additional
 delegated RedundantParentheses stub and both absent version-gated cops.
-The exhaustive 367-rule inventory retains 325 queued or in-progress entries;
+The exhaustive 367-rule inventory retains 324 queued or in-progress entries;
 some already have implementations. Security/Eval and Lint/AssignmentInCondition are complete within their
 bounded gates; the remaining owned queue continues. Documented safety and syntax limits remain, including
 additional UselessAssignment capture combinations. These bounded results do
@@ -954,3 +954,10 @@ All296 source/spec states pass scoped tests; full native validation passes973 te
 Separate pinned-source review confirms zero-child Begin detection, including empty interpolation, with explicit KwBegin excluded and no autocorrection. All12 unchanged upstream examples plus386 independent sources match exact messages/full normalized ranges/unchanged bytes, with accepted native/original trees and false correction flags. Every one of the796 public modes matches bytes, exits and inspected scope; all1,592 second passes are stable and there are zero cop errors or differences. Both engines finish176 modes clean and620 with the same retained offenses. Fresh original processing of the398 reviewed source/config states remains the final-state oracle because neither engine edits any byte; native flag/no-edit assertions and public second passes independently verify this identity.
 
 All32 metadata modes and16 actual Wistia-config probes match. Two pre-existing truncated multiline golden highlights were updated only after fresh original evidence confirmed their full18-character range. The full native gate passed971 tests/one ignored; the subsequent EmptyWhen source checkpoint passes973/one ignored without altering this cop. Binary build, original helper lint and byte-identical regeneration pass. Other source/version/encoding/directive and combined-cop families remain outside this bounded gate. This completes42 owned bounded ports, including all13 initial direct Style stubs;325 owned rules still await full review, including the running EmptyWhen public gate.
+
+
+## EmptyWhen final bounded gate
+
+Separate pinned-source review confirms the nil-body predicate, original CommentsHelp sibling-line window, truthful non-boolean options and full normalized condition range. All16 unchanged examples plus280 independent valid sources match exact diagnostics, unchanged bytes and unsupported-correction flags; every tree is accepted by both parsers. All592 public modes match bytes, exits and inspected scope, explicitly preserving AllowComments:null in their configurations. All1,184 second passes are stable, with zero cop errors or differences. Both engines finish214 modes clean and378 with the same retained offenses. Since the rule never edits source, the296 fresh original source/config replays are also the unchanged final-state oracle, independently checked by native no-edit assertions and public second passes.
+
+All32 metadata modes and16 actual Wistia-config probes match. The full native suite passes973 tests/one pre-existing ignored, and binary build/reference lint/byte-identical regeneration pass. Source-family limits and generic semantic-parent/syntax/combined-cop work remain outside this bounded gate. This completes43 owned bounded ports, including all13 original direct Style stubs;324 await full review. Lint/ElseLayout is next: original source/spec inspection has confirmed missing corrections and parenthesis/line-value hazards that require structural safeguards.
