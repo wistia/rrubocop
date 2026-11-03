@@ -7,7 +7,7 @@ use super::types::ConfigLayer;
 
 pub(crate) fn lockfile_gem_version(lockfile_dir: &Path, gem_name: &str) -> Option<f64> {
     for lock_name in &["Gemfile.lock", "gems.locked"] {
-        if let Ok(content) = std::fs::read_to_string(lockfile_dir.join(lock_name)) {
+        if let Some(content) = super::lockfile_snapshot::read(&lockfile_dir.join(lock_name)) {
             if let Some(ver) = parse_gem_version_from_lockfile(&content, gem_name) {
                 return Some(ver);
             }
