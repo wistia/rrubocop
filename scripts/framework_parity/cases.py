@@ -10,6 +10,8 @@ def cases():
         if cop == "Rails/UnknownEnv":
             config.setdefault("Environments", ["production", "development", "test", "staging", "promptfoo"])
         rows.append(dict(id=f"{cop}:{len(rows)}", cop=cop, path="app/helpers/example.rb" if cop in ("Rails/ContentTag","Rails/LinkToBlank") else "app/models/example.rb", source=source + "\n", expected=[], corrected=source + "\n", config=config))
+    from relative_date_cases import extend as relative_date_cases
+    relative_date_cases(add)
     for body in ("(has_many :children)", "begin; has_many :children; end", "if flag; has_many :children; end", "(has_many :children do; work; end)"):
         for prefix in ("", "work; "):
             add("Rails/HasManyOrHasOneDependent",f"class Model; with_options dependent: :destroy do; {prefix}{body}; end; end")

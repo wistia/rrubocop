@@ -1,0 +1,50 @@
+{
+  "source": "rubocop-rails 2.26.0/spec/rubocop/cop/rails/relative_date_constant_spec.rb",
+  "cases": [
+    {
+      "source": "class SomeClass\n  EXPIRED_AT = 1.week.since(base)\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  EXPIRED_AT = -> { 1.year.ago }\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  EXPIRED_AT = Proc.new { 1.year.ago }\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  EXPIRIES = {\n    yearly: Proc.new { 1.year.ago },\n    monthly: Proc.new { 1.month.ago }\n  }\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  EXPIRED_AT = 1.week.since\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  RECENT_DATE = Date.yesterday\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  FUTURE_DATE = Time.zone.tomorrow\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  START_DATE = 2.weeks.ago.to_date\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  TRIAL_PERIOD = DateTime.current..1.day.since\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  TRIAL_PERIOD = DateTime.current...1.day.since\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  TRIAL_PERIOD = 1.day.ago..DateTime.current\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  TRIAL_PERIOD = 1.day.ago...DateTime.current\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  EXPIRED_AT ||= 1.week.since\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  START, A, x = 2.weeks.ago, 1.week.since, 5\nend\n"
+    },
+    {
+      "source": "class SomeClass\n  FOO, BAR = *do_something\nend\n"
+    }
+  ]
+}

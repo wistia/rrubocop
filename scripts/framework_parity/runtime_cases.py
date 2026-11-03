@@ -1,5 +1,18 @@
 """Trusted, explicitly authored programs; ordinary fixture code is never executed."""
 PROGRAMS = [
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nclass Example\nNEW = Date.yesterday\nend\np Example.new.class\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nDATE = Date.yesterday\np DATE\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nDATE = 1.day.ago\np DATE.class\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nDATE = Date.yesterday\np Object.const_get(:DATE)\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nDATE = Date.yesterday\np Object.constants.include?(:DATE)\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nclass Clock\ndef self.ago; puts :evaluated; 1; end\nend\nDATE = Clock.ago\nputs :finished\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nDATE = Date.yesterday\nputs :finished\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nclass Example\n  DATE = 1.day.ago.to_date\nend\nputs :finished\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nbegin\nDATE = Time.yesterday\nrescue NoMethodError, ArgumentError => error\np error.class\nend\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nbegin\nDATE = 1.yesterday\nrescue NoMethodError, ArgumentError => error\np error.class\nend\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nbegin\nDATE = Time.now.ago\nrescue NoMethodError, ArgumentError => error\np error.class\nend\n"),
+    ('Rails/RelativeDateConstant', "gem 'activesupport', '8.1.3.1'\nrequire 'active_support/all'\nDATE = Date.yesterday\np __LINE__\n"),
+
     ('Rails/LinkToBlank', "gem 'actionview', '8.1.3.1'\nrequire 'bigdecimal'\nrequire 'json'\nrequire 'action_view'\nrequire 'nokogiri'\nclass LinkProbe < ActionView::Base\ndef run\nhtml=link_to('/url',target: '_blank') { 'text' }\nanchor=Nokogiri::HTML5.fragment(html).at('a')\nattributes=anchor.attribute_nodes.reject { |a| a.name=='rel' }.map { |a| [a.name,a.value] }.sort\np [anchor.text,attributes,anchor['rel'].to_s.split.reject { |token| token=='noopener' },@events]\nend\nend\nLinkProbe.empty.run\n"),
     ('Rails/LinkToBlank', "gem 'actionview', '8.1.3.1'\nrequire 'bigdecimal'\nrequire 'json'\nrequire 'action_view'\nrequire 'nokogiri'\nclass LinkProbe < ActionView::Base\ndef run\nfn=proc { 'text' }\nhtml=link_to('/url',{target: :_blank},&fn)\nanchor=Nokogiri::HTML5.fragment(html).at('a')\nattributes=anchor.attribute_nodes.reject { |a| a.name=='rel' }.map { |a| [a.name,a.value] }.sort\np [anchor.text,attributes,anchor['rel'].to_s.split.reject { |token| token=='noopener' },@events]\nend\nend\nLinkProbe.empty.run\n"),
 

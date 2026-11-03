@@ -1,9 +1,8 @@
 # Framework cop parity implementation
 
-The initial inventory covers 90 enabled Rails, Migration, Performance and FactoryBot cops.
-Seven Performance stubs are implemented on `feat/wistia-parity-performance` at `00c5d3f` and await integration; this branch retains the other 83 rules.
-The baseline inventory contained 67 no-op stubs. The current branch replaces 43 stubs and reviews three existing implementations.
-Seventeen retained Rails baseline stubs and the remaining existing-cop gaps still need work. Seven delegated baseline stubs are implemented separately. `wistia-framework-parity.json` tracks every owned rule.
+The initial inventory covers 90 enabled Rails, Migration, Performance and FactoryBot cops, including 67 baseline no-op stubs. This branch now replaces 50 stubs and reviews three existing implementations. Six retained Rails stubs and 20 pre-existing implementations still need review.
+
+Seven Performance stubs are implemented separately on `feat/wistia-parity-performance` at `00c5d3f`. Four schema-dependent Rails stubs are delegated to `feat/wistia-parity-schema`; their completion is tracked separately. This branch retains 79 of the original 90 rules. The inventory JSON distinguishes physical stubs on this branch from delegated implementations awaiting integration.
 
 ## Original-rule review
 
@@ -887,3 +886,19 @@ Twelve pinned ActionView 8.1.3.1 programs observe link text, href/target/other a
 Final gate: **592 originals, 1,184 second passes, 12 trusted programs**. All captured valid native-parser-supported originals match warning counts/messages/ranges. The existing `link_to +1, target: '_blank'` tree-sitter ERROR shape retains **three warning differences**, with no private recovery. **935 visible events** are 261 correction-metadata guards, those three parser events, 327 safe-byte events, 327 unsafe-byte events, 14 runtime differences and three original invalid-UTF8 split errors. Native corrections compile and all second passes are stable. UTF-8/Unicode protocol cases use the strict LF-delimited JSONL loader; no discrepancy is allowlisted.
 
 Validation: **933 native tests pass, one ignored**, three JSONL protocol tests pass, and both production helper/model scope probes pass. The catalog now has 116 cases across 52 rules (112 production, four auxiliary); only the new two probes were rerun here. Totals: **49 baseline stubs replaced plus three existing rules reviewed on this branch; seven retained baseline Rails stubs remain**. Four schema stubs are delegated and 20 pre-existing implementations await their separate source review. Seven delegated Performance baseline stubs are complete; scheduling/publishing remain deferred.
+
+## Rails/RelativeDateConstant checkpoint
+
+Reviewed the pinned `rubocop-rails-2.26.0/lib/rubocop/cop/rails/relative_date_constant.rb` and all 15 upstream spec examples after implementation. The fixture preserves those original inputs; the fresh pinned Ruby reference supplies messages, source ranges, metadata and correction bytes.
+
+The post-implementation matrix contains 213 originals and 426 generated second-pass states, including all eight relative method names, nonmatching/argument/safe-navigation controls, postorder-first message selection, ordinary versus numbered blocks and Ruby-version controls, direct/qualified/conditional/multiple assignment, array RHS grouping, comment ownership, overlapping nested assignments, autocorrection-disabled and inline-disabled policy. On every valid noncrashing reference state, warning counts/messages/ranges/severity match. The native implementation rewrites 16 original inputs; unsafe-mode corrections are byte-identical to Ruby where permitted. Safe mode preserves bytes throughout. No native invalid correction or nonidempotence occurred.
+
+All 541 strict difference events remain visible: 264 correction-metadata safeguards, 261 unsafe-mode byte safeguards, 10 original runtime behavior changes, three original clobbering errors for nested constant assignments and three original-invalid Ruby 2.5 numbered-block states. These are not passing exact-autocorrection parity claims. In particular, the original explicitly documents that constant consumers are not updated; it also defers arbitrary initializer effects/errors and can overwrite existing methods (`NEW` becomes `self.new`).
+
+Native correction stays unsafe and only supports bounded passive ActiveSupport numeric/duration/date/time chains, standalone unqualified assignments, no visible constant consumers/reflection, no source method overrides or superclass, and no comments/heredocs/line-number effects. A pinned 197-name Ruby 3.4.9 Object/Class method table prevents overwriting inherited methods; regenerate it with `refresh_relative_date_methods.rb` (loads JSON, matching the capture environment). Unknown external constant consumers or monkey patches remain part of the unsafe method-contract assumption, not a guarantee of global behavior preservation. Nonmatching/unsupported contexts still receive the original warning with correction unavailable.
+
+Twelve explicitly authored programs pin ActiveSupport 8.1.3.1 and all have valid, successful original executions (including rescued error observations). All 24 native mode observations preserve original stdout and exit status. They cover constant reads/reflection, side effects, line values, inherited constructor preservation, invalid date calls and supported rewrites. Five original unsafe corrections change these observations. The source-backed guards are intentional divergences, not rule exceptions.
+
+Known open matcher limit: delayed heredoc interpolation bodies need Core's canonical traversal helper; no private lossy recovery was added. Typed/dynamic date-expression branches outside the bounded correction model remain warnings without fixes. No claim of complete cross-cop scheduling or integration parity is made.
+
+Validation: final differential artifacts `/dev/shm/framework-relative-date-reviewed-results`; 933 native tests pass, one audit probe remains intentionally ignored by default; both actual-production-config CLI path controls pass. Scope catalog now contains 114 production controls across 53 rules plus four auxiliary policy cases. Ruby generator passes pinned default-config autocorrection/lint, and regenerates the method table exactly. This Rust-fork helper is not a Wistia autoloaded application/spec file. Six retained baseline stubs remain: Delegate, FilePath, HttpPositionalArguments, Presence, SafeNavigation, UniqBeforePluck.
