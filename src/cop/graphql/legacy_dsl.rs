@@ -23,6 +23,9 @@ impl Cop for LegacyDsl {
         CALL_KINDS
     }
 
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"define"]
+    }
     fn check_node(
         &self,
         source: &SourceFile,

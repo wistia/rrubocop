@@ -71,7 +71,7 @@ fn check_pair(
     let (Some(pn), Some(cn)) = (field_name(source, prev), field_name(source, curr)) else {
         return;
     };
-    if correct_order(&pn, &cn, order_ref) {
+    if correct_order(&pn, &cn, order_ref, source) {
         return;
     }
     let (line, col) = source.offset_to_line_col(curr.start_byte());

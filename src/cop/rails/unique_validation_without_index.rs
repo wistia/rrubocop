@@ -78,6 +78,15 @@ fn const_parts(source: &SourceFile, node: Node<'_>, parts: &mut Vec<String>) {
     }
 }
 fn table_name(source: &SourceFile, class: Node<'_>) -> Option<String> {
+    struct TableName(Option<String>);
+    source
+        .cached(class.start_byte(), || {
+            TableName(table_name_uncached(source, class))
+        })
+        .0
+        .clone()
+}
+fn table_name_uncached(source: &SourceFile, class: Node<'_>) -> Option<String> {
     let mut overrides = Vec::new();
     for node in walk(class) {
         if regular_send_name(source, node).as_deref() != Some(b"table_name=") {
@@ -213,9 +222,6 @@ impl Cop for UniqueValidationWithoutIndex {
         {
             return;
         }
-        let Some(schema) = super::schema_model::load(source, config) else {
-            return;
-        };
         let args = arguments(node);
         let Some(options) = args.last() else {
             return;
@@ -241,13 +247,16 @@ impl Cop for UniqueValidationWithoutIndex {
         {
             return;
         }
+        let Some(schema) = super::schema_model::load(source, config) else {
+            return;
+        };
         let Some(class) = class_node(node) else {
             return;
         };
         let Some(table_name) = table_name(source, class) else {
             return;
         };
-        let Some(table) = schema.tables.iter().find(|table| table.name == table_name) else {
+        let Some(table) = schema.table(&table_name) else {
             return;
         };
         let Some(first) = args
@@ -270,13 +279,7 @@ impl Cop for UniqueValidationWithoutIndex {
         if table
             .indices
             .iter()
-            .chain(
-                schema
-                    .indices
-                    .iter()
-                    .filter(|(name, _)| *name == table_name)
-                    .map(|(_, index)| index),
-            )
+            .chain(schema.external_indices(&table_name))
             .any(|index| {
                 index.unique
                     && (index.columns.as_ref() == Some(&names)

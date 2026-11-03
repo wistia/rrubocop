@@ -12,6 +12,8 @@ use tree_sitter::Node;
 pub(super) struct Schema {
     pub tables: Vec<Table>,
     pub indices: Vec<(String, Index)>,
+    table_lookup: std::collections::HashMap<String, usize>,
+    index_lookup: std::collections::HashMap<String, Vec<usize>>,
 }
 pub(super) struct Table {
     pub name: String,
@@ -136,7 +138,34 @@ impl Schema {
                 }
             }
         }
+        for (index, table) in schema.tables.iter().enumerate() {
+            schema
+                .table_lookup
+                .entry(table.name.clone())
+                .or_insert(index);
+        }
+        for (index, (name, _)) in schema.indices.iter().enumerate() {
+            schema
+                .index_lookup
+                .entry(name.clone())
+                .or_default()
+                .push(index);
+        }
         Some(schema)
+    }
+}
+impl Schema {
+    pub fn table(&self, name: &str) -> Option<&Table> {
+        self.table_lookup
+            .get(name)
+            .map(|&index| &self.tables[index])
+    }
+    pub fn external_indices(&self, name: &str) -> impl Iterator<Item = &Index> {
+        self.index_lookup
+            .get(name)
+            .into_iter()
+            .flatten()
+            .map(|&index| &self.indices[index].1)
     }
 }
 pub(crate) fn path_from(directory: &Path) -> Option<PathBuf> {
@@ -150,6 +179,14 @@ pub(crate) fn path_from(directory: &Path) -> Option<PathBuf> {
     }
     None
 }
+fn discovered_path(source: &SourceFile, directory: &Path) -> Option<PathBuf> {
+    struct SchemaPath(Option<PathBuf>);
+    source
+        .operation()
+        .cached(directory, || SchemaPath(path_from(directory)))
+        .0
+        .clone()
+}
 pub(super) fn load(source: &SourceFile, config: &CopConfig) -> Option<Arc<Schema>> {
     #[cfg(test)]
     if let Some(value) = config.options.get("SchemaSource") {
@@ -157,7 +194,8 @@ pub(super) fn load(source: &SourceFile, config: &CopConfig) -> Option<Arc<Schema
     }
     let _ = config;
     struct SchemaSnapshot(Option<Arc<Schema>>);
-    let path = path_from(&std::env::current_dir().ok()?)?;
+    let directory = std::env::current_dir().ok()?;
+    let path = discovered_path(source, &directory)?;
     source
         .operation()
         .cached(&path, || {
@@ -170,4 +208,35 @@ pub(super) fn load(source: &SourceFile, config: &CopConfig) -> Option<Arc<Schema
         })
         .0
         .clone()
+}
+
+#[cfg(test)]
+mod performance_tests {
+    use super::*;
+    #[test]
+    fn schema_discovery_caches_absence_only_for_the_current_operation() {
+        let project = tempfile::tempdir().unwrap();
+        std::fs::create_dir(project.path().join("db")).unwrap();
+        let operation = Arc::default();
+        let first = SourceFile::from_bytes("a.rb", vec![]).with_operation(Arc::clone(&operation));
+        let second = SourceFile::from_bytes("b.rb", vec![]).with_operation(operation);
+        assert_eq!(discovered_path(&first, project.path()), None);
+        let path = project.path().join("db/schema.rb");
+        std::fs::write(&path, "").unwrap();
+        assert_eq!(discovered_path(&second, project.path()), None);
+        assert_eq!(
+            discovered_path(&SourceFile::from_bytes("c.rb", vec![]), project.path()),
+            Some(path)
+        );
+    }
+    #[test]
+    fn schema_indexes_keep_first_duplicate_table_and_external_index_order() {
+        let schema = Schema::parse("Schema.define do; create_table 'users' do |t|; t.string 'first'; end; create_table 'users' do |t|; t.string 'second'; end; add_index 'users', ['first'], unique: true; add_index 'users', ['second']; end").unwrap();
+        assert!(schema.table("users").unwrap().columns.contains("first"));
+        assert!(!schema.table("users").unwrap().columns.contains("second"));
+        let indexes: Vec<_> = schema.external_indices("users").collect();
+        assert_eq!(indexes.len(), 2);
+        assert!(indexes[0].unique);
+        assert!(!indexes[1].unique);
+    }
 }

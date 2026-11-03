@@ -1,4 +1,27 @@
 //! Preserve branch evaluation when suggesting ActiveSupport presence.
+fn has_crlf(source: &SourceFile) -> bool {
+    struct CrLf(bool);
+    source
+        .cached(0, || {
+            CrLf(source.as_bytes().windows(2).any(|b| b == b"\r\n"))
+        })
+        .0
+}
+fn line_literal(source: &SourceFile, mut root: Node<'_>) -> bool {
+    struct LineLiteral(bool);
+    source
+        .cached(0, || {
+            while let Some(parent) = root.parent() {
+                root = parent;
+            }
+            let mut found = false;
+            crate::cop::shared::for_each_descendant(root, |node| {
+                found |= crate::cop::shared::is_line_literal(source, node);
+            });
+            LineLiteral(found)
+        })
+        .0
+}
 use crate::cop::shared::ruby_expression::{
     plain_string, plain_symbol, regular_send_arguments, regular_send_name, regular_send_receiver,
     same_expression,
@@ -537,21 +560,11 @@ impl Cop for Presence {
             && fallback_safe(source, other)
             && !overridden(source, node)
             && collect_comments(node).is_empty()
-            && !source.as_bytes().windows(2).any(|b| b == b"\r\n");
+            && !has_crlf(source);
         if d.correctable {
             let removed_lines = raw.bytes().filter(|b| *b == b'\n').count()
                 != replacement.bytes().filter(|b| *b == b'\n').count();
-            let mut root = node;
-            while let Some(p) = root.parent() {
-                root = p;
-            }
-            let mut pending = vec![root];
-            let mut line_literal = false;
-            while let Some(n) = pending.pop() {
-                line_literal |= crate::cop::shared::is_line_literal(source, n);
-                pending.extend(named_kids(n));
-            }
-            d.correctable = !(removed_lines && line_literal);
+            d.correctable = !(removed_lines && line_literal(source, node));
             let mut proposed = source.as_bytes().to_vec();
             proposed.splice(node.byte_range(), replacement.bytes());
             let proposed = SourceFile::from_bytes("presence.rb", proposed);

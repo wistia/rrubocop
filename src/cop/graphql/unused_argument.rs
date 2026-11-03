@@ -74,10 +74,11 @@ fn missing_for<'a>(
 }
 
 fn missing_args(source: &SourceFile, method: Node<'_>, declared: &[String]) -> Vec<String> {
-    let kwargs = method_kwarg_names(source, method);
+    let kwargs: std::collections::HashSet<_> =
+        method_kwarg_names(source, method).into_iter().collect();
     let mut missing: Vec<_> = declared
         .iter()
-        .filter(|a| !kwargs.contains(a))
+        .filter(|a| !kwargs.contains(*a))
         .cloned()
         .collect();
     missing.sort();

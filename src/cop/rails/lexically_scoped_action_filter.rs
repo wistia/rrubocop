@@ -48,7 +48,13 @@ fn values(source: &SourceFile, node: Node<'_>) -> Vec<String> {
     }
     scalar(source, node).into_iter().collect()
 }
-fn defined(source: &SourceFile, parent: Node<'_>) -> Vec<String> {
+fn defined(source: &SourceFile, parent: Node<'_>) -> std::sync::Arc<Defined> {
+    source.cached(parent.start_byte(), || {
+        Defined(defined_uncached(source, parent))
+    })
+}
+struct Defined(Vec<String>);
+fn defined_uncached(source: &SourceFile, parent: Node<'_>) -> Vec<String> {
     let Some(body) = parent.child_by_field_name("body") else {
         return Vec::new();
     };
@@ -164,7 +170,7 @@ impl Cop for LexicallyScopedActionFilter {
         let methods = defined(source, parent);
         let unmatched: Vec<_> = values(source, value)
             .into_iter()
-            .filter(|name| !methods.contains(name))
+            .filter(|name| !methods.0.contains(name))
             .collect();
         if unmatched.is_empty() {
             return;

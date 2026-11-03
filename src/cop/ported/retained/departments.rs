@@ -36,14 +36,19 @@ fn valid(name: &str) -> bool {
     NONWORD.is_match(name) || QUALIFIED.is_match(name) || DEPARTMENTS.contains(name)
 }
 fn qualify(name: &str) -> Option<String> {
+    static LEGACY: LazyLock<std::collections::HashMap<&'static str, &'static str>> =
+        LazyLock::new(|| {
+            let mut names = std::collections::HashMap::new();
+            for name in include_str!("../../../resources/legacy_cop_names.txt").lines() {
+                if let Some((_, short)) = name.split_once('/') {
+                    names.entry(short).or_insert(name);
+                }
+            }
+            names
+        });
     crate::config::cop_names::qualified(name)
         .map(|s| s.into_owned())
-        .or_else(|| {
-            include_str!("../../../resources/legacy_cop_names.txt")
-                .lines()
-                .find(|n| n.split_once('/').is_some_and(|(_, short)| short == name))
-                .map(str::to_owned)
-        })
+        .or_else(|| LEGACY.get(name).map(|name| (*name).to_owned()))
 }
 
 fn check_token(

@@ -15,6 +15,12 @@ fn ordinary_block(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bo
     })
 }
 fn custom_relation(source: &SourceFile, node: Node<'_>) -> bool {
+    struct CustomRelation(bool);
+    source
+        .cached(0, || CustomRelation(custom_relation_uncached(source, node)))
+        .0
+}
+fn custom_relation_uncached(source: &SourceFile, node: Node<'_>) -> bool {
     let mut root = node;
     while let Some(parent) = root.parent() {
         root = parent;
