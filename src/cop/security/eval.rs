@@ -53,25 +53,10 @@ fn literal_interpolations(source: &SourceFile, node: Node<'_>) -> bool {
             .all(|child| original_recursive_literal(source, child, false));
     }
     let mut stack = if node.kind() == "heredoc_beginning" {
-        let Some((start, end)) = crate::cop::ported::heredoc_span(source, node) else {
+        let Some(interpolations) = crate::cop::shared::heredoc_interpolations(source, node) else {
             return false;
         };
-        let root = std::iter::successors(Some(node), |node| node.parent())
-            .last()
-            .unwrap();
-        let mut result = Vec::new();
-        let mut stack = vec![root];
-        while let Some(child) = stack.pop() {
-            if child.kind() == "interpolation"
-                && child.start_byte() >= start
-                && child.end_byte() <= end
-            {
-                result.push(child);
-            } else {
-                stack.extend(children(child));
-            }
-        }
-        result
+        interpolations
     } else {
         children(node)
     };

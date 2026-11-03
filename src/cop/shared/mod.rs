@@ -4,6 +4,8 @@ mod bare_args;
 mod command_call;
 pub mod ruby_arguments;
 pub use command_call::{CommandArgument, CommandUnaryPlus, UnaryCommandCall, command_unary_plus, command_unary_plus_call};
+mod heredoc_interpolations;
+pub(crate) use heredoc_interpolations::heredoc_interpolations;
 mod corrected_crlf;
 pub(crate) use corrected_crlf::normalize_corrected_crlf;
 mod integer;

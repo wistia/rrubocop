@@ -1,0 +1,20 @@
+{
+  "reference": "RuboCop1.65.1 / Parser3.3.5.0",
+  "api": "shared::heredoc_interpolations(source, opener) -> Option<Vec<Node>>",
+  "cases": 8,
+  "heredoc_bodies": 9,
+  "interpolation_groups": 8,
+  "contract": "Associated native body only; direct interpolation nodes in source order; reuse original-verified heredoc_span. Native parse-clean/ranges/text matched against original literal child membership. No new decoder or syntax recovery.",
+  "coverage": [
+    "single/multiple/empty interpolation",
+    "single-quoted and command delimiters",
+    "multiple openers on one line",
+    "CRLF and Unicode expression coordinates",
+    "nested ordinary string interpolation stays within its outer interpolation"
+  ],
+  "consumer_regression": "All five Security/Eval tests pass:13 original,246independent,255final states; AssignmentInCondition25original/605independent parity tests pass in WIP consumer.",
+  "remaining_limits": [
+    "Additional nested-heredoc/parser-error and encoding families remain unreviewed; no recovery from native invalid trees"
+  ],
+  "fixture_programs_executed": false
+}
