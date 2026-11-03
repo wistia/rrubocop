@@ -1,0 +1,323 @@
+[
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing registers an offense when respond_to_missing? is not implemented",
+    "original": "class Test\n  def method_missing\n  end\nend\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 24,
+        "message": "When using `method_missing`, define `respond_to_missing?`."
+      }
+    ],
+    "ruby_corrected": "class Test\n  def method_missing\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing registers an offense when method_missing is implemented as a class methods",
+    "original": "class Test\n  def self.method_missing\n  end\nend\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 29,
+        "message": "When using `method_missing`, define `respond_to_missing?`."
+      }
+    ],
+    "ruby_corrected": "class Test\n  def self.method_missing\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing allows method_missing and respond_to_missing? implemented as instance methods",
+    "original": "class Test\n  def respond_to_missing?\n  end\n\n  def method_missing\n  end\nend\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Test\n  def respond_to_missing?\n  end\n\n  def method_missing\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing allows method_missing and respond_to_missing? implemented as class methods",
+    "original": "class Test\n  def self.respond_to_missing?\n  end\n\n  def self.method_missing\n  end\nend\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Test\n  def self.respond_to_missing?\n  end\n\n  def self.method_missing\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing allows method_missing and respond_to_missing? when defined with inline access modifier",
+    "original": "class Test\n  private def respond_to_missing?\n  end\n\n  private def method_missing\n  end\nend\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Test\n  private def respond_to_missing?\n  end\n\n  private def method_missing\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing allows method_missing and respond_to_missing? when defined with inline access modifier and method_missing is not qualified by inline access modifier",
+    "original": "class Test\n  private def respond_to_missing?\n  end\n\n  def method_missing\n  end\nend\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Test\n  private def respond_to_missing?\n  end\n\n  def method_missing\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing registers an offense respond_to_missing? is implemented as an instance method and method_missing is implemented as a class method",
+    "original": "class Test\n  def self.method_missing\n  end\n\n  def respond_to_missing?\n  end\nend\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 29,
+        "message": "When using `method_missing`, define `respond_to_missing?`."
+      }
+    ],
+    "ruby_corrected": "class Test\n  def self.method_missing\n  end\n\n  def respond_to_missing?\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing registers an offense respond_to_missing? is implemented as a class method and method_missing is implemented as an instance method",
+    "original": "class Test\n  def self.respond_to_missing?\n  end\n\n  def method_missing\n  end\nend\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 5,
+        "column": 3,
+        "length": 24,
+        "message": "When using `method_missing`, define `respond_to_missing?`."
+      }
+    ],
+    "ruby_corrected": "class Test\n  def self.respond_to_missing?\n  end\n\n  def method_missing\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 0",
+    "original": "def respond_to_missing?; end\ndef method_missing; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 23,
+        "message": "When using `method_missing`, define `respond_to_missing?`."
+      }
+    ],
+    "ruby_corrected": "def respond_to_missing?; end\ndef method_missing; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 1",
+    "original": "class A; def respond_to_missing?; end; end\nclass B; def method_missing; end; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class A; def respond_to_missing?; end; end\nclass B; def method_missing; end; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 2",
+    "original": "module M; def respond_to_missing?; end; class C; def method_missing; end; end; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "module M; def respond_to_missing?; end; class C; def method_missing; end; end; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 3",
+    "original": "class C; if flag; def method_missing; end; end; def respond_to_missing?; end; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C; if flag; def method_missing; end; end; def respond_to_missing?; end; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 4",
+    "original": "class C; class << self; def method_missing; end; def respond_to_missing?; end; end; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C; class << self; def method_missing; end; def respond_to_missing?; end; end; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 5",
+    "original": "class C; define_method(:helper) { def method_missing; end }; def respond_to_missing?; end; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C; define_method(:helper) { def method_missing; end }; def respond_to_missing?; end; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 6",
+    "original": "class C; def helper; def method_missing; end; end; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 22,
+        "length": 23,
+        "message": "When using `method_missing`, define `respond_to_missing?`."
+      }
+    ],
+    "ruby_corrected": "class C; def helper; def method_missing; end; end; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 7",
+    "original": "class C; def (respond_to_missing?).method_missing; end; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 45,
+        "message": "When using `method_missing`, define `respond_to_missing?`."
+      }
+    ],
+    "ruby_corrected": "class C; def (respond_to_missing?).method_missing; end; end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::MissingRespondToMissing source branch 8",
+    "original": "class C; private def self.method_missing; end; def self.respond_to_missing?; end; end\n",
+    "config": {
+      "Description": "Checks if `method_missing` is implemented without implementing `respond_to_missing`.",
+      "StyleGuide": "#no-method-missing",
+      "Enabled": true,
+      "VersionAdded": "0.56",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C; private def self.method_missing; end; def self.respond_to_missing?; end; end\n"
+  }
+]

@@ -1,0 +1,1475 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with `Dir[]` does not register an offense",
+    "original": "Dir[\"./lib/**/*.rb\"].each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with `Dir[]` with extra logic does not register an offense",
+    "original": "Dir[\"./lib/**/*.rb\"].each do |file|\n  if file.start_with?('_')\n    puts \"Not required.\"\n  else\n    require file\n  end\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].each do |file|\n  if file.start_with?('_')\n    puts \"Not required.\"\n  else\n    require file\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with `Dir[]` with require block passed as parameter does not register an offense",
+    "original": "Dir[\"./lib/**/*.rb\"].each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with `Dir[]` with top-level ::Dir does not register an offense",
+    "original": "::Dir[\"./lib/**/*.rb\"].each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::Dir[\"./lib/**/*.rb\"].each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with `Dir.glob` does not register an offense",
+    "original": "Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with `Dir.glob` with require block passed as parameter does not register an offense",
+    "original": "Dir.glob(Rails.root.join('test', '*.rb')).each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(Rails.root.join('test', '*.rb')).each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with `Dir.glob` with top-level ::Dir does not register an offense",
+    "original": "::Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), ::File::FNM_DOTMATCH).each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), ::File::FNM_DOTMATCH).each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with `Dir.glob` with `sort: false` keyword option does not register an offense",
+    "original": "Dir.glob(Rails.root.join('test', '*.rb'), sort: false).each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(Rails.root.join('test', '*.rb'), sort: false).each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with direct block glob does not register an offense",
+    "original": "Dir.glob(\"./lib/**/*.rb\") do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"./lib/**/*.rb\") do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with direct block glob with require block passed as parameter does not register an offense",
+    "original": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH,\n  &method(:require)\n)\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH,\n  &method(:require)\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 3.0 or higher with direct block glob with top-level ::Dir does not register an offense",
+    "original": "::Dir.glob(\"./lib/**/*.rb\") do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::Dir.glob(\"./lib/**/*.rb\") do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index registers an offense and autocorrects to add .sort when the block has `require`",
+    "original": "Dir[\"./lib/**/*.rb\"].each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 25,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index registers an offense and autocorrects to add .sort when the block has `require`",
+    "original": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index registers an offense and autocorrects to add .sort when the numblock has `require`",
+    "original": "Dir[\"./lib/**/*.rb\"].each do\n  require _1\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 25,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each do\n  require _1\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index registers an offense and autocorrects to add .sort when the numblock has `require`",
+    "original": "Dir[\"./lib/**/*.rb\"].sort.each do\n  require _1\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each do\n  require _1\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index registers an offense and autocorrects to add .sort when the block has `require_relative`",
+    "original": "Dir[\"./lib/**/*.rb\"].each do |file|\n  require_relative file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 25,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require_relative file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index registers an offense and autocorrects to add .sort when the block has `require_relative`",
+    "original": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require_relative file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require_relative file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index registers an offense with extra logic",
+    "original": "Dir[\"./lib/**/*.rb\"].each do |file|\n  if file.start_with?('_')\n    puts \"Not required.\"\n  else\n    require file\n  end\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 25,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  if file.start_with?('_')\n    puts \"Not required.\"\n  else\n    require file\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index registers an offense with extra logic",
+    "original": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  if file.start_with?('_')\n    puts \"Not required.\"\n  else\n    require file\n  end\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  if file.start_with?('_')\n    puts \"Not required.\"\n  else\n    require file\n  end\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index with require block passed as parameter registers an offense an autocorrects to add sort",
+    "original": "Dir[\"./lib/**/*.rb\"].each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 44,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index with require block passed as parameter registers an offense an autocorrects to add sort",
+    "original": "Dir[\"./lib/**/*.rb\"].sort.each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index with require_relative block passed as parameter registers an offense an autocorrects to add sort",
+    "original": "Dir[\"./lib/**/*.rb\"].each(&method(:require_relative))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 53,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each(&method(:require_relative))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index with require_relative block passed as parameter registers an offense an autocorrects to add sort",
+    "original": "Dir[\"./lib/**/*.rb\"].sort.each(&method(:require_relative))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].sort.each(&method(:require_relative))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index with top-level ::Dir registers an offense and corrects to add .sort",
+    "original": "::Dir[\"./lib/**/*.rb\"].each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 27,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "::Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted index with top-level ::Dir registers an offense and corrects to add .sort",
+    "original": "::Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::Dir[\"./lib/**/*.rb\"].sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted glob registers an offense and autocorrects to add .sort",
+    "original": "Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 75,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted glob registers an offense and autocorrects to add .sort",
+    "original": "Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).sort.each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), File::FNM_DOTMATCH).sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted glob with require block passed as parameter registers an offense an autocorrects to add sort",
+    "original": "Dir.glob(Rails.root.join('test', '*.rb')).each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 65,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(Rails.root.join('test', '*.rb')).sort.each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted glob with require block passed as parameter registers an offense an autocorrects to add sort",
+    "original": "Dir.glob(Rails.root.join('test', '*.rb')).sort.each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(Rails.root.join('test', '*.rb')).sort.each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted glob with top-level ::Dir registers an offense and corrects to add .sort",
+    "original": "::Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), ::File::FNM_DOTMATCH).each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 79,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "::Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), ::File::FNM_DOTMATCH).sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with unsorted glob with top-level ::Dir registers an offense and corrects to add .sort",
+    "original": "::Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), ::File::FNM_DOTMATCH).sort.each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::Dir.glob(Rails.root.join(__dir__, 'test', '*.rb'), ::File::FNM_DOTMATCH).sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with direct block glob registers an offense and autocorrects to add .sort.each",
+    "original": "Dir.glob(\"./lib/**/*.rb\") do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 25,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\"./lib/**/*.rb\").sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with direct block glob registers an offense and autocorrects to add .sort.each",
+    "original": "Dir.glob(\"./lib/**/*.rb\").sort.each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"./lib/**/*.rb\").sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with direct block glob with require block passed as parameter registers an offense and autocorrects to add sort",
+    "original": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH,\n  &method(:require)\n)\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 89,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH\n).sort.each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with direct block glob with require block passed as parameter registers an offense and autocorrects to add sort",
+    "original": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH\n).sort.each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH\n).sort.each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with direct block glob with require_relative block passed as parameter registers an offense and autocorrects to add sort",
+    "original": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH,\n  &method(:require_relative)\n)\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 98,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH\n).sort.each(&method(:require_relative))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with direct block glob with require_relative block passed as parameter registers an offense and autocorrects to add sort",
+    "original": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH\n).sort.each(&method(:require_relative))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\n  Rails.root.join('./lib/**/*.rb'),\n  File::FNM_DOTMATCH\n).sort.each(&method(:require_relative))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with direct block glob with top-level ::Dir registers an offense and corrects to add .sort.each",
+    "original": "::Dir.glob(\"./lib/**/*.rb\") do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 27,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "::Dir.glob(\"./lib/**/*.rb\").sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when requiring files when Ruby 2.7 or lower with direct block glob with top-level ::Dir registers an offense and corrects to add .sort.each",
+    "original": "::Dir.glob(\"./lib/**/*.rb\").sort.each do |file|\n  require file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::Dir.glob(\"./lib/**/*.rb\").sort.each do |file|\n  require file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder when not requiring files does not register an offense",
+    "original": "Dir[\"./lib/**/*.rb\"].each do |file|\n  puts file\nend\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"./lib/**/*.rb\"].each do |file|\n  puts file\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 0",
+    "original": "Dir[\"*.rb\"].each { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 16,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir[\"*.rb\"].sort.each { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 1",
+    "original": "Dir.[](\"*.rb\").each { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 19,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.[](\"*.rb\").sort.each { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 2",
+    "original": "Dir.glob(\"*.rb\") { |file| require_relative file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 16,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\"*.rb\").sort.each { |file| require_relative file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 3",
+    "original": "::Dir.glob(\"*.rb\").each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 42,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "::Dir.glob(\"*.rb\").sort.each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 4",
+    "original": "Module::Dir.glob(\"*.rb\") { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Module::Dir.glob(\"*.rb\") { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 5",
+    "original": "Dir&.glob(\"*.rb\") { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir&.glob(\"*.rb\") { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 6",
+    "original": "Dir.glob(\"*.rb\") { |a,b| require a }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |a,b| require a }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 7",
+    "original": "Dir.glob(\"*.rb\") { |file; local| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file; local| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 8",
+    "original": "Dir.glob(\"*.rb\") { |file| object.require(file) }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file| object.require(file) }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 9",
+    "original": "Dir.glob(\"*.rb\") { |file| require file, extra }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file| require file, extra }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 10",
+    "original": "Dir.glob(\"*.rb\") { |file| require other }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file| require other }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 11",
+    "original": "Dir.glob(\"*.rb\").sort.each { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").sort.each { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 12",
+    "original": "Dir.glob(\"*.rb\") { require _1; require _2 }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 16,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\"*.rb\").sort.each { require _1; require _2 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 13",
+    "original": "Dir.glob(\"*.rb\", &method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 35,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\"*.rb\").sort.each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 14",
+    "original": "Dir.glob(\"*.rb\").each(&method(\"require\"))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").each(&method(\"require\"))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 15",
+    "original": "Dir.glob(\"*.rb\").each(&object.method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").each(&object.method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 16",
+    "original": "Dir.glob(\"*.rb\").each(&method(:require_relative))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 49,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\"*.rb\").sort.each(&method(:require_relative))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 17",
+    "original": "Dir.glob(\"*.rb\").each(1) { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").each(1) { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 18",
+    "original": "Dir.glob(\"*.rb\") { |file| require(file) if enabled }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 16,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\"*.rb\").sort.each { |file| require(file) if enabled }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 2.7 edge 19",
+    "original": "Dir.glob(\"*.rb\", sort: false).each { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 34,
+        "message": "Sort files before requiring them."
+      }
+    ],
+    "ruby_corrected": "Dir.glob(\"*.rb\", sort: false).sort.each { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 0",
+    "original": "Dir[\"*.rb\"].each { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir[\"*.rb\"].each { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 1",
+    "original": "Dir.[](\"*.rb\").each { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.[](\"*.rb\").each { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 2",
+    "original": "Dir.glob(\"*.rb\") { |file| require_relative file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file| require_relative file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 3",
+    "original": "::Dir.glob(\"*.rb\").each(&method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "::Dir.glob(\"*.rb\").each(&method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 4",
+    "original": "Module::Dir.glob(\"*.rb\") { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Module::Dir.glob(\"*.rb\") { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 5",
+    "original": "Dir&.glob(\"*.rb\") { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir&.glob(\"*.rb\") { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 6",
+    "original": "Dir.glob(\"*.rb\") { |a,b| require a }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |a,b| require a }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 7",
+    "original": "Dir.glob(\"*.rb\") { |file; local| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file; local| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 8",
+    "original": "Dir.glob(\"*.rb\") { |file| object.require(file) }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file| object.require(file) }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 9",
+    "original": "Dir.glob(\"*.rb\") { |file| require file, extra }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file| require file, extra }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 10",
+    "original": "Dir.glob(\"*.rb\") { |file| require other }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file| require other }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 11",
+    "original": "Dir.glob(\"*.rb\").sort.each { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").sort.each { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 12",
+    "original": "Dir.glob(\"*.rb\") { require _1; require _2 }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { require _1; require _2 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 13",
+    "original": "Dir.glob(\"*.rb\", &method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\", &method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 14",
+    "original": "Dir.glob(\"*.rb\").each(&method(\"require\"))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").each(&method(\"require\"))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 15",
+    "original": "Dir.glob(\"*.rb\").each(&object.method(:require))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").each(&object.method(:require))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 16",
+    "original": "Dir.glob(\"*.rb\").each(&method(:require_relative))\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").each(&method(:require_relative))\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 17",
+    "original": "Dir.glob(\"*.rb\").each(1) { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\").each(1) { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 18",
+    "original": "Dir.glob(\"*.rb\") { |file| require(file) if enabled }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { |file| require(file) if enabled }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder 3.4 edge 19",
+    "original": "Dir.glob(\"*.rb\", sort: false).each { |file| require file }\n",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\", sort: false).each { |file| require file }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder nested numbered scope",
+    "original": "Dir.glob(\"*.rb\") { other.each { require _1 } }",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { other.each { require _1 } }"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::NonDeterministicRequireOrder method name is not a numbered parameter",
+    "original": "Dir.glob(\"*.rb\") { require object._1 }",
+    "config": {
+      "Description": "Always sort arrays returned by Dir.glob when requiring files.",
+      "Enabled": true,
+      "VersionAdded": "0.78",
+      "Safe": false,
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "Dir.glob(\"*.rb\") { require object._1 }"
+  }
+]

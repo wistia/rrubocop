@@ -1,0 +1,138 @@
+[
+  {
+    "id": "multiline-value-separator",
+    "original": "{\n a:\n  1,\n    long: 2\n}\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "TargetRubyVersion": 3.4,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 5,
+        "length": 7,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "{\n a:\n  1,\nlong2\n}\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "{\n a:\n  1,\n    long: 2\n}\n",
+    "intentional_difference": "Decline removal of non-whitespace bytes or newline-crossing alignment edits; preserve the original offense."
+  },
+  {
+    "id": "omitted-values-separator",
+    "original": "a=1; long=2; {\n a:,\n   long:\n}\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "TargetRubyVersion": 3.4,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 4,
+        "length": 5,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "a=1; long=2; {\n a:long:\n}\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a=1; long=2; {\n a:,\n   long:\n}\n",
+    "intentional_difference": "Decline removal of non-whitespace bytes or newline-crossing alignment edits; preserve the original offense."
+  },
+  {
+    "id": "multiline-value-styles-(['key', 'table'], ['separator', 'key'])",
+    "original": "{\n a:\n  1,\n    long: 2\n}\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "separator",
+        "key"
+      ],
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "TargetRubyVersion": 3.4,
+      "ArgumentAlignmentEnabled": false,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": false,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 5,
+        "length": 7,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "{\n a:\n  1,\nlong2\n}\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "{\n a:\n  1,\n    long: 2\n}\n",
+    "intentional_difference": "Decline removal of non-whitespace bytes or newline-crossing alignment edits; preserve the original offense."
+  },
+  {
+    "id": "omitted-values-styles-(['key', 'table'], ['separator', 'key'])",
+    "original": "a=1; long=2; {\n a:,\n   long:\n}\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "separator",
+        "key"
+      ],
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "TargetRubyVersion": 3.4,
+      "ArgumentAlignmentEnabled": false,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": false,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 4,
+        "length": 5,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "a=1; long=2; {\n a:long:\n}\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a=1; long=2; {\n a:,\n   long:\n}\n",
+    "intentional_difference": "Decline removal of non-whitespace bytes or newline-crossing alignment edits; preserve the original offense."
+  }
+]

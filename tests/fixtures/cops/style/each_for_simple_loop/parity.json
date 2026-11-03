@@ -1,0 +1,580 @@
+[
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop does not register offense if range starting point is not constant",
+    "original": "(a..10).each {}",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(a..10).each {}"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop does not register offense if range endpoint is not constant",
+    "original": "(0..b).each {}",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(0..b).each {}"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop does not register offense for character range",
+    "original": "('a'..'b').each {}",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "('a'..'b').each {}"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop with inline block with no parameters autocorrects an offense",
+    "original": "(0...10).each { do_something }\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 13,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "10.times { do_something }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop with inline block with no parameters autocorrects an offense",
+    "original": "10.times { do_something }\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "10.times { do_something }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop with inline block with parameters does not register an offense",
+    "original": "(0...10).each { |n| do_something(n) }\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(0...10).each { |n| do_something(n) }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop with multiline block with no parameters autocorrects an offense",
+    "original": "(0...10).each do\n  do_something\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 13,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "10.times do\n  do_something\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop with multiline block with no parameters autocorrects an offense",
+    "original": "10.times do\n  do_something\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "10.times do\n  do_something\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop with multiline block with parameters does not register an offense",
+    "original": "(0...10).each do |n|\n  do_something(n)\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(0...10).each do |n|\n  do_something(n)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using safe navigation operator with inline block with no parameters autocorrects an offense",
+    "original": "(0...10)&.each { do_something }\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 14,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "10.times { do_something }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using safe navigation operator with inline block with parameters does not register an offense",
+    "original": "(0...10)&.each { |n| do_something(n) }\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(0...10)&.each { |n| do_something(n) }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using safe navigation operator with multiline block with no parameters autocorrects an offense",
+    "original": "(0...10)&.each do\n  do_something\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 14,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "10.times do\n  do_something\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using safe navigation operator with multiline block with parameters does not register an offense",
+    "original": "(0...10)&.each do |n|\n  do_something(n)\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(0...10)&.each do |n|\n  do_something(n)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an inclusive end range autocorrects the source with inline block",
+    "original": "(0..10).each {}\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "11.times {}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an inclusive end range autocorrects the source with inline block",
+    "original": "11.times {}\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "11.times {}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an inclusive end range autocorrects the source with multiline block",
+    "original": "(0..10).each do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "11.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an inclusive end range autocorrects the source with multiline block",
+    "original": "11.times do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "11.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an inclusive end range autocorrects the range not starting with zero",
+    "original": "(3..7).each do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "5.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an inclusive end range autocorrects the range not starting with zero",
+    "original": "5.times do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "5.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an inclusive end range does not register offense for range not starting with zero and using param",
+    "original": "(3..7).each do |n|\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(3..7).each do |n|\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an inclusive end range when using safe navigation operator autocorrects the range not starting with zero",
+    "original": "(3..7)&.each do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "5.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an exclusive end range autocorrects the source with inline block",
+    "original": "(0...10).each {}\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 13,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "10.times {}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an exclusive end range autocorrects the source with inline block",
+    "original": "10.times {}\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "10.times {}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an exclusive end range autocorrects the source with multiline block",
+    "original": "(0...10).each do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 13,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "10.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an exclusive end range autocorrects the source with multiline block",
+    "original": "10.times do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "10.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an exclusive end range autocorrects the range not starting with zero",
+    "original": "(3...7).each do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "4.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an exclusive end range autocorrects the range not starting with zero",
+    "original": "4.times do\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "4.times do\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop when using an exclusive end range does not register offense for range not starting with zero and using param",
+    "original": "(3...7).each do |n|\nend\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(3...7).each do |n|\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop source branch 0",
+    "original": "(5..1).each {}\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "-3.times {}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop source branch 1",
+    "original": "(-5..-1).each {}\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 13,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "5.times {}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop source branch 2",
+    "original": "(0x0...0x10).each {}\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 17,
+        "message": "Use `Integer#times` for a simple loop which iterates a fixed number of times."
+      }
+    ],
+    "ruby_corrected": "16.times {}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachForSimpleLoop source branch 3",
+    "original": "(0..10).each { _1 }\n",
+    "config": {
+      "Description": "Use `Integer#times` for a simple loop which iterates a fixed number of times.",
+      "Enabled": true,
+      "VersionAdded": "0.41",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(0..10).each { _1 }\n"
+  }
+]

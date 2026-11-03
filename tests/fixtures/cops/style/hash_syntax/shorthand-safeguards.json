@@ -1,0 +1,248 @@
+[
+  {
+    "id": "independent comment always",
+    "original": "{foo: # keep\n foo}\n",
+    "config": {
+      "EnforcedStyle": "ruby19",
+      "SupportedStyles": [
+        "ruby19",
+        "hash_rockets"
+      ],
+      "EnforcedShorthandSyntax": "always",
+      "SupportedShorthandSyntax": [
+        "always",
+        "never"
+      ],
+      "UseHashRocketsWithSymbolValues": false,
+      "PreferHashRocketsForNonAlnumEndingSymbols": false,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "hash",
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 3,
+        "message": "Omit the hash value."
+      }
+    ],
+    "ruby_corrected": "{foo:}\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "{foo: # keep\n foo}\n",
+    "safeguard_reason": "Original whole-pair replacement deletes the comment between key and value.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "independent comment consistent",
+    "original": "{foo: # keep\n foo}\n",
+    "config": {
+      "EnforcedStyle": "ruby19",
+      "SupportedStyles": [
+        "ruby19",
+        "hash_rockets"
+      ],
+      "EnforcedShorthandSyntax": "consistent",
+      "SupportedShorthandSyntax": [
+        "always",
+        "never"
+      ],
+      "UseHashRocketsWithSymbolValues": false,
+      "PreferHashRocketsForNonAlnumEndingSymbols": false,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "hash",
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 3,
+        "message": "Omit the hash value."
+      }
+    ],
+    "ruby_corrected": "{foo:}\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "{foo: # keep\n foo}\n",
+    "safeguard_reason": "Original whole-pair replacement deletes the comment between key and value.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "edge never mixed call never",
+    "original": "call foo:, bar: bar\nnext_call arg\n",
+    "config": {
+      "EnforcedStyle": "ruby19",
+      "SupportedStyles": [
+        "ruby19",
+        "hash_rockets"
+      ],
+      "EnforcedShorthandSyntax": "never",
+      "SupportedShorthandSyntax": [
+        "always",
+        "never"
+      ],
+      "UseHashRocketsWithSymbolValues": false,
+      "PreferHashRocketsForNonAlnumEndingSymbols": false,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "begin",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 3,
+        "message": "Include the hash value."
+      }
+    ],
+    "ruby_corrected": "call(foo: foo, bar: bar\nnext_call arg\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "call foo:, bar: bar\nnext_call arg\n",
+    "safeguard_reason": "Original inserts an opening command-call parenthesis but omits its closing parenthesis because the last pair has no offense, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):2:1: error: unexpected token tIDENTIFIER",
+        "(string):2: next_call arg",
+        "(string):2: ^~~~~~~~~    "
+      ]
+    ]
+  },
+  {
+    "id": "edge semicolon omitted last always",
+    "original": "call foo: foo, bar:; next_call(arg)\n",
+    "config": {
+      "EnforcedStyle": "ruby19",
+      "SupportedStyles": [
+        "ruby19",
+        "hash_rockets"
+      ],
+      "EnforcedShorthandSyntax": "always",
+      "SupportedShorthandSyntax": [
+        "always",
+        "never"
+      ],
+      "UseHashRocketsWithSymbolValues": false,
+      "PreferHashRocketsForNonAlnumEndingSymbols": false,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "begin",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 3,
+        "message": "Omit the hash value."
+      }
+    ],
+    "ruby_corrected": "call(foo:, bar:; next_call(arg)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "call foo: foo, bar:; next_call(arg)\n",
+    "safeguard_reason": "Original inserts an opening command-call parenthesis but omits its closing parenthesis because the last pair has no offense, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):1:16: error: unexpected token tSEMI",
+        "(string):1: call(foo:, bar:; next_call(arg)",
+        "(string):1:                ^               "
+      ]
+    ]
+  },
+  {
+    "id": "edge semicolon omitted last consistent",
+    "original": "call foo: foo, bar:; next_call(arg)\n",
+    "config": {
+      "EnforcedStyle": "ruby19",
+      "SupportedStyles": [
+        "ruby19",
+        "hash_rockets"
+      ],
+      "EnforcedShorthandSyntax": "consistent",
+      "SupportedShorthandSyntax": [
+        "always",
+        "never"
+      ],
+      "UseHashRocketsWithSymbolValues": false,
+      "PreferHashRocketsForNonAlnumEndingSymbols": false,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "begin",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 3,
+        "message": "Do not mix explicit and implicit hash values. Omit the hash value."
+      }
+    ],
+    "ruby_corrected": "call(foo:, bar:; next_call(arg)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "call foo: foo, bar:; next_call(arg)\n",
+    "safeguard_reason": "Original inserts an opening command-call parenthesis but omits its closing parenthesis because the last pair has no offense, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):1:16: error: unexpected token tSEMI",
+        "(string):1: call(foo:, bar:; next_call(arg)",
+        "(string):1:                ^               "
+      ]
+    ]
+  },
+  {
+    "id": "edge semicolon omitted last either_consistent",
+    "original": "call foo: foo, bar:; next_call(arg)\n",
+    "config": {
+      "EnforcedStyle": "ruby19",
+      "SupportedStyles": [
+        "ruby19",
+        "hash_rockets"
+      ],
+      "EnforcedShorthandSyntax": "either_consistent",
+      "SupportedShorthandSyntax": [
+        "always",
+        "never"
+      ],
+      "UseHashRocketsWithSymbolValues": false,
+      "PreferHashRocketsForNonAlnumEndingSymbols": false,
+      "Enabled": true,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "begin",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 3,
+        "message": "Do not mix explicit and implicit hash values. Omit the hash value."
+      }
+    ],
+    "ruby_corrected": "call(foo:, bar:; next_call(arg)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "call foo: foo, bar:; next_call(arg)\n",
+    "safeguard_reason": "Original inserts an opening command-call parenthesis but omits its closing parenthesis because the last pair has no offense, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):1:16: error: unexpected token tSEMI",
+        "(string):1: call(foo:, bar:; next_call(arg)",
+        "(string):1:                ^               "
+      ]
+    ]
+  }
+]

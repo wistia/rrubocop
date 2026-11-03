@@ -1,0 +1,4528 @@
+[
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment accepts single line hash",
+    "original": "func(a: 0, bb: 1)",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0, bb: 1)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment accepts several pairs per line",
+    "original": "func(a: 1, bb: 2,\n     ccc: 3, dddd: 4)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 1, bb: 2,\n     ccc: 3, dddd: 4)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment accepts pairs that don't start a line",
+    "original": "render :json => {:a => messages,\n                 :b => :json}, :status => 404\ndef example\n  a(\n    b: :c,\n    d: e(\n      f: g\n    ), h: :i)\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "render :json => {:a => messages,\n                 :b => :json}, :status => 404\ndef example\n  a(\n    b: :c,\n    d: e(\n      f: g\n    ), h: :i)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment registers no offense for superclass call without args",
+    "original": "super",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment registers no offense for yield without args",
+    "original": "yield",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers offense and corrects misaligned keys in implicit hash",
+    "original": "func(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func(a: 0,\n     b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers offense and corrects misaligned keys in implicit hash",
+    "original": "func(a: 0,\n     b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0,\n     b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers offense and corrects misaligned keys in explicit hash",
+    "original": "func({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func({a: 0,\n      b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers offense and corrects misaligned keys in explicit hash",
+    "original": "func({a: 0,\n      b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func({a: 0,\n      b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers an offense and corrects misaligned keys in implicit hash for super",
+    "original": "super(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "super(a: 0,\n      b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers an offense and corrects misaligned keys in implicit hash for super",
+    "original": "super(a: 0,\n      b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super(a: 0,\n      b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers an offense and corrects misaligned keys in explicit hash for super",
+    "original": "super({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "super({a: 0,\n       b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers an offense and corrects misaligned keys in explicit hash for super",
+    "original": "super({a: 0,\n       b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super({a: 0,\n       b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers an offense and corrects misaligned keys in implicit hash for yield",
+    "original": "yield(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "yield(a: 0,\n      b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers an offense and corrects misaligned keys in implicit hash for yield",
+    "original": "yield(a: 0,\n      b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield(a: 0,\n      b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers an offense and corrects misaligned keys in explicit hash for yield",
+    "original": "yield({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "yield({a: 0,\n       b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash registers an offense and corrects misaligned keys in explicit hash for yield",
+    "original": "yield({a: 0,\n       b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield({a: 0,\n       b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash when using hash value omission registers offense and corrects misaligned keys in implicit hash",
+    "original": "func(a:,\n  b:)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func(a:,\n     b:)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash when using hash value omission registers offense and corrects misaligned keys in implicit hash",
+    "original": "func(a:,\n     b:)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a:,\n     b:)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash when using hash value omission registers offense and corrects misaligned keys in explicit hash",
+    "original": "func({a:,\n  b:})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func({a:,\n      b:})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always inspect last argument hash when using hash value omission registers offense and corrects misaligned keys in explicit hash",
+    "original": "func({a:,\n      b:})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_inspect",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func({a:,\n      b:})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` registers and corrects an offense",
+    "original": "THINGS = {\n  oh: :io,\n    hi: 'neat'\n    }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 5,
+        "length": 10,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "THINGS = {\n  oh: :io,\n  hi: 'neat'\n    }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` registers and corrects an offense",
+    "original": "THINGS = {\n  oh: :io,\n  hi: 'neat'\n    }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "THINGS = {\n  oh: :io,\n  hi: 'neat'\n    }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` registers and corrects an offense when using misaligned keyword arguments",
+    "original": "config.fog_credentials_as_kwargs(\n  provider:              'AWS',\n  aws_access_key_id:     ENV['S3_ACCESS_KEY'],\n  aws_secret_access_key: ENV['S3_SECRET'],\n  region:                ENV['S3_REGION'],\n)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 28,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 3,
+        "length": 43,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 5,
+        "column": 3,
+        "length": 39,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "config.fog_credentials_as_kwargs(\n  provider: 'AWS',\n  aws_access_key_id: ENV['S3_ACCESS_KEY'],\n  aws_secret_access_key: ENV['S3_SECRET'],\n  region: ENV['S3_REGION'],\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` registers and corrects an offense when using misaligned keyword arguments",
+    "original": "config.fog_credentials_as_kwargs(\n  provider: 'AWS',\n  aws_access_key_id: ENV['S3_ACCESS_KEY'],\n  aws_secret_access_key: ENV['S3_SECRET'],\n  region: ENV['S3_REGION'],\n)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "config.fog_credentials_as_kwargs(\n  provider: 'AWS',\n  aws_access_key_id: ENV['S3_ACCESS_KEY'],\n  aws_secret_access_key: ENV['S3_SECRET'],\n  region: ENV['S3_REGION'],\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` does not register an offense using aligned hash literal",
+    "original": "{\n  oh: :io,\n  hi: 'neat'\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{\n  oh: :io,\n  hi: 'neat'\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` does not register an offense for an empty hash literal",
+    "original": "foo({})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo({})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` does not register an offense using aligned hash argument for `proc.()`",
+    "original": "proc.(key: value)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "proc.(key: value)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` when using hash value omission registers and corrects an offense",
+    "original": "THINGS = {\n  oh:,\n    hi:\n    }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 5,
+        "length": 3,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "THINGS = {\n  oh:,\n  hi:\n    }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` when using hash value omission registers and corrects an offense",
+    "original": "THINGS = {\n  oh:,\n  hi:\n    }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "THINGS = {\n  oh:,\n  hi:\n    }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when `EnforcedStyle: with_fixed_indentation` of `ArgumentAlignment` when using hash value omission does not register and corrects an offense when using aligned keyword arguments",
+    "original": "config.fog_credentials_as_kwargs(\n  provider:,\n  aws_access_key_id:,\n  aws_secret_access_key:,\n  region:\n)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_fixed_indentation"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_fixed_indentation"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "config.fog_credentials_as_kwargs(\n  provider:,\n  aws_access_key_id:,\n  aws_secret_access_key:,\n  region:\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always ignore last argument hash accepts misaligned keys in implicit hash",
+    "original": "func(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_ignore",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0,\n  b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always ignore last argument hash accepts misaligned keys in explicit hash",
+    "original": "func({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_ignore",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func({a: 0,\n  b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always ignore last argument hash accepts misaligned keys in implicit hash for super",
+    "original": "super(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_ignore",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super(a: 0,\n  b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always ignore last argument hash accepts misaligned keys in explicit hash for super",
+    "original": "super({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_ignore",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super({a: 0,\n  b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always ignore last argument hash accepts misaligned keys in implicit hash for yield",
+    "original": "yield(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_ignore",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield(a: 0,\n  b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment always ignore last argument hash accepts misaligned keys in explicit hash for yield",
+    "original": "yield({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "always_ignore",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield({a: 0,\n  b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash accepts misaligned keys in implicit hash",
+    "original": "func(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0,\n  b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash registers an offense and corrects misaligned keys in explicit hash",
+    "original": "func({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func({a: 0,\n      b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash registers an offense and corrects misaligned keys in explicit hash",
+    "original": "func({a: 0,\n      b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func({a: 0,\n      b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash accepts misaligned keys in implicit hash for super",
+    "original": "super(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super(a: 0,\n  b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash registers an offense and corrects misaligned keys in explicit hash for super",
+    "original": "super({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "super({a: 0,\n       b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash registers an offense and corrects misaligned keys in explicit hash for super",
+    "original": "super({a: 0,\n       b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super({a: 0,\n       b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash accepts misaligned keys in implicit hash for yield",
+    "original": "yield(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield(a: 0,\n  b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash registers an offense and corrects misaligned keys in explicit hash for yield",
+    "original": "yield({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "yield({a: 0,\n       b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore implicit last argument hash registers an offense and corrects misaligned keys in explicit hash for yield",
+    "original": "yield({a: 0,\n       b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_implicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield({a: 0,\n       b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash registers an offense and corrects misaligned keys in implicit hash",
+    "original": "func(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func(a: 0,\n     b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash registers an offense and corrects misaligned keys in implicit hash",
+    "original": "func(a: 0,\n     b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0,\n     b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash accepts misaligned keys in explicit hash",
+    "original": "func({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func({a: 0,\n  b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash registers an offense and corrects misaligned keys in implicit hash for super",
+    "original": "super(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "super(a: 0,\n      b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash registers an offense and corrects misaligned keys in implicit hash for super",
+    "original": "super(a: 0,\n      b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super(a: 0,\n      b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash accepts misaligned keys in explicit hash for super",
+    "original": "super({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "super({a: 0,\n  b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash registers an offense and corrects misaligned keys in implicit hash for yield",
+    "original": "yield(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "yield(a: 0,\n      b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash registers an offense and corrects misaligned keys in implicit hash for yield",
+    "original": "yield(a: 0,\n      b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield(a: 0,\n      b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash accepts misaligned keys in explicit hash for yield",
+    "original": "yield({a: 0,\n  b: 1})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "yield({a: 0,\n  b: 1})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash when using hash value omission registers an offense and corrects misaligned keys in implicit hash",
+    "original": "func(a:,\n  b:)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func(a:,\n     b:)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash when using hash value omission registers an offense and corrects misaligned keys in implicit hash",
+    "original": "func(a:,\n     b:)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a:,\n     b:)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment ignore explicit last argument hash when using hash value omission accepts misaligned keys in explicit hash",
+    "original": "func({a:,\n  b:})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "EnforcedLastArgumentHashStyle": "ignore_explicit",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func({a:,\n  b:})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects misaligned hash keys",
+    "original": "hash1 = {\n  a: 0,\n   bb: 1\n}\nhash2 = {\n  'ccc' => 2,\n 'dddd'  =>  2\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 4,
+        "length": 5,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 2,
+        "length": 13,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash1 = {\n  a: 0,\n  bb: 1\n}\nhash2 = {\n  'ccc' => 2,\n  'dddd' => 2\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects misaligned hash keys",
+    "original": "hash1 = {\n  a: 0,\n  bb: 1\n}\nhash2 = {\n  'ccc' => 2,\n  'dddd' => 2\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  a: 0,\n  bb: 1\n}\nhash2 = {\n  'ccc' => 2,\n  'dddd' => 2\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects misaligned mixed multiline hash keys",
+    "original": "hash = { a: 1, b: 2,\n        c: 3 }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 9,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = { a: 1, b: 2,\n         c: 3 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects misaligned mixed multiline hash keys",
+    "original": "hash = { a: 1, b: 2,\n         c: 3 }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = { a: 1, b: 2,\n         c: 3 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration accepts left-aligned hash keys with single spaces",
+    "original": "hash1 = {\n  aa: 0,\n  b: 1,\n}\nhash2 = {\n  :a => 0,\n  :bb => 1\n}\nhash3 = {\n  'a' => 0,\n  'bb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  aa: 0,\n  b: 1,\n}\nhash2 = {\n  :a => 0,\n  :bb => 1\n}\nhash3 = {\n  'a' => 0,\n  'bb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects zero or multiple spaces",
+    "original": "hash1 = {\n  a:   0,\n  bb:1,\n}\nhash2 = {\n  'ccc'=> 2,\n  'dddd' =>  3\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 6,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 6,
+        "column": 3,
+        "length": 9,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 3,
+        "length": 12,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash1 = {\n  a: 0,\n  bb: 1,\n}\nhash2 = {\n  'ccc' => 2,\n  'dddd' => 3\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects zero or multiple spaces",
+    "original": "hash1 = {\n  a: 0,\n  bb: 1,\n}\nhash2 = {\n  'ccc' => 2,\n  'dddd' => 3\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  a: 0,\n  bb: 1,\n}\nhash2 = {\n  'ccc' => 2,\n  'dddd' => 3\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects separator alignment",
+    "original": "hash = {\n    'a' => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 10,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n    'a' => 0,\n    'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects separator alignment",
+    "original": "hash = {\n    'a' => 0,\n    'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n    'a' => 0,\n    'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects table alignment",
+    "original": "hash = {\n  'a'   => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 10,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n  'a' => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects table alignment",
+    "original": "hash = {\n  'a' => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  'a' => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects multiline value starts in wrong place",
+    "original": "hash = {\n  'a' =>  (\n    ),\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 15,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n  'a' => (\n    ),\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects multiline value starts in wrong place",
+    "original": "hash = {\n  'a' => (\n    ),\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  'a' => (\n    ),\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration does not register an offense when value starts on next line",
+    "original": "hash = {\n  'a' =>\n    0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  'a' =>\n    0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects mixed hash styles",
+    "original": "hash1 = { a: 0,\n     bb: 1,\n           ccc: 2 }\nhash2 = { :a   => 0,\n  :bb  => 1,\n            :ccc  =>2 }\nhash3 = { 'a'   =>   0,\n               'bb'  => 1,\n    'ccc'  =>2 }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 6,
+        "length": 5,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 12,
+        "length": 6,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 4,
+        "column": 11,
+        "length": 9,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 5,
+        "column": 3,
+        "length": 9,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 6,
+        "column": 13,
+        "length": 9,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 11,
+        "length": 12,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 8,
+        "column": 16,
+        "length": 10,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 9,
+        "column": 5,
+        "length": 10,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash1 = { a: 0,\n          bb: 1,\n          ccc: 2 }\nhash2 = { :a => 0,\n          :bb => 1,\n          :ccc => 2 }\nhash3 = { 'a' => 0,\n          'bb' => 1,\n          'ccc' => 2 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects mixed hash styles",
+    "original": "hash1 = { a: 0,\n          bb: 1,\n          ccc: 2 }\nhash2 = { :a => 0,\n          :bb => 1,\n          :ccc => 2 }\nhash3 = { 'a' => 0,\n          'bb' => 1,\n          'ccc' => 2 }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = { a: 0,\n          bb: 1,\n          ccc: 2 }\nhash2 = { :a => 0,\n          :bb => 1,\n          :ccc => 2 }\nhash3 = { 'a' => 0,\n          'bb' => 1,\n          'ccc' => 2 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects alignment when using double splat in an explicit hash",
+    "original": "Hash(foo: 'bar',\n       **extra_params\n)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 14,
+        "message": "Align keyword splats with the rest of the hash if it spans more than one line."
+      }
+    ],
+    "ruby_safe": "Hash(foo: 'bar',\n     **extra_params\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects alignment when using double splat in an explicit hash",
+    "original": "Hash(foo: 'bar',\n     **extra_params\n)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "Hash(foo: 'bar',\n     **extra_params\n)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects alignment when using double splat in braces",
+    "original": "{foo: 'bar',\n       **extra_params\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 14,
+        "message": "Align keyword splats with the rest of the hash if it spans more than one line."
+      }
+    ],
+    "ruby_safe": "{foo: 'bar',\n **extra_params\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration registers an offense and corrects alignment when using double splat in braces",
+    "original": "{foo: 'bar',\n **extra_params\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{foo: 'bar',\n **extra_params\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration with implicit hash as last argument registers an offense and corrects misaligned hash keys",
+    "original": "func(a: 0,\n  b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 4,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func(a: 0,\n     b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration with implicit hash as last argument registers an offense and corrects misaligned hash keys",
+    "original": "func(a: 0,\n     b: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0,\n     b: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration with implicit hash as last argument registers an offense and corrects right alignment of keys",
+    "original": "func(a: 0,\n   bbb: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 4,
+        "length": 6,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "func(a: 0,\n     bbb: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration with implicit hash as last argument registers an offense and corrects right alignment of keys",
+    "original": "func(a: 0,\n     bbb: 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0,\n     bbb: 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with default configuration with implicit hash as last argument accepts an empty hash",
+    "original": "h = {}",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "h = {}"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when using hash value omission accepts single line hash",
+    "original": "func(a:, bb:)",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a:, bb:)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when using hash value omission accepts several pairs per line",
+    "original": "func(a:, bb:,\n     ccc:, dddd:)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a:, bb:,\n     ccc:, dddd:)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment when using hash value omission accepts pairs that don't start a line",
+    "original": "render :json => {a:,\n                 b:}, :status => 404\ndef example\n  a(\n    b:,\n    c: d(\n      e:\n    ), f:)\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "render :json => {a:,\n                 b:}, :status => 404\ndef example\n  a(\n    b:,\n    c: d(\n      e:\n    ), f:)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts single line hash",
+    "original": "func(a: 0, bb: 1)",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0, bb: 1)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts several pairs per line",
+    "original": "func(a: 1, bb: 2,\n     ccc: 3, dddd: 4)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 1, bb: 2,\n     ccc: 3, dddd: 4)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts pairs that don't start a line",
+    "original": "render :json => {:a => messages,\n                 :b => :json}, :status => 404\ndef example\n  a(\n    b: :c,\n    d: e(\n      f: g\n    ), h: :i)\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "render :json => {:a => messages,\n                 :b => :json}, :status => 404\ndef example\n  a(\n    b: :c,\n    d: e(\n      f: g\n    ), h: :i)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts aligned hash keys and values",
+    "original": "hash1 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash2 = {\n  a:   0,\n  bbb: 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash2 = {\n  a:   0,\n  bbb: 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts an empty hash",
+    "original": "h = {}",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "h = {}"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts a multiline array of single line hashes",
+    "original": "def self.scenarios_order\n    [\n      { before:   %w( l k ) },\n      { ending:   %w( m l ) },\n      { starting: %w( m n ) },\n      { after:    %w( n o ) }\n    ]\n  end\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def self.scenarios_order\n    [\n      { before:   %w( l k ) },\n      { ending:   %w( m l ) },\n      { starting: %w( m n ) },\n      { after:    %w( n o ) }\n    ]\n  end\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts hashes that use different separators",
+    "original": "hash = {\n  a: 1,\n  'bbb' => 2\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  a: 1,\n  'bbb' => 2\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts hashes that use different separators and double splats",
+    "original": "hash = {\n  a: 1,\n  'bbb' => 2,\n  **foo\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  a: 1,\n  'bbb' => 2,\n  **foo\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts a symbol only hash followed by a keyword splat",
+    "original": "hash = {\n  a: 1,\n  **kw\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  a: 1,\n  **kw\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration accepts a keyword splat only hash",
+    "original": "hash = {\n  **kw\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  **kw\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration registers an offense for misaligned hash values",
+    "original": "hash1 = {\n  'a'   =>  0,\n  'bbb' => 1\n}\nhash2 = {\n  a:   0,\n  bbb:1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 11,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 3,
+        "length": 5,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash1 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash2 = {\n  a:   0,\n  bbb: 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration registers an offense and corrects for misaligned hash keys",
+    "original": "hash1 = {\n  'a'   =>  0,\n 'bbb'  =>  1\n}\nhash2 = {\n   a:  0,\n  bbb: 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 11,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 2,
+        "length": 12,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      },
+      {
+        "line": 6,
+        "column": 4,
+        "length": 5,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 3,
+        "length": 6,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash1 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash2 = {\n   a:   0,\n   bbb: 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration registers an offense and corrects for misaligned hash keys",
+    "original": "hash1 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash2 = {\n   a:   0,\n   bbb: 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash2 = {\n   a:   0,\n   bbb: 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration registers an offense and corrects misaligned hash rockets",
+    "original": "hash = {\n  'a'   => 0,\n  'bbb'  => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 11,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n  'a'   => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration registers an offense and corrects misaligned hash rockets",
+    "original": "hash = {\n  'a'   => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  'a'   => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration when using hash value omission accepts single line hash",
+    "original": "func(a:, bb:)",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a:, bb:)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration when using hash value omission accepts several pairs per line",
+    "original": "func(a:, bb:,\n     ccc:, dddd:)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a:, bb:,\n     ccc:, dddd:)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration when using hash value omission accepts pairs that don't start a line",
+    "original": "render :json => {a:,\n                 b:}, :status => 404\ndef example\n  a(\n    b:,\n    c: d(\n      e:\n    ), f:)\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "render :json => {a:,\n                 b:}, :status => 404\ndef example\n  a(\n    b:,\n    c: d(\n      e:\n    ), f:)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table alignment configuration when using hash value omission accepts aligned hash keys and values",
+    "original": "hash1 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash2 = {\n  a:   0,\n  bbb: 1,\n  ccc:\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash2 = {\n  a:   0,\n  bbb: 1,\n  ccc:\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with table+separator alignment configuration accepts a single method argument entry with colon",
+    "original": "merge(parent: nil)",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "merge(parent: nil)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration accepts aligned hash keys",
+    "original": "hash1 = {\n    a: 0,\n  bbb: 1\n}\nhash2 = {\n    'a' => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n    a: 0,\n  bbb: 1\n}\nhash2 = {\n    'a' => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration accepts an empty hash",
+    "original": "h = {}",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "h = {}"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration registers an offense and corrects misaligned hash values",
+    "original": "hash = {\n    'a' =>  0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 10,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n    'a' =>  0,\n  'bbb' =>  1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration registers an offense and corrects misaligned hash values",
+    "original": "hash = {\n    'a' =>  0,\n  'bbb' =>  1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n    'a' =>  0,\n  'bbb' =>  1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration registers an offense and corrects misaligned hash rockets",
+    "original": "hash = {\n    'a'  => 0,\n  'bbb' =>  1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 11,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n    'a'  => 0,\n  'bbb'  => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration registers an offense and corrects misaligned hash rockets",
+    "original": "hash = {\n    'a'  => 0,\n  'bbb'  => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n    'a'  => 0,\n  'bbb'  => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration accepts hashes with different separators",
+    "original": "{a: 1,\n  'b' => 2,\n   **params}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "{a: 1,\n  'b' => 2,\n   **params}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration accepts single line hash",
+    "original": "func(a: 0, bb: 1)",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 0, bb: 1)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration accepts several pairs per line",
+    "original": "func(a: 1, bb: 2,\n     ccc: 3, dddd: 4)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a: 1, bb: 2,\n     ccc: 3, dddd: 4)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration accepts pairs that don't start a line",
+    "original": "render :json => {:a => messages,\n                 :b => :json}, :status => 404\ndef example\n  a(\n    b: :c,\n    d: e(\n      f: g\n    ), h: :i)\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "render :json => {:a => messages,\n                 :b => :json}, :status => 404\ndef example\n  a(\n    b: :c,\n    d: e(\n      f: g\n    ), h: :i)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration registers an offense and corrects mixed indentation and spacing",
+    "original": "hash1 = { a: 0,\n     bb:    1,\n           ccc: 2 }\nhash2 = { a => 0,\n     bb =>    1,\n           ccc  =>2 }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 6,
+        "length": 8,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 12,
+        "length": 6,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      },
+      {
+        "line": 5,
+        "column": 6,
+        "length": 10,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      },
+      {
+        "line": 6,
+        "column": 12,
+        "length": 8,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash1 = { a: 0,\n         bb: 1,\n        ccc: 2 }\nhash2 = { a => 0,\n         bb => 1,\n        ccc => 2 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration registers an offense and corrects mixed indentation and spacing",
+    "original": "hash1 = { a: 0,\n         bb: 1,\n        ccc: 2 }\nhash2 = { a => 0,\n         bb => 1,\n        ccc => 2 }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = { a: 0,\n         bb: 1,\n        ccc: 2 }\nhash2 = { a => 0,\n         bb => 1,\n        ccc => 2 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration doesn't break code by moving long keys too far left",
+    "original": "{\n  sjtjo: sjtjo,\n  too_ono_ilitjion_tofotono_o: too_ono_ilitjion_tofotono_o,\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 56,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "{\n  sjtjo: sjtjo,\ntoo_ono_ilitjion_tofotono_o: too_ono_ilitjion_tofotono_o,\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration doesn't break code by moving long keys too far left",
+    "original": "{\n  sjtjo: sjtjo,\ntoo_ono_ilitjion_tofotono_o: too_ono_ilitjion_tofotono_o,\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 1,
+        "length": 56,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "{\n  sjtjo: sjtjo,\ntoo_ono_ilitjion_tofotono_o: too_ono_ilitjion_tofotono_o,\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration when using hash value omission accepts aligned hash keys",
+    "original": "hash1 = {\n    a: 0,\n  bbb: 1,\n  ccc:\n}\nhash2 = {\n    'a' => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n    a: 0,\n  bbb: 1,\n  ccc:\n}\nhash2 = {\n    'a' => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration when using hash value omission registers an offense and corrects mixed indentation and spacing",
+    "original": "hash1 = { a: 0,\n     bb:,\n           ccc: 2 }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 6,
+        "length": 3,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 12,
+        "length": 6,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash1 = { a: 0,\n         bb:,\n        ccc: 2 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration when using hash value omission registers an offense and corrects mixed indentation and spacing",
+    "original": "hash1 = { a: 0,\n         bb:,\n        ccc: 2 }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = { a: 0,\n         bb:,\n        ccc: 2 }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration when using hash value omission accepts single line hash",
+    "original": "func(a:, bb:)",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a:, bb:)"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration when using hash value omission accepts several pairs per line",
+    "original": "func(a:, bb:,\n     ccc:, dddd:)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "func(a:, bb:,\n     ccc:, dddd:)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with separator alignment configuration when using hash value omission accepts pairs that don't start a line",
+    "original": "render :json => {a:,\n                 b:}, :status => 404\ndef example\n  a(\n    b:,\n    c: d(\n      e:\n    ), f:)\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "separator",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "render :json => {a:,\n                 b:}, :status => 404\ndef example\n  a(\n    b:,\n    c: d(\n      e:\n    ), f:)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration accepts aligned hash keys, by keys",
+    "original": "hash1 = {\n  a: 0,\n  bbb: 1\n}\nhash2 = {\n  'a' => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  a: 0,\n  bbb: 1\n}\nhash2 = {\n  'a' => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration accepts aligned hash keys, by table",
+    "original": "hash1 = {\n  a:   0,\n  bbb: 1\n}\nhash2 = {\n  'a'   => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  a:   0,\n  bbb: 1\n}\nhash2 = {\n  'a'   => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration accepts aligned hash keys, by both",
+    "original": "hash1 = {\n  a:   0,\n  bbb: 1\n}\nhash2 = {\n  a: 0,\n  bbb: 1\n}\n\nhash3 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash4 = {\n  'a' => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  a:   0,\n  bbb: 1\n}\nhash2 = {\n  a: 0,\n  bbb: 1\n}\n\nhash3 = {\n  'a'   => 0,\n  'bbb' => 1\n}\nhash4 = {\n  'a' => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration accepts aligned hash keys with mixed hash style",
+    "original": "headers = {\n  \"Content-Type\" => 0,\n  Authorization: 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "headers = {\n  \"Content-Type\" => 0,\n  Authorization: 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration accepts an empty hash",
+    "original": "h = {}",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "h = {}"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash values",
+    "original": "hash = {\n    'a' =>  0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 9,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 3,
+        "column": 3,
+        "length": 10,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n    'a' => 0,\n    'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash values",
+    "original": "hash = {\n    'a' => 0,\n    'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n    'a' => 0,\n    'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash values, prefer table when least offenses",
+    "original": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk'    => 0,\n  'a'       => 0,\n  'b' => 1,\n        'c' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 3,
+        "length": 8,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 9,
+        "length": 8,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk'    => 0,\n  'a'       => 0,\n  'b' => 1,\n  'c' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash values, prefer table when least offenses",
+    "original": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk'    => 0,\n  'a'       => 0,\n  'b' => 1,\n  'c' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 3,
+        "length": 8,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 3,
+        "length": 8,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk'    => 0,\n  'a'       => 0,\n  'b' => 1,\n  'c' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash values, prefer key when least offenses",
+    "original": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk' => 0,\n  'a' => 0,\n  'b' => 1,\n        'c' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 14,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 9,
+        "length": 8,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0,\n  'a' => 0,\n  'b' => 1,\n  'c' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash values, prefer key when least offenses",
+    "original": "hash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0,\n  'a' => 0,\n  'b' => 1,\n  'c' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0,\n  'a' => 0,\n  'b' => 1,\n  'c' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash keys with mixed hash style",
+    "original": "headers = {\n  \"Content-Type\" => 0,\n   Authorization: 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 4,
+        "length": 16,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "headers = {\n  \"Content-Type\" => 0,\n  Authorization: 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash values, works separate for each hash",
+    "original": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk' => 0\n}\n\nhash = {\n  'abcdefg' => 0,\n  'abcdef'       => 0,\n  'gijk' => 0\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 14,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      },
+      {
+        "line": 9,
+        "column": 3,
+        "length": 19,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0\n}\n\nhash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration registers an offense and corrects misaligned hash values, works separate for each hash",
+    "original": "hash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0\n}\n\nhash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "key",
+        "table"
+      ],
+      "EnforcedColonStyle": [
+        "key",
+        "table"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0\n}\n\nhash = {\n  'abcdefg' => 0,\n  'abcdef' => 0,\n  'gijk' => 0\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration table and key config registers an offense and corrects misaligned hash values, prefer table because it is specified first",
+    "original": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk'    => 0,\n  'a'       => 0,\n  'b' => 1,\n        'c' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "table",
+        "key"
+      ],
+      "EnforcedColonStyle": [
+        "table",
+        "key"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 3,
+        "length": 8,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 9,
+        "length": 8,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk'    => 0,\n  'a'       => 0,\n  'b'       => 1,\n  'c'       => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with multiple preferred(key and table) alignment configuration table and key config registers an offense and corrects misaligned hash values, prefer table because it is specified first",
+    "original": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk'    => 0,\n  'a'       => 0,\n  'b'       => 1,\n  'c'       => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": [
+        "table",
+        "key"
+      ],
+      "EnforcedColonStyle": [
+        "table",
+        "key"
+      ],
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash = {\n  'abcdefg' => 0,\n  'abcdef'  => 0,\n  'gijk'    => 0,\n  'a'       => 0,\n  'b'       => 1,\n  'c'       => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with different settings for => and : registers offenses and correct misaligned entries",
+    "original": "hash1 = {\n  a:   0,\n  bbb: 1\n}\nhash2 = {\n    'a' => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 6,
+        "message": "Align the separators of a hash literal if they span more than one line."
+      },
+      {
+        "line": 7,
+        "column": 3,
+        "length": 10,
+        "message": "Align the keys of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "hash1 = {\n  a:   0,\nbbb:   1\n}\nhash2 = {\n    'a' => 0,\n    'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with different settings for => and : registers offenses and correct misaligned entries",
+    "original": "hash1 = {\n  a:   0,\nbbb:   1\n}\nhash2 = {\n    'a' => 0,\n    'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n  a:   0,\nbbb:   1\n}\nhash2 = {\n    'a' => 0,\n    'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with different settings for => and : accepts aligned entries",
+    "original": "hash1 = {\n    a: 0,\n  bbb: 1\n}\nhash2 = {\n  'a' => 0,\n  'bbb' => 1\n}\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "separator",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "hash1 = {\n    a: 0,\n  bbb: 1\n}\nhash2 = {\n  'a' => 0,\n  'bbb' => 1\n}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` and misaligned keys registers an offense and corrects",
+    "original": "foo ab: 1,\n    c: 2\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 4,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "foo ab: 1,\n    c:  2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` and misaligned keys registers an offense and corrects",
+    "original": "foo ab: 1,\n    c:  2\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo ab: 1,\n    c:  2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` when using hash value omission and aligned keys does not register an offense",
+    "original": "foo ab: 1,\n    c:\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.1,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo ab: 1,\n    c:\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` when using anonymous keyword rest arguments and forwarded keyword rest argument after a hash key registers an offense on the misaligned key and corrects",
+    "original": "def foo(**)\n  bar ab: 1,\n      c: 2, **\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.2,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 4,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "def foo(**)\n  bar ab: 1,\n      c:  2, **\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` when using anonymous keyword rest arguments and forwarded keyword rest argument after a hash key registers an offense on the misaligned key and corrects",
+    "original": "def foo(**)\n  bar ab: 1,\n      c:  2, **\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.2,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def foo(**)\n  bar ab: 1,\n      c:  2, **\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` when using anonymous keyword rest arguments and aligned keys but forwarded keyword rest argument after does not register an offense on the `forwarded_kwrestarg`",
+    "original": "def foo(**)\n  bar a: 1,\n      b: 2, **\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.2,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def foo(**)\n  bar a: 1,\n      b: 2, **\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` when using anonymous keyword rest arguments and a misaligned forwarded keyword rest argument registers an offense and corrects",
+    "original": "def foo(**)\n  bar a: 1,\n        **\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.2,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 9,
+        "length": 2,
+        "message": "Align keyword splats with the rest of the hash if it spans more than one line."
+      }
+    ],
+    "ruby_safe": "def foo(**)\n  bar a: 1,\n      **\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` when using anonymous keyword rest arguments and a misaligned forwarded keyword rest argument registers an offense and corrects",
+    "original": "def foo(**)\n  bar a: 1,\n      **\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.2,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "def foo(**)\n  bar a: 1,\n      **\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` when the only item is a kwsplat does not register an offense",
+    "original": "foo({**rest})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo({**rest})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` and a double splat argument after a hash key registers an offense on the misaligned key and corrects",
+    "original": "foo ab: 1,\n    c: 2, **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 4,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "foo ab: 1,\n    c:  2, **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` and a double splat argument after a hash key registers an offense on the misaligned key and corrects",
+    "original": "foo ab: 1,\n    c:  2, **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo ab: 1,\n    c:  2, **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` and aligned keys but a double splat argument after does not register an offense on the `kwsplat`",
+    "original": "foo a: 1,\n    b: 2, **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo a: 1,\n    b: 2, **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` and a misaligned double splat argument registers an offense and corrects",
+    "original": "foo a: 1,\n      **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 7,
+        "length": 6,
+        "message": "Align keyword splats with the rest of the hash if it spans more than one line."
+      }
+    ],
+    "ruby_safe": "foo a: 1,\n    **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedColonStyle`: `table` and a misaligned double splat argument registers an offense and corrects",
+    "original": "foo a: 1,\n    **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "key",
+      "EnforcedColonStyle": "table",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo a: 1,\n    **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedHashRocketStyle`: `table` and misaligned keys registers an offense and corrects",
+    "original": "foo :ab => 1,\n    :c => 2\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 7,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "foo :ab => 1,\n    :c  => 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedHashRocketStyle`: `table` and misaligned keys registers an offense and corrects",
+    "original": "foo :ab => 1,\n    :c  => 2\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo :ab => 1,\n    :c  => 2\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedHashRocketStyle`: `table` when the only item is a kwsplat does not register an offense",
+    "original": "foo({**rest})\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo({**rest})\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedHashRocketStyle`: `table` and a double splat argument after a hash key registers an offense on the misaligned key and corrects",
+    "original": "foo :ab => 1,\n    :c => 2, **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 7,
+        "message": "Align the keys and values of a hash literal if they span more than one line."
+      }
+    ],
+    "ruby_safe": "foo :ab => 1,\n    :c  => 2, **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedHashRocketStyle`: `table` and a double splat argument after a hash key registers an offense on the misaligned key and corrects",
+    "original": "foo :ab => 1,\n    :c  => 2, **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo :ab => 1,\n    :c  => 2, **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedHashRocketStyle`: `table` and aligned keys but a double splat argument after does not register an offense on the `kwsplat`",
+    "original": "foo :a => 1,\n    :b => 2, **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo :a => 1,\n    :b => 2, **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedHashRocketStyle`: `table` and a misaligned double splat argument registers an offense and corrects",
+    "original": "foo :a => 1,\n      **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 7,
+        "length": 6,
+        "message": "Align keyword splats with the rest of the hash if it spans more than one line."
+      }
+    ],
+    "ruby_safe": "foo :a => 1,\n    **rest\n"
+  },
+  {
+    "id": "RuboCop::Cop::Layout::HashAlignment with `EnforcedHashRocketStyle`: `table` and a misaligned double splat argument registers an offense and corrects",
+    "original": "foo :a => 1,\n    **rest\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedHashRocketStyle": "table",
+      "EnforcedColonStyle": "key",
+      "Enabled": true,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7,
+      "ArgumentAlignmentEnabled": true,
+      "ArgumentAlignmentStyle": "with_first_argument"
+    },
+    "sibling_cops": {
+      "Layout/ArgumentAlignment": {
+        "Enabled": true,
+        "EnforcedStyle": "with_first_argument"
+      }
+    },
+    "ruby_diagnostics": [],
+    "ruby_safe": "foo :a => 1,\n    **rest\n"
+  }
+]

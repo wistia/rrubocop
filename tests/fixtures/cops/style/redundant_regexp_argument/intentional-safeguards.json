@@ -1,0 +1,177 @@
+[
+  {
+    "id": "pattern /\\\"/",
+    "original": "string.gsub(/\\\"/, \"bar\")\n",
+    "config": {
+      "Description": "Identifies places where argument can be replaced from a deterministic regexp to a string.",
+      "Enabled": true,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 4,
+        "message": "Use string `'\\\"'` as argument instead of regexp `/\\\"/`."
+      }
+    ],
+    "ruby_corrected": "string.gsub('\\\"', \"bar\")\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.gsub(/\\\"/, \"bar\")\n",
+    "safeguard_reason": "Preserve regex/string escape and interpolation semantics, split whitespace behavior, encoded bytes, or observed match state."
+  },
+  {
+    "id": "pattern /\"\\n/",
+    "original": "string.gsub(/\"\\n/, \"bar\")\n",
+    "config": {
+      "Description": "Identifies places where argument can be replaced from a deterministic regexp to a string.",
+      "Enabled": true,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 5,
+        "message": "Use string `'\"\\n'` as argument instead of regexp `/\"\\n/`."
+      }
+    ],
+    "ruby_corrected": "string.gsub('\"\\n', \"bar\")\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.gsub(/\"\\n/, \"bar\")\n",
+    "safeguard_reason": "Preserve regex/string escape and interpolation semantics, split whitespace behavior, encoded bytes, or observed match state."
+  },
+  {
+    "id": "pattern /\\#\\{danger\\}/",
+    "original": "string.gsub(/\\#\\{danger\\}/, \"bar\")\n",
+    "config": {
+      "Description": "Identifies places where argument can be replaced from a deterministic regexp to a string.",
+      "Enabled": true,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 14,
+        "message": "Use string `\"#{danger}\"` as argument instead of regexp `/\\#\\{danger\\}/`."
+      }
+    ],
+    "ruby_corrected": "string.gsub(\"#{danger}\", \"bar\")\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.gsub(/\\#\\{danger\\}/, \"bar\")\n",
+    "safeguard_reason": "Preserve regex/string escape and interpolation semantics, split whitespace behavior, encoded bytes, or observed match state."
+  },
+  {
+    "id": "pattern /\\#\\$global/",
+    "original": "string.gsub(/\\#\\$global/, \"bar\")\n",
+    "config": {
+      "Description": "Identifies places where argument can be replaced from a deterministic regexp to a string.",
+      "Enabled": true,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 12,
+        "message": "Use string `\"#$global\"` as argument instead of regexp `/\\#\\$global/`."
+      }
+    ],
+    "ruby_corrected": "string.gsub(\"#$global\", \"bar\")\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.gsub(/\\#\\$global/, \"bar\")\n",
+    "safeguard_reason": "Preserve regex/string escape and interpolation semantics, split whitespace behavior, encoded bytes, or observed match state."
+  },
+  {
+    "id": "space split",
+    "original": "string.split(/\\ /)\n",
+    "config": {
+      "Description": "Identifies places where argument can be replaced from a deterministic regexp to a string.",
+      "Enabled": true,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 14,
+        "length": 4,
+        "message": "Use string `\" \"` as argument instead of regexp `/\\ /`."
+      }
+    ],
+    "ruby_corrected": "string.split(\" \")\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.split(/\\ /)\n",
+    "safeguard_reason": "Preserve regex/string escape and interpolation semantics, split whitespace behavior, encoded bytes, or observed match state."
+  },
+  {
+    "id": "capture partition",
+    "original": "string.partition(/f/); $~\n",
+    "config": {
+      "Description": "Identifies places where argument can be replaced from a deterministic regexp to a string.",
+      "Enabled": true,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 18,
+        "length": 3,
+        "message": "Use string `\"f\"` as argument instead of regexp `/f/`."
+      }
+    ],
+    "ruby_corrected": "string.partition(\"f\"); $~\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.partition(/f/); $~\n",
+    "safeguard_reason": "Preserve regex/string escape and interpolation semantics, split whitespace behavior, encoded bytes, or observed match state."
+  },
+  {
+    "id": "capture byteindex",
+    "original": "string.byteindex(/f/); Regexp.last_match\n",
+    "config": {
+      "Description": "Identifies places where argument can be replaced from a deterministic regexp to a string.",
+      "Enabled": true,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 18,
+        "length": 3,
+        "message": "Use string `\"f\"` as argument instead of regexp `/f/`."
+      }
+    ],
+    "ruby_corrected": "string.byteindex(\"f\"); Regexp.last_match\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "string.byteindex(/f/); Regexp.last_match\n",
+    "safeguard_reason": "Preserve regex/string escape and interpolation semantics, split whitespace behavior, encoded bytes, or observed match state."
+  }
+]

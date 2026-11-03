@@ -102,6 +102,7 @@ fn load_gem_yaml_layer(
 }
 
 fn merge_require_layer(base_layer: &mut ConfigLayer, mut layer: ConfigLayer, working_dir: &Path) {
+    layer.validation_safety.clear();
     // Legacy require layers do not carry their merge policy into the project.
     // New plugin defaults retain injected excludes after project replacement.
     if !super::gem_path_version::select_version("rubocop", working_dir)
@@ -125,7 +126,10 @@ fn load_require_fallback(
         return;
     }
     match load_gem_yaml_layer(gem_name, "config/base.yml", working_dir, visited, gem_cache) {
-        Ok(layer) => merge_layer_into(base_layer, &layer, None),
+        Ok(mut layer) => {
+            layer.validation_safety.clear();
+            merge_layer_into(base_layer, &layer, None);
+        }
         Err(_) => {}
     }
 }
@@ -207,6 +211,14 @@ pub(crate) fn process_require_plugins(
             gem_cache,
             base_layer,
         );
+    }
+    if gems.iter().any(|gem| gem == "standard") {
+        base_layer
+            .cop_configs
+            .entry("Lint/AssignmentInCondition".into())
+            .or_default()
+            .options
+            .insert("__StandardAssignmentMessage".into(), true.into());
     }
     record_require_enabled(base_layer);
     *visited = visited_before;

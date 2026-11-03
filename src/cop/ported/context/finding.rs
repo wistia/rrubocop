@@ -7,6 +7,7 @@ pub(in crate::cop::ported) struct Finding {
     pub edit: Option<(usize, usize, String)>,
     pub additional: Vec<(usize, usize, String)>,
     pub correctable: bool,
+    pub highlight_length: Option<usize>,
 }
 impl Finding {
     pub fn new(node: Node<'_>, message: impl Into<String>) -> Self {
@@ -17,6 +18,7 @@ impl Finding {
             edit: None,
             additional: vec![],
             correctable: false,
+            highlight_length: None,
         }
     }
     pub fn send(node: Node<'_>, message: impl Into<String>) -> Self {
@@ -37,6 +39,7 @@ impl Finding {
             edit: None,
             additional: vec![],
             correctable: false,
+            highlight_length: None,
         }
     }
     pub fn replace_with<T: Into<String>>(

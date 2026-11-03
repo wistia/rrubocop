@@ -15,3 +15,7 @@ else something_else
      ^^^^^^^^^^^^^^ Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
   other
 end
+if something then test
+else something_else
+     ^^^^^^^^^^^^^^ Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?
+end

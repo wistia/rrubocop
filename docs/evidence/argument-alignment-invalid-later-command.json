@@ -1,0 +1,162 @@
+[
+  {
+    "id": "later-command-0",
+    "source": "outer(first, foo +1,\n other)\n",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_version": 3.4,
+    "parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ast": "nil",
+    "calls": []
+  },
+  {
+    "id": "later-command-1",
+    "source": "outer(first,\n foo +1,\n other)\n",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_version": 3.4,
+    "parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ast": "nil",
+    "calls": []
+  },
+  {
+    "id": "later-command-2",
+    "source": "outer(first, second, foo +1,\n other)\n",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_version": 3.4,
+    "parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ast": "nil",
+    "calls": []
+  },
+  {
+    "id": "later-command-3",
+    "source": "outer(first, foo +1,\n other,\n third)\n",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_version": 3.4,
+    "parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ast": "nil",
+    "calls": []
+  },
+  {
+    "id": "later-command-4",
+    "source": "outer(first, foo +{a: 1,\n b: 2},\n other)\n",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_version": 3.4,
+    "parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ast": "nil",
+    "calls": []
+  },
+  {
+    "id": "later-command-5",
+    "source": "outer(first, inner(one, foo +1,\n other),\n last)\n",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_version": 3.4,
+    "parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ast": "nil",
+    "calls": []
+  },
+  {
+    "id": "later-command-6",
+    "source": "obj[first, foo +1,\n other]\n",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_version": 3.4,
+    "parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ast": "nil",
+    "calls": []
+  },
+  {
+    "id": "later-command-7",
+    "source": "outer(foo +1, other, bar +2,\n last)\n",
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_version": 3.4,
+    "parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ast": "nil",
+    "calls": []
+  }
+]

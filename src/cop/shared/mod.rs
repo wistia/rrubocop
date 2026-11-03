@@ -14,6 +14,13 @@ pub use command_call::{
 };
 mod regexp;
 pub use regexp::{captures_observed, decode_ruby_double_quoted_content, is_literal_regexp_text};
+mod corrected_crlf;
+pub(crate) use corrected_crlf::normalize_corrected_crlf;
+mod numbered_parameters;
+pub use numbered_parameters::numbered_parameter_arity;
+pub(crate) use numbered_parameters::{numbered_reference, outer_scope_values};
+mod ruby_tokens;
+pub(crate) use ruby_tokens::{atomic as ruby_token_leaf, nodes as ruby_token_nodes};
 mod block_pass;
 mod integer;
 mod node_util;
@@ -136,6 +143,14 @@ pub fn argument_nodes<'a>(node: Node<'a>) -> Vec<Node<'a>> {
             .collect();
     }
     Vec::new()
+}
+
+/// Call arguments excluding comment trivia.
+pub fn semantic_argument_nodes(node: Node<'_>) -> Vec<Node<'_>> {
+    argument_nodes(node)
+        .into_iter()
+        .filter(|argument| argument.kind() != "comment")
+        .collect()
 }
 
 /// Walk all descendants, invoking `f` on each.

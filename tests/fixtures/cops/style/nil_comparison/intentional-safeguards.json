@@ -1,0 +1,602 @@
+[
+  {
+    "id": "continuation predicate",
+    "original": "x \\\n == nil\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "predicate",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 2,
+        "message": "Prefer the use of the `nil?` predicate."
+      }
+    ],
+    "ruby_corrected": "x \\.nil?\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x \\\n == nil\n",
+    "safeguard_reason": "Original raw substitution deletes a continued newline while leaving its backslash, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):1:3: error: bare backslash only allowed before newline",
+        "(string):1: x \\.nil?",
+        "(string):1:   ^     "
+      ]
+    ]
+  },
+  {
+    "id": "explicit bare operator predicate",
+    "original": "x.== nil\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "predicate",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 2,
+        "message": "Prefer the use of the `nil?` predicate."
+      }
+    ],
+    "ruby_corrected": "x..nil?\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.== nil\n",
+    "safeguard_reason": "Original raw substitution leaves two adjacent dots, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "predicate parens comparison",
+    "original": "x.nil?()\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "x == nil()\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.nil?()\n",
+    "safeguard_reason": "Original retains empty call parentheses after the nil keyword, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):1:9: error: unexpected token tLPAREN2",
+        "(string):1: x == nil()",
+        "(string):1:         ^ "
+      ]
+    ]
+  },
+  {
+    "id": "predicate block comparison",
+    "original": "x.nil? { true }\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "x == nil { true }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.nil? { true }\n",
+    "safeguard_reason": "Original moves the block after the nil keyword, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):1:10: error: unexpected token tLCURLY",
+        "(string):1: x == nil { true }",
+        "(string):1:          ^       "
+      ]
+    ]
+  },
+  {
+    "id": "predicate do comparison",
+    "original": "x.nil? do; true; end\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "x == nil do; true; end\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.nil? do; true; end\n",
+    "safeguard_reason": "Original moves the do block after the nil keyword, producing invalid Ruby.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):1:10: error: unexpected token kDO",
+        "(string):1: x == nil do; true; end",
+        "(string):1:          ^~           "
+      ]
+    ]
+  },
+  {
+    "id": "chain comparison",
+    "original": "x.nil?.to_s\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "x == nil.to_s\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.nil?.to_s\n",
+    "safeguard_reason": "Original changes the receiver/precedence of the following method call.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "index comparison",
+    "original": "x.nil?[0]\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "x == nil[0]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.nil?[0]\n",
+    "safeguard_reason": "Original moves indexing from the predicate result to nil.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "binary parent comparison",
+    "original": "x.nil? == true\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 3,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "x == nil == true\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.nil? == true\n",
+    "safeguard_reason": "Original creates a chained equality expression with different or invalid grouping.",
+    "ruby_corrected_parser_errors": [
+      [
+        "(string):1:10: error: unexpected token tEQ",
+        "(string):1: x == nil == true",
+        "(string):1:          ^~     "
+      ]
+    ]
+  },
+  {
+    "id": "negative comparison",
+    "original": "-x.nil?\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "-x == nil\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "-x.nil?\n",
+    "safeguard_reason": "Original moves numeric negation from the predicate result to the receiver.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "bit not comparison",
+    "original": "~x.nil?\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "~x == nil\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "~x.nil?\n",
+    "safeguard_reason": "Original moves bitwise negation from the predicate result to the receiver.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "defined predicate comparison",
+    "original": "defined?(x.nil?)\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "defined?",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 12,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "defined?(x == nil)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "defined?(x.nil?)\n",
+    "safeguard_reason": "Conservative preservation of defined? observation: available nil? and == methods can differ.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "defined comparison predicate",
+    "original": "defined?(x == nil)\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "predicate",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "defined?",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 12,
+        "length": 2,
+        "message": "Prefer the use of the `nil?` predicate."
+      }
+    ],
+    "ruby_corrected": "defined?(x.nil?)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "defined?(x == nil)\n",
+    "safeguard_reason": "Conservative preservation of defined? observation: available nil? and == methods can differ.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "receiver nil literal comparison",
+    "original": "store(\"x.nil?\").nil?\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 17,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "store(\"x == nil\").nil?\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "store(\"x.nil?\").nil?\n",
+    "safeguard_reason": "Original replaces literal text inside the receiver expression rather than the predicate selector.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "receiver equal literal predicate",
+    "original": "store(\"x == nil\") == nil\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "predicate",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 19,
+        "length": 2,
+        "message": "Prefer the use of the `nil?` predicate."
+      }
+    ],
+    "ruby_corrected": "store(\"x.nil?\") == nil\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "store(\"x == nil\") == nil\n",
+    "safeguard_reason": "Original replaces literal text inside the receiver expression rather than the comparison selector.",
+    "ruby_corrected_parser_errors": []
+  },
+  {
+    "id": "numeric -(1).nil? comparison",
+    "original": "-(1).nil?\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_nil_receivers": [
+      {
+        "source": "(1)",
+        "type": "begin"
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "-(1) == nil\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "-(1).nil?\n",
+    "safeguard_reason": "Original moves unary negation from the predicate result to its receiver; parentheses prevent numeric-literal folding here."
+  },
+  {
+    "id": "numeric ~1.nil? comparison",
+    "original": "~1.nil?\n",
+    "config": {
+      "Description": "Prefer x.nil? to x == nil.",
+      "StyleGuide": "#predicate-methods",
+      "Enabled": true,
+      "VersionAdded": "0.12",
+      "VersionChanged": "0.59",
+      "EnforcedStyle": "comparison",
+      "SupportedStyles": [
+        "predicate",
+        "comparison"
+      ],
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "send",
+    "ruby_nil_receivers": [
+      {
+        "source": "1",
+        "type": "int"
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 4,
+        "message": "Prefer the use of the `==` comparison."
+      }
+    ],
+    "ruby_corrected": "~1 == nil\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "~1.nil?\n",
+    "safeguard_reason": "Original moves bitwise negation from the predicate result to its receiver."
+  }
+]

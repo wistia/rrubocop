@@ -1,0 +1,650 @@
+[
+  {
+    "id": "defaults",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {},
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 1,
+        "bytes": "items { |a, b,| work }\n"
+      },
+      "-A": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      }
+    }
+  },
+  {
+    "id": "direct-bad",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"Safe\": false, \"SafeAutoCorrect\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "direct-good",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "Safe": true,
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"Safe\": true, \"SafeAutoCorrect\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      },
+      "-A": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      }
+    }
+  },
+  {
+    "id": "default-safe-not-explicit",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"SafeAutoCorrect\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 1,
+        "bytes": "items { |a, b,| work }\n"
+      },
+      "-A": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      }
+    }
+  },
+  {
+    "id": "parent-safe-child-auto",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": false
+        }
+      }
+    ],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"SafeAutoCorrect\": true}, \"inherit_from\": [\"parent-0.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": false}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "parent-auto-child-safe",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "SafeAutoCorrect": true
+        }
+      }
+    ],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "Safe": false
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"Safe\": false}, \"inherit_from\": [\"parent-0.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"SafeAutoCorrect\": true}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "invalid-parent-good-child",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": false,
+          "SafeAutoCorrect": true
+        }
+      }
+    ],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "Safe": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"Safe\": true}, \"inherit_from\": [\"parent-0.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": false, \"SafeAutoCorrect\": true}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "parent-0.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "parent-0.yml"
+      }
+    }
+  },
+  {
+    "id": "invalid-parent-auto-child",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": false,
+          "SafeAutoCorrect": true
+        }
+      }
+    ],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "SafeAutoCorrect": false
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"SafeAutoCorrect\": false}, \"inherit_from\": [\"parent-0.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": false, \"SafeAutoCorrect\": true}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "parent-0.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "parent-0.yml"
+      }
+    }
+  },
+  {
+    "id": "null-cancels-safe",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": false
+        }
+      }
+    ],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "Safe": null,
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"Safe\": null, \"SafeAutoCorrect\": true}, \"inherit_from\": [\"parent-0.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": false}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      },
+      "-A": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      }
+    }
+  },
+  {
+    "id": "null-cancels-auto",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": false,
+          "SafeAutoCorrect": true
+        }
+      }
+    ],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "SafeAutoCorrect": null
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"SafeAutoCorrect\": null}, \"inherit_from\": [\"parent-0.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": false, \"SafeAutoCorrect\": true}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "parent-0.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "parent-0.yml"
+      }
+    }
+  },
+  {
+    "id": "good-parent-null-auto",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": true,
+          "SafeAutoCorrect": true
+        }
+      }
+    ],
+    "local": {
+      "Style/TrailingCommaInBlockArgs": {
+        "SafeAutoCorrect": null
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"SafeAutoCorrect\": null}, \"inherit_from\": [\"parent-0.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": true, \"SafeAutoCorrect\": true}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 1,
+        "bytes": "items { |a, b,| work }\n"
+      },
+      "-A": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      }
+    }
+  },
+  {
+    "id": "two-parent-conflict",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": false
+        }
+      },
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "SafeAutoCorrect": true
+        }
+      }
+    ],
+    "local": {},
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}, \"inherit_from\": [\"parent-0.yml\", \"parent-1.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": false}}",
+      "{\"Style/TrailingCommaInBlockArgs\": {\"SafeAutoCorrect\": true}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInBlockArgs",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "two-parent-safe-override",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": false
+        }
+      },
+      {
+        "Style/TrailingCommaInBlockArgs": {
+          "Safe": true,
+          "SafeAutoCorrect": true
+        }
+      }
+    ],
+    "local": {},
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}, \"inherit_from\": [\"parent-0.yml\", \"parent-1.yml\"]}",
+    "parent_sources": [
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": false}}",
+      "{\"Style/TrailingCommaInBlockArgs\": {\"Safe\": true, \"SafeAutoCorrect\": true}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      },
+      "-A": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      }
+    }
+  },
+  {
+    "id": "department-only",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "Style": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}, \"Style\": {\"Safe\": false, \"SafeAutoCorrect\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "department-split",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "Style": {
+        "Safe": false
+      },
+      "Style/TrailingCommaInBlockArgs": {
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true, \"SafeAutoCorrect\": true}, \"Style\": {\"Safe\": false}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 1,
+        "bytes": "items { |a, b,| work }\n"
+      },
+      "-A": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      }
+    }
+  },
+  {
+    "id": "allcops-only",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "AllCops": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4, \"Safe\": false, \"SafeAutoCorrect\": true}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "AllCops",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "AllCops",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "plugin-default-not-explicit",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "require": [
+        "rubocop-performance"
+      ],
+      "Performance/AncestorsInclude": {
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}, \"require\": [\"rubocop-performance\"], \"Performance/AncestorsInclude\": {\"SafeAutoCorrect\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 1,
+        "bytes": "items { |a, b,| work }\n"
+      },
+      "-A": {
+        "exit": 0,
+        "bytes": "items { |a, b| work }\n"
+      }
+    }
+  },
+  {
+    "id": "plugin-explicit-conflict",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "require": [
+        "rubocop-performance"
+      ],
+      "Performance/AncestorsInclude": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}, \"require\": [\"rubocop-performance\"], \"Performance/AncestorsInclude\": {\"Safe\": false, \"SafeAutoCorrect\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Performance/AncestorsInclude",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Performance/AncestorsInclude",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "plugin-inherited-conflict",
+    "reference_version": "1.65.1",
+    "parents": [
+      {
+        "require": [
+          "rubocop-performance"
+        ],
+        "Performance/AncestorsInclude": {
+          "Safe": false
+        }
+      }
+    ],
+    "local": {
+      "Performance/AncestorsInclude": {
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}, \"Performance/AncestorsInclude\": {\"SafeAutoCorrect\": true}, \"inherit_from\": [\"parent-0.yml\"]}",
+    "parent_sources": [
+      "{\"require\": [\"rubocop-performance\"], \"Performance/AncestorsInclude\": {\"Safe\": false}}"
+    ],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Performance/AncestorsInclude",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Performance/AncestorsInclude",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "conflict-order-args-first",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "Style/TrailingCommaInArguments": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      },
+      "Style/TrailingCommaInArrayLiteral": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}, \"Style/TrailingCommaInArguments\": {\"Safe\": false, \"SafeAutoCorrect\": true}, \"Style/TrailingCommaInArrayLiteral\": {\"Safe\": false, \"SafeAutoCorrect\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInArguments",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInArguments",
+        "error_file": "config.yml"
+      }
+    }
+  },
+  {
+    "id": "conflict-order-array-first",
+    "reference_version": "1.65.1",
+    "parents": [],
+    "local": {
+      "Style/TrailingCommaInArrayLiteral": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      },
+      "Style/TrailingCommaInArguments": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      }
+    },
+    "config_source": "{\"AllCops\": {\"DisabledByDefault\": true, \"NewCops\": \"disable\", \"TargetRubyVersion\": 3.4}, \"Style/TrailingCommaInBlockArgs\": {\"Enabled\": true}, \"Style/TrailingCommaInArrayLiteral\": {\"Safe\": false, \"SafeAutoCorrect\": true}, \"Style/TrailingCommaInArguments\": {\"Safe\": false, \"SafeAutoCorrect\": true}}",
+    "parent_sources": [],
+    "source": "items { |a, b,| work }\n",
+    "expected": {
+      "-a": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInArrayLiteral",
+        "error_file": "config.yml"
+      },
+      "-A": {
+        "exit": 2,
+        "bytes": "items { |a, b,| work }\n",
+        "error_section": "Style/TrailingCommaInArrayLiteral",
+        "error_file": "config.yml"
+      }
+    }
+  }
+]

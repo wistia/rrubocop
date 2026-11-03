@@ -1,0 +1,1417 @@
+[
+  {
+    "id": "attr-implicit",
+    "original": "class C\n  attr :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 10,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\n  attr :a\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-self.",
+    "original": "class C\n  self.attr :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  self.attr :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-obj.",
+    "original": "class C\n  obj.attr :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  obj.attr :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-obj&.",
+    "original": "class C\n  obj&.attr :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  obj&.attr :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-last-def b; end",
+    "original": "class C\nattr :a,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr :a\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-last-def self.b; end",
+    "original": "class C\nattr :a,\n def self.b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr :a,\n def self.b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-last-(def b; end)",
+    "original": "class C\nattr :a,\n (def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr :a,\n (def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-last-begin def b; end; end",
+    "original": "class C\nattr :a,\n begin def b; end; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr :a,\n begin def b; end; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-last-if condition; def b; end; end",
+    "original": "class C\nattr :a,\n if condition; def b; end; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr :a,\n if condition; def b; end; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-last-def b = value",
+    "original": "class C\nattr :a,\n def b = value\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr :a\n def b = value\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr-parenthesized",
+    "original": "class C\nattr(:a, def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr(:a def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\nattr(:a, def b; end)\nend\n"
+  },
+  {
+    "id": "attr-multiple",
+    "original": "class C\nattr :a, :b,\n def c; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 12,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr :a, :b\n def c; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-implicit",
+    "original": "class C\n  attr_reader :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 17,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\n  attr_reader :a\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-self.",
+    "original": "class C\n  self.attr_reader :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  self.attr_reader :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-obj.",
+    "original": "class C\n  obj.attr_reader :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  obj.attr_reader :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-obj&.",
+    "original": "class C\n  obj&.attr_reader :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  obj&.attr_reader :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-last-def b; end",
+    "original": "class C\nattr_reader :a,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-last-def self.b; end",
+    "original": "class C\nattr_reader :a,\n def self.b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader :a,\n def self.b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-last-(def b; end)",
+    "original": "class C\nattr_reader :a,\n (def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader :a,\n (def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-last-begin def b; end; end",
+    "original": "class C\nattr_reader :a,\n begin def b; end; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader :a,\n begin def b; end; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-last-if condition; def b; end; end",
+    "original": "class C\nattr_reader :a,\n if condition; def b; end; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader :a,\n if condition; def b; end; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-last-def b = value",
+    "original": "class C\nattr_reader :a,\n def b = value\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a\n def b = value\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_reader-parenthesized",
+    "original": "class C\nattr_reader(:a, def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader(:a def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\nattr_reader(:a, def b; end)\nend\n"
+  },
+  {
+    "id": "attr_reader-multiple",
+    "original": "class C\nattr_reader :a, :b,\n def c; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 19,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a, :b\n def c; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-implicit",
+    "original": "class C\n  attr_writer :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 17,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\n  attr_writer :a\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-self.",
+    "original": "class C\n  self.attr_writer :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  self.attr_writer :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-obj.",
+    "original": "class C\n  obj.attr_writer :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  obj.attr_writer :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-obj&.",
+    "original": "class C\n  obj&.attr_writer :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  obj&.attr_writer :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-last-def b; end",
+    "original": "class C\nattr_writer :a,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_writer :a\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-last-def self.b; end",
+    "original": "class C\nattr_writer :a,\n def self.b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_writer :a,\n def self.b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-last-(def b; end)",
+    "original": "class C\nattr_writer :a,\n (def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_writer :a,\n (def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-last-begin def b; end; end",
+    "original": "class C\nattr_writer :a,\n begin def b; end; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_writer :a,\n begin def b; end; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-last-if condition; def b; end; end",
+    "original": "class C\nattr_writer :a,\n if condition; def b; end; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_writer :a,\n if condition; def b; end; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-last-def b = value",
+    "original": "class C\nattr_writer :a,\n def b = value\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_writer :a\n def b = value\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_writer-parenthesized",
+    "original": "class C\nattr_writer(:a, def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_writer(:a def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\nattr_writer(:a, def b; end)\nend\n"
+  },
+  {
+    "id": "attr_writer-multiple",
+    "original": "class C\nattr_writer :a, :b,\n def c; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 19,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_writer :a, :b\n def c; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-implicit",
+    "original": "class C\n  attr_accessor :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 19,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\n  attr_accessor :a\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-self.",
+    "original": "class C\n  self.attr_accessor :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  self.attr_accessor :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-obj.",
+    "original": "class C\n  obj.attr_accessor :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  obj.attr_accessor :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-obj&.",
+    "original": "class C\n  obj&.attr_accessor :a,\n    def b\n    end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n  obj&.attr_accessor :a,\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-last-def b; end",
+    "original": "class C\nattr_accessor :a,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 17,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_accessor :a\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-last-def self.b; end",
+    "original": "class C\nattr_accessor :a,\n def self.b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_accessor :a,\n def self.b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-last-(def b; end)",
+    "original": "class C\nattr_accessor :a,\n (def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_accessor :a,\n (def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-last-begin def b; end; end",
+    "original": "class C\nattr_accessor :a,\n begin def b; end; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_accessor :a,\n begin def b; end; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-last-if condition; def b; end; end",
+    "original": "class C\nattr_accessor :a,\n if condition; def b; end; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_accessor :a,\n if condition; def b; end; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-last-def b = value",
+    "original": "class C\nattr_accessor :a,\n def b = value\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 17,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_accessor :a\n def b = value\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "attr_accessor-parenthesized",
+    "original": "class C\nattr_accessor(:a, def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 17,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_accessor(:a def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\nattr_accessor(:a, def b; end)\nend\n"
+  },
+  {
+    "id": "attr_accessor-multiple",
+    "original": "class C\nattr_accessor :a, :b,\n def c; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 21,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_accessor :a, :b\n def c; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-0",
+    "original": "class C\nattr_readers :a,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_readers :a,\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-1",
+    "original": "class C\nattr_reader :a\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader :a\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-2",
+    "original": "class C\nattr_reader(:a)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader(:a)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-3",
+    "original": "class C\nattr_reader :a,\n value\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader :a,\n value\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-4",
+    "original": "class C\nattr_reader \"a\",\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 16,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader \"a\"\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-5",
+    "original": "class C\nattr_reader \"#{value}\",\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 23,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader \"#{value}\"\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-6",
+    "original": "class C\nattr_reader [:a, :b],\n def c; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 21,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader [:a, :b]\n def c; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-7",
+    "original": "class C\nattr_reader *symbols,\n def c; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [
+      {
+        "level": "warning",
+        "reason": "ambiguous_prefix",
+        "line": 2
+      }
+    ],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 21,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader *symbols\n def c; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-8",
+    "original": "class C\nattr_reader :a ,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 16,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a \n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-9",
+    "original": "class C\nattr_reader :a\t,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 16,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a\t\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-10",
+    "original": "class C\nattr_reader :a, # comment ,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a # comment ,\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-13",
+    "original": "class C\nattr_reader :a \\\n , def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 16,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a \n , def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\nattr_reader :a \\\n , def b; end\nend\n"
+  },
+  {
+    "id": "shape-16",
+    "original": "class C\nattr_reader :a,\n def b\n work { |x,y| x }\n end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a\n def b\n work { |x,y| x }\n end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-17",
+    "original": "class C\nattr_reader :a,\n def b\n rescue\n fallback\n end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a\n def b\n rescue\n fallback\n end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-18",
+    "original": "class C\nattr_reader :\u5e83\u3044,\n def \u6700\u5f8c; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 16,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :\u5e83\u3044\n def \u6700\u5f8c; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-19",
+    "original": "class C\nattr_reader(:a,\n def b; end,\n)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader(:a\n def b; end,\n)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\nattr_reader(:a,\n def b; end,\n)\nend\n"
+  },
+  {
+    "id": "shape-20",
+    "original": "class C\n::C.attr_reader :a,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\n::C.attr_reader :a,\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-21",
+    "original": "class C\nattr_reader :a, def b;end; def c;end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a def b;end; def c;end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\nattr_reader :a, def b;end; def c;end\nend\n"
+  },
+  {
+    "id": "crlf-attr-implicit",
+    "original": "class C\r\n  attr :a,\r\n    def b\r\n    end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 10,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\n  attr :a\n    def b\n    end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-self.",
+    "original": "class C\r\n  self.attr :a,\r\n    def b\r\n    end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\r\n  self.attr :a,\r\n    def b\r\n    end\r\nend\r\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-obj.",
+    "original": "class C\r\n  obj.attr :a,\r\n    def b\r\n    end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\r\n  obj.attr :a,\r\n    def b\r\n    end\r\nend\r\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-obj&.",
+    "original": "class C\r\n  obj&.attr :a,\r\n    def b\r\n    end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\r\n  obj&.attr :a,\r\n    def b\r\n    end\r\nend\r\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-last-def b; end",
+    "original": "class C\r\nattr :a,\r\n def b; end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr :a\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-last-def self.b; end",
+    "original": "class C\r\nattr :a,\r\n def self.b; end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\r\nattr :a,\r\n def self.b; end\r\nend\r\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-last-(def b; end)",
+    "original": "class C\r\nattr :a,\r\n (def b; end)\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\r\nattr :a,\r\n (def b; end)\r\nend\r\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-last-begin def b; end; end",
+    "original": "class C\r\nattr :a,\r\n begin def b; end; end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\r\nattr :a,\r\n begin def b; end; end\r\nend\r\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-last-if condition; def b; end; end",
+    "original": "class C\r\nattr :a,\r\n if condition; def b; end; end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\r\nattr :a,\r\n if condition; def b; end; end\r\nend\r\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-last-def b = value",
+    "original": "class C\r\nattr :a,\r\n def b = value\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr :a\n def b = value\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "crlf-attr-parenthesized",
+    "original": "class C\r\nattr(:a, def b; end)\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr(:a def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\r\nattr(:a, def b; end)\r\nend\r\n"
+  },
+  {
+    "id": "crlf-attr-multiple",
+    "original": "class C\r\nattr :a, :b,\r\n def c; end\r\nend\r\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 12,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr :a, :b\n def c; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "separation-0",
+    "original": "class C\nattr_reader :a, # comment\\\n def b;end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a # comment\\\n def b;end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "separation-1",
+    "original": "class C\nattr_reader :a, \\\n def b;end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a \\\n def b;end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "class C\nattr_reader :a, \\\n def b;end\nend\n"
+  },
+  {
+    "id": "separation-2",
+    "original": "class C\nattr_reader :a, \\\n\n def b;end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a \\\n\n def b;end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "separation-3",
+    "original": "class C\nattr_reader :a, \\\n # comment\n def b;end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a \\\n # comment\n def b;end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "separation-4",
+    "original": "class C\nattr_reader :a, # comment\n def b;end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a # comment\n def b;end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "separation-5",
+    "original": "class C\nattr_reader :a, # comment\\\r\n def b;end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 15,
+        "length": 1,
+        "message": "Avoid leaving a trailing comma in attribute declarations."
+      }
+    ],
+    "ruby_corrected": "class C\nattr_reader :a # comment\\\n def b;end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

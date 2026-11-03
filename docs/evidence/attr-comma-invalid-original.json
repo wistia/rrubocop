@@ -1,0 +1,88 @@
+[
+  {
+    "id": "shape-11",
+    "original": "class C\nattr_reader(:a # comment ,\n , def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader(:a # comment ,\n , def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-12",
+    "original": "class C\nattr_reader(:a \n  , def b; end)\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader(:a \n  , def b; end)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-14",
+    "original": "class C\nattr_reader :a # comment\n , def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader :a # comment\n , def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "shape-15",
+    "original": "class C\nattr_reader :a\n,\n def b; end\nend\n",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class C\nattr_reader :a\n,\n def b; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

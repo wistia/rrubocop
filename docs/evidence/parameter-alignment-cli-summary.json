@@ -1,0 +1,616 @@
+{
+  "implementation_commit": "8762054",
+  "reference": "Ruby RuboCop1.65.1",
+  "mode_comparisons": 372,
+  "equal_bytes": 348,
+  "equal_exit": 372,
+  "equal_scope": 372,
+  "stable_second_passes": 744,
+  "cop_errors": 0,
+  "intentional_difference_modes": [
+    {
+      "case": "multiline-regexp-positive-with_first_parameter-2",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n        two=/a\n         b/,\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=/a\n b/,\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-regexp-positive-with_first_parameter-2",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n        two=/a\n         b/,\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=/a\n b/,\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-regexp-positive-with_first_parameter-4",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n        two=/a\n         b/,\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=/a\n b/,\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-regexp-positive-with_first_parameter-4",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n        two=/a\n         b/,\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=/a\n b/,\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-regexp-positive-with_fixed_indentation-2",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n  two=/a\n   b/,\n  third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n  two=/a\n b/,\n  third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-regexp-positive-with_fixed_indentation-2",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n  two=/a\n   b/,\n  third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n  two=/a\n b/,\n  third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-regexp-positive-with_fixed_indentation-4",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n    two=/a\n     b/,\n    third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n    two=/a\n b/,\n    third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-regexp-positive-with_fixed_indentation-4",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n    two=/a\n     b/,\n    third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n    two=/a\n b/,\n    third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-symbol-positive-with_first_parameter-2",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n        two=:\"a\n         b\",\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=:\"a\n b\",\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-symbol-positive-with_first_parameter-2",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n        two=:\"a\n         b\",\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=:\"a\n b\",\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-symbol-positive-with_first_parameter-4",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n        two=:\"a\n         b\",\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=:\"a\n b\",\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-symbol-positive-with_first_parameter-4",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n        two=:\"a\n         b\",\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=:\"a\n b\",\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-symbol-positive-with_fixed_indentation-2",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n  two=:\"a\n   b\",\n  third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n  two=:\"a\n b\",\n  third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-symbol-positive-with_fixed_indentation-2",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n  two=:\"a\n   b\",\n  third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n  two=:\"a\n b\",\n  third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-symbol-positive-with_fixed_indentation-4",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n    two=:\"a\n     b\",\n    third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n    two=:\"a\n b\",\n    third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "multiline-symbol-positive-with_fixed_indentation-4",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n    two=:\"a\n     b\",\n    third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n    two=:\"a\n b\",\n    third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "percent-word-positive-with_first_parameter-2",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n        two=%w(first\n        second\\\n        word),\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=%w(first\n        second\\\nword),\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "percent-word-positive-with_first_parameter-2",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n        two=%w(first\n        second\\\n        word),\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=%w(first\n        second\\\nword),\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "percent-word-positive-with_first_parameter-4",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n        two=%w(first\n        second\\\n        word),\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=%w(first\n        second\\\nword),\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "percent-word-positive-with_first_parameter-4",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n        two=%w(first\n        second\\\n        word),\n        third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n        two=%w(first\n        second\\\nword),\n        third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "percent-word-positive-with_fixed_indentation-2",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n  two=%w(first\n  second\\\n  word),\n  third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n  two=%w(first\n  second\\\nword),\n  third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "percent-word-positive-with_fixed_indentation-2",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n  two=%w(first\n  second\\\n  word),\n  third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n  two=%w(first\n  second\\\nword),\n  third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "percent-word-positive-with_fixed_indentation-4",
+      "mode": "-a",
+      "ruby_bytes": "def foo(one,\n    two=%w(first\n    second\\\n    word),\n    third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n    two=%w(first\n    second\\\nword),\n    third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    },
+    {
+      "case": "percent-word-positive-with_fixed_indentation-4",
+      "mode": "-A",
+      "ruby_bytes": "def foo(one,\n    two=%w(first\n    second\\\n    word),\n    third=3)\nend\n",
+      "rust_bytes": "def foo(one,\n    two=%w(first\n    second\\\nword),\n    third=3)\nend\n",
+      "native_matches_reviewed_safe_output": true
+    }
+  ],
+  "final_exit_counts": {
+    "ruby": {
+      "0": 372,
+      "1": 0
+    },
+    "rust": {
+      "0": 372,
+      "1": 0
+    }
+  },
+  "production_modes": [
+    {
+      "case": "ordinary",
+      "engine": "ruby",
+      "mode": "-a",
+      "corrected": "def foo(first,\n  second)\nend\n",
+      "final_exit": 0
+    },
+    {
+      "case": "ordinary",
+      "engine": "rust",
+      "mode": "-a",
+      "corrected": "def foo(first,\n  second)\nend\n",
+      "final_exit": 0
+    },
+    {
+      "case": "ordinary",
+      "engine": "ruby",
+      "mode": "-A",
+      "corrected": "def foo(first,\n  second)\nend\n",
+      "final_exit": 0
+    },
+    {
+      "case": "ordinary",
+      "engine": "rust",
+      "mode": "-A",
+      "corrected": "def foo(first,\n  second)\nend\n",
+      "final_exit": 0
+    },
+    {
+      "case": "multiline-default",
+      "engine": "ruby",
+      "mode": "-a",
+      "corrected": "def foo(first,\n  second=[one,\n  two])\nend\n",
+      "final_exit": 0
+    },
+    {
+      "case": "multiline-default",
+      "engine": "rust",
+      "mode": "-a",
+      "corrected": "def foo(first,\n  second=[one,\n  two])\nend\n",
+      "final_exit": 0
+    },
+    {
+      "case": "multiline-default",
+      "engine": "ruby",
+      "mode": "-A",
+      "corrected": "def foo(first,\n  second=[one,\n  two])\nend\n",
+      "final_exit": 0
+    },
+    {
+      "case": "multiline-default",
+      "engine": "rust",
+      "mode": "-A",
+      "corrected": "def foo(first,\n  second=[one,\n  two])\nend\n",
+      "final_exit": 0
+    }
+  ],
+  "correction_metadata_controls": [
+    {
+      "case": "detect",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "('AutoCorrect', 'disabled', '-a')",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "('AutoCorrect', 'disabled', '-A')",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "('AutoCorrect', False, '-a')",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "('AutoCorrect', False, '-A')",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "('SafeAutoCorrect', False, '-a')",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "('SafeAutoCorrect', False, '-A')",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "('Safe', False, '-a')",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 1,
+          "corrected": false,
+          "bytes": "def foo(one,\n two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "('Safe', False, '-A')",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        }
+      ]
+    }
+  ],
+  "width_controls": [
+    {
+      "case": "missing--a",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n    two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n    two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "missing--A",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n    two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n    two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "null--a",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n    two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n    two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "null--A",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n    two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n    two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "own-two--a",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "own-two--A",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "own-zero--a",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\ntwo)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\ntwo)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "own-zero--A",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\ntwo)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\ntwo)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "global-zero--a",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\ntwo)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\ntwo)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "global-zero--A",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\ntwo)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\ntwo)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "both-null--a",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        }
+      ]
+    },
+    {
+      "case": "both-null--A",
+      "observations": [
+        {
+          "engine": "ruby",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        },
+        {
+          "engine": "rust",
+          "exit": 0,
+          "corrected": true,
+          "bytes": "def foo(one,\n  two)\nend\n"
+        }
+      ]
+    }
+  ],
+  "final_state_replay": {
+    "unique_final_sources_and_configs": 145,
+    "original_parser_errors": 0,
+    "states_with_remaining_original_offenses": 0,
+    "states_with_further_original_corrections": 0,
+    "native_diagnostics_ranges_and_bytes": "all145 match, including protected literal outputs"
+  }
+}

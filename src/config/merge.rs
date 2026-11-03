@@ -10,6 +10,7 @@ pub(crate) fn merge_layer_into(
     overlay: &ConfigLayer,
     inherit_mode: Option<&InheritMode>,
 ) {
+    super::safety::merge(&mut base.validation_safety, &overlay.validation_safety);
     merge_global_excludes(base, overlay, inherit_mode);
     merge_layer_scalars(base, overlay);
     merge_department_map(base, overlay, inherit_mode);

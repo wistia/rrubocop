@@ -17,10 +17,18 @@ struct Scanner<'a> {
     extended: bool,
     tokens: Vec<Token>,
     captures: (usize, usize),
+    named: Vec<(usize, usize)>,
     emit_tokens: bool,
 }
 pub(super) fn scan(text: &str, extended: bool, interpolations: &[(usize, usize)]) -> Vec<Token> {
     run(text, extended, interpolations, true).tokens
+}
+pub(super) fn named(
+    text: &str,
+    extended: bool,
+    interpolations: &[(usize, usize)],
+) -> Vec<(usize, usize)> {
+    run(text, extended, interpolations, false).named
 }
 pub(super) fn captures(
     text: &str,
@@ -43,6 +51,7 @@ fn run<'a>(
         extended,
         tokens: vec![],
         captures: (0, 0),
+        named: Vec::new(),
         emit_tokens,
     };
     scanner.run();
@@ -140,6 +149,10 @@ impl Scanner<'_> {
             || text.starts_with("(?<") && !text.starts_with("(?<=") && !text.starts_with("(?<!")
         {
             self.captures.0 += 1;
+            let close = if text.starts_with("(?'") { '\'' } else { '>' };
+            if let Some(end) = text[3..].find(close) {
+                self.named.push((i + 3, i + 3 + end));
+            }
         } else if !text.starts_with("(?") {
             self.captures.1 += 1;
         }

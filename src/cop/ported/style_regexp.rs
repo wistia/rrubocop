@@ -116,3 +116,75 @@ pub(super) fn capture_counts(c: &Context<'_>, n: Node<'_>) -> Option<(usize, usi
     }
     Pattern::new(c, n)?.captures()
 }
+
+mod mixed_ranges;
+
+pub(super) fn mixed_case_ranges(c: &Context<'_>, node: Node<'_>) -> Vec<(usize, usize)> {
+    mixed_ranges::ranges(c, node)
+}
+
+pub(super) fn constructor_literal(c: &Context<'_>, node: Node<'_>) -> Option<String> {
+    let pattern = Pattern::new(c, node)?;
+    let mut offset = 0;
+    let mut interpolations = pattern.interpolations.iter().peekable();
+    let bytes = pattern.text.as_bytes();
+    while offset < bytes.len() {
+        if let Some((start, end)) = interpolations.peek() {
+            if *start == offset {
+                offset = *end;
+                interpolations.next();
+                continue;
+            }
+        }
+        if bytes[offset] == b'/' {
+            return None;
+        }
+        offset += if bytes[offset] == b'\\' { 2 } else { 1 };
+    }
+    let raw = c.text(node);
+    let suffix = &raw[pattern.offset - node.start_byte()
+        + pattern.text.len()
+        + pattern.delimiters[1].len_utf8()..];
+    let flags: std::collections::BTreeSet<_> = suffix.chars().collect();
+    Some(format!(
+        "/{}/{}",
+        pattern.text,
+        flags.into_iter().collect::<String>()
+    ))
+}
+
+pub(super) fn named_groups(c: &Context<'_>, node: Node<'_>) -> Vec<(String, bool)> {
+    let Some(pattern) = Pattern::new(c, node) else {
+        return vec![];
+    };
+    if !pattern.interpolations.is_empty() {
+        return vec![];
+    }
+    let mut names = Vec::new();
+    for (start, end) in pattern.named() {
+        let name = &pattern.text[*start..*end];
+        if !names.iter().any(|(existing, _)| existing == name) {
+            let referenced = pattern
+                .tokens()
+                .iter()
+                .filter(|token| !token.inside)
+                .any(|token| {
+                    let escape = &pattern.text[token.start..token.end];
+                    let reference = ["\\k<", "\\g<", "\\k'", "\\g'"]
+                        .into_iter()
+                        .find_map(|prefix| escape.strip_prefix(prefix))
+                        .and_then(|value| value.get(..value.len().saturating_sub(1)));
+                    reference.is_some_and(|reference| {
+                        reference.starts_with(['+', '-'])
+                            || reference.as_bytes().first().is_some_and(u8::is_ascii_digit)
+                            || reference == name
+                            || reference
+                                .strip_prefix(name)
+                                .is_some_and(|suffix| suffix.starts_with(['+', '-']))
+                    })
+                });
+            names.push((name.to_string(), referenced));
+        }
+    }
+    names
+}

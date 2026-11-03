@@ -1,0 +1,977 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for an overly broad character range",
+    "original": "foo = 'A'..'z'\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 8,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = 'A'..'z'\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for an overly broad exclusive character range",
+    "original": "foo = 'A'...'z'\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 9,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = 'A'...'z'\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense for an acceptable range",
+    "original": "foo = 'A'..'Z'\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = 'A'..'Z'\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense when the number of characters at the start of range is other than 1",
+    "original": "foo = 'aa'..'z'\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = 'aa'..'z'\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense when the number of characters at the end of range is other than 1",
+    "original": "foo = 'a'..'zz'\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = 'a'..'zz'\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense for an endless range",
+    "original": "('a'..)\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "('a'..)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for an overly broad range",
+    "original": "foo = /[A-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 9,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = /[A-Za-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for an overly broad range",
+    "original": "foo = /[A-Za-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[A-Za-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for an overly broad range between interpolations",
+    "original": "foo = /[#{A-z}A-z#{y}]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 15,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = /[#{A-z}A-Za-z#{y}]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for an overly broad range between interpolations",
+    "original": "foo = /[#{A-z}A-Za-z#{y}]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[#{A-z}A-Za-z#{y}]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for each of multiple unsafe ranges",
+    "original": "foo = /[_A-b;Z-a!]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      },
+      {
+        "line": 1,
+        "column": 14,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = /[_A-Za-b;Za!]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for each of multiple unsafe ranges",
+    "original": "foo = /[_A-Za-b;Za!]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[_A-Za-b;Za!]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for each of multiple unsafe ranges at the correct place",
+    "original": "foo = %r{[A-z]+/[A-z]+|all}.freeze || /_[A-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      },
+      {
+        "line": 1,
+        "column": 42,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = %r{[A-Za-z]+/[A-Za-z]+|all}.freeze || /_[A-Za-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for each of multiple unsafe ranges at the correct place",
+    "original": "foo = %r{[A-Za-z]+/[A-Za-z]+|all}.freeze || /_[A-Za-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = %r{[A-Za-z]+/[A-Za-z]+|all}.freeze || /_[A-Za-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense in an extended regexp",
+    "original": "foo = /\n  A-z # not a character class\n  [A-z]_..._\n/x\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 4,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = /\n  A-z # not a character class\n  [A-Za-z]_..._\n/x\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense in an extended regexp",
+    "original": "foo = /\n  A-z # not a character class\n  [A-Za-z]_..._\n/x\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /\n  A-z # not a character class\n  [A-Za-z]_..._\n/x\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for nested (intersected) unsafe ranges",
+    "original": "foo = /[_A-z;&&[^G-f]]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      },
+      {
+        "line": 1,
+        "column": 18,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = /[_A-Za-z;&&[^G-Za-f]]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for nested (intersected) unsafe ranges",
+    "original": "foo = /[_A-Za-z;&&[^G-Za-f]]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[_A-Za-z;&&[^G-Za-f]]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for unsafe range with possible octal digits following",
+    "original": "foo = /[_A-z123]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = /[_A-Za-z123]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for unsafe range with possible octal digits following",
+    "original": "foo = /[_A-Za-z123]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[_A-Za-z123]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for unsafe range with full octal escape preceeding",
+    "original": "foo = /[\\001A-z123]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = /[\\001A-Za-z123]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for unsafe range with full octal escape preceeding",
+    "original": "foo = /[\\001A-Za-z123]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\001A-Za-z123]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for unsafe range with short octal escape preceeding",
+    "original": "foo = /[\\1A-z123]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "foo = /[\\1A-Za-z123]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange registers an offense for unsafe range with short octal escape preceeding",
+    "original": "foo = /[\\1A-Za-z123]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\1A-Za-z123]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense for accepted ranges",
+    "original": "foo = /[_a-zA-Z0-9;]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[_a-zA-Z0-9;]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with escaped octal opening bound",
+    "original": "foo = /[\\101-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\101-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with escaped octal closing bound",
+    "original": "foo = /[A-\\172]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[A-\\172]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with opening hex bound",
+    "original": "foo = /[\\x01-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\x01-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with closing hex bound",
+    "original": "foo = /[A-\\x7a]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[A-\\x7a]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with escaped hex bounds",
+    "original": "foo = /[\\x41-\\x7a]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\x41-\\x7a]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with tricky escaped hex bounds",
+    "original": "foo = /[\\xA-\\xf]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\xA-\\xf]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with escaped unicode bounds",
+    "original": "foo = /[\\u0041-\\u007a]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\u0041-\\u007a]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with control characters",
+    "original": "foo = /[\\C-A-\\cz]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\C-A-\\cz]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with escaped dash (not a range)",
+    "original": "foo = /[A\\-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[A\\-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with nested character class",
+    "original": "foo = /[a-[bc]]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[a-[bc]]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense when a character between `Z` and `a` is at the start of range.",
+    "original": "foo = /[_-a]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[_-a]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense when a character between `Z` and `a` is at the end of range.",
+    "original": "foo = /[A-_]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[A-_]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange does not register an offense with invalid byte sequence in UTF-8",
+    "original": "foo = /[\\\u2013]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = /[\\\u2013]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange ruby > 2.6 does not register an offense for a beginless range",
+    "original": "(..'z')\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(..'z')\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 0",
+    "original": "\"\\x41\"..\"z\"\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 11,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "\"\\x41\"..\"z\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 1",
+    "original": "'\\x41'..'z'\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "'\\x41'..'z'\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 2",
+    "original": "?A..?z\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 6,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "?A..?z\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 3",
+    "original": "\"'\"..\"a\"\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "\"'\"..\"a\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 4",
+    "original": "\"0\"..\"9\"\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"0\"..\"9\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 5",
+    "original": "\"9\"..\"a\"\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "\"9\"..\"a\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 6",
+    "original": "%q{A}..%q{z}\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "%q{A}..%q{z}\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 7",
+    "original": "/[0-A-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/[0-A-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 8",
+    "original": "/[A-Z-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/[A-Z-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 9",
+    "original": "/[\\xA-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/[\\xA-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 10",
+    "original": "/[\\x30-A-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/[\\x30-A-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 11",
+    "original": "/[\\u0041-z]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/[\\u0041-z]/\n"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::MixedCaseRange independent source branch 12",
+    "original": "/[^0-9A-z.-]/\n",
+    "config": {
+      "Description": "Checks for mixed-case character ranges since they include likely unintended characters.",
+      "Enabled": true,
+      "SafeAutoCorrect": false,
+      "VersionAdded": "1.53",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 3,
+        "message": "Ranges from upper to lower case ASCII letters may include unintended characters. Instead of `A-z` (which also includes several symbols) specify each range individually: `A-Za-z` and individually specify any symbols."
+      }
+    ],
+    "ruby_corrected": "/[^0-9A-Za-z.-]/\n"
+  }
+]

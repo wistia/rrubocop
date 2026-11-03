@@ -1,0 +1,515 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is missing registers an offense for a missing when body",
+    "original": "case foo\nwhen :bar then 1\nwhen :baz # nothing\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 1,
+        "length": 9,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar then 1\nwhen :baz # nothing\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is missing registers an offense for missing when body followed by else",
+    "original": "case foo\nwhen :bar then 1\nwhen :baz # nothing\nelse 3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 1,
+        "length": 9,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar then 1\nwhen :baz # nothing\nelse 3\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil),\n  s(:int, 3))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is missing registers an offense for missing when ... then body",
+    "original": "case foo\nwhen :bar then 1\nwhen :baz then # nothing\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 1,
+        "length": 9,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar then 1\nwhen :baz then # nothing\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is missing registers an offense for missing when ... then body followed by else",
+    "original": "case foo\nwhen :bar then 1\nwhen :baz then # nothing\nelse 3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 1,
+        "length": 9,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar then 1\nwhen :baz then # nothing\nelse 3\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil),\n  s(:int, 3))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is missing registers an offense for missing when body with a comment",
+    "original": "case foo\nwhen :bar\n  1\nwhen :baz\n  # nothing\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 1,
+        "length": 9,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar\n  1\nwhen :baz\n  # nothing\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is missing registers an offense for missing when body with a comment followed by else",
+    "original": "case foo\nwhen :bar\n  1\nwhen :baz\n  # nothing\nelse\n  3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 1,
+        "length": 9,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar\n  1\nwhen :baz\n  # nothing\nelse\n  3\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil),\n  s(:int, 3))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is missing registers an offense when case line has no expression",
+    "original": "case\nwhen :bar\n  1\nwhen :baz\n  # nothing\nelse\n  3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 1,
+        "length": 9,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case\nwhen :bar\n  1\nwhen :baz\n  # nothing\nelse\n  3\nend\n",
+    "ruby_ast": "s(:case, nil,\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:case, nil,\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz), nil),\n  s(:int, 3))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is present accepts case with when ... then statements",
+    "original": "case foo\nwhen :bar then 1\nwhen :baz then 2\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar then 1\nwhen :baz then 2\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is present accepts case with when ... then statements and else clause",
+    "original": "case foo\nwhen :bar then 1\nwhen :baz then 2\nelse 3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar then 1\nwhen :baz then 2\nelse 3\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)),\n  s(:int, 3))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is present accepts case with when bodies",
+    "original": "case foo\nwhen :bar\n  1\nwhen :baz\n  2\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar\n  1\nwhen :baz\n  2\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is present accepts case with when bodies and else clause",
+    "original": "case foo\nwhen :bar\n  1\nwhen :baz\n  2\nelse\n  3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar\n  1\nwhen :baz\n  2\nelse\n  3\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)),\n  s(:int, 3))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when a `when` body is present accepts with no case line expression",
+    "original": "case\nwhen :bar\n  1\nwhen :baz\n  2\nelse\n  3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case\nwhen :bar\n  1\nwhen :baz\n  2\nelse\n  3\nend\n",
+    "ruby_ast": "s(:case, nil,\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:case, nil,\n  s(:when,\n    s(:sym, :bar),\n    s(:int, 1)),\n  s(:when,\n    s(:sym, :baz),\n    s(:int, 2)),\n  s(:int, 3))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when `AllowComments: true` accepts an empty when body with a comment",
+    "original": "case condition\nwhen foo\n  do_something\nwhen bar\n  # do nothing\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": true,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case condition\nwhen foo\n  do_something\nwhen bar\n  # do nothing\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:send, nil, :foo),\n    s(:send, nil, :do_something)),\n  s(:when,\n    s(:send, nil, :bar), nil), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:send, nil, :foo),\n    s(:send, nil, :do_something)),\n  s(:when,\n    s(:send, nil, :bar), nil), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when `AllowComments: true` registers an offense for missing when body without a comment",
+    "original": "case condition\nwhen foo\n  42 # magic number\nwhen bar\nwhen baz # more comments mixed\n  21 # another magic number\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": true,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 1,
+        "length": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case condition\nwhen foo\n  42 # magic number\nwhen bar\nwhen baz # more comments mixed\n  21 # another magic number\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:send, nil, :foo),\n    s(:int, 42)),\n  s(:when,\n    s(:send, nil, :bar), nil),\n  s(:when,\n    s(:send, nil, :baz),\n    s(:int, 21)), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:send, nil, :foo),\n    s(:int, 42)),\n  s(:when,\n    s(:send, nil, :bar), nil),\n  s(:when,\n    s(:send, nil, :baz),\n    s(:int, 21)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when `AllowComments: true` accepts an empty when ... then body with a comment",
+    "original": "case condition\nwhen foo\n  do_something\nwhen bar then # do nothing\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": true,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case condition\nwhen foo\n  do_something\nwhen bar then # do nothing\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:send, nil, :foo),\n    s(:send, nil, :do_something)),\n  s(:when,\n    s(:send, nil, :bar), nil), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:send, nil, :foo),\n    s(:send, nil, :do_something)),\n  s(:when,\n    s(:send, nil, :bar), nil), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyWhen when `AllowComments: false` registers an offense for empty when body with a comment",
+    "original": "case condition\nwhen foo\n  do_something\nwhen bar\n  # do nothing\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for `when` branches with empty bodies.",
+      "Enabled": true,
+      "AllowComments": false,
+      "VersionAdded": "0.45",
+      "VersionChanged": "0.83",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 1,
+        "length": 8,
+        "message": "Avoid `when` branches without a body.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case condition\nwhen foo\n  do_something\nwhen bar\n  # do nothing\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:send, nil, :foo),\n    s(:send, nil, :do_something)),\n  s(:when,\n    s(:send, nil, :bar), nil), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :condition),\n  s(:when,\n    s(:send, nil, :foo),\n    s(:send, nil, :do_something)),\n  s(:when,\n    s(:send, nil, :bar), nil), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

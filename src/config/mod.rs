@@ -39,6 +39,7 @@ mod resolved_inject;
 mod resolved_state;
 mod resolved_versions;
 mod ruby_ver;
+mod safety;
 mod standard;
 mod standard_convert;
 mod types;
@@ -426,6 +427,38 @@ mod tests {
         .expect("Standard inheritance must work without an installed bundle");
         assert!(!config.is_cop_enabled("Bundler/OrderedGems", Path::new("Gemfile"), &[], &[]));
         assert!(config.is_cop_enabled("Bundler/DuplicatedGem", Path::new("Gemfile"), &[], &[]));
+    }
+
+    #[test]
+    fn standard_assignment_extension_requires_loading_standard() {
+        for required in [false, true] {
+            let dir = tempfile::tempdir().unwrap();
+            std::fs::write(
+                dir.path().join("Gemfile.lock"),
+                "GEM\n  specs:\n    standard (1.40.0)\n",
+            )
+            .unwrap();
+            let yaml = format!(
+                "{}inherit_gem:\n  standard: config/base.yml\n",
+                if required {
+                    "require: [standard]\n"
+                } else {
+                    ""
+                }
+            );
+            let config = load_config(
+                Some(&write_config(dir.path(), &yaml)),
+                Some(dir.path()),
+                None,
+            )
+            .unwrap();
+            assert_eq!(
+                config
+                    .cop_config("Lint/AssignmentInCondition")
+                    .get_bool("__StandardAssignmentMessage", false),
+                required
+            );
+        }
     }
 
     #[test]

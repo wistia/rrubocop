@@ -1,0 +1,114 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with operator assignment in top level registers an offense",
+    "original": "foo ||= 1\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`. Use `||` instead of `||=`."
+      }
+    ],
+    "ruby_corrected": "foo || 1\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "foo ||= 1\n",
+    "reason": "Preserves a fresh local declaration; original operator removal changes that local into a method lookup."
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a block local variable is assigned and unreferenced registers offenses for self assignment in numblock",
+    "original": "do_something { foo += _1 }\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 16,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`. Use `+` instead of `+=`."
+      }
+    ],
+    "ruby_corrected": "do_something { foo + _1 }\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "do_something { foo += _1 }\n",
+    "reason": "Preserves a fresh local declaration; original operator removal changes that local into a method lookup."
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a pattern match variable is assigned with `in` and unreferenced in a block registers an offense",
+    "original": "def some_method\n  foo in { bar: bar }\n  baz { qux -= 1 }\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 9,
+        "length": 3,
+        "message": "Useless assignment to variable - `qux`. Use `-` instead of `-=`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo in { bar: bar }\n  baz { qux - 1 }\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def some_method\n  foo in { bar: bar }\n  baz { qux -= 1 }\n  foo\nend\n",
+    "reason": "Preserves a fresh local declaration; original operator removal changes that local into a method lookup."
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a pattern match variable is assigned with `=>` and unreferenced in a block registers an offense",
+    "original": "def some_method\n  foo => { bar: bar }\n  baz { qux -= 1 }\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 9,
+        "length": 3,
+        "message": "Useless assignment to variable - `qux`. Use `-` instead of `-=`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo => { bar: bar }\n  baz { qux - 1 }\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def some_method\n  foo => { bar: bar }\n  baz { qux -= 1 }\n  foo\nend\n",
+    "reason": "Preserves a fresh local declaration; original operator removal changes that local into a method lookup."
+  }
+]

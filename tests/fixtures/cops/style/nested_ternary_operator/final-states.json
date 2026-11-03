@@ -1,0 +1,2431 @@
+[
+  {
+    "id": "final-RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression",
+    "original": "if a\nb ? b1 : b2\nelse\na2\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "native_final_exit": 0,
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if a\nb ? b1 : b2\nelse\na2\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :b1),\n    s(:send, nil, :b2)),\n  s(:send, nil, :a2))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :b1),\n    s(:send, nil, :b2)),\n  s(:send, nil, :a2))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "final-RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression with block",
+    "original": "if cond\nfoo\nelse\nbar(foo.a ? foo.b : foo) { |e, k| e.nil? ? nil : e[k] }\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "native_final_exit": 0,
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if cond\nfoo\nelse\nbar(foo.a ? foo.b : foo) { |e, k| e.nil? ? nil : e[k] }\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :cond),\n  s(:send, nil, :foo),\n  s(:block,\n    s(:send, nil, :bar,\n      s(:if,\n        s(:send,\n          s(:send, nil, :foo), :a),\n        s(:send,\n          s(:send, nil, :foo), :b),\n        s(:send, nil, :foo))),\n    s(:args,\n      s(:arg, :e),\n      s(:arg, :k)),\n    s(:if,\n      s(:send,\n        s(:lvar, :e), :nil?),\n      s(:nil),\n      s(:send,\n        s(:lvar, :e), :[],\n        s(:lvar, :k)))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :cond),\n  s(:send, nil, :foo),\n  s(:block,\n    s(:send, nil, :bar,\n      s(:if,\n        s(:send,\n          s(:send, nil, :foo), :a),\n        s(:send,\n          s(:send, nil, :foo), :b),\n        s(:send, nil, :foo))),\n    s(:args,\n      s(:arg, :e),\n      s(:arg, :k)),\n    s(:if,\n      s(:send,\n        s(:lvar, :e), :nil?),\n      s(:nil),\n      s(:send,\n        s(:lvar, :e), :[],\n        s(:lvar, :k)))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "final-RuboCop::Cop::Style::NestedTernaryOperator registers an offense and corrects for a nested ternary operator expression with no parentheses on the outside",
+    "original": "if x\ny + (z ? 1 : 0)\nelse\nnil\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "native_final_exit": 0,
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if x\ny + (z ? 1 : 0)\nelse\nnil\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :x),\n  s(:send,\n    s(:send, nil, :y), :+,\n    s(:begin,\n      s(:if,\n        s(:send, nil, :z),\n        s(:int, 1),\n        s(:int, 0)))),\n  s(:nil))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :x),\n  s(:send,\n    s(:send, nil, :y), :+,\n    s(:begin,\n      s(:if,\n        s(:send, nil, :z),\n        s(:int, 1),\n        s(:int, 0)))),\n  s(:nil))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "final-RuboCop::Cop::Style::NestedTernaryOperator registers an offense when a ternary operator has a nested ternary operator within an `if`",
+    "original": "if a\n\n  if b\n    c ? 1 : 2\n  end\n\nelse\n3\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "native_final_exit": 0,
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if a\n\n  if b\n    c ? 1 : 2\n  end\n\nelse\n3\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:if,\n      s(:send, nil, :c),\n      s(:int, 1),\n      s(:int, 2)), nil),\n  s(:int, 3))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:if,\n      s(:send, nil, :c),\n      s(:int, 1),\n      s(:int, 2)), nil),\n  s(:int, 3))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "final-RuboCop::Cop::Style::NestedTernaryOperator accepts a non-nested ternary operator within an if",
+    "original": "a = if x\n  cond ? b : c\nelse\n  d\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "native_final_exit": 0,
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "a = if x\n  cond ? b : c\nelse\n  d\nend\n",
+    "ruby_ast": "s(:lvasgn, :a,\n  s(:if,\n    s(:send, nil, :x),\n    s(:if,\n      s(:send, nil, :cond),\n      s(:send, nil, :b),\n      s(:send, nil, :c)),\n    s(:send, nil, :d)))",
+    "ruby_corrected_ast": "s(:lvasgn, :a,\n  s(:if,\n    s(:send, nil, :x),\n    s(:if,\n      s(:send, nil, :cond),\n      s(:send, nil, :b),\n      s(:send, nil, :c)),\n    s(:send, nil, :d)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "final-RuboCop::Cop::Style::NestedTernaryOperator can handle multiple nested ternaries",
+    "original": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Use one expression per branch in a ternary operator.",
+      "StyleGuide": "#no-nested-ternary",
+      "Enabled": true,
+      "VersionAdded": "0.9",
+      "VersionChanged": "0.86",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "native_final_exit": 0,
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:if,\n    s(:send, nil, :c),\n    s(:send, nil, :d),\n    s(:if,\n      s(:send, nil, :e),\n      s(:send, nil, :f),\n      s(:send, nil, :g))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:if,\n    s(:send, nil, :c),\n    s(:send, nil, :d),\n    s(:if,\n      s(:send, nil, :e),\n      s(:send, nil, :f),\n      s(:send, nil, :g))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "final-nested-v2.7-0",
+    "original": "if a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-1",
+    "original": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:if,\n    s(:send, nil, :c),\n    s(:send, nil, :d),\n    s(:if,\n      s(:send, nil, :e),\n      s(:send, nil, :f),\n      s(:send, nil, :g))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:if,\n    s(:send, nil, :c),\n    s(:send, nil, :d),\n    s(:if,\n      s(:send, nil, :e),\n      s(:send, nil, :f),\n      s(:send, nil, :g))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-2",
+    "original": "if a\nb\nelse\n(c ? d : e)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb\nelse\n(c ? d : e)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-3",
+    "original": "if (a ? b : c)\nd\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if (a ? b : c)\nd\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:send, nil, :b),\n      s(:send, nil, :c))),\n  s(:send, nil, :d),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:send, nil, :b),\n      s(:send, nil, :c))),\n  s(:send, nil, :d),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-4",
+    "original": "if a\n(b ? c : d)\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n(b ? c : d)\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-5",
+    "original": "a ? (b) + (c ? d : e) : f\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 12,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb) + (c ? d : e\nelse\nf\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send,\n    s(:begin,\n      s(:send, nil, :b)), :+,\n    s(:begin,\n      s(:if,\n        s(:send, nil, :c),\n        s(:send, nil, :d),\n        s(:send, nil, :e)))),\n  s(:send, nil, :f))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b) + (c ? d : e) : f\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v2.7-6",
+    "original": "a ? (b).foo(c ? d : e) : f\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb).foo(c ? d : e\nelse\nf\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send,\n    s(:begin,\n      s(:send, nil, :b)), :foo,\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))),\n  s(:send, nil, :f))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :f), nil)",
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b).foo(c ? d : e) : f\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v2.7-7",
+    "original": "x = if a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "x = if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:lvasgn, :x,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:lvasgn, :x,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-8",
+    "original": "foo(if a\nb ? c : d\nelse\ne\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo(if a\nb ? c : d\nelse\ne\nend)\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:send, nil, :foo,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-9",
+    "original": "foo a ? (b ? c : d) : e\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "foo if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:if,\n    s(:send, nil, :a),\n    s(:begin,\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d))),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "foo a ? (b ? c : d) : e\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v2.7-10",
+    "original": "(if a\nb ? c : d\nelse\ne\nend).foo\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(if a\nb ? c : d\nelse\ne\nend).foo\n",
+    "ruby_ast": "s(:send,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))), :foo)",
+    "ruby_corrected_ast": "s(:send,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))), :foo)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-11",
+    "original": "if a\nb ? c : d\nelse\ne\nend if flag\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend if flag\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :flag),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)), nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :flag),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-12",
+    "original": "flag && (if a\nb ? c : d\nelse\ne\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "flag && (if a\nb ? c : d\nelse\ne\nend)\n",
+    "ruby_ast": "s(:and,\n  s(:send, nil, :flag),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": "s(:and,\n  s(:send, nil, :flag),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-13",
+    "original": "\"#{if a\nb ? c : d\nelse\ne\nend}\"\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"#{if a\nb ? c : d\nelse\ne\nend}\"\n",
+    "ruby_ast": "s(:dstr,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": "s(:dstr,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-14",
+    "original": "if a\n[b ? c : d]\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n[b ? c : d]\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:array,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:array,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-15",
+    "original": "if a\n{x: b ? c : d}\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n{x: b ? c : d}\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:hash,\n    s(:pair,\n      s(:sym, :x),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:hash,\n    s(:pair,\n      s(:sym, :x),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-16",
+    "original": "if a\n-> {b ? c : d}\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n-> {b ? c : d}\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:block,\n    s(:send, nil, :lambda),\n    s(:args),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:block,\n    s(:send, nil, :lambda),\n    s(:args),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-17",
+    "original": "if a\nb; c ? d : e\nelse\nf\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb; c ? d : e\nelse\nf\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:send, nil, :b),\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))),\n  s(:send, nil, :f))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:send, nil, :b),\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))),\n  s(:send, nil, :f))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-18",
+    "original": "if a\nbegin; b ? c : d;end\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nbegin; b ? c : d;end\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:kwbegin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:kwbegin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-19",
+    "original": "a ? b : c\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "a ? b : c\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:send, nil, :c))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:send, nil, :c))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-20",
+    "original": "if a;b ? c : d;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a;b ? c : d;end\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)), nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-21",
+    "original": "if a\n# comment\n b ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n# comment\n b ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-22",
+    "original": "if a\nb ? c : d # comment\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d # comment\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-23",
+    "original": "if a\nb ? c : d\nelse\ne\nend # final comment\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend # final comment\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v2.7-27",
+    "original": "a ? (b ? c : d) : e\nline=__LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nline=__LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:begin,\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d))),\n    s(:send, nil, :e)),\n  s(:lvasgn, :line,\n    s(:int, 2)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:lvasgn, :line,\n    s(:int, 6)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b ? c : d) : e\nline=__LINE__\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v2.7-28",
+    "original": "a ? (__LINE__ ? c : d) : e\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 16,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\n__LINE__ ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:if,\n      s(:int, 1),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:int, 2),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (__LINE__ ? c : d) : e\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v2.7-29",
+    "original": "a ? (b ? c : d) : __LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb ? c : d\nelse\n__LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:int, 1))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:int, 4))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b ? c : d) : __LINE__\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v3.4-0",
+    "original": "if a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-1",
+    "original": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb\nelse\nif c\nd\nelse\ne ? f : g\nend\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:if,\n    s(:send, nil, :c),\n    s(:send, nil, :d),\n    s(:if,\n      s(:send, nil, :e),\n      s(:send, nil, :f),\n      s(:send, nil, :g))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:if,\n    s(:send, nil, :c),\n    s(:send, nil, :d),\n    s(:if,\n      s(:send, nil, :e),\n      s(:send, nil, :f),\n      s(:send, nil, :g))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-2",
+    "original": "if a\nb\nelse\n(c ? d : e)\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb\nelse\n(c ? d : e)\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-3",
+    "original": "if (a ? b : c)\nd\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if (a ? b : c)\nd\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:send, nil, :b),\n      s(:send, nil, :c))),\n  s(:send, nil, :d),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:send, nil, :b),\n      s(:send, nil, :c))),\n  s(:send, nil, :d),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-4",
+    "original": "if a\n(b ? c : d)\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n(b ? c : d)\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-5",
+    "original": "a ? (b) + (c ? d : e) : f\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 12,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb) + (c ? d : e\nelse\nf\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send,\n    s(:begin,\n      s(:send, nil, :b)), :+,\n    s(:begin,\n      s(:if,\n        s(:send, nil, :c),\n        s(:send, nil, :d),\n        s(:send, nil, :e)))),\n  s(:send, nil, :f))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b) + (c ? d : e) : f\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v3.4-6",
+    "original": "a ? (b).foo(c ? d : e) : f\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb).foo(c ? d : e\nelse\nf\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send,\n    s(:begin,\n      s(:send, nil, :b)), :foo,\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))),\n  s(:send, nil, :f))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :f), nil)",
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      },
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b).foo(c ? d : e) : f\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v3.4-7",
+    "original": "x = if a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "x = if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:lvasgn, :x,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:lvasgn, :x,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-8",
+    "original": "foo(if a\nb ? c : d\nelse\ne\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo(if a\nb ? c : d\nelse\ne\nend)\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:send, nil, :foo,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-9",
+    "original": "foo a ? (b ? c : d) : e\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "foo if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:if,\n    s(:send, nil, :a),\n    s(:begin,\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d))),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "foo a ? (b ? c : d) : e\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v3.4-10",
+    "original": "(if a\nb ? c : d\nelse\ne\nend).foo\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "(if a\nb ? c : d\nelse\ne\nend).foo\n",
+    "ruby_ast": "s(:send,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))), :foo)",
+    "ruby_corrected_ast": "s(:send,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))), :foo)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-11",
+    "original": "if a\nb ? c : d\nelse\ne\nend if flag\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend if flag\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :flag),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)), nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :flag),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-12",
+    "original": "flag && (if a\nb ? c : d\nelse\ne\nend)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "flag && (if a\nb ? c : d\nelse\ne\nend)\n",
+    "ruby_ast": "s(:and,\n  s(:send, nil, :flag),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": "s(:and,\n  s(:send, nil, :flag),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-13",
+    "original": "\"#{if a\nb ? c : d\nelse\ne\nend}\"\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "\"#{if a\nb ? c : d\nelse\ne\nend}\"\n",
+    "ruby_ast": "s(:dstr,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": "s(:dstr,\n  s(:begin,\n    s(:if,\n      s(:send, nil, :a),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)),\n      s(:send, nil, :e))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-14",
+    "original": "if a\n[b ? c : d]\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n[b ? c : d]\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:array,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:array,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-15",
+    "original": "if a\n{x: b ? c : d}\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n{x: b ? c : d}\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:hash,\n    s(:pair,\n      s(:sym, :x),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:hash,\n    s(:pair,\n      s(:sym, :x),\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d)))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-16",
+    "original": "if a\n-> {b ? c : d}\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n-> {b ? c : d}\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:block,\n    s(:send, nil, :lambda),\n    s(:args),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:block,\n    s(:send, nil, :lambda),\n    s(:args),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-17",
+    "original": "if a\nb; c ? d : e\nelse\nf\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb; c ? d : e\nelse\nf\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:send, nil, :b),\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))),\n  s(:send, nil, :f))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:send, nil, :b),\n    s(:if,\n      s(:send, nil, :c),\n      s(:send, nil, :d),\n      s(:send, nil, :e))),\n  s(:send, nil, :f))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-18",
+    "original": "if a\nbegin; b ? c : d;end\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nbegin; b ? c : d;end\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:kwbegin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:kwbegin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-19",
+    "original": "a ? b : c\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "a ? b : c\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:send, nil, :c))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:send, nil, :b),\n  s(:send, nil, :c))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-20",
+    "original": "if a;b ? c : d;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a;b ? c : d;end\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)), nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-21",
+    "original": "if a\n# comment\n b ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n# comment\n b ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-22",
+    "original": "if a\nb ? c : d # comment\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d # comment\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-23",
+    "original": "if a\nb ? c : d\nelse\ne\nend # final comment\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend # final comment\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-v3.4-27",
+    "original": "a ? (b ? c : d) : e\nline=__LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nline=__LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:begin,\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d))),\n    s(:send, nil, :e)),\n  s(:lvasgn, :line,\n    s(:int, 2)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:lvasgn, :line,\n    s(:int, 6)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b ? c : d) : e\nline=__LINE__\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v3.4-28",
+    "original": "a ? (__LINE__ ? c : d) : e\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 16,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\n__LINE__ ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:if,\n      s(:int, 1),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:int, 2),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (__LINE__ ? c : d) : e\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-v3.4-29",
+    "original": "a ? (b ? c : d) : __LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb ? c : d\nelse\n__LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:begin,\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d))),\n  s(:int, 1))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:int, 4))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b ? c : d) : __LINE__\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v2.7-0",
+    "original": "foo x, if a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo x, if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:send, nil, :x),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:send, nil, :foo,\n  s(:send, nil, :x),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-context-v2.7-1",
+    "original": "foo a ? (b ? c : d) : e, x\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "foo if a\nb ? c : d\nelse\ne\nend, x\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:if,\n    s(:send, nil, :a),\n    s(:begin,\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d))),\n    s(:send, nil, :e)),\n  s(:send, nil, :x))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "foo a ? (b ? c : d) : e, x\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v2.7-2",
+    "original": "foo x: if a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo x: if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:hash,\n    s(:pair,\n      s(:sym, :x),\n      s(:if,\n        s(:send, nil, :a),\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d)),\n        s(:send, nil, :e)))))",
+    "ruby_corrected_ast": "s(:send, nil, :foo,\n  s(:hash,\n    s(:pair,\n      s(:sym, :x),\n      s(:if,\n        s(:send, nil, :a),\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d)),\n        s(:send, nil, :e)))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-context-v2.7-3",
+    "original": "[if a\nb ? c : d\nelse\ne\nend]\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "[if a\nb ? c : d\nelse\ne\nend]\n",
+    "ruby_ast": "s(:array,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:array,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-context-v2.7-4",
+    "original": "def test;return a ? (b ? c : d) : e;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 22,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "def test;return if a\nb ? c : d\nelse\ne\nend;end\n",
+    "ruby_ast": "s(:def, :test,\n  s(:args),\n  s(:return,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "useless_else"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def test;return a ? (b ? c : d) : e;end\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v2.7-5",
+    "original": "loop {break a ? (b ? c : d) : e}\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 18,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "loop {break if a\nb ? c : d\nelse\ne\nend}\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :loop),\n  s(:args),\n  s(:break,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "loop {break a ? (b ? c : d) : e}\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v2.7-6",
+    "original": "loop {next a ? (b ? c : d) : e}\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 17,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "loop {next if a\nb ? c : d\nelse\ne\nend}\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :loop),\n  s(:args),\n  s(:next,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "loop {next a ? (b ? c : d) : e}\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v2.7-7",
+    "original": "def test;yield a ? (b ? c : d) : e;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 21,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "def test;yield if a\nb ? c : d\nelse\ne\nend;end\n",
+    "ruby_ast": "s(:def, :test,\n  s(:args),\n  s(:yield,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "useless_else"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def test;yield a ? (b ? c : d) : e;end\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v2.7-8",
+    "original": "def test;super a ? (b ? c : d) : e;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 21,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "def test;super if a\nb ? c : d\nelse\ne\nend;end\n",
+    "ruby_ast": "s(:def, :test,\n  s(:args),\n  s(:super,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "useless_else"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def test;super a ? (b ? c : d) : e;end\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v3.4-0",
+    "original": "foo x, if a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo x, if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:send, nil, :x),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:send, nil, :foo,\n  s(:send, nil, :x),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-context-v3.4-1",
+    "original": "foo a ? (b ? c : d) : e, x\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 10,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "foo if a\nb ? c : d\nelse\ne\nend, x\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:if,\n    s(:send, nil, :a),\n    s(:begin,\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d))),\n    s(:send, nil, :e)),\n  s(:send, nil, :x))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "foo a ? (b ? c : d) : e, x\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v3.4-2",
+    "original": "foo x: if a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo x: if a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:send, nil, :foo,\n  s(:hash,\n    s(:pair,\n      s(:sym, :x),\n      s(:if,\n        s(:send, nil, :a),\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d)),\n        s(:send, nil, :e)))))",
+    "ruby_corrected_ast": "s(:send, nil, :foo,\n  s(:hash,\n    s(:pair,\n      s(:sym, :x),\n      s(:if,\n        s(:send, nil, :a),\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d)),\n        s(:send, nil, :e)))))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-context-v3.4-3",
+    "original": "[if a\nb ? c : d\nelse\ne\nend]\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "[if a\nb ? c : d\nelse\ne\nend]\n",
+    "ruby_ast": "s(:array,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:array,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-context-v3.4-4",
+    "original": "def test;return a ? (b ? c : d) : e;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 22,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "def test;return if a\nb ? c : d\nelse\ne\nend;end\n",
+    "ruby_ast": "s(:def, :test,\n  s(:args),\n  s(:return,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "useless_else"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def test;return a ? (b ? c : d) : e;end\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v3.4-5",
+    "original": "loop {break a ? (b ? c : d) : e}\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 18,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "loop {break if a\nb ? c : d\nelse\ne\nend}\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :loop),\n  s(:args),\n  s(:break,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "loop {break a ? (b ? c : d) : e}\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v3.4-6",
+    "original": "loop {next a ? (b ? c : d) : e}\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 17,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "loop {next if a\nb ? c : d\nelse\ne\nend}\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :loop),\n  s(:args),\n  s(:next,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "loop {next a ? (b ? c : d) : e}\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v3.4-7",
+    "original": "def test;yield a ? (b ? c : d) : e;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 21,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "def test;yield if a\nb ? c : d\nelse\ne\nend;end\n",
+    "ruby_ast": "s(:def, :test,\n  s(:args),\n  s(:yield,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "useless_else"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def test;yield a ? (b ? c : d) : e;end\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-context-v3.4-8",
+    "original": "def test;super a ? (b ? c : d) : e;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 21,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "def test;super if a\nb ? c : d\nelse\ne\nend;end\n",
+    "ruby_ast": "s(:def, :test,\n  s(:args),\n  s(:super,\n    s(:if,\n      s(:send, nil, :a),\n      s(:begin,\n        s(:if,\n          s(:send, nil, :b),\n          s(:send, nil, :c),\n          s(:send, nil, :d))),\n      s(:send, nil, :e))))",
+    "ruby_corrected_ast": null,
+    "ruby_corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "useless_else"
+      }
+    ],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def test;super a ? (b ? c : d) : e;end\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-magic-v2.7-0",
+    "original": "before=__LINE__\nif a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "before=__LINE__\nif a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:begin,\n  s(:lvasgn, :before,\n    s(:int, 1)),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:lvasgn, :before,\n    s(:int, 1)),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v2.7-1",
+    "original": "if __LINE__\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if __LINE__\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:int, 1),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:int, 1),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v2.7-2",
+    "original": "if a\n'__LINE__' ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n'__LINE__' ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:str, \"__LINE__\"),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:str, \"__LINE__\"),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v2.7-3",
+    "original": "if a\nb ? c : d\nelse\ne\nend # __LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend # __LINE__\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v2.7-4",
+    "original": "if a\nobj.__LINE__ ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nobj.__LINE__ ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send,\n      s(:send, nil, :obj), :__LINE__),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send,\n      s(:send, nil, :obj), :__LINE__),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v2.7-5",
+    "original": "a ? (b ? c : d) : e\np __LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\np __LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:begin,\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d))),\n    s(:send, nil, :e)),\n  s(:send, nil, :p,\n    s(:int, 2)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:send, nil, :p,\n    s(:int, 6)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b ? c : d) : e\np __LINE__\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-magic-v2.7-6",
+    "original": "if a\nb ? c : d\nelse\ne\nend\np \"__LINE__\"\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\np \"__LINE__\"\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:send, nil, :p,\n    s(:str, \"__LINE__\")))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:send, nil, :p,\n    s(:str, \"__LINE__\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v3.4-0",
+    "original": "before=__LINE__\nif a\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "before=__LINE__\nif a\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:begin,\n  s(:lvasgn, :before,\n    s(:int, 1)),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:lvasgn, :before,\n    s(:int, 1)),\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v3.4-1",
+    "original": "if __LINE__\nb ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if __LINE__\nb ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:int, 1),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:int, 1),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v3.4-2",
+    "original": "if a\n'__LINE__' ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n'__LINE__' ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:str, \"__LINE__\"),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:str, \"__LINE__\"),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v3.4-3",
+    "original": "if a\nb ? c : d\nelse\ne\nend # __LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend # __LINE__\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v3.4-4",
+    "original": "if a\nobj.__LINE__ ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nobj.__LINE__ ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send,\n      s(:send, nil, :obj), :__LINE__),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send,\n      s(:send, nil, :obj), :__LINE__),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-magic-v3.4-5",
+    "original": "a ? (b ? c : d) : e\np __LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 9,
+        "message": "Ternary operators must not be nested. Prefer `if` or `else` constructs instead.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\np __LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:begin,\n      s(:if,\n        s(:send, nil, :b),\n        s(:send, nil, :c),\n        s(:send, nil, :d))),\n    s(:send, nil, :e)),\n  s(:send, nil, :p,\n    s(:int, 2)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:send, nil, :p,\n    s(:int, 6)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "a ? (b ? c : d) : e\np __LINE__\n",
+    "rust_correctable": false,
+    "reason": "Decline original correction that creates parser errors or changes __LINE__ literal values; preserve valid source and offense.",
+    "native_final_exit": 1
+  },
+  {
+    "id": "final-nested-magic-v3.4-6",
+    "original": "if a\nb ? c : d\nelse\ne\nend\np \"__LINE__\"\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\np \"__LINE__\"\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:send, nil, :p,\n    s(:str, \"__LINE__\")))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:send, nil, :p,\n    s(:str, \"__LINE__\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-whitespace-v2.7-2",
+    "original": "if a\nb ? c : d\nelse\ne\nend\nif x\ny ? u : v\nelse\nz\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nif x\ny ? u : v\nelse\nz\nend\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:if,\n    s(:send, nil, :x),\n    s(:if,\n      s(:send, nil, :y),\n      s(:send, nil, :u),\n      s(:send, nil, :v)),\n    s(:send, nil, :z)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:if,\n    s(:send, nil, :x),\n    s(:if,\n      s(:send, nil, :y),\n      s(:send, nil, :u),\n      s(:send, nil, :v)),\n    s(:send, nil, :z)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-whitespace-v3.4-2",
+    "original": "if a\nb ? c : d\nelse\ne\nend\nif x\ny ? u : v\nelse\nz\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nif x\ny ? u : v\nelse\nz\nend\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:if,\n    s(:send, nil, :x),\n    s(:if,\n      s(:send, nil, :y),\n      s(:send, nil, :u),\n      s(:send, nil, :v)),\n    s(:send, nil, :z)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:if,\n    s(:send, nil, :x),\n    s(:if,\n      s(:send, nil, :y),\n      s(:send, nil, :u),\n      s(:send, nil, :v)),\n    s(:send, nil, :z)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-stable-line-v2.7-0",
+    "original": "if a\n__LINE__ ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n__LINE__ ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:int, 2),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:int, 2),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-stable-line-v2.7-1",
+    "original": "if a\nb ? c : d\nelse\ne\nend\nline=__LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nline=__LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:lvasgn, :line,\n    s(:int, 6)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:lvasgn, :line,\n    s(:int, 6)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-stable-line-v2.7-2",
+    "original": "if a\nb ? c : d\nelse\n__LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\n__LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:int, 4))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:int, 4))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-stable-line-v3.4-0",
+    "original": "if a\n__LINE__ ? c : d\nelse\ne\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\n__LINE__ ? c : d\nelse\ne\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:int, 2),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:int, 2),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:send, nil, :e))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-stable-line-v3.4-1",
+    "original": "if a\nb ? c : d\nelse\ne\nend\nline=__LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nline=__LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:lvasgn, :line,\n    s(:int, 6)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:lvasgn, :line,\n    s(:int, 6)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-stable-line-v3.4-2",
+    "original": "if a\nb ? c : d\nelse\n__LINE__\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\n__LINE__\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:int, 4))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :a),\n  s(:if,\n    s(:send, nil, :b),\n    s(:send, nil, :c),\n    s(:send, nil, :d)),\n  s(:int, 4))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-name-role-0",
+    "original": "if a\nb ? c : d\nelse\ne\nend\ndef __LINE__;end\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\ndef __LINE__;end\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:def, :__LINE__,\n    s(:args), nil))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:def, :__LINE__,\n    s(:args), nil))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-name-role-1",
+    "original": "if a\nb ? c : d\nelse\ne\nend\nalias __LINE__ something\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nalias __LINE__ something\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:alias,\n    s(:sym, :__LINE__),\n    s(:sym, :something)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:alias,\n    s(:sym, :__LINE__),\n    s(:sym, :something)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-nested-name-role-2",
+    "original": "if a\nb ? c : d\nelse\ne\nend\nundef __LINE__\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if a\nb ? c : d\nelse\ne\nend\nundef __LINE__\n",
+    "ruby_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:undef,\n    s(:sym, :__LINE__)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:if,\n    s(:send, nil, :a),\n    s(:if,\n      s(:send, nil, :b),\n      s(:send, nil, :c),\n      s(:send, nil, :d)),\n    s(:send, nil, :e)),\n  s(:undef,\n    s(:sym, :__LINE__)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  }
+]

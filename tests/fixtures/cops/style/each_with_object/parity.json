@@ -1,0 +1,1720 @@
+[
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject finds inject and reduce with passed in and returned hash",
+    "original": "[].inject({}) { |a, e| a }\n\n[].reduce({}) do |a, e|\n  a[e] = 1\n  a[e] = 1\n  a\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      },
+      {
+        "line": 3,
+        "column": 4,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `reduce`."
+      }
+    ],
+    "ruby_safe": "[].each_with_object({}) { |e, a|  }\n\n[].each_with_object({}) do |e, a|\n  a[e] = 1\n  a[e] = 1\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject finds inject and reduce with passed in and returned hash",
+    "original": "[].each_with_object({}) { |e, a|  }\n\n[].each_with_object({}) do |e, a|\n  a[e] = 1\n  a[e] = 1\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[].each_with_object({}) { |e, a|  }\n\n[].each_with_object({}) do |e, a|\n  a[e] = 1\n  a[e] = 1\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject finds inject is safe navigation called with passed in and returned hash",
+    "original": "[]&.inject({}) { |a, e| a }\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 5,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_safe": "[]&.each_with_object({}) { |e, a|  }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject finds inject is safe navigation called with passed in and returned hash",
+    "original": "[]&.each_with_object({}) { |e, a|  }\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[]&.each_with_object({}) { |e, a|  }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject correctly autocorrects",
+    "original": "[1, 2, 3].inject({}) do |h, i|\n  h[i] = i\n  h\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_safe": "[1, 2, 3].each_with_object({}) do |i, h|\n  h[i] = i\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject correctly autocorrects",
+    "original": "[1, 2, 3].each_with_object({}) do |i, h|\n  h[i] = i\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[1, 2, 3].each_with_object({}) do |i, h|\n  h[i] = i\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject correctly autocorrects with return value only",
+    "original": "[1, 2, 3].inject({}) do |h, i|\n  h\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 11,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_safe": "[1, 2, 3].each_with_object({}) do |i, h|\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject correctly autocorrects with return value only",
+    "original": "[1, 2, 3].each_with_object({}) do |i, h|\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[1, 2, 3].each_with_object({}) do |i, h|\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject ignores inject and reduce with passed in, but not returned hash",
+    "original": "[].inject({}) do |a, e|\n  a + e\nend\n\n[].reduce({}) do |a, e|\n  my_method e, a\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[].inject({}) do |a, e|\n  a + e\nend\n\n[].reduce({}) do |a, e|\n  my_method e, a\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject ignores inject and reduce with empty body",
+    "original": "[].inject({}) do |a, e|\nend\n\n[].reduce({}) { |a, e| }\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[].inject({}) do |a, e|\nend\n\n[].reduce({}) { |a, e| }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject ignores inject and reduce with condition as body",
+    "original": "[].inject({}) do |a, e|\n  a = e if e\nend\n\n[].inject({}) do |a, e|\n  if e\n    a = e\n  end\nend\n\n[].reduce({}) do |a, e|\n  a = e ? e : 2\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[].inject({}) do |a, e|\n  a = e if e\nend\n\n[].inject({}) do |a, e|\n  if e\n    a = e\n  end\nend\n\n[].reduce({}) do |a, e|\n  a = e ? e : 2\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject ignores inject and reduce passed in symbol",
+    "original": "[].inject(:+)",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[].inject(:+)"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject does not blow up for reduce with no arguments",
+    "original": "[1, 2, 3].inject { |a, e| a + e }",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[1, 2, 3].inject { |a, e| a + e }"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject ignores inject/reduce with assignment to accumulator param in block",
+    "original": "r = [1, 2, 3].reduce({}) do |memo, item|\n  memo += item > 2 ? item : 0\n  memo\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "r = [1, 2, 3].reduce({}) do |memo, item|\n  memo += item > 2 ? item : 0\n  memo\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject Ruby 2.7 finds inject and reduce with passed in and returned hash and numblock",
+    "original": "[].reduce({}) do\n  _1[_2] = 1\n  _1\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `reduce`."
+      }
+    ],
+    "ruby_safe": "[].each_with_object({}) do\n  _2[_1] = 1\n  _2\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject Ruby 2.7 finds inject and reduce with passed in and returned hash and numblock",
+    "original": "[].each_with_object({}) do\n  _2[_1] = 1\n  _2\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[].each_with_object({}) do\n  _2[_1] = 1\n  _2\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject Ruby 2.7 finds `reduce` is called with passed in and returned hash and numblock",
+    "original": "[]&.reduce({}) do\n  _1[_2] = 1\n  _1\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 5,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `reduce`."
+      }
+    ],
+    "ruby_safe": "[]&.each_with_object({}) do\n  _2[_1] = 1\n  _2\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject Ruby 2.7 finds `reduce` is called with passed in and returned hash and numblock",
+    "original": "[]&.each_with_object({}) do\n  _2[_1] = 1\n  _2\nend\n",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "[]&.each_with_object({}) do\n  _2[_1] = 1\n  _2\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::EachWithObject when a simple literal is passed as initial value ignores inject/reduce",
+    "original": "array.reduce(0) { |a, e| a }",
+    "config": {
+      "Description": "Prefer `each_with_object` over `inject` or `reduce`.",
+      "Enabled": true,
+      "VersionAdded": "0.22",
+      "VersionChanged": "0.42",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "array.reduce(0) { |a, e| a }"
+  },
+  {
+    "id": "initial '0'",
+    "original": "items.inject(0) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(0) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '-1'",
+    "original": "items.inject(-1) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(-1) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '+1'",
+    "original": "items.inject(+1) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(+1) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '1.5'",
+    "original": "items.inject(1.5) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(1.5) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '-1.5'",
+    "original": "items.inject(-1.5) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(-1.5) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '1r'",
+    "original": "items.inject(1r) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(1r) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '1i'",
+    "original": "items.inject(1i) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(1i) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial 'nil'",
+    "original": "items.inject(nil) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(nil) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial 'false'",
+    "original": "items.inject(false) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(false) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial 'true'",
+    "original": "items.inject(true) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(true) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial ':foo'",
+    "original": "items.inject(:foo) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(:foo) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial ':\"foo\"'",
+    "original": "items.inject(:\"foo\") { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(:\"foo\") { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial ':\"#{value}\"'",
+    "original": "items.inject(:\"#{value}\") { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(:\"#{value}\") { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '\"foo\"'",
+    "original": "items.inject(\"foo\") { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(\"foo\") { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '\"#{value}\"'",
+    "original": "items.inject(\"#{value}\") { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(\"#{value}\") { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '\"foo\\nbar\"'",
+    "original": "items.inject(\"foo\nbar\") { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(\"foo\nbar\") { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '\"foo\\\\\\nbar\"'",
+    "original": "items.inject(\"foo\\\nbar\") { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(\"foo\\\nbar\") { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial \"'foo\\nbar'\"",
+    "original": "items.inject('foo\nbar') { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object('foo\nbar') { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '?a'",
+    "original": "items.inject(?a) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(?a) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '__LINE__'",
+    "original": "items.inject(__LINE__) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(__LINE__) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '__FILE__'",
+    "original": "items.inject(__FILE__) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(__FILE__) { |memo, element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '__ENCODING__'",
+    "original": "items.inject(__ENCODING__) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(__ENCODING__) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '{}'",
+    "original": "items.inject({}) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '[]'",
+    "original": "items.inject([]) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object([]) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '/foo/'",
+    "original": "items.inject(/foo/) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(/foo/) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '1..3'",
+    "original": "items.inject(1..3) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(1..3) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '(0)'",
+    "original": "items.inject((0)) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object((0)) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial 'initial'",
+    "original": "items.inject(initial) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(initial) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial 'a: 1, b: 2'",
+    "original": "items.inject(a: 1, b: 2) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(a: 1, b: 2) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "initial '%x(command)'",
+    "original": "items.inject(%x(command)) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(%x(command)) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body memo",
+    "original": "items.inject({}) do |memo, element|\n  memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body memo[element] = element; memo",
+    "original": "items.inject({}) do |memo, element|\n  memo[element] = element; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  memo[element] = element; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body memo += element; memo",
+    "original": "items.inject({}) do |memo, element|\n  memo += element; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  memo += element; memo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body memo = element; memo",
+    "original": "items.inject({}) do |memo, element|\n  memo = element; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  memo = element; memo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body memo ||= initial; memo",
+    "original": "items.inject({}) do |memo, element|\n  memo ||= initial; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  memo ||= initial; memo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body memo.foo = element; memo",
+    "original": "items.inject({}) do |memo, element|\n  memo.foo = element; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  memo.foo = element; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body memo[element] += 1; memo",
+    "original": "items.inject({}) do |memo, element|\n  memo[element] += 1; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  memo[element] += 1; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body a, memo = element; memo",
+    "original": "items.inject({}) do |memo, element|\n  a, memo = element; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  a, memo = element; memo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body for memo in elements; end; memo",
+    "original": "items.inject({}) do |memo, element|\n  for memo in elements; end; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  for memo in elements; end; memo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body other.each {|memo| memo = 1}; memo",
+    "original": "items.inject({}) do |memo, element|\n  other.each {|memo| memo = 1}; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  other.each {|memo| memo = 1}; memo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body def helper; memo = 1; end; memo",
+    "original": "items.inject({}) do |memo, element|\n  def helper; memo = 1; end; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  def helper; memo = 1; end; memo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body case element; in {memo: other}; end; memo",
+    "original": "items.inject({}) do |memo, element|\n  case element; in {memo: other}; end; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  case element; in {memo: other}; end; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body case element; in [^memo]; end; memo",
+    "original": "items.inject({}) do |memo, element|\n  case element; in [^memo]; end; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  case element; in [^memo]; end; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body next memo if element; memo",
+    "original": "items.inject({}) do |memo, element|\n  next memo if element; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  next memo if element; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body inner.each {next nil}; memo",
+    "original": "items.inject({}) do |memo, element|\n  inner.each {next nil}; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  inner.each {next nil}; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body while pred; next nil; end; memo",
+    "original": "items.inject({}) do |memo, element|\n  while pred; next nil; end; memo\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  while pred; next nil; end; \nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body memo # keep",
+    "original": "items.inject({}) do |memo, element|\n  memo # keep\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n   # keep\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body work(memo); memo;",
+    "original": "items.inject({}) do |memo, element|\n  work(memo); memo;\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  work(memo); ;\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body if pred; memo; else; memo; end",
+    "original": "items.inject({}) do |memo, element|\n  if pred; memo; else; memo; end\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  if pred; memo; else; memo; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body (memo)",
+    "original": "items.inject({}) do |memo, element|\n  (memo)\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) do |element, memo|\n  ()\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body before; (memo)",
+    "original": "items.inject({}) do |memo, element|\n  before; (memo)\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  before; (memo)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body ((memo))",
+    "original": "items.inject({}) do |memo, element|\n  ((memo))\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  ((memo))\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "body begin; memo; end",
+    "original": "items.inject({}) do |memo, element|\n  begin; memo; end\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) do |memo, element|\n  begin; memo; end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "parameters |memo, element|",
+    "original": "items.inject({}) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "parameters |memo, element, extra|",
+    "original": "items.inject({}) { |memo, element, extra| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element, memo, extra|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "parameters |memo, *element|",
+    "original": "items.inject({}) { |memo, *element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |*element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "parameters |memo = initial, element|",
+    "original": "items.inject({}) { |memo = initial, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element, memo = initial|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "parameters |(memo,x), element|",
+    "original": "items.inject({}) { |(memo,x), element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) { |(memo,x), element| memo }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "parameters |memo, (key,value)|",
+    "original": "items.inject({}) { |memo, (key,value)| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |(key,value), memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "parameters |memo, element; local|",
+    "original": "items.inject({}) { |memo, element; local| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element, memo; local|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "parameters |memo, element = initial|",
+    "original": "items.inject({}) { |memo, element = initial| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { |element = initial, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby2.5 _1[_2] = 1; _1",
+    "original": "items.inject({}) { _1[_2] = 1; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) { _1[_2] = 1; _1 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby2.7 _1[_2] = 1; _1",
+    "original": "items.inject({}) { _1[_2] = 1; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { _2[_1] = 1; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 _1[_2] = 1; _1",
+    "original": "items.inject({}) { _1[_2] = 1; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { _2[_1] = 1; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 _1",
+    "original": "items.inject({}) { _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 1,
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) { _1 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby2.5 _2; _1",
+    "original": "items.inject({}) { _2; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 2.5
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) { _2; _1 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby2.7 _2; _1",
+    "original": "items.inject({}) { _2; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { _1; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 _2; _1",
+    "original": "items.inject({}) { _2; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { _1; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 _3; _1",
+    "original": "items.inject({}) { _3; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 3,
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) { _3; _1 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 _1(); _2; _1",
+    "original": "items.inject({}) { _1(); _2; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { _1(); _1; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 helper(_2:); _1",
+    "original": "items.inject({}) { helper(_2:); _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 1,
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject({}) { helper(_2:); _1 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 def _2.foo; end; _1",
+    "original": "items.inject({}) { def _2.foo; end; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { def _1.foo; end; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 class C < _2; end; _1",
+    "original": "items.inject({}) { class C < _2; end; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { class C < _1; end; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 class << _2; end; _1",
+    "original": "items.inject({}) { class << _2; end; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { class << _1; end; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "numbered Ruby3.4 next _1 if _2; _1",
+    "original": "items.inject({}) { next _1 if _2; _1 }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "numblock",
+    "ruby_numblock_arity": 2,
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object({}) { next _2 if _1; _2 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "heredoc single",
+    "original": "items.inject(<<~TEXT) { |memo, element| memo }\n  text\nTEXT\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [],
+    "ruby_corrected": "items.inject(<<~TEXT) { |memo, element| memo }\n  text\nTEXT\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "heredoc multiple",
+    "original": "items.inject(<<~TEXT) { |memo, element| memo }\n  one\n  two\nTEXT\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "items.each_with_object(<<~TEXT) { |element, memo|  }\n  one\n  two\nTEXT\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "reduce safe navigation",
+    "original": "items&.reduce({}) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `reduce`."
+      }
+    ],
+    "ruby_corrected": "items&.each_with_object({}) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "implicit receiver",
+    "original": "inject({}) { |memo, element| memo }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4
+    },
+    "ruby_parser_errors": [],
+    "ruby_ast_kind": "block",
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 6,
+        "message": "Use `each_with_object` instead of `inject`."
+      }
+    ],
+    "ruby_corrected": "each_with_object({}) { |element, memo|  }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

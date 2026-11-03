@@ -1,0 +1,1494 @@
+{
+  "modes": 32,
+  "matching": 32,
+  "cases": [
+    {
+      "config": {},
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmprplt7n2_/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {},
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp157t8xqq/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpr73spw7u/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpj3ilzqo1/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": false
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpe5mh1owj/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": false
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp0a4waer0/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": null
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpwv_x61d8/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": null
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpfrn8lzej/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpudshavn5/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp7kn2hb0f/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": false
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp0xouxia9/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": false
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpic8t4g97/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": null
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpg0r16j3j/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": null
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp3m4r0_kn/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp22hcjj8b/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpfl5rxpfa/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": false
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpp26f11w_/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": false
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp6m_eovs7/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": null
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpkh9ei8je/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": null
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpe21gya_g/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": "disabled"
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp85_2n5hl/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": "disabled"
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpg8u8z1yg/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\nWarning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpss_fklyr/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\nWarning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmphbm0rz3b/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": false
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\nWarning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpa4cla6o5/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": false
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\nWarning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpopux_zj2/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": null
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\nWarning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpbwatn_e6/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": null
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\nWarning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp9i2id4df/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 2,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": null,
+          "stderr": "Error: Unsafe cops cannot have a safe autocorrection (section Lint/ElseLayout in /tmp/tmpb6t4dazp/config.yml)\n"
+        },
+        "rust": {
+          "exit": 2,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": null,
+          "stderr": "error: Unsafe cops cannot have a safe autocorrection (section Lint/ElseLayout in /tmp/tmpb6t4dazp/config.yml)\n"
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 2,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": null,
+          "stderr": "Error: Unsafe cops cannot have a safe autocorrection (section Lint/ElseLayout in /tmp/tmpk2y137nb/config.yml)\n"
+        },
+        "rust": {
+          "exit": 2,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": null,
+          "stderr": "error: Unsafe cops cannot have a safe autocorrection (section Lint/ElseLayout in /tmp/tmpk2y137nb/config.yml)\n"
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": null,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\nWarning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if condition\n first\nelse work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp4mqwbddt/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": null,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Odd `else` layout detected. Did you mean to use `elsif`?",
+              "cop_name": "Lint/ElseLayout",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 3,
+                "start_column": 6,
+                "last_line": 3,
+                "last_column": 9,
+                "length": 4,
+                "line": 3,
+                "column": 6
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/ElseLayout does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\nWarning: Lint/ElseLayout does not support SafeAutoCorrect parameter.\n\nSupported parameters are:\n\n  - Enabled\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if condition\n first\nelse\n  work\nend\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp2c2a8n34/input.rb",
+              "line": 3,
+              "column": 5,
+              "severity": "W",
+              "cop_name": "Lint/ElseLayout",
+              "message": "Lint/ElseLayout: Odd `else` layout detected. Did you mean to use `elsif`?",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    }
+  ]
+}

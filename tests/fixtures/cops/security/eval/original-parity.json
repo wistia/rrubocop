@@ -1,0 +1,278 @@
+[
+  {
+    "id": "RuboCop::Cop::Security::Eval registers an offense for eval as function",
+    "original": "eval(something)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 4,
+        "message": "The use of `eval` is a serious security risk."
+      }
+    ],
+    "ruby_safe": "eval(something)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval registers an offense for eval as command",
+    "original": "eval something\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 4,
+        "message": "The use of `eval` is a serious security risk."
+      }
+    ],
+    "ruby_safe": "eval something\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval registers an offense `Binding#eval`",
+    "original": "binding.eval something\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 9,
+        "length": 4,
+        "message": "The use of `eval` is a serious security risk."
+      }
+    ],
+    "ruby_safe": "binding.eval something\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval registers an offense for eval with string that has an interpolation",
+    "original": "eval \"something#{foo}\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 4,
+        "message": "The use of `eval` is a serious security risk."
+      }
+    ],
+    "ruby_safe": "eval \"something#{foo}\"\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval accepts eval as variable",
+    "original": "eval = something",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "eval = something"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval accepts eval as method",
+    "original": "something.eval",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "something.eval"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval accepts eval on a literal string",
+    "original": "eval(\"puts 1\")",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "eval(\"puts 1\")"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval accepts eval with no arguments",
+    "original": "eval",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "eval"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval accepts eval with a multiline string",
+    "original": "eval \"something\\nsomething2\"",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "eval \"something\\nsomething2\""
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval accepts eval with a string that interpolates a literal",
+    "original": "eval \"something#{2}\"",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "eval \"something#{2}\""
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval with an explicit binding, filename, and line number registers an offense for eval as function",
+    "original": "eval(something, binding, \"test.rb\", 1)\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 4,
+        "message": "The use of `eval` is a serious security risk."
+      }
+    ],
+    "ruby_safe": "eval(something, binding, \"test.rb\", 1)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval with an explicit binding, filename, and line number registers an offense for eval as command",
+    "original": "eval something, binding, \"test.rb\", 1\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 4,
+        "message": "The use of `eval` is a serious security risk."
+      }
+    ],
+    "ruby_safe": "eval something, binding, \"test.rb\", 1\n"
+  },
+  {
+    "id": "RuboCop::Cop::Security::Eval with an explicit binding, filename, and line number accepts eval on a literal string",
+    "original": "eval(\"puts 1\", binding, \"test.rb\", 1)",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "The use of eval represents a serious security risk.",
+      "Enabled": true,
+      "VersionAdded": "0.47",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "eval(\"puts 1\", binding, \"test.rb\", 1)"
+  }
+]

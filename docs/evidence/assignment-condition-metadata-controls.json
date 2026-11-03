@@ -1,0 +1,1494 @@
+{
+  "modes": 32,
+  "matching": 32,
+  "cases": [
+    {
+      "config": {},
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp6aed4abx/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {},
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpn1vsmyon/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpiobjd__k/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpbhujenp7/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": false
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp7vvm_wrb/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": false
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp53ysi7wb/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": null
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpi9k6wael/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": null
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpopnp3sy6/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp6kde896d/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpgnuqfqsx/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": false
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpznzvs4ni/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": false
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpo4bq1egu/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": null
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmppat7fk6i/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "SafeAutoCorrect": null
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpelzwbboj/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpop3d9n5t/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpw9wbeo8v/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": false
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp6xwsa450/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": false
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpglyzz9lt/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": null
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmppm652zgf/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": null
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpmkbsjtyx/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": "disabled"
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp5qjnpelv/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "AutoCorrect": "disabled"
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": false,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": ""
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp302ic9yw/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp2iiijkqc/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmphg1n7dmu/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": false
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpse631njy/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": false
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmp1w1q94qe/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": null
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpyj99o4ek/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": true,
+        "SafeAutoCorrect": null
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmpcvr0q62d/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 2,
+          "bytes": "if x=value;work;end\n",
+          "offenses": null,
+          "stderr": "Error: Unsafe cops cannot have a safe autocorrection (section Lint/AssignmentInCondition in /tmp/tmpkvrtrbel/config.yml)\n"
+        },
+        "rust": {
+          "exit": 2,
+          "bytes": "if x=value;work;end\n",
+          "offenses": null,
+          "stderr": "error: Unsafe cops cannot have a safe autocorrection (section Lint/AssignmentInCondition in /tmp/tmpkvrtrbel/config.yml)\n"
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": false,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 2,
+          "bytes": "if x=value;work;end\n",
+          "offenses": null,
+          "stderr": "Error: Unsafe cops cannot have a safe autocorrection (section Lint/AssignmentInCondition in /tmp/tmpjr0hpwld/config.yml)\n"
+        },
+        "rust": {
+          "exit": 2,
+          "bytes": "if x=value;work;end\n",
+          "offenses": null,
+          "stderr": "error: Unsafe cops cannot have a safe autocorrection (section Lint/AssignmentInCondition in /tmp/tmpjr0hpwld/config.yml)\n"
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": null,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-a",
+      "observations": {
+        "ruby": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": false,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 1,
+          "bytes": "if x=value;work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmprke6ol4d/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": false
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    },
+    {
+      "config": {
+        "Safe": null,
+        "SafeAutoCorrect": true
+      },
+      "mode": "-A",
+      "observations": {
+        "ruby": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "severity": "warning",
+              "message": "Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "cop_name": "Lint/AssignmentInCondition",
+              "corrected": true,
+              "correctable": true,
+              "location": {
+                "start_line": 1,
+                "start_column": 5,
+                "last_line": 1,
+                "last_column": 5,
+                "length": 1,
+                "line": 1,
+                "column": 5
+              }
+            }
+          ],
+          "stderr": "Warning: Lint/AssignmentInCondition does not support Safe parameter.\n\nSupported parameters are:\n\n  - Enabled\n  - AllowSafeAssignment\n"
+        },
+        "rust": {
+          "exit": 0,
+          "bytes": "if (x=value);work;end\n",
+          "offenses": [
+            {
+              "path": "/tmp/tmporvqphac/input.rb",
+              "line": 1,
+              "column": 4,
+              "severity": "W",
+              "cop_name": "Lint/AssignmentInCondition",
+              "message": "Lint/AssignmentInCondition: Use `==` if you meant to do a comparison or wrap the expression in parentheses to indicate you meant to assign in a condition.",
+              "corrected": true
+            }
+          ],
+          "stderr": ""
+        }
+      },
+      "equal": true
+    }
+  ]
+}

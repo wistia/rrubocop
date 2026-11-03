@@ -18,7 +18,7 @@ pub(super) fn register(r: &mut CopRegistry) {
         ("Lint/AmbiguousAssignment", &["assignment"], ambiguous, false, true, false),
         ("Lint/BooleanSymbol", &["simple_symbol","delimited_symbol","hash_key_symbol"], boolean_symbol, true, false, false),
         ("Lint/DeprecatedConstants", &["constant","scope_resolution"], deprecated, true, true, false),
-        ("Lint/EmptyExpression", &["parenthesized_statements"], empty, false, true, false),
+        ("Lint/EmptyExpression", &["parenthesized_statements", "interpolation"], empty, false, true, false),
         ("Lint/InterpolationCheck", &["string"], interpolation, true, false, false),
         ("Lint/NestedPercentLiteral", &["string_array","symbol_array"], nested_percent, false, true, false),
         ("Lint/TripleQuotes", &["chained_string"], triple, true, true, false)

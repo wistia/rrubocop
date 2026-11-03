@@ -5,15 +5,14 @@ pub use calls::matches_class_and_module_children;
 
 mod collections;
 pub use collections::matches_empty_heredoc;
-pub use collections::matches_hash_syntax;
 pub use collections::matches_symbol_array;
 pub use collections::matches_word_array;
+pub(crate) use collections::word_symbol_name;
 
 mod control;
 pub use control::matches_if_with_semicolon;
 pub use control::matches_one_line_conditional;
 pub use control::matches_stabby_lambda_parentheses;
-pub use control::matches_ternary_parentheses;
 
 mod invertible_unless_condition;
 pub use invertible_unless_condition::matches_invertible_unless_condition;
@@ -54,7 +53,6 @@ pub use stubs::matches_multiline_memoization;
 pub use stubs::matches_nested_parenthesized_calls;
 pub use stubs::matches_optional_arguments;
 pub use stubs::matches_redundant_line_continuation;
-pub use stubs::matches_redundant_parentheses;
 pub use stubs::matches_redundant_string_escape;
 pub use stubs::matches_return_nil_in_predicate_method_definition;
 pub use stubs::matches_symbol_proc;

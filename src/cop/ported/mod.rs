@@ -192,7 +192,9 @@ fn finding_diagnostic(
 ) -> Diagnostic {
     let (line, col) = source.offset_to_line_col(finding.start);
     let mut diagnostic = rule.diagnostic(source, line, col, finding.message.clone());
-    diagnostic.highlight_length = highlight_length(source, finding.start, finding.end);
+    diagnostic.highlight_length = finding
+        .highlight_length
+        .unwrap_or_else(|| highlight_length(source, finding.start, finding.end));
     diagnostic.correctable = finding.correctable;
     diagnostic.severity = config.severity.unwrap_or(diagnostic.severity);
     diagnostic
@@ -253,6 +255,31 @@ pub(super) fn static_literal(source: &SourceFile, node: Node<'_>) -> Option<Stri
         .map(std::borrow::Cow::into_owned)
 }
 
+pub(super) fn mixed_case_regexp_ranges(source: &SourceFile, node: Node<'_>) -> Vec<(usize, usize)> {
+    style_regexp::mixed_case_ranges(&Context::new(source, &CopConfig::default()), node)
+}
+
+pub(super) fn static_ruby_string(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    let config = CopConfig::default();
+    let context = Context::new(source, &config);
+    context
+        .ruby_static_string(node)
+        .map(|value| value.into_owned())
+}
+
+pub(super) fn redundant_regexp_literal(source: &SourceFile, node: Node<'_>) -> Option<String> {
+    std::str::from_utf8(&source.as_bytes()[node.start_byte()..node.end_byte()]).ok()?;
+    style_regexp::constructor_literal(&Context::new(source, &CopConfig::default()), node)
+}
+
+pub(super) fn ruby_local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
+    local_identifier(source, node)
+}
+
+pub(super) fn named_regexp_groups(source: &SourceFile, node: Node<'_>) -> Vec<(String, bool)> {
+    style_regexp::named_groups(&Context::new(source, &CopConfig::default()), node)
+}
+
 pub(super) fn local_identifier(source: &SourceFile, node: Node<'_>) -> bool {
     let config = CopConfig::default();
     context::local_identifier(&Context::new(source, &config), node)
@@ -287,6 +314,15 @@ pub(super) fn heredoc_span(source: &SourceFile, node: Node<'_>) -> Option<(usize
 
 pub(super) fn decode_ruby_double_quoted_content(inner: &str) -> Option<String> {
     context::decode_double_quoted_content(inner)
+}
+
+pub(super) fn decode_regexp_content(
+    inner: &[u8],
+    opening: u8,
+    closing: u8,
+    ruby_version: f64,
+) -> Option<Vec<u8>> {
+    context::decode_regexp_content(inner, opening, closing, ruby_version)
 }
 
 pub(super) fn decode_regexp_parts(

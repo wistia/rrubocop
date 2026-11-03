@@ -24,7 +24,10 @@
         "correctable": true
       }
     ],
-    "corrected": "value = 'ok'\np \"#{value}\"\n"
+    "corrected": "value = 'ok'\np \"#{value}\"\n",
+    "rust_correctable": false,
+    "rust_corrected": "value = 'ok'\np '#{value}'\n",
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation and can change behavior or raise; retain the offense without an edit."
   },
   {
     "cop": "Lint/InterpolationCheck",
@@ -51,7 +54,10 @@
         "correctable": true
       }
     ],
-    "corrected": "seen = []\np \"#{seen << :called; 42}\"\np seen\n"
+    "corrected": "seen = []\np \"#{seen << :called; 42}\"\np seen\n",
+    "rust_correctable": false,
+    "rust_corrected": "seen = []\np '#{seen << :called; 42}'\np seen\n",
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation and can change behavior or raise; retain the offense without an edit."
   },
   {
     "cop": "Lint/InterpolationCheck",
@@ -78,7 +84,10 @@
         "correctable": true
       }
     ],
-    "corrected": "value = 'ok'\np %{say \"#{value}\"}\n"
+    "corrected": "value = 'ok'\np %{say \"#{value}\"}\n",
+    "rust_correctable": false,
+    "rust_corrected": "value = 'ok'\np %q{say \"#{value}\"}\n",
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation and can change behavior or raise; retain the offense without an edit."
   },
   {
     "cop": "Lint/InterpolationCheck",

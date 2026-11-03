@@ -1,0 +1,58 @@
+[
+  {
+    "id": "retained-range-215",
+    "original": "x = (\n# parity audit\n)\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 5,
+        "length": 18,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "ruby_corrected": "x = (\n# parity audit\n)\n",
+    "ruby_ast": "s(:lvasgn, :x,\n  s(:begin))",
+    "ruby_corrected_ast": "s(:lvasgn, :x,\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "retained-range-216",
+    "original": "if (\n# parity audit\n); run; end\n",
+    "path": "test.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "ActiveSupportExtensionsEnabled": true
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 18,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "ruby_corrected": "if (\n# parity audit\n); run; end\n",
+    "ruby_ast": "s(:if,\n  s(:begin),\n  s(:send, nil, :run), nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:begin),\n  s(:send, nil, :run), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

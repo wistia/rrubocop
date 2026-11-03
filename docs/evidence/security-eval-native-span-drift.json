@@ -1,0 +1,76 @@
+[
+  {
+    "id": "eval-space-delimiter-v2.7",
+    "original": "eval %q foo ; eval(code)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 15,
+        "length": 4,
+        "message": "The use of `eval` is a serious security risk.",
+        "severity": "convention",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "ruby_corrected": "eval %q foo ; eval(code)\n",
+    "ruby_ast": "s(:begin,\n  s(:send, nil, :eval,\n    s(:str, \"foo\")),\n  s(:send, nil, :eval,\n    s(:send, nil, :code)))",
+    "ruby_eval_shapes": [
+      {
+        "receiver_type": null,
+        "first_argument_type": "str",
+        "first_dstr_recursive_literal": null
+      },
+      {
+        "receiver_type": null,
+        "first_argument_type": "send",
+        "first_dstr_recursive_literal": null
+      }
+    ],
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "eval-space-delimiter-v3.4",
+    "original": "eval %q foo ; eval(code)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 15,
+        "length": 4,
+        "message": "The use of `eval` is a serious security risk.",
+        "severity": "convention",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "ruby_corrected": "eval %q foo ; eval(code)\n",
+    "ruby_ast": "s(:begin,\n  s(:send, nil, :eval,\n    s(:str, \"foo\")),\n  s(:send, nil, :eval,\n    s(:send, nil, :code)))",
+    "ruby_eval_shapes": [
+      {
+        "receiver_type": null,
+        "first_argument_type": "str",
+        "first_dstr_recursive_literal": null
+      },
+      {
+        "receiver_type": null,
+        "first_argument_type": "send",
+        "first_dstr_recursive_literal": null
+      }
+    ],
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

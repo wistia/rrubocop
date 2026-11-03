@@ -1,0 +1,566 @@
+[
+  {
+    "id": "multiline-regexp-positive-with_first_element-2",
+    "original": "[first,\n/a\n b/,\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 6,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "[first,\n /a\n  b/,\n third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n /a\n b/,\n third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-regexp-positive-with_first_element-4",
+    "original": "[first,\n/a\n b/,\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 6,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "[first,\n /a\n  b/,\n third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n /a\n b/,\n third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-regexp-positive-with_fixed_indentation-2",
+    "original": "[first,\n/a\n b/,\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 6,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_corrected": "[first,\n  /a\n   b/,\n  third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n  /a\n b/,\n  third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-regexp-positive-with_fixed_indentation-4",
+    "original": "[first,\n/a\n b/,\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 6,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_corrected": "[first,\n    /a\n     b/,\n    third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n    /a\n b/,\n    third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-regexp-negative-with_first_element-2",
+    "original": "[first,\n    /a\n     b/,\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 10,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "[first,\n /a\n  b/,\n third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n /a\n     b/,\n third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-regexp-negative-with_first_element-4",
+    "original": "[first,\n    /a\n     b/,\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 10,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "[first,\n /a\n  b/,\n third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n /a\n     b/,\n third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-regexp-negative-with_fixed_indentation-2",
+    "original": "[first,\n    /a\n     b/,\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 10,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_corrected": "[first,\n  /a\n   b/,\n  third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n  /a\n     b/,\n  third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-symbol-positive-with_first_element-2",
+    "original": "[first,\n:\"a\n b\",\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 7,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "[first,\n :\"a\n  b\",\n third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n :\"a\n b\",\n third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-symbol-positive-with_first_element-4",
+    "original": "[first,\n:\"a\n b\",\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 7,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "[first,\n :\"a\n  b\",\n third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n :\"a\n b\",\n third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-symbol-positive-with_fixed_indentation-2",
+    "original": "[first,\n:\"a\n b\",\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 7,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_corrected": "[first,\n  :\"a\n   b\",\n  third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n  :\"a\n b\",\n  third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-symbol-positive-with_fixed_indentation-4",
+    "original": "[first,\n:\"a\n b\",\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 7,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_corrected": "[first,\n    :\"a\n     b\",\n    third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n    :\"a\n b\",\n    third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-symbol-negative-with_first_element-2",
+    "original": "[first,\n    :\"a\n     b\",\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 11,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "[first,\n :\"a\n  b\",\n third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n :\"a\n     b\",\n third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-symbol-negative-with_first_element-4",
+    "original": "[first,\n    :\"a\n     b\",\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 11,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "[first,\n :\"a\n  b\",\n third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n :\"a\n     b\",\n third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "multiline-symbol-negative-with_fixed_indentation-2",
+    "original": "[first,\n    :\"a\n     b\",\n third]\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 5,
+        "length": 11,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_corrected": "[first,\n  :\"a\n   b\",\n  third]\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "[first,\n  :\"a\n     b\",\n  third]\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "continued-percent-word-positive-with_first_element-2",
+    "original": "%w(first\nsecond\\\nword\n third)\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 12,
+        "message": "Align the elements of an array literal if they span more than one line."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "%w(first\n   second\\\n   word\n   third)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "%w(first\n   second\\\nword\n   third)\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "continued-percent-word-positive-with_first_element-4",
+    "original": "%w(first\nsecond\\\nword\n third)\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_element",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 12,
+        "message": "Align the elements of an array literal if they span more than one line."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Align the elements of an array literal if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "%w(first\n   second\\\n   word\n   third)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "%w(first\n   second\\\nword\n   third)\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "continued-percent-word-positive-with_fixed_indentation-2",
+    "original": "%w(first\nsecond\\\nword\n third)\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 12,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_corrected": "%w(first\n  second\\\n  word\n  third)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "%w(first\n  second\\\nword\n  third)\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  },
+  {
+    "id": "continued-percent-word-positive-with_fixed_indentation-4",
+    "original": "%w(first\nsecond\\\nword\n third)\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 12,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 5,
+        "message": "Use one level of indentation for elements following the first line of a multi-line array."
+      }
+    ],
+    "ruby_corrected": "%w(first\n    second\\\n    word\n    third)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "%w(first\n    second\\\nword\n    third)\n",
+    "intentional_difference": "Preserve literal-interior bytes; original indentation correction changes regexp/symbol/percent-word literal values."
+  }
+]

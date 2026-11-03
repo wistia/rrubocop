@@ -143,6 +143,29 @@ pub(crate) fn inject_active_support(cfg: &ResolvedConfig, name: &str, config: &m
 }
 
 pub(crate) fn inject_hash_alignment(cfg: &ResolvedConfig, name: &str, config: &mut CopConfig) {
+    if name == "Layout/ArgumentAlignment" {
+        inject_bool(
+            &mut config.options,
+            "HashAlignmentEnabled",
+            sibling_enabled(&cfg.cop_configs, "Layout/HashAlignment"),
+        );
+        for (source, destination) in [
+            ("EnforcedColonStyle", "HashAlignmentEnforcedColonStyle"),
+            (
+                "EnforcedHashRocketStyle",
+                "HashAlignmentEnforcedHashRocketStyle",
+            ),
+        ] {
+            let value = cfg
+                .cop_configs
+                .get("Layout/HashAlignment")
+                .and_then(|sibling| sibling.options.get(source))
+                .cloned()
+                .unwrap_or_else(|| Value::String("key".into()));
+            config.options.entry(destination.into()).or_insert(value);
+        }
+        return;
+    }
     if name != "Layout/HashAlignment" {
         return;
     }
@@ -354,4 +377,81 @@ pub(crate) fn inject_config_disabled_cops(
                 .map(|(n, _)| Value::String(n.clone()))
                 .collect(),
         ));
+}
+
+pub(crate) fn inject_operator_spacing(cfg: &ResolvedConfig, name: &str, config: &mut CopConfig) {
+    if name != "Layout/SpaceAroundOperators" {
+        return;
+    }
+    inject_sibling_str(
+        &mut config.options,
+        &cfg.cop_configs,
+        "Layout/HashAlignment",
+        "EnforcedHashRocketStyle",
+        "EnforcedHashRocketStyle",
+        "key",
+    );
+    let force_alignment = cfg
+        .cop_configs
+        .get("Layout/ExtraSpacing")
+        .and_then(|extra| extra.options.get("ForceEqualSignAlignment"))
+        .and_then(Value::as_bool)
+        .unwrap_or(false);
+    inject_bool(
+        &mut config.options,
+        "ForceEqualSignAlignment",
+        force_alignment,
+    );
+}
+
+pub(crate) fn inject_redundant_parentheses(
+    cfg: &ResolvedConfig,
+    name: &str,
+    config: &mut CopConfig,
+) {
+    if name != "Style/RedundantParentheses" {
+        return;
+    }
+    inject_bool(
+        &mut config.options,
+        "TernaryParenthesesEnabled",
+        sibling_enabled(&cfg.cop_configs, "Style/TernaryParentheses"),
+    );
+    inject_sibling_str(
+        &mut config.options,
+        &cfg.cop_configs,
+        "Style/TernaryParentheses",
+        "EnforcedStyle",
+        "TernaryParenthesesEnforcedStyle",
+        "require_no_parentheses",
+    );
+    inject_bool(
+        &mut config.options,
+        "ParenthesesAroundConditionEnabled",
+        sibling_enabled(&cfg.cop_configs, "Style/ParenthesesAroundCondition"),
+    );
+    let allow = cfg
+        .cop_configs
+        .get("Style/ParenthesesAroundCondition")
+        .is_some_and(|condition| condition.get_bool("AllowInMultilineConditions", false));
+    inject_bool(&mut config.options, "AllowInMultilineConditions", allow);
+}
+
+pub(crate) fn inject_non_nil_check(cfg: &ResolvedConfig, name: &str, config: &mut CopConfig) {
+    if name != "Style/NonNilCheck" {
+        return;
+    }
+    inject_bool(
+        &mut config.options,
+        "NilComparisonEnabled",
+        sibling_enabled(&cfg.cop_configs, "Style/NilComparison"),
+    );
+    inject_sibling_str(
+        &mut config.options,
+        &cfg.cop_configs,
+        "Style/NilComparison",
+        "EnforcedStyle",
+        "NilComparisonEnforcedStyle",
+        "predicate",
+    );
 }

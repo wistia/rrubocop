@@ -1,0 +1,403 @@
+[
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs curly brace block format registers an offense when a trailing comma is not needed",
+    "original": "test { |a, b,| a + b }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 1,
+        "message": "Useless trailing comma present in block arguments."
+      }
+    ],
+    "ruby_safe": "test { |a, b| a + b }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs curly brace block format registers an offense when a trailing comma is not needed",
+    "original": "test { |a, b| a + b }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test { |a, b| a + b }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs curly brace block format does not register an offense when a trailing comma is required",
+    "original": "test { |a,| a }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test { |a,| a }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs curly brace block format does not register an offense when no arguments are present",
+    "original": "test { a }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test { a }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs curly brace block format does not register an offense for default arguments",
+    "original": "test { |a, b, c = nil| a + b + c }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test { |a, b, c = nil| a + b + c }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs curly brace block format does not register an offense for keyword arguments",
+    "original": "test { |a, b, c: 1| a + b + c }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test { |a, b, c: 1| a + b + c }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs curly brace block format ignores commas in default argument strings",
+    "original": "add { |foo, bar = ','| foo + bar }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "add { |foo, bar = ','| foo + bar }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs curly brace block format preserves semicolons in block/local variables",
+    "original": "add { |foo, bar,; baz| foo + bar }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "add { |foo, bar,; baz| foo + bar }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format registers an offense when a trailing comma is not needed",
+    "original": "test do |a, b,|\n  a + b\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 14,
+        "length": 1,
+        "message": "Useless trailing comma present in block arguments."
+      }
+    ],
+    "ruby_safe": "test do |a, b|\n  a + b\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format registers an offense when a trailing comma is not needed",
+    "original": "test do |a, b|\n  a + b\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test do |a, b|\n  a + b\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format does not register an offense when a trailing comma is required",
+    "original": "test do |a,|\n  a\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test do |a,|\n  a\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format does not register an offense when no arguments are present",
+    "original": "test do\n  a\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test do\n  a\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format does not register an offense for an empty block",
+    "original": "test do ||\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test do ||\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format does not register an offense for default arguments",
+    "original": "test do |a, b, c = nil|\n   a + b + c\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test do |a, b, c = nil|\n   a + b + c\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format does not register an offense for keyword arguments",
+    "original": "test do |a, b, c: 1|\n   a + b + c\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "test do |a, b, c: 1|\n   a + b + c\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format ignores commas in default argument strings",
+    "original": "add do |foo, bar = ','|\n  foo + bar\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "add do |foo, bar = ','|\n  foo + bar\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs do/end block format preserves semicolons in block/local variables",
+    "original": "add do |foo, bar,; baz|\n  foo + bar\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "add do |foo, bar,; baz|\n  foo + bar\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs when `->` has multiple arguments does not register an offense",
+    "original": "-> (foo, bar) { do_something(foo, bar) }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "-> (foo, bar) { do_something(foo, bar) }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs when `lambda` has multiple arguments does not register an offense when more than one argument is present with no trailing comma",
+    "original": "lambda { |foo, bar| do_something(foo, bar) }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "ruby_safe": "lambda { |foo, bar| do_something(foo, bar) }\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::TrailingCommaInBlockArgs when `lambda` has multiple arguments registers an offense and corrects when a trailing comma isn't needed",
+    "original": "lambda { |foo, bar,| do_something(foo, bar) }\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for useless trailing commas in block arguments.",
+      "Enabled": true,
+      "Safe": false,
+      "VersionAdded": "0.81",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 19,
+        "length": 1,
+        "message": "Useless trailing comma present in block arguments."
+      }
+    ],
+    "ruby_safe": "lambda { |foo, bar| do_something(foo, bar) }\n"
+  }
+]

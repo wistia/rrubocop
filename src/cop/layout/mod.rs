@@ -1,5 +1,4 @@
 mod access_modifier_indentation;
-mod align_items;
 mod argument_alignment;
 mod array_alignment;
 mod assignment_indentation;
@@ -69,6 +68,7 @@ mod multiline_method_call_brace_layout;
 mod multiline_method_call_indentation;
 mod multiline_method_definition_brace_layout;
 mod multiline_operation_indentation;
+mod original_alignment;
 mod parameter_alignment;
 mod report;
 mod rescue_ensure_alignment;

@@ -1,0 +1,410 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used as a standalone expression registers an offense",
+    "original": "()\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "()\n",
+    "ruby_ast": "s(:begin)",
+    "ruby_corrected_ast": "s(:begin)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used as a standalone expression with nested empty expressions registers an offense",
+    "original": "(())\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 2,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "(())\n",
+    "ruby_ast": "s(:begin,\n  s(:begin))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used in a condition registers an offense inside `if`",
+    "original": "if (); end\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 4,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if (); end\n",
+    "ruby_ast": "s(:if,\n  s(:begin), nil, nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:begin), nil, nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used in a condition registers an offense inside `elsif`",
+    "original": "if foo\n  1\nelsif ()\n  2\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 7,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if foo\n  1\nelsif ()\n  2\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :foo),\n  s(:int, 1),\n  s(:if,\n    s(:begin),\n    s(:int, 2), nil))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :foo),\n  s(:int, 1),\n  s(:if,\n    s(:begin),\n    s(:int, 2), nil))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used in a condition registers an offense inside `case`",
+    "original": "case ()\nwhen :foo then 1\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 6,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case ()\nwhen :foo then 1\nend\n",
+    "ruby_ast": "s(:case,\n  s(:begin),\n  s(:when,\n    s(:sym, :foo),\n    s(:int, 1)), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:begin),\n  s(:when,\n    s(:sym, :foo),\n    s(:int, 1)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used in a condition registers an offense inside `when`",
+    "original": "case foo\nwhen () then 1\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 6,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen () then 1\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:begin),\n    s(:int, 1)), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:begin),\n    s(:int, 1)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used in a condition registers an offense in the condition of a ternary operator",
+    "original": "() ? true : false\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "() ? true : false\n",
+    "ruby_ast": "s(:if,\n  s(:begin),\n  s(:true),\n  s(:false))",
+    "ruby_corrected_ast": "s(:if,\n  s(:begin),\n  s(:true),\n  s(:false))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used in a condition registers an offense in the return value of a ternary operator",
+    "original": "foo ? () : bar\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "foo ? () : bar\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :foo),\n  s(:begin),\n  s(:send, nil, :bar))",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :foo),\n  s(:begin),\n  s(:send, nil, :bar))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used as a return value registers an offense in the return value of a method",
+    "original": "def foo\n  ()\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "def foo\n  ()\nend\n",
+    "ruby_ast": "s(:def, :foo,\n  s(:args),\n  s(:begin))",
+    "ruby_corrected_ast": "s(:def, :foo,\n  s(:args),\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used as a return value registers an offense in the return value of a condition",
+    "original": "if foo\n  ()\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "if foo\n  ()\nend\n",
+    "ruby_ast": "s(:if,\n  s(:send, nil, :foo),\n  s(:begin), nil)",
+    "ruby_corrected_ast": "s(:if,\n  s(:send, nil, :foo),\n  s(:begin), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used as a return value registers an offense in the return value of a case statement",
+    "original": "case foo\nwhen :bar then ()\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 16,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "case foo\nwhen :bar then ()\nend\n",
+    "ruby_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:begin)), nil)",
+    "ruby_corrected_ast": "s(:case,\n  s(:send, nil, :foo),\n  s(:when,\n    s(:sym, :bar),\n    s(:begin)), nil)",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyExpression when used as an assignment registers an offense for the assigned value",
+    "original": "foo = ()\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty expressions.",
+      "Enabled": true,
+      "VersionAdded": "0.45",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 7,
+        "length": 2,
+        "message": "Avoid empty expressions.",
+        "correctable": false,
+        "corrected": false
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "foo = ()\n",
+    "ruby_ast": "s(:lvasgn, :foo,\n  s(:begin))",
+    "ruby_corrected_ast": "s(:lvasgn, :foo,\n  s(:begin))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

@@ -1,0 +1,645 @@
+[
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp does not register an offense when using `[low, high].min`",
+    "original": "[low, high].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "[low, high].min\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if x < low` / `elsif high < x` / `else`",
+    "original": "if x < low\n  low\nelsif high < x\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 51,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if x < low` / `elsif high < x` / `else`",
+    "original": "x.clamp(low, high)\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if low > x` / `elsif high < x` / `else`",
+    "original": "if low > x\n  low\nelsif high < x\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 51,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if x < low` / `elsif x > high` / `else`",
+    "original": "if x < low\n  low\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 51,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if low > x` / `elsif x > high` / `else`",
+    "original": "if low > x\n  low\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 51,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if high < x` / `elsif x < low` / `else`",
+    "original": "if high < x\n  high\nelsif x < low\n  low\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 51,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if x > high` / `elsif x < low` / `else`",
+    "original": "if x > high\n  high\nelsif x < low\n  low\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 51,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if high < x` / `elsif low > x` / `else`",
+    "original": "if high < x\n  high\nelsif low > x\n  low\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 51,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `if x > high` / `elsif low > x` / `else`",
+    "original": "if x > high\n  high\nelsif low > x\n  low\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 51,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `elsif x > high` / `elsif low > x` / `else`",
+    "original": "if condition\n  do_something\nelsif x > high\n  high\nelsif low > x\n  low\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 1,
+        "length": 50,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "if condition\n  do_something\nelse\n  x.clamp(low, high)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `elsif x > high` / `elsif low > x` / `else`",
+    "original": "if condition\n  do_something\nelse\n  x.clamp(low, high)\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if condition\n  do_something\nelse\n  x.clamp(low, high)\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 does not register and corrects an offense when using `if x < low` / `elsif high < x` / `else` and all return values are the same",
+    "original": "if x < low\n  x\nelsif high < x\n  x\nelse\n  x\nend\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if x < low\n  x\nelsif high < x\n  x\nelse\n  x\nend\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers an offense when using `[[x, low].max, high].min`",
+    "original": "[[x, low].max, high].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[[x, low].max, high].min\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers an offense when using `[[low, x].max, high].min`",
+    "original": "[[low, x].max, high].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[[low, x].max, high].min\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers an offense when using `[high, [x, low].max].min`",
+    "original": "[high, [x, low].max].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[high, [x, low].max].min\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers an offense when using `[high, [low, x].max].min`",
+    "original": "[high, [low, x].max].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[high, [low, x].max].min\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers an offense when using `[[x, high].min, low].max`",
+    "original": "[[x, high].min, low].max\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[[x, high].min, low].max\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers an offense when using `[[high, x].min, low].max`",
+    "original": "[[high, x].min, low].max\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[[high, x].min, low].max\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `[[low, high].min].max`",
+    "original": "[low, [x, high].min].max\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[low, [x, high].min].max\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version >= 2.4 registers and corrects an offense when using `[low, [high, x].min].max`",
+    "original": "[low, [high, x].min].max\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.4
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[low, [high, x].min].max\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version <= 2.3 does not register an offense when using `[[x, low].max, high].min`",
+    "original": "[[x, low].max, high].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.3
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "[[x, low].max, high].min\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version <= 2.3 does not register an offense when using `[[low, x].max, high].min`",
+    "original": "[[low, x].max, high].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.3
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "[[low, x].max, high].min\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version <= 2.3 does not register an offense when using `[high, [x, low].max].min`",
+    "original": "[high, [x, low].max].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.3
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "[high, [x, low].max].min\n"
+  },
+  {
+    "id": "RuboCop::Cop::Style::ComparableClamp target ruby version <= 2.3 does not register an offense when using `[high, [low, x].max].min`",
+    "original": "[high, [low, x].max].min\n",
+    "config": {
+      "Description": "Enforces the use of `Comparable#clamp` instead of comparison by minimum and maximum.",
+      "Enabled": true,
+      "VersionAdded": "1.44",
+      "AutoCorrect": "always",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "IndentationWidth": null,
+      "TargetRubyVersion": 2.3
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "[high, [low, x].max].min\n"
+  },
+  {
+    "id": "explicit sends",
+    "original": "if x() < low\n  low\nelsif x() > high\n  high\nelse\n  x()\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 57,
+        "message": "Use `x().clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x().clamp(low, high)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "number bases",
+    "original": "if x < 0x10\n  0x10\nelsif x > 32\n  32\nelse\n  x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 49,
+        "message": "Use `x.clamp(0x10, 32)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(0x10, 32)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "below version",
+    "original": "if x < low\n  low\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 2.3,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if x < low\n  low\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "empty statement",
+    "original": "if x < low\n  low;\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 52,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "wrong operator",
+    "original": "if x < low\n  low\nelsif x < high\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if x < low\n  low\nelsif x < high\n  high\nelse\n  x\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "multiple branch statements",
+    "original": "if x < low\n  other; low\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if x < low\n  other; low\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "array outer block",
+    "original": "[[x, low].max, high].min { |a,b| a <=> b }\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 24,
+        "message": "Use `Comparable#clamp` instead."
+      }
+    ],
+    "ruby_corrected": "[[x, low].max, high].min { |a,b| a <=> b }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "unless",
+    "original": "unless x >= low\nlow\nelse\n x > high ? high : x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "unless x >= low\nlow\nelse\n x > high ? high : x\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

@@ -1,0 +1,3706 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and assigned again in a modifier condition accepts with parentheses",
+    "original": "a = nil\nputs a if (a = 123)\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "a = nil\nputs a if (a = 123)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and assigned again in a modifier condition accepts without parentheses",
+    "original": "a = nil\nputs a unless a = 123\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "a = nil\nputs a unless a = 123\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and assigned again in a modifier loop condition accepts with parentheses",
+    "original": "a = nil\nputs a while (a = false)\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "a = nil\nputs a while (a = false)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and assigned again in a modifier loop condition accepts without parentheses",
+    "original": "a = nil\nputs a until a = true\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "a = nil\nputs a until a = true\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a method registers an offense",
+    "original": "class SomeClass\n  foo = 1\n  puts foo\n  def some_method\n    foo = 2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 5,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "class SomeClass\n  foo = 1\n  puts foo\n  def some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a method registers an offense",
+    "original": "class SomeClass\n  foo = 1\n  puts foo\n  def some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class SomeClass\n  foo = 1\n  puts foo\n  def some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a singleton method defined with self keyword registers an offense",
+    "original": "class SomeClass\n  foo = 1\n  puts foo\n  def self.some_method\n    foo = 2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 5,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "class SomeClass\n  foo = 1\n  puts foo\n  def self.some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a singleton method defined with self keyword registers an offense",
+    "original": "class SomeClass\n  foo = 1\n  puts foo\n  def self.some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class SomeClass\n  foo = 1\n  puts foo\n  def self.some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a singleton method defined with variable name registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  instance = Object.new\n  def instance.some_method\n    foo = 2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  instance = Object.new\n  def instance.some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a singleton method defined with variable name registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  instance = Object.new\n  def instance.some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  instance = Object.new\n  def instance.some_method\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a class registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  class SomeClass\n    foo = 2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 5,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  class SomeClass\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a class registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  class SomeClass\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  class SomeClass\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a class subclassing another class stored in local variable registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  array_class = Array\n  class SomeClass < array_class\n    foo = 2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  array_class = Array\n  class SomeClass < array_class\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a class subclassing another class stored in local variable registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  array_class = Array\n  class SomeClass < array_class\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  array_class = Array\n  class SomeClass < array_class\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a singleton class registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  instance = Object.new\n  class << instance\n    foo = 2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  instance = Object.new\n  class << instance\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a singleton class registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  instance = Object.new\n  class << instance\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  instance = Object.new\n  class << instance\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a module registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  module SomeModule\n    foo = 2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 5,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  module SomeModule\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in a module registers an offense",
+    "original": "1.times do\n  foo = 1\n  puts foo\n  module SomeModule\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1.times do\n  foo = 1\n  puts foo\n  module SomeModule\n    2\n    bar = 3\n    puts bar\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and referenced when defining a module does not register an offense",
+    "original": "x = Object.new\nmodule x::Foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "x = Object.new\nmodule x::Foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in `for` registers an offense",
+    "original": "for item in items\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 5,
+        "length": 4,
+        "message": "Useless assignment to variable - `item`. Did you mean `items`?"
+      }
+    ],
+    "ruby_corrected": "for _ in items\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in `for` registers an offense",
+    "original": "for _ in items\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "for _ in items\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in `for` with multiple variables registers an offense",
+    "original": "for i, j in items\n  do_something(i)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 8,
+        "length": 1,
+        "message": "Useless assignment to variable - `j`."
+      }
+    ],
+    "ruby_corrected": "for i, _ in items\n  do_something(i)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in `for` with multiple variables registers an offense",
+    "original": "for i, _ in items\n  do_something(i)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "for i, _ in items\n  do_something(i)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and referenced in `for` does not register an offense",
+    "original": "for item in items\n  do_something(item)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "for item in items\n  do_something(item)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in top level registers an offense",
+    "original": "foo = 1\nbar = 2\nputs bar\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "1\nbar = 2\nputs bar\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and unreferenced in top level registers an offense",
+    "original": "1\nbar = 2\nputs bar\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1\nbar = 2\nputs bar\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with operator assignment in top level registers an offense",
+    "original": "foo || 1\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo || 1\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned multiple times but unreferenced registers offenses for each assignment",
+    "original": "def some_method\n  foo = 1\n  bar = 2\n  foo = 3\n  puts bar\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      },
+      {
+        "line": 4,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  1\n  bar = 2\n  3\n  puts bar\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned multiple times but unreferenced registers offenses for each assignment",
+    "original": "def some_method\n  1\n  bar = 2\n  3\n  puts bar\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  1\n  bar = 2\n  3\n  puts bar\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a referenced variable is reassigned but not re-referenced registers an offense for the non-re-referenced assignment",
+    "original": "def some_method\n  foo = 1\n  puts foo\n  foo = 3\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo = 1\n  puts foo\n  3\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a referenced variable is reassigned but not re-referenced registers an offense for the non-re-referenced assignment",
+    "original": "def some_method\n  foo = 1\n  puts foo\n  3\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = 1\n  puts foo\n  3\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when an unreferenced variable is reassigned and re-referenced registers an offense for the unreferenced assignment",
+    "original": "def some_method\n  foo = 1\n  foo = 3\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  1\n  foo = 3\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when an unreferenced variable is reassigned and re-referenced registers an offense for the unreferenced assignment",
+    "original": "def some_method\n  1\n  foo = 3\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  1\n  foo = 3\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when an unreferenced variable is reassigned in a block accepts",
+    "original": "def const_name(node)\n  const_names = []\n  const_node = node\n\n  loop do\n    namespace_node, name = *const_node\n    const_names << name\n    break unless namespace_node\n    break if namespace_node.type == :cbase\n    const_node = namespace_node\n  end\n\n  const_names.reverse.join('::')\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def const_name(node)\n  const_names = []\n  const_node = node\n\n  loop do\n    namespace_node, name = *const_node\n    const_names << name\n    break unless namespace_node\n    break if namespace_node.type == :cbase\n    const_node = namespace_node\n  end\n\n  const_names.reverse.join('::')\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a referenced variable is reassigned in a block accepts",
+    "original": "def some_method\n  foo = 1\n  puts foo\n  1.times do\n    foo = 2\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = 1\n  puts foo\n  1.times do\n    foo = 2\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a block local variable is declared but not assigned accepts",
+    "original": "1.times do |i; foo|\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1.times do |i; foo|\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a block local variable is assigned and unreferenced registers offenses for the assignment",
+    "original": "1.times do |i; foo|\n  foo = 2\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "1.times do |i; foo|\n  2\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a block local variable is assigned and unreferenced registers offenses for the assignment",
+    "original": "1.times do |i; foo|\n  2\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1.times do |i; foo|\n  2\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a block local variable is assigned and unreferenced registers offenses for self assignment in numblock",
+    "original": "do_something { foo + _1 }\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "do_something { foo + _1 }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in loop body and unreferenced registers an offense",
+    "original": "def some_method\n  while true\n    foo = 1\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  while true\n    1\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in loop body and unreferenced registers an offense",
+    "original": "def some_method\n  while true\n    1\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  while true\n    1\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned at the end of loop body and would be referenced in next iteration accepts",
+    "original": "def some_method\n  total = 0\n  foo = 0\n\n  while total < 100\n    total += foo\n    foo += 1\n  end\n\n  total\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  total = 0\n  foo = 0\n\n  while total < 100\n    total += foo\n    foo += 1\n  end\n\n  total\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned at the end of loop body and would be referenced in loop condition accepts",
+    "original": "def some_method\n  total = 0\n  foo = 0\n\n  while foo < 100\n    total += 1\n    foo += 1\n  end\n\n  total\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  total = 0\n  foo = 0\n\n  while foo < 100\n    total += 1\n    foo += 1\n  end\n\n  total\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a setter is invoked with operator assignment in loop body accepts",
+    "original": "def some_method\n  obj = {}\n\n  while obj[:count] < 100\n    obj[:count] += 1\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  obj = {}\n\n  while obj[:count] < 100\n    obj[:count] += 1\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in loop body but won't be referenced either next iteration or loop condition registers an offense",
+    "original": "def some_method\n  total = 0\n  foo = 0\n\n  while total < 100\n    total += 1\n    foo += 1\n  end\n\n  total\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  total = 0\n  foo = 0\n\n  while total < 100\n    total += 1\n    foo += 1\n  end\n\n  total\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a referenced variable is reassigned but not re-referenced in a method defined in loop registers an offense",
+    "original": "while true\n  def some_method\n    foo = 1\n    puts foo\n    foo = 3\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 5,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "while true\n  def some_method\n    foo = 1\n    puts foo\n    3\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a referenced variable is reassigned but not re-referenced in a method defined in loop registers an offense",
+    "original": "while true\n  def some_method\n    foo = 1\n    puts foo\n    3\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "while true\n  def some_method\n    foo = 1\n    puts foo\n    3\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable that has same name as outer scope variable is not referenced in a method defined in loop registers an offense",
+    "original": "foo = 1\n\nwhile foo < 100\n  foo += 1\n  def some_method\n    foo = 1\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "foo = 1\n\nwhile foo < 100\n  foo += 1\n  def some_method\n    1\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable that has same name as outer scope variable is not referenced in a method defined in loop registers an offense",
+    "original": "foo = 1\n\nwhile foo < 100\n  foo += 1\n  def some_method\n    1\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = 1\n\nwhile foo < 100\n  foo += 1\n  def some_method\n    1\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in single branch if and unreferenced registers an offense",
+    "original": "def some_method(flag)\n  if flag\n    foo = 1\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(flag)\n  if flag\n    1\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in single branch if and unreferenced registers an offense",
+    "original": "def some_method(flag)\n  if flag\n    1\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  if flag\n    1\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a unreferenced variable is reassigned in same branch and referenced after the branching registers an offense for the unreferenced assignment",
+    "original": "def some_method(flag)\n  if flag\n    foo = 1\n    foo = 2\n  end\n\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(flag)\n  if flag\n    1\n    foo = 2\n  end\n\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a unreferenced variable is reassigned in same branch and referenced after the branching registers an offense for the unreferenced assignment",
+    "original": "def some_method(flag)\n  if flag\n    1\n    foo = 2\n  end\n\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  if flag\n    1\n    foo = 2\n  end\n\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in single branch if and referenced after the branching accepts",
+    "original": "def some_method(flag)\n  foo = 1\n\n  if flag\n    foo = 2\n  end\n\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  foo = 1\n\n  if flag\n    foo = 2\n  end\n\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in a loop while loop accepts",
+    "original": "def while(param)\n  ret = 1\n\n  while param != 10\n    param += 2\n    ret = param + 1\n  end\n\n  ret\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def while(param)\n  ret = 1\n\n  while param != 10\n    param += 2\n    ret = param + 1\n  end\n\n  ret\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in a loop post while loop accepts",
+    "original": "def post_while(param)\n  ret = 1\n\n  begin\n    param += 2\n    ret = param + 1\n  end while param < 40\n\n  ret\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def post_while(param)\n  ret = 1\n\n  begin\n    param += 2\n    ret = param + 1\n  end while param < 40\n\n  ret\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in a loop until loop accepts",
+    "original": "def until(param)\n  ret = 1\n\n  until param == 10\n    param += 2\n    ret = param + 1\n  end\n\n  ret\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def until(param)\n  ret = 1\n\n  until param == 10\n    param += 2\n    ret = param + 1\n  end\n\n  ret\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in a loop post until loop accepts",
+    "original": "def post_until(param)\n  ret = 1\n\n  begin\n    param += 2\n    ret = param + 1\n  end until param == 10\n\n  ret\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def post_until(param)\n  ret = 1\n\n  begin\n    param += 2\n    ret = param + 1\n  end until param == 10\n\n  ret\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in a loop for loop accepts",
+    "original": "def for(param)\n  ret = 1\n\n  for x in param...10\n    param += x\n    ret = param + 1\n  end\n\n  ret\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def for(param)\n  ret = 1\n\n  for x in param...10\n    param += x\n    ret = param + 1\n  end\n\n  ret\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in each branch of if and referenced after the branching accepts",
+    "original": "def some_method(flag)\n  if flag\n    foo = 2\n  else\n    foo = 3\n  end\n\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  if flag\n    foo = 2\n  else\n    foo = 3\n  end\n\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in single branch if and referenced in the branch registers an offense for the unreferenced assignment",
+    "original": "def some_method(flag)\n  foo = 1\n\n  if flag\n    foo = 2\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(flag)\n  1\n\n  if flag\n    foo = 2\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned in single branch if and referenced in the branch registers an offense for the unreferenced assignment",
+    "original": "def some_method(flag)\n  1\n\n  if flag\n    foo = 2\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  1\n\n  if flag\n    foo = 2\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in each branch of if and referenced in the else branch registers an offense for the assignment in the if branch",
+    "original": "def some_method(flag)\n  if flag\n    foo = 2\n  else\n    foo = 3\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(flag)\n  if flag\n    2\n  else\n    foo = 3\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in each branch of if and referenced in the else branch registers an offense for the assignment in the if branch",
+    "original": "def some_method(flag)\n  if flag\n    2\n  else\n    foo = 3\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  if flag\n    2\n  else\n    foo = 3\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned and unreferenced in a if branch while the variable is referenced in the paired else branch registers an offense for the reassignment in the if branch",
+    "original": "def some_method(flag)\n  foo = 1\n\n  if flag\n    puts foo\n    foo = 2\n  else\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(flag)\n  foo = 1\n\n  if flag\n    puts foo\n    2\n  else\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned and unreferenced in a if branch while the variable is referenced in the paired else branch registers an offense for the reassignment in the if branch",
+    "original": "def some_method(flag)\n  foo = 1\n\n  if flag\n    puts foo\n    2\n  else\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  foo = 1\n\n  if flag\n    puts foo\n    2\n  else\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when there's an unreferenced assignment in top level if branch while the variable is referenced in the paired else branch registers an offense for the assignment in the if branch",
+    "original": "if flag\n  foo = 1\nelse\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "if flag\n  1\nelse\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when there's an unreferenced assignment in top level if branch while the variable is referenced in the paired else branch registers an offense for the assignment in the if branch",
+    "original": "if flag\n  1\nelse\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "if flag\n  1\nelse\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when there's an unreferenced reassignment in a if branch while the variable is referenced in the paired elsif branch registers an offense for the reassignment in the if branch",
+    "original": "def some_method(flag_a, flag_b)\n  foo = 1\n\n  if flag_a\n    puts foo\n    foo = 2\n  elsif flag_b\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(flag_a, flag_b)\n  foo = 1\n\n  if flag_a\n    puts foo\n    2\n  elsif flag_b\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when there's an unreferenced reassignment in a if branch while the variable is referenced in the paired elsif branch registers an offense for the reassignment in the if branch",
+    "original": "def some_method(flag_a, flag_b)\n  foo = 1\n\n  if flag_a\n    puts foo\n    2\n  elsif flag_b\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag_a, flag_b)\n  foo = 1\n\n  if flag_a\n    puts foo\n    2\n  elsif flag_b\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when there's an unreferenced reassignment in a if branch while the variable is referenced in a case branch in the paired else branch registers an offense for the reassignment in the if branch",
+    "original": "def some_method(flag_a, flag_b)\n  foo = 1\n\n  if flag_a\n    puts foo\n    foo = 2\n  else\n    case\n    when flag_b\n      puts foo\n    end\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 5,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(flag_a, flag_b)\n  foo = 1\n\n  if flag_a\n    puts foo\n    2\n  else\n    case\n    when flag_b\n      puts foo\n    end\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when there's an unreferenced reassignment in a if branch while the variable is referenced in a case branch in the paired else branch registers an offense for the reassignment in the if branch",
+    "original": "def some_method(flag_a, flag_b)\n  foo = 1\n\n  if flag_a\n    puts foo\n    2\n  else\n    case\n    when flag_b\n      puts foo\n    end\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag_a, flag_b)\n  foo = 1\n\n  if flag_a\n    puts foo\n    2\n  else\n    case\n    when flag_b\n      puts foo\n    end\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when an assignment in a if branch is referenced in another if branch accepts",
+    "original": "def some_method(flag_a, flag_b)\n  if flag_a\n    foo = 1\n  end\n\n  if flag_b\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag_a, flag_b)\n  if flag_a\n    foo = 1\n  end\n\n  if flag_b\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in branch of modifier if that references the variable in its conditional clauseand referenced after the branching accepts",
+    "original": "def some_method(flag)\n  foo = 1 unless foo\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  foo = 1 unless foo\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in branch of modifier if that references the variable in its conditional clauseand unreferenced registers an offense",
+    "original": "def some_method(flag)\n  foo = 1 unless foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(flag)\n  1 unless foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in branch of modifier if that references the variable in its conditional clauseand unreferenced registers an offense",
+    "original": "def some_method(flag)\n  1 unless foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(flag)\n  1 unless foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned on each side of && and referenced after the && accepts",
+    "original": "def some_method\n  (foo = do_something_returns_object_or_nil) && (foo = 1)\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  (foo = do_something_returns_object_or_nil) && (foo = 1)\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a unreferenced variable is reassigned on the left side of && and referenced after the && registers an offense for the unreferenced assignment",
+    "original": "def some_method\n  foo = 1\n  (foo = do_something_returns_object_or_nil) && do_something\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  1\n  (foo = do_something_returns_object_or_nil) && do_something\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a unreferenced variable is reassigned on the left side of && and referenced after the && registers an offense for the unreferenced assignment",
+    "original": "def some_method\n  1\n  (foo = do_something_returns_object_or_nil) && do_something\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  1\n  (foo = do_something_returns_object_or_nil) && do_something\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a unreferenced variable is reassigned on the right side of && and referenced after the && accepts",
+    "original": "def some_method\n  foo = 1\n  do_something_returns_object_or_nil && foo = 2\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = 1\n  do_something_returns_object_or_nil && foo = 2\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned while referencing itself in rhs and referenced accepts",
+    "original": "def some_method\n  foo = [1, 2]\n  foo = foo.map { |i| i + 1 }\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = [1, 2]\n  foo = foo.map { |i| i + 1 }\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned with binary operator assignment and referenced accepts",
+    "original": "def some_method\n  foo = 1\n  foo += 1\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = 1\n  foo += 1\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned with logical operator assignment and referenced accepts",
+    "original": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo ||= 1\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo ||= 1\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned with binary operator assignment while assigning to itself in rhs then referenced registers an offense for the assignment in rhs",
+    "original": "def some_method\n  foo = 1\n  foo += foo = 2\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 10,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo = 1\n  foo += 2\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned with binary operator assignment while assigning to itself in rhs then referenced registers an offense for the assignment in rhs",
+    "original": "def some_method\n  foo = 1\n  foo += 2\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = 1\n  foo += 2\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned first with ||= and referenced accepts",
+    "original": "def some_method\n  foo ||= 1\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo ||= 1\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with ||= at the last expression of the scope registers an offense",
+    "original": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo ||= 1\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`. Use `||` instead of `||=`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo || 1\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with ||= at the last expression of the scope registers an offense",
+    "original": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo || 1\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo || 1\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with ||= before the last expression of the scope registers an offense",
+    "original": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo ||= 1\n  some_return_value\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo || 1\n  some_return_value\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with ||= before the last expression of the scope registers an offense",
+    "original": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo || 1\n  some_return_value\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = do_something_returns_object_or_nil\n  foo || 1\n  some_return_value\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with multiple assignment and unreferenced registers an offense",
+    "original": "def some_method\n  foo, bar = do_something\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 8,
+        "length": 3,
+        "message": "Useless assignment to variable - `bar`. Use `_` or `_bar` as a variable name to indicate that it won't be used."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo, _ = do_something\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with multiple assignment and unreferenced registers an offense",
+    "original": "def some_method\n  foo, _ = do_something\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo, _ = do_something\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when variables are assigned using chained assignment and remain unreferenced registers an offense",
+    "original": "def some_method\n  foo = bar = do_something\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  bar = do_something\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when variables are assigned using chained assignment and remain unreferenced registers an offense",
+    "original": "def some_method\n  bar = do_something\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `bar`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  do_something\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when same name variables are assigned using chained assignment registers an offense",
+    "original": "def some_method\n  foo = foo = do_something\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo = do_something\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when same name variables are assigned using chained assignment registers an offense",
+    "original": "def some_method\n  foo = do_something\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  do_something\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when variables are assigned with sequential assignment using the comma operator and unreferenced registers an offense",
+    "original": "def some_method\n  foo = 1, bar = 2\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      },
+      {
+        "line": 2,
+        "column": 12,
+        "length": 3,
+        "message": "Useless assignment to variable - `bar`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo = 1, bar = 2\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned with multiple assignment while referencing itself in rhs and referenced accepts",
+    "original": "def some_method\n  foo = 1\n  foo, bar = do_something(foo)\n  puts foo, bar\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = 1\n  foo, bar = do_something(foo)\n  puts foo, bar\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when part of a multiple assignment is enclosed in parentheses registers an offense when the variable in parentheses is not used",
+    "original": "def some_method\n  foo, (bar, baz) = do_something\n  puts foo, bar\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 14,
+        "length": 3,
+        "message": "Useless assignment to variable - `baz`. Use `_` or `_baz` as a variable name to indicate that it won't be used."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo, (bar, _) = do_something\n  puts foo, bar\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when part of a multiple assignment is enclosed in parentheses registers an offense when the variable in parentheses is not used",
+    "original": "def some_method\n  foo, (bar, _) = do_something\n  puts foo, bar\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo, (bar, _) = do_something\n  puts foo, bar\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when part of a multiple assignment is enclosed in parentheses registers an offense when the variable in nested parentheses is not used",
+    "original": "def some_method\n  foo, (bar, (baz, qux)) = do_something\n  puts foo, bar, baz\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 20,
+        "length": 3,
+        "message": "Useless assignment to variable - `qux`. Use `_` or `_qux` as a variable name to indicate that it won't be used."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo, (bar, (baz, _)) = do_something\n  puts foo, bar, baz\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when part of a multiple assignment is enclosed in parentheses registers an offense when the variable in nested parentheses is not used",
+    "original": "def some_method\n  foo, (bar, (baz, _)) = do_something\n  puts foo, bar, baz\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo, (bar, (baz, _)) = do_something\n  puts foo, bar, baz\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with rest assignment and unreferenced registers an offense",
+    "original": "def some_method\n  foo, *bar = do_something\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 9,
+        "length": 3,
+        "message": "Useless assignment to variable - `bar`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  foo, *_ = do_something\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with rest assignment and unreferenced registers an offense",
+    "original": "def some_method\n  foo, *_ = do_something\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo, *_ = do_something\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in loop body and referenced in post while condition accepts",
+    "original": "begin\n  a = (a || 0) + 1\n  puts a\nend while a <= 2\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  a = (a || 0) + 1\n  puts a\nend while a <= 2\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in loop body and referenced in post until condition accepts",
+    "original": "begin\n  a = (a || 0) + 1\n  puts a\nend until a > 2\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  a = (a || 0) + 1\n  puts a\nend until a > 2\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in main body of begin with rescue but unreferenced registers an offense",
+    "original": "begin\n  do_something\n  foo = true\nrescue\n  do_anything\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "begin\n  do_something\n  true\nrescue\n  do_anything\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in main body of begin with rescue but unreferenced registers an offense",
+    "original": "begin\n  do_something\n  true\nrescue\n  do_anything\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  do_something\n  true\nrescue\n  do_anything\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in main body of begin, rescue and else then referenced after the begin accepts",
+    "original": "begin\n  do_something\n  foo = :in_begin\nrescue FirstError\n  foo = :in_first_rescue\nrescue SecondError\n  foo = :in_second_rescue\nelse\n  foo = :in_else\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  do_something\n  foo = :in_begin\nrescue FirstError\n  foo = :in_first_rescue\nrescue SecondError\n  foo = :in_second_rescue\nelse\n  foo = :in_else\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in main body of begin then referenced after the begin accepts",
+    "original": "begin\n  status = :initial\n  connect_sometimes_fails!\n  status = :connected\n  fetch_sometimes_fails!\n  status = :fetched\nrescue\n  do_something\nend\n\nputs status\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  status = :initial\n  connect_sometimes_fails!\n  status = :connected\n  fetch_sometimes_fails!\n  status = :fetched\nrescue\n  do_something\nend\n\nputs status\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in main body of begin then referenced in rescue accepts",
+    "original": "begin\n  status = :initial\n  connect_sometimes_fails!\n  status = :connected\n  fetch_sometimes_fails!\n  status = :fetched\nrescue\n  puts status\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  status = :initial\n  connect_sometimes_fails!\n  status = :connected\n  fetch_sometimes_fails!\n  status = :fetched\nrescue\n  puts status\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in main body of begin then referenced in ensure accepts",
+    "original": "begin\n  status = :initial\n  connect_sometimes_fails!\n  status = :connected\n  fetch_sometimes_fails!\n  status = :fetched\nensure\n  puts status\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  status = :initial\n  connect_sometimes_fails!\n  status = :connected\n  fetch_sometimes_fails!\n  status = :fetched\nensure\n  puts status\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in rescue and referenced after the begin registers an offense",
+    "original": "foo = false\n\nbegin\n  do_something\nrescue\n  foo = true\n  foo = true\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "foo = false\n\nbegin\n  do_something\nrescue\n  true\n  foo = true\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in rescue and referenced after the begin registers an offense",
+    "original": "foo = false\n\nbegin\n  do_something\nrescue\n  true\n  foo = true\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = false\n\nbegin\n  do_something\nrescue\n  true\n  foo = true\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in rescue with ensure then referenced after the begin registers an offense",
+    "original": "foo = false\n\nbegin\n  do_something\nrescue\n  foo = true\n  foo = true\nensure\n  do_anything\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "foo = false\n\nbegin\n  do_something\nrescue\n  true\n  foo = true\nensure\n  do_anything\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in rescue with ensure then referenced after the begin registers an offense",
+    "original": "foo = false\n\nbegin\n  do_something\nrescue\n  true\n  foo = true\nensure\n  do_anything\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo = false\n\nbegin\n  do_something\nrescue\n  true\n  foo = true\nensure\n  do_anything\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in ensure with rescue then referenced after the begin registers an offense",
+    "original": "begin\n  do_something\nrescue\n  do_anything\nensure\n  foo = true\n  foo = true\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 6,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "begin\n  do_something\nrescue\n  do_anything\nensure\n  true\n  foo = true\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is reassigned multiple times in ensure with rescue then referenced after the begin registers an offense",
+    "original": "begin\n  do_something\nrescue\n  do_anything\nensure\n  true\n  foo = true\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  do_something\nrescue\n  do_anything\nensure\n  true\n  foo = true\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned at the end of rescue and would be referenced with retry accepts",
+    "original": "retried = false\n\nbegin\n  do_something\nrescue\n  fail if retried\n  retried = true\n  retry\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "retried = false\n\nbegin\n  do_something\nrescue\n  fail if retried\n  retried = true\n  retry\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned with operator assignment in rescue and would be referenced with retry accepts",
+    "original": "retry_count = 0\n\nbegin\n  do_something\nrescue\n  fail if (retry_count += 1) > 3\n  retry\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "retry_count = 0\n\nbegin\n  do_something\nrescue\n  fail if (retry_count += 1) > 3\n  retry\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in main body of begin, rescue and else and reassigned in ensure then referenced after the begin registers offenses for each assignment before ensure",
+    "original": "begin\n  do_something\n  foo = :in_begin\nrescue FirstError\n  foo = :in_first_rescue\nrescue SecondError\n  foo = :in_second_rescue\nelse\n  foo = :in_else\nensure\n  foo = :in_ensure\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      },
+      {
+        "line": 5,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      },
+      {
+        "line": 7,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      },
+      {
+        "line": 9,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "begin\n  do_something\n  :in_begin\nrescue FirstError\n  :in_first_rescue\nrescue SecondError\n  :in_second_rescue\nelse\n  :in_else\nensure\n  foo = :in_ensure\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in main body of begin, rescue and else and reassigned in ensure then referenced after the begin registers offenses for each assignment before ensure",
+    "original": "begin\n  do_something\n  :in_begin\nrescue FirstError\n  :in_first_rescue\nrescue SecondError\n  :in_second_rescue\nelse\n  :in_else\nensure\n  foo = :in_ensure\nend\n\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  do_something\n  :in_begin\nrescue FirstError\n  :in_first_rescue\nrescue SecondError\n  :in_second_rescue\nelse\n  :in_else\nensure\n  foo = :in_ensure\nend\n\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a rescued error variable is wrongly tried to be referenced in another rescue body registers an offense",
+    "original": "begin\n  do_something\nrescue FirstError => error\nrescue SecondError\n  p error # => nil\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 3,
+        "column": 22,
+        "length": 5,
+        "message": "Useless assignment to variable - `error`."
+      }
+    ],
+    "ruby_corrected": "begin\n  do_something\nrescue FirstError\nrescue SecondError\n  p error # => nil\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a rescued error variable is wrongly tried to be referenced in another rescue body registers an offense",
+    "original": "begin\n  do_something\nrescue FirstError\nrescue SecondError\n  p error # => nil\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\n  do_something\nrescue FirstError\nrescue SecondError\n  p error # => nil\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a method argument is reassigned and zero arity super is called accepts",
+    "original": "def some_method(foo)\n  foo = 1\n  super\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(foo)\n  foo = 1\n  super\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a local variable is unreferenced and zero arity super is called registers an offense",
+    "original": "def some_method(bar)\n  foo = 1\n  super\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(bar)\n  1\n  super\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a local variable is unreferenced and zero arity super is called registers an offense",
+    "original": "def some_method(bar)\n  1\n  super\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(bar)\n  1\n  super\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a method argument is reassigned but not passed to super registers an offense",
+    "original": "def some_method(foo, bar)\n  foo = 1\n  super(bar)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method(foo, bar)\n  1\n  super(bar)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a method argument is reassigned but not passed to super registers an offense",
+    "original": "def some_method(foo, bar)\n  1\n  super(bar)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(foo, bar)\n  1\n  super(bar)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a named capture is unreferenced in top level registers an offense",
+    "original": "/(?<foo>w+)/ =~ 'FOO'\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "/(?:w+)/ =~ 'FOO'\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a named capture is unreferenced in top level registers an offense",
+    "original": "/(?:w+)/ =~ 'FOO'\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "/(?:w+)/ =~ 'FOO'\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a named capture is unreferenced in other than top level registers an offense",
+    "original": "def some_method\n  /(?<foo>\\w+)/ =~ 'FOO'\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 13,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  /(?:\\w+)/ =~ 'FOO'\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a named capture is unreferenced in other than top level registers an offense",
+    "original": "def some_method\n  /(?:\\w+)/ =~ 'FOO'\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  /(?:\\w+)/ =~ 'FOO'\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a named capture is referenced accepts",
+    "original": "def some_method\n  /(?<foo>w+)(?<bar> +)/ =~ 'FOO'\n  puts foo\n  puts bar\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  /(?<foo>w+)(?<bar> +)/ =~ 'FOO'\n  puts foo\n  puts bar\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is referenced in rhs of named capture expression accepts",
+    "original": "def some_method\n  foo = 'some string'\n  /(?<foo>w+)/ =~ foo\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo = 'some string'\n  /(?<foo>w+)/ =~ foo\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a pattern match variable is assigned with `in` and referenced in a block does not register an offense",
+    "original": "def some_method\n  foo in { bar: bar }\n  baz { bar -= 1 }\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo in { bar: bar }\n  baz { bar -= 1 }\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a pattern match variable is assigned with `=>` and referenced in a block does not register an offense",
+    "original": "def some_method\n  foo => { bar: bar }\n  baz { bar -= 1 }\n  foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 3.0
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  foo => { bar: bar }\n  baz { bar -= 1 }\n  foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in begin and referenced outside accepts",
+    "original": "def some_method\n  begin\n    foo = 1\n  end\n  puts foo\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  begin\n    foo = 1\n  end\n  puts foo\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is shadowed by a block argument and unreferenced registers an offense",
+    "original": "def some_method\n  foo = 1\n  1.times do |foo|\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  1\n  1.times do |foo|\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is shadowed by a block argument and unreferenced registers an offense",
+    "original": "def some_method\n  1\n  1.times do |foo|\n    puts foo\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  1\n  1.times do |foo|\n    puts foo\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is not used and the name starts with _ accepts",
+    "original": "def some_method\n  _foo = 1\n  bar = 2\n  puts bar\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  _foo = 1\n  bar = 2\n  puts bar\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a method argument is not used accepts",
+    "original": "def some_method(arg)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(arg)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when an optional method argument is not used accepts",
+    "original": "def some_method(arg = nil)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(arg = nil)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a block method argument is not used accepts",
+    "original": "def some_method(&block)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(&block)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a splat method argument is not used accepts",
+    "original": "def some_method(*args)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(*args)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a optional keyword method argument is not used accepts",
+    "original": "def some_method(name: value)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(name: value)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a keyword splat method argument is used accepts",
+    "original": "def some_method(name: value, **rest_keywords)\n  p rest_keywords\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(name: value, **rest_keywords)\n  p rest_keywords\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a keyword splat method argument is not used accepts",
+    "original": "def some_method(name: value, **rest_keywords)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(name: value, **rest_keywords)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when an anonymous keyword splat method argument is defined accepts",
+    "original": "def some_method(name: value, **)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method(name: value, **)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a block argument is not used accepts",
+    "original": "1.times do |i|\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1.times do |i|\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when there is only one AST node and it is unused variable registers an offense",
+    "original": "foo = 1\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "1\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when there is only one AST node and it is unused variable registers an offense",
+    "original": "1\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "1\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned while being passed to a method taking block and the variable is used accepts",
+    "original": "some_method(foo = 1) do\nend\nputs foo\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "some_method(foo = 1) do\nend\nputs foo\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned while being passed to a method taking block and the variable is not used registers an offense",
+    "original": "some_method(foo = 1) do\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 13,
+        "length": 3,
+        "message": "Useless assignment to variable - `foo`."
+      }
+    ],
+    "ruby_corrected": "some_method(1) do\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned while being passed to a method taking block and the variable is not used registers an offense",
+    "original": "some_method(1) do\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "some_method(1) do\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned and passed to a method followed by method taking block accepts",
+    "original": "pattern = '*.rb'\nDir.glob(pattern).map do |path|\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "pattern = '*.rb'\nDir.glob(pattern).map do |path|\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment using numbered block parameter does not register an offense when the variable is used",
+    "original": "var = 42\n\ndo_something { _1 == var }\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "var = 42\n\ndo_something { _1 == var }\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment using numbered block parameter does not register an offense when the variable is assigned and later used",
+    "original": "var = nil\n\ndo_something { var = _1 }\n\nsomething_else(var)\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "var = nil\n\ndo_something { var = _1 }\n\nsomething_else(var)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment when a variable is assigned in 2 identical if branches doesn't think 1 of the 2 assignments is useless",
+    "original": "def foo\n  if bar\n    foo = 1\n  else\n    foo = 1\n  end\n  foo.bar.baz\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def foo\n  if bar\n    foo = 1\n  else\n    foo = 1\n  end\n  foo.bar.baz\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar variable-like method invocation suggests the method name",
+    "original": "def some_method\n  enviromnent = {}\n  another_symbol\n  puts environment\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 11,
+        "message": "Useless assignment to variable - `enviromnent`. Did you mean `environment`?"
+      }
+    ],
+    "ruby_corrected": "def some_method\n  {}\n  another_symbol\n  puts environment\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar variable-like method invocation suggests the method name",
+    "original": "def some_method\n  {}\n  another_symbol\n  puts environment\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  {}\n  another_symbol\n  puts environment\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar variable suggests the variable name",
+    "original": "def some_method\n  environment = nil\n  another_symbol\n  enviromnent = {}\n  puts environment\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 3,
+        "length": 11,
+        "message": "Useless assignment to variable - `enviromnent`. Did you mean `environment`?"
+      }
+    ],
+    "ruby_corrected": "def some_method\n  environment = nil\n  another_symbol\n  {}\n  puts environment\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar variable suggests the variable name",
+    "original": "def some_method\n  environment = nil\n  another_symbol\n  {}\n  puts environment\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  environment = nil\n  another_symbol\n  {}\n  puts environment\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there are only less similar names does not suggest any name",
+    "original": "def some_method\n  enviromnent = {}\n  another_symbol\n  puts envelope\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 11,
+        "message": "Useless assignment to variable - `enviromnent`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  {}\n  another_symbol\n  puts envelope\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there are only less similar names does not suggest any name",
+    "original": "def some_method\n  {}\n  another_symbol\n  puts envelope\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  {}\n  another_symbol\n  puts envelope\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar method invocation with explicit receiver does not suggest any name",
+    "original": "def some_method\n  enviromnent = {}\n  another_symbol\n  puts self.environment\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 11,
+        "message": "Useless assignment to variable - `enviromnent`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  {}\n  another_symbol\n  puts self.environment\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar method invocation with explicit receiver does not suggest any name",
+    "original": "def some_method\n  {}\n  another_symbol\n  puts self.environment\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  {}\n  another_symbol\n  puts self.environment\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar method invocation with arguments does not suggest any name",
+    "original": "def some_method\n  enviromnent = {}\n  another_symbol\n  puts environment(1)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 11,
+        "message": "Useless assignment to variable - `enviromnent`."
+      }
+    ],
+    "ruby_corrected": "def some_method\n  {}\n  another_symbol\n  puts environment(1)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar method invocation with arguments does not suggest any name",
+    "original": "def some_method\n  {}\n  another_symbol\n  puts environment(1)\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def some_method\n  {}\n  another_symbol\n  puts environment(1)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar name but it's in inner scope does not suggest any name",
+    "original": "class SomeClass\n  enviromnent = {}\n\n  def some_method(environment)\n    puts environment\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 11,
+        "message": "Useless assignment to variable - `enviromnent`."
+      }
+    ],
+    "ruby_corrected": "class SomeClass\n  {}\n\n  def some_method(environment)\n    puts environment\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment similar name suggestion when there's a similar name but it's in inner scope does not suggest any name",
+    "original": "class SomeClass\n  {}\n\n  def some_method(environment)\n    puts environment\n  end\nend\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class SomeClass\n  {}\n\n  def some_method(environment)\n    puts environment\n  end\nend\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::UselessAssignment inside a `case-match` node does not register an offense when the variable is used",
+    "original": "case '0'\nin String\n  res = 1\nelse\n  res = 2\nend\n\ndo_something(res)\n",
+    "config": {
+      "Description": "Checks for useless assignment to a local variable.",
+      "StyleGuide": "#underscore-unused-vars",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.11",
+      "VersionChanged": "1.61",
+      "SafeAutoCorrect": false,
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "ruby_diagnostics": [],
+    "ruby_corrected": "case '0'\nin String\n  res = 1\nelse\n  res = 2\nend\n\ndo_something(res)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

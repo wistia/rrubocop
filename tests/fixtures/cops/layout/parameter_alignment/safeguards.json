@@ -1,0 +1,410 @@
+[
+  {
+    "id": "multiline-regexp-positive-with_first_parameter-2",
+    "original": "def foo(one,\ntwo=/a\n b/,\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_parameter",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 10,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 7,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n        two=/a\n         b/,\n        third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n        two=/a\n b/,\n        third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "multiline-regexp-positive-with_first_parameter-4",
+    "original": "def foo(one,\ntwo=/a\n b/,\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_parameter",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 10,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 7,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n        two=/a\n         b/,\n        third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n        two=/a\n b/,\n        third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "multiline-regexp-positive-with_fixed_indentation-2",
+    "original": "def foo(one,\ntwo=/a\n b/,\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 10,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 7,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n  two=/a\n   b/,\n  third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n  two=/a\n b/,\n  third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "multiline-regexp-positive-with_fixed_indentation-4",
+    "original": "def foo(one,\ntwo=/a\n b/,\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 10,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 7,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n    two=/a\n     b/,\n    third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n    two=/a\n b/,\n    third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "multiline-symbol-positive-with_first_parameter-2",
+    "original": "def foo(one,\ntwo=:\"a\n b\",\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_parameter",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 11,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 7,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n        two=:\"a\n         b\",\n        third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n        two=:\"a\n b\",\n        third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "multiline-symbol-positive-with_first_parameter-4",
+    "original": "def foo(one,\ntwo=:\"a\n b\",\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_parameter",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 11,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 7,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n        two=:\"a\n         b\",\n        third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n        two=:\"a\n b\",\n        third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "multiline-symbol-positive-with_fixed_indentation-2",
+    "original": "def foo(one,\ntwo=:\"a\n b\",\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 11,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 7,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n  two=:\"a\n   b\",\n  third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n  two=:\"a\n b\",\n  third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "multiline-symbol-positive-with_fixed_indentation-4",
+    "original": "def foo(one,\ntwo=:\"a\n b\",\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 11,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      },
+      {
+        "line": 4,
+        "column": 2,
+        "length": 7,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n    two=:\"a\n     b\",\n    third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n    two=:\"a\n b\",\n    third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "percent-word-positive-with_first_parameter-2",
+    "original": "def foo(one,\ntwo=%w(first\nsecond\\\nword),\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_parameter",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 26,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      },
+      {
+        "line": 5,
+        "column": 2,
+        "length": 7,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n        two=%w(first\n        second\\\n        word),\n        third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n        two=%w(first\n        second\\\nword),\n        third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "percent-word-positive-with_first_parameter-4",
+    "original": "def foo(one,\ntwo=%w(first\nsecond\\\nword),\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_first_parameter",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 26,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      },
+      {
+        "line": 5,
+        "column": 2,
+        "length": 7,
+        "message": "Align the parameters of a method definition if they span more than one line."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n        two=%w(first\n        second\\\n        word),\n        third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n        two=%w(first\n        second\\\nword),\n        third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "percent-word-positive-with_fixed_indentation-2",
+    "original": "def foo(one,\ntwo=%w(first\nsecond\\\nword),\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 2,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 2
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 26,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      },
+      {
+        "line": 5,
+        "column": 2,
+        "length": 7,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n  two=%w(first\n  second\\\n  word),\n  third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n  two=%w(first\n  second\\\nword),\n  third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  },
+  {
+    "id": "percent-word-positive-with_fixed_indentation-4",
+    "original": "def foo(one,\ntwo=%w(first\nsecond\\\nword),\n third=3)\nend\n",
+    "reference_version": "1.65.1",
+    "config": {
+      "EnforcedStyle": "with_fixed_indentation",
+      "IndentationWidth": 4,
+      "TargetRubyVersion": 3.4
+    },
+    "sibling_cops": {
+      "Layout/IndentationWidth": {
+        "Width": 4
+      }
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 1,
+        "length": 26,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      },
+      {
+        "line": 5,
+        "column": 2,
+        "length": 7,
+        "message": "Use one level of indentation for parameters following the first line of a multi-line method definition."
+      }
+    ],
+    "ruby_corrected": "def foo(one,\n    two=%w(first\n    second\\\n    word),\n    third=3)\nend\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "def foo(one,\n    two=%w(first\n    second\\\nword),\n    third=3)\nend\n",
+    "intentional_difference": "Preserve literal-interior bytes while aligning the parameter; original correction changes literal values."
+  }
+]

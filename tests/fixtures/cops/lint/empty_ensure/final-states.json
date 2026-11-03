@@ -1,0 +1,3286 @@
+[
+  {
+    "id": "final-RuboCop::Cop::Lint::EmptyEnsure registers an offense and corrects empty ensure",
+    "original": "begin\n  something\n # hello\n  # world\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty ensure block.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.10",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "native_final_exit": 0,
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "begin\n  something\n # hello\n  # world\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :something))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :something))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "final-RuboCop::Cop::Lint::EmptyEnsure does not register an offense for non-empty ensure",
+    "original": "begin\n  something\n  return\nensure\n  file.close\nend\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty ensure block.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.10",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "native_final_exit": 0,
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "begin\n  something\n  return\nensure\n  file.close\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:begin,\n      s(:send, nil, :something),\n      s(:return)),\n    s(:send,\n      s(:send, nil, :file), :close)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:begin,\n      s(:send, nil, :something),\n      s(:return)),\n    s(:send,\n      s(:send, nil, :file), :close)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "final-empty-ensure-0",
+    "original": "begin\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-2",
+    "original": "begin\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n;\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-4",
+    "original": "begin\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n;;\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-6",
+    "original": "begin\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-8",
+    "original": "begin\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-10",
+    "original": "begin\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-11",
+    "original": "begin\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-12",
+    "original": "begin\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-13",
+    "original": "begin\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-14",
+    "original": "begin\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-15",
+    "original": "begin\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-16",
+    "original": "begin\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-17",
+    "original": "begin\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-18",
+    "original": "begin\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-19",
+    "original": "begin\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-20",
+    "original": "begin\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-21",
+    "original": "begin\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-22",
+    "original": "def probe\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-24",
+    "original": "def probe\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n;\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-26",
+    "original": "def probe\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n;;\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-28",
+    "original": "def probe\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-30",
+    "original": "def probe\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-32",
+    "original": "def probe\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-33",
+    "original": "def probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-34",
+    "original": "def probe\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-35",
+    "original": "def probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-36",
+    "original": "def probe\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-37",
+    "original": "def probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-38",
+    "original": "def probe\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-39",
+    "original": "def probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-40",
+    "original": "def probe\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-41",
+    "original": "def probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-42",
+    "original": "def probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-43",
+    "original": "def probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-44",
+    "original": "def self.probe\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-46",
+    "original": "def self.probe\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n;\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-48",
+    "original": "def self.probe\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n;;\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-50",
+    "original": "def self.probe\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-52",
+    "original": "def self.probe\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-54",
+    "original": "def self.probe\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-55",
+    "original": "def self.probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-56",
+    "original": "def self.probe\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-57",
+    "original": "def self.probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-58",
+    "original": "def self.probe\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-59",
+    "original": "def self.probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-60",
+    "original": "def self.probe\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-61",
+    "original": "def self.probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-62",
+    "original": "def self.probe\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-63",
+    "original": "def self.probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-64",
+    "original": "def self.probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-65",
+    "original": "def self.probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-66",
+    "original": "work do\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-68",
+    "original": "work do\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n;\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-70",
+    "original": "work do\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n;;\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-72",
+    "original": "work do\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-74",
+    "original": "work do\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-76",
+    "original": "work do\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-77",
+    "original": "work do\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-78",
+    "original": "work do\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-79",
+    "original": "work do\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-80",
+    "original": "work do\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-81",
+    "original": "work do\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-82",
+    "original": "work do\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-83",
+    "original": "work do\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-84",
+    "original": "work do\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-85",
+    "original": "work do\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-86",
+    "original": "work do\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-87",
+    "original": "work do\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-88",
+    "original": "class Probe\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-90",
+    "original": "class Probe\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n;\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-92",
+    "original": "class Probe\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n;;\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-94",
+    "original": "class Probe\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-96",
+    "original": "class Probe\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-98",
+    "original": "class Probe\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-99",
+    "original": "class Probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-100",
+    "original": "class Probe\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-101",
+    "original": "class Probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-102",
+    "original": "class Probe\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-103",
+    "original": "class Probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-104",
+    "original": "class Probe\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-105",
+    "original": "class Probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-106",
+    "original": "class Probe\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-107",
+    "original": "class Probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-108",
+    "original": "class Probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-109",
+    "original": "class Probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-110",
+    "original": "begin\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-112",
+    "original": "begin\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n;\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-114",
+    "original": "begin\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n;;\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-116",
+    "original": "begin\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-118",
+    "original": "begin\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-120",
+    "original": "begin\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-121",
+    "original": "begin\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-122",
+    "original": "begin\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-123",
+    "original": "begin\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-124",
+    "original": "begin\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-125",
+    "original": "begin\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-126",
+    "original": "begin\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-127",
+    "original": "begin\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-128",
+    "original": "begin\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-129",
+    "original": "begin\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-130",
+    "original": "begin\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-131",
+    "original": "begin\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "begin\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:kwbegin,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-132",
+    "original": "def probe\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-134",
+    "original": "def probe\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n;\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-136",
+    "original": "def probe\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n;;\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-138",
+    "original": "def probe\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-140",
+    "original": "def probe\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-142",
+    "original": "def probe\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-143",
+    "original": "def probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-144",
+    "original": "def probe\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-145",
+    "original": "def probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-146",
+    "original": "def probe\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-147",
+    "original": "def probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-148",
+    "original": "def probe\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-149",
+    "original": "def probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-150",
+    "original": "def probe\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-151",
+    "original": "def probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-152",
+    "original": "def probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-153",
+    "original": "def probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:def, :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-154",
+    "original": "def self.probe\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-156",
+    "original": "def self.probe\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n;\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-158",
+    "original": "def self.probe\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n;;\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-160",
+    "original": "def self.probe\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-162",
+    "original": "def self.probe\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-164",
+    "original": "def self.probe\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-165",
+    "original": "def self.probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-166",
+    "original": "def self.probe\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-167",
+    "original": "def self.probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-168",
+    "original": "def self.probe\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-169",
+    "original": "def self.probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-170",
+    "original": "def self.probe\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-171",
+    "original": "def self.probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-172",
+    "original": "def self.probe\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-173",
+    "original": "def self.probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-174",
+    "original": "def self.probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-175",
+    "original": "def self.probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "def self.probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:defs,\n  s(:self), :probe,\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-176",
+    "original": "work do\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-178",
+    "original": "work do\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n;\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-180",
+    "original": "work do\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n;;\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-182",
+    "original": "work do\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-184",
+    "original": "work do\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-186",
+    "original": "work do\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-187",
+    "original": "work do\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-188",
+    "original": "work do\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-189",
+    "original": "work do\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-190",
+    "original": "work do\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-191",
+    "original": "work do\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-192",
+    "original": "work do\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-193",
+    "original": "work do\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-194",
+    "original": "work do\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-195",
+    "original": "work do\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-196",
+    "original": "work do\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-197",
+    "original": "work do\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "work do\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:block,\n  s(:send, nil, :work),\n  s(:args),\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-198",
+    "original": "class Probe\nwork\n\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-200",
+    "original": "class Probe\nwork\n;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n;\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-202",
+    "original": "class Probe\nwork\n;;\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n;;\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-204",
+    "original": "class Probe\nwork\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n # comment\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-206",
+    "original": "class Probe\nwork\n\n # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\n\n # comment\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:send, nil, :work))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-208",
+    "original": "class Probe\nwork\nensure\n nil\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n nil\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-209",
+    "original": "class Probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n nil\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:nil)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-210",
+    "original": "class Probe\nwork\nensure\n ()\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n ()\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-211",
+    "original": "class Probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n ()\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:begin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-212",
+    "original": "class Probe\nwork\nensure\n begin;end\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n begin;end\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-213",
+    "original": "class Probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n begin;end\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:kwbegin)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-214",
+    "original": "class Probe\nwork\nensure\n work\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n work\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-215",
+    "original": "class Probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n work\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-216",
+    "original": "class Probe\nwork\nensure\n work; # comment\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n work; # comment\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-217",
+    "original": "class Probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n work; # comment\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:send, nil, :work)))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-218",
+    "original": "class Probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\nwork\nensure\n <<TEXT\ncontent\nTEXT\nend\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  },
+  {
+    "id": "final-empty-ensure-219",
+    "original": "class Probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "class Probe\r\nwork\r\nensure\r\n <<TEXT\r\ncontent\r\nTEXT\r\nend\r\n",
+    "ruby_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_ast": "s(:class,\n  s(:const, nil, :Probe), nil,\n  s(:ensure,\n    s(:send, nil, :work),\n    s(:str, \"content\\n\")))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_final_exit": 0
+  }
+]

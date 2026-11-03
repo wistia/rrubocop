@@ -1,0 +1,147 @@
+[
+  {
+    "id": "edge 15 semantic False",
+    "original": "a+b != nil\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "NilComparisonEnabled": true,
+      "NilComparisonEnforcedStyle": "predicate",
+      "IncludeSemanticChanges": false
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 10,
+        "message": "Prefer `!a+b.nil?` over `a+b != nil`."
+      }
+    ],
+    "ruby_corrected": "!a+b.nil?\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "sibling_cops": {
+      "Style/NilComparison": {
+        "Enabled": true,
+        "EnforcedStyle": "predicate"
+      }
+    },
+    "rust_corrected": "a+b != nil\n",
+    "safeguard_reason": "Original source substitution changes receiver precedence or edits a quoted string instead of the comparison."
+  },
+  {
+    "id": "edge 17 semantic True",
+    "original": "\"!=nil\" != nil\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "NilComparisonEnabled": true,
+      "NilComparisonEnforcedStyle": "predicate",
+      "IncludeSemanticChanges": true
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 14,
+        "message": "Explicit non-nil checks are usually redundant."
+      }
+    ],
+    "ruby_corrected": "\"\" != nil\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "sibling_cops": {
+      "Style/NilComparison": {
+        "Enabled": true,
+        "EnforcedStyle": "predicate"
+      }
+    },
+    "rust_corrected": "\"!=nil\" != nil\n",
+    "safeguard_reason": "Original source substitution changes receiver precedence or edits a quoted string instead of the comparison."
+  },
+  {
+    "id": "explicit operator semantic False",
+    "original": "x.!= nil\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "NilComparisonEnabled": true,
+      "NilComparisonEnforcedStyle": "predicate",
+      "IncludeSemanticChanges": false
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "message": "Prefer `!x.nil?` over `x.!= nil`."
+      }
+    ],
+    "ruby_corrected": "!x..nil?\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.!= nil\n",
+    "safeguard_reason": "Original textual substitution leaves an invalid explicit operator receiver suffix.",
+    "sibling_cops": {
+      "Style/NilComparison": {
+        "Enabled": true,
+        "EnforcedStyle": "predicate"
+      }
+    }
+  },
+  {
+    "id": "explicit operator semantic True",
+    "original": "x.!= nil\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "NilComparisonEnabled": true,
+      "NilComparisonEnforcedStyle": "predicate",
+      "IncludeSemanticChanges": true
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "message": "Explicit non-nil checks are usually redundant."
+      }
+    ],
+    "ruby_corrected": "x.\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "x.!= nil\n",
+    "safeguard_reason": "Original textual substitution leaves an invalid explicit operator receiver suffix.",
+    "sibling_cops": {
+      "Style/NilComparison": {
+        "Enabled": true,
+        "EnforcedStyle": "predicate"
+      }
+    }
+  },
+  {
+    "id": "explicit negation 2",
+    "original": "x.nil?.! {}\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "NilComparisonEnabled": true,
+      "NilComparisonEnforcedStyle": "predicate",
+      "IncludeSemanticChanges": true
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 8,
+        "message": "Explicit non-nil checks are usually redundant."
+      }
+    ],
+    "ruby_corrected": "x {}\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "sibling_cops": {
+      "Style/NilComparison": {
+        "Enabled": true,
+        "EnforcedStyle": "predicate"
+      }
+    },
+    "rust_corrected": "x.nil?.! {}\n",
+    "safeguard_reason": "Replacing the send leaves an attached block on an arbitrary receiver and can produce invalid Ruby."
+  }
+]

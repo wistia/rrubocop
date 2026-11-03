@@ -1,0 +1,65 @@
+[
+  {
+    "id": "same AST different source",
+    "original": "if x() < low\n  low\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 53,
+        "message": "Use `x.clamp(high, low)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(high, low)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if x() < low\n  low\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "safeguard_reason": "Preserve source and runtime behavior where original correction changes bounds or deletes a comment."
+  },
+  {
+    "id": "reverse bounds",
+    "original": "if x < 10\n  10\nelsif x > 1\n  1\nelse\n  x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 43,
+        "message": "Use `x.clamp(10, 1)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(10, 1)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if x < 10\n  10\nelsif x > 1\n  1\nelse\n  x\nend\n",
+    "safeguard_reason": "Preserve source and runtime behavior where original correction changes bounds or deletes a comment."
+  },
+  {
+    "id": "dropped comment",
+    "original": "if x < low\n  low # keep\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "config": {
+      "Enabled": true,
+      "TargetRubyVersion": 3.4,
+      "IndentationWidth": 2
+    },
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 58,
+        "message": "Use `x.clamp(low, high)` instead of `if/elsif/else`."
+      }
+    ],
+    "ruby_corrected": "x.clamp(low, high)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "if x < low\n  low # keep\nelsif x > high\n  high\nelse\n  x\nend\n",
+    "safeguard_reason": "Preserve source and runtime behavior where original correction changes bounds or deletes a comment."
+  }
+]

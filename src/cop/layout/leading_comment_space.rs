@@ -2,7 +2,6 @@
 
 use tree_sitter::Tree;
 
-use crate::cop::layout::report;
 use crate::cop::shared;
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -22,7 +21,7 @@ fn missing_space_after_hash(text: &[u8]) -> bool {
     let hash_run = text.iter().take_while(|&&b| b == b'#').count();
     match text.get(hash_run) {
         None => false,
-        Some(b) if b.is_ascii_whitespace() || *b == b'=' => false,
+        Some(b' ' | b'\t' | b'\r' | b'\n' | b'\x0b' | b'\x0c' | b'=') => false,
         Some(_) => true,
     }
 }
@@ -52,13 +51,6 @@ fn skip_gemfile_ruby(config: &CopConfig, source: &SourceFile, text: &[u8]) -> bo
             == Some("Gemfile")
 }
 
-fn skip_shebang(text: &[u8], line: usize, prev_line: Option<usize>, prev_shebang: bool) -> bool {
-    if !text.starts_with(b"#!") {
-        return false;
-    }
-    line == 1 || (line > 1 && prev_line == Some(line - 1) && prev_shebang)
-}
-
 fn skip_config_ru(source: &SourceFile, text: &[u8], line: usize) -> bool {
     text.starts_with(b"#\\")
         && line == 1
@@ -68,57 +60,12 @@ fn skip_config_ru(source: &SourceFile, text: &[u8], line: usize) -> bool {
             == Some("config.ru")
 }
 
-fn advance(prev_line: &mut Option<usize>, prev_shebang: &mut bool, line: usize, shebang: bool) {
-    *prev_line = Some(line);
-    *prev_shebang = shebang;
-}
-
-fn skip_allowed_comment(
-    source: &SourceFile,
-    config: &CopConfig,
-    text: &[u8],
-    line: usize,
-    prev_line: Option<usize>,
-    prev_shebang: bool,
-) -> bool {
-    skip_shebang(text, line, prev_line, prev_shebang)
-        || skip_config_ru(source, text, line)
+fn skip_allowed_comment(source: &SourceFile, config: &CopConfig, text: &[u8], line: usize) -> bool {
+    line == 1 && (text.starts_with(b"#!") || skip_config_ru(source, text, line))
         || skip_rbs_annotation(config, text)
         || skip_steep_annotation(config, text)
         || skip_doxygen(config, text)
         || skip_gemfile_ruby(config, source, text)
-}
-
-fn handle_comment(
-    cop: &dyn Cop,
-    source: &SourceFile,
-    config: &CopConfig,
-    text: &[u8],
-    start: usize,
-    line: usize,
-    prev_line: &mut Option<usize>,
-    prev_shebang: &mut bool,
-    diagnostics: &mut Vec<Diagnostic>,
-    corrections: &mut Option<&mut Vec<Correction>>,
-) {
-    if !missing_space_after_hash(text) {
-        advance(prev_line, prev_shebang, line, false);
-        return;
-    }
-    if skip_allowed_comment(source, config, text, line, *prev_line, *prev_shebang) {
-        advance(prev_line, prev_shebang, line, text.starts_with(b"#!"));
-        return;
-    }
-    report::insert_space(
-        cop,
-        source,
-        start,
-        "Missing space after `#`.".into(),
-        diagnostics,
-        corrections,
-        start + 1,
-    );
-    advance(prev_line, prev_shebang, line, false);
 }
 
 impl Cop for LeadingCommentSpace {
@@ -144,24 +91,30 @@ impl Cop for LeadingCommentSpace {
     ) {
         let _ = code_map;
         let bytes = source.as_bytes();
-        let mut prev_line = None::<usize>;
-        let mut prev_shebang = false;
+        let initial_count = diagnostics.len();
         for comment in shared::collect_comments(tree.root_node()) {
             let start = comment.start_byte();
             let text = &bytes[start..comment.end_byte()];
-            let (line, _) = source.offset_to_line_col(start);
-            handle_comment(
-                self,
-                source,
-                config,
-                text,
-                start,
-                line,
-                &mut prev_line,
-                &mut prev_shebang,
-                diagnostics,
-                &mut corrections,
-            );
+            let (line, column) = source.offset_to_line_col(start);
+            if !missing_space_after_hash(text) || skip_allowed_comment(source, config, text, line) {
+                continue;
+            }
+            let mut diagnostic =
+                self.diagnostic(source, line, column, "Missing space after `#`.".into());
+            diagnostic.highlight_length = String::from_utf8_lossy(text)
+                .trim_end_matches('\r')
+                .chars()
+                .count();
+            diagnostic.corrected =
+                shared::push_replace(&mut corrections, start + 1, start + 1, " ", self.name());
+            diagnostics.push(diagnostic);
+        }
+        if diagnostics.len() > initial_count {
+            for (offset, window) in bytes.windows(2).enumerate() {
+                if window == b"\r\n" {
+                    shared::push_replace(&mut corrections, offset, offset + 1, "", self.name());
+                }
+            }
         }
     }
 }
@@ -174,6 +127,26 @@ mod tests {
 
     crate::cop_fixture_tests!(LeadingCommentSpace, "cops/layout/leading_comment_space");
 
+    #[test]
+    fn independent_original_states() {
+        crate::testutil::assert_original_spec_parity(
+            &LeadingCommentSpace,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/layout/leading_comment_space/independent-parity.json"
+            )),
+        );
+    }
+    #[test]
+    fn original_ruby_states() {
+        crate::testutil::assert_original_spec_parity(
+            &LeadingCommentSpace,
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/layout/leading_comment_space/original-parity.json"
+            )),
+        );
+    }
     #[test]
     fn rbs_inline_annotation_allowed() {
         let mut config = CopConfig::default();

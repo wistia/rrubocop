@@ -1,0 +1,257 @@
+[
+  {
+    "id": "parameters-2-brace",
+    "original": "items { |(a,b),| work }\n",
+    "ruby_corrected": "items { |(a,b)| work }\n",
+    "native_expected": "items { |(a,b),| work }\n",
+    "before_parameter_types": [
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "parameters-2-do",
+    "original": "items do |(a,b),|\n work\nend\n",
+    "ruby_corrected": "items do |(a,b)|\n work\nend\n",
+    "native_expected": "items do |(a,b),|\n work\nend\n",
+    "before_parameter_types": [
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "parameters-3-brace",
+    "original": "items { |(a,(b,c)),| work }\n",
+    "ruby_corrected": "items { |(a,(b,c))| work }\n",
+    "native_expected": "items { |(a,(b,c)),| work }\n",
+    "before_parameter_types": [
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "parameters-3-do",
+    "original": "items do |(a,(b,c)),|\n work\nend\n",
+    "ruby_corrected": "items do |(a,(b,c))|\n work\nend\n",
+    "native_expected": "items do |(a,(b,c)),|\n work\nend\n",
+    "before_parameter_types": [
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "scope-2",
+    "original": "items { |a,| work }.each { |x,y| work }\n",
+    "ruby_corrected": "items { |a| work }.each { |x,y| work }\n",
+    "native_expected": "items { |a,| work }.each { |x,y| work }\n",
+    "before_parameter_types": [
+      [
+        "arg",
+        "arg"
+      ],
+      [
+        "arg"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "arg",
+        "arg"
+      ],
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "scope-3",
+    "original": "items { |(a,b),| work }.each { |x,y| work }\n",
+    "ruby_corrected": "items { |(a,b)| work }.each { |x,y| work }\n",
+    "native_expected": "items { |(a,b),| work }.each { |x,y| work }\n",
+    "before_parameter_types": [
+      [
+        "arg",
+        "arg"
+      ],
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "arg",
+        "arg"
+      ],
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "scope-6",
+    "original": "items { |a,| work }.each { |x,y,| work }\n",
+    "ruby_corrected": "items { |a| work }.each { |x,y,| work }\n",
+    "native_expected": "items { |a,| work }.each { |x,y,| work }\n",
+    "before_parameter_types": [
+      [
+        "arg",
+        "arg"
+      ],
+      [
+        "arg"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "arg",
+        "arg"
+      ],
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "crlf-parameters-2-brace",
+    "original": "items { |(a,b),| work }\r\n",
+    "ruby_corrected": "items { |(a,b)| work }\n",
+    "native_expected": "items { |(a,b),| work }\r\n",
+    "before_parameter_types": [
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "crlf-parameters-2-do",
+    "original": "items do |(a,b),|\r\n work\r\nend\r\n",
+    "ruby_corrected": "items do |(a,b)|\n work\nend\n",
+    "native_expected": "items do |(a,b),|\r\n work\r\nend\r\n",
+    "before_parameter_types": [
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "crlf-parameters-3-brace",
+    "original": "items { |(a,(b,c)),| work }\r\n",
+    "ruby_corrected": "items { |(a,(b,c))| work }\n",
+    "native_expected": "items { |(a,(b,c)),| work }\r\n",
+    "before_parameter_types": [
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  },
+  {
+    "id": "crlf-parameters-3-do",
+    "original": "items do |(a,(b,c)),|\r\n work\r\nend\r\n",
+    "ruby_corrected": "items do |(a,(b,c))|\n work\nend\n",
+    "native_expected": "items do |(a,(b,c)),|\r\n work\r\nend\r\n",
+    "before_parameter_types": [
+      [
+        "mlhs"
+      ]
+    ],
+    "after_parameter_types": [
+      [
+        "procarg0"
+      ]
+    ],
+    "parser_version": "3.3.5.0",
+    "semantic_parser_compatibility_flags": {
+      "emit_procarg0": true,
+      "emit_arg_inside_procarg0": true
+    }
+  }
+]

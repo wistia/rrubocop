@@ -1,0 +1,70 @@
+[
+  {
+    "id": "interpolation-v2.7-23",
+    "original": "%q #{value} \n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 2.7
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q #{value} \n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_shape_difference": "Native string spans the trailing newline with an empty closing token; original string ends at the matching space delimiter. Original location length12, native13. This requires original literal ownership adaptation; not counted as passing parity."
+  },
+  {
+    "id": "interpolation-v3.4-23",
+    "original": "%q #{value} \n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4
+    },
+    "reference_version": "1.65.1",
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 1,
+        "length": 12,
+        "message": "Interpolation in single quoted string detected. Use double quoted strings if you need interpolation."
+      }
+    ],
+    "ruby_corrected": "\"#{value}\"\n",
+    "ruby_ast_types": [
+      "str"
+    ],
+    "ruby_corrected_ast_types": [
+      "dstr",
+      "begin",
+      "send"
+    ],
+    "ruby_corrected_parser_diagnostics": [],
+    "rust_corrected": "%q #{value} \n",
+    "rust_correctable": false,
+    "reason": "Preserve literal interpolation expressions: the original delimiter rewrite activates evaluation or creates invalid syntax; retain the offense without an edit.",
+    "reference_investigation": "fresh cop per independent source/config",
+    "native_shape_difference": "Native string spans the trailing newline with an empty closing token; original string ends at the matching space delimiter. Original location length12, native13. This requires original literal ownership adaptation; not counted as passing parity."
+  }
+]
