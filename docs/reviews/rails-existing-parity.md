@@ -66,3 +66,24 @@ Arbitrary executable task code is not evaluated. Non-UTF8 and exotic dynamic
 literal/macro AST families remain bounded evidence, not a universal-equivalence
 claim. Contextual autocorrection beyond the tested boolean/disabled policies and
 combined-cop scheduling are not claimed; scheduling remains user-deferred.
+
+The final combined gate is 1,649 originals and 3,298 generated states, including
+the independent safety matrix. It has no returned diagnostic location/message/
+range/severity differences, invalid native corrections or idempotence failures.
+All 52 native runtime modes preserve behavior. The strict driver retains 298
+observations: 108 correctability-only metadata, 108 all-byte, 69 safe-byte, six
+original Rake error states and seven unsafe-original runtime differences. The
+native suite passes 935 with one ignored. Original errors have no comparable
+returned diagnostics and remain explicit evidence, rather than being allowed.
+
+A separate four-control physical `-a` config test matches all three valid safety
+combinations. It preserves one generic invalid-input rejection gap: original
+`ConfigValidator#reject_conflicting_safe_settings` rejects `Safe: false` together
+with `SafeAutoCorrect: true` (exit 2), whereas native currently accepts it (exit 1,
+no edits). The source is rubocop-1.65.1/lib/rubocop/config_validator.rb:241. This
+is explicitly retained as an unsupported generic configuration-validation branch;
+it is not a cop-detection mismatch or an allowed difference. The physical runner
+exits nonzero. The 40-case matrix is a direct-cop API gate that bypasses full CLI
+configuration validation; its results do not imply that every combination is a
+valid original CLI configuration. Other invalid configuration policies are outside
+this bounded review.
