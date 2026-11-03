@@ -1,0 +1,175 @@
+[
+  {
+    "id": "RuboCop::Cop::Lint::EmptyInterpolation registers an offense and corrects #{} in interpolation",
+    "original": "\"this is the #{}\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty string interpolation.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.20",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 14,
+        "length": 3,
+        "message": "Empty interpolation detected.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "\"this is the \"\n",
+    "ruby_ast": "s(:dstr,\n  s(:str, \"this is the \"),\n  s(:begin))",
+    "ruby_corrected_ast": "s(:str, \"this is the \")",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyInterpolation registers an offense and corrects #{} in interpolation",
+    "original": "\"this is the \"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty string interpolation.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.20",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "\"this is the \"\n",
+    "ruby_ast": "s(:str, \"this is the \")",
+    "ruby_corrected_ast": "s(:str, \"this is the \")",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyInterpolation registers an offense and corrects #{ } in interpolation",
+    "original": "\"this is the #{ }\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty string interpolation.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.20",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 14,
+        "length": 4,
+        "message": "Empty interpolation detected.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "\"this is the \"\n",
+    "ruby_ast": "s(:dstr,\n  s(:str, \"this is the \"),\n  s(:begin))",
+    "ruby_corrected_ast": "s(:str, \"this is the \")",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyInterpolation finds interpolations in string-like contexts",
+    "original": "/regexp #{}/\n`backticks #{}`\n:\"symbol #{}\"\n",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty string interpolation.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.20",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [
+      {
+        "line": 1,
+        "column": 9,
+        "length": 3,
+        "message": "Empty interpolation detected.",
+        "correctable": true,
+        "corrected": true
+      },
+      {
+        "line": 2,
+        "column": 12,
+        "length": 3,
+        "message": "Empty interpolation detected.",
+        "correctable": true,
+        "corrected": true
+      },
+      {
+        "line": 3,
+        "column": 10,
+        "length": 3,
+        "message": "Empty interpolation detected.",
+        "correctable": true,
+        "corrected": true
+      }
+    ],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "/regexp /\n`backticks `\n:\"symbol \"\n",
+    "ruby_ast": "s(:begin,\n  s(:regexp,\n    s(:str, \"regexp \"),\n    s(:begin),\n    s(:regopt)),\n  s(:xstr,\n    s(:str, \"backticks \"),\n    s(:begin)),\n  s(:dsym,\n    s(:str, \"symbol \"),\n    s(:begin)))",
+    "ruby_corrected_ast": "s(:begin,\n  s(:regexp,\n    s(:str, \"regexp \"),\n    s(:regopt)),\n  s(:xstr,\n    s(:str, \"backticks \")),\n  s(:sym, :\"symbol \"))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": false,
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "RuboCop::Cop::Lint::EmptyInterpolation accepts non-empty interpolation",
+    "original": "\"this is #{top} silly\"",
+    "path": "(string)",
+    "reference_version": "1.65.1",
+    "config": {
+      "Description": "Checks for empty string interpolation.",
+      "Enabled": true,
+      "AutoCorrect": "always",
+      "VersionAdded": "0.20",
+      "VersionChanged": "1.61",
+      "EnforcedHashRocketStyle": null,
+      "ForceEqualSignAlignment": null,
+      "TargetRubyVersion": 2.7
+    },
+    "sibling_cops": {},
+    "ruby_diagnostics": [],
+    "parser_version": "3.3.5.0",
+    "ruby_parser_diagnostics": [],
+    "ruby_corrected": "\"this is #{top} silly\"",
+    "ruby_ast": "s(:dstr,\n  s(:str, \"this is \"),\n  s(:begin,\n    s(:send, nil, :top)),\n  s(:str, \" silly\"))",
+    "ruby_corrected_ast": "s(:dstr,\n  s(:str, \"this is \"),\n  s(:begin,\n    s(:send, nil, :top)),\n  s(:str, \" silly\"))",
+    "ruby_corrected_parser_diagnostics": [],
+    "ruby_preserves_ast_without_grouping": true,
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

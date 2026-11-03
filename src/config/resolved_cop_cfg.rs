@@ -29,7 +29,8 @@ impl ResolvedConfig {
             "Style/TrailingCommaInBlockArgs" => &[("SafeAutoCorrect", false)],
             "Lint/TrailingCommaInAttributeDeclaration"
             | "Style/NestedTernaryOperator"
-            | "Lint/EmptyEnsure" => &[("Safe", false), ("SafeAutoCorrect", false)],
+            | "Lint/EmptyEnsure"
+            | "Lint/EmptyInterpolation" => &[("Safe", false), ("SafeAutoCorrect", false)],
             "Lint/AssignmentInCondition" => &[("Safe", false), ("SafeAutoCorrect", true)],
             _ => &[],
         };
