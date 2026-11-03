@@ -97,6 +97,12 @@ impl Cop for PendingWithoutReason {
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["call", "identifier"]
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        crate::cop::rspec::helpers::example_and_group_names()
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        self.interested_call_names()
+    }
     fn check_node(
         &self,
         source: &SourceFile,

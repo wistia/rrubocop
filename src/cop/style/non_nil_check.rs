@@ -85,6 +85,12 @@ impl Cop for NonNilCheck {
     fn interested_node_kinds(&self) -> &'static [&'static str] {
         &["binary", "unary", "call", "identifier"]
     }
+    fn interested_call_names(&self) -> &'static [&'static [u8]] {
+        &[b"!=", b"!", b"nil?"]
+    }
+    fn interested_identifier_names(&self) -> &'static [&'static [u8]] {
+        &[b"nil?"]
+    }
     fn check_node(
         &self,
         source: &SourceFile,

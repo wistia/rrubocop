@@ -44,6 +44,12 @@ const GROUPS: &[&[u8]] = &[
 
 const LETS: &[&[u8]] = &[b"let", b"let!", b"subject", b"subject!"];
 
+pub fn example_and_group_names() -> &'static [&'static [u8]] {
+    static NAMES: std::sync::LazyLock<Vec<&'static [u8]>> =
+        std::sync::LazyLock::new(|| EXAMPLES.iter().chain(GROUPS).copied().collect());
+    &NAMES
+}
+
 pub fn is_example(name: &[u8]) -> bool {
     EXAMPLES.iter().any(|&e| e == name)
 }
