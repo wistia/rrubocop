@@ -4,7 +4,7 @@ mod indentation;
 pub(super) fn value<'a>(c: &Context<'a>, n: Node<'_>) -> Option<Cow<'a, str>> {
     let quoted = quoted(c.text(n))?;
     let (start, end) = content_span(c, n)?;
-    if !quoted && interpolated(root(n), start, end) {
+    if !quoted && interpolated(c, root(n), start, end) {
         return None;
     }
     render(
@@ -27,10 +27,15 @@ fn root(n: Node<'_>) -> Node<'_> {
     ancestors(n).last().unwrap_or(n)
 }
 
-fn interpolated(root: Node<'_>, start: usize, end: usize) -> bool {
-    descendants(root).any(|node| {
-        node.kind() == "interpolation" && node.start_byte() >= start && node.start_byte() < end
-    })
+fn interpolated(c: &Context<'_>, root: Node<'_>, start: usize, end: usize) -> bool {
+    let index = crate::cop::shared::heredoc_index::heredoc_index(c.source, root);
+    let next = index
+        .interpolations
+        .partition_point(|position| *position < start);
+    index
+        .interpolations
+        .get(next)
+        .is_some_and(|position| *position < end)
 }
 
 fn render(content: &str, quoted: bool, squiggly: bool) -> Option<Cow<'_, str>> {
@@ -61,7 +66,7 @@ fn normalize(content: &str, squiggly: bool) -> Cow<'_, str> {
 pub(in crate::cop::ported::context) fn parts(c: &Context<'_>, n: Node<'_>) -> Option<Vec<String>> {
     let quoted = quoted(c.text(n))?;
     let (start, end) = content_span(c, n)?;
-    if !quoted && interpolated(root(n), start, end) {
+    if !quoted && interpolated(c, root(n), start, end) {
         return None;
     }
     let content = normalize(content(c, start, end)?, c.text(n).starts_with("<<~"));
@@ -83,30 +88,33 @@ pub(in crate::cop::ported::context) fn content_span(
     n: Node<'_>,
 ) -> Option<(usize, usize)> {
     let start = after_line(c, n.end_byte());
-    let start = preceding(n).into_iter().try_fold(start, |start, opener| {
-        span(c, opener, start).map(|(_, end)| after_line(c, end))
-    })?;
-    span(c, n, start)
+    let start = preceding(c, n)
+        .into_iter()
+        .try_fold(start, |start, (from, to)| {
+            span(
+                c,
+                std::str::from_utf8(&c.source.as_bytes()[from..to]).unwrap_or(""),
+                start,
+            )
+            .map(|(_, end)| after_line(c, end))
+        })?;
+    span(c, c.text(n), start)
 }
 
-fn preceding(n: Node<'_>) -> Vec<Node<'_>> {
-    let mut pending = descendants(root(n))
-        .filter(|node| {
-            node.kind() == "heredoc_beginning"
-                && node.start_position().row == n.start_position().row
-                && node.start_byte() < n.start_byte()
-        })
-        .collect::<Vec<_>>();
-    pending.sort_by_key(Node::start_byte);
-    pending
+fn preceding(c: &Context<'_>, n: Node<'_>) -> Vec<(usize, usize)> {
+    let index = crate::cop::shared::heredoc_index::heredoc_index(c.source, root(n));
+    index
+        .preceding_on_line(n.start_byte(), n.start_position().row)
+        .map(|opener| (opener.start, opener.end))
+        .collect()
 }
 
-fn span(c: &Context<'_>, n: Node<'_>, start: usize) -> Option<(usize, usize)> {
+fn span(c: &Context<'_>, opener: &str, start: usize) -> Option<(usize, usize)> {
     let mut offset = start;
     while offset < c.source.as_bytes().len() {
         let end = after_line(c, offset);
         let line = content(c, offset, end)?;
-        if terminates(c.text(n), line) {
+        if terminates(opener, line) {
             return Some((start, offset));
         }
         offset = end;

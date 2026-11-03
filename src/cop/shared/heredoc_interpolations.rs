@@ -9,18 +9,21 @@ pub(crate) fn heredoc_interpolations<'a>(
 ) -> Option<Vec<Node<'a>>> {
     let (start, end) = crate::cop::ported::heredoc_span(source, node)?;
     let root = std::iter::successors(Some(node), |node| node.parent()).last()?;
-    let mut pending = vec![root];
-    let mut body = None;
-    while let Some(node) = pending.pop() {
-        if node.kind() == "heredoc_body"
-            && node.start_byte() <= start
-            && node.end_byte() >= end
-            && body.is_none_or(|body: Node<'a>| node.byte_range().len() < body.byte_range().len())
-        {
-            body = Some(node);
-        }
-        pending.extend(named_kids(node));
-    }
+    let index = super::heredoc_index::heredoc_index(source, root);
+    let indexed = index
+        .bodies
+        .iter()
+        .filter(|body| !root.has_error() && body.node.start <= start && body.node.end >= end)
+        .min_by_key(|body| body.node.end - body.node.start)
+        .and_then(|body| {
+            root.named_descendant_for_byte_range(body.node.start, body.node.end)
+                .filter(|node| {
+                    node.kind() == "heredoc_body"
+                        && node.start_byte() == body.node.start
+                        && node.end_byte() == body.node.end
+                })
+        });
+    let body = indexed.or_else(|| enclosing_body(root, start, end));
     let mut pending = named_kids(body?);
     let mut result = Vec::new();
     while let Some(node) = pending.pop() {
@@ -35,6 +38,22 @@ pub(crate) fn heredoc_interpolations<'a>(
     }
     result.sort_by_key(Node::start_byte);
     Some(result)
+}
+
+fn enclosing_body<'a>(root: Node<'a>, start: usize, end: usize) -> Option<Node<'a>> {
+    let mut pending = vec![root];
+    let mut body = None;
+    while let Some(node) = pending.pop() {
+        if node.kind() == "heredoc_body"
+            && node.start_byte() <= start
+            && node.end_byte() >= end
+            && body.is_none_or(|body: Node<'a>| node.byte_range().len() < body.byte_range().len())
+        {
+            body = Some(node);
+        }
+        pending.extend(named_kids(node));
+    }
+    body
 }
 
 #[cfg(test)]

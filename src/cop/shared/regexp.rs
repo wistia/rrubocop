@@ -43,48 +43,54 @@ pub fn captures_observed(source: &SourceFile, mut root: Node<'_>) -> bool {
             break;
         }
     }
-    fn scan(source: &SourceFile, node: Node<'_>, root: Node<'_>) -> bool {
-        if node != root
-            && matches!(
-                node.kind(),
-                "method" | "singleton_method" | "class" | "module" | "singleton_class"
-            )
-        {
-            return false;
-        }
-        if node.kind() == "global_variable" {
-            let text = node_bytes(source, node);
-            if matches!(
-                text,
-                b"$~"
-                    | b"$&"
-                    | b"$+"
-                    | b"$'"
-                    | b"$`"
-                    | b"$MATCH"
-                    | b"$PREMATCH"
-                    | b"$POSTMATCH"
-                    | b"$LAST_PAREN_MATCH"
-                    | b"$LAST_MATCH_INFO"
-            ) || text.get(1).is_some_and(u8::is_ascii_digit)
-            {
-                return true;
-            }
-        }
-        if node.kind() == "call"
-            && call_method_name(source, node) == Some(b"last_match")
-            && call_receiver(node).is_some_and(|n| regexp_constant(source, n))
-        {
-            return true;
-        }
-        if indirect_capture_observer(source, node) {
-            return true;
-        }
-        let mut cursor = node.walk();
-        node.named_children(&mut cursor)
-            .any(|child| scan(source, child, root))
+    struct Captures(std::sync::Mutex<std::collections::HashMap<(usize, usize, u16), bool>>);
+    let cached = source.cached(0, || Captures(Default::default()));
+    let mut observations = cached.0.lock().unwrap();
+    *observations
+        .entry((root.start_byte(), root.end_byte(), root.kind_id()))
+        .or_insert_with(|| scan(source, root, root))
+}
+
+fn scan(source: &SourceFile, node: Node<'_>, root: Node<'_>) -> bool {
+    if node != root
+        && matches!(
+            node.kind(),
+            "method" | "singleton_method" | "class" | "module" | "singleton_class"
+        )
+    {
+        return false;
     }
-    scan(source, root, root)
+    if node.kind() == "global_variable" {
+        let text = node_bytes(source, node);
+        if matches!(
+            text,
+            b"$~"
+                | b"$&"
+                | b"$+"
+                | b"$'"
+                | b"$`"
+                | b"$MATCH"
+                | b"$PREMATCH"
+                | b"$POSTMATCH"
+                | b"$LAST_PAREN_MATCH"
+                | b"$LAST_MATCH_INFO"
+        ) || text.get(1).is_some_and(u8::is_ascii_digit)
+        {
+            return true;
+        }
+    }
+    if node.kind() == "call"
+        && call_method_name(source, node) == Some(b"last_match")
+        && call_receiver(node).is_some_and(|n| regexp_constant(source, n))
+    {
+        return true;
+    }
+    if indirect_capture_observer(source, node) {
+        return true;
+    }
+    let mut cursor = node.walk();
+    node.named_children(&mut cursor)
+        .any(|child| scan(source, child, root))
 }
 
 use std::sync::LazyLock;
@@ -108,6 +114,49 @@ pub fn decode_ruby_double_quoted_content(text: &str) -> Option<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn cached_capture_facts_preserve_exact_scope_scans_and_snapshot_lifetimes() {
+        for code in [
+            "first.split(/x/); second.split(/y/)",
+            "first.split(/x/); $1; def separate; second.split(/y/); end",
+            "def outer; first.split(/x/); items.each { Regexp.last_match }; end; second.split(/y/)",
+            "class A; first.split(/x/); def nested; second.split(/y/); $~; end; end",
+            "module A; first.split(/x/); class B; Regexp.public_send(:last_match); end; end",
+            "class << self; first.split(/x/); Regexp.method(:last_match).call; end",
+            "first.split(/x/); Other::Regexp.last_match; ::Regexp2.last_match",
+        ] {
+            let source = SourceFile::from_bytes("capture.rb", code.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(!tree.root_node().has_error(), "{code}");
+            super::super::for_each_descendant(tree.root_node(), |node| {
+                if node.kind() != "call" {
+                    return;
+                }
+                let mut scope = node;
+                while let Some(parent) = scope.parent() {
+                    scope = parent;
+                    if matches!(
+                        scope.kind(),
+                        "method" | "singleton_method" | "class" | "module" | "singleton_class"
+                    ) {
+                        break;
+                    }
+                }
+                let expected = scan(&source, scope, scope);
+                assert_eq!(captures_observed(&source, node), expected, "{code}");
+                assert_eq!(captures_observed(&source, node), expected, "cached {code}");
+            });
+        }
+        for (code, expected) in [("value.split(/x/); $1", true), ("value.split(/x/)", false)] {
+            let source = SourceFile::from_bytes("same.rb", code.as_bytes().to_vec());
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert_eq!(
+                captures_observed(&source, tree.root_node().named_child(0).unwrap()),
+                expected
+            );
+        }
+    }
+
     #[test]
     fn capture_observers_resolve_only_the_root_regexp_constant() {
         for (receiver, expected) in [

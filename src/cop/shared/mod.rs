@@ -3,6 +3,9 @@ mod line_literal;
 pub(crate) use line_literal::is_line_literal;
 mod numeric_send;
 pub use numeric_send::{float_literal_span, numeric_send_start};
+mod compiled_patterns;
+pub(crate) use compiled_patterns::compiled_patterns;
+pub(crate) mod heredoc_index;
 mod heredoc_interpolations;
 pub(crate) use heredoc_interpolations::heredoc_interpolations;
 
