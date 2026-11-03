@@ -1,0 +1,356 @@
+[
+  {
+    "id": "block-chain-delimiters-0",
+    "original": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(:once)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "recovered": true,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(:once)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-1",
+    "original": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(\n  :once\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "recovered": true,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(\n  :once\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-2",
+    "original": "foo (bar)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo (bar)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-3",
+    "original": "foo (\n  bar\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo (\n  bar\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-4",
+    "original": "foo(\n  bar\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo(\n  bar\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-5",
+    "original": "foo(\n  (bar)\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo(\n  (bar)\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-6",
+    "original": "foo do\n  work\nend.at_least(\n  :once\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo do\n  work\nend.at_least(\n  :once\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-7",
+    "original": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(:once)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "recovered": true,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(:once)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-8",
+    "original": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(\n  :once\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "recovered": true,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 3,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(\n  :once,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(\n  :once\n)\n",
+    "reason": "The original comma insertion is Ruby-valid but the native parser represents it as an ERROR in this command-block receiver context."
+  },
+  {
+    "id": "block-chain-delimiters-9",
+    "original": "foo (bar)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo (bar)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-10",
+    "original": "foo (\n  bar\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo (\n  bar\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-11",
+    "original": "foo(\n  bar\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "foo(\n  bar,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-12",
+    "original": "foo(\n  (bar)\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "foo(\n  (bar),\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-13",
+    "original": "foo do\n  work\nend.at_least(\n  :once\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 3,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "foo do\n  work\nend.at_least(\n  :once,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-14",
+    "original": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(:once)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "recovered": true,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(:once)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-15",
+    "original": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(\n  :once\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "recovered": true,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 3,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(\n  :once,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "expect(X).to receive(:x).and_wrap_original do |method, *args|\n  method.call(*args)\nend.at_least(\n  :once\n)\n",
+    "reason": "The original comma insertion is Ruby-valid but the native parser represents it as an ERROR in this command-block receiver context."
+  },
+  {
+    "id": "block-chain-delimiters-16",
+    "original": "foo (bar)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo (bar)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-17",
+    "original": "foo (\n  bar\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "foo (\n  bar\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-18",
+    "original": "foo(\n  bar\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 3,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "foo(\n  bar,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-19",
+    "original": "foo(\n  (bar)\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 3,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "foo(\n  (bar),\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "block-chain-delimiters-20",
+    "original": "foo do\n  work\nend.at_least(\n  :once\n)\n",
+    "path": "probe.rb",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "recovered": false,
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 4,
+        "column": 3,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "foo do\n  work\nend.at_least(\n  :once,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  }
+]

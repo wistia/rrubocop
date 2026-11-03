@@ -40,6 +40,35 @@ fn heredoc(source: &SourceFile, node: Node<'_>) -> bool {
     }
 }
 
+fn invocation_arguments<'a>(node: Node<'a>) -> Option<(Node<'a>, usize, bool)> {
+    let list = node.child_by_field_name("arguments")?;
+    let direct_parentheses = |container: Node<'a>| {
+        let open = container.child(0)?;
+        let close =
+            container.child(u32::try_from(container.child_count().checked_sub(1)?).ok()?)?;
+        (open.kind() == "(" && close.kind() == ")").then_some(close.start_byte())
+    };
+    if let Some(close) = direct_parentheses(list) {
+        return Some((list, close, false));
+    }
+    let children: Vec<_> = named_kids(list)
+        .into_iter()
+        .filter(|child| semantic(*child))
+        .collect();
+    let [group] = children.as_slice() else {
+        return None;
+    };
+    if group.kind() != "parenthesized_statements"
+        || group.byte_range() != list.byte_range()
+        || node
+            .child_by_field_name("method")
+            .is_none_or(|method| method.end_byte() != group.start_byte())
+    {
+        return None;
+    }
+    direct_parentheses(*group).map(|close| (*group, close, true))
+}
+
 impl Cop for TrailingCommaInArguments {
     fn name(&self) -> &'static str {
         "Style/TrailingCommaInArguments"
@@ -94,19 +123,11 @@ impl TrailingCommaInArguments {
         {
             return;
         }
-        let Some(list) = node.child_by_field_name("arguments") else {
+        let Some((list, close, recovered_invocation)) = invocation_arguments(node) else {
             return;
         };
-        if node_bytes(source, list).first() != Some(&b'(')
-            || node_bytes(source, list).last() != Some(&b')')
-        {
-            return;
-        }
-        let close = list.end_byte() - 1;
         let args = shared::ruby_arguments::from_nodes(
-            shared::argument_nodes(node)
-                .into_iter()
-                .filter(|node| semantic(*node)),
+            named_kids(list).into_iter().filter(|node| semantic(*node)),
         );
         let Some(last) = args.last() else { return };
         let mut elements = Vec::new();
@@ -141,7 +162,8 @@ impl TrailingCommaInArguments {
                 elements.insert(0, (first.start_byte(), end));
             }
         }
-        let mut unsafe_insertion = command_owns_tail
+        let mut unsafe_insertion = recovered_invocation
+            || command_owns_tail
             || last
                 .node()
                 .is_some_and(|node| node.kind() == "forward_argument");
@@ -222,6 +244,9 @@ impl TrailingCommaInArguments {
         diagnostic.highlight_length = String::from_utf8_lossy(&source.as_bytes()[start..end])
             .chars()
             .count();
+        if recovered_invocation && replacement == "," {
+            diagnostic.correctable = false;
+        }
         if replacement != "," || !unsafe_insertion {
             diagnostic.corrected = push_replace(
                 &mut corrections,
@@ -241,6 +266,92 @@ mod tests {
         TrailingCommaInArguments,
         "cops/style/trailing_comma_in_arguments"
     );
+
+    #[test]
+    fn command_block_receiver_owns_invocation_delimiters() {
+        let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/tests/fixtures/cops/style/trailing_comma_in_arguments/block-chain-delimiters.json"
+        )))
+        .unwrap();
+        for case in cases.as_array_mut().unwrap() {
+            assert_eq!(
+                case["ruby_parser_diagnostics"],
+                serde_json::json!([]),
+                "{}",
+                case["id"]
+            );
+            let source = SourceFile::from_bytes(
+                "probe.rb",
+                case["original"].as_str().unwrap().as_bytes().to_vec(),
+            );
+            let tree = crate::parse::parse_ruby(&source).unwrap();
+            assert!(!tree.root_node().has_error(), "{}", case["id"]);
+            shared::for_each_descendant(tree.root_node(), |node| {
+                if let Some((list, close, _)) = invocation_arguments(node) {
+                    assert_eq!(source.as_bytes()[close], b')');
+                    for arg in shared::ruby_arguments::from_nodes(
+                        named_kids(list).into_iter().filter(|node| semantic(*node)),
+                    ) {
+                        assert!(
+                            arg.end() <= close,
+                            "{}: {} > {}",
+                            case["id"],
+                            arg.end(),
+                            close
+                        );
+                    }
+                }
+            });
+            if case.get("rust_corrected").is_some() {
+                let original_fix = SourceFile::from_bytes(
+                    "fixed.rb",
+                    case["ruby_corrected"].as_str().unwrap().as_bytes().to_vec(),
+                );
+                assert!(
+                    crate::parse::parse_ruby(&original_fix)
+                        .unwrap()
+                        .root_node()
+                        .has_error(),
+                    "{}",
+                    case["id"]
+                );
+                let config = CopConfig {
+                    options: case["config"]
+                        .as_object()
+                        .unwrap()
+                        .iter()
+                        .map(|(key, value)| (key.clone(), serde_yml::to_value(value).unwrap()))
+                        .collect(),
+                    ..Default::default()
+                };
+                let mut diagnostics = Vec::new();
+                let mut corrections = Vec::new();
+                TrailingCommaInArguments.check_source(
+                    &source,
+                    &tree,
+                    &CodeMap::default(),
+                    &config,
+                    &mut diagnostics,
+                    Some(&mut corrections),
+                );
+                assert!(!diagnostics.is_empty(), "{}", case["id"]);
+                assert!(
+                    diagnostics
+                        .iter()
+                        .all(|diagnostic| !diagnostic.correctable && !diagnostic.corrected),
+                    "{}",
+                    case["id"]
+                );
+                assert!(corrections.is_empty(), "{}", case["id"]);
+                case["ruby_corrected"] = case["rust_corrected"].clone();
+            }
+        }
+        crate::testutil::assert_original_spec_parity(
+            &TrailingCommaInArguments,
+            &serde_json::to_string(&cases).unwrap(),
+        );
+    }
 
     #[test]
     fn original_spec_states() {
