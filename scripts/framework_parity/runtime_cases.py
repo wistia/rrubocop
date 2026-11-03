@@ -193,3 +193,6 @@ PROGRAMS += delegate_allow_blank_programs()
 
 from real_corpus_runtime import programs as real_corpus_programs
 PROGRAMS += real_corpus_programs()
+
+from find_each_runtime import programs as find_each_programs
+PROGRAMS += find_each_programs()

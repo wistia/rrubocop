@@ -17,6 +17,7 @@ model = 'app/models/framework_parity_probe.rb'
 service = 'app/services/framework_parity_probe.rb'
 spec = 'spec/factories/framework_parity_probe.rb'
 rows = [
+ ('Rails/FindEach', 'User.all.each { |row| row.name }', model, 'spec/framework_parity_spec.rb'),
  ('Migration/DepartmentName', '# rubocop:todo Alias\nalias :foo :bar', model, service),
  ('Rails/SkipsModelValidations', 'User.update_all(flag: true)', model, 'spec/framework_parity_spec.rb'),
  ('Rails/ReversibleMigrationMethodDefinition', 'class Probe < ActiveRecord::Migration[6.0]; def up; end; end', 'db/migrate/20260101000000_framework_parity.rb', model),

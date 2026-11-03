@@ -512,4 +512,6 @@ def cases():
     extend(add)
     from real_corpus_cases import extend
     extend(add)
+    from find_each_cases import extend
+    extend(add)
     return rows

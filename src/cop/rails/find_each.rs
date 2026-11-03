@@ -1,10 +1,12 @@
 //! Rails/FindEach — `all.each` / `where.each` should be `find_each`.
 
+use crate::cop::shared::ruby_expression::{regular_send_name, regular_send_receiver};
 use regex::Regex;
+use std::borrow::Cow;
 use tree_sitter::Node;
 
 use crate::cop::shared::{
-    call_method_name, call_receiver, method_node, node_bytes, node_text, push_replace,
+    argument_nodes, call_receiver, method_node, named_kids, node_bytes, push_replace,
 };
 use crate::cop::{Cop, CopConfig};
 use crate::correction::Correction;
@@ -14,10 +16,6 @@ use crate::parse::source::SourceFile;
 pub struct FindEach;
 
 const MSG: &str = "Use `find_each` instead of `each`.";
-
-fn is_call(node: Node<'_>) -> bool {
-    matches!(node.kind(), "call" | "command" | "command_call")
-}
 
 fn is_scope(name: &[u8]) -> bool {
     matches!(
@@ -36,41 +34,43 @@ fn is_scope(name: &[u8]) -> bool {
             | b"where"
     )
 }
-
 fn errors_where(source: &SourceFile, recv: Node<'_>) -> bool {
-    call_method_name(source, recv) == Some(b"where")
-        && call_receiver(recv).is_some_and(|r| is_errors(source, r))
+    regular_send_name(source, recv).as_deref() == Some(b"where")
+        && call_receiver(recv).is_some_and(|errors| {
+            errors.child_by_field_name("block").is_none()
+                && regular_send_name(source, errors).as_deref() == Some(b"errors")
+        })
 }
-
-/// Bare `errors` is an identifier in tree-sitter and a send in RuboCop.
-fn is_errors(source: &SourceFile, node: Node<'_>) -> bool {
-    if node.kind() == "identifier" {
-        return node_bytes(source, node) == b"errors";
-    }
-    is_call(node) && call_method_name(source, node) == Some(b"errors")
-}
-
-fn scope_name<'a>(source: &'a SourceFile, recv: Node<'_>) -> Option<&'a [u8]> {
-    let name = if is_call(recv) {
-        call_method_name(source, recv)?
-    } else if recv.kind() == "identifier" && node_bytes(source, recv) == b"all" {
-        node_bytes(source, recv)
-    } else {
+fn scope_name<'a>(source: &'a SourceFile, recv: Node<'_>) -> Option<Cow<'a, [u8]>> {
+    if recv.child_by_field_name("block").is_some() {
         return None;
-    };
-    is_scope(name).then_some(name)
+    }
+    let name = regular_send_name(source, recv)?;
+    is_scope(&name).then_some(name)
 }
-
+fn root_constant(source: &SourceFile, node: Node<'_>, expected: &[u8]) -> bool {
+    (node.kind() == "constant" && node_bytes(source, node) == expected)
+        || (node.kind() == "scope_resolution"
+            && node.child_by_field_name("scope").is_none()
+            && node
+                .child_by_field_name("name")
+                .is_some_and(|name| node_bytes(source, name) == expected))
+}
 fn ar_class(source: &SourceFile, class_node: Node<'_>) -> bool {
-    let Some(sc) = class_node.child_by_field_name("superclass") else {
+    let Some(sc) = class_node
+        .child_by_field_name("superclass")
+        .and_then(|sc| sc.named_child(0))
+    else {
         return false;
     };
-    let mut cur = sc.walk();
-    sc.named_children(&mut cur).next().is_some_and(|expr| {
-        let name = node_text(source, expr);
-        let name = name.trim().trim_start_matches("::");
-        name == "ApplicationRecord" || name == "ActiveRecord::Base"
-    })
+    root_constant(source, sc, b"ApplicationRecord")
+        || (sc.kind() == "scope_resolution"
+            && sc
+                .child_by_field_name("name")
+                .is_some_and(|name| node_bytes(source, name) == b"Base")
+            && sc
+                .child_by_field_name("scope")
+                .is_some_and(|scope| root_constant(source, scope, b"ActiveRecord")))
 }
 
 fn in_active_record(source: &SourceFile, node: Node<'_>) -> bool {
@@ -84,15 +84,19 @@ fn in_active_record(source: &SourceFile, node: Node<'_>) -> bool {
     false
 }
 
+fn configured_strings<'a>(config: &'a CopConfig, key: &str) -> Vec<&'a str> {
+    match config.options.get(key) {
+        Some(serde_yml::Value::Sequence(values)) => {
+            values.iter().filter_map(|value| value.as_str()).collect()
+        }
+        Some(serde_yml::Value::String(value)) => vec![value.as_str()],
+        _ => vec![],
+    }
+}
 fn listed(config: &CopConfig, key: &str, name: &[u8]) -> bool {
-    config
-        .options
-        .get(key)
-        .and_then(|v| v.as_sequence())
-        .is_some_and(|seq| {
-            seq.iter()
-                .any(|v| v.as_str().is_some_and(|s| s.as_bytes() == name))
-        })
+    configured_strings(config, key)
+        .iter()
+        .any(|value| value.as_bytes() == name)
 }
 
 fn configured_allowed(config: &CopConfig, name: &[u8]) -> bool {
@@ -106,15 +110,10 @@ fn pattern_hit(config: &CopConfig, name: &[u8]) -> bool {
     let Ok(text) = std::str::from_utf8(name) else {
         return false;
     };
-    config
-        .options
-        .get("AllowedPatterns")
-        .and_then(|v| v.as_sequence())
-        .is_some_and(|seq| {
-            seq.iter()
-                .filter_map(|v| v.as_str())
-                .any(|pat| Regex::new(pat).is_ok_and(|re| re.is_match(text)))
-        })
+    ["AllowedPatterns", "IgnoredPatterns"]
+        .into_iter()
+        .flat_map(|key| configured_strings(config, key))
+        .any(|pattern| Regex::new(pattern).is_ok_and(|re| re.is_match(text)))
 }
 
 fn name_allowed(config: &CopConfig, name: &[u8]) -> bool {
@@ -126,28 +125,72 @@ fn name_allowed(config: &CopConfig, name: &[u8]) -> bool {
 
 /// Receiver chain and arguments, not the block (`each { order }` still flags).
 fn any_allowed(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> bool {
-    if is_call(node) {
-        if call_method_name(source, node).is_some_and(|n| name_allowed(config, n)) {
+    fn walk(source: &SourceFile, node: Node<'_>, config: &CopConfig, own_block: bool) -> bool {
+        if regular_send_name(source, node).is_some_and(|name| name_allowed(config, &name)) {
             return true;
         }
-        if call_receiver(node).is_some_and(|r| any_allowed(source, r, config)) {
-            return true;
-        }
-        return node
-            .child_by_field_name("arguments")
-            .is_some_and(|args| any_allowed(source, args, config));
+        let excluded = own_block
+            .then(|| node.child_by_field_name("block"))
+            .flatten();
+        let mut cursor = node.walk();
+        node.named_children(&mut cursor)
+            .filter(|child| Some(*child) != excluded)
+            .any(|child| walk(source, child, config, false))
     }
-    let mut cur = node.walk();
-    node.named_children(&mut cur)
-        .any(|child| any_allowed(source, child, config))
+    walk(source, node, config, true)
 }
 
 fn scope_each<'a>(source: &SourceFile, node: Node<'a>) -> Option<Node<'a>> {
-    if call_method_name(source, node) != Some(b"each") {
+    if regular_send_name(source, node).as_deref() != Some(b"each") {
         return None;
     }
     let recv = call_receiver(node)?;
     scope_name(source, recv).map(|_| recv)
+}
+
+struct RelationOverrides(bool);
+fn overridden(source: &SourceFile, node: Node<'_>) -> bool {
+    source
+        .cached(0, || {
+            let mut root = node;
+            while let Some(parent) = root.parent() {
+                root = parent;
+            }
+            let mut pending = vec![root];
+            while let Some(node) = pending.pop() {
+                if matches!(node.kind(), "method" | "singleton_method")
+                    && node.child_by_field_name("name").is_some_and(|name| {
+                        is_scope(node_bytes(source, name))
+                            || matches!(node_bytes(source, name), b"each" | b"find_each")
+                    })
+                {
+                    return RelationOverrides(true);
+                }
+                if (node.kind() == "assignment"
+                    && node
+                        .child_by_field_name("left")
+                        .is_some_and(|left| matches!(left.kind(), "constant" | "scope_resolution")))
+                    || node.kind() == "alias"
+                    || regular_send_name(source, node).is_some_and(|name| {
+                        matches!(
+                            name.as_ref(),
+                            b"alias_method"
+                                | b"define_method"
+                                | b"define_singleton_method"
+                                | b"class_eval"
+                                | b"module_eval"
+                                | b"eval"
+                                | b"prepend"
+                        )
+                    })
+                {
+                    return RelationOverrides(true);
+                }
+                pending.extend(named_kids(node));
+            }
+            RelationOverrides(false)
+        })
+        .0
 }
 
 fn report(
@@ -156,18 +199,26 @@ fn report(
     node: Node<'_>,
     diagnostics: &mut Vec<Diagnostic>,
     corrections: &mut Option<&mut Vec<Correction>>,
+    config: &CopConfig,
 ) {
     let meth = method_node(node).unwrap_or(node);
     let (line, col) = source.offset_to_line_col(meth.start_byte());
     let mut diag = cop.diagnostic(source, line, col, MSG.to_string());
     diag.highlight_length = meth.end_byte().saturating_sub(meth.start_byte()).max(1);
-    if push_replace(
-        corrections,
-        meth.start_byte(),
-        meth.end_byte(),
-        "find_each",
-        cop.name(),
-    ) {
+    diag.correctable = !config.autocorrect_disabled()
+        && !crate::cop::shared::ruby_semantics::value_used(source, node)
+        && node.child_by_field_name("block").is_some()
+        && argument_nodes(node).is_empty()
+        && !overridden(source, node);
+    if diag.correctable
+        && push_replace(
+            corrections,
+            meth.start_byte(),
+            meth.end_byte(),
+            "find_each",
+            cop.name(),
+        )
+    {
         diag.corrected = true;
     }
     diagnostics.push(diag);
@@ -187,7 +238,7 @@ impl Cop for FindEach {
     }
 
     fn interested_node_kinds(&self) -> &'static [&'static str] {
-        &["call", "command", "command_call"]
+        &["call"]
     }
 
     fn interested_call_names(&self) -> &'static [&'static [u8]] {
@@ -205,15 +256,13 @@ impl Cop for FindEach {
         let Some(recv) = scope_each(source, node) else {
             return;
         };
-        if (recv.kind() == "identifier" || call_receiver(recv).is_none())
-            && !in_active_record(source, node)
-        {
+        if regular_send_receiver(source, recv) == Some(None) && !in_active_record(source, node) {
             return;
         }
         if errors_where(source, recv) || any_allowed(source, node, config) {
             return;
         }
-        report(self, source, node, diagnostics, &mut corrections);
+        report(self, source, node, diagnostics, &mut corrections, config);
     }
 }
 

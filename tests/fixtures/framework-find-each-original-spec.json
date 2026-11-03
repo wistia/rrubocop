@@ -1,0 +1,188 @@
+{
+  "source": "rubocop-rails2.26.0/spec/rubocop/cop/rails/find_each_spec.rb",
+  "cases": [
+    {
+      "source": "class Model < ApplicationRecord\n  model.errors.where(:title).each { |error| do_something(error)  }\nend\n"
+    },
+    {
+      "source": "class Model < ApplicationRecord\n  where(record: [record1, record2]).each(&:touch)\nend\n"
+    },
+    {
+      "source": "User.all.each { |u| u.x }\n"
+    },
+    {
+      "source": "class C; User.all.each { |u| u.x }; end\n"
+    },
+    {
+      "source": "class C\n  all.each { |u| u.x }\nend\n"
+    },
+    {
+      "source": "class C < Foo\n  all.each { |u| u.x }\nend\n"
+    },
+    {
+      "source": "class C < ApplicationRecord\n  all.each { |u| u.x }\nend\n"
+    },
+    {
+      "source": "class C < ::ApplicationRecord\n  all.each { |u| u.x }\nend\n"
+    },
+    {
+      "source": "class C < ActiveRecord::Base\n  all.each { |u| u.x }\nend\n"
+    },
+    {
+      "source": "class C < ::ActiveRecord::Base\n  all.each { |u| u.x }\nend\n"
+    },
+    {
+      "source": "User.joins(:posts).each { |u| u.something }\n"
+    },
+    {
+      "source": "User.joins(:posts).each { |u| u.something }\n"
+    },
+    {
+      "source": "User.joins(:posts).each { |u| u.something }\n"
+    },
+    {
+      "source": "User.all.each { |u| u.something }"
+    },
+    {
+      "source": "User.all.order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.all.limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.all.select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.eager_load(:association_name).each { |u| u.something }"
+    },
+    {
+      "source": "User.eager_load(:association_name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.eager_load(:association_name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.eager_load(:association_name).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.includes(:association_name).each { |u| u.something }"
+    },
+    {
+      "source": "User.includes(:association_name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.includes(:association_name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.includes(:association_name).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.joins(:association_name).each { |u| u.something }"
+    },
+    {
+      "source": "User.joins(:association_name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.joins(:association_name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.joins(:association_name).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.left_joins(:association_name).each { |u| u.something }"
+    },
+    {
+      "source": "User.left_joins(:association_name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.left_joins(:association_name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.left_joins(:association_name).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.left_outer_joins(:association_name).each { |u| u.something }"
+    },
+    {
+      "source": "User.left_outer_joins(:association_name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.left_outer_joins(:association_name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.left_outer_joins(:association_name).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.where(name: name).or(User.where(age: age)).each { |u| u.something }"
+    },
+    {
+      "source": "User.where(name: name).or(User.where(age: age)).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.where(name: name).or(User.where(age: age)).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.where(name: name).or(User.where(age: age)).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.preload(:association_name).each { |u| u.something }"
+    },
+    {
+      "source": "User.preload(:association_name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.preload(:association_name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.preload(:association_name).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.references(:association_name).each { |u| u.something }"
+    },
+    {
+      "source": "User.references(:association_name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.references(:association_name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.references(:association_name).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.unscoped.each { |u| u.something }"
+    },
+    {
+      "source": "User.unscoped.order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.unscoped.limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.unscoped.select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.where(name: name).each { |u| u.something }"
+    },
+    {
+      "source": "User.where(name: name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.where(name: name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.where(name: name).select(:name, :age).each { |u| u.something }"
+    },
+    {
+      "source": "User.where.not(name: name).each { |u| u.something }"
+    },
+    {
+      "source": "User.where.not(name: name).order(:name).each { |u| u.something }"
+    },
+    {
+      "source": "User.where.not(name: name).limit(10).each { |u| u.something }"
+    },
+    {
+      "source": "User.where.not(name: name).select(:name, :age).each { |u| u.something }"
+    }
+  ]
+}

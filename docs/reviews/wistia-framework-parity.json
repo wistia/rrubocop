@@ -269,7 +269,16 @@
       "baseline_noop": false,
       "baseline_ruby_correctable": true,
       "baseline_rust_correctable": true,
-      "status": "pending"
+      "status": "reviewed_with_explicit_safeguards",
+      "upstream_source": "rubocop-rails-2.26.0/lib/rubocop/cop/rails/find_each.rb; lib/rubocop/cop/mixin/active_record_helper.rb; rubocop-1.65.1/lib/rubocop/cop/mixin/allowed_methods.rb; lib/rubocop/cop/mixin/allowed_pattern.rb",
+      "original_cases": 628,
+      "second_pass_cases": 1256,
+      "trusted_runtime_scenarios": 9,
+      "remaining_limits": [
+        "Unsafe-only corrections require unused return values, a real block/no positional arguments and no visible custom/dynamic/constant-bound relation APIs",
+        "Permitted rewrites retain the original standard ActiveRecord batching-contract assumption; actual SQL/backend behavior is not proven by these fixtures",
+        "Full Ruby Regexp compatibility beyond exercised string patterns and legacy Regexp objects remains outside the bounded AllowedPatterns review"
+      ]
     },
     {
       "name": "Rails/HasAndBelongsToMany",
@@ -935,9 +944,9 @@
       "upstream_source": "rubocop-factory_bot-2.26.1/lib/rubocop/cop/factory_bot/factory_class_name.rb"
     }
   ],
-  "implemented_on_branch": 64,
+  "implemented_on_branch": 65,
   "replaced_noop_stubs": 53,
-  "actual_config_scope_cases": 136,
+  "actual_config_scope_cases": 138,
   "actual_config_scope_mismatches": 0,
   "original_ast_equality_pairs": 75,
   "auxiliary_policy_cases": 4,
@@ -948,7 +957,7 @@
   "remaining_unimplemented_noop_stubs": 0,
   "pending_delegated_noop_stubs": 0,
   "pending_delegated_existing_reviews": 0,
-  "retained_pending_existing_reviews": 2,
+  "retained_pending_existing_reviews": 1,
   "physical_target_gem_controls": 36,
   "completed_delegated_existing_reviews": 10
 }
