@@ -1,0 +1,26 @@
+{
+  "supported_states": 303,
+  "native_error_states": [
+    {
+      "id": "anonymous-block-no_comma-lf",
+      "source": "def foo(&);bar(\n one,\n &\n);end\n",
+      "tree": "(program (method name: (identifier) parameters: (method_parameters (block_parameter)) body: (body_statement (call method: (identifier) arguments: (argument_list (identifier) (ERROR))))))"
+    },
+    {
+      "id": "anonymous-block-comma-lf",
+      "source": "def foo(&);bar(\n one,\n &\n);end\n",
+      "tree": "(program (method name: (identifier) parameters: (method_parameters (block_parameter)) body: (body_statement (call method: (identifier) arguments: (argument_list (identifier) (ERROR))))))"
+    },
+    {
+      "id": "anonymous-block-consistent_comma-lf",
+      "source": "def foo(&);bar(\n one,\n &\n);end\n",
+      "tree": "(program (method name: (identifier) parameters: (method_parameters (block_parameter)) body: (body_statement (call method: (identifier) arguments: (argument_list (identifier) (ERROR))))))"
+    }
+  ],
+  "deferred_cli_modes": 6,
+  "deferred_equal_bytes": 6,
+  "deferred_equal_exits": 6,
+  "deferred_equal_scope": 6,
+  "deferred_stable_second_passes": 12,
+  "note": "Matching no-offense output for a native ERROR tree is coincidental and is excluded from supported counts."
+}

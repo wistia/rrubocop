@@ -1,0 +1,256 @@
+[
+  {
+    "id": "insertion-guard-control-0-no_comma",
+    "original": "outer(foo 1,\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "outer(foo 1,\n other\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-0-comma",
+    "original": "outer(foo 1,\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo 1,\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo 1,\n other\n)\n"
+  },
+  {
+    "id": "insertion-guard-control-0-consistent_comma",
+    "original": "outer(foo 1,\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo 1,\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(foo 1,\n other\n)\n"
+  },
+  {
+    "id": "insertion-guard-control-1-no_comma",
+    "original": "outer((foo 1),\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "outer((foo 1),\n other\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-1-comma",
+    "original": "outer((foo 1),\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer((foo 1),\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-1-consistent_comma",
+    "original": "outer((foo 1),\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer((foo 1),\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-2-no_comma",
+    "original": "outer(foo(1),\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "outer(foo(1),\n other\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-2-comma",
+    "original": "outer(foo(1),\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo(1),\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-2-consistent_comma",
+    "original": "outer(foo(1),\n other\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(foo(1),\n other,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-3-no_comma",
+    "original": "outer(\n foo(1) {work}\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "outer(\n foo(1) {work}\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-3-comma",
+    "original": "outer(\n foo(1) {work}\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 13,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(\n foo(1) {work},\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-3-consistent_comma",
+    "original": "outer(\n foo(1) {work}\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 13,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(\n foo(1) {work},\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-5-no_comma",
+    "original": "outer(\n foo 1\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "no_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [],
+    "ruby_corrected": "outer(\n foo 1\n)\n",
+    "reference_investigation": "fresh cop per independent source/config"
+  },
+  {
+    "id": "insertion-guard-control-5-comma",
+    "original": "outer(\n foo 1\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(\n foo 1,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(\n foo 1\n)\n"
+  },
+  {
+    "id": "insertion-guard-control-5-consistent_comma",
+    "original": "outer(\n foo 1\n)\n",
+    "config": {
+      "TargetRubyVersion": 3.4,
+      "EnforcedStyleForMultiline": "consistent_comma"
+    },
+    "ruby_parser_diagnostics": [],
+    "ruby_diagnostics": [
+      {
+        "line": 2,
+        "column": 2,
+        "length": 5,
+        "message": "Put a comma after the last parameter of a multiline method call."
+      }
+    ],
+    "ruby_corrected": "outer(\n foo 1,\n)\n",
+    "reference_investigation": "fresh cop per independent source/config",
+    "rust_corrected": "outer(\n foo 1\n)\n"
+  }
+]

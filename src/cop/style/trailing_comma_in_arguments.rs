@@ -265,7 +265,7 @@ mod tests {
     }
 
     #[test]
-    fn unsafe_original_command_tail_corrections_are_declined() {
+    fn unsafe_original_insertions_are_declined() {
         let mut cases: serde_json::Value = serde_json::from_str(include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
             "/tests/fixtures/cops/style/trailing_comma_in_arguments/safeguards.json"
@@ -277,6 +277,75 @@ mod tests {
         crate::testutil::assert_original_spec_parity(
             &TrailingCommaInArguments,
             &serde_json::to_string(&cases).unwrap(),
+        );
+    }
+
+    #[test]
+    fn guard_controls_and_final_native_states() {
+        for fixture in [
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_arguments/guard-controls.json"
+            )),
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_arguments/final-states.json"
+            )),
+        ] {
+            let mut cases: serde_json::Value = serde_json::from_str(fixture).unwrap();
+            for case in cases.as_array_mut().unwrap() {
+                if case.get("rust_corrected").is_some() {
+                    case["ruby_corrected"] = case["rust_corrected"].clone();
+                }
+            }
+            crate::testutil::assert_original_spec_parity(
+                &TrailingCommaInArguments,
+                &serde_json::to_string(&cases).unwrap(),
+            );
+        }
+    }
+
+    #[test]
+    fn covered_sources_have_clean_native_trees() {
+        let mut errors = Vec::new();
+        for fixture in [
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_arguments/original-parity.json"
+            )),
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_arguments/independent-parity.json"
+            )),
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_arguments/safeguards.json"
+            )),
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_arguments/guard-controls.json"
+            )),
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/tests/fixtures/cops/style/trailing_comma_in_arguments/final-states.json"
+            )),
+        ] {
+            let cases: serde_json::Value = serde_json::from_str(fixture).unwrap();
+            for case in cases.as_array().unwrap() {
+                let source = SourceFile::from_bytes(
+                    "probe.rb",
+                    case["original"].as_str().unwrap().as_bytes().to_vec(),
+                );
+                let tree = crate::parse::parse_ruby(&source).unwrap();
+                if tree.root_node().has_error() {
+                    errors.push(serde_json::json!({"id":case["id"],"source":case["original"],"tree":tree.root_node().to_sexp()}));
+                }
+            }
+        }
+        assert!(
+            errors.is_empty(),
+            "NATIVE_ERROR_COVERAGE {}",
+            serde_json::to_string(&errors).unwrap()
         );
     }
 

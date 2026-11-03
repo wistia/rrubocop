@@ -1,0 +1,54 @@
+[
+  {
+    "id": "insertion-guard-control-0-comma",
+    "original": "outer(foo 1,\n other\n)\n",
+    "ruby_corrected": "outer(foo 1,\n other,\n)\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ],
+    "native_expected": "outer(foo 1,\n other\n)\n"
+  },
+  {
+    "id": "insertion-guard-control-0-consistent_comma",
+    "original": "outer(foo 1,\n other\n)\n",
+    "ruby_corrected": "outer(foo 1,\n other,\n)\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ],
+    "native_expected": "outer(foo 1,\n other\n)\n"
+  },
+  {
+    "id": "insertion-guard-control-5-comma",
+    "original": "outer(\n foo 1\n)\n",
+    "ruby_corrected": "outer(\n foo 1,\n)\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ],
+    "native_expected": "outer(\n foo 1\n)\n"
+  },
+  {
+    "id": "insertion-guard-control-5-consistent_comma",
+    "original": "outer(\n foo 1\n)\n",
+    "ruby_corrected": "outer(\n foo 1,\n)\n",
+    "corrected_parser_diagnostics": [
+      {
+        "level": "error",
+        "reason": "unexpected_token",
+        "line": 3
+      }
+    ],
+    "native_expected": "outer(\n foo 1\n)\n"
+  }
+]

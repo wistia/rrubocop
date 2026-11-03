@@ -1,0 +1,155 @@
+[
+  {
+    "case": "detect",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      }
+    ]
+  },
+  {
+    "case": "('AutoCorrect', 'disabled', '-a')",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      }
+    ]
+  },
+  {
+    "case": "('AutoCorrect', 'disabled', '-A')",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      }
+    ]
+  },
+  {
+    "case": "('AutoCorrect', False, '-a')",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      }
+    ]
+  },
+  {
+    "case": "('AutoCorrect', False, '-A')",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      }
+    ]
+  },
+  {
+    "case": "('SafeAutoCorrect', False, '-a')",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      }
+    ]
+  },
+  {
+    "case": "('SafeAutoCorrect', False, '-A')",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 0,
+        "corrected": true,
+        "bytes": "foo(one,\n two\n)\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 0,
+        "corrected": true,
+        "bytes": "foo(one,\n two\n)\n"
+      }
+    ]
+  },
+  {
+    "case": "('Safe', False, '-a')",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 1,
+        "corrected": false,
+        "bytes": "foo(one,\r\n two,\r\n)\r\n"
+      }
+    ]
+  },
+  {
+    "case": "('Safe', False, '-A')",
+    "observations": [
+      {
+        "engine": "ruby",
+        "exit": 0,
+        "corrected": true,
+        "bytes": "foo(one,\n two\n)\n"
+      },
+      {
+        "engine": "rust",
+        "exit": 0,
+        "corrected": true,
+        "bytes": "foo(one,\n two\n)\n"
+      }
+    ]
+  }
+]
