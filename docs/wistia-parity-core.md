@@ -1013,3 +1013,34 @@ The 365 fresh original source/config states also describe the final states becau
 ### Benchmark regression checkpoint
 
 The real-codebase trailing-argument delimiter panic was fixed independently in c53845d and integrated in 091dc33. Its actual-file repro, 21 original-backed controls, all 12 prior/new cop tests and parser-limit safeguards are recorded in `docs/evidence/trailing-comma-block-chain-panic.md`. The rebuilt original/native CLIs both inspect the triggering Wistia file successfully with no offenses. This fixes a missed source shape in an already bounded-reviewed rule; it does not increase the completed-cop count.
+
+### Real-codebase false-positive repairs after the cold benchmark
+
+The optimized integrated 091dc33 scan of Wistia 310b8e42e91 reported 169
+findings; the original Ruby scan on the 74 affected files reported three.
+Four core predicates caused 146 confirmed native-only findings: implicit numbered
+parameters (122), ExactRegexpMatch root alternation (one), block-call ternary
+conditions (10), and RedundantParentheses send/delimiter/range roles (13).
+The isolated source commits are 0cfeb03, 8dc92f7, 2072e30 and 480043c.
+
+Fresh original observations cover 33 numbered-parameter states, 11 regexp states,
+24 ternary states and 19 grouping states (87 total), with the regexp's six unsafe
+original tail corrections retained separately from native no-edit safeguards.
+All 12 focused tests pass, including the existing 155 ExactRegexpMatch, 135
+TernaryParentheses and 324 RedundantParentheses original-spec states. Clarity lint
+and regeneration preserve original fixtures. These are corrections to bounded
+ports/existing predicates, not four additional completed full source reviews.
+
+The fresh actual-config public CLI inspects all 56 files containing the 146
+owned native-only findings with zero offenses and empty stderr. A separate
+positive control preserves exactly the original three findings (one MixedCaseRange,
+two TernaryParentheses), including file/line/column/message. A positive/negative
+pair per repaired cop passes all 16 public safe/unsafe mode comparisons: corrected
+bytes, process exits, inspected scope and all 32 engine second passes agree.
+The larger dedicated source fixtures and intentionally unsafe differences remain
+visible; the small public replay is not exhaustive parity evidence.
+
+Evidence: `docs/evidence/numbered-parameter-real-corpus.md`,
+`docs/evidence/exact-regexp-real-alternation.md`,
+`docs/evidence/ternary-block-condition-real-corpus.md`, and
+`docs/evidence/redundant-parentheses-real-corpus.md`.
