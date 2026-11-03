@@ -33,9 +33,22 @@ impl<'t> Index<'t> {
             loops: Vec::new(),
         };
         index.walk(root, &mut 0);
+        let mut scope_nodes: HashMap<usize, Vec<Node<'t>>> = HashMap::new();
+        for node in index
+            .nodes
+            .values()
+            .filter(|node| scope_kind(**node).is_some())
+        {
+            scope_nodes
+                .entry(node.start_byte())
+                .or_default()
+                .push(*node);
+        }
         for (id, scope) in model.scopes.iter().enumerate().skip(1) {
-            if let Some(node) = index.nodes.values().find(|node| {
-                node.start_byte() == scope.entered_at && scope_kind(**node) == Some(scope.kind)
+            if let Some(node) = scope_nodes.get(&scope.entered_at).and_then(|nodes| {
+                nodes
+                    .iter()
+                    .find(|node| scope_kind(**node) == Some(scope.kind))
             }) {
                 index.anchors[id] = *node;
             }
