@@ -2,7 +2,7 @@
 mod line_literal;
 pub(crate) use line_literal::is_line_literal;
 mod numeric_send;
-pub use numeric_send::numeric_send_start;
+pub use numeric_send::{float_literal_span, numeric_send_start};
 mod heredoc_interpolations;
 pub(crate) use heredoc_interpolations::heredoc_interpolations;
 
