@@ -181,3 +181,6 @@ PROGRAMS += safe_nav_programs()
 
 from presence_runtime import programs as presence_programs
 PROGRAMS += presence_programs()
+
+from times_map_runtime import programs as times_map_programs
+PROGRAMS += times_map_programs()
