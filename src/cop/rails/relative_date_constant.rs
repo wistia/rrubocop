@@ -41,7 +41,12 @@ fn nested(source: &SourceFile, node: Node<'_>, config: &CopConfig) -> Option<Str
     }) {
         return None;
     }
-    for child in named_kids(node) {
+    let children = if node.kind() == "heredoc_beginning" {
+        crate::cop::shared::heredoc_interpolations(source, node).unwrap_or_default()
+    } else {
+        named_kids(node)
+    };
+    for child in children {
         if matches!(child.kind(), "comment" | "identifier")
             && node.child_by_field_name("method") == Some(child)
         {

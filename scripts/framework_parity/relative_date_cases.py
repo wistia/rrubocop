@@ -15,6 +15,8 @@ def extend(add):
         add("Rails/RelativeDateConstant", source)
     for source in ("DATE ||= ago { side }", "DATE ||= ago { _1 }", "DATE, OTHER = ago, # keep\ntomorrow", "DATE, # keep\nOTHER = ago, tomorrow", "DATE = tomorrow.ago", "DATE = ago.tomorrow", "OUTER = (INNER = ago)"):
         add("Rails/RelativeDateConstant", source)
+    for source in ("DATE = <<~SQL\n#{Date.yesterday}\nSQL", "DATE = <<~'SQL'\n#{Date.yesterday}\nSQL", "DATE = <<~SQL\n#{proc { Date.yesterday }}\nSQL", "DATE = <<~SQL\n#{proc { _1; Date.yesterday }}\nSQL", "DATE = [<<~SQL, <<~OTHER]\n#{Date.yesterday}\nSQL\n#{1.day.ago}\nOTHER", "DATE ||= <<~SQL\n#{Date.yesterday}\nSQL"):
+        add("Rails/RelativeDateConstant", source)
     methods = ("since", "from_now", "after", "ago", "until", "before", "yesterday", "tomorrow", "today")
     for method in methods:
         for value in (f"1.day.{method}", f"clock.{method}", f"clock.{method}(base)", f"clock&.{method}", f"{method}()", f"-> {{ clock.{method} }}", f"proc {{ clock.{method} }}", f"proc {{ _1; clock.{method} }}", f"[clock.{method}]", f"{{date: clock.{method}}}"):

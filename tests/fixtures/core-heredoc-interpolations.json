@@ -1,0 +1,183 @@
+[
+  {
+    "id": "simple",
+    "source": "puts <<A\n#{x = value}\nA\n",
+    "ruby_version": 3.4,
+    "reference_version": "1.65.1",
+    "heredocs": [
+      {
+        "opener": "<<A",
+        "line": 1,
+        "column": 5,
+        "interpolations": [
+          [
+            {
+              "source": "x = value",
+              "line": 2,
+              "column": 2
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "multi",
+    "source": "puts <<A\n#{x = value; y = other}\nA\n",
+    "ruby_version": 3.4,
+    "reference_version": "1.65.1",
+    "heredocs": [
+      {
+        "opener": "<<A",
+        "line": 1,
+        "column": 5,
+        "interpolations": [
+          [
+            {
+              "source": "x = value",
+              "line": 2,
+              "column": 2
+            },
+            {
+              "source": "y = other",
+              "line": 2,
+              "column": 13
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quoted",
+    "source": "puts <<'A'\n#{x = value}\nA\n",
+    "ruby_version": 3.4,
+    "reference_version": "1.65.1",
+    "heredocs": [
+      {
+        "opener": "<<'A'",
+        "line": 1,
+        "column": 5,
+        "interpolations": []
+      }
+    ]
+  },
+  {
+    "id": "empty",
+    "source": "puts <<A\n#{}\nA\n",
+    "ruby_version": 3.4,
+    "reference_version": "1.65.1",
+    "heredocs": [
+      {
+        "opener": "<<A",
+        "line": 1,
+        "column": 5,
+        "interpolations": [
+          []
+        ]
+      }
+    ]
+  },
+  {
+    "id": "two",
+    "source": "puts <<A, <<B\n#{first}\nA\n#{second}\nB\n",
+    "ruby_version": 3.4,
+    "reference_version": "1.65.1",
+    "heredocs": [
+      {
+        "opener": "<<A",
+        "line": 1,
+        "column": 5,
+        "interpolations": [
+          [
+            {
+              "source": "first",
+              "line": 2,
+              "column": 2
+            }
+          ]
+        ]
+      },
+      {
+        "opener": "<<B",
+        "line": 1,
+        "column": 10,
+        "interpolations": [
+          [
+            {
+              "source": "second",
+              "line": 4,
+              "column": 2
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "crlf",
+    "source": "puts <<A\r\n#{λ = value}\r\nA\r\n",
+    "ruby_version": 3.4,
+    "reference_version": "1.65.1",
+    "heredocs": [
+      {
+        "opener": "<<A",
+        "line": 1,
+        "column": 5,
+        "interpolations": [
+          [
+            {
+              "source": "λ = value",
+              "line": 2,
+              "column": 2
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "nested-string",
+    "source": "puts <<A\n#{\"#{x = value}\"}\nA\n",
+    "ruby_version": 3.4,
+    "reference_version": "1.65.1",
+    "heredocs": [
+      {
+        "opener": "<<A",
+        "line": 1,
+        "column": 5,
+        "interpolations": [
+          [
+            {
+              "source": "\"#{x = value}\"",
+              "line": 2,
+              "column": 2
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "command",
+    "source": "puts <<~`A`\n#{x}\nA\n",
+    "ruby_version": 3.4,
+    "reference_version": "1.65.1",
+    "heredocs": [
+      {
+        "opener": "<<~`A`",
+        "line": 1,
+        "column": 5,
+        "interpolations": [
+          [
+            {
+              "source": "x",
+              "line": 2,
+              "column": 2
+            }
+          ]
+        ]
+      }
+    ]
+  }
+]

@@ -1,4 +1,6 @@
 //! Shared tree-sitter helpers for cops (nitrocop-inspired, AST-adapted).
+mod heredoc_interpolations;
+pub(crate) use heredoc_interpolations::heredoc_interpolations;
 
 mod bare_args;
 mod command_call;
