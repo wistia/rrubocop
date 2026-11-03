@@ -508,4 +508,6 @@ def cases():
     extend(add)
     from skips_validations_cases import extend
     extend(add)
+    from department_cases import extend
+    extend(add)
     return rows

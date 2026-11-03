@@ -1,0 +1,29 @@
+{
+  "source": "rubocop1.65.1/spec/rubocop/cop/migration/department_name_spec.rb",
+  "cases": [
+    {
+      "source": "# rubocop:todo Alias, LineLength\nalias :ala :bala\n# rubocop:enable Alias, LineLength\n"
+    },
+    {
+      "source": "# rubocop : todo Alias, LineLength\nalias :ala :bala\n# rubocop : enable Alias, LineLength\n"
+    },
+    {
+      "source": "# rubocop:disable SingleSpaceBeforeFirstArg, Layout/LineLength\nname             \"apache_kafka\"\n"
+    },
+    {
+      "source": "alias :ala :bala # rubocop:disable all\n# rubocop:disable Style/Alias\n"
+    },
+    {
+      "source": "# rubocop:disable Style/Alias # Plain code comment\nalias :ala :bala\n"
+    },
+    {
+      "source": "# rubocop:disable Style/Alias -- because something, something, and something\nalias :ala :bala\n"
+    },
+    {
+      "source": "# rubocop:disable Style:Alias\nalias :ala :bala\n"
+    },
+    {
+      "source": "# rubocop:disable Style\nalias :ala :bala\n"
+    }
+  ]
+}

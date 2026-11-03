@@ -12,10 +12,10 @@ use regex::Regex;
 use tree_sitter::Node;
 static DIRECTIVE: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"^(# *rubocop *: *(?:disable|enable|todo) +)(.*)").unwrap());
-static TOKENS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[^,]+|\W+").unwrap());
+static TOKENS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[^,]+|[^A-Za-z0-9_]+").unwrap());
 static QUALIFIED: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"[A-Za-z]+/[A-Za-z]+|all").unwrap());
-static NONWORD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\W+").unwrap());
+static NONWORD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[^A-Za-z0-9_]+").unwrap());
 pub(super) fn check(c: &Context<'_>, n: Node<'_>) -> Vec<Finding> {
     let Some(captures) = DIRECTIVE.captures(c.text(n)) else {
         return vec![];
@@ -52,17 +52,23 @@ fn check_token(
     offset: usize,
     token: &regex::Match<'_>,
 ) -> Option<Finding> {
-    let name = token.as_str().trim();
+    let name = token
+        .as_str()
+        .trim_matches(|ch| matches!(ch, '\0' | '\t' | '\n' | '\x0b' | '\x0c' | '\r' | ' '));
     if valid(name) {
         return None;
     }
     let start = n.start_byte() + offset + token.start();
     let f = Finding::range(start, start + name.len(), "Department name is missing.");
-    Some(if let Some(qualified) = qualify(name) {
-        f.edit_with(c, start, start + name.len(), || qualified)
-    } else {
-        f
-    })
+    Some(
+        if let Some(qualified) =
+            qualify(name).filter(|_| token.as_str().get(..name.len()) == Some(name))
+        {
+            f.edit_with(c, start, start + name.len(), || qualified)
+        } else {
+            f
+        },
+    )
 }
 fn unexpected(name: &str) -> bool {
     name.bytes()
